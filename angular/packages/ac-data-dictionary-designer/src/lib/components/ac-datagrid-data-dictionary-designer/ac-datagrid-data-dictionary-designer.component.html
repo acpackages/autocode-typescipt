@@ -1,0 +1,194 @@
+<div style="height: 100%;">
+  <div style="height: 100%;overflow: auto;width:25%;overflow: auto;display: inline-block;">
+    <ac-datagrid #dataGridTables [autoAddNewRow]="true" [data]="tables"
+      (onSelectedRowChange)="handleSelectedTableChange()">
+      <ac-datagrid-column [field]="AcDDTable.keyTableName" title="Table" />
+    </ac-datagrid>
+  </div>
+  <div style="height: 100%;width:75%; overflow: auto;display: inline-block;">
+    <div style="height: 74%;width:100%; overflow: auto;display: inline-block;">
+      <ac-datagrid #dataGridFields [autoAddNewRow]="true" [data]="tableFields">
+        <ac-datagrid-column [field]="AcDDTableField.keyFieldName" title="Field" style="min-width: 200px;" />
+        <ac-datagrid-column [field]="AcDDTableField.keyFieldType" title="Type" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-select style="width:100%;height:100%;"  [record]="rowData" [field]="column.field"
+              [value]="rowData[column.field]" [options]="optionsFieldTypes" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="PrimaryKey?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.primaryKey" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="AutoIncrement?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.autoIncrement" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="CheckInAutoNumber?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.checkInAutoNumber" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="CheckInModify?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.checkInModify" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="CheckInSave?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.checkInSave" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="InSearchQuery?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.inSearchQuery" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="SelectDistinct?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.isSelectDistinct" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="NotNull?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.notNull" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="Required?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.required" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="SetNullBeforeDelete?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.setNullBeforeDelete" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+        <ac-datagrid-column title="UniqueKey?" [allowSort]="false" style="min-width: 200px;">
+          <ng-template let-rowData="rowData" let-column="column">
+            <ac-property-input style="width:100%;height:100%;"  [fieldRecord]="rowData"
+              [fieldProperty]="AcEnumDDFieldProperty.uniqueKey" [options]="optionsTrueFalse" />
+          </ng-template>
+        </ac-datagrid-column>
+      </ac-datagrid>
+    </div>
+    <div style="height: 25%;width:100%; overflow: auto;display: flex;">
+      <div style="display:inline-block;width: 60px;">
+        <ul class="nav flex-column nav-pills">
+          <li class="nav-item" title="Incoming Relationships" >
+            <button type="button" class="nav-link active w-100" data-bs-toggle="tab" data-bs-target=".tab-incoming-relationships"><i class="fa fa-share-nodes" style="transform: rotate(180deg);"></i></button>
+          </li>
+          <li class="nav-item" title="Outgoing Relationships" >
+            <button type="button" class="nav-link w-100" data-bs-toggle="tab" data-bs-target=".tab-outgoing-relationships"><i class="fa fa-share-nodes" ></i></button>
+          </li>
+          <li class="nav-item" title="Triggers" >
+            <button type="button" class="nav-link w-100" data-bs-toggle="tab" data-bs-target=".tab-triggers"><i class="fa fa-link"></i></button>
+          </li>
+        </ul>
+      </div>
+      <div style="height: 100%;width: calc(100% - 55px);">
+        <div class="tab-content" style="height: 100%;">
+          <div class="tab-pane active tab-incoming-relationships" role="tabpanel" style="height: 100%;">
+            <ac-datagrid #dataGridRelationshipsDestination [autoAddNewRow]="true" [data]="tableRelationshipsDestination">
+              <ac-datagrid-column title="Destination Field" [field]="AcDDRelationship.keyDestinationField" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-input style="width:100%;height:100%;" [record]="rowData"
+                    [field]="AcDDRelationship.keyDestinationField" />
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Source Table" [field]="AcDDRelationship.keySourceTable" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-select-table-input style="width:100%;height:100%;" [acDataDictionary]="acDataDictionary" [record]="rowData"
+                    [field]="AcDDRelationship.keySourceTable" (onChange)="selectField.setFieldsList();"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Source Field" [field]="AcDDRelationship.keySourceField" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-select-table-field-input #selectField style="width:100%;height:100%;" [acDataDictionary]="acDataDictionary" [record]="rowData"
+                    [field]="AcDDRelationship.keySourceField" [tableName]="rowData[AcDDRelationship.keySourceTable]"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="DeleteSource?" [field]="AcDDRelationship.keyCascadeDeleteSource" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-boolean-input style="width:100%;height:100%;" [record]="rowData" [field]="AcDDRelationship.keyCascadeDeleteSource" [value]="rowData[AcDDRelationship.keyCascadeDeleteSource]" [(ngModel)]="rowData[AcDDRelationship.keyCascadeDeleteSource]"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="DeletDestination?" [field]="AcDDRelationship.keyCascadeDeleteDestination" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-boolean-input style="width:100%;height:100%;" [record]="rowData" [field]="AcDDRelationship.keyCascadeDeleteDestination" [value]="rowData[AcDDRelationship.keyCascadeDeleteDestination]" [(ngModel)]="rowData[AcDDRelationship.keyCascadeDeleteDestination]"/>
+                </ng-template>
+              </ac-datagrid-column>
+            </ac-datagrid>
+          </div>
+          <div class="tab-pane tab-outgoing-relationships" role="tabpanel" style="height: 100%;">
+            <ac-datagrid #dataGridRelationshipsSource [autoAddNewRow]="true" [data]="tableRelationshipsSource">
+              <ac-datagrid-column title="Source Field" [field]="AcDDRelationship.keySourceField" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-select-table-field-input #selectField style="width:100%;height:100%;" [acDataDictionary]="acDataDictionary" [record]="rowData"
+                    [field]="AcDDRelationship.keySourceField" [tableName]="rowData[AcDDRelationship.keySourceTable]"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Destination Table" [field]="AcDDRelationship.keyDestinationTable" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-select-table-input style="width:100%;height:100%;" [acDataDictionary]="acDataDictionary" [record]="rowData"
+                    [field]="AcDDRelationship.keyDestinationTable" (onChange)="selectField.setFieldsList();"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Destination Field" [field]="AcDDRelationship.keyDestinationField" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-input style="width:100%;height:100%;" [record]="rowData"
+                    [field]="AcDDRelationship.keyDestinationField" />
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="DeleteSource?" [field]="AcDDRelationship.keyCascadeDeleteSource" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-boolean-input style="width:100%;height:100%;" [record]="rowData" [field]="AcDDRelationship.keyCascadeDeleteSource" [value]="rowData[AcDDRelationship.keyCascadeDeleteSource]" [(ngModel)]="rowData[AcDDRelationship.keyCascadeDeleteSource]"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="DeletDestination?" [field]="AcDDRelationship.keyCascadeDeleteDestination" [allowSort]="false" style="min-width: 200px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-boolean-input style="width:100%;height:100%;" [record]="rowData" [field]="AcDDRelationship.keyCascadeDeleteDestination" [value]="rowData[AcDDRelationship.keyCascadeDeleteDestination]" [(ngModel)]="rowData[AcDDRelationship.keyCascadeDeleteDestination]"/>
+                </ng-template>
+              </ac-datagrid-column>
+            </ac-datagrid>
+          </div>
+          <div class="tab-pane tab-triggers" role="tabpanel" style="height: 100%;">
+            <ac-datagrid #dataGridTriggers [autoAddNewRow]="true" [data]="tableTriggers">
+              <ac-datagrid-column title="Execute" [field]="AcDDTrigger.keyTriggerExecution" [allowSort]="false" style="min-width: 100px;width: 100px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-select style="width:100%;height:100%;" [record]="rowData" [field]="AcDDTrigger.keyTriggerExecution" [options]="optionsTriggerExecution"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Operation" [field]="AcDDTrigger.keyTriggerTableRowOperation" [allowSort]="false" style="min-width: 100px;width: 100px;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-select style="width:100%;height:100%;" [record]="rowData" [field]="AcDDTrigger.keyTriggerTableRowOperation" [options]="optionsTriggerOperation"/>
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Trigger Name" [field]="AcDDTrigger.keyTriggerName" [allowSort]="false" >
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-input style="width:100%;height:100%;" [record]="rowData" [field]="AcDDTrigger.keyTriggerName" />
+                </ng-template>
+              </ac-datagrid-column>
+              <ac-datagrid-column title="Trigger Code" [field]="AcDDTrigger.keyTriggerCode" [allowSort]="false" style="min-width: 50%;width: 50%;">
+                <ng-template let-rowData="rowData" let-column="column">
+                  <ac-input style="width:100%;height:100%;" [record]="rowData" [field]="AcDDTrigger.keyTriggerCode" />
+                </ng-template>
+              </ac-datagrid-column>
+            </ac-datagrid>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

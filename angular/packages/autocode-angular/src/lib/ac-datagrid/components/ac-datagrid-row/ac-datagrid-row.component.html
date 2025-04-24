@@ -1,0 +1,7 @@
+<tr #tr class="ac-datagrid-tr">
+  <ng-container *ngFor="let column of columns;let index = index;">
+    <ac-datagrid-cell acCommentElementTag [column]="column" [index]="index" [rowData]="rowData" [rowInstance]="this" [dataGrid]="this"
+      (onDestroy)="handleCellDestroy($event)" (onInit)="handleCellInit($event)"  (onViewInit)="handleCellViewInit($event)"
+      />
+  </ng-container>
+</tr>

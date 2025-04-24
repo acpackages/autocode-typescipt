@@ -1,0 +1,6 @@
+th{
+  outline: 2px solid #bbb;
+  border: solid 1px #bbb;
+  z-index: 2;
+  position: sticky;
+}

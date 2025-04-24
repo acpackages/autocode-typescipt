@@ -1,0 +1,15 @@
+{
+  "name": "ac-data-dictionary-designer",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@ac_packages/autocode": "^0.0.7",
+    "@ac_packages/autocode-data-dictionary": "^0.0.2",
+    "@ac_packages/autocode-extensions": "0.0.3",
+    "@angular/common": "^19.1.0",
+    "@angular/core": "^19.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

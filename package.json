@@ -1,0 +1,16 @@
+{
+  "name": "ts-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10",
+  "workspaces": ["packages/*"],
+  "devDependencies": {
+    "turbo": "latest",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test"
+  }
+}

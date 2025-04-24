@@ -1,0 +1,30 @@
+<div class="ac-datagrid-container" style="height:100%;max-height: 100%;width:100%;overflow: hidden;">
+  <table class="ac-datagrid-table" #tableHead >
+
+  </table>
+  <div class="ac-datagrid-container" [style]="'width:100%;height:calc(100%);max-height:calc(100%);max-width:calc(100%);overflow:auto;'">
+  <table class="ac-datagrid-table" #tableBody [tabindex]="tabIndex" (blur)="handleBlur($event)" (focus)="handleFocus($event)" (keydown)="handleKeyDown($event)">
+    <!-- <thead style="height:0px!important">
+      <tr>
+      <ng-container *ngFor="let column of columns;let index = index">
+        <th class="ac-datagrid-actual-th" #th acDimensionChangeListener (onDimensionChange)="handleThDimensionChange($event,column)" (onViewInit)="handleThViewInit($event,column,th)"></th>
+      </ng-container>
+    </tr>
+    </thead> -->
+    <thead class="ac-datagrid-thead">
+      <tr>
+      <ng-container *ngFor="let column of columns">
+        <ac-datagrid-column-head acCommentElementTag [column]="column" (onSortChange)="handleColumnSortChange(column,$event)" (onWidthChange)="handleColumnWidthChange(column,$event)"/>
+      </ng-container>
+    </tr>
+    </thead>
+    <tbody class="ac-datagrid-tbody">
+      <ng-container *ngFor="let row of dataController.dataDisplay;let index = index">
+        <ac-datagrid-row acCommentElementTag [rowData]="row" [index]="index" [columns]="columns"
+          [listenForWidthChange]="index==0" [dataGridInstance]="this" (onDestroy)="handleRowDestroy($event)" (onInit)="handleRowInit($event)" (onViewInit)="handleRowViewInit($event)"
+          (onRowDataChange)="handleRowDataChange($event)" />
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+</div>

@@ -1,0 +1,16 @@
+<input #input
+  [style]="style"
+  [class]="class + ' ac-input'"
+  [type]="type"
+  [attr.name]="name"
+  [disabled]="disabled"
+  [readonly]="readonly"
+  [required]="validation.required"
+  [checked]="checked"
+  (blur)="handleBlur($event)"
+  (change)="handleChange($event)"
+  (click)="handleClick($event)"
+  (focus)="handleFocus($event)"
+  (keydown)="handleKeyDown($event)"
+  (keyup)="handleKeyUp($event)"
+/>

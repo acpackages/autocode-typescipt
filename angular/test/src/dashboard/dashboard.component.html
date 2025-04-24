@@ -1,0 +1,44 @@
+<div class="p-2" id="menus">
+  <button class="btn btn-success m-2" type="button" data-toggle="collapse" data-target="#collapseDataArchitectDesigner">Data Architect Designer</button>
+  <button class="btn btn-danger m-2" type="button" data-toggle="collapse" data-target="#collapseDatagrid">Datagrid</button>
+  <button class="btn btn-primary m-2" type="button" data-toggle="collapse" data-target="#collapseFilters">Filters</button>
+  <button class="btn btn-info m-2" type="button" data-toggle="collapse" data-target="#collapseForms">Forms</button>
+  <button class="btn btn-warning m-2" type="button" data-toggle="collapse" data-target="#collapseNodeEditor">Node Editor</button>
+  <button class="btn btn-secondary m-2" type="button" data-toggle="collapse" data-target="#collapsePagination">Pagination</button>
+  <div class="row">
+    <div class="col">
+      <div class="collapse multi-collapse show" id="collapseDataArchitectDesigner" data-parent="#menus">
+        <div class="card card-body">
+          <a routerLink="/data-dictionary-designer">Datagrid Based Designer</a>
+        </div>
+      </div>
+      <div class="collapse multi-collapse show" id="collapseDatagrid" data-parent="#menus">
+        <div class="card card-body">
+          <a routerLink="/datagrid">Datagrid Basic with Pagination</a>
+          <a routerLink="/datagrid/no-pagination">Datagrid Basic without Pagination</a>
+        </div>
+      </div>
+      <div class="collapse multi-collapse show" id="collapseFilters" data-parent="#menus">
+        <div class="card card-body">
+          <a routerLink="/filters">Filters</a>
+        </div>
+      </div>
+      <div class="collapse multi-collapse show" id="collapseForms" data-parent="#menus">
+        <div class="card card-body">
+          <a routerLink="/forms">Forms</a>
+        </div>
+      </div>
+      <div class="collapse multi-collapse show" id="collapseNodeEditor" data-parent="#menus">
+        <div class="card card-body">
+          <a routerLink="/node-editor">Node Editor</a>
+        </div>
+      </div>
+      <div class="collapse multi-collapse show" id="collapsePagination" data-parent="#menus">
+        <div class="card card-body">
+          <a routerLink="/pagination">Pagination</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

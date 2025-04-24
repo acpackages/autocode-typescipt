@@ -1,0 +1,1 @@
+<th #th class="ac-datagrid-th" acResizableElement [style.width.px]="column.width" [style]="column.style" (onResize)="handleResize($event)">{{column.title}} <ac-sort-button *ngIf="column.allowSort == true" (onChange)="handleSort($event)"/></th>

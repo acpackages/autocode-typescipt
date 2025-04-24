@@ -1,0 +1,20 @@
+{
+  "name": "@ac_packages/autocode",
+  "version": "0.0.8",
+  "type": "module",
+  "description": "autocode is base package for autocode in Angular, React, Vue &amp; Node JS",
+  "main": "dist/autocode.cjs.js",
+  "module": "dist/autocode.esm.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.5",
+  "dependencies": {
+    "@ac_packages/autocode-extensions": "0.0.3",
+    "moment": "^2.30.1"
+  }
+}

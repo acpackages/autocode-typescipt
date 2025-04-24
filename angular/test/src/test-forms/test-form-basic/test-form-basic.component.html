@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-6">
+    <form>
+      <div class="p-4">
+        <h6>Personal Details</h6>
+        <div class="row">
+          <div class="col-4 mb-3">
+            <label>First Name</label>
+            <ac-input field="first_name" class="form-control" placeholder="First Name" [record]="record"/>
+          </div>
+          <div class="col-4 mb-3">
+            <label>Middle Name</label>
+            <ac-input field="middle_name" class="form-control" placeholder="Middle Name" [record]="record"/>
+          </div>
+          <div class="col-4 mb-3">
+            <label>Last Name</label>
+            <ac-input field="last_name" class="form-control" placeholder="Last Name" [record]="record"/>
+          </div>
+          <div class="col-4 mb-3">
+            <label>Gender</label>
+            <ac-select field="gender" class="form-control" placeholder="Select Gender" [record]="record" [options]="[
+              'MALE','FEMALE'
+            ]">
+            </ac-select>
+          </div>
+          <div class="col-4 mb-3">
+            <label>DOB</label>
+            <ac-input type="datetime-local" field="dob" class="form-control" placeholder="DOB" [record]="record"/>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Meal Preferences</label>
+            <div class="row">
+              <ng-container *ngFor="let meal of mealPreferences">
+                <div class="col-3">
+                  <ac-option field="meal_preferences" [optionValue]="meal" [record]="record" [name]="meal" [labelElement]="label"/>
+                  <label #label class="ms-2" [attr.for]="meal">{{meal}}</label>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Maritial Status</label>
+            <div class="row">
+              <ng-container *ngFor="let status of maritialStatuses">
+                <div class="col-3">
+                  <ac-option [type]="'radio'" field="maritial_status" name="maritial_status[]" [optionValue]="status" [record]="record" [name]="status" [labelElement]="label"/>
+                  <label #label class="ms-2">{{status}}</label>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Phone Numbers</label>
+            <ac-array-values #phoneInput field="phone" class="form-control" placeholder="Phone Numbers" [record]="record">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Label</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ac-array-value-items>
+                    <ng-template #template let-item let-index="index">
+                      <tr>
+                        <td>
+                          <ac-input [record]="item" field="label" />
+                        </td>
+                        <td>
+                          <ac-input [record]="item" field="value"/>
+                        </td>
+                        <td><button class="btn btn-danger py-1" type="button" (click)="phoneInput.removeItem(item)">Delete</button></td>
+                      </tr>
+                    </ng-template>
+                  </ac-array-value-items>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-primary py-1" ac-array-value-append>Append Item</button>
+            </ac-array-values>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Email Address</label>
+            <ac-array-values #emailInput field="email" class="form-control" placeholder="Phone Numbers" [record]="record">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Label</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ac-array-value-items>
+                    <ng-template #template let-item let-index="index">
+                      <tr>
+                        <td>
+                          <ac-input [record]="item" field="label" />
+                        </td>
+                        <td>
+                          <ac-input [record]="item" field="value"/>
+                        </td>
+                        <td><button class="btn btn-danger py-1" type="button" (click)="emailInput.removeItem(item)">Delete</button></td>
+                      </tr>
+                    </ng-template>
+                  </ac-array-value-items>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-primary py-1" ac-array-value-append>Append Item</button>
+            </ac-array-values>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Websites</label>
+            <ac-array-values #websiteInput field="website" class="form-control" placeholder="Phone Numbers" [record]="record">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Label</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ac-array-value-items>
+                    <ng-template #template let-item let-index="index">
+                      <tr>
+                        <td>
+                          <ac-input [record]="item" field="label" />
+                        </td>
+                        <td>
+                          <ac-input [record]="item" field="value"/>
+                        </td>
+                        <td><button class="btn btn-danger py-1" type="button" (click)="websiteInput.removeItem(item)">Delete</button></td>
+                      </tr>
+                    </ng-template>
+                  </ac-array-value-items>
+                </tbody>
+              </table>
+              <button type="button" class="btn btn-primary py-1" ac-array-value-append>Append Item</button>
+            </ac-array-values>
+          </div>
+          <div class="col-12 mb-3">
+            <label>About</label>
+            <ac-textarea field="about" class="form-control" placeholder="About" [record]="record"/>
+          </div>
+          <div class="col-12 mb-3">
+            <label>Profile Picture</label>
+            <ac-files field="about" class="form-control" placeholder="About" [record]="record"/>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="handleSubmit()">Save Form</button>
+      </div>
+    </form>
+  </div>
+</div>
