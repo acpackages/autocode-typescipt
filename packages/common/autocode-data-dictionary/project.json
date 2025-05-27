@@ -1,0 +1,21 @@
+{
+  "name": "autocode-data-dictionary",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/common/autocode-data-dictionary/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/common/autocode-data-dictionary",
+        "main": "packages/common/autocode-data-dictionary/src/index.ts",
+        "tsConfig": "packages/common/autocode-data-dictionary/tsconfig.lib.json",
+        "assets": ["packages/common/autocode-data-dictionary/*.md"],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@autocode-typescript/autocode",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    "import": "./index.js",
+    "require": "./index.cjs"
+  },
+  "types": "./index.d.ts",
+  "dependencies": {}
+}

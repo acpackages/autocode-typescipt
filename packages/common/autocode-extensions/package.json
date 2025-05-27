@@ -1,0 +1,11 @@
+{
+  "name": "@autocode-typescript/autocode-extensions",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "types": "./index.d.ts",
+  "devDependencies": {
+    "@types/luxon": "^3.6.2"
+  }
+}

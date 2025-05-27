@@ -1,0 +1,21 @@
+{
+  "name": "autocode-extensions",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/common/autocode-extensions/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/common/autocode-extensions",
+        "main": "packages/common/autocode-extensions/src/index.ts",
+        "tsConfig": "packages/common/autocode-extensions/tsconfig.lib.json",
+        "assets": ["packages/common/autocode-extensions/*.md"],
+        "format": ["cjs"],
+        "generatePackageJson": true
+      }
+    }
+  }
+}

@@ -1,17 +1,72 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "ES6",
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
     "module": "esnext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": "./",
-    "baseUrl": "./",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
     "paths": {
-      "@packages/*": ["packages/*"]
+      "@autocode-typescript/autocode": [
+        "packages/common/autocode/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-angular": [
+        "packages/angular/autocode-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-data-dictionary": [
+        "packages/common/autocode-data-dictionary/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-data-dictionary-editor-angular": [
+        "packages/angular/autocode-data-dictionary-editor-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-datagrid-on-aggrid-angular": [
+        "packages/angular/autocode-datagrid-on-aggrid-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-drag-drop-builder-angular": [
+        "packages/angular/autocode-drag-drop-builder-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-extensions": [
+        "packages/common/autocode-extensions/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-input-audio-recording-angular": [
+        "packages/angular/autocode-input-audio-recording-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-input-on-ngselect": [
+        "packages/angular/autocode-input-on-ngselect/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-input-on-quill-angular": [
+        "packages/angular/autocode-input-on-quill-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-input-on-tinymce-angular": [
+        "packages/angular/autocode-input-on-tinymce-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-node-editor-angular": [
+        "packages/angular/autocode-node-editor-angular/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-react": [
+        "packages/react/autocode-react/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-sql": [
+        "packages/node/autocode-sql/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-vue": [
+        "packages/vue/autocode-vue/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-web": [
+        "packages/node/autocode-web/src/index.ts"
+      ],
+      "@autocode-typescript/autocode-web-on-express": [
+        "packages/node/autocode-web-on-express/src/index.ts"
+      ]
     }
   },
-  "include": ["packages/**/*"]
+  "exclude": ["node_modules", "tmp"]
 }

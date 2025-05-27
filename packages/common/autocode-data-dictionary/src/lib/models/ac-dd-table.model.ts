@@ -1,0 +1,142 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
+import { AcDDTableColumn } from "./ac-dd-table-column.model";
+import { AcDDTableProperty } from "./ac-dd-table-property.model";
+import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcEnumDDTableProperty } from "../enums/ac-enum-dd-table-property.enum";
+
+export class AcDDTable {
+  static readonly KEY_TABLE_COLUMNS = "table_columns";
+  static readonly KEY_TABLE_NAME = "table_name";
+  static readonly KEY_TABLE_PROPERTIES = "table_properties";
+
+  @AcBindJsonProperty({ key: AcDDTable.KEY_TABLE_COLUMNS })
+  tableColumns: AcDDTableColumn[] = [];
+
+  @AcBindJsonProperty({ key: AcDDTable.KEY_TABLE_NAME })
+  tableName: string = "";
+
+  @AcBindJsonProperty({ key: AcDDTable.KEY_TABLE_PROPERTIES })
+  tableProperties: AcDDTableProperty[] = [];
+
+  static instanceFromJson({ jsonData }: { jsonData: any }): AcDDTable {
+    const instance = new AcDDTable();
+    instance.fromJson({ jsonData: jsonData });
+    return instance;
+  }
+
+  static getDropTableStatement(params: { tableName: string; databaseType?: string }): string {
+    return `DROP TABLE IF EXISTS ${params.tableName};`;
+  }
+
+  static getInstance(params: { tableName: string; dataDictionaryName?: string }): AcDDTable {
+    const dataDictionaryName = params.dataDictionaryName ?? "default";
+    const result = new AcDDTable();
+    const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
+
+    if (acDataDictionary.tables.hasOwnProperty(params.tableName)) {
+      result.fromJson({ jsonData: acDataDictionary.tables[params.tableName] });
+    }
+
+    return result;
+  }
+
+  getColumn(columnName: string): AcDDTableColumn | undefined {
+    return this.tableColumns.find((column) => column.columnName === columnName);
+  }
+
+  getColumnNames(): string[] {
+    return this.tableColumns.map((column) => column.columnName);
+  }
+
+  getCreateTableStatement(params?: { databaseType?: string }): string {
+    const databaseType = params?.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
+    const columnDefinitions = this.tableColumns
+      .map((column) => column.getColumnDefinitionForStatement({ databaseType }))
+      .filter((def) => def !== "");
+    return `CREATE TABLE IF NOT EXISTS ${this.tableName} (${columnDefinitions.join(", ")});`;
+  }
+
+  getPrimaryKeyColumnName(): string {
+    const primaryKeyColumn = this.getPrimaryKeyColumn();
+    return primaryKeyColumn ? primaryKeyColumn.columnName : "";
+  }
+
+  getPrimaryKeyColumn(): AcDDTableColumn | undefined {
+    const primaryKeyColumns = this.getPrimaryKeyColumns();
+    return primaryKeyColumns.length > 0 ? primaryKeyColumns[0] : undefined;
+  }
+
+  getPrimaryKeyColumns(): AcDDTableColumn[] {
+    return this.tableColumns.filter((column) => column.isPrimaryKey());
+  }
+
+  getSearchQueryColumnNames(): string[] {
+    return this.getSearchQueryColumns().map((column) => column.columnName);
+  }
+
+  getSearchQueryColumns(): AcDDTableColumn[] {
+    return this.tableColumns.filter((column) => column.isInSearchQuery());
+  }
+
+  getForeignKeyColumns(): AcDDTableColumn[] {
+    return this.tableColumns.filter((column) => column.isForeignKey());
+  }
+
+  getPluralName(): string {
+    let result = this.tableName;
+    for (const property of this.tableProperties) {
+      if (property.propertyName === AcEnumDDTableProperty.PLURAL_NAME) {
+        result = property.propertyValue;
+        break;
+      }
+    }
+    return result;
+  }
+
+  getSingularName(): string {
+    let result = this.tableName;
+    for (const property of this.tableProperties) {
+      if (property.propertyName === AcEnumDDTableProperty.SINGULAR_NAME) {
+        result = property.propertyValue;
+        break;
+      }
+    }
+    return result;
+  }
+
+  getSelectDistinctColumns(): AcDDTableColumn[] {
+    return this.tableColumns.filter((column) => column.isSelectDistinct());
+  }
+
+  fromJson({ jsonData }: { jsonData: any }): this {
+
+    if (AcDDTable.KEY_TABLE_COLUMNS in jsonData && typeof jsonData[AcDDTable.KEY_TABLE_COLUMNS] === "object" && !Array.isArray(jsonData[AcDDTable.KEY_TABLE_COLUMNS])) {
+      for (const [columnName, columnData] of Object.entries(jsonData[AcDDTable.KEY_TABLE_COLUMNS])) {
+        const column = AcDDTableColumn.instanceFromJson({ jsonData: columnData });
+        column.table = this;
+        this.tableColumns.push(column);
+      }
+      delete jsonData[AcDDTable.KEY_TABLE_COLUMNS];
+    }
+
+    if (AcDDTable.KEY_TABLE_PROPERTIES in jsonData && typeof jsonData[AcDDTable.KEY_TABLE_PROPERTIES] === "object" && !Array.isArray(jsonData[AcDDTable.KEY_TABLE_PROPERTIES])) {
+      for (const propertyData of Object.values(jsonData[AcDDTable.KEY_TABLE_PROPERTIES])) {
+        this.tableProperties.push(AcDDTableProperty.instanceFromJson({ jsonData: propertyData }));
+      }
+      delete jsonData[AcDDTable.KEY_TABLE_PROPERTIES];
+    }
+
+    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });
+    return this;
+  }
+
+  toJson(): Record<string, any> {
+    return AcJsonUtils.getJsonDataFromInstance({ instance: this });
+  }
+
+  toString(): string {
+    return AcJsonUtils.prettyEncode(this.toJson());
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@autocode-typescript/autocode-data-dictionary",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@autocode-typescript/autocode":"0.0.1"
+  }
+}

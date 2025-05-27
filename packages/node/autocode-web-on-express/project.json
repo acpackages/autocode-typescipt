@@ -1,0 +1,20 @@
+{
+  "name": "autocode-web-on-express",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/node/autocode-web-on-express/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/node/autocode-web-on-express",
+        "tsConfig": "packages/node/autocode-web-on-express/tsconfig.lib.json",
+        "packageJson": "packages/node/autocode-web-on-express/package.json",
+        "main": "packages/node/autocode-web-on-express/src/index.ts",
+        "assets": ["packages/node/autocode-web-on-express/*.md"]
+      }
+    }
+  }
+}
