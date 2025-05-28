@@ -5,31 +5,18 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "type": {
-      "executor": "nx:run-commands",
+    "build": {
+      "executor": "@nx/js:custom",
       "options": {
-        "command": "tsc -p packages/common/autocode/tsconfig.lib.json"
+        "buildTarget": "autocode:rollup"
       }
     },
-    "copy-types": {
+    "rollup": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "cp -r dist-types/*.d.ts dist/"
-      },
-      "dependsOn": ["type"]
-    },
-    "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist",
-        "main": "packages/common/autocode/src/index.ts",
-        "tsConfig": "packages/common/autocode/tsconfig.lib.json",
-        "assets": ["packages/common/autocode/*.md"],
-        "format": ["cjs","esm"],
-        "generatePackageJson": true
-      },
-      "dependsOn": ["^type"]
+        "command": "rollup -c rollup.config.js",
+        "cwd": "packages/common/autocode"
+      }
     }
   }
 }

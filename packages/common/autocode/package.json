@@ -1,13 +1,17 @@
 {
   "name": "@autocode-typescript/autocode",
   "version": "0.0.1",
-  "private": true,
   "type": "module",
-  "main": "index.js",
-  "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
-  },
+  "main": "./index.cjs.js",
+  "module": "./index.esm.js",
+  "browser": "./index.umd.js",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "exports": {
+    "import": "./index.esm.js",
+    "require": "./index.cjs.js"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "uuid": "^11.1.0"
+  }
 }
