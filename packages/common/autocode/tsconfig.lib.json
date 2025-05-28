@@ -6,11 +6,11 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
-    "declarationDir": "../../../dist/packages/common/autocode",
+    "declarationDir": "dist",
     "rootDir": "src",
     "skipLibCheck": true,
     "composite": false,
-    "sourceMap": true
+    "sourceMap": true,
   },
   "include": ["src/**/*.ts"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]

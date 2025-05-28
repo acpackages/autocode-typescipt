@@ -31,8 +31,7 @@ export class AcDDTrigger {
     return instance;
   }
 
-  static getInstance(triggerName: string, options?: { dataDictionaryName?: string }): AcDDTrigger {
-    const dataDictionaryName = options?.dataDictionaryName ?? "default";
+  static getInstance({triggerName,dataDictionaryName = "default"}:{triggerName: string,  dataDictionaryName?: string }): AcDDTrigger {
     const result = new AcDDTrigger();
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
 
@@ -43,16 +42,14 @@ export class AcDDTrigger {
     return result;
   }
 
-  static getDropTriggerStatement(params: { triggerName: string; databaseType?: string }): string {
+  static getDropTriggerStatement({triggerName,databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { triggerName: string; databaseType?: string }): string {
     // default for databaseType param if not provided
-    const databaseType = params.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
-    return `DROP TRIGGER IF EXISTS ${params.triggerName};`;
+    return `DROP TRIGGER IF EXISTS ${triggerName};`;
   }
 
-  getCreateTriggerStatement(options?: { databaseType?: string }): string {
-    const databaseType:any = options?.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
+  getCreateTriggerStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
     let result = '';
-    if ([AcEnumSqlDatabaseType.MYSQL, AcEnumSqlDatabaseType.SQLITE].includes(databaseType)) {
+    if ([AcEnumSqlDatabaseType.MYSQL, AcEnumSqlDatabaseType.SQLITE].includes(databaseType as any)) {
       result = `CREATE TRIGGER ${this.triggerName} ${this.triggerExecution} ${this.rowOperation} ON ${this.tableName} FOR EACH ROW BEGIN ${this.triggerCode} END;`;
     }
     return result;

@@ -29,14 +29,14 @@ export class AcDDViewColumn {
   @AcBindJsonProperty({ key: AcDDViewColumn.KEY_COLUMN_SOURCE_NAME })
   columnSourceName: string = "";
 
-  static instanceFromJson(params: { jsonData: Record<string, any> }): AcDDViewColumn {
+  static instanceFromJson({jsonData}: { jsonData: Record<string, any> }): AcDDViewColumn {
     const instance = new AcDDViewColumn();
-    instance.fromJson({ jsonData: params.jsonData });
+    instance.fromJson({ jsonData: jsonData });
     return instance;
   }
 
-  fromJson(params: { jsonData: Record<string, any> }): AcDDViewColumn {
-    const json = { ...params.jsonData };
+  fromJson({jsonData}: { jsonData: Record<string, any> }): AcDDViewColumn {
+    const json = { ...jsonData };
 
     if (json.hasOwnProperty(AcDDViewColumn.KEY_COLUMN_PROPERTIES)) {
       const props = json[AcDDViewColumn.KEY_COLUMN_PROPERTIES] as Record<string, any>;

@@ -6,15 +6,16 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/js:custom",
       "options": {
-        "outputPath": "dist/packages/common/autocode-extensions",
-        "main": "packages/common/autocode-extensions/src/index.ts",
-        "tsConfig": "packages/common/autocode-extensions/tsconfig.lib.json",
-        "assets": ["packages/common/autocode-extensions/*.md"],
-        "format": ["cjs"],
-        "generatePackageJson": true
+        "buildTarget": "autocode-extensions:rollup"
+      }
+    },
+    "rollup": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rollup -c rollup.config.mjs",
+        "cwd": "packages/common/autocode-extensions"
       }
     }
   }

@@ -5,11 +5,9 @@ import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
 import path from 'path';
-import fs from 'fs';
 import pkg from './package.json' assert { type: 'json' };
 
 const outputDir = '../../../dist/packages/common/autocode';
-fs.mkdirSync(outputDir, { recursive: true });
 
 export default {
   input: path.resolve(process.cwd(), 'src/index.ts'),

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcEnumDDColumnRelationType } from "../enums/ac-enum-dd-column-relation-type.enum";
 import { AcDDFunction } from "./ac-dd-function.model";
 import { AcDDRelationship } from "./ac-dd-relationship.model";
@@ -6,7 +8,7 @@ import { AcDDTableColumn } from "./ac-dd-table-column.model";
 import { AcDDTable } from "./ac-dd-table.model";
 import { AcDDTrigger } from "./ac-dd-trigger.model";
 import { AcDDView } from "./ac-dd-view.model";
-import { AcBindJsonProperty, AcJsonUtils }from "@autocode-typescript/autocode";
+import { AcBindJsonProperty, AcJsonUtils } from "@autocode-typescript/autocode";
 
 export class AcDataDictionary {
   static readonly KEY_DATA_DICTIONARIES = "data_dictionaries";
@@ -41,7 +43,7 @@ export class AcDataDictionary {
     return new AcDataDictionary().fromJson({ jsonData });
   }
 
-  static getFunctions({ dataDictionaryName = "default" } = {}): Record<string, AcDDFunction> {
+  static getFunctions({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): Record<string, AcDDFunction> {
     const result: Record<string, AcDDFunction> = {};
     const acDataDictionary = this.getInstance({ dataDictionaryName });
     for (const [functionName, functionData] of Object.entries(acDataDictionary.functions)) {
@@ -63,7 +65,7 @@ export class AcDataDictionary {
     return null;
   }
 
-  static getInstance({ dataDictionaryName = "default" } = {}): AcDataDictionary {
+  static getInstance({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): AcDataDictionary {
     const instance = new AcDataDictionary();
     if (this.dataDictionaries[dataDictionaryName]) {
       instance.fromJson({ jsonData: this.dataDictionaries[dataDictionaryName] });
@@ -71,7 +73,7 @@ export class AcDataDictionary {
     return instance;
   }
 
-  static getRelationships({ dataDictionaryName = "default" } = {}): AcDDRelationship[] {
+  static getRelationships({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): AcDDRelationship[] {
     const result: AcDDRelationship[] = [];
     const acDataDictionary = this.getInstance({ dataDictionaryName });
 
@@ -88,7 +90,7 @@ export class AcDataDictionary {
     return result;
   }
 
-  static getStoredProcedures({ dataDictionaryName = "default" } = {}): Record<string, AcDDStoredProcedure> {
+  static getStoredProcedures({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): Record<string, AcDDStoredProcedure> {
     const result: Record<string, AcDDStoredProcedure> = {};
     const acDataDictionary = this.getInstance({ dataDictionaryName });
 
@@ -130,7 +132,7 @@ export class AcDataDictionary {
     const acDataDictionary = this.getInstance({ dataDictionaryName });
     if (tableName in acDataDictionary.tables) {
       const table = AcDDTable.instanceFromJson({ jsonData: acDataDictionary.tables[tableName] });
-      return table.getColumn(columnName)!;
+      return table.getColumn({columnName})!;
     }
     return null;
   }
@@ -213,7 +215,7 @@ export class AcDataDictionary {
     return result;
   }
 
-  static getTables({ dataDictionaryName = "default" } = {}): Record<string, AcDDTable> {
+  static getTables({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): Record<string, AcDDTable> {
     const result: Record<string, AcDDTable> = {};
     const acDataDictionary = this.getInstance({ dataDictionaryName });
 
@@ -223,7 +225,7 @@ export class AcDataDictionary {
     return result;
   }
 
-  static getTriggers({ dataDictionaryName = "default" } = {}): Record<string, AcDDTrigger> {
+  static getTriggers({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): Record<string, AcDDTrigger> {
     const result: Record<string, AcDDTrigger> = {};
     const acDataDictionary = this.getInstance({ dataDictionaryName });
 
@@ -244,7 +246,7 @@ export class AcDataDictionary {
     return null;
   }
 
-  static getViews({ dataDictionaryName = "default" } = {}): Record<string, AcDDView> {
+  static getViews({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): Record<string, AcDDView> {
     const result: Record<string, AcDDView> = {};
     const acDataDictionary = this.getInstance({ dataDictionaryName });
 

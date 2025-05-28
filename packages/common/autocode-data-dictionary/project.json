@@ -6,15 +6,16 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/js:custom",
       "options": {
-        "outputPath": "dist/packages/common/autocode-data-dictionary",
-        "main": "packages/common/autocode-data-dictionary/src/index.ts",
-        "tsConfig": "packages/common/autocode-data-dictionary/tsconfig.lib.json",
-        "assets": ["packages/common/autocode-data-dictionary/*.md"],
-        "format": ["cjs"],
-        "generatePackageJson": true
+        "buildTarget": "autocode-data-dictionary:rollup"
+      }
+    },
+    "rollup": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rollup -c rollup.config.mjs",
+        "cwd": "packages/common/autocode-data-dictionary"
       }
     }
   }

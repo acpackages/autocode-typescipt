@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
 import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
@@ -28,8 +30,7 @@ export class AcDDTableColumn {
   @AcBindJsonProperty({ skipInFromJson: true, skipInToJson: true })
   table?: AcDDTable;
 
-  static getInstance(params: { tableName: string; columnName: string; dataDictionaryName?: string }): AcDDTableColumn {
-    const { tableName, columnName, dataDictionaryName = "default" } = params;
+  static getInstance({tableName,columnName,dataDictionaryName="default"}: { tableName: string; columnName: string; dataDictionaryName?: string }): AcDDTableColumn {
     return AcDataDictionary.getTableColumn({ tableName, columnName, dataDictionaryName })!;
   }
 
@@ -39,8 +40,7 @@ export class AcDDTableColumn {
     return instance;
   }
 
-  static getDropColumnStatement(params: { tableName: string; columnName: string; databaseType?: string }): string {
-    const { tableName, columnName } = params;
+  static getDropColumnStatement({tableName,columnName,databaseType =AcEnumSqlDatabaseType.UNKNOWN}: { tableName: string; columnName: string; databaseType?: string }): string {
     // databaseType is ignored in your original, keep same behavior
     return `ALTER TABLE ${tableName} DROP COLUMN ${columnName};`;
   }
@@ -105,16 +105,14 @@ export class AcDDTableColumn {
     return this.columnName;
   }
 
-  getAddColumnStatement(params: { tableName: string; databaseType?: string }): string {
-    const { tableName, databaseType = AcEnumSqlDatabaseType.UNKNOWN } = params;
+  getAddColumnStatement({tableName,databaseType = AcEnumSqlDatabaseType.UNKNOWN}: { tableName: string; databaseType?: string }): string {
     if (databaseType === AcEnumSqlDatabaseType.MYSQL) {
       return `ALTER TABLE ${tableName} ADD COLUMN ${this.getColumnDefinitionForStatement({ databaseType })}`;
     }
     return "";
   }
 
-  getColumnDefinitionForStatement(params: { databaseType?: string } = {}): string {
-    const databaseType = params.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
+  getColumnDefinitionForStatement({databaseType = AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
     let columnTypeLocal = this.columnType;
     let result = "";
     const defaultValue = this.getDefaultValue();

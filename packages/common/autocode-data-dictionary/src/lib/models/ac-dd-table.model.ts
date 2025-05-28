@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
@@ -26,23 +27,22 @@ export class AcDDTable {
     return instance;
   }
 
-  static getDropTableStatement(params: { tableName: string; databaseType?: string }): string {
-    return `DROP TABLE IF EXISTS ${params.tableName};`;
+  static getDropTableStatement({tableName,databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { tableName: string; databaseType?: string }): string {
+    return `DROP TABLE IF EXISTS ${tableName};`;
   }
 
-  static getInstance(params: { tableName: string; dataDictionaryName?: string }): AcDDTable {
-    const dataDictionaryName = params.dataDictionaryName ?? "default";
+  static getInstance({tableName,dataDictionaryName="default"}: { tableName: string; dataDictionaryName?: string }): AcDDTable {
     const result = new AcDDTable();
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
 
-    if (acDataDictionary.tables.hasOwnProperty(params.tableName)) {
-      result.fromJson({ jsonData: acDataDictionary.tables[params.tableName] });
+    if (acDataDictionary.tables.hasOwnProperty(tableName)) {
+      result.fromJson({ jsonData: acDataDictionary.tables[tableName] });
     }
 
     return result;
   }
 
-  getColumn(columnName: string): AcDDTableColumn | undefined {
+  getColumn({columnName}:{columnName: string}): AcDDTableColumn | undefined {
     return this.tableColumns.find((column) => column.columnName === columnName);
   }
 
@@ -50,8 +50,7 @@ export class AcDDTable {
     return this.tableColumns.map((column) => column.columnName);
   }
 
-  getCreateTableStatement(params?: { databaseType?: string }): string {
-    const databaseType = params?.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
+  getCreateTableStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
     const columnDefinitions = this.tableColumns
       .map((column) => column.getColumnDefinitionForStatement({ databaseType }))
       .filter((def) => def !== "");

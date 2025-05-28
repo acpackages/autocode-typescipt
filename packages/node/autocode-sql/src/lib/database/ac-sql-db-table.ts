@@ -45,7 +45,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
           this.logger.log(`Performing cascade delete with related table ${deleteTableName} and column ${deleteColumnName} with value ${deleteColumnValue}`);
           if (deleteTableName && deleteColumnName) {
-            if (Autocode.validPrimaryKey(deleteColumnValue)) {
+            if (Autocode.validPrimaryKey({value:deleteColumnValue})) {
               this.logger.log(`Deleting related rows for primary key value : ${deleteColumnValue}`);
               const deleteCondition = `${deleteColumnName} = :deleteColumnValue`;
               const deleteAcTable = new AcSqlDbTable({ tableName: deleteTableName, dataDictionaryName: this.dataDictionaryName });
@@ -165,7 +165,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       const primaryKeyColumnName = this.acDDTable.getPrimaryKeyColumnName();
 
       if (primaryKeyColumnName) {
-        if (row.hasOwnProperty(primaryKeyColumnName) && Autocode.validPrimaryKey(row[primaryKeyColumnName])) {
+        if (row.hasOwnProperty(primaryKeyColumnName) && Autocode.validPrimaryKey({value:row[primaryKeyColumnName]})) {
           conditions.push(`${primaryKeyColumnName} != @primaryKeyValue`);
           parameters["@primaryKeyValue"] = row[primaryKeyColumnName];
         }
@@ -777,7 +777,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               result.primaryKeyColumn = primaryKeyColumn;
               result.primaryKeyValue = primaryKeyValue;
               if (primaryKeyColumn.length > 0) {
-                if (!Autocode.validPrimaryKey(primaryKeyValue) && Autocode.validPrimaryKey(insertResult.lastInsertedId)) {
+                if (!Autocode.validPrimaryKey({value:primaryKeyValue}) && Autocode.validPrimaryKey({value:insertResult.lastInsertedId})) {
                   primaryKeyValue = insertResult.lastInsertedId;
                 }
               }
@@ -977,7 +977,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       let condition = "";
       let conditionParameters: Record<string, any> = {};
 
-      if (Autocode.validPrimaryKey(primaryKeyValue)) {
+      if (Autocode.validPrimaryKey({value:primaryKeyValue})) {
         this.logger.log("Found primary key value so primary key value will be used");
         condition = `${primaryKeyColumn} = :primaryKeyValue`;
         conditionParameters[":primaryKeyValue"] = primaryKeyValue;
@@ -1095,7 +1095,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         let condition = "";
         let conditionParameters: Record<string, any> = {};
 
-        if (Autocode.validPrimaryKey(primaryKeyValue)) {
+        if (Autocode.validPrimaryKey({value:primaryKeyValue})) {
           this.logger.log("Found primary key value so primary key value will be used");
           condition = `${primaryKeyColumn} = :primaryKeyValue`;
           conditionParameters[":primaryKeyValue"] = primaryKeyValue;
@@ -1281,7 +1281,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         }
         this.logger.log(["Formatted data : ", row]);
 
-        if (!condition && Autocode.validPrimaryKey(primaryKeyValue)) {
+        if (!condition && Autocode.validPrimaryKey({value:primaryKeyValue})) {
           condition = `${primaryKeyColumn} = :primaryKeyValue`;
           parameters = { ":primaryKeyValue": primaryKeyValue };
         }
@@ -1396,7 +1396,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
           this.logger.log(["Formatted data : ", row]);
 
-          if (Object.keys(row).length > 0 && Autocode.validPrimaryKey(primaryKeyValue)) {
+          if (Object.keys(row).length > 0 && Autocode.validPrimaryKey({value:primaryKeyValue})) {
             const condition = `${primaryKeyColumn} = :primaryKeyValue${index}`;
             const parameters = { [`:primaryKeyValue${index}`]: primaryKeyValue };
             primaryKeyValues.push(primaryKeyValue);

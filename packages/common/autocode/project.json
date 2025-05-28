@@ -14,7 +14,7 @@
     "rollup": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "rollup -c rollup.config.js",
+        "command": "rollup -c rollup.config.mjs",
         "cwd": "packages/common/autocode"
       }
     }

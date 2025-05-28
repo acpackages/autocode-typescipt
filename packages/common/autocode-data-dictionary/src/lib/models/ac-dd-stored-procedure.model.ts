@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcBindJsonProperty, AcJsonUtils } from "@autocode-typescript/autocode";
+import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
 import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDStoredProcedure {
@@ -13,34 +14,32 @@ export class AcDDStoredProcedure {
   @AcBindJsonProperty({ key: AcDDStoredProcedure.KEY_STORED_PROCEDURE_CODE })
   storedProcedureCode: string = "";
 
-  static instanceFromJson(params: { jsonData: { [key: string]: any } }): AcDDStoredProcedure {
+  static instanceFromJson({jsonData}: { jsonData: { [key: string]: any } }): AcDDStoredProcedure {
     const instance = new AcDDStoredProcedure();
-    instance.fromJson({ jsonData: params.jsonData });
+    instance.fromJson({ jsonData: jsonData });
     return instance;
   }
 
-  static getInstance(params: { storedProcedureName: string; dataDictionaryName?: string }): AcDDStoredProcedure {
-    const dataDictionaryName = params.dataDictionaryName ?? "default";
+  static getInstance({storedProcedureName,dataDictionaryName="default"}: { storedProcedureName: string; dataDictionaryName?: string }): AcDDStoredProcedure {
     const result = new AcDDStoredProcedure();
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
 
-    if (acDataDictionary.storedProcedures.hasOwnProperty(params.storedProcedureName)) {
-      result.fromJson({ jsonData: acDataDictionary.storedProcedures[params.storedProcedureName] });
+    if (acDataDictionary.storedProcedures.hasOwnProperty(storedProcedureName)) {
+      result.fromJson({ jsonData: acDataDictionary.storedProcedures[storedProcedureName] });
     }
     return result;
   }
 
-  static getDropStoredProcedureStatement(params: { storedProcedureName: string; databaseType?: string }): string {
-    const storedProcedureName = params.storedProcedureName;
+  static getDropStoredProcedureStatement({storedProcedureName,databaseType = AcEnumSqlDatabaseType.UNKNOWN}: { storedProcedureName: string; databaseType?: string }): string {
     return `DROP PROCEDURE IF EXISTS ${storedProcedureName};`;
   }
 
-  fromJson(params: { jsonData: { [key: string]: any } }): this {
-    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: params.jsonData });
+  fromJson({jsonData}: { jsonData: { [key: string]: any } }): this {
+    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });
     return this;
   }
 
-  getCreateStoredProcedureStatement(params?: { databaseType?: string }): string {
+  getCreateStoredProcedureStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
     return this.storedProcedureCode;
   }
 

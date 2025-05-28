@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 declare global {
   interface Date {
     fromFormatted(dateString: string, format?: string): Date;
-    addTime(params: {
+    addTime({years,months,days,hours,minutes,seconds,milliseconds}: {
       years?: number;
       months?: number;
       days?: number;
@@ -13,7 +13,7 @@ declare global {
       seconds?: number;
       milliseconds?: number;
     }): Date;
-    subtractTime(params: {
+    subtractTime({years,months,days,hours,minutes,seconds,milliseconds}: {
       years?: number;
       months?: number;
       days?: number;

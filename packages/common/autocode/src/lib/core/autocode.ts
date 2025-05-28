@@ -70,8 +70,7 @@ export class Autocode {
     return instance.constructor.name;
   }
 
-  static getExceptionMessage(params: { exception: any; stackTrace?: any }): string {
-    const { exception, stackTrace } = params;
+  static getExceptionMessage({exception,stackTrace}: { exception: any; stackTrace?: any }): string {
     if (stackTrace) {
       console.error(this._consoleColors["Red"] + stackTrace.toString() + this._consoleColors["Reset"]);
     }
@@ -79,7 +78,7 @@ export class Autocode {
     return exception.toString();
   }
 
-  static validPrimaryKey(value: any): boolean {
+  static validPrimaryKey({value}:{value: any}): boolean {
     if (value != null && value !== '') {
       if (typeof value === 'string' && value !== '0') return true;
       if (typeof value === 'number' && value !== 0) return true;

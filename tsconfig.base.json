@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@autocode-typescript/autocode": [
-        "packages/common/autocode/src/index.ts"
+        "dist/packages/common/autocode"
       ],
       "@autocode-typescript/autocode-angular": [
         "packages/angular/autocode-angular/src/index.ts"

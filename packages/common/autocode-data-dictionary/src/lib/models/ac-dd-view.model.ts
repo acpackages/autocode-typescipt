@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
@@ -24,8 +25,7 @@ export class AcDDView {
     return instance;
   }
 
-  static getInstance(viewName: string, options?: { dataDictionaryName?: string }): AcDDView {
-    const dataDictionaryName = options?.dataDictionaryName ?? "default";
+  static getInstance({viewName,dataDictionaryName = "default"}:{viewName: string, dataDictionaryName?: string }): AcDDView {
     const result = new AcDDView();
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
 
@@ -51,13 +51,11 @@ export class AcDDView {
     return this;
   }
 
-  static getDropViewStatement(params: { viewName: string; databaseType?: string }): string {
-    const databaseType = params.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
-    return `DROP VIEW IF EXISTS ${params.viewName};`;
+  static getDropViewStatement({viewName,databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { viewName: string; databaseType?: string }): string {
+    return `DROP VIEW IF EXISTS ${viewName};`;
   }
 
-  getCreateViewStatement(options?: { databaseType?: string }): string {
-    const databaseType = options?.databaseType ?? AcEnumSqlDatabaseType.UNKNOWN;
+  getCreateViewStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
     return `CREATE VIEW ${this.viewName} AS ${this.viewQuery};`;
   }
 
