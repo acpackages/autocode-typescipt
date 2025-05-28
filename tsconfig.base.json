@@ -19,52 +19,52 @@
         "dist/packages/common/autocode"
       ],
       "@autocode-typescript/autocode-angular": [
-        "packages/angular/autocode-angular/src/index.ts"
+        "dist/packages/angular/autocode-angular"
       ],
       "@autocode-typescript/autocode-data-dictionary": [
-        "packages/common/autocode-data-dictionary/src/index.ts"
+        "dist/packages/common/autocode-data-dictionary"
       ],
       "@autocode-typescript/autocode-data-dictionary-editor-angular": [
-        "packages/angular/autocode-data-dictionary-editor-angular/src/index.ts"
+        "dist/packages/angular/autocode-data-dictionary-editor-angular"
       ],
       "@autocode-typescript/autocode-datagrid-on-aggrid-angular": [
-        "packages/angular/autocode-datagrid-on-aggrid-angular/src/index.ts"
+        "dist/packages/angular/autocode-datagrid-on-aggrid-angular"
       ],
       "@autocode-typescript/autocode-drag-drop-builder-angular": [
-        "packages/angular/autocode-drag-drop-builder-angular/src/index.ts"
+        "dist/packages/angular/autocode-drag-drop-builder-angular"
       ],
       "@autocode-typescript/autocode-extensions": [
-        "packages/common/autocode-extensions/src/index.ts"
+        "dist/packages/common/autocode-extensions"
       ],
       "@autocode-typescript/autocode-input-audio-recording-angular": [
-        "packages/angular/autocode-input-audio-recording-angular/src/index.ts"
+        "dist/packages/angular/autocode-input-audio-recording-angular"
       ],
       "@autocode-typescript/autocode-input-on-ngselect": [
-        "packages/angular/autocode-input-on-ngselect/src/index.ts"
+        "dist/packages/angular/autocode-input-on-ngselect"
       ],
       "@autocode-typescript/autocode-input-on-quill-angular": [
-        "packages/angular/autocode-input-on-quill-angular/src/index.ts"
+        "dist/packages/angular/autocode-input-on-quill-angular"
       ],
       "@autocode-typescript/autocode-input-on-tinymce-angular": [
-        "packages/angular/autocode-input-on-tinymce-angular/src/index.ts"
+        "dist/packages/angular/autocode-input-on-tinymce-angular"
       ],
       "@autocode-typescript/autocode-node-editor-angular": [
-        "packages/angular/autocode-node-editor-angular/src/index.ts"
+        "dist/packages/angular/autocode-node-editor-angular"
       ],
       "@autocode-typescript/autocode-react": [
-        "packages/react/autocode-react/src/index.ts"
+        "dist/packages/react/autocode-react"
       ],
       "@autocode-typescript/autocode-sql": [
-        "packages/node/autocode-sql/src/index.ts"
+        "dist/packages/node/autocode-sql"
       ],
       "@autocode-typescript/autocode-vue": [
-        "packages/vue/autocode-vue/src/index.ts"
+        "dist/packages/vue/autocode-vue"
       ],
       "@autocode-typescript/autocode-web": [
-        "packages/node/autocode-web/src/index.ts"
+        "dist/packages/node/autocode-web"
       ],
       "@autocode-typescript/autocode-web-on-express": [
-        "packages/node/autocode-web-on-express/src/index.ts"
+        "dist/packages/node/autocode-web-on-express"
       ]
     }
   },

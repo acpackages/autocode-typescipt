@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
-    "declarationDir": "dist",
+    "declarationDir": "../../../dist/packages/common/autocode",
     "rootDir": "src",
     "skipLibCheck": true,
     "composite": false,
