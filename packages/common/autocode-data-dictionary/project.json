@@ -6,12 +6,6 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:custom",
-      "options": {
-        "buildTarget": "autocode-data-dictionary:rollup"
-      }
-    },
-    "rollup": {
       "executor": "nx:run-commands",
       "options": {
         "command": "rollup -c rollup.config.mjs",

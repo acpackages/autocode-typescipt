@@ -2,7 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
-import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcDataDictionary } from "../..";
 
 export class AcDDStoredProcedure {
   static readonly KEY_STORED_PROCEDURE_NAME = "stored_procedure_name";

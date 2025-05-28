@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-prototype-builtins */
@@ -33,7 +34,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return conn;
   }
 
-  async checkDatabaseExist(): Promise<AcResult> {
+  override async checkDatabaseExist(): Promise<AcResult> {
     const result = new AcResult();
     let db: Connection | null = null;
     try {
@@ -50,7 +51,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  async checkTableExist({ tableName }: { tableName: string }): Promise<AcResult> {
+  override async checkTableExist({ tableName }: { tableName: string }): Promise<AcResult> {
     const result = new AcResult();
     let db: Connection | null = null;
     try {
@@ -67,7 +68,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  async createDatabase(): Promise<AcResult> {
+  override async createDatabase(): Promise<AcResult> {
     const result = new AcResult();
     let db: Connection | null = null;
     try {
@@ -83,7 +84,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  async deleteRows({
+  override async deleteRows({
     tableName,
     condition = '',
     parameters = {},
@@ -102,7 +103,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: parameters,
       });
-      const [res] = await db.execute(updatedStatement, Object.values(statementParametersMap));
+      const [res] = await db.execute(updatedStatement, Object.values(statementParametersMap!));
       result.affectedRowsCount = (res as any).affectedRows;
       result.setSuccess();
     } catch (ex) {
@@ -113,7 +114,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  async executeMultipleSqlStatements({
+  override async executeMultipleSqlStatements({
     statements,
     parameters = {},
   }: {
@@ -130,7 +131,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
           statement,
           passedParameters: parameters,
         });
-        await db.execute(updatedStatement, Object.values(statementParametersMap));
+        await db.execute(updatedStatement, Object.values(statementParametersMap!));
       }
       await db.commit();
       result.setSuccess();
@@ -143,7 +144,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  async executeStatement({
+  override async executeStatement({
     statement,
     operation = AcEnumDDRowOperation.UNKNOWN,
     parameters = {},
@@ -160,7 +161,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: parameters,
       });
-      await db.execute(updatedStatement, Object.values(statementParametersMap));
+      await db.execute(updatedStatement, Object.values(statementParametersMap!));
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
@@ -170,7 +171,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  formatRow({
+  override formatRow({
     row,
     columnFormats = {},
   }: {
@@ -204,11 +205,11 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return formattedRow;
   }
 
-  async getConnectionObject({ includeDatabase = true }: { includeDatabase?: boolean }): Promise<any> {
+  override async getConnectionObject({ includeDatabase = true }: { includeDatabase?: boolean }): Promise<any> {
     return includeDatabase ? await this._getConnection() : await this._getConnectionWithoutDatabase();
   }
 
-  async getDatabaseFunctions(): Promise<AcSqlDaoResult> {
+  override async getDatabaseFunctions(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
     let db: Connection | null = null;
     try {
@@ -228,12 +229,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getDatabaseStoredProcedures(): Promise<AcSqlDaoResult> {
+  override async getDatabaseStoredProcedures(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
     let db: Connection | null = null;
     try {
@@ -253,12 +254,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getDatabaseTables(): Promise<AcSqlDaoResult> {
+  override async getDatabaseTables(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
     let db: Connection | null = null;
     try {
@@ -278,12 +279,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getDatabaseTriggers(): Promise<AcSqlDaoResult> {
+  override async getDatabaseTriggers(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
     let db: Connection | null = null;
     try {
@@ -303,12 +304,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getDatabaseViews(): Promise<AcSqlDaoResult> {
+  override async getDatabaseViews(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
     let db: Connection | null = null;
     try {
@@ -328,12 +329,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getRows({ statement, condition = "", parameters = {}, mode = AcEnumDDSelectMode.LIST, columnFormats = {} }: {
+  override async getRows({ statement, condition = "", parameters = {}, mode = AcEnumDDSelectMode.LIST, columnFormats = {} }: {
     statement: string;
     condition?: string;
     parameters?: Record<string, any>;
@@ -355,7 +356,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement: updatedStatement,
         passedParameters: parameters,
       });
-      const [results] = await db.execute(finalStatement, statementParametersMap);
+      const [results]:any = await db.execute(finalStatement, statementParametersMap);
       if (mode === AcEnumDDSelectMode.COUNT) {
         const row = results[0].assoc();
         result.totalRows = row['records_count'];
@@ -368,12 +369,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getTableColumns({ tableName }: { tableName: string }): Promise<AcSqlDaoResult> {
+  override async getTableColumns({ tableName }: { tableName: string }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
     let db: Connection | null = null;
     try {
@@ -405,12 +406,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async getViewColumns({ viewName }: { viewName: string }): Promise<AcSqlDaoResult> {
+  override async getViewColumns({ viewName }: { viewName: string }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
     let db: Connection | null = null;
     try {
@@ -442,13 +443,12 @@ export class AcMysqlDao extends AcBaseSqlDao {
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  override
-  async insertRow({
+  override async insertRow({
     tableName,
     row,
   }: {
@@ -475,15 +475,15 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [insertResult]: any = await db.execute(updatedStatement, updatedParameterValues);
       result.lastInsertedId = parseInt(insertResult.insertId);
       result.setSuccess();
-    } catch (ex) {
+    } catch (ex:any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async insertRows({
+  override async insertRows({
     tableName,
     rows,
   }: {
@@ -517,15 +517,15 @@ export class AcMysqlDao extends AcBaseSqlDao {
       } else {
         result.setSuccess({ value: true, message: 'No rows to insert.' });
       }
-    } catch (ex) {
+    } catch (ex:any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async updateRow({
+  override async updateRow({
     tableName,
     row,
     condition = "",
@@ -551,15 +551,15 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [updateResult]: any = await db.execute(updatedStatement, updatedParameterValues);
       result.affectedRowsCount = parseInt(updateResult.affectedRows);
       result.setSuccess();
-    } catch (ex) {
+    } catch (ex:any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }
 
-  async updateRows({
+  override async updateRows({
     tableName,
     rowsWithConditions,
   }: {
@@ -593,10 +593,10 @@ export class AcMysqlDao extends AcBaseSqlDao {
         }
       }
       result.setSuccess();
-    } catch (ex) {
+    } catch (ex:any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     } finally {
-      await db.end();
+      await db!.end();
     }
     return result;
   }

@@ -2,10 +2,8 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
-import { AcDDTableColumn } from "./ac-dd-table-column.model";
-import { AcDDTableProperty } from "./ac-dd-table-property.model";
-import { AcDataDictionary } from "./ac-data-dictionary.model";
-import { AcEnumDDTableProperty } from "../enums/ac-enum-dd-table-property.enum";
+import { AcDataDictionary, AcDDTableColumn, AcDDTableProperty, AcEnumDDTableProperty } from "../..";
+
 
 export class AcDDTable {
   static readonly KEY_TABLE_COLUMNS = "table_columns";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
 import { AcEventExecutionResult } from "../models/ac-event-execution-result.model";
@@ -6,14 +7,14 @@ import { Autocode } from "./autocode";
 export class AcEvents {
   private _events: Record<string, Record<string, Function>> = {};
 
-  execute({ key, args = [] }: { key: string; args?: any[] }): AcEventExecutionResult {
+  execute({ eventName, args }: { eventName: string; args?: any }): AcEventExecutionResult {
     const result = new AcEventExecutionResult();
 
     try {
       const functionResults: Record<string, AcEventExecutionResult> = {};
 
-      if (this._events[key]) {
-        const functionsToExecute = this._events[key];
+      if (this._events[eventName]) {
+        const functionsToExecute = this._events[eventName];
 
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
           const functionResult = fun(...args);

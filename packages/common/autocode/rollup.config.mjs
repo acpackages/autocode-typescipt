@@ -1,6 +1,8 @@
 import typescript from 'rollup-plugin-typescript2';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import globals from 'rollup-plugin-node-globals';
+import builtins from 'rollup-plugin-node-builtins';
 import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
@@ -13,12 +15,12 @@ export default {
   input: path.resolve(process.cwd(), 'src/index.ts'),
   output: [
     {
-      file: path.join(outputDir, 'index.cjs.js'),
+      file: path.join(outputDir, 'index.cjs'),
       format: 'cjs',
       sourcemap: true
     },
     {
-      file: path.join(outputDir, 'index.esm.js'),
+      file: path.join(outputDir, 'index.mjs'),
       format: 'esm',
       sourcemap: true
     },
@@ -31,14 +33,19 @@ export default {
   ],
   external: [
     ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {})
+    ...Object.keys(pkg.peerDependencies || {}),
+    'fs','fs/promises', 'path'
   ],
   plugins: [
     resolve({
-      extensions: ['.js', '.ts']
+      browser: true,
+      preferBuiltins: false,
+      extensions: ['.js', '.ts'],
     }),
     commonjs(),
     json(),
+    globals(),
+    builtins(),
     typescript({
       tsconfig: path.resolve(process.cwd(), 'tsconfig.lib.json'),
       clean: true,
@@ -50,6 +57,7 @@ export default {
         { src: 'package.json', dest: outputDir },
         { src: 'README.md', dest: outputDir }
       ]
-    })
+    }),
+
   ]
 };

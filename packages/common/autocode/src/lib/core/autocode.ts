@@ -1,4 +1,3 @@
-import { randomBytes } from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
 
 export class Autocode {
@@ -40,7 +39,7 @@ export class Autocode {
   static uniqueId(): string {
     const timestamp = Math.floor(Date.now() / 1000);
     const timestampHex = timestamp.toString(16);
-    const randomPart = this._generateRandomHex(16);
+    const randomPart = this.uuid();
     let id = `ac_${this.generateRandomString()}${timestampHex}${randomPart}`;
 
     const tsKey = timestamp.toString();
@@ -49,7 +48,7 @@ export class Autocode {
     }
 
     while (this._uniqueIds[tsKey].has(id)) {
-      const newRandom = this._generateRandomHex(16);
+      const newRandom = this.uuid();
       id = `ac_${this.generateRandomString()}${timestampHex}${newRandom}`;
     }
     this._uniqueIds[tsKey].add(id);
@@ -94,8 +93,4 @@ export class Autocode {
     return uuidv4();
   }
 
-  private static _generateRandomHex(length: number): string {
-    const bytes = randomBytes(length / 2);
-    return bytes.toString('hex');
-  }
 }

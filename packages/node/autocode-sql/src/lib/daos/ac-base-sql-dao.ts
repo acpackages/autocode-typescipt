@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-prototype-builtins */
@@ -217,23 +218,23 @@ export class AcBaseSqlDao {
           if (Array.isArray(value)) {
             const replacement = new Array(value.length).fill('?').join(',');
             statement = statement.replace(new RegExp(this._escapeRegExp(key)), replacement);
-            statementParametersList.splice(parameterIndex, 0, ...value);
+            statementParametersList!.splice(parameterIndex, 0, ...value);
           } else {
             statement = statement.replace(new RegExp(this._escapeRegExp(key)), '?');
-            statementParametersList.splice(parameterIndex, 0, value);
+            statementParametersList!.splice(parameterIndex, 0, value);
           }
           this.logger.log(`Statement : ${statement}`);
           this.logger.log(`Values After: ${JSON.stringify(statementParametersList)}`);
         }
       } else {
-        let index = Object.keys(statementParametersMap).length;
+        let index = Object.keys(statementParametersMap!).length;
         let parameterKey = `parameter${index}`;
-        while (statementParametersMap.hasOwnProperty(parameterKey)) {
+        while (statementParametersMap!.hasOwnProperty(parameterKey)) {
           index++;
           parameterKey = `parameter${index}`;
         }
         statement = statement.replace(key, `:${parameterKey}`);
-        statementParametersMap[parameterKey] = value;
+        statementParametersMap![parameterKey] = value;
       }
     }
 

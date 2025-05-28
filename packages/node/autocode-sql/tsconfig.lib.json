@@ -1,9 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
+    "target": "ES2020",
+    "module": "ESNext",
     "declaration": true,
-    "types": ["node"]
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "declarationDir": "../../../dist/packages/node/autocode-sql",
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "composite": false,
+    "sourceMap": true,
   },
   "include": ["src/**/*.ts"],
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]

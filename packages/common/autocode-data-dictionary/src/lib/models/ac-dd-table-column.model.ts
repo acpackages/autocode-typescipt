@@ -2,12 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
-import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
-import { AcDDTable } from "./ac-dd-table.model";
-import { AcDataDictionary } from "./ac-data-dictionary.model";
-import { AcEnumDDColumnProperty } from "../enums/ac-enum-dd-column-property.enum";
-import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
-import { AcDDRelationship } from "./ac-dd-relationship.model";
+import { AcDataDictionary, AcDDRelationship, AcDDTable, AcDDTableColumnProperty, AcEnumDDColumnProperty, AcEnumDDColumnType } from "../..";
 
 export class AcDDTableColumn {
   static readonly KEY_COLUMN_NAME = "column_name";

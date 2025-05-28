@@ -1,4 +1,5 @@
-import { Autocode } from "./autocode";
+import { Autocode } from "../..";
+
 
 export class AcBackgroundFile {
   private filePath: string;

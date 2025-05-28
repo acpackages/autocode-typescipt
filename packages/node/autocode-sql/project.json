@@ -6,14 +6,10 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
       "options": {
-        "outputPath": "dist/packages/node/autocode-sql",
-        "tsConfig": "packages/node/autocode-sql/tsconfig.lib.json",
-        "packageJson": "packages/node/autocode-sql/package.json",
-        "main": "packages/node/autocode-sql/src/index.ts",
-        "assets": ["packages/node/autocode-sql/*.md"]
+        "command": "rollup -c rollup.config.mjs",
+        "cwd": "packages/node/autocode-sql"
       }
     }
   }

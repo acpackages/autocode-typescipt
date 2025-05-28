@@ -2,8 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
-import { AcDDViewColumn } from "./ac-dd-view-column.model";
-import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcDataDictionary, AcDDViewColumn } from "../..";
 
 export class AcDDView {
   static readonly KEY_VIEW_NAME = "view_name";

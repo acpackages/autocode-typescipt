@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcEnumDDColumnRelationType } from "../enums/ac-enum-dd-column-relation-type.enum";
-import { AcDDFunction } from "./ac-dd-function.model";
-import { AcDDRelationship } from "./ac-dd-relationship.model";
-import { AcDDStoredProcedure } from "./ac-dd-stored-procedure.model";
-import { AcDDTableColumn } from "./ac-dd-table-column.model";
-import { AcDDTable } from "./ac-dd-table.model";
-import { AcDDTrigger } from "./ac-dd-trigger.model";
-import { AcDDView } from "./ac-dd-view.model";
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-typescript/autocode";
+import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcEnumDDColumnRelationType } from "../..";
 
 export class AcDataDictionary {
   static readonly KEY_DATA_DICTIONARIES = "data_dictionaries";

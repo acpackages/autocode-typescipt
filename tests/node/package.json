@@ -1,0 +1,10 @@
+{
+  "name": "test-node",
+  "version": "0.0.1",
+  "dependencies": {
+    "@autocode-typescript/autocode-data-dictionary": "0.0.1",
+    "@autocode-typescript/autocode-sql": "0.0.1"
+  },
+  "main": "./main.js",
+  "type": "module"
+}

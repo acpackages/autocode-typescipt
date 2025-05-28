@@ -13,12 +13,12 @@ export default {
   input: path.resolve(process.cwd(), 'src/index.ts'),
   output: [
     {
-      file: path.join(outputDir, 'index.cjs.js'),
+      file: path.join(outputDir, 'index.cjs'),
       format: 'cjs',
       sourcemap: true
     },
     {
-      file: path.join(outputDir, 'index.esm.js'),
+      file: path.join(outputDir, 'index.mjs'),
       format: 'esm',
       sourcemap: true
     },

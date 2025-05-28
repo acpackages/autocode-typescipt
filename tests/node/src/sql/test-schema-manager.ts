@@ -4,6 +4,7 @@ import { AcDataDictionary }  from '@autocode-typescript/autocode-data-dictionary
 import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager }  from '@autocode-typescript/autocode-sql';
 import { AcEnumSqlDatabaseType } from '@autocode-typescript/autocode';
 export async function testSchemaManager(): Promise<void> {
+  console.log("Testing Schema Manager");
   const dataDictionaryFilePath = path.resolve('assets/data_dictionary.json');
 
   if (fs.existsSync(dataDictionaryFilePath)) {

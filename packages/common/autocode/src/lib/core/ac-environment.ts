@@ -1,4 +1,5 @@
-import { AcEnumEnvironment } from "../enums/ac-enum-environment.enum";
+import { AcEnumEnvironment } from "../..";
+
 
 export class AcEnvironment {
   static environment: AcEnumEnvironment = AcEnumEnvironment.DEVELOPMENT;

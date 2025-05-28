@@ -1,0 +1,22 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<div class="ac-pagination-container">
+  <div class="ac-pagination-results-info">
+    {{resultStartNumber}} to {{resultEndNumber}} of {{totalResults}},
+    Showing
+    <select class="ac-pagination-per-page-select" #perPageSelect [(ngModel)]="displayPerPage" (change)="handleDisplayPerPageChange(perPageSelect.value)">
+      <option *ngFor="let option of perPageOptions" [value]="option">{{option}}</option>
+    </select> per page
+  </div>
+  <div class="ac-pagination-page-buttons-container">
+      <!-- <div>Goto Page <input type="number" class="ac-pagination-goto-page-input"> &nbsp;</div> -->
+      <ul class="ac-pagination-buttons-list">
+        <li [innerHTML]="previousHtml" (click)="handlePreviousClick()" [attr.disabled]="activePage===1"></li>
+        <li [class]="page.isActive?'ac-page-active':''" *ngFor="let page of pageButtons" (click)="handlePageClick(page)">
+          {{ page.pageLabel }}
+        </li>
+        <li [innerHTML]="nextHtml" (click)="handleNextClick()"  [attr.disabled]="activePage<totalPages"></li>
+      </ul>
+  </div>
+</div>
+

@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
@@ -16,55 +17,55 @@
     "baseUrl": ".",
     "paths": {
       "@autocode-typescript/autocode": [
-        "dist/packages/common/autocode"
+        "packages/common/autocode/index.ts"
       ],
       "@autocode-typescript/autocode-angular": [
-        "dist/packages/angular/autocode-angular"
+        "packages/angular/autocode-angular/index.ts"
       ],
       "@autocode-typescript/autocode-data-dictionary": [
-        "dist/packages/common/autocode-data-dictionary"
+        "packages/common/autocode-data-dictionary/index.ts"
       ],
       "@autocode-typescript/autocode-data-dictionary-editor-angular": [
-        "dist/packages/angular/autocode-data-dictionary-editor-angular"
+        "packages/angular/autocode-data-dictionary-editor-angular/index.ts"
       ],
       "@autocode-typescript/autocode-datagrid-on-aggrid-angular": [
-        "dist/packages/angular/autocode-datagrid-on-aggrid-angular"
+        "packages/angular/autocode-datagrid-on-aggrid-angular/index.ts"
       ],
       "@autocode-typescript/autocode-drag-drop-builder-angular": [
-        "dist/packages/angular/autocode-drag-drop-builder-angular"
+        "packages/angular/autocode-drag-drop-builder-angular/index.ts"
       ],
       "@autocode-typescript/autocode-extensions": [
-        "dist/packages/common/autocode-extensions"
+        "packages/common/autocode-extensions/index.ts"
       ],
       "@autocode-typescript/autocode-input-audio-recording-angular": [
-        "dist/packages/angular/autocode-input-audio-recording-angular"
+        "packages/angular/autocode-input-audio-recording-angular/index.ts"
       ],
       "@autocode-typescript/autocode-input-on-ngselect": [
-        "dist/packages/angular/autocode-input-on-ngselect"
+        "packages/angular/autocode-input-on-ngselect/index.ts"
       ],
       "@autocode-typescript/autocode-input-on-quill-angular": [
-        "dist/packages/angular/autocode-input-on-quill-angular"
+        "packages/angular/autocode-input-on-quill-angular/index.ts"
       ],
       "@autocode-typescript/autocode-input-on-tinymce-angular": [
-        "dist/packages/angular/autocode-input-on-tinymce-angular"
+        "packages/angular/autocode-input-on-tinymce-angular/index.ts"
       ],
       "@autocode-typescript/autocode-node-editor-angular": [
-        "dist/packages/angular/autocode-node-editor-angular"
+        "packages/angular/autocode-node-editor-angular/index.ts"
       ],
       "@autocode-typescript/autocode-react": [
-        "dist/packages/react/autocode-react"
+        "packages/react/autocode-react/index.ts"
       ],
       "@autocode-typescript/autocode-sql": [
-        "dist/packages/node/autocode-sql"
+        "packages/node/autocode-sql/index.ts"
       ],
       "@autocode-typescript/autocode-vue": [
-        "dist/packages/vue/autocode-vue"
+        "packages/vue/autocode-vue/index.ts"
       ],
       "@autocode-typescript/autocode-web": [
-        "dist/packages/node/autocode-web"
+        "packages/node/autocode-web/index.ts"
       ],
       "@autocode-typescript/autocode-web-on-express": [
-        "dist/packages/node/autocode-web-on-express"
+        "packages/node/autocode-web-on-express/index.ts"
       ]
     }
   },

@@ -1,0 +1,21 @@
+<td #td [class]="class" [style]="column.style" (dblclick)="handleDblClick()" (click)="handleClick()" (focus)="handleFocus()" (blur)="handleBlur()">
+  <ng-container *ngIf="column.template; else defaultOutput">
+    <ng-container *ngTemplateOutlet="column.template; context: { column: column, rowData:rowData, isEditing:isEditing }">
+    </ng-container>
+  </ng-container>
+  <ng-template #defaultOutput>
+    <ng-container *ngIf="isEditing;else notEditingTemplate">
+      <ng-container *ngIf="isEditing">
+        <ng-container *ngTemplateOutlet="editingTemplate;">
+    </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+  <ng-template #notEditingTemplate>
+    <div *ngIf="!isEditing">{{rowData[column.field!]}}</div>
+  </ng-template>
+  <ng-template #editingTemplate>
+    <ac-input class="ac-datagrid-input" [autoFocus]="true" [record]="rowData" [field]="column.field!"
+      [value]="rowData[column.field!]" (onChange)="handleChange()"/>
+  </ng-template>
+</td>

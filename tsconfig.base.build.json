@@ -1,0 +1,73 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@autocode-typescript/autocode": [
+        "dist/packages/common/autocode"
+      ],
+      "@autocode-typescript/autocode-angular": [
+        "dist/packages/angular/autocode-angular"
+      ],
+      "@autocode-typescript/autocode-data-dictionary": [
+        "dist/packages/common/autocode-data-dictionary"
+      ],
+      "@autocode-typescript/autocode-data-dictionary-editor-angular": [
+        "dist/packages/angular/autocode-data-dictionary-editor-angular"
+      ],
+      "@autocode-typescript/autocode-datagrid-on-aggrid-angular": [
+        "dist/packages/angular/autocode-datagrid-on-aggrid-angular"
+      ],
+      "@autocode-typescript/autocode-drag-drop-builder-angular": [
+        "dist/packages/angular/autocode-drag-drop-builder-angular"
+      ],
+      "@autocode-typescript/autocode-extensions": [
+        "dist/packages/common/autocode-extensions"
+      ],
+      "@autocode-typescript/autocode-input-audio-recording-angular": [
+        "dist/packages/angular/autocode-input-audio-recording-angular"
+      ],
+      "@autocode-typescript/autocode-input-on-ngselect": [
+        "dist/packages/angular/autocode-input-on-ngselect"
+      ],
+      "@autocode-typescript/autocode-input-on-quill-angular": [
+        "dist/packages/angular/autocode-input-on-quill-angular"
+      ],
+      "@autocode-typescript/autocode-input-on-tinymce-angular": [
+        "dist/packages/angular/autocode-input-on-tinymce-angular"
+      ],
+      "@autocode-typescript/autocode-node-editor-angular": [
+        "dist/packages/angular/autocode-node-editor-angular"
+      ],
+      "@autocode-typescript/autocode-react": [
+        "dist/packages/react/autocode-react"
+      ],
+      "@autocode-typescript/autocode-sql": [
+        "dist/packages/node/autocode-sql"
+      ],
+      "@autocode-typescript/autocode-vue": [
+        "dist/packages/vue/autocode-vue"
+      ],
+      "@autocode-typescript/autocode-web": [
+        "dist/packages/node/autocode-web"
+      ],
+      "@autocode-typescript/autocode-web-on-express": [
+        "dist/packages/node/autocode-web-on-express"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

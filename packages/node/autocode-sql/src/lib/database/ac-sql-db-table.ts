@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-prototype-builtins */
 import { AcDataDictionary, AcDDSelectStatement, AcDDTable, AcEnumDDColumnFormat, AcEnumDDColumnType, AcEnumDDRowEvent, AcEnumDDRowOperation, AcEnumDDSelectMode } from "@autocode-typescript/autocode-data-dictionary";
 import { AcSqlDbTableColumn } from "./ac-sql-db-table-column";
@@ -119,7 +121,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
           if (this.databaseType === AcEnumSqlDatabaseType.MYSQL) {
             const meta = autoNumberColumns[name];
             columnGetRows =
-              `SELECT CONCAT('{"${name}':',IF(MAX(CAST(SUBSTRING(${name}, ${meta.prefix_length} + 1) AS UNSIGNED)) IS NULL,0,MAX(CAST(SUBSTRING(${name}, ${meta.prefix_length} + 1) AS UNSIGNED))),'}') AS max_json FROM ${this.tableName} WHERE ${name} LIKE '${meta.prefix}%' ${checkCondition}`;
+              `SELECT CONCAT('{"${name}':',IF(MAX(CAST(SUBSTRING(${name}, ${meta["prefix_length"]} + 1) AS UNSIGNED)) IS NULL,0,MAX(CAST(SUBSTRING(${name}, ${meta["prefix_length"]} + 1) AS UNSIGNED))),'}') AS max_json FROM ${this.tableName} WHERE ${name} LIKE '${meta["prefix"]}%' ${checkCondition}`;
           }
           if (columnGetRows) {
             getRowsStatements.push(columnGetRows);
@@ -138,7 +140,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               let lastRecordId = maxJson[name] ?? 0;
               lastRecordId++;
               const meta = autoNumberColumns[name];
-              const autoNumberValue = meta.prefix + this.updateValueLengthWithChars({ value: lastRecordId.toString(), char: "0", length: meta.length });
+              const autoNumberValue = meta["prefix"] + this.updateValueLengthWithChars({ value: lastRecordId.toString(), char: "0", length: meta["length"] });
               row[name] = autoNumberValue;
             }
           } else {
@@ -520,7 +522,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
   getColumnDefinitionForStatement(columnName: string): string {
     let result = '';
-    const acDDTableColumn = this.acDDTable.getColumn(columnName)!;
+    const acDDTableColumn = this.acDDTable.getColumn({columnName})!;
     let columnType = acDDTableColumn.columnType;
     const defaultValue = acDDTableColumn.getDefaultValue();
     let size = acDDTableColumn.getSize();
@@ -1219,7 +1221,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       for (const acRelationship of tableRelationships) {
         if (continueOperation) {
           if (acRelationship.destinationTable === this.tableName) {
-            const column = this.acDDTable.getColumn(acRelationship.destinationColumn);
+            const column = this.acDDTable.getColumn({columnName:acRelationship.destinationColumn});
             if (column && column.isSetValuesNullBeforeDelete()) {
               const setNullStatement = `UPDATE ${acRelationship.sourceTable} SET ${acRelationship.sourceColumn} = NULL WHERE ${acRelationship.sourceColumn} IN (SELECT ${acRelationship.destinationColumn} FROM ${this.tableName} WHERE ${condition})`;
               this.logger.log(["Executing set null statement", setNullStatement]);

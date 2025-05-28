@@ -754,7 +754,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           logger: this.logger,
         });
       }
-    } catch (ex) {
+    } catch (ex:any) {
       // Assuming this.logger.error accepts an error and stack trace
       result.setException({ exception: ex, stackTrace: ex.stack, logger: this.logger });
     }
@@ -798,7 +798,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
       } else {
         result.setSuccess({ message: 'Schema data dictionary already initialized', logger: this.logger });
       }
-    } catch (ex) {
+    } catch (ex:any) {
       result.setException({ exception: ex, stackTrace: ex.stack, logger: this.logger });
     }
     return result;

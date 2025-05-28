@@ -3,13 +3,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-typescript/autocode";
-import { AcDDConditionGroup } from "./ac-dd-condition-group.model";
-import { AcEnumDDLogicalOperator } from "../enums/ac-enum-dd-logical-operator.enum";
-import { AcDataDictionary } from "./ac-data-dictionary.model";
-import { AcDDCondition } from "./ac-dd-condition.model";
-import { AcEnumDDConditionOperator } from "../enums/ac-enum-dd-condition-operator.enum";
-import { AcDDTableColumn } from "./ac-dd-table-column.model";
-import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
+import { AcDataDictionary, AcDDCondition, AcDDConditionGroup, AcDDTableColumn, AcEnumDDColumnType, AcEnumDDConditionOperator, AcEnumDDLogicalOperator } from "../..";
 
 export class AcDDSelectStatement {
   static readonly KEY_CONDITION = "condition";
