@@ -15,7 +15,7 @@
     <div *ngIf="!isEditing">{{rowData[column.field!]}}</div>
   </ng-template>
   <ng-template #editingTemplate>
-    <ac-input class="ac-datagrid-input" [autoFocus]="true" [record]="rowData" [field]="column.field!"
+    <ac-input class="ac-datagrid-input" [autoFocus]="true" [(ngModel)]="rowData[column.field!]"
       [value]="rowData[column.field!]" (onChange)="handleChange()"/>
   </ng-template>
 </td>

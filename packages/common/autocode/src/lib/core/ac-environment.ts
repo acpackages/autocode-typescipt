@@ -1,4 +1,4 @@
-import { AcEnumEnvironment } from "../..";
+import { AcEnumEnvironment } from "../enums/ac-enum-environment.enum";
 
 
 export class AcEnvironment {

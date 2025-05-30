@@ -30,10 +30,10 @@ export class TestFormBasicComponent {
     ],
   };
   maritialStatuses:string[] = ["Single","Engaged","Married","Divorced","Widowed","Other"];
-  mealPreferences:string[] = ["Chinese","Indian","Italian","Pujabi","South Indian","Rajasthani","Gujarati"];
+  mealPreferences:string[] = ["Chinese","Indian","Italian","Punjabi","South Indian","Rajasthani","Gujarati"];
   constructor() {
     setTimeout(() => {
-      // this.setRecordValues();
+      this.setRecordValues();
     }, 3500);
   }
 
@@ -43,22 +43,23 @@ export class TestFormBasicComponent {
 
   setRecordValues() {
     this.record = {
-      "first_name": "John",
-      "middle_name": "Parser",
-      "last_name": "Maclain",
-      "gender": "MALE",
+      "first_name": "Jenny",
+      "middle_name": "Teresa",
+      "last_name": "Parker",
+      "gender": "FEMALE",
       "about": "Background Artist in one of most famous hollywood movie that majority of people does not know.",
+      "meal_preferences":["Punjabi","South Indian"],
       "phone": [
-        { "label": "Home", "value": "026813549888" },
-        { "label": "Mobile", "value": "9173314413" }
+        { "label": "Mobile", "value": "9173314413" },
+        { "label": "Home", "value": "026813549888" }
       ],
       "email": [
-        { "label": "Personal", "value": "personal@email.com" },
-        { "label": "Office", "value": "office@email.com" }
+        { "label": "Office", "value": "office@email.com" },
+        { "label": "Personal", "value": "personal@email.com" }
       ],
       "website": [
-        { "label": "Personal", "value": "personalwebsite.com" },
-        { "label": "Corporate", "value": "corporatewebsite.com" }
+        { "label": "Corporate", "value": "corporatewebsite.com" },
+        { "label": "Personal", "value": "personalwebsite.com" }
       ],
     };
     console.log("Record Set");

@@ -5,13 +5,13 @@
         <ng-template #template let-item let-index="index">
           <tr>
             <td>
-              <ac-select field="field" [record]="item" [options]="filterFields" />
+              <ac-select [(ngModel)]="item['field']" [options]="filterFields" />
             </td>
             <td>
-              <ac-select field="operator" [record]="item" [options]="comparisonOperators"/>
+              <ac-select [(ngModel)]="item['operator']" [options]="comparisonOperators"/>
             </td>
             <td >
-              <ac-input field="value" [record]="item" *ngIf="!comparisonOperatorsWithoutValues.includes(item['operator'])"/>
+              <ac-input [(ngModel)]="item['value']" *ngIf="!comparisonOperatorsWithoutValues.includes(item['operator'])"/>
             </td>
             <td><button class="btn btn-danger py-1" type="button" (click)="filtersArray.removeItem(item)">Delete</button></td>
           </tr>

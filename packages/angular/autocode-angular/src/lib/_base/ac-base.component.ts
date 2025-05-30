@@ -14,9 +14,12 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
   elementChildren:HTMLElement[] = [];
   events:AcEvents = new AcEvents();
   logger:AcLogger = new AcLogger();
+  instanceInitialized:boolean = false;
+  instanceViewInitialized:boolean = false;
 
   constructor(protected elementRef:ElementRef,protected autocodeService:AutocodeService){
   }
+
 
   ngAfterViewInit(){
     if(this.commentElementTag){
@@ -27,6 +30,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
     };
     this.onViewInit.emit(event);
     this.events.execute({eventName:"viewInit",args:event});
+    this.instanceViewInitialized = true;
   }
 
   ngOnDestroy(){
@@ -46,6 +50,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
     };
     this.onInit.emit(event);
     this.events.execute({eventName:"init",args:event});
+    this.instanceInitialized = true;
   }
 
   commentTag(){

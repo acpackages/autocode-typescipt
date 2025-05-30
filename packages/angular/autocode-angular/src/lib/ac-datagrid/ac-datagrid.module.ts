@@ -14,6 +14,7 @@ import { AcDimensionChangeListenerDirective } from '../directives/ac-dimension-c
 import { AcResizableElementDirective } from '../directives/ac-resizable-element.directive';
 import { AcDatagridColumnEditTemplateDirective } from './directives/ac-datagrid-column-edit-template.directive';
 import { AcDatagridColumnRenderTemplateDirective } from './directives/ac-datagrid-column-render-template.directive';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AcDatagridColumnRenderTemplateDirective } from './directives/ac-datagri
     AcInputsModule,
     AcRuntimeModule,
     AcSortingModule,
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class AcDatagridModule { }

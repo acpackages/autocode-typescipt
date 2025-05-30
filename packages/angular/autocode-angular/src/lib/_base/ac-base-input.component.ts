@@ -5,7 +5,7 @@
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { AutocodeService } from '../services/autocode.service';
 import { IAcInputValidation } from '../ac-inputs/interfaces/ac-input-validations.interface';
 import { ControlValueAccessor, FormControl, Validator } from '@angular/forms';
@@ -17,16 +17,14 @@ import { AcBase } from './ac-base.component';
   template: '<span></span>',
   standalone: false
 })
-export class AcBaseInput extends AcBase implements OnChanges, ControlValueAccessor, Validator {
+export class AcBaseInput extends AcBase implements ControlValueAccessor, Validator {
   @Input() autoFocus: boolean = false;
   @Input() class: string = "";
   @Input() defaultValue: any;
   @Input() disabled: boolean = false;
-  @Input() field: string = "";
   @Input() name: string = "";
   @Input() placeholder: string = "";
   @Input() readonly: boolean = false;
-  @Input() record: any = {};
   @Input() reflectingRecords: any = {};
   @Input() validation: IAcInputValidation = {};
   @Input() style: string = "";
@@ -35,6 +33,7 @@ export class AcBaseInput extends AcBase implements OnChanges, ControlValueAccess
 
   @Input() set value(value: any) {
     const object = this; object.setValue(value);
+    this.valueChange.emit(this._value);
   }
 
   @Output() onBlur: EventEmitter<IAcInputEvent> = new EventEmitter();
@@ -46,6 +45,7 @@ export class AcBaseInput extends AcBase implements OnChanges, ControlValueAccess
   @Output() onKeyDown: EventEmitter<IAcInputEvent> = new EventEmitter();
   @Output() onKeyUp: EventEmitter<IAcInputEvent> = new EventEmitter();
   @Output() override onViewInit: EventEmitter<IAcInputEvent> = new EventEmitter();
+  @Output() valueChange = new EventEmitter<any>();
 
   override commentElementTag: boolean = true;
   hasValidationErrors: boolean = false;
@@ -65,12 +65,6 @@ export class AcBaseInput extends AcBase implements OnChanges, ControlValueAccess
       }, 10);
     }
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes["record"]) {
-      this.setValueFromRecord();
-    }
   }
 
   handleBlur(event: any) {
@@ -130,16 +124,7 @@ export class AcBaseInput extends AcBase implements OnChanges, ControlValueAccess
 
   setValue(value: any) {
     this._value = value;
-    if (this.record) {
-      this.record[this.field] = value;
-    }
     this.setFormControlValue(value);
-  }
-
-  setValueFromRecord() {
-    if (this.record) {
-      this.value = this.record[this.field];
-    }
   }
 
   validateRequired() {

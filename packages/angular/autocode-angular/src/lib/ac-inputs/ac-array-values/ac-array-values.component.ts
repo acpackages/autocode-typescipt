@@ -103,16 +103,12 @@ export class AcArrayValuesComponent extends AcBaseInput{
     this.items.splice(index,1);
   }
 
-  override setValueFromRecord(): void {
-    if(this.record && this.field){
-      this.clearItems();
-      this.appendItems(this.record[this.field]);
+  override setValue(value: any): void {
+    if(value==undefined){
+      value = [];
     }
+    this._value = value;
+    this.items = value;
   }
 
-  updateValueInRecord(){
-    if(this.record && this.field){
-      this.record[this.field] = this.items;
-    }
-  }
 }

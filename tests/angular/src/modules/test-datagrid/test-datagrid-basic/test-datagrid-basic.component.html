@@ -3,8 +3,7 @@ DataGrid
   <ac-datagrid-column field="id">
     <ng-template let-rowData="rowData" let-column="column" let-isEditing="isEditing">
       <ng-container *ngIf="isEditing">
-        <ac-input style="width:100%;height:100%;" *ngIf="isEditing" [autoFocus]="true" [record]="rowData" [field]="column.field"
-      [value]="rowData[column.field]" />
+        <ac-input style="width:100%;height:100%;" *ngIf="isEditing" [autoFocus]="true" [(value)]="rowData[column.field]" />
       </ng-container>
       <ng-container *ngIf="!isEditing">
         Id : <b>{{rowData[column.field]}}</b>

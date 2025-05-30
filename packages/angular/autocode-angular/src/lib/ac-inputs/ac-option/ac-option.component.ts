@@ -7,38 +7,35 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AcBaseInput } from '../../_base/ac-base-input.component';
 import { AcEnumOptionInputType } from '../enums/ac-input-types.enum';
 import { Autocode } from '@autocode-typescript/autocode';
+import '@autocode-typescript/autocode-extensions';
 
 @Component({
-    selector: 'ac-option',
-    templateUrl: './ac-option.component.html',
-    styleUrl: './ac-option.component.css',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => AcOptionComponent),
-            multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => AcOptionComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: 'ac-option',
+  templateUrl: './ac-option.component.html',
+  styleUrl: './ac-option.component.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AcOptionComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => AcOptionComponent),
+      multi: true
+    }
+  ],
+  standalone: false
 })
-export class AcOptionComponent extends AcBaseInput implements OnChanges{
+export class AcOptionComponent extends AcBaseInput implements OnChanges {
   @ViewChild("input") input!: ElementRef;
-  @Input() checked:boolean = false;
-  @Input() labelElement:Element|undefined;
-  @Input() optionValue:any;
-  @Input() optionValueUnchecked:any;
-  @Input() type:AcEnumOptionInputType|any = AcEnumOptionInputType.checkbox;
-  @Input() isArray:boolean|undefined;
+  @Input() checked: boolean = false;
+  @Input() labelElement: Element | undefined;
+  @Input() optionValue: any;
+  @Input() optionValueUnchecked: any;
+  @Input() type: AcEnumOptionInputType | any = AcEnumOptionInputType.checkbox;
+  @Input() isArray: boolean | undefined;
   AcEnumOptionInputType = AcEnumOptionInputType;
-
-  override ngOnChanges(changes:SimpleChanges): void {
-    super.ngOnChanges(changes);
-  }
 
   override ngOnInit(): void {
     if (this.isArray == undefined || this.isArray == null) {
@@ -49,94 +46,97 @@ export class AcOptionComponent extends AcBaseInput implements OnChanges{
         this.isArray = false;
       }
     }
+    if (this.isArray == undefined) {
+      this.isArray = false;
+    }
     super.ngOnInit();
+    this.setIsChecked();
   }
 
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    if(this.labelElement){
-      this.labelElement.addEventListener("click",()=>{
+    if (this.labelElement) {
+      this.labelElement.addEventListener("click", () => {
         this.input.nativeElement.click();
       })
     }
+    this.setIsChecked();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 
   override handleChange(event: any) {
     const object = this;
-    object.checked = event.target.checked;
-    this.setValueToRecord();
+    this.updateCheckedValue(event.target.checked);
     super.handleChange(event);
   }
 
 
-  setValueToRecord() {
+  updateCheckedValue(isChecked: boolean, triggerEvent: boolean = true) {
     const object = this;
-    if (Autocode.validValue(object.field)) {
-      if (object.field != "") {
-        if (!Autocode.validValue(object.record[object.field])) {
-          if (object.isArray) {
-            object.record[object.field] = [];
-          }
+    if (object.isArray) {
+      if (!Array.isArray(object.value)) {
+        this._value = [];
+      }
+      if (isChecked) {
+        this._value.remove(object.optionValueUnchecked);
+        if (!object._value.includes(object.optionValue)) {
+          object._value.push(object.optionValue);
         }
-        if (object.isArray) {
-          if (!Array.isArray(object.record[object.field])) {
-            object.record[object.field] = [];
-          }
-          if (object.checked) {
-            object.record[object.field] = object.record[object.field].remove(object.optionValueUnchecked);
-            if (!object.record[object.field].includes(object.optionValue)) {
-              object.record[object.field].push(object.optionValue);
-            }
-          }
-          else {
-            console.log(object.record[object.field]);
-            object.record[object.field] = object.record[object.field].remove(object.optionValue);
-            if (Autocode.validValue(object.optionValueUnchecked)) {
-              if (!object.record[object.field].includes(object.optionValueUnchecked)) {
-                object.record[object.field].push(object.optionValueUnchecked);
-              }
-            }
-          }
-        }
-        else {
-          if (object.checked) {
-            object.record[object.field] = object.optionValue;
-          }
-          else {
-            object.record[object.field] = object.optionValueUnchecked;
+      }
+      else {
+        this._value.remove(object.optionValue);
+        console.log("Object value unchecked : " + this.optionValueUnchecked);
+        if (Autocode.validValue(object.optionValueUnchecked)) {
+          console.log("Object value when unchecked : " + this.optionValueUnchecked);
+          if (!object._value.includes(object.optionValueUnchecked)) {
+            object._value.push(object.optionValueUnchecked);
           }
         }
       }
+    }
+    else {
+      if (isChecked) {
+        object._value = object.optionValue;
+      }
+      else {
+        object._value = object.optionValueUnchecked;
+      }
+    }
+    if (triggerEvent) {
+      this.value = this._value;
     }
   }
 
   override setValue(value: any): void {
-    this.setValueFromRecord();
+    const object = this;
+    super.setValue(value);
+    object.setIsChecked();
+    if(this.instanceViewInitialized){
+      this.updateCheckedValue(this.checked, false);
+    }
+    console.log(this);
   }
 
-  override setValueFromRecord(): void {
+  setIsChecked(): void {
     const object = this;
-    if ( Autocode.validValue(object.optionValue) && Autocode.validValue(object.record) && Autocode.validValue(object.field) && object.field != '' ) {
-      if (object.isArray) {
-        if (Array.isArray(object.record[object.field]) && object.record[object.field].includes(object.optionValue)) {
-          object.checked = true;
-        }
-        else {
-          object.checked = false;
-        }
+    if (object.isArray) {
+      if (Array.isArray(object.value) && object.value.includes(object.optionValue)) {
+        object.checked = true;
       }
       else {
-        if (object.record[object.field] == object.optionValue) {
-          object.checked = true;
-        }
-        else {
-          object.checked = false;
-        }
+        object.checked = false;
       }
     }
-    setTimeout(() => {
-      this.setValueFromRecord();
-    }, 100);
+    else {
+      if (object.value == object.optionValue) {
+        object.checked = true;
+      }
+      else {
+        object.checked = false;
+      }
+    }
   }
-
 }
