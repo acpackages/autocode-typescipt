@@ -31,6 +31,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
     this.onViewInit.emit(event);
     this.events.execute({eventName:"viewInit",args:event});
     this.instanceViewInitialized = true;
+    console.log("View Initialized");
   }
 
   ngOnDestroy(){

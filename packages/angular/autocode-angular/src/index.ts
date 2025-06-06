@@ -39,9 +39,9 @@ export * from "./lib/ac-filters/enums/ac-filter-operators.enum";
 export * from "./lib/ac-filters/interfaces/ac-filter-field.interface";
 
 export * from "./lib/ac-inputs/ac-inputs.module";
-export * from "./lib/ac-inputs/ac-array-values/ac-array-values.component";
 export * from "./lib/ac-inputs/ac-array-values/ac-array-value-item/ac-array-value-item.component";
 export * from "./lib/ac-inputs/ac-array-values/ac-array-value-items/ac-array-value-items.component";
+export * from "./lib/ac-inputs/ac-array-values/ac-array-values.component";
 export * from "./lib/ac-inputs/ac-files/ac-files.component";
 export * from "./lib/ac-inputs/ac-files/ac-file-preview/ac-file-preview.component";
 export * from "./lib/ac-inputs/ac-input/ac-input.component";
@@ -85,8 +85,6 @@ export * from "./lib/directives/ac-resizable-element.directive";
 
 export * from "./lib/services/autocode.service";
 export * from "./lib/utilities/ac-data-controller";
-export * from "./lib/utilities/ac-data-dictionary";
-export * from "./lib/utilities/ac-email";
 
 
 

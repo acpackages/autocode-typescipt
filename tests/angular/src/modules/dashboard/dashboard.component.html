@@ -1,49 +1,57 @@
 <div class="p-2" id="menus">
-  <button class="btn btn-info m-2" type="button" data-toggle="collapse" data-target="#collapseAgGrid">Ag Grid</button>
-  <button class="btn btn-success m-2" type="button" data-toggle="collapse" data-target="#collapseDataArchitectDesigner">Data Architect Designer</button>
-  <button class="btn btn-danger m-2" type="button" data-toggle="collapse" data-target="#collapseDatagrid">Datagrid</button>
-  <button class="btn btn-primary m-2" type="button" data-toggle="collapse" data-target="#collapseFilters">Filters</button>
-  <button class="btn btn-info m-2" type="button" data-toggle="collapse" data-target="#collapseForms">Forms</button>
-  <button class="btn btn-warning m-2" type="button" data-toggle="collapse" data-target="#collapseNodeEditor">Node Editor</button>
-  <button class="btn btn-secondary m-2" type="button" data-toggle="collapse" data-target="#collapsePagination">Pagination</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'aggrid'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'aggrid'">Ag Grid</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'data_dictionary_editor'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'data_dictionary_editor'">Data Dictionary Editor</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'datagrid'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'datagrid'">Datagrid</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'filters'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'filters'">Filters</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'forms'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'forms'">Forms</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'node_editor'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'node_editor'">Node Editor</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'pagination'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'pagination'">Pagination</button>
   <div class="row">
     <div class="col">
-      <div class="collapse multi-collapse show" id="collapseAgGrid" data-parent="#menus">
+      <ng-container *ngIf="activeMenu==='aggrid'">
         <div class="card card-body">
-          <a routerLink="/ag-grid">Basic AgGrid</a>
+          <h5>AGGrid</h5>
+          <a routerLink="/ag-grid">Local Data</a>
+          <a routerLink="/ag-grid/on-demand">Data On Demand</a>
         </div>
-      </div>
-      <div class="collapse multi-collapse show" id="collapseDataArchitectDesigner" data-parent="#menus">
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='data_dictionary_editor'">
         <div class="card card-body">
+          <h5>Data Dictionary Editor</h5>
           <a routerLink="/data-dictionary-designer">Datagrid Based Designer</a>
         </div>
-      </div>
-      <div class="collapse multi-collapse show" id="collapseDatagrid" data-parent="#menus">
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='datagrid'">
         <div class="card card-body">
+          <h5>Datagrid</h5>
           <a routerLink="/datagrid">Datagrid Basic with Pagination</a>
           <a routerLink="/datagrid/no-pagination">Datagrid Basic without Pagination</a>
         </div>
-      </div>
-      <div class="collapse multi-collapse show" id="collapseFilters" data-parent="#menus">
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='filters'">
         <div class="card card-body">
+          <h5>Filters</h5>
           <a routerLink="/filters">Filters</a>
         </div>
-      </div>
-      <div class="collapse multi-collapse show" id="collapseForms" data-parent="#menus">
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='forms'">
         <div class="card card-body">
+          <h5>Forms</h5>
           <a routerLink="/forms">Forms</a>
         </div>
-      </div>
-      <div class="collapse multi-collapse show" id="collapseNodeEditor" data-parent="#menus">
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='node_editor'">
         <div class="card card-body">
+          <h5>Node Editor</h5>
           <a routerLink="/node-editor">Node Editor</a>
         </div>
-      </div>
-      <div class="collapse multi-collapse show" id="collapsePagination" data-parent="#menus">
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='pagination'">
         <div class="card card-body">
+          <h5>Pagination</h5>
           <a routerLink="/pagination">Pagination</a>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 

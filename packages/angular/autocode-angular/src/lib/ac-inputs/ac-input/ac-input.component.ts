@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, ElementRef, forwardRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, forwardRef, Input, ViewChild } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AcBaseInput } from '../../_base/ac-base-input.component';
 
@@ -23,7 +23,7 @@ import { AcBaseInput } from '../../_base/ac-base-input.component';
   ],
   standalone: false
 })
-export class AcInputComponent extends AcBaseInput {
+export class AcInputComponent extends AcBaseInput implements AfterViewInit {
   @ViewChild("input") input!: ElementRef;
   @Input() type: string = "text";
 }

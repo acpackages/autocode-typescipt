@@ -1,0 +1,17 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.header-label {
+  font-weight: bold;
+}
+.sort-icons {
+  margin-left: 5px;
+}
+.filter-icon {
+  margin-left: auto;
+  cursor: pointer;
+}

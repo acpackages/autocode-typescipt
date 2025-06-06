@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component } from '@angular/core';
-// import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { employeeData } from '../../data/employee-data';
 
 @Component({

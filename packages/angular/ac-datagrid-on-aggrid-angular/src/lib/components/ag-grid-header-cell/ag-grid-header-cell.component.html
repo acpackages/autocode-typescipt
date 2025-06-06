@@ -1,0 +1,14 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<div class="header-container" (click)="onSortRequested($event)">
+      <span class="header-label">{{ params.displayName }}</span>
+
+      <span class="sort-icons">
+        <i *ngIf="params.column?.isSortAscending()" class="material-icons">arrow_upward</i>
+        <i *ngIf="params.column?.isSortDescending()" class="material-icons">arrow_downward</i>
+      </span>
+
+      <span #filterElement
+        class="material-icons filter-icon"
+        (click)="onFilterClick($event)">filter_list</span>
+    </div>

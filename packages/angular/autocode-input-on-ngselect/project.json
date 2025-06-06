@@ -6,6 +6,22 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "project": "packages/angular/autocode-input-on-ngselect/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/angular/autocode-input-on-ngselect/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/angular/autocode-input-on-ngselect/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],

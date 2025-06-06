@@ -3,24 +3,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestAgGridBasicComponent } from './test-ag-grid-basic/test-ag-grid-basic.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AcDatagridModule } from 'packages/angular/autocode-angular/src/lib/ac-datagrid/ac-datagrid.module';
+import { TestAgGridOnDemandDataComponent } from './test-ag-grid-on-demand-data/test-ag-grid-on-demand-data.component';
 import { AcInputsModule } from 'packages/angular/autocode-angular/src/lib/ac-inputs/ac-inputs.module';
+import { AcDatagridOnAgGridModule } from 'packages/angular/ac-datagrid-on-aggrid-angular/src/lib/ac-datagrid-on-ag-grid.module';
+import { AcDatagridModule } from 'packages/angular/autocode-angular/src/lib/ac-datagrid/ac-datagrid.module';
+import { ComponentsModule } from '../../components/components.module';
 
 export const routes: Routes = [
   { path: '', component: TestAgGridBasicComponent },
-  // { path: 'on-demand', component: TestAgGridOnDemandDataComponent },
+  { path: 'on-demand', component: TestAgGridOnDemandDataComponent },
 ];
 
 @NgModule({
   declarations: [
     TestAgGridBasicComponent,
-    // TestAgGridOnDemandDataComponent
+    TestAgGridOnDemandDataComponent
   ],
   imports: [
     CommonModule,
-    // AcDatagridOnAgGridModule,
+    ComponentsModule,
+    AcDatagridOnAgGridModule,
     AcDatagridModule,
-    // AcAngularModule,
     AcInputsModule,
     RouterModule.forChild(routes)
   ],

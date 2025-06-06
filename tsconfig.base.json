@@ -16,11 +16,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-typescript/autocode": [
+       "@autocode-typescript/autocode": [
         "packages/common/autocode/index.ts"
       ],
       "@autocode-typescript/autocode-angular": [
-        "packages/angular/autocode-angular/index.ts"
+        "dist/packages/angular/autocode-angular"
       ],
       "@autocode-typescript/autocode-data-dictionary": [
         "packages/common/autocode-data-dictionary/index.ts"
@@ -28,8 +28,8 @@
       "@autocode-typescript/autocode-data-dictionary-editor-angular": [
         "packages/angular/autocode-data-dictionary-editor-angular/index.ts"
       ],
-      "@autocode-typescript/autocode-datagrid-on-aggrid-angular": [
-        "packages/angular/autocode-datagrid-on-aggrid-angular/index.ts"
+      "@autocode-typescript/ac-datagrid-on-aggrid-angular": [
+        "packages/angular/ac-datagrid-on-aggrid-angular/index.ts"
       ],
       "@autocode-typescript/autocode-drag-drop-builder-angular": [
         "packages/angular/autocode-drag-drop-builder-angular/index.ts"

@@ -5,20 +5,17 @@ import { AcEventExecutionResult } from "../models/ac-event-execution-result.mode
 import { Autocode } from "./autocode";
 
 export class AcEvents {
-  private _events: Record<string, Record<string, Function>> = {};
+  private events: Record<string, Record<string, Function>> = {};
 
   execute({ eventName, args }: { eventName: string; args?: any }): AcEventExecutionResult {
     const result = new AcEventExecutionResult();
 
     try {
       const functionResults: Record<string, AcEventExecutionResult> = {};
-
-      if (this._events[eventName]) {
-        const functionsToExecute = this._events[eventName];
-
+      if (this.events[eventName]) {
+        const functionsToExecute = this.events[eventName];
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
-          const functionResult = fun(...args);
-
+          const functionResult = Array.isArray(args) ? fun(...args) : fun(args);
           if (
             functionResult &&
             functionResult instanceof AcEventExecutionResult &&
@@ -28,12 +25,10 @@ export class AcEvents {
           }
         }
       }
-
       if (Object.keys(functionResults).length > 0) {
         result.hasResults = true;
         result.results = functionResults;
       }
-
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
@@ -42,19 +37,18 @@ export class AcEvents {
     return result;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   subscribe({ eventName, callback }: { eventName: string; callback: Function }): string {
-    if (!this._events[eventName]) {
-      this._events[eventName] = {};
+    if (!this.events[eventName]) {
+      this.events[eventName] = {};
     }
     const subscriptionId = Autocode.uniqueId();
-    this._events[eventName][subscriptionId] = callback;
+    this.events[eventName][subscriptionId] = callback;
     return subscriptionId;
   }
 
   unsubscribe({ subscriptionId }: { subscriptionId: string }): void {
-    for (const eventName in this._events) {
-      const eventFunctions = this._events[eventName];
+    for (const eventName in this.events) {
+      const eventFunctions = this.events[eventName];
       if (eventFunctions[subscriptionId]) {
         delete eventFunctions[subscriptionId];
       }

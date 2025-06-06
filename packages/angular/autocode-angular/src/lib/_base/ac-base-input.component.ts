@@ -55,14 +55,16 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
 
   constructor(public override elementRef: ElementRef, public override autocodeService: AutocodeService) {
     super(elementRef, autocodeService);
-    this.events.subscribe({eventName:"viewInit",callback:() => {
+    console.log(this);
+    this.events.subscribe({eventName:"viewInit",callback:(params) => {
+      console.log("Focusing");
       setTimeout(() => {
         if (this.autoFocus) {
           for (const child of this.elementChildren) {
             child.focus();
           }
         }
-      }, 10);
+      }, 100);
     }
     });
   }

@@ -6,6 +6,8 @@ export interface IAcDataGridColumn{
   field?:string,
   fieldForEdit?:string,
   allowSort?:boolean,
+  allowEdit?:boolean,
+  allowSelect?:boolean,
   allowFilter?:boolean,
   component?:any,
   componentProperties?:any,

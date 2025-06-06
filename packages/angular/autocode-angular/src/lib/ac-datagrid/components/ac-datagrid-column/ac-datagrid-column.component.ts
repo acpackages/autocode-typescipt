@@ -23,6 +23,8 @@ export class AcDatagridColumnComponent extends AcBase {
   @Input() field: string = "";
   @Input() fieldForEdit: string = "";
   @Input() allowSort: boolean = true;
+  @Input() allowEdit: boolean = true;
+  @Input() allowSelect: boolean = false;
   @Input() allowFilter: boolean = true;
   @Input() index?: number;
   @Input() width?: number;
@@ -32,7 +34,9 @@ export class AcDatagridColumnComponent extends AcBase {
   get columnDetails(): IAcDataGridColumn {
     const result: IAcDataGridColumn = {
       allowSort: this.allowSort,
+      allowEdit: this.allowEdit,
       allowFilter: this.allowFilter,
+      allowSelect: this.allowSelect,
       field: this.field,
       title: this.field,
       format: undefined,

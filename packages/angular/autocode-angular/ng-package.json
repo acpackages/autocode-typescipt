@@ -1,7 +1,13 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../angular/autocode-angular",
+  "dest": "../../../dist/packages/angular/autocode-angular",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "@autocode-typescript/autocode",
+    "@angular/cdk",
+    "@primeng/themes",
+    "tslib"
+  ]
 }
