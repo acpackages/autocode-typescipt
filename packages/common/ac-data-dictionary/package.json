@@ -1,0 +1,16 @@
+{
+  "name": "@autocode-ts/ac-data-dictionary",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "browser": "./index.umd.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.cjs"
+  },
+  "dependencies": {
+    "@autocode-ts/autocode":"0.0.1"
+  }
+}

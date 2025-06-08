@@ -1,0 +1,16 @@
+{
+  "name": "ac-data-dictionary",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/common/ac-data-dictionary/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rollup -c rollup.config.mjs",
+        "cwd": "packages/common/ac-data-dictionary"
+      }
+    }
+  }
+}

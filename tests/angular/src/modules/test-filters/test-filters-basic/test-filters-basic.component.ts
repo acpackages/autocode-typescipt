@@ -1,8 +1,8 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, ViewChild } from '@angular/core';
-import { AcFiltersComponent } from 'packages/angular/autocode-angular/src/lib/ac-filters/ac-filters/ac-filters.component';
-import { AcEnumFilterLogicalOperator, AcEnumFilterComparisonOperator } from 'packages/angular/autocode-angular/src/lib/ac-filters/enums/ac-filter-operators.enum';
-import { IAcFilterGroup, IAcFilterField } from 'packages/angular/autocode-angular/src/lib/ac-filters/interfaces/ac-filter-field.interface';
+import { AcFiltersComponent } from 'packages/angular/ac-angular/src/lib/ac-filters/ac-filters/ac-filters.component';
+import { AcEnumFilterLogicalOperator, AcEnumFilterComparisonOperator } from 'packages/angular/ac-angular/src/lib/ac-filters/enums/ac-filter-operators.enum';
+import { IAcFilterGroup, IAcFilterField } from 'packages/angular/ac-angular/src/lib/ac-filters/interfaces/ac-filter-field.interface';
 
 @Component({
     selector: 'app-test-filters-basic',

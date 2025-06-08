@@ -1,0 +1,9 @@
+{
+  "name": "ac-react",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react/ac-react/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-react --web",
+  "targets": {}
+}

@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import { AcDataDictionary }  from '@autocode-typescript/autocode-data-dictionary';
-import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager }  from '@autocode-typescript/autocode-sql';
-import { AcEnumSqlDatabaseType } from '@autocode-typescript/autocode';
+import { AcDataDictionary }  from '@autocode-ts/ac-data-dictionary';
+import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager }  from '@autocode-ts/ac-sql';
+import { AcEnumSqlDatabaseType } from '@autocode-ts/autocode';
 export async function testSchemaManager(): Promise<void> {
   console.log("Testing Schema Manager");
   const dataDictionaryFilePath = path.resolve('assets/data_dictionary.json');

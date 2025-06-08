@@ -1,0 +1,20 @@
+{
+  "name": "ac-web",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/node/ac-web/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/node/ac-web",
+        "tsConfig": "packages/node/ac-web/tsconfig.lib.json",
+        "packageJson": "packages/node/ac-web/package.json",
+        "main": "packages/node/ac-web/src/index.ts",
+        "assets": ["packages/node/ac-web/*.md"]
+      }
+    }
+  }
+}

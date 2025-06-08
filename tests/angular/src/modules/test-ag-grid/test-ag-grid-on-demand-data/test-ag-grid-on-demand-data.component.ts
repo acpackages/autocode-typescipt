@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from '@autocode-typescript/autocode-angular';
+import { IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from '@autocode-ts/ac-angular';
 
 @Component({
   selector: 'app-test-ag-grid-on-demand-data',
@@ -10,7 +10,7 @@ import { IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from '
   styleUrl: './test-ag-grid-on-demand-data.component.scss'
 })
 export class TestAgGridOnDemandDataComponent {
-  baseUrl = 'http://autocode.localhost/tests/autocode-web/mvc-test/';
+  baseUrl = 'http://autocode.localhost/tests/ac-web/mvc-test/';
   constructor(private httpClient: HttpClient) {
   }
   dataFunction: Function = async (params: IAcDataGridDataOnDemandParams) => {

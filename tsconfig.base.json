@@ -16,56 +16,60 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-       "@autocode-typescript/autocode": [
-        "packages/common/autocode/index.ts"
+      "@autocode-ts/ac-ng-datagrid-on-aggrid": [
+        "packages/angular/ac-ng-datagrid-on-aggrid/index.ts"
       ],
-      "@autocode-typescript/autocode-angular": [
-        "dist/packages/angular/autocode-angular"
+      "@autocode-ts/autocode": ["packages/common/autocode/index.ts"],
+      "@autocode-ts/ac-angular": [
+        "dist/packages/angular/ac-angular"
       ],
-      "@autocode-typescript/autocode-data-dictionary": [
-        "packages/common/autocode-data-dictionary/index.ts"
+      "@autocode-ts/ac-data-dictionary": [
+        "packages/common/ac-data-dictionary/index.ts"
       ],
-      "@autocode-typescript/autocode-data-dictionary-editor-angular": [
-        "packages/angular/autocode-data-dictionary-editor-angular/index.ts"
+      "@autocode-ts/ac-ng-data-dictionary-editor": [
+        "packages/angular/ac-ng-data-dictionary-editor/index.ts"
       ],
-      "@autocode-typescript/ac-datagrid-on-aggrid-angular": [
-        "packages/angular/ac-datagrid-on-aggrid-angular/index.ts"
+      "@autocode-ts/ac-ng-drag-drop-builder": [
+        "packages/angular/ac-ng-drag-drop-builder/index.ts"
       ],
-      "@autocode-typescript/autocode-drag-drop-builder-angular": [
-        "packages/angular/autocode-drag-drop-builder-angular/index.ts"
+      "@autocode-ts/ac-extensions": [
+        "packages/common/ac-extensions/index.ts"
       ],
-      "@autocode-typescript/autocode-extensions": [
-        "packages/common/autocode-extensions/index.ts"
+      "@autocode-ts/ac-ng-input-audio-recording": [
+        "packages/angular/ac-ng-input-audio-recording/index.ts"
       ],
-      "@autocode-typescript/autocode-input-audio-recording-angular": [
-        "packages/angular/autocode-input-audio-recording-angular/index.ts"
+      "@autocode-ts/ac-ng-input-on-ngselect": [
+        "packages/angular/ac-ng-input-on-ngselect/index.ts"
       ],
-      "@autocode-typescript/autocode-input-on-ngselect": [
-        "packages/angular/autocode-input-on-ngselect/index.ts"
+      "@autocode-ts/ac-ng-input-on-quill": [
+        "packages/angular/ac-ng-input-on-quill/index.ts"
       ],
-      "@autocode-typescript/autocode-input-on-quill-angular": [
-        "packages/angular/autocode-input-on-quill-angular/index.ts"
+      "@autocode-ts/ac-ng-input-on-tinymce": [
+        "packages/angular/ac-ng-input-on-tinymce/index.ts"
       ],
-      "@autocode-typescript/autocode-input-on-tinymce-angular": [
-        "packages/angular/autocode-input-on-tinymce-angular/index.ts"
+      "@autocode-ts/ac-ng-media-library": [
+        "packages/angular/ac-ng-media-library/src/index.ts"
       ],
-      "@autocode-typescript/autocode-node-editor-angular": [
-        "packages/angular/autocode-node-editor-angular/index.ts"
+      "@autocode-ts/ac-ng-menu-editor": [
+        "packages/angular/ac-ng-menu-editor/src/index.ts"
       ],
-      "@autocode-typescript/autocode-react": [
-        "packages/react/autocode-react/index.ts"
+      "@autocode-ts/ac-ng-node-editor": [
+        "packages/angular/ac-ng-node-editor/index.ts"
       ],
-      "@autocode-typescript/autocode-sql": [
-        "packages/node/autocode-sql/index.ts"
+      "@autocode-ts/ac-react": [
+        "packages/react/ac-react/index.ts"
       ],
-      "@autocode-typescript/autocode-vue": [
-        "packages/vue/autocode-vue/index.ts"
+      "@autocode-ts/ac-sql": [
+        "packages/node/ac-sql/index.ts"
       ],
-      "@autocode-typescript/autocode-web": [
-        "packages/node/autocode-web/index.ts"
+      "@autocode-ts/ac-vue": [
+        "packages/vue/ac-vue/index.ts"
       ],
-      "@autocode-typescript/autocode-web-on-express": [
-        "packages/node/autocode-web-on-express/index.ts"
+      "@autocode-ts/ac-web": [
+        "packages/node/ac-web/index.ts"
+      ],
+      "@autocode-ts/ac-web-on-express": [
+        "packages/node/ac-web-on-express/index.ts"
       ]
     }
   },

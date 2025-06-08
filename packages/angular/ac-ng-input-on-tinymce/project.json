@@ -1,0 +1,36 @@
+{
+  "name": "ac-ng-input-on-tinymce",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/angular/ac-ng-input-on-tinymce/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "project": "packages/angular/ac-ng-input-on-tinymce/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/angular/ac-ng-input-on-tinymce/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/angular/ac-ng-input-on-tinymce/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/angular/ac-ng-input-on-tinymce/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

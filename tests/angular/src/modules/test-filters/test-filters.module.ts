@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestFiltersBasicComponent } from './test-filters-basic/test-filters-basic.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AcFiltersModule } from 'packages/angular/autocode-angular/src/lib/ac-filters/ac-filters.module';
+import { AcFiltersModule } from 'packages/angular/ac-angular/src/lib/ac-filters/ac-filters.module';
 
 export const routes: Routes = [
   { path: '', component: TestFiltersBasicComponent },

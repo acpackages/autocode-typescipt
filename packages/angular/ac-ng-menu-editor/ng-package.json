@@ -1,0 +1,15 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/packages/angular/ac-ng-menu-editor",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@autocode-ts/ac-extensions",
+    "@autocode-ts/ac-angular",
+    "@autocode-ts/autocode",
+    "@angular/cdk",
+    "@primeng/themes",
+    "tslib"
+  ]
+}

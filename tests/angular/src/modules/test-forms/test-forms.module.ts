@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { TestFormBasicComponent } from './test-form-basic/test-form-basic.component';
-import { AcInputsModule } from 'packages/angular/autocode-angular/src/lib/ac-inputs/ac-inputs.module';
+import { AcInputsModule } from 'packages/angular/ac-angular/src/lib/ac-inputs/ac-inputs.module';
 
 export const routes: Routes = [
   { path: '', component: TestFormBasicComponent },

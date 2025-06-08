@@ -2,10 +2,10 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, ViewChild } from '@angular/core';
 import { employeeData } from '../../data/employee-data';
-import { AcBase } from 'packages/angular/autocode-angular/src/lib/_base/ac-base.component';
-import { AcDatagridComponent } from 'packages/angular/autocode-angular/src/lib/ac-datagrid/components/ac-datagrid/ac-datagrid.component';
-import { AcFiltersComponent } from 'packages/angular/autocode-angular/src/lib/ac-filters/ac-filters/ac-filters.component';
-import { AcPaginationComponent } from 'packages/angular/autocode-angular/src/lib/ac-pagination/ac-pagination/ac-pagination.component';
+import { AcBase } from 'packages/angular/ac-angular/src/lib/_base/ac-base.component';
+import { AcDatagridComponent } from 'packages/angular/ac-angular/src/lib/ac-datagrid/components/ac-datagrid/ac-datagrid.component';
+import { AcFiltersComponent } from 'packages/angular/ac-angular/src/lib/ac-filters/ac-filters/ac-filters.component';
+import { AcPaginationComponent } from 'packages/angular/ac-angular/src/lib/ac-pagination/ac-pagination/ac-pagination.component';
 
 @Component({
     selector: 'app-test-datagrid-basic',

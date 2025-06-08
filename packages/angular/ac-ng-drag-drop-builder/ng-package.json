@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/packages/angular/ac-ng-drag-drop-builder",
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@autocode-ts/autocode",
+    "@autocode-ts/ac-angular",
+    "@autocode-ts/ac-extensions",
+    "tslib"
+  ]
+}
