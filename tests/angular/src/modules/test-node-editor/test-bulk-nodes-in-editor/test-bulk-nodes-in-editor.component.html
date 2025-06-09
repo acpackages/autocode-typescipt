@@ -1,0 +1,39 @@
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<div>
+  <button type="button" class="btn btn-secondary" (click)="hanldeAutoArrange()">Auto Arrange Nodes</button>
+</div>
+<div style="height:calc(100vh - 100px);width: 100vw;">
+  <ac-node-editor #nodeEditor
+    [connectionContextMenuTemplate]="connectionContextMenuTemplate"
+    [editorContextMenuTemplate]="editorContextMenuTemplate"
+    [enableLogger]="true"
+    [nodeContextMenuTemplate]="nodeContextMenuTemplate"
+    [defaultNodeType]="TestNodeComponent"
+    (onConnectionAdded)="handleConnectionAdded($event)"
+    (onConnectionClicked)="connectionClicked($event)"
+    (onEditorInitialized)="editorInitialized()"
+     />
+</div>
+<ng-template #connectionContextMenuTemplate let-connection="connection">
+  <div class="context-menu bg-danger">
+    <ul>
+      <li (click)="contextMenuClicked('connection',connection,'remove_connection')">Remove Connection</li>
+    </ul>
+  </div>
+</ng-template>
+<ng-template #editorContextMenuTemplate let-editor="editor">
+  <div class="context-menu bg-danger">
+    <ul>
+      <li (click)="contextMenuClicked('editor',editor,'add_node')">Add Node</li>
+    </ul>
+  </div>
+</ng-template>
+<ng-template #nodeContextMenuTemplate let-node="node">
+  <div class="context-menu bg-danger">
+    <ul>
+      <li (click)="contextMenuClicked('node',node,'clone_node')">Clone Node</li>
+      <li (click)="contextMenuClicked('node',node,'remove_node')">Remove Node</li>
+    </ul>
+  </div>
+</ng-template>

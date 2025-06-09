@@ -11,11 +11,11 @@ import { AreaExtensions, AreaPlugin } from 'rete-area-plugin';
 import { AutoArrangePlugin,Presets as ArrangePresets,ArrangeAppliers } from "rete-auto-arrange-plugin";
 import { ClassicFlow, ConnectionPlugin, Presets as ConnectionPresets } from 'rete-connection-plugin';
 import { ContextMenuPlugin, Presets as ContextMenuPresets } from "rete-context-menu-plugin";
-import { arrayDifference, arrayRemove, arrayToObject } from '@autocode-ts/ac-extensions';
+import { arrayDifference, arrayRemove, arrayToObject } from 'packages/common/ac-extensions/src/index';
 import { AcEnumNodeConnectionStatus } from '../../enums/ac-node-connection-status.enum';
 import { IAcNodeConnectionEvent } from '../../interfaces/ac-node-connection-event.interface';
 import { AcNodeSocketComponent } from '../ac-node-socket/ac-node-socket.component';
-import { AcBase, AutocodeService } from '@autocode-ts/ac-angular';
+import { AcBase, AutocodeService } from 'packages/angular/ac-angular/src/index';
 import { AcNodeConnectionComponent } from '../ac-node-connection/ac-node-connection.component';
 import { AcNodeComponent } from '../ac-node/ac-node.component';
 class Node extends ClassicPreset.Node {

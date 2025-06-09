@@ -131,7 +131,7 @@ Object.prototype.isSame = function (compareObject: any):boolean{
     return result;
 }
 
-Object.prototype.filter = function <T>(filterFunction: (key: string, value: T) => boolean): object {
+Object.prototype.filter = function <T>(filterFunction: (key: string, value: any) => boolean): object {
     const obj = this;
     const result: any = {};
     if (typeof filterFunction === 'function') {

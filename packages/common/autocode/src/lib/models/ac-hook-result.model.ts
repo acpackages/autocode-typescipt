@@ -9,17 +9,17 @@ export class AcHookResult extends AcResult {
   @AcBindJsonProperty({ key: AcHookResult.KEY_CONTINUE_OPERATION })
   continueOperation: boolean = true;
 
-  changes: any[] = [];
+  // changes: any[] = [];
 
-  constructor({
-    continueOperation = true,
-    changes = [],
-  }: {
-    continueOperation?: boolean;
-    changes?: any[];
-  } = {}) {
-    super();
-    this.continueOperation = continueOperation;
-    this.changes = changes;
-  }
+  // constructor({
+  //   continueOperation = true,
+  //   changes = [],
+  // }: {
+  //   continueOperation?: boolean;
+  //   changes?: any[];
+  // } = {}) {
+  //   super();
+  //   this.continueOperation = continueOperation;
+  //   this.changes = changes;
+  // }
 }

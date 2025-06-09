@@ -1,4 +1,4 @@
-export * from './lib/ac-node-editor.module';
+export * from './lib/ac-ng-node-editor.module';
 
 export * from './lib/components/ac-node/ac-node.component';
 export * from './lib/components/ac-node-connection/ac-node-connection.component';

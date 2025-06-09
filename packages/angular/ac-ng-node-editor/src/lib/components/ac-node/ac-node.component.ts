@@ -3,11 +3,11 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component, Input } from '@angular/core';
-import { AcBase } from '@autocode-ts/ac-angular';
 import { IAcNodeConnectionEvent } from '../../interfaces/ac-node-connection-event.interface';
 import { AcNodeEditorComponent } from '../ac-node-editor/ac-node-editor.component';
 import { ClassicPreset } from 'rete';
-import { objectCopyTo } from '@autocode-ts/ac-extensions';
+import { objectCopyTo } from 'packages/common/ac-extensions/src/index';
+import { AcBase } from 'packages/angular/ac-angular/src/index';
 @Component({
   selector: 'ac-node',
   templateUrl: './ac-node.component.html',

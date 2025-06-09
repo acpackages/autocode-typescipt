@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "strict": false,
     "allowSyntheticDefaultImports": true,
     "rootDir": ".",
     "sourceMap": true,
@@ -19,7 +20,9 @@
       "@autocode-ts/ac-ng-datagrid-on-aggrid": [
         "packages/angular/ac-ng-datagrid-on-aggrid/index.ts"
       ],
-      "@autocode-ts/autocode": ["packages/common/autocode/index.ts"],
+      "@autocode-ts/autocode": [
+        "packages/common/autocode/index.ts"
+      ],
       "@autocode-ts/ac-angular": [
         "dist/packages/angular/ac-angular"
       ],

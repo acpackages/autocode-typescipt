@@ -2,25 +2,22 @@
 
 declare global {
   interface Number {
-    readonly isEven: boolean;
-    readonly isOdd: boolean;
+    isEven(): boolean;
+    isOdd(): boolean;
     format(format: string): string;
     round(decimals?: number): number;
   }
 }
 
-Object.defineProperties(Number.prototype, {
-  isEven: {
-    get() {
-      return this % 2 === 0;
-    },
-  },
-  isOdd: {
-    get() {
-      return this % 2 !== 0;
-    },
-  },
-});
+
+Number.prototype.isEven = function() : boolean {
+ return this.valueOf() % 2 === 0;
+}
+
+Number.prototype.isOdd = function() : boolean {
+ return this.valueOf() % 2 !== 0;
+}
+
 
 Number.prototype.format = function (format: string): string {
   if (format === "DISPLAY") {

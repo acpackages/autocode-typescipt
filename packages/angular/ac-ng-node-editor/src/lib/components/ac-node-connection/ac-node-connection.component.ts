@@ -3,7 +3,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input } from '@angular/core';
-import { AcBase } from '@autocode-ts/ac-angular';
+import { AcBase } from 'packages/angular/ac-angular/src/index';
 import { AcNodeEditorComponent } from '../ac-node-editor/ac-node-editor.component';
 
 @Component({

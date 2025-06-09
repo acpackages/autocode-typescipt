@@ -22,4 +22,4 @@ import { AcNodeSocketComponent } from './components/ac-node-socket/ac-node-socke
     CommonModule
   ]
 })
-export class AcNodeEditorModule { }
+export class AcNgNodeEditorModule { }

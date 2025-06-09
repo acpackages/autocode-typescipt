@@ -36,11 +36,11 @@ export const appRoutes: Routes = [
       (m) => m.TestFormsModule
     ),
   },
-  // {
-  //   path: 'node-editor', loadChildren: () => import('../modules/test-node-editor/test-node-editor.module').then(
-  //     (m) => m.TestNodeEditorModule
-  //   ),
-  // },
+  {
+    path: 'node-editor', loadChildren: () => import('../modules/test-node-editor/test-node-editor.module').then(
+      (m) => m.TestNodeEditorModule
+    ),
+  },
   {
     path: 'pagination', loadChildren: () => import('../modules/test-pagination/test-pagination.module').then(
       (m) => m.TestPaginationModule

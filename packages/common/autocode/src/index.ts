@@ -23,6 +23,5 @@ export * from './lib/models/ac-hook-execution-result.model';
 export * from './lib/models/ac-hook-result.model';
 export * from './lib/models/ac-result.model';
 
-export * from './lib/utils/ac-directory-utils';
 export * from './lib/utils/ac-file-utils';
 export * from './lib/utils/ac-json-utils';

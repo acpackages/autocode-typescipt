@@ -2,8 +2,8 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { AcBase, AutocodeService } from '@autocode-ts/ac-angular';
-import { Autocode } from '@autocode-ts/autocode';
+import { AcBase, AutocodeService } from 'packages/angular/ac-angular/src/index';
+import { Autocode } from 'packages/common/autocode/src/index';
 import { AcNodeComponent } from '../ac-node/ac-node.component';
 import { ClassicPreset } from 'rete';
 import { IAcNodeConnectionEvent } from '../../interfaces/ac-node-connection-event.interface';
