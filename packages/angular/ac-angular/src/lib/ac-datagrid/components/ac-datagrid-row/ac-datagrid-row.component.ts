@@ -21,7 +21,7 @@ export class AcDatagridRowComponent extends AcBase{
 
   @Input() dataGridInstance!: AcDatagridComponent;
   @Input() index:number = -1;
-  @Input() rowData:any = {};
+  @Input() data:any = {};
   @Input() columns:IAcDataGridColumn[] = [];
 
   @Output() onCellEnterEditMode:EventEmitter<IAcDataGridRowEvent> = new EventEmitter();
@@ -43,7 +43,7 @@ export class AcDatagridRowComponent extends AcBase{
     const event:IAcDataGridRowEvent = {
       index:this.index,
       instance:this,
-      rowData:this.rowData
+      data:this.data
     };
     this.onDestroy.emit(event);
   }
@@ -52,7 +52,7 @@ export class AcDatagridRowComponent extends AcBase{
     const event:IAcDataGridRowEvent = {
       index:this.index,
       instance:this,
-      rowData:this.rowData
+      data:this.data
     };
     this.onInit.emit(event);
   }
@@ -61,7 +61,7 @@ export class AcDatagridRowComponent extends AcBase{
     const event:IAcDataGridRowEvent = {
       index:this.index,
       instance:this,
-      rowData:this.rowData
+      data:this.data
     };
     this.onViewInit.emit(event);
   }
@@ -70,10 +70,10 @@ export class AcDatagridRowComponent extends AcBase{
     const changes= this.getDataChanges();
     if (Object.keys(changes).length>0) {
       this.notifiedChanged = true;
-      const event:IAcDataGridRowDataChangeEvent = {changes:changes,index:this.index,newRowData:this.rowData,oldRowData:this.previousRowData};
+      const event:IAcDataGridRowDataChangeEvent = {changes:changes,index:this.index,newRowData:this.data,oldRowData:this.previousRowData};
       this.onRowDataChange.emit(event);
       this.events.execute({eventName:'rowDataChange',args:event});
-      this.previousRowData = { ...this.rowData };
+      this.previousRowData = { ...this.data };
     }
     // setTimeout(() => {
     //   this.checkChanged();
@@ -82,7 +82,7 @@ export class AcDatagridRowComponent extends AcBase{
 
   getDataChanges() {
     let result = true;
-    const objectA: any = this.rowData;
+    const objectA: any = this.data;
     const compareObject: any = this.previousRowData;
     const objectAKeys = Object.keys(objectA);
     const objectBKeys = Object.keys(compareObject);

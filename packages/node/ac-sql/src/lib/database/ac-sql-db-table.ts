@@ -134,8 +134,8 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
           if (selectResponse.isSuccess()) {
             const rows = selectResponse.rows;
-            for (const rowData of rows) {
-              const maxJson = JSON.parse(rowData["max_json"]);
+            for (const data of rows) {
+              const maxJson = JSON.parse(data["max_json"]);
               const name = Object.keys(maxJson)[0];
               let lastRecordId = maxJson[name] ?? 0;
               lastRecordId++;

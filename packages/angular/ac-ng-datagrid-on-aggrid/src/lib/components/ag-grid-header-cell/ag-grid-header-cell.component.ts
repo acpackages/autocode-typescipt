@@ -3,6 +3,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IHeaderAngularComp } from 'ag-grid-angular';
 import { IHeaderParams } from 'ag-grid-community';
+import { AcDataGrid } from 'packages/angular/ac-angular/src';
 
 @Component({
   selector: 'ag-grid-header-cell',
@@ -14,9 +15,11 @@ export class AgGridHeaderCellComponent implements IHeaderAngularComp {
   @ViewChild('filterElement')
   filterElement!: ElementRef;
   params!: IHeaderParams;
+  AcDataGrid = AcDataGrid;
 
   agInit(params: IHeaderParams): void {
     this.params = params;
+    console.log(this);
   }
 
   onSortRequested(event: MouseEvent) {

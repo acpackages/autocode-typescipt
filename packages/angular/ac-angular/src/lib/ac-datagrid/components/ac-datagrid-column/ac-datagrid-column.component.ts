@@ -6,6 +6,7 @@ import { AcBase } from '../../../_base/ac-base.component';
 import { AcDatagridColumnEditTemplateDirective } from '../../directives/ac-datagrid-column-edit-template.directive';
 import { AcDatagridColumnRenderTemplateDirective } from '../../directives/ac-datagrid-column-render-template.directive';
 import { IAcDataGridColumn } from '../../interfaces/ac-datagrid-column.interface';
+import { AcEnumColumnDataType } from '../../enums/ac-column-data-types.enum';
 
 @Component({
   selector: 'ac-datagrid-column',
@@ -20,6 +21,7 @@ export class AcDatagridColumnComponent extends AcBase {
   @ContentChild(AcDatagridColumnRenderTemplateDirective)
   renderTemplate?: AcDatagridColumnRenderTemplateDirective;
   @Input() title: string = "";
+  @Input() dataType: any = AcEnumColumnDataType.string;
   @Input() field: string = "";
   @Input() fieldForEdit: string = "";
   @Input() allowSort: boolean = true;
@@ -37,8 +39,9 @@ export class AcDatagridColumnComponent extends AcBase {
       allowEdit: this.allowEdit,
       allowFilter: this.allowFilter,
       allowSelect: this.allowSelect,
+      dataType:this.dataType,
       field: this.field,
-      title: this.field,
+      title: this.title == ''?this.field:this.title,
       format: undefined,
       style: this.style,
       index: this.index,

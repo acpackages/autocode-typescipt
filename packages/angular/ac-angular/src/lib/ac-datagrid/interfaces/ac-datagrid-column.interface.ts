@@ -1,9 +1,11 @@
 import { TemplateRef } from "@angular/core";
 import { IAcDatagridColumnState } from "./ac-datagrid-column-state.interface";
+import { AcEnumColumnDataType } from "../enums/ac-column-data-types.enum";
 
 export interface IAcDataGridColumn{
   title?:string,
   field?:string,
+  dataType?:AcEnumColumnDataType,
   fieldForEdit?:string,
   allowSort?:boolean,
   allowEdit?:boolean,

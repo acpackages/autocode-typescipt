@@ -12,9 +12,11 @@ export * from "./lib/ac-datagrid/components/ac-datagrid/ac-datagrid.component";
 export * from "./lib/ac-datagrid/components/ac-datagrid-cell/ac-datagrid-cell.component";
 export * from "./lib/ac-datagrid/components/ac-datagrid-column/ac-datagrid-column.component";
 export * from "./lib/ac-datagrid/components/ac-datagrid-column-head/ac-datagrid-column-head.component";
-export * from "./lib/ac-datagrid/components/ac-datagrid-row/ac-datagrid-row.component";
+export * from "./lib/ac-datagrid/components/ac-datagrid-row/ac-datagrid-row.component"
+export * from "./lib/ac-datagrid/config/ac-datagrid.config";
 export * from "./lib/ac-datagrid/directives/ac-datagrid-column-edit-template.directive";
 export * from "./lib/ac-datagrid/directives/ac-datagrid-column-render-template.directive";
+export * from "./lib/ac-datagrid/enums/ac-column-data-types.enum";
 export * from "./lib/ac-datagrid/interfaces/ac-datagrid-cell-event.interface";
 export * from "./lib/ac-datagrid/interfaces/ac-datagrid-column-state.interface";
 export * from "./lib/ac-datagrid/interfaces/ac-datagrid-column-width-change-event.interface";

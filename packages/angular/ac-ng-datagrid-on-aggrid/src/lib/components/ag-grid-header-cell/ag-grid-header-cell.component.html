@@ -1,14 +1,16 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<div class="header-container" (click)="onSortRequested($event)">
-      <span class="header-label">{{ params.displayName }}</span>
+<div class="ag-grid-header-cell">
+  <span class="ag-grid-header-cell-label" (click)="onSortRequested($event)">{{ params.displayName }}</span>
 
-      <span class="sort-icons">
-        <i *ngIf="params.column?.isSortAscending()" class="material-icons">arrow_upward</i>
-        <i *ngIf="params.column?.isSortDescending()" class="material-icons">arrow_downward</i>
-      </span>
+  <span class="ag-grid-header-cell-sort-button" *ngIf="params.column.isSortable()" (click)="onSortRequested($event)" >
+    <span [innerHTML]="AcDataGrid.sortButtonHtml" *ngIf="!params.column?.isSortAscending() && !params.column?.isSortDescending()" ></span>
+    <span [innerHTML]="AcDataGrid.sortButtonAscHtml" *ngIf="params.column?.isSortAscending()"></span>
+    <span [innerHTML]="AcDataGrid.sortButtonDescHtml" *ngIf="params.column?.isSortDescending()" ></span>
+  </span>
 
-      <span #filterElement
-        class="material-icons filter-icon"
-        (click)="onFilterClick($event)">filter_list</span>
-    </div>
+  <span class="ag-grid-header-cell-filter-button" #filterElement (click)="onFilterClick($event)" *ngIf="params.column.isFilterAllowed()">
+    <span [innerHTML]="AcDataGrid.filterButtonHtml" *ngIf="!params.column?.isFilterActive()"></span>
+    <span [innerHTML]="AcDataGrid.filterButtonAppliedHtml" *ngIf="params.column?.isFilterActive()" ></span>
+  </span>
+</div>

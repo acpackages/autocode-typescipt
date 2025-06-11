@@ -1,7 +1,8 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from '@autocode-ts/ac-angular';
+import { AcDatagridOnAgGridComponent } from 'packages/angular/ac-ng-datagrid-on-aggrid/src/lib/components/ac-datagrid-on-ag-grid/ac-datagrid-on-ag-grid.component';
 
 @Component({
   selector: 'app-test-ag-grid-on-demand-data',
@@ -10,6 +11,7 @@ import { IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from '
   styleUrl: './test-ag-grid-on-demand-data.component.scss'
 })
 export class TestAgGridOnDemandDataComponent {
+  @ViewChild("dataGrid") dataGrid:AcDatagridOnAgGridComponent;
   baseUrl = 'http://autocode.localhost/tests/ac-web/mvc-test/';
   constructor(private httpClient: HttpClient) {
   }
@@ -62,5 +64,14 @@ export class TestAgGridOnDemandDataComponent {
         },
       });
     });
+  }
+
+   handleDeleteRow(data:any){;
+    this.dataGrid.deleteRow({data:data});
+  }
+
+  handleEditRow(data:any){;
+    const updatedData:any = {...data,account_name:'Updated Name : '+data['account_name']};
+    this.dataGrid.updateRow({data:updatedData,key:'id'});
   }
 }

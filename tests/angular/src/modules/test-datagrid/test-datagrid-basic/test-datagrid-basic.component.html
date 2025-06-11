@@ -1,20 +1,20 @@
 DataGrid
 <ac-datagrid #dataGrid [data]="data" [pagination]="pagination" [filters]="filters">
-  <ac-datagrid-column field="id">
-    <ng-template let-rowData="rowData" let-column="column" let-isEditing="isEditing">
+  <ac-datagrid-column field="id" title="Id">
+    <ng-template let-data="data" let-column="column" let-isEditing="isEditing">
       <ng-container *ngIf="isEditing">
-        <ac-input style="width:100%;height:100%;" *ngIf="isEditing" [autoFocus]="true" [(value)]="rowData[column.field]" />
+        <ac-input style="width:100%;height:100%;" *ngIf="isEditing" [autoFocus]="true" [(value)]="data[column.field]" />
       </ng-container>
       <ng-container *ngIf="!isEditing">
-        Id : <b>{{rowData[column.field]}}</b>
+        Id : <b>{{data[column.field]}}</b>
       </ng-container>
     </ng-template>
   </ac-datagrid-column>
-  <ac-datagrid-column field="name" />
-  <ac-datagrid-column field="gender" />
-  <ac-datagrid-column field="dateOfBirth" />
-  <ac-datagrid-column field="hobbies" />
-  <ac-datagrid-column field="about" />
+  <ac-datagrid-column field="name" title="Name'"/>
+  <ac-datagrid-column field="gender" title="Gender"/>
+  <ac-datagrid-column field="dateOfBirth" dataType="date" title="Birth Date"/>
+  <ac-datagrid-column field="hobbies" title="Hobbies"/>
+  <ac-datagrid-column field="about" title="About"/>
 </ac-datagrid>
 <ac-pagination #pagination [displayPerPage]="10"/>
 <ac-filters #filters />

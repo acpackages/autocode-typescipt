@@ -499,10 +499,10 @@ export class AcMysqlDao extends AcBaseSqlDao {
         const placeholders = columns.map((_, i) => `@p${i}`).join(', ');
         const statement = `INSERT INTO ${tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
         db.beginTransaction();
-        for (const rowData of rows) {
+        for (const data of rows) {
           const params: Record<string, any> = {};
           for (let i = 0; i < columns.length; i++) {
-            params[`@p${i}`] = rowData[columns[i]];
+            params[`@p${i}`] = data[columns[i]];
           }
           const setParametersResult = this.setSqlStatementParameters({
             statement,

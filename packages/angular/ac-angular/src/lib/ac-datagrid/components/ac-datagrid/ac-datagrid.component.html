@@ -24,7 +24,7 @@
       </thead>
       <tbody class="ac-datagrid-tbody">
         <ng-container *ngFor="let row of dataController.dataDisplay;let index = index">
-          <ac-datagrid-row acCommentElementTag [rowData]="row" [index]="index" [columns]="columns"
+          <ac-datagrid-row acCommentElementTag [data]="row" [index]="index" [columns]="columns"
             [dataGridInstance]="this" (onDestroy)="handleRowDestroy($event)"
             (onInit)="handleRowInit($event)" (onViewInit)="handleRowViewInit($event)"
             (onRowDataChange)="handleRowDataChange($event)" />

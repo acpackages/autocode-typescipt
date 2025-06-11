@@ -8,6 +8,6 @@ export interface IAcDataGridCellEvent{
   field:string,
   rowInstance:AcDatagridRowComponent,
   instance:AcDatagridCellComponent,
-  rowData:any,
+  data:any,
   rowIndex:number
 }

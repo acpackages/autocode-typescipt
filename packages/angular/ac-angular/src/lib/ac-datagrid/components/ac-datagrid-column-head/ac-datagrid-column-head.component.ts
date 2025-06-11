@@ -16,7 +16,7 @@ export class AcDatagridColumnHeadComponent extends AcBase {
   @ViewChild("th") th!: ElementRef;
 
   @Input() listenForWidthChange: boolean = false;
-  @Input() rowData: any = {};
+  @Input() data: any = {};
   @Input() column: IAcDataGridColumn = {};
 
   @Output() override onInit:EventEmitter<any> = new EventEmitter();

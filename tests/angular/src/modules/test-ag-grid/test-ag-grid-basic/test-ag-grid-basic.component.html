@@ -2,21 +2,43 @@ Total Rows : {{dataGrid.totalRows}}
 <button class="btn btn-secondary" (click)="dataGrid.exportData()">Export as Excel</button>
 <ac-input class="form-control" #searchInput style="width:100%;height:100%;" placeholder="Search..." />
 <div style="height:70vh;">
-  <ac-datagrid-on-ag-grid #dataGrid [data]="data" [editable]="true" [pagination]="true" [filterSearchValue] = "searchInput.value" [selectMultiple]="false">
-    <ac-datagrid-column [allowSelect]="true" [allowEdit]="false" [style]="'max-width:100px;'" />
-    <ac-datagrid-column field="id">
-      <ng-template acDatagridColumnRenderTemplate let-rowData="rowData" let-column="column">
-        Id : <b>{{rowData[column.field]}}</b>
+  <ac-datagrid-on-ag-grid
+  #dataGrid
+  [data]="data"
+  [editable]="true"
+  [pagination]="true"
+  [filterSearchValue] = "searchInput.value"
+  [selectMultiple]="true"
+  [autoAddNewRow]="true"
+  (onActiveRowChange)="handleActiveRowChange($event)"
+  (onCellFocused)="handleCellFocused($event)"
+  (onCellValueChanged)="handleCellValueChanged($event)"
+  (onRowAdded)="handleRowAdded($event)"
+  (onRowDataModified)="handleRowDataModified($event)"
+  (onRowDeleted)="handleRowDeleted($event)"
+  (onRowFocus)="handleRowFocus($event)"
+  (onRowSelected)="handleRowSelected($event)"
+  (onRowUpdated)="handleRowUpdated($event)"
+  >
+<ac-datagrid-column [allowSelect]="true" [allowSort]="false" [allowEdit]="false" [allowFilter]="false" [style]="'max-width:100px;'" />
+    <ac-datagrid-column field="id" title="Id">
+      <ng-template acDatagridColumnRenderTemplate let-data="data" let-column="column">
+        Id : <b>{{data[column.field]}}</b>
       </ng-template>
-      <ng-template acDatagridColumnEditTemplate let-rowData="rowData" let-column="column">
-        <ac-input style="width:100%;height:100%;" [autoFocus]="true" [(value)]="rowData[column.field]" />
+      <ng-template acDatagridColumnEditTemplate let-data="data" let-column="column">
+        <ac-input style="width:100%;height:100%;" [autoFocus]="true" [(value)]="data[column.field]" />
       </ng-template>
     </ac-datagrid-column>
-    <ac-datagrid-column field="name" [style]="'min-width:100px;'" />
-    <ac-datagrid-column field="gender" [style]="'min-width:120px;'" />
-    <ac-datagrid-column field="dateOfBirth" [style]="'min-width:120px;'" />
-    <ac-datagrid-column field="hobbies" />
-    <ac-datagrid-column field="about" />
+    <ac-datagrid-column field="name" [allowSort]="false" title="Name" [style]="'min-width:100px;'" />
+    <ac-datagrid-column field="gender" title="Gender" [style]="'min-width:120px;'" />
+    <ac-datagrid-column field="dateOfBirth" [style]="'min-width:120px;'" title="Birth Date" dataType="date"/>
+    <ac-datagrid-column field="hobbies" title="Hobbies"/>
+    <ac-datagrid-column field="about" title="About"/>
+<ac-datagrid-column field="action" title="Action" [allowEdit]="false">
+      <ng-template acDatagridColumnRenderTemplate let-data="data" let-column="column">
+        <action-column (onDelete)="handleDeleteRow(data)" (onEdit)="handleEditRow(data)"/>
+      </ng-template>
+    </ac-datagrid-column>
   </ac-datagrid-on-ag-grid>
 </div>
 

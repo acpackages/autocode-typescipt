@@ -23,7 +23,7 @@ export class AcDatagridCellComponent extends AcBase {
 
   @Input() dataGridInstance!: AcDatagridComponent;
   @Input() index:number = -1;
-  @Input() rowData: any = {};
+  @Input() data: any = {};
   @Input() column: IAcDataGridColumn = {};
   @Input() rowInstance!: AcDatagridRowComponent;
 
@@ -112,7 +112,7 @@ export class AcDatagridCellComponent extends AcBase {
     return {
       field: this.column.field,
       instance: this,
-      rowData: this.rowData,
+      data: this.data,
       column: this.column,
       rowInstance:this.rowInstance,
       index:this.index,

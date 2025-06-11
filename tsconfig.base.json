@@ -17,26 +17,19 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-ts/ac-ng-datagrid-on-aggrid": [
-        "packages/angular/ac-ng-datagrid-on-aggrid/index.ts"
-      ],
-      "@autocode-ts/autocode": [
-        "packages/common/autocode/index.ts"
-      ],
-      "@autocode-ts/ac-angular": [
-        "dist/packages/angular/ac-angular"
-      ],
+      "@autocode-ts/ac-angular": ["dist/packages/angular/ac-angular"],
       "@autocode-ts/ac-data-dictionary": [
         "packages/common/ac-data-dictionary/index.ts"
       ],
+      "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/index.ts"],
       "@autocode-ts/ac-ng-data-dictionary-editor": [
         "packages/angular/ac-ng-data-dictionary-editor/index.ts"
       ],
+      "@autocode-ts/ac-ng-datagrid-on-aggrid": [
+        "packages/angular/ac-ng-datagrid-on-aggrid/index.ts"
+      ],
       "@autocode-ts/ac-ng-drag-drop-builder": [
         "packages/angular/ac-ng-drag-drop-builder/index.ts"
-      ],
-      "@autocode-ts/ac-extensions": [
-        "packages/common/ac-extensions/index.ts"
       ],
       "@autocode-ts/ac-ng-input-audio-recording": [
         "packages/angular/ac-ng-input-audio-recording/index.ts"
@@ -59,21 +52,17 @@
       "@autocode-ts/ac-ng-node-editor": [
         "packages/angular/ac-ng-node-editor/index.ts"
       ],
-      "@autocode-ts/ac-react": [
-        "packages/react/ac-react/index.ts"
+      "@autocode-ts/ac-ng-runtime": [
+        "packages/angular/ac-ng-runtime/src/index.ts"
       ],
-      "@autocode-ts/ac-sql": [
-        "packages/node/ac-sql/index.ts"
-      ],
-      "@autocode-ts/ac-vue": [
-        "packages/vue/ac-vue/index.ts"
-      ],
-      "@autocode-ts/ac-web": [
-        "packages/node/ac-web/index.ts"
-      ],
+      "@autocode-ts/ac-react": ["packages/react/ac-react/index.ts"],
+      "@autocode-ts/ac-sql": ["packages/node/ac-sql/index.ts"],
+      "@autocode-ts/ac-vue": ["packages/vue/ac-vue/index.ts"],
+      "@autocode-ts/ac-web": ["packages/node/ac-web/index.ts"],
       "@autocode-ts/ac-web-on-express": [
         "packages/node/ac-web-on-express/index.ts"
-      ]
+      ],
+      "@autocode-ts/autocode": ["packages/common/autocode/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

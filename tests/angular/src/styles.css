@@ -2,3 +2,26 @@
 .ag-side-buttons {
   display: none !important;
 }
+.ag-header-cell-comp-wrapper{
+  display: block;
+}
+.ag-grid-header-cell{
+  height: 100%;
+}
+.ag-grid-header-cell-label,.ag-grid-header-cell-sort-button,.ag-grid-header-cell-filter-button{
+  padding-top: 12.5px;
+  display: inline-block;
+}
+.ag-grid-header-cell-filter-button{
+  float: right;
+  cursor: pointer;
+}
+.ag-grid-header-cell-label{
+  cursor: pointer;
+}
+.ag-grid-header-cell-sort-button{
+  width: 25px;
+  text-align: center;
+  margin-left: 0px;
+  cursor: pointer;
+}
