@@ -19,7 +19,7 @@ const LargeTextCellElement: ElementParams = {
         },
     ],
 };
-export class LargeTextCellEditor extends PopupComponent implements ICellEditorComp {
+export class AcDGLargeTextCellEditor extends PopupComponent implements ICellEditorComp {
     private readonly eTextArea: AgInputTextArea = RefPlaceholder;
     private params: ILargeTextEditorParams;
     private focusAfterAttached: boolean;

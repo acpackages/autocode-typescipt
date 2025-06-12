@@ -10,7 +10,7 @@ import { _formatNumberCommas, _isClientSideRowModel, _warn } from 'ag-grid-commu
 import { AgNameValue } from './agNameValue';
 import { _getFilteredRowCount, _getTotalRowCount } from './utils';
 
-export class TotalAndFilteredRowsComp extends AgNameValue implements IStatusPanelComp {
+export class AcDGTotalAndFilteredRowsComp extends AgNameValue implements IStatusPanelComp {
     public postConstruct(): void {
         if (!_isClientSideRowModel(this.gos)) {
             _warn(224);

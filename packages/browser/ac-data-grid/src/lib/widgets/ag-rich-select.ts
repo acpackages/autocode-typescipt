@@ -67,7 +67,7 @@ const AgRichSelectElement: ElementParams = {
         },
     ],
 };
-export class AgRichSelect<TValue = any> extends AgPickerField<
+export class AcDataGridRichSelect<TValue = any> extends AgPickerField<
     TValue[] | TValue,
     RichSelectParams<TValue>,
     AgRichSelectEvent,

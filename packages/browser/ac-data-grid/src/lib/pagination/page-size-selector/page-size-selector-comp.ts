@@ -13,7 +13,7 @@ import type { PaginationService } from '../paginationService';
 
 const paginationPageSizeSelector = 'paginationPageSizeSelector';
 const PageSizeSelectorCompElement: ElementParams = { tag: 'span', cls: 'ag-paging-page-size' };
-export class PageSizeSelectorComp extends Component {
+export class AcDGPageSizeSelectorComp extends Component {
     private pagination: PaginationService;
 
     public wireBeans(beans: BeanCollection): void {

@@ -9,7 +9,7 @@ import { AgSliderSelector } from '../../../../widgets/agSlider';
 import type { ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class AxisTicksPanel extends Component {
+export class AcDGAxisTicksPanel extends Component {
     private chartTranslation: ChartTranslationService;
     private readonly axisTicksSizeSlider: AgSlider = RefPlaceholder;
 

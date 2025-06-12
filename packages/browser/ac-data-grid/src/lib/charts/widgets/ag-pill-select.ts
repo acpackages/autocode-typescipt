@@ -30,7 +30,7 @@ export interface IAcDataGridPillSelectChangeParams<TValue> {
     selected: TValue[];
 }
 
-export class AgPillSelect<TValue = string | null> extends Component {
+export class AcDataGridPillSelect<TValue = string | null> extends Component {
     private dropZonePanel: PillSelectDropZonePanel<TValue>;
     private eSelect?: AgSelect<TValue>;
 
@@ -180,7 +180,7 @@ export class AgPillSelect<TValue = string | null> extends Component {
     }
 }
 
-class PillSelectDragComp<TValue> extends PillDragComp<TValue> {
+class AcDGPillSelectDragComp<TValue> extends PillDragComp<TValue> {
     constructor(
         private readonly value: TValue,
         dragSourceDropTarget: DropTarget,
@@ -231,7 +231,7 @@ class PillSelectDragComp<TValue> extends PillDragComp<TValue> {
     }
 }
 
-class PillSelectDropZonePanel<TValue> extends PillDropZonePanel<PillSelectDragComp<TValue>, TValue> {
+class AcDGPillSelectDropZonePanel<TValue> extends PillDropZonePanel<PillSelectDragComp<TValue>, TValue> {
     constructor(
         private readonly model: {
             getValues: () => TValue[];

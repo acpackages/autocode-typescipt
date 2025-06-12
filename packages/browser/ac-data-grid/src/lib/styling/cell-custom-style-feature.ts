@@ -7,7 +7,7 @@ import { _addGridCommonParams } from '../gridOptionsUtils';
 import type { CellCtrl, ICellComp } from '../rendering/cell/cellCtrl';
 import { processClassRules } from './stylingUtils';
 
-export class CellCustomStyleFeature extends BeanStub {
+export class AcDGCellCustomStyleFeature extends BeanStub {
     private readonly column: AgColumn;
     private staticClasses: string[] = [];
 

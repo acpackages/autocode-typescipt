@@ -34,7 +34,7 @@ import {
 } from './utils/focus';
 import { _makeNull } from './utils/generic';
 
-export class FocusService extends BeanStub implements NamedBean {
+export class AcDGFocusService extends BeanStub implements NamedBean {
     beanName = 'focusSvc' as const;
 
     private colModel: ColumnModel;

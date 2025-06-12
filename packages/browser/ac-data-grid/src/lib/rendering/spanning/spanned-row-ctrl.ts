@@ -4,7 +4,7 @@ import type { CellCtrl } from '../cell/cellCtrl';
 import { RowCtrl } from '../row/rowCtrl';
 import { SpannedCellCtrl } from './spannedCellCtrl';
 
-export class SpannedRowCtrl extends RowCtrl {
+export class AcDGSpannedRowCtrl extends RowCtrl {
     protected override onRowIndexChanged(): void {
         super.onRowIndexChanged();
         this.getAllCellCtrls().forEach((c) => c.refreshAriaRowIndex());

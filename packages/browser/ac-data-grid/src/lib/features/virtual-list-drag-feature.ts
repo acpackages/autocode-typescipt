@@ -14,7 +14,7 @@ import type { VirtualListDragItem, VirtualListDragParams } from './iVirtualListD
 
 const LIST_ITEM_HOVERED = 'ag-list-item-hovered';
 
-export class VirtualListDragFeature<
+export class AcDGVirtualListDragFeature<
     C extends Component<any>,
     R extends Component<any>,
     V,

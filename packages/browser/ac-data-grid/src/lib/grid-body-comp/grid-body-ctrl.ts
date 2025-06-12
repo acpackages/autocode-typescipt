@@ -47,7 +47,7 @@ export interface IGridBodyComp extends LayoutView {
     setGridRootRole(role: 'grid' | 'treegrid'): void;
 }
 
-export class GridBodyCtrl extends BeanStub {
+export class AcDGGridBodyCtrl extends BeanStub {
     private ctrlsSvc: CtrlsService;
     private colModel: ColumnModel;
     private scrollVisibleSvc: ScrollVisibleService;

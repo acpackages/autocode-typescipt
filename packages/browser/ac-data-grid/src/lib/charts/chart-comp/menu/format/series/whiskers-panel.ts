@@ -8,7 +8,7 @@ import { AgSliderSelector } from '../../../../widgets/agSlider';
 import type { ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class WhiskersPanel extends Component {
+export class AcDGWhiskersPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

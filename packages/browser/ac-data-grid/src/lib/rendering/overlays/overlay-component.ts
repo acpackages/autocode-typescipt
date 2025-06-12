@@ -20,7 +20,7 @@ export interface IOverlayComp<
 > extends IComponent<TParams>,
         IOverlay<TData, TContext, TParams> {}
 
-export abstract class OverlayComponent<
+export abstract class AcDGOverlayComponent<
         TData = any,
         TContext = any,
         TParams extends Readonly<IOverlayParams<TData, TContext>> = IOverlayParams<TData, TContext>,

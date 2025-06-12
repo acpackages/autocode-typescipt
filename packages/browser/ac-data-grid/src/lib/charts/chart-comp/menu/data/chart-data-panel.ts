@@ -20,7 +20,7 @@ const DefaultDataPanelDef: ChartDataPanelType = {
     ],
 };
 
-export class ChartDataPanel extends Component {
+export class AcDGChartDataPanel extends Component {
     protected chartTranslation: ChartTranslationService;
     private chartSvc: IChartService;
 

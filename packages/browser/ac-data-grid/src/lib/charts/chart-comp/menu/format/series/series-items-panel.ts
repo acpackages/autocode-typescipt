@@ -10,7 +10,7 @@ import { FontPanel } from '../fontPanel';
 
 type SeriesItemType = 'positive' | 'negative';
 
-export class SeriesItemsPanel extends Component {
+export class AcDGSeriesItemsPanel extends Component {
     private readonly seriesItemsGroup: AgGroupComponent = RefPlaceholder;
 
     private chartTranslation: ChartTranslationService;

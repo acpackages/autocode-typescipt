@@ -49,7 +49,7 @@ const ToolPanelColumnGroupElement: ElementParams = {
     ],
 };
 
-export class ToolPanelColumnGroupComp extends Component {
+export class AcDGToolPanelColumnGroupComp extends Component {
     private readonly cbSelect: AgCheckbox = RefPlaceholder;
     private readonly eLabel: HTMLElement = RefPlaceholder;
 

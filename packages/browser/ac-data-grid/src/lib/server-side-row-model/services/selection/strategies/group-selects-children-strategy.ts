@@ -21,7 +21,7 @@ interface IAcDGSelectionState {
     toggledNodes: Map<string, SelectionState>;
 }
 
-export class GroupSelectsChildrenStrategy extends BeanStub implements ISelectionStrategy {
+export class AcDGGroupSelectsChildrenStrategy extends BeanStub implements ISelectionStrategy {
     private rowModel: IRowModel;
     private rowGroupColsSvc?: IColsService;
     private filterManager?: FilterManager;

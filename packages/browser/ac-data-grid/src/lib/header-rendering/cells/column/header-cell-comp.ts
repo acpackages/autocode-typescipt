@@ -17,7 +17,7 @@ const HeaderCellElement: ElementParams = {
         { tag: 'div', ref: 'eHeaderCompWrapper', cls: 'ag-header-cell-comp-wrapper', role: 'presentation' },
     ],
 };
-export class HeaderCellComp extends AbstractHeaderCellComp<HeaderCellCtrl> {
+export class AcDGHeaderCellComp extends AbstractHeaderCellComp<HeaderCellCtrl> {
     private readonly eResize: HTMLElement = RefPlaceholder;
     private readonly eHeaderCompWrapper: HTMLElement = RefPlaceholder;
 

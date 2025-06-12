@@ -7,7 +7,7 @@ import { AgColorPickerSelector } from '../../../../widgets/agColorPicker';
 import type { ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class BackgroundPanel extends Component {
+export class AcDGBackgroundPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

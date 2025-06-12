@@ -18,7 +18,7 @@ export interface IAcDataGridSelectParams<TValue = string>
     placeholder?: string;
 }
 export type AgSelectEvent = 'selectedItem';
-export class AgSelect<TValue = string | null> extends AgPickerField<
+export class AcDataGridSelect<TValue = string | null> extends AgPickerField<
     TValue,
     AgSelectParams<TValue> & AgPickerFieldParams,
     AgSelectEvent,

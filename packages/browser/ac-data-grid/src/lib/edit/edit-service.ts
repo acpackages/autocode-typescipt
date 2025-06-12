@@ -15,7 +15,7 @@ import type { RowCtrl } from '../rendering/row/rowCtrl';
 import { _getTabIndex } from '../utils/browser';
 import { PopupEditorWrapper } from './cellEditors/popupEditorWrapper';
 
-export class EditService extends BeanStub implements NamedBean {
+export class AcDGEditService extends BeanStub implements NamedBean {
     beanName = 'editSvc' as const;
 
     /** @return whether to prevent default on event */

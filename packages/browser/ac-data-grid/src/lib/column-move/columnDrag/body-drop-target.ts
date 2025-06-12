@@ -14,7 +14,7 @@ export interface IAcDGDropListener {
     onDragCancel(): void;
 }
 
-export class BodyDropTarget extends BeanStub implements DropTarget {
+export class AcDGBodyDropTarget extends BeanStub implements DropTarget {
     private eSecondaryContainers: HTMLElement[][];
     private currentDropListener: DropListener;
 

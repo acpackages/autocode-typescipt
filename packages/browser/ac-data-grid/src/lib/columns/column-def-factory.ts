@@ -42,7 +42,7 @@ export function _deepCloneDefinition<T>(object: T, keysToSkip?: string[]): T | u
     return res;
 }
 
-export class ColumnDefFactory extends BeanStub implements NamedBean {
+export class AcDGColumnDefFactory extends BeanStub implements NamedBean {
     beanName = 'colDefFactory' as const;
 
     private rowGroupColsSvc?: IColsService;

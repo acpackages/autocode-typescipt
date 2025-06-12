@@ -16,7 +16,7 @@ export enum SelectionHandleType {
     RANGE,
 }
 
-export abstract class AbstractSelectionHandle extends Component {
+export abstract class AcDGAbstractSelectionHandle extends Component {
     protected cellCtrl: CellCtrl;
     protected cellRange: CellRange;
 

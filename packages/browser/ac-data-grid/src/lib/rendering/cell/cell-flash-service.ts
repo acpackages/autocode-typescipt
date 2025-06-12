@@ -11,7 +11,7 @@ interface IAcDGAnimationPhase {
     flashEndTime: number;
     fadeEndTime: number;
 }
-export class CellFlashService extends BeanStub implements NamedBean {
+export class AcDGCellFlashService extends BeanStub implements NamedBean {
     beanName = 'cellFlashSvc' as const;
 
     private nextAnimationTime: number | null = null;

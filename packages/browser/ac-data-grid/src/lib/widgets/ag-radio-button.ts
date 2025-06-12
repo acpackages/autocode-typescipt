@@ -4,7 +4,7 @@ import { AgCheckbox } from './agCheckbox';
 
 export interface IAcDataGridRadioButtonParams extends AgCheckboxParams {}
 
-export class AgRadioButton extends AgCheckbox<AgRadioButtonParams> {
+export class AcDataGridRadioButton extends AgCheckbox<AgRadioButtonParams> {
     constructor(config?: AgRadioButtonParams) {
         super(config, 'ag-radio-button', 'radio');
     }

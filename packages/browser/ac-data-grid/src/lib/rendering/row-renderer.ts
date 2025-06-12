@@ -46,7 +46,7 @@ interface IAcDGRowNodeMap {
 
 const ROW_ANIMATION_TIMEOUT = 400 as const;
 
-export class RowRenderer extends BeanStub implements NamedBean {
+export class AcDGRowRenderer extends BeanStub implements NamedBean {
     beanName = 'rowRenderer' as const;
 
     private pageBounds: PageBoundsService;
@@ -1543,7 +1543,7 @@ export class RowRenderer extends BeanStub implements NamedBean {
     }
 }
 
-class RowCtrlCache {
+class AcDGRowCtrlCache {
     // map for fast access
     private entriesMap: RowCtrlByRowNodeIdMap = {};
 

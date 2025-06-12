@@ -10,7 +10,7 @@ const AgNameValueElement: ElementParams = {
         { tag: 'span', ref: 'eValue', cls: 'ag-status-name-value-value' },
     ],
 };
-export class AgNameValue extends Component {
+export class AcDataGridNameValue extends Component {
     private readonly eLabel: HTMLElement = RefPlaceholder;
     private readonly eValue: HTMLElement = RefPlaceholder;
     public valueFormatter: (params: IStatusPanelValueFormatterParams) => string;

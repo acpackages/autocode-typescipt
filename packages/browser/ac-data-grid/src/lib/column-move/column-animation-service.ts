@@ -2,7 +2,7 @@ import type { NamedBean } from '../context/bean';
 import { BeanStub } from '../context/beanStub';
 import type { GridBodyCtrl } from '../gridBodyComp/gridBodyCtrl';
 
-export class ColumnAnimationService extends BeanStub implements NamedBean {
+export class AcDGColumnAnimationService extends BeanStub implements NamedBean {
     beanName = 'colAnimation' as const;
 
     private gridBodyCtrl: GridBodyCtrl;

@@ -66,7 +66,7 @@ function getAgGroupComponentTemplate(params: AgGroupComponentParams): ElementPar
     };
 }
 
-export class AgGroupComponent extends Component<AgGroupComponentEvent> {
+export class AcDataGridGroupComponent extends Component<AgGroupComponentEvent> {
     private items: GroupItem[];
     private cssIdentifier: string;
     private enabled: boolean;
@@ -378,7 +378,7 @@ function getDefaultTitleBarTemplate(params: AgGroupComponentParams): ElementPara
         ],
     };
 }
-class DefaultTitleBar extends Component<ExpandedChangedEventType> {
+class AcDGDefaultTitleBar extends Component<ExpandedChangedEventType> {
     private title: string | undefined;
     private suppressOpenCloseIcons: boolean = false;
     private suppressKeyboardNavigation: boolean = false;

@@ -16,7 +16,7 @@ import { ManagedFocusFeature } from '../../../widgets/managedFocusFeature';
 import { AbstractHeaderCellCtrl } from '../abstractCell/abstractHeaderCellCtrl';
 import type { IHeaderFilterCellComp } from './iHeaderFilterCellComp';
 
-export class HeaderFilterCellCtrl extends AbstractHeaderCellCtrl<IHeaderFilterCellComp, AgColumn> {
+export class AcDGHeaderFilterCellCtrl extends AbstractHeaderCellCtrl<IHeaderFilterCellComp, AgColumn> {
     private eButtonShowMainFilter: HTMLElement;
     private eFloatingFilterBody: HTMLElement;
 

@@ -26,7 +26,7 @@ const GroupFloatingFilterElement: ElementParams = {
     role: 'presentation',
 };
 
-export class GroupFloatingFilterComp extends Component implements IFloatingFilterComp<GroupFilter> {
+export class AcDGGroupFloatingFilterComp extends Component implements IFloatingFilterComp<GroupFilter> {
     private filterManager?: FilterManager;
 
     public wireBeans(beans: BeanCollection) {

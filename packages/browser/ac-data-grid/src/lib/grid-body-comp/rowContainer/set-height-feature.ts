@@ -1,7 +1,7 @@
 import { BeanStub } from '../../context/beanStub';
 import type { RowContainerHeightService } from '../../rendering/rowContainerHeightService';
 
-export class SetHeightFeature extends BeanStub {
+export class AcDGSetHeightFeature extends BeanStub {
     constructor(
         private readonly eContainer: HTMLElement,
         private readonly eViewport?: HTMLElement

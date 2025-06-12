@@ -9,7 +9,7 @@ import type { ColState } from '../../model/chartDataModel';
 import { DEFAULT_CHART_CATEGORY } from '../../model/chartDataModel';
 import type { ChartTranslationKey, ChartTranslationService } from '../../services/chartTranslationService';
 
-export abstract class DragDataPanel extends Component {
+export abstract class AcDGDragDataPanel extends Component {
     protected chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

@@ -22,7 +22,7 @@ export interface IAcDGToolPanelColumnCompParams<TData = any, TContext = any>
     extends IToolPanelParams<TData, TContext, ColumnToolPanelState>,
         IToolPanelColumnCompParams {}
 
-export class ColumnToolPanel extends Component implements IColumnToolPanel, IToolPanelComp {
+export class AcDGColumnToolPanel extends Component implements IColumnToolPanel, IToolPanelComp {
     private initialised = false;
     private params: ToolPanelColumnCompParams;
 

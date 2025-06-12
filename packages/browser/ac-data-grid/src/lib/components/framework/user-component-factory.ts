@@ -84,7 +84,7 @@ export function _getUserCompKeys<TDefinition>(
     return { compName, jsComp, fwComp, paramsFromSelector, popupFromSelector, popupPositionFromSelector };
 }
 
-export class UserComponentFactory extends BeanStub implements NamedBean {
+export class AcDGUserComponentFactory extends BeanStub implements NamedBean {
     beanName = 'userCompFactory' as const;
 
     private gridOptions: GridOptions;

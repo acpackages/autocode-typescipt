@@ -68,7 +68,7 @@ export const createPart = <T = unknown>(args: CreatePartArgs<T>): Part<ExpandTyp
 export const defaultModeName = '$default';
 
 let partCounter = 0;
-export class PartImpl implements Part {
+export class AcDGPartImpl implements Part {
     feature?: string | undefined;
     modeParams: Record<string, Record<string, unknown>>;
     css?: string | (() => string) | undefined;

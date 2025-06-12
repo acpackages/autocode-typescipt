@@ -1,4 +1,4 @@
-export class SetValueModelFilteringKeys {
+export class AcDGSetValueModelFilteringKeys {
     // To make the filtering fast, we store the keys in a Set rather than using the default array.
     private filteringKeys: Set<string | null> | null = null;
 

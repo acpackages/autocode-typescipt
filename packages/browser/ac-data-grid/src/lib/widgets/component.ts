@@ -32,7 +32,7 @@ export interface IAcDGVisibleChangedEvent extends IAcDataGridEvent<'displayChang
 
 export type ComponentSelector = { component: { new (params?: any): Component<any> }; selector: AgComponentSelector };
 
-export class Component<TLocalEvent extends string = ComponentEvent>
+export class AcDGComponent<TLocalEvent extends string = ComponentEvent>
     extends BeanStub<TLocalEvent | ComponentEvent>
     implements ComponentBean, BaseBean<BeanCollection>
 {

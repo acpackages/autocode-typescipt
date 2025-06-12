@@ -17,7 +17,7 @@ import type { DateFilterModel, DateFilterParams } from './iDateFilter';
 const DEFAULT_MIN_YEAR = 1000;
 const DEFAULT_MAX_YEAR = Infinity;
 
-export class DateFilter extends ScalarFilter<DateFilterModel, Date, DateCompWrapper> {
+export class AcDGDateFilter extends ScalarFilter<DateFilterModel, Date, DateCompWrapper> {
     private readonly eConditionPanelsFrom: HTMLElement[] = [];
     private readonly eConditionPanelsTo: HTMLElement[] = [];
 

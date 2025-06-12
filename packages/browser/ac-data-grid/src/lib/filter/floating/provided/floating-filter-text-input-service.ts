@@ -4,7 +4,7 @@ import { AgInputTextField } from '../../../widgets/agInputTextField';
 import { RefPlaceholder } from '../../../widgets/component';
 import type { FloatingFilterInputService } from './iFloatingFilterInputService';
 
-export class FloatingFilterTextInputService extends BeanStub implements FloatingFilterInputService {
+export class AcDGFloatingFilterTextInputService extends BeanStub implements FloatingFilterInputService {
     private eInput: AgInputTextField = RefPlaceholder;
     private onValueChanged: (e: KeyboardEvent) => void = () => {};
 

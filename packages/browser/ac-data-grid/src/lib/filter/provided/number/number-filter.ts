@@ -11,7 +11,7 @@ import { DEFAULT_NUMBER_FILTER_OPTIONS } from './numberFilterConstants';
 import { NumberFilterModelFormatter } from './numberFilterModelFormatter';
 import { getAllowedCharPattern } from './numberFilterUtils';
 
-export class NumberFilter extends ScalarFilter<NumberFilterModel, number> {
+export class AcDGNumberFilter extends ScalarFilter<NumberFilterModel, number> {
     private readonly eValuesFrom: (AgInputTextField | AgInputNumberField)[] = [];
     private readonly eValuesTo: (AgInputTextField | AgInputNumberField)[] = [];
 

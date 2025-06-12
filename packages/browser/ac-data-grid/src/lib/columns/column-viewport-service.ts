@@ -10,7 +10,7 @@ import { _exists } from '../utils/generic';
 import type { ColumnModel } from './columnModel';
 import type { VisibleColsService } from './visibleColsService';
 
-export class ColumnViewportService extends BeanStub implements NamedBean {
+export class AcDGColumnViewportService extends BeanStub implements NamedBean {
     beanName = 'colViewport' as const;
 
     private visibleCols: VisibleColsService;

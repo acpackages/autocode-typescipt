@@ -4,7 +4,7 @@ import { DEFAULT_CHART_CATEGORY } from '../../model/chartDataModel';
 import { CartesianChartProxy } from '../cartesian/cartesianChartProxy';
 import type { UpdateParams } from '../chartProxy';
 
-export abstract class StatisticalChartProxy<
+export abstract class AcDGStatisticalChartProxy<
     TSeries extends 'box-plot' | 'range-area' | 'range-bar',
 > extends CartesianChartProxy<TSeries> {
     public getAxes(params: UpdateParams, commonChartOptions: AgCartesianChartOptions): AgCartesianAxisOptions[] {

@@ -31,7 +31,7 @@ export type HeaderCellCtrlInstanceId = BrandedType<string, 'HeaderCellCtrlInstan
 
 export const DOM_DATA_KEY_HEADER_CTRL = 'headerCtrl';
 
-export abstract class AbstractHeaderCellCtrl<
+export abstract class AcDGAbstractHeaderCellCtrl<
     TComp extends IAbstractHeaderCellComp = IAbstractHeaderCellComp,
     TColumn extends AgColumn | AgColumnGroup = AgColumn | AgColumnGroup,
     TFeature extends IHeaderResizeFeature = IHeaderResizeFeature,

@@ -85,7 +85,7 @@ let changeSetId = 0;
 // this is added to the main DOM element
 let gridInstanceSequence = 0;
 
-export class GridOptionsService extends BeanStub implements NamedBean {
+export class AcDGGridOptionsService extends BeanStub implements NamedBean {
     beanName = 'gos' as const;
 
     private gridOptions: GridOptions;

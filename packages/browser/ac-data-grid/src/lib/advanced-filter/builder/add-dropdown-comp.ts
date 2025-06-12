@@ -39,7 +39,7 @@ const AddDropdownCompElement: ElementParams = {
         },
     ],
 };
-export class AddDropdownComp extends AgRichSelect {
+export class AcDGAddDropdownComp extends AgRichSelect {
     constructor(private readonly params: AddDropdownCompParams) {
         super({
             ...params,

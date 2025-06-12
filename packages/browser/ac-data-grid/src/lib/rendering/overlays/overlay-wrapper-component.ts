@@ -28,7 +28,7 @@ const OverlayWrapperElement: ElementParams = {
     ],
 };
 
-export class OverlayWrapperComponent extends Component implements LayoutView {
+export class AcDGOverlayWrapperComponent extends Component implements LayoutView {
     private readonly eOverlayWrapper: HTMLElement = RefPlaceholder;
 
     private activePromise: AgPromise<IOverlayComp> | null = null;

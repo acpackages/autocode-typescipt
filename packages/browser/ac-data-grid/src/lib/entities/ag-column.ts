@@ -54,7 +54,7 @@ export function isColumn(col: Column | ColumnGroup | ProvidedColumnGroup): col i
 // appear as a child of either the original tree or the displayed tree. However the relevant group classes
 // for each type only implements one, as each group can only appear in it's associated tree (eg ProvidedColumnGroup
 // can only appear in OriginalColumn tree).
-export class AgColumn<TValue = any>
+export class AcDataGridColumn<TValue = any>
     extends BeanStub<ColumnEventName>
     implements Column, IAgEventEmitter<ColumnEventName>
 {

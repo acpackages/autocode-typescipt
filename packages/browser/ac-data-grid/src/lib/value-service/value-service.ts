@@ -21,7 +21,7 @@ import { _warn } from '../validation/logging';
 import type { ExpressionService } from './expressionService';
 import type { ValueCache } from './valueCache';
 
-export class ValueService extends BeanStub implements NamedBean {
+export class AcDGValueService extends BeanStub implements NamedBean {
     beanName = 'valueSvc' as const;
 
     private expressionSvc?: ExpressionService;

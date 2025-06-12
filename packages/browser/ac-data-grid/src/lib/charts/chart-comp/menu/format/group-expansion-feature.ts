@@ -3,7 +3,7 @@ import { BeanStub } from 'ag-grid-community';
 import type { AgGroupComponent } from '../../../../widgets/agGroupComponent';
 
 // handles single group expansion
-export class GroupExpansionFeature extends BeanStub {
+export class AcDGGroupExpansionFeature extends BeanStub {
     private id: number = 0;
     private groupComponents: Map<number, AgGroupComponent> = new Map();
     private expandedGroupComponent?: number;

@@ -24,7 +24,7 @@ const PYRAMID_SHAPES: XYCoordShape[] = [
     ],
 ];
 
-export class MiniPyramidClass extends MiniFunnelClass {
+export class AcDGMiniPyramidClass extends MiniFunnelClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

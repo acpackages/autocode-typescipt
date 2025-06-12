@@ -26,7 +26,7 @@ const mapToObject = (map: Map<string, any>): Record<string, any> => {
     return obj;
 };
 
-export class PivotStage extends BeanStub implements NamedBean, IRowNodeStage {
+export class AcDGPivotStage extends BeanStub implements NamedBean, IRowNodeStage {
     beanName = 'pivotStage' as const;
 
     public refreshProps: Set<keyof GridOptions<any>> = new Set([

@@ -6,7 +6,7 @@ import { MiniAreaClass, miniAreaData } from './miniArea';
 
 export const miniStackedAreaData = stackData(miniAreaData);
 
-export class MiniStackedAreaClass extends MiniAreaClass {
+export class AcDGMiniStackedAreaClass extends MiniAreaClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

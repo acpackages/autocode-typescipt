@@ -10,7 +10,7 @@ import type {
 } from 'ag-grid-community';
 import { BeanStub, _getGroupingApproach } from 'ag-grid-community';
 
-export class GroupStage<TData> extends BeanStub implements NamedBean, IRowNodeStage {
+export class AcDGGroupStage<TData> extends BeanStub implements NamedBean, IRowNodeStage {
     beanName = 'groupStage' as const;
 
     public refreshProps: Set<keyof GridOptions<any>> = new Set([

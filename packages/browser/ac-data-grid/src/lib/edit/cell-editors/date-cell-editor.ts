@@ -12,7 +12,7 @@ const DateCellElement: ElementParams = {
     ref: 'eInput',
     cls: 'ag-cell-editor',
 };
-class DateCellEditorInput implements CellEditorInput<Date, IDateCellEditorParams, AgInputDateField> {
+class AcDGDateCellEditorInput implements CellEditorInput<Date, IDateCellEditorParams, AgInputDateField> {
     private eInput: AgInputDateField;
     private params: IDateCellEditorParams;
 
@@ -56,7 +56,7 @@ class DateCellEditorInput implements CellEditorInput<Date, IDateCellEditorParams
     }
 }
 
-export class DateCellEditor extends SimpleCellEditor<Date, IDateCellEditorParams, AgInputDateField> {
+export class AcDGDateCellEditor extends SimpleCellEditor<Date, IDateCellEditorParams, AgInputDateField> {
     constructor() {
         super(new DateCellEditorInput());
     }

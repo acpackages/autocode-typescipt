@@ -13,7 +13,7 @@ import type { FilterRequestSource } from './iColumnFilter';
 
 const FilterWrapperElement: ElementParams = { tag: 'div', cls: 'ag-filter' };
 
-export class FilterWrapperComp extends Component {
+export class AcDGFilterWrapperComp extends Component {
     private filterWrapper: FilterWrapper | null = null;
 
     constructor(

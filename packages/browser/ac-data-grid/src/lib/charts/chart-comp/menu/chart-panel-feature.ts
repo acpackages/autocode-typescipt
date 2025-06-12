@@ -5,7 +5,7 @@ import type { ChartController } from '../chartController';
 import type { ChartSeriesType } from '../utils/seriesTypeMapper';
 import { getSeriesType } from '../utils/seriesTypeMapper';
 
-export class ChartPanelFeature extends BeanStub {
+export class AcDGChartPanelFeature extends BeanStub {
     private chartType: ChartType;
     private isGrouping: boolean;
     private panels: Component[] = [];

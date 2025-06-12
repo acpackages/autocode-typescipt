@@ -1,4 +1,4 @@
-export class CssClassManager {
+export class AcDGCssClassManager {
     private getGui: () => HTMLElement | undefined | null;
 
     // to minimise DOM hits, we only apply CSS classes if they have changed. as adding a CSS class that is already

@@ -56,7 +56,7 @@ type BeanDestroyFunc = Pick<BeanStub<any>, 'addDestroyFunc'>;
 
 // for all controllers that are singletons, they can register here so other parts
 // of the application can access them.
-export class CtrlsService extends BeanStub<'ready'> implements NamedBean {
+export class AcDGCtrlsService extends BeanStub<'ready'> implements NamedBean {
     beanName = 'ctrlsSvc' as const;
 
     private params: IAcDGReadyParams = {} as any;

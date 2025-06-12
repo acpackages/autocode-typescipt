@@ -48,7 +48,7 @@ export interface ITooltipComp extends IComponent<ITooltipParams> {}
 
 const TooltipComponentElement: ElementParams = { tag: 'div', cls: 'ag-tooltip' };
 
-export class TooltipComponent extends PopupComponent implements ITooltipComp {
+export class AcDGTooltipComponent extends PopupComponent implements ITooltipComp {
     constructor() {
         super(TooltipComponentElement);
     }

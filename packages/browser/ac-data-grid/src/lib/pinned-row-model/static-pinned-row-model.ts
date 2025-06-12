@@ -17,7 +17,7 @@ interface IAcDGOrderedCache<T extends { id: string | undefined }> {
     order: string[];
 }
 
-export class StaticPinnedRowModel extends BeanStub implements IPinnedRowModel {
+export class AcDGStaticPinnedRowModel extends BeanStub implements IPinnedRowModel {
     private nextId = 0;
     private pinnedTopRows: OrderedCache<RowNode> = { cache: {}, order: [] };
     private pinnedBottomRows: OrderedCache<RowNode> = { cache: {}, order: [] };

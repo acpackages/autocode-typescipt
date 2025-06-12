@@ -19,7 +19,7 @@ import { _warn } from '../validation/logging';
 import type { ColumnFilterService, FilterWrapper } from './columnFilterService';
 import type { QuickFilterService } from './quickFilterService';
 
-export class FilterManager extends BeanStub implements NamedBean {
+export class AcDGFilterManager extends BeanStub implements NamedBean {
     beanName = 'filterManager' as const;
 
     private quickFilter?: QuickFilterService;

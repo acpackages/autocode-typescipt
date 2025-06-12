@@ -4,7 +4,7 @@ import { BeanStub } from 'ag-grid-community';
 /**
  * Containers helper functions specific to row group col values.
  */
-export class ShowRowGroupColValueService extends BeanStub implements NamedBean, IShowRowGroupColsValueService {
+export class AcDGShowRowGroupColValueService extends BeanStub implements NamedBean, IShowRowGroupColsValueService {
     beanName = 'showRowGroupColValueSvc' as const;
 
     /**

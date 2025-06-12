@@ -81,7 +81,7 @@ interface IAcDGRowsDrop<TData = any> {
 
 type RowDragEventType = 'rowDragEnter' | 'rowDragLeave' | 'rowDragMove' | 'rowDragEnd' | 'rowDragCancel';
 
-export class RowDragFeature extends BeanStub implements DropTarget {
+export class AcDGRowDragFeature extends BeanStub implements DropTarget {
     private clientSideRowModel: IClientSideRowModel;
     private eContainer: HTMLElement;
     private lastDraggingEvent: DraggingEvent;

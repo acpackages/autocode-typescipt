@@ -11,7 +11,7 @@ import type {
 import { BaseExpansionService } from '../../rowHierarchy/baseExpansionService';
 import type { ServerSideRowModel } from '../serverSideRowModel';
 
-export class ServerSideExpansionService extends BaseExpansionService implements NamedBean, IExpansionService {
+export class AcDGServerSideExpansionService extends BaseExpansionService implements NamedBean, IExpansionService {
     beanName = 'expansionSvc' as const;
 
     private serverSideRowModel: ServerSideRowModel;

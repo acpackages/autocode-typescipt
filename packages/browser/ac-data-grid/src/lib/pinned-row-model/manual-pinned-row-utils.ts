@@ -4,7 +4,7 @@ import { _isServerSideRowModel } from '../gridOptionsUtils';
 import type { RowPinnedType } from '../interfaces/iRowNode';
 import { _removeFromArray } from '../utils/array';
 
-export class PinnedRows {
+export class AcDGPinnedRows {
     /** Canonical set of pinned nodes */
     private all = new Set<RowNode>();
     /**

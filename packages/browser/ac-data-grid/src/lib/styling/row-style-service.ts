@@ -16,7 +16,7 @@ export function calculateRowLevel(rowNode: RowNode): number {
     return parent ? parent.level + 1 : 0;
 }
 
-export class RowStyleService extends BeanStub implements NamedBean {
+export class AcDGRowStyleService extends BeanStub implements NamedBean {
     beanName = 'rowStyleSvc' as const;
 
     public processClassesFromGridOptions(classes: string[], rowNode: RowNode): void {

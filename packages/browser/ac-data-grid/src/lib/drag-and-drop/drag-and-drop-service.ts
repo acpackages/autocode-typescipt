@@ -134,7 +134,7 @@ export type DragAndDropIcon =
     | 'notAllowed'
     | 'hide';
 
-export class DragAndDropService extends BeanStub implements NamedBean {
+export class AcDGDragAndDropService extends BeanStub implements NamedBean {
     beanName = 'dragAndDrop' as const;
 
     private ctrlsSvc: CtrlsService;

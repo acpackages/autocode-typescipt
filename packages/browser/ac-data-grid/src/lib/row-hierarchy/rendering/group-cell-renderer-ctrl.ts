@@ -25,7 +25,7 @@ import {
 
 import { _isHiddenParent } from '../rowHierarchyUtils';
 
-export class GroupCellRendererCtrl extends BeanStub implements IGroupCellRendererCtrl {
+export class AcDGGroupCellRendererCtrl extends BeanStub implements IGroupCellRendererCtrl {
     private params: GroupCellRendererParams;
 
     private node: RowNode; // the node this cell is rendering for

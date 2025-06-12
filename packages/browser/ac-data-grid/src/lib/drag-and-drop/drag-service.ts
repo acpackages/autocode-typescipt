@@ -11,7 +11,7 @@ import { _areEventsNear } from '../utils/mouse';
 
 /** Adds drag listening onto an element. In AG Grid this is used twice, first is resizing columns,
  * second is moving the columns and column groups around (ie the 'drag' part of Drag and Drop. */
-export class DragService extends BeanStub implements NamedBean {
+export class AcDGDragService extends BeanStub implements NamedBean {
     beanName = 'dragSvc' as const;
 
     private currentDragParams: DragListenerParams | null;

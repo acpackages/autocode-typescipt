@@ -17,7 +17,7 @@ import {
     _shouldRowBeRendered,
 } from './flattenUtils';
 
-export class FlattenStage extends BeanStub implements IRowNodeStage<RowNode[]>, NamedBean {
+export class AcDGFlattenStage extends BeanStub implements IRowNodeStage<RowNode[]>, NamedBean {
     beanName = 'flattenStage' as const;
 
     public refreshProps: Set<keyof GridOptions<any>> = new Set([

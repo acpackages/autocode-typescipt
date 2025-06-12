@@ -53,7 +53,7 @@ export interface IAcDGCommonCreateChartParams extends BaseCreateChartParams {
     focusDialogOnOpen?: boolean;
 }
 
-export class ChartService extends BeanStub implements NamedBean, IChartService {
+export class AcDGChartService extends BeanStub implements NamedBean, IChartService {
     beanName = 'chartSvc' as const;
 
     private visibleCols: VisibleColsService;

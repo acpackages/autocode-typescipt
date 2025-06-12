@@ -4,7 +4,7 @@ import type { GetDataPath, IChangedRowNodes, NamedBean, RefreshModelParams, RowN
 import { AbstractClientSideTreeNodeManager } from './abstractClientSideTreeNodeManager';
 import type { TreeNode } from './treeNode';
 
-export class ClientSidePathTreeNodeManager<TData>
+export class AcDGClientSidePathTreeNodeManager<TData>
     extends AbstractClientSideTreeNodeManager<TData>
     implements NamedBean
 {

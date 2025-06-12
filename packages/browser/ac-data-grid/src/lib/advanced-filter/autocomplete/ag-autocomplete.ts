@@ -59,7 +59,7 @@ const AgAutocompleteElement: ElementParams = {
     ],
 };
 
-export class AgAutocomplete extends Component<AgAutocompleteEvent> {
+export class AcDataGridAutocomplete extends Component<AgAutocompleteEvent> {
     private popupSvc: PopupService;
 
     public wireBeans(beans: BeanCollection): void {

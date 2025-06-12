@@ -53,7 +53,7 @@ interface IAcDGGroupingDetails {
     keyCreators: (((params: KeyCreatorParams) => string) | undefined)[];
 }
 
-export class GroupStrategy extends BeanStub implements IRowGroupingStrategy {
+export class AcDGGroupStrategy extends BeanStub implements IRowGroupingStrategy {
     private colModel: ColumnModel;
     private rowGroupColsSvc?: IColsService;
     private valueSvc: ValueService;

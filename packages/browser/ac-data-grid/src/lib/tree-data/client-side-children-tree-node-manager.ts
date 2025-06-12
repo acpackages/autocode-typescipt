@@ -16,7 +16,7 @@ import type { DataFieldGetter } from './fieldAccess';
 import type { TreeNode } from './treeNode';
 import type { TreeRow } from './treeRow';
 
-export class ClientSideChildrenTreeNodeManager<TData>
+export class AcDGClientSideChildrenTreeNodeManager<TData>
     extends AbstractClientSideTreeNodeManager<TData>
     implements IClientSideNodeManager<TData>, NamedBean
 {

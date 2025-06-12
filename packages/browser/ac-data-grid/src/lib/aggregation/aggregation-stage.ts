@@ -29,7 +29,7 @@ interface IAcDGAggregationDetails {
     userAggFunc: ((params: WithoutGridCommon<GetGroupRowAggParams<any, any>>) => any) | undefined;
 }
 
-export class AggregationStage extends BeanStub implements NamedBean, IRowNodeStage {
+export class AcDGAggregationStage extends BeanStub implements NamedBean, IRowNodeStage {
     beanName = 'aggStage' as const;
 
     public refreshProps: Set<keyof GridOptions<any>> = new Set([

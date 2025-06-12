@@ -1,7 +1,7 @@
 import type { CellRange } from '../interfaces/IRangeService';
 import type { CellValueChange } from './iUndoRedo';
 
-export class UndoRedoAction {
+export class AcDGUndoRedoAction {
     cellValueChanges: CellValueChange[];
 
     constructor(cellValueChanges: CellValueChange[]) {
@@ -9,7 +9,7 @@ export class UndoRedoAction {
     }
 }
 
-export class RangeUndoRedoAction extends UndoRedoAction {
+export class AcDGRangeUndoRedoAction extends UndoRedoAction {
     constructor(
         cellValueChanges: CellValueChange[],
         public readonly initialRange?: CellRange,
@@ -21,7 +21,7 @@ export class RangeUndoRedoAction extends UndoRedoAction {
 }
 
 const DEFAULT_STACK_SIZE = 10;
-export class UndoRedoStack {
+export class AcDGUndoRedoStack {
     private readonly maxStackSize: number;
 
     private actionStack: UndoRedoAction[] = [];

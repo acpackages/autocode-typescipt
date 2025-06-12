@@ -1,6 +1,6 @@
 import { Component } from 'ag-grid-community';
 
-export class AgHorizontalResize extends Component {
+export class AcDataGridHorizontalResize extends Component {
     private startingWidth: number;
     public elementToResize: HTMLElement;
     public inverted: boolean;

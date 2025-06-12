@@ -17,7 +17,7 @@ interface IAcDGRemoveDetails {
     fromAllLeafChildren: Set<GroupRow> | null;
 }
 
-export class BatchRemover {
+export class AcDGBatchRemover {
     private allSets = new Map<GroupRow, RemoveDetails>();
 
     public removeFromChildrenAfterGroup(parent: RowNode, child: RowNode): void {

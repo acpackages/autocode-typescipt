@@ -29,7 +29,7 @@ const CheckboxCellRendererElement: ElementParams = {
     ],
 };
 
-export class CheckboxCellRenderer extends Component implements ICellRenderer {
+export class AcDGCheckboxCellRenderer extends Component implements ICellRenderer {
     private readonly eCheckbox: AgCheckbox = RefPlaceholder;
     private params: ICheckboxCellRendererParams;
 

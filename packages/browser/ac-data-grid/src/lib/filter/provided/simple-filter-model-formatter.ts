@@ -4,7 +4,7 @@ import { FILTER_LOCALE_TEXT } from '../filterLocaleText';
 import type { ICombinedSimpleModel, ISimpleFilterModel } from './iSimpleFilter';
 import type { OptionsFactory } from './optionsFactory';
 
-export abstract class SimpleFilterModelFormatter<TValue = any> {
+export abstract class AcDGSimpleFilterModelFormatter<TValue = any> {
     constructor(
         private readonly getLocaleTextFunc: () => LocaleTextFunc,
         private optionsFactory: OptionsFactory,

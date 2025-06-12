@@ -11,7 +11,7 @@ export const miniStackedBarData = [
     [2, 3, 4],
 ];
 
-export class MiniStackedBarClass extends MiniChartWithAxes {
+export class AcDGMiniStackedBarClass extends MiniChartWithAxes {
     private readonly bars: any[][];
 
     constructor(

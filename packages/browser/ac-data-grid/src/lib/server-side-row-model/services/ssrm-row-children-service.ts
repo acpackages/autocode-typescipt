@@ -2,7 +2,7 @@ import type { IRowChildrenService, NamedBean, RowNode } from 'ag-grid-community'
 import { BeanStub } from 'ag-grid-community';
 
 /** handles row grouping and tree data logic */
-export class SsrmRowChildrenService extends BeanStub implements NamedBean, IRowChildrenService {
+export class AcDGSsrmRowChildrenService extends BeanStub implements NamedBean, IRowChildrenService {
     beanName = 'rowChildrenSvc' as const;
 
     public getHasChildrenValue(rowNode: RowNode): boolean | null {

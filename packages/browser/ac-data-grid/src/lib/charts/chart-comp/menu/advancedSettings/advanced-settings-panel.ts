@@ -14,7 +14,7 @@ const INTERACTIVITY_GROUPS = ['navigator', 'zoom', 'animation', 'crosshair'] as 
 
 type ChartInteractivityGroup = (typeof INTERACTIVITY_GROUPS)[number];
 
-export class AdvancedSettingsPanel extends Component {
+export class AcDGAdvancedSettingsPanel extends Component {
     private chartPanelFeature: ChartPanelFeature;
 
     constructor(private readonly chartMenuContext: ChartMenuContext) {

@@ -17,7 +17,7 @@ type MenuItemProperty = {
     removeIcon?: IconName;
 };
 
-export class ToolPanelContextMenu extends Component {
+export class AcDGToolPanelContextMenu extends Component {
     private columns: AgColumn[];
     private allowScrollIntoView: boolean;
     private allowGrouping: boolean;

@@ -14,7 +14,7 @@ export function updateRowNodeAfterFilter(rowNode: RowNode): void {
     }
 }
 
-export class FilterStage extends BeanStub implements IRowNodeStage, NamedBean {
+export class AcDGFilterStage extends BeanStub implements IRowNodeStage, NamedBean {
     beanName = 'filterStage' as const;
 
     public refreshProps: Set<keyof GridOptions<any>> = new Set(['excludeChildrenWhenTreeDataFiltering']);

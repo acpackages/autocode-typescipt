@@ -43,7 +43,7 @@ const CSS_MENU = 'ag-menu';
 const CSS_CONTEXT_MENU_OPEN = 'ag-context-menu-open';
 const CSS_CONTEXT_MENU_LOADING_ICON = 'ag-context-menu-loading-icon';
 
-export class ContextMenuService extends BeanStub implements NamedBean, IContextMenuService {
+export class AcDGContextMenuService extends BeanStub implements NamedBean, IContextMenuService {
     beanName = 'contextMenuSvc' as const;
 
     private destroyLoadingSpinner: (() => void) | null = null;
@@ -450,7 +450,7 @@ export class ContextMenuService extends BeanStub implements NamedBean, IContextM
 
 export type ContextMenuEvent = 'closeMenu';
 
-class ContextMenu extends Component<ContextMenuEvent> {
+class AcDGContextMenu extends Component<ContextMenuEvent> {
     private menuList: AgMenuList | null = null;
     private focusedCell: CellPosition | null = null;
 

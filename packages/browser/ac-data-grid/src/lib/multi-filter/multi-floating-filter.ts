@@ -28,7 +28,7 @@ const MultiFloatingFilterElement: ElementParams = {
     cls: 'ag-multi-floating-filter ag-floating-filter-input',
 };
 
-export class MultiFloatingFilterComp extends Component implements IFloatingFilterComp<MultiFilter> {
+export class AcDGMultiFloatingFilterComp extends Component implements IFloatingFilterComp<MultiFilter> {
     private floatingFilters: IFloatingFilterComp[] = [];
     private compDetailsList: UserCompDetails[] = [];
     private params: IFloatingFilterParams<MultiFilter>;

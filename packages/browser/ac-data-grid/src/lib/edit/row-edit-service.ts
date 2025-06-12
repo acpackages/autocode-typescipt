@@ -4,7 +4,7 @@ import type { RowEditingStartedEvent, RowEditingStoppedEvent } from '../events';
 import type { CellCtrl } from '../rendering/cell/cellCtrl';
 import type { RowCtrl } from '../rendering/row/rowCtrl';
 
-export class RowEditService extends BeanStub implements NamedBean {
+export class AcDGRowEditService extends BeanStub implements NamedBean {
     beanName = 'rowEditSvc' as const;
 
     /** @return whether to prevent default on event */

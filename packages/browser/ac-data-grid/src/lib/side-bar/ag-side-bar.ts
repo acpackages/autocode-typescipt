@@ -42,7 +42,7 @@ const AgSideBarElement: ElementParams = {
         },
     ],
 };
-export class AgSideBar extends Component implements ISideBar {
+export class AcDataGridSideBar extends Component implements ISideBar {
     private readonly sideBarButtons: AgSideBarButtons = RefPlaceholder;
 
     private toolPanelWrappers: ToolPanelWrapper[] = [];

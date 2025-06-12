@@ -36,7 +36,7 @@ export namespace AbstractClientSideNodeManager {
     export type RootNode<TData> = ClientSideNodeManagerRootNode<TData>;
 }
 
-export abstract class AbstractClientSideNodeManager<TData = any>
+export abstract class AcDGAbstractClientSideNodeManager<TData = any>
     extends BeanStub
     implements IClientSideNodeManager<TData>
 {

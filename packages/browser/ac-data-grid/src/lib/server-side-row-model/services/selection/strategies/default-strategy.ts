@@ -16,7 +16,7 @@ interface IAcDGSelectedState {
     toggledNodes: Set<string>;
 }
 
-export class DefaultStrategy extends BeanStub implements ISelectionStrategy {
+export class AcDGDefaultStrategy extends BeanStub implements ISelectionStrategy {
     private selectedState: SelectedState = { selectAll: false, toggledNodes: new Set() };
 
     /**

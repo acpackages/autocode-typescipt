@@ -9,7 +9,7 @@ import { MiniChartWithAxes } from '../miniChartWithAxes';
 
 export const miniAreaData = miniLineData;
 
-export class MiniAreaClass extends MiniChartWithAxes {
+export class AcDGMiniAreaClass extends MiniChartWithAxes {
     protected readonly areas: Path[];
 
     constructor(

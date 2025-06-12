@@ -23,7 +23,7 @@ import type { ChartMenuService } from '../services/chartMenuService';
 import type { ChartTranslationService } from '../services/chartTranslationService';
 import type { ChartMenuContext } from './chartMenuContext';
 
-export class ChartMenuListFactory extends BeanStub implements NamedBean {
+export class AcDGChartMenuListFactory extends BeanStub implements NamedBean {
     beanName = 'chartMenuListFactory' as const;
 
     private popupSvc: PopupService;
@@ -220,7 +220,7 @@ export class ChartMenuListFactory extends BeanStub implements NamedBean {
     }
 }
 
-class ChartMenuList extends Component {
+class AcDGChartMenuList extends Component {
     private readonly eChartsMenu: HTMLElement = RefPlaceholder;
 
     private hidePopupFunc: () => void;

@@ -9,7 +9,7 @@ import { _formatNumberCommas, _isClientSideRowModel, _isServerSideRowModel, _war
 import { AgNameValue } from './agNameValue';
 import { _getTotalRowCount } from './utils';
 
-export class SelectedRowsComp extends AgNameValue implements IStatusPanelComp {
+export class AcDGSelectedRowsComp extends AgNameValue implements IStatusPanelComp {
     public postConstruct(): void {
         const gos = this.gos;
         if (!_isClientSideRowModel(gos) && !_isServerSideRowModel(gos)) {

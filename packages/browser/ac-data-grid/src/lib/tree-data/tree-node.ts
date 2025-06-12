@@ -27,7 +27,7 @@ const EMPTY_CHILDREN = (_EmptyArray as TreeNode[]).values();
  * The empty filler nodes nodes are removed.
  * Before commit those arrays are NOT representing the truth, so they should not be used.
  */
-export class TreeNode implements ITreeNode {
+export class AcDGTreeNode implements ITreeNode {
     /** Contains all the children by their key */
     private children: Map<string, TreeNode> | null = null;
 

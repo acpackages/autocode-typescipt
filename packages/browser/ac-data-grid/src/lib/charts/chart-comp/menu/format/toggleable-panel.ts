@@ -13,7 +13,7 @@ export interface IAcDGToggleablePanelParams {
     cssIdentifier?: string;
 }
 
-export class ToggleablePanel extends Component {
+export class AcDGToggleablePanel extends Component {
     private readonly toggleableGroup: AgGroupComponent = RefPlaceholder;
 
     private readonly chartOptions: ChartOptionsProxy;

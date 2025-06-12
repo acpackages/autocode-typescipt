@@ -4,7 +4,7 @@ import type { AgChartsExports } from '../../../../../agChartsExports';
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChart } from '../miniChart';
 
-export class MiniHeatmapClass extends MiniChart {
+export class AcDGMiniHeatmapClass extends MiniChart {
     private readonly rects: Rect[];
 
     constructor(

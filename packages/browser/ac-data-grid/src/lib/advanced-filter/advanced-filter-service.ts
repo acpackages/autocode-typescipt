@@ -22,7 +22,7 @@ import type {
     FilterExpressionFunctionParams,
 } from './filterExpressionUtils';
 
-export class AdvancedFilterService extends BeanStub implements NamedBean, IAdvancedFilterService {
+export class AcDGAdvancedFilterService extends BeanStub implements NamedBean, IAdvancedFilterService {
     beanName = 'advancedFilter' as const;
 
     private valueSvc: ValueService;

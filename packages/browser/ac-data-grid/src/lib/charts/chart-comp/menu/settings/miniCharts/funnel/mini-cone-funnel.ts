@@ -25,7 +25,7 @@ const CONE_FUNNEL_SHAPES: XYCoordShape[] = [
     ],
 ];
 
-export class MiniConeFunnelClass extends MiniFunnelClass {
+export class AcDGMiniConeFunnelClass extends MiniFunnelClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

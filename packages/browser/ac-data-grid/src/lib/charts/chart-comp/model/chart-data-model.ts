@@ -45,7 +45,7 @@ export interface IAcDGChartModelParams {
 
 export const DEFAULT_CHART_CATEGORY = 'AG-GRID-DEFAULT-CATEGORY';
 
-export class ChartDataModel extends BeanStub {
+export class AcDGChartDataModel extends BeanStub {
     private rangeSvc: IRangeService;
     private chartTranslation: ChartTranslationService;
 

@@ -60,7 +60,7 @@ const AggregationCompElement: ElementParams = {
         },
     ],
 };
-export class AggregationComp extends Component implements IStatusPanelComp {
+export class AcDGAggregationComp extends Component implements IStatusPanelComp {
     private readonly sumAggregationComp: AgNameValue = RefPlaceholder;
     private readonly countAggregationComp: AgNameValue = RefPlaceholder;
     private readonly minAggregationComp: AgNameValue = RefPlaceholder;

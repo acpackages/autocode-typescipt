@@ -11,7 +11,7 @@ import { BeanStub, _isServerSideRowModel } from 'ag-grid-community';
 import type { ServerSideRowModel } from '../serverSideRowModel';
 import type { ListenerUtils } from './listenerUtils';
 
-export class FilterListener extends BeanStub implements NamedBean {
+export class AcDGFilterListener extends BeanStub implements NamedBean {
     beanName = 'ssrmFilterListener' as const;
 
     private serverSideRowModel: ServerSideRowModel;

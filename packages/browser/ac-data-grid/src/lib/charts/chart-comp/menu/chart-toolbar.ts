@@ -9,7 +9,7 @@ interface IAcDGChartToolbarButton {
     callback: (eventSource: HTMLElement) => void;
 }
 
-export class ChartToolbar extends Component {
+export class AcDGChartToolbar extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

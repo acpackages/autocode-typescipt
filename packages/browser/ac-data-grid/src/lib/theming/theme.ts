@@ -62,7 +62,7 @@ type GridThemeUseArgs = {
     nonce: string | undefined;
 };
 
-export class ThemeImpl {
+export class AcDGThemeImpl {
     constructor(readonly parts: PartImpl[] = []) {}
 
     withPart(part: Part | (() => Part)): ThemeImpl {

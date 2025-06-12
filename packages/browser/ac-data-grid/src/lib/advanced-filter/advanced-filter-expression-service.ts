@@ -27,7 +27,7 @@ import {
     TextFilterExpressionOperators,
 } from './filterExpressionOperators';
 
-export class AdvancedFilterExpressionService extends BeanStub implements NamedBean {
+export class AcDGAdvancedFilterExpressionService extends BeanStub implements NamedBean {
     beanName = 'advFilterExpSvc' as const;
 
     private valueSvc: ValueService;

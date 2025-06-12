@@ -19,7 +19,7 @@ const SCROLL_GAP_NEEDED_BEFORE_MOVE = SCROLL_MOVE_WIDTH / 2;
 const SCROLL_ACCELERATION_RATE = 5;
 const SCROLL_TIME_INTERVAL = 100;
 
-export class MoveColumnFeature extends BeanStub implements DropListener {
+export class AcDGMoveColumnFeature extends BeanStub implements DropListener {
     private gridBodyCon: GridBodyCtrl;
 
     private needToMoveLeft = false;

@@ -5,7 +5,7 @@ import type { MiniChartSelector } from '../../miniChartsContainer';
 import { accumulateData } from '../miniChartHelpers';
 import { MiniChartWithPolarAxes } from '../miniChartWithPolarAxes';
 
-export class MiniRadialBarClass extends MiniChartWithPolarAxes {
+export class AcDGMiniRadialBarClass extends MiniChartWithPolarAxes {
     private readonly series: Group[];
 
     private data = [

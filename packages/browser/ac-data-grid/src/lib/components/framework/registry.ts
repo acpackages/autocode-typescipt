@@ -6,7 +6,7 @@ import type { IconName, IconValue } from '../../utils/icon';
 import { _errMsg } from '../../validation/logging';
 import type { AgComponentSelector, ComponentSelector } from '../../widgets/component';
 
-export class Registry extends BeanStub implements NamedBean {
+export class AcDGRegistry extends BeanStub implements NamedBean {
     beanName = 'registry' as const;
 
     private agGridDefaults: { [key in UserComponentName]?: any } = {};

@@ -16,7 +16,7 @@ export interface IAcDGUpdateLayoutClassesParams {
     print: boolean;
 }
 
-export class LayoutFeature extends BeanStub {
+export class AcDGLayoutFeature extends BeanStub {
     constructor(private view: LayoutView) {
         super();
     }

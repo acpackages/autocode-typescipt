@@ -12,7 +12,7 @@ import { _warn } from '../validation/logging';
 import type { ValueService } from '../valueService/valueService';
 import { CsvSerializingSession } from './csvSerializingSession';
 
-export class CsvCreator
+export class AcDGCsvCreator
     extends BaseCreator<CsvCustomContent, CsvSerializingSession, CsvExportParams>
     implements NamedBean, ICsvCreator
 {

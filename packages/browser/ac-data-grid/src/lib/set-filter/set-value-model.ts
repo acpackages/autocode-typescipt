@@ -58,7 +58,7 @@ export interface IAcDGSetValueModelParams<V> {
 
 export type SetValueModelEvent = 'availableValuesChanged';
 /** @param V type of value in the Set Filter */
-export class SetValueModel<V> implements IEventEmitter<SetValueModelEvent> {
+export class AcDGSetValueModel<V> implements IEventEmitter<SetValueModelEvent> {
     private readonly gos: GridOptionsService;
     private readonly localEventService = new LocalEventService<SetValueModelEvent>();
     private formatter: TextFormatter;

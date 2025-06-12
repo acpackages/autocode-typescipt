@@ -26,7 +26,7 @@ import { DefaultStrategy } from './selection/strategies/defaultStrategy';
 import { GroupSelectsChildrenStrategy } from './selection/strategies/groupSelectsChildrenStrategy';
 import type { ISelectionStrategy } from './selection/strategies/iSelectionStrategy';
 
-export class ServerSideSelectionService extends BaseSelectionService implements NamedBean, ISelectionService {
+export class AcDGServerSideSelectionService extends BaseSelectionService implements NamedBean, ISelectionService {
     beanName = 'selectionSvc' as const;
 
     private selectionStrategy: ISelectionStrategy;

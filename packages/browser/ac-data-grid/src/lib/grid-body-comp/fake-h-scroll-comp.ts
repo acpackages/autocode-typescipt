@@ -23,7 +23,7 @@ const FakeHScrollElement: ElementParams = {
         { tag: 'div', ref: 'eRightSpacer', cls: 'ag-horizontal-right-spacer' },
     ],
 };
-export class FakeHScrollComp extends AbstractFakeScrollComp {
+export class AcDGFakeHScrollComp extends AbstractFakeScrollComp {
     private visibleCols: VisibleColsService;
     private scrollVisibleSvc: ScrollVisibleService;
 

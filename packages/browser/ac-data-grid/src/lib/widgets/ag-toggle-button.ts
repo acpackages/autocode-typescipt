@@ -5,7 +5,7 @@ import type { ComponentSelector } from './component';
 
 export interface IAcDataGridToggleButtonParams extends AgCheckboxParams {}
 
-export class AgToggleButton extends AgCheckbox<AgToggleButtonParams> {
+export class AcDataGridToggleButton extends AgCheckbox<AgToggleButtonParams> {
     constructor(config?: AgToggleButtonParams) {
         super(config, 'ag-toggle-button');
         this.registerCSS(agToggleButtonCSS);

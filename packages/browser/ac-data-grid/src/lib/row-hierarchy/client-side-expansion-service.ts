@@ -10,7 +10,7 @@ import { _exists } from 'ag-grid-community';
 
 import { BaseExpansionService } from './baseExpansionService';
 
-export class ClientSideExpansionService extends BaseExpansionService implements NamedBean, IExpansionService {
+export class AcDGClientSideExpansionService extends BaseExpansionService implements NamedBean, IExpansionService {
     beanName = 'expansionSvc' as const;
 
     private rowModel: IClientSideRowModel;

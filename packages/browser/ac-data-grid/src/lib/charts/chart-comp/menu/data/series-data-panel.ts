@@ -6,7 +6,7 @@ import type { ColState } from '../../model/chartDataModel';
 import type { ChartOptionsService } from '../../services/chartOptionsService';
 import { DragDataPanel } from './dragDataPanel';
 
-export class SeriesDataPanel extends DragDataPanel {
+export class AcDGSeriesDataPanel extends DragDataPanel {
     constructor(
         chartController: ChartController,
         private readonly chartOptionsService: ChartOptionsService,

@@ -4,7 +4,7 @@ import type { AgColumn } from '../entities/agColumn';
 import type { AgColumnGroup } from '../entities/agColumnGroup';
 import type { RowContainerCtrl } from '../gridBodyComp/rowContainer/rowContainerCtrl';
 
-export class AutoWidthCalculator extends BeanStub implements NamedBean {
+export class AcDGAutoWidthCalculator extends BeanStub implements NamedBean {
     beanName = 'autoWidthCalc' as const;
 
     private centerRowContainerCtrl: RowContainerCtrl;

@@ -1,7 +1,7 @@
 import type { NamedBean } from './context/bean';
 import { BeanStub } from './context/beanStub';
 
-export class GridDestroyService extends BeanStub implements NamedBean {
+export class AcDGGridDestroyService extends BeanStub implements NamedBean {
     beanName = 'gridDestroySvc' as const;
 
     public destroyCalled = false;

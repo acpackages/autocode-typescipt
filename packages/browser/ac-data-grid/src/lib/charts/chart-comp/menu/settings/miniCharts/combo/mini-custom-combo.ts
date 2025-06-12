@@ -5,7 +5,7 @@ import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChart } from '../miniChart';
 import { createColumnRects, createLinePaths } from '../miniChartHelpers';
 
-export class MiniCustomComboClass extends MiniChart {
+export class AcDGMiniCustomComboClass extends MiniChart {
     private columns: Rect[];
     private lines: Path[];
 

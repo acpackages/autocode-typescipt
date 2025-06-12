@@ -36,7 +36,7 @@ export interface IAcDGColumnCollections {
     map: { [id: string]: AgColumn };
 }
 
-export class ColumnModel extends BeanStub implements NamedBean {
+export class AcDGColumnModel extends BeanStub implements NamedBean {
     beanName = 'colModel' as const;
 
     // as provided by gridProp columnsDefs

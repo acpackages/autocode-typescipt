@@ -28,7 +28,7 @@ const FUNNEL_SHAPES: XYCoordShape[] = [
     ],
 ];
 
-export class MiniFunnelClass extends MiniChart {
+export class AcDGMiniFunnelClass extends MiniChart {
     protected shapes: Shape[];
 
     constructor(

@@ -6,7 +6,7 @@ const RowNumbersRowResizerElement: ElementParams = {
     cls: 'ag-row-numbers-resizer',
 };
 
-export class AgRowNumbersRowResizer extends Component {
+export class AcDataGridRowNumbersRowResizer extends Component {
     private node: RowNode | undefined;
     private initialYPosition: number = -1;
     private initialHeight: number | null | undefined;

@@ -8,7 +8,7 @@ import { _jsonEquals } from '../utils/generic';
 import type { InfiniteCacheParams } from './infiniteCache';
 import { InfiniteCache } from './infiniteCache';
 
-export class InfiniteRowModel extends BeanStub implements NamedBean, IRowModel {
+export class AcDGIRowModel extends BeanStub implements NamedBean, IRowModel {
     beanName = 'rowModel' as const;
 
     private infiniteCache: InfiniteCache | null | undefined;

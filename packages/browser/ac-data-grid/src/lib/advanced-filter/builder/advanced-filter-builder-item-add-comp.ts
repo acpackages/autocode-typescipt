@@ -44,7 +44,7 @@ const ItemAddElement: ElementParams = {
         },
     ],
 };
-export class AdvancedFilterBuilderItemAddComp extends Component<AdvancedFilterBuilderEvents> {
+export class AcDGAdvancedFilterBuilderItemAddComp extends Component<AdvancedFilterBuilderEvents> {
     private advFilterExpSvc: AdvancedFilterExpressionService;
     private registry: Registry;
 

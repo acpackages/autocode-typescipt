@@ -8,7 +8,7 @@ export const miniNormalizedColumnData = [
     [2, 4, 6],
 ];
 
-export class MiniNormalizedColumnClass extends MiniStackedColumnClass {
+export class AcDGMiniNormalizedColumnClass extends MiniStackedColumnClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

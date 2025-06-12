@@ -41,7 +41,7 @@ export type ChartControllerEvent =
     | 'chartTypeChanged'
     | 'chartSeriesChartTypeChanged'
     | 'chartLinkedChanged';
-export class ChartController extends BeanStub<ChartControllerEvent> {
+export class AcDGChartController extends BeanStub<ChartControllerEvent> {
     private rangeSvc: IRangeService;
     private agChartsExports: AgChartsExports;
 

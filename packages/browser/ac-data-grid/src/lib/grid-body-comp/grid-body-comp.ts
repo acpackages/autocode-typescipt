@@ -103,7 +103,7 @@ function getGridBodyTemplate(includeOverlay?: boolean): {
     return { paramsMap, elementParams };
 }
 
-export class GridBodyComp extends Component {
+export class AcDGGridBodyComp extends Component {
     private readonly eGridRoot: HTMLElement = RefPlaceholder;
     private readonly eBodyViewport: HTMLElement = RefPlaceholder;
     private readonly eStickyTop: HTMLElement = RefPlaceholder;

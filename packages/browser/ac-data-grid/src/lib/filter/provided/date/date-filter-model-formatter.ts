@@ -5,7 +5,7 @@ import type { OptionsFactory } from '../optionsFactory';
 import { SimpleFilterModelFormatter } from '../simpleFilterModelFormatter';
 import type { DateFilterModel, DateFilterParams } from './iDateFilter';
 
-export class DateFilterModelFormatter extends SimpleFilterModelFormatter {
+export class AcDGDateFilterModelFormatter extends SimpleFilterModelFormatter {
     constructor(
         private dateFilterParams: DateFilterParams,
         getLocaleTextFunc: () => LocaleTextFunc,

@@ -9,7 +9,7 @@ import { _formatNumberCommas, _isClientSideRowModel, _warn } from 'ag-grid-commu
 import { AgNameValue } from './agNameValue';
 import { _getTotalRowCount } from './utils';
 
-export class TotalRowsComp extends AgNameValue implements IStatusPanelComp {
+export class AcDGTotalRowsComp extends AgNameValue implements IStatusPanelComp {
     public postConstruct(): void {
         this.setLabel('totalRows', 'Total Rows');
 

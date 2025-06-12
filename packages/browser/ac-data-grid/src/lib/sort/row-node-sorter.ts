@@ -13,7 +13,7 @@ export interface IAcDGSortedRowNode {
 
 // this logic is used by both SSRM and CSRM
 
-export class RowNodeSorter extends BeanStub implements NamedBean {
+export class AcDGRowNodeSorter extends BeanStub implements NamedBean {
     beanName = 'rowNodeSorter' as const;
 
     private isAccentedSort: boolean;

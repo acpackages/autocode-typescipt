@@ -28,7 +28,7 @@ const FiltersToolPanelElement: ElementParams = {
         { tag: 'ag-filters-tool-panel-list', ref: 'filtersToolPanelListPanel' },
     ],
 };
-export class FiltersToolPanel extends Component implements IFiltersToolPanel, IToolPanelComp {
+export class AcDGFiltersToolPanel extends Component implements IFiltersToolPanel, IToolPanelComp {
     private readonly filtersToolPanelHeaderPanel: AgFiltersToolPanelHeader = RefPlaceholder;
     private readonly filtersToolPanelListPanel: AgFiltersToolPanelList = RefPlaceholder;
 

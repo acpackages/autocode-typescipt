@@ -77,7 +77,7 @@ type Matches = Map<IRowNode, CellMatch[]>;
 /** column and corresponding number of matches in the cell for that column. `null` column is full width. */
 type CellMatch = [Column | null, number];
 
-export class FindService extends BeanStub implements NamedBean, IFindService {
+export class AcDGFindService extends BeanStub implements NamedBean, IFindService {
     beanName = 'findSvc' as const;
 
     /**

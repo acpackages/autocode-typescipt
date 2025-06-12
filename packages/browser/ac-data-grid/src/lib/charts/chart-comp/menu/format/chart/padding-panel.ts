@@ -12,7 +12,7 @@ import type { ChartTranslationService } from '../../../services/chartTranslation
 import type { ChartThemeOverridesSeriesType } from '../../../utils/seriesTypeMapper';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class PaddingPanel extends Component {
+export class AcDGPaddingPanel extends Component {
     private readonly paddingTopSlider: AgSlider = RefPlaceholder;
 
     private chartTranslation: ChartTranslationService;

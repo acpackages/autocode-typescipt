@@ -129,7 +129,7 @@ export function _setUmd(): void {
     isUmd = true;
 }
 
-export class ModuleRegistry {
+export class AcDGModuleRegistry {
     /**
      * @deprecated v33 Use `registerModules([module])` instead.
      */

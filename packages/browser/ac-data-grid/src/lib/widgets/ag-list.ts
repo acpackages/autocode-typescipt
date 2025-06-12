@@ -11,7 +11,7 @@ export interface IAcDGListOption<TValue = string> {
 
 export type AgListEvent = 'fieldValueChanged' | 'selectedItem';
 
-export class AgList<TEventType extends string = AgListEvent, TValue = string> extends Component<
+export class AcDataGridList<TEventType extends string = AgListEvent, TValue = string> extends Component<
     TEventType | AgListEvent
 > {
     private readonly activeClass = 'ag-active-item';

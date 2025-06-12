@@ -21,7 +21,7 @@ import {
     isColumnSelectionCol,
 } from './columnUtils';
 
-export class SelectionColService extends BeanStub implements NamedBean, IColumnCollectionService {
+export class AcDGSelectionColService extends BeanStub implements NamedBean, IColumnCollectionService {
     beanName = 'selectionColSvc' as const;
 
     public columns: ColumnCollections | null;

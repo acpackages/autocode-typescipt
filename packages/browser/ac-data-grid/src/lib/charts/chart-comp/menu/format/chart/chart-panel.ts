@@ -8,7 +8,7 @@ import type { FormatPanelOptions } from '../formatPanel';
 import { BackgroundPanel } from './backgroundPanel';
 import { PaddingPanel } from './paddingPanel';
 
-export class ChartPanel extends Component {
+export class AcDGChartPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

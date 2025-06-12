@@ -10,7 +10,7 @@ interface IAcDGSeriesDefinition {
     sizeField?: FieldDefinition;
 }
 
-export class ScatterChartProxy extends CartesianChartProxy<'scatter' | 'bubble'> {
+export class AcDGScatterChartProxy extends CartesianChartProxy<'scatter' | 'bubble'> {
     protected override getAxes(_params: UpdateParams): AgCartesianAxisOptions[] {
         return [
             {

@@ -6,7 +6,7 @@ import { VirtualList } from '../../widgets/virtualList';
 import { isRowGroupColLocked } from '../rowGroupingUtils';
 import type { TDropZone } from './baseDropZonePanel';
 
-export class DropZoneColumnComp extends PillDragComp<AgColumn> {
+export class AcDGDropZoneColumnComp extends PillDragComp<AgColumn> {
     private readonly eSortIndicator: SortIndicatorComp = RefPlaceholder;
 
     private displayName: string | null;
@@ -350,7 +350,7 @@ export class DropZoneColumnComp extends PillDragComp<AgColumn> {
     }
 }
 
-class AggItemComp extends Component {
+class AcDGAggItemComp extends Component {
     public selectItem: () => void;
 
     constructor(itemSelected: () => void, value: string) {

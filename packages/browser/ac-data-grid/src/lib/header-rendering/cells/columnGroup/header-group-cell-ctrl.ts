@@ -30,7 +30,7 @@ export interface IHeaderGroupCellComp extends IAbstractHeaderCellComp {
     getUserCompInstance(): IHeaderGroupComp | undefined;
 }
 
-export class HeaderGroupCellCtrl extends AbstractHeaderCellCtrl<
+export class AcDGHeaderGroupCellCtrl extends AbstractHeaderCellCtrl<
     IHeaderGroupCellComp,
     AgColumnGroup,
     GroupResizeFeature

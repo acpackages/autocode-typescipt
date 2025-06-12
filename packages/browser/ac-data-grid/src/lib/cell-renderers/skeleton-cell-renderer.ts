@@ -3,7 +3,7 @@ import { Component, _createElement, _setAriaLabel, _setAriaLabelledBy } from 'ag
 
 const SkeletonCellRendererElement: ElementParams = { tag: 'div', cls: 'ag-skeleton-container' };
 
-export class SkeletonCellRenderer extends Component implements ILoadingCellRendererComp {
+export class AcDGSkeletonCellRenderer extends Component implements ILoadingCellRendererComp {
     constructor() {
         super(SkeletonCellRendererElement);
     }

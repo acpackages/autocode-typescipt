@@ -36,7 +36,7 @@ const PillDragCompElement: ElementParams = {
         { tag: 'span', ref: 'eButton', cls: 'ag-column-drop-cell-button', role: 'presentation' },
     ],
 };
-export abstract class PillDragComp<TItem> extends Component<PillDragCompEvent> {
+export abstract class AcDGPillDragComp<TItem> extends Component<PillDragCompEvent> {
     private readonly eText: HTMLElement = RefPlaceholder;
     private readonly eDragHandle: HTMLElement = RefPlaceholder;
     private readonly eButton: HTMLElement = RefPlaceholder;

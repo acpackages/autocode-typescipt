@@ -11,7 +11,7 @@ export interface ILicenseManager {
     setLicenseKey: (key?: string, gridContext?: boolean) => void;
 }
 
-export class LicenseManager {
+export class AcDGLicenseManager {
     private static RELEASE_INFORMATION: string = 'MTc0NjgwNzgyNTIwMA==';
     private static licenseKey: string;
     private static chartsLicenseManager?: ILicenseManager;

@@ -10,7 +10,7 @@ export interface IAcDGHorizontalResizeParams {
     onResizeEnd: (delta: number) => void;
 }
 
-export class HorizontalResizeService extends BeanStub implements NamedBean {
+export class AcDGHorizontalResizeService extends BeanStub implements NamedBean {
     beanName = 'horizontalResizeSvc' as const;
 
     private dragStartX: number;

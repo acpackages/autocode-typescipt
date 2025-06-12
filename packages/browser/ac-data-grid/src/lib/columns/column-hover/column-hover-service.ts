@@ -8,7 +8,7 @@ import { HoverFeature } from './hoverFeature';
 
 const CSS_COLUMN_HOVER = 'ag-column-hover';
 
-export class ColumnHoverService extends BeanStub implements NamedBean {
+export class AcDGColumnHoverService extends BeanStub implements NamedBean {
     beanName = 'colHover' as const;
 
     private selectedColumns: AgColumn[] | null;

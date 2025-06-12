@@ -9,7 +9,7 @@ import { ChangedPath } from '../utils/changedPath';
 
 // Matches value in clipboard module
 const SOURCE_PASTE = 'paste';
-export class ChangeDetectionService extends BeanStub implements NamedBean {
+export class AcDGChangeDetectionService extends BeanStub implements NamedBean {
     beanName = 'changeDetectionSvc' as const;
 
     private clientSideRowModel: IClientSideRowModel | null = null;

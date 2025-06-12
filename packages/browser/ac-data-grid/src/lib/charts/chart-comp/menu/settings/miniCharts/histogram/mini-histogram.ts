@@ -4,7 +4,7 @@ import type { AgChartsExports } from '../../../../../agChartsExports';
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChartWithAxes } from '../miniChartWithAxes';
 
-export class MiniHistogramClass extends MiniChartWithAxes {
+export class AcDGMiniHistogramClass extends MiniChartWithAxes {
     private readonly bars: Rect[];
 
     constructor(container: HTMLElement, agChartsExports: AgChartsExports, fills: string[], strokes: string[]) {

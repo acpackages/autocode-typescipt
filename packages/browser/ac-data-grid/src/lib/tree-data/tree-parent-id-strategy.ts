@@ -29,7 +29,7 @@ export interface IAcDGTreeStrategyRow<TData = any> extends RowNode<TData> {
     sourceRowIndex: number;
 }
 
-export class TreeParentIdStrategy<TData = any> extends BeanStub implements IRowGroupingStrategy<TData> {
+export class AcDGTreeParentIdStrategy<TData = any> extends BeanStub implements IRowGroupingStrategy<TData> {
     private parentIdGetter: ParentIdGetter<TData> | null = null;
     private oldGroupDisplayColIds: string | null = null;
 

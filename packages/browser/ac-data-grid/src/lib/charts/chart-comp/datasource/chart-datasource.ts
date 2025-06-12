@@ -45,7 +45,7 @@ interface IData {
     groupChartData?: any[];
 }
 
-export class ChartDatasource extends BeanStub {
+export class AcDGChartDatasource extends BeanStub {
     private gridRowModel: IRowModel;
     private pivotResultCols?: IPivotResultColsService;
     private valueSvc: ValueService;

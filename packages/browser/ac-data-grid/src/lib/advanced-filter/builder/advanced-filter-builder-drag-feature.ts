@@ -15,7 +15,7 @@ export interface IAcDGAdvancedFilterBuilderDragStartedEvent extends IAcDataGridE
 export type AdvancedFilterBuilderDragFeatureEvent =
     | 'advancedFilterBuilderDragStarted'
     | 'advancedFilterBuilderDragEnded';
-export class AdvancedFilterBuilderDragFeature extends BeanStub<AdvancedFilterBuilderDragFeatureEvent> {
+export class AcDGAdvancedFilterBuilderDragFeature extends BeanStub<AdvancedFilterBuilderDragFeatureEvent> {
     constructor(
         private readonly comp: AdvancedFilterBuilderComp,
         private readonly virtualList: VirtualList

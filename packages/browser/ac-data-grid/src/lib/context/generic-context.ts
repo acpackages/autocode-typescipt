@@ -32,7 +32,7 @@ export interface IAcDGBaseBean<TBeanCollection> {
     preWireBeans?(beans: TBeanCollection): void;
 }
 
-export class GenericContext<TBeanName extends string, TBeanCollection extends { [key in TBeanName]?: any }> {
+export class AcDGGenericContext<TBeanName extends string, TBeanCollection extends { [key in TBeanName]?: any }> {
     protected beans: TBeanCollection = {} as TBeanCollection;
     private createdBeans: GenericBean<TBeanName, TBeanCollection>[] = [];
     private beanDestroyComparator?: BeanComparator<TBeanName, TBeanCollection>;

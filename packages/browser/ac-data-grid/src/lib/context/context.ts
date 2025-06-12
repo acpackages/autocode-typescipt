@@ -320,7 +320,7 @@ export type BeanCollection = CoreBeanCollection & {
     [key in Exclude<BeanName, keyof CoreBeanCollection>]?: unknown;
 };
 
-export class Context extends GenericContext<BeanName, BeanCollection> {
+export class AcDGContext extends GenericContext<BeanName, BeanCollection> {
     private gridId: string;
     private destroyCallback?: () => void;
 

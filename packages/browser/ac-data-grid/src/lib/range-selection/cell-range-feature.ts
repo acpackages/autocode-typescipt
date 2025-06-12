@@ -44,7 +44,7 @@ function _isFillHandleEnabled(gos: GridOptionsService): boolean {
     return typeof selection !== 'boolean' ? selection.handle?.mode === 'fill' : false;
 }
 
-export class CellRangeFeature implements ICellRangeFeature {
+export class AcDGCellRangeFeature implements ICellRangeFeature {
     private rangeSvc: IRangeService;
     private cellComp: ICellComp;
     private eGui: HTMLElement;

@@ -7,7 +7,7 @@ import type { CellCtrl } from '../cell/cellCtrl';
 import type { RowCtrl } from '../row/rowCtrl';
 import { SpannedRowCtrl } from './spannedRowCtrl';
 
-export class SpannedRowRenderer extends BeanStub<'spannedRowsUpdated'> implements NamedBean {
+export class AcDGSpannedRowRenderer extends BeanStub<'spannedRowsUpdated'> implements NamedBean {
     beanName = 'spannedRowRenderer' as const;
 
     public postConstruct(): void {

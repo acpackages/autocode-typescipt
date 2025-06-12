@@ -50,7 +50,7 @@ function _normaliseQwertyAzerty(keyboardEvent: KeyboardEvent): string {
     return code;
 }
 
-export class RowContainerEventsFeature extends BeanStub {
+export class AcDGRowContainerEventsFeature extends BeanStub {
     constructor(public readonly element: HTMLElement) {
         super();
     }

@@ -21,7 +21,7 @@ const GroupCellRendererElement: ElementParams = {
     ],
 };
 
-export class GroupCellRenderer extends Component implements ICellRendererComp {
+export class AcDGGroupCellRenderer extends Component implements ICellRendererComp {
     private readonly eExpanded: HTMLElement = RefPlaceholder;
     private readonly eContracted: HTMLElement = RefPlaceholder;
     private readonly eCheckbox: HTMLElement = RefPlaceholder;

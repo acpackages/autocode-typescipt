@@ -14,7 +14,7 @@ const DATE_TREE_LIST_PATH_GETTER = (date: Date | null) => {
     return [String(date.getFullYear()), String(date.getMonth() + 1), String(date.getDate())];
 };
 
-export class TreeSetDisplayValueModel<V> implements ISetDisplayValueModel<V> {
+export class AcDGTreeSetDisplayValueModel<V> implements ISetDisplayValueModel<V> {
     /** all displayed items in a tree structure */
     private allDisplayedItemsTree: SetFilterModelTreeItem[] = [];
     /** all displayed items flattened and filtered */

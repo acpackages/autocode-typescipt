@@ -10,7 +10,7 @@ import { CellCtrl } from '../cell/cellCtrl';
 import type { RowCtrl } from '../row/rowCtrl';
 import type { CellSpan } from './rowSpanCache';
 
-export class SpannedCellCtrl extends CellCtrl {
+export class AcDGSpannedCellCtrl extends CellCtrl {
     private readonly SPANNED_CELL_CSS_CLASS = 'ag-spanned-cell';
     private eWrapper: HTMLElement;
 

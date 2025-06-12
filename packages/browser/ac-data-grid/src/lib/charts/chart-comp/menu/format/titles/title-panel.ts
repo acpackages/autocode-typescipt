@@ -9,7 +9,7 @@ import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 import type { FontPanelParams } from '../fontPanel';
 import { FontPanel } from '../fontPanel';
 
-export class TitlePanel extends Component {
+export class AcDGTitlePanel extends Component {
     protected chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

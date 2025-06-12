@@ -33,7 +33,7 @@ import { VERSION } from '../../version';
 import { migrateGridStateModel } from './stateModelMigration';
 import { _convertColumnGroupState, convertColumnState } from './stateUtils';
 
-export class StateService extends BeanStub implements NamedBean {
+export class AcDGStateService extends BeanStub implements NamedBean {
     beanName = 'stateSvc' as const;
 
     private updateRowGroupExpansionStateTimer: ReturnType<typeof setTimeout> | number = 0;

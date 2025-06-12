@@ -6,7 +6,7 @@ import type { ChartTranslationService } from '../../services/chartTranslationSer
 import type { ChartMenuContext } from '../chartMenuContext';
 import { AdvancedSettingsPanel } from './advancedSettingsPanel';
 
-export class AdvancedSettingsMenuFactory extends BeanStub implements NamedBean {
+export class AcDGAdvancedSettingsMenuFactory extends BeanStub implements NamedBean {
     beanName = 'advSettingsMenuFactory' as const;
 
     private activeMenu?: AdvancedSettingsMenu;
@@ -54,7 +54,7 @@ export class AdvancedSettingsMenuFactory extends BeanStub implements NamedBean {
     }
 }
 
-class AdvancedSettingsMenu extends TabGuardComp {
+class AcDGAdvancedSettingsMenu extends TabGuardComp {
     private advancedSettingsPanel: AdvancedSettingsPanel;
 
     constructor(private readonly chartMenuContext: ChartMenuContext) {

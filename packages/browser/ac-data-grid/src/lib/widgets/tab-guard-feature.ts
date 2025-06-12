@@ -35,7 +35,7 @@ export interface IAcDGTabGuardParams {
     isFocusableContainer?: boolean;
 }
 
-export class TabGuardFeature extends BeanStub {
+export class AcDGTabGuardFeature extends BeanStub {
     private eTopGuard: HTMLElement;
     private eBottomGuard: HTMLElement;
     private eFocusableElement: HTMLElement;

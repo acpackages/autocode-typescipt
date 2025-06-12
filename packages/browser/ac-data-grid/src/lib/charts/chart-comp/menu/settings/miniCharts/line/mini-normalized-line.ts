@@ -7,7 +7,7 @@ import { miniStackedLineData } from './miniStackedLine';
 
 export const miniNormalizedLineData = normalizeStackData(miniStackedLineData);
 
-export class MiniNormalizedLineClass extends MiniLineClass {
+export class AcDGMiniNormalizedLineClass extends MiniLineClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

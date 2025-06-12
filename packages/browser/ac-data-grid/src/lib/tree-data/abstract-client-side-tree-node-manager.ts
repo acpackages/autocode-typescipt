@@ -64,7 +64,7 @@ export type InitialGroupOrderComparatorCallback =
     | ((params: WithoutGridCommon<InitialGroupOrderComparatorParams>) => number)
     | undefined;
 
-export abstract class AbstractClientSideTreeNodeManager<TData> extends AbstractClientSideNodeManager<TData> {
+export abstract class AcDGAbstractClientSideTreeNodeManager<TData> extends AbstractClientSideNodeManager<TData> {
     private oldGroupDisplayColIds: string = '';
 
     /** Rows that are pending deletion, this.commitDeletedRows() will finalize removal. */

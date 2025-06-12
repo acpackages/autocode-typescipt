@@ -15,7 +15,7 @@ import type { ChartOptionsProxy } from '../services/chartOptionsService';
 import type { ChartTranslationKey, ChartTranslationService } from '../services/chartTranslationService';
 import type { FontPanelParams } from './format/fontPanel';
 
-export class ChartMenuParamsFactory extends BeanStub {
+export class AcDGChartMenuParamsFactory extends BeanStub {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

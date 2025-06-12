@@ -8,7 +8,7 @@ import { _setAriaColSpan } from '../../utils/aria';
 import { _last } from '../../utils/array';
 import { _exists } from '../../utils/generic';
 
-export class SetLeftFeature extends BeanStub {
+export class AcDGSetLeftFeature extends BeanStub {
     private ariaEl: HTMLElement;
 
     private actualLeft: number;

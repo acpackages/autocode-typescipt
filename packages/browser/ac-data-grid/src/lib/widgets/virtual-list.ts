@@ -47,7 +47,7 @@ function getVirtualListTemplate(cssIdentifier: string): ElementParams {
     };
 }
 
-export class VirtualList<
+export class AcDGVirtualList<
     C extends Component<any> = Component<any>,
     V = any,
     TEventType extends string = ComponentEvent,

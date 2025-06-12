@@ -5,7 +5,7 @@ import type { HeaderCellCtrl, IHeaderCellComp } from '../headerRendering/cells/c
 import type { ColumnPinnedType } from '../interfaces/iColumn';
 import { _getInnerWidth, _setDisplayed } from '../utils/dom';
 
-export class ResizeFeature extends BeanStub implements IHeaderResizeFeature {
+export class AcDGResizeFeature extends BeanStub implements IHeaderResizeFeature {
     private lastResizeAmount: number;
     private resizeStartWidth: number;
     private resizeWithShiftKey: boolean;

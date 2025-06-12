@@ -5,7 +5,7 @@ import { _waitUntil } from '../utils/function';
 import { Component, RefPlaceholder } from '../widgets/component';
 import type { ScrollPartner } from './gridBodyScrollFeature';
 
-export abstract class AbstractFakeScrollComp extends Component implements ScrollPartner {
+export abstract class AcDGAbstractFakeScrollComp extends Component implements ScrollPartner {
     public readonly eViewport: HTMLElement = RefPlaceholder;
     protected readonly eContainer: HTMLElement = RefPlaceholder;
 

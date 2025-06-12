@@ -4,7 +4,7 @@ import type { AgSliderParams } from '../../../../widgets/agSlider';
 import type { ChartMenuService } from '../../../services/chartMenuService';
 import { TitlePanel } from './titlePanel';
 
-export class ChartTitlePanel extends TitlePanel {
+export class AcDGChartTitlePanel extends TitlePanel {
     private chartMenuSvc: ChartMenuService;
 
     public override wireBeans(beans: BeanCollection): void {

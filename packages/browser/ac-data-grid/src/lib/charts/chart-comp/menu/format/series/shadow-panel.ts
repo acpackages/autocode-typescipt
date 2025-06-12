@@ -9,7 +9,7 @@ import { AgSliderSelector } from '../../../../widgets/agSlider';
 import type { ChartTranslationKey, ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class ShadowPanel extends Component {
+export class AcDGShadowPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

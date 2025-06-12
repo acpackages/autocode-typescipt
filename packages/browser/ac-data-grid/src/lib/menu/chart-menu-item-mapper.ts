@@ -9,7 +9,7 @@ import type {
 } from 'ag-grid-community';
 import { BeanStub, _createIconNoSpan, _warn } from 'ag-grid-community';
 
-export class ChartMenuItemMapper extends BeanStub implements NamedBean {
+export class AcDGChartMenuItemMapper extends BeanStub implements NamedBean {
     beanName = 'chartMenuItemMapper' as const;
 
     public getChartItems(key: 'pivotChart' | 'chartRange'): MenuItemDef | null {
@@ -186,7 +186,7 @@ export type PivotMenuOptionName =
     | 'pivotConeFunnel'
     | 'pivotPyramid';
 
-class PivotMenuItemMapper implements MenuItemBuilder<PivotMenuOptionName> {
+class AcDGPivotMenuItemMapper implements MenuItemBuilder<PivotMenuOptionName> {
     constructor(
         private beans: BeanCollection,
         private chartSvc: IChartService,
@@ -420,7 +420,7 @@ export type RangeMenuOptionName =
     | 'rangeConeFunnel'
     | 'rangePyramid';
 
-class RangeMenuItemMapper implements MenuItemBuilder<RangeMenuOptionName> {
+class AcDGRangeMenuItemMapper implements MenuItemBuilder<RangeMenuOptionName> {
     constructor(
         private beans: BeanCollection,
         private chartSvc: IChartService,

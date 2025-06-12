@@ -23,7 +23,7 @@ function calculateOffsets(offset: DonutOffset) {
     return { outerRadiusOffset, innerRadiusOffset };
 }
 
-export class PieChartProxy extends ChartProxy<AgPolarChartOptions, 'pie' | 'donut'> {
+export class AcDGPieChartProxy extends ChartProxy<AgPolarChartOptions, 'pie' | 'donut'> {
     protected getUpdateOptions(params: UpdateParams, commonChartOptions: AgPolarChartOptions): AgPolarChartOptions {
         return {
             ...commonChartOptions,

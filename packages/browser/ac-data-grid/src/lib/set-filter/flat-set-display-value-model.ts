@@ -3,7 +3,7 @@ import type { AgColumn, TextFormatter, ValueFormatterParams, ValueService } from
 import type { ISetDisplayValueModel } from './iSetDisplayValueModel';
 import { SET_FILTER_ADD_SELECTION_TO_FILTER, SET_FILTER_SELECT_ALL } from './iSetDisplayValueModel';
 
-export class FlatSetDisplayValueModel<V> implements ISetDisplayValueModel<V> {
+export class AcDGFlatSetDisplayValueModel<V> implements ISetDisplayValueModel<V> {
     /** All keys that are currently displayed, after the mini-filter has been applied. */
     private displayedKeys: (string | null)[] = [];
 

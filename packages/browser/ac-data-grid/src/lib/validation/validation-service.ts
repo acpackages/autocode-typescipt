@@ -21,7 +21,7 @@ import { DEPRECATED_ICONS_V33, ICON_MODULES, ICON_VALUES } from './rules/iconVal
 import { USER_COMP_MODULES } from './rules/userCompValidations';
 import type { DependentValues, OptionsValidator, RequiredOptions } from './validationTypes';
 
-export class ValidationService extends BeanStub implements NamedBean {
+export class AcDGValidationService extends BeanStub implements NamedBean {
     beanName = 'validation' as const;
 
     private gridOptions: GridOptions;

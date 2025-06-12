@@ -26,7 +26,7 @@ export const CHART_TOOL_PANEL_MENU_OPTIONS: { [key in ChartToolPanelName]: Chart
     format: 'chartFormat',
 };
 
-export class ChartMenuService extends BeanStub implements NamedBean {
+export class AcDGChartMenuService extends BeanStub implements NamedBean {
     beanName = 'chartMenuSvc' as const;
 
     private advSettingsMenuFactory?: AdvancedSettingsMenuFactory;

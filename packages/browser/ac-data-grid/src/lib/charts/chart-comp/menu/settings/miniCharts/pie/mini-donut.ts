@@ -5,7 +5,7 @@ import type { ChartTranslationKey } from '../../../../services/chartTranslationS
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChart } from '../miniChart';
 
-export class MiniDonutClass extends MiniChart {
+export class AcDGMiniDonutClass extends MiniChart {
     private readonly sectors: Sector[];
 
     constructor(

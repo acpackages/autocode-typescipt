@@ -2,7 +2,7 @@ import type { SetFilterModel } from 'ag-grid-community';
 
 import type { SetFilter } from './setFilter';
 
-export class SetFilterModelFormatter {
+export class AcDGSetFilterModelFormatter {
     public getModelAsString<V>(model: SetFilterModel | null | undefined, setFilter: SetFilter<V>): string {
         const { values } = model || setFilter.getModel() || {};
         const valueModel = setFilter.getValueModel();

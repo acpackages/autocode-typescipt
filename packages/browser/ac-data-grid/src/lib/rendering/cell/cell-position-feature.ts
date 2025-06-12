@@ -14,7 +14,7 @@ import type { CellCtrl } from './cellCtrl';
  *  #) Cell Height (when doing row span, otherwise we don't touch the height as it's just row height)
  *  #) Cell Left (the horizontal positioning of the cell, the vertical positioning is on the row)
  */
-export class CellPositionFeature extends BeanStub {
+export class AcDGCellPositionFeature extends BeanStub {
     private readonly column: AgColumn;
     private readonly rowNode: RowNode;
 

@@ -13,7 +13,7 @@ import { _getInnerWidth } from '../utils/dom';
 import { _warn } from '../validation/logging';
 import { TouchListener } from '../widgets/touchListener';
 
-export class ColumnAutosizeService extends BeanStub implements NamedBean {
+export class AcDGColumnAutosizeService extends BeanStub implements NamedBean {
     beanName = 'colAutosize' as const;
 
     private timesDelayed = 0;

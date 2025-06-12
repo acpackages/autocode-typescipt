@@ -42,7 +42,7 @@ const convertToHeaderNameComparator =
     (comparator: (valueA: string, valueB: string) => number) => (a: ColGroupDef | ColDef, b: ColGroupDef | ColDef) =>
         comparator(a.headerName!, b.headerName!);
 
-export class PivotColDefService extends BeanStub implements NamedBean, IPivotColDefService {
+export class AcDGPivotColDefService extends BeanStub implements NamedBean, IPivotColDefService {
     beanName = 'pivotColDefSvc' as const;
 
     private colModel: ColumnModel;

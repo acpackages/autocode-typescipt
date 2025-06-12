@@ -7,7 +7,7 @@ import type { ComponentSelector } from '../../widgets/component';
 import type { ProvidedFilterParams } from './iProvidedFilter';
 import { ProvidedFilter } from './providedFilter';
 
-class TestFilter extends ProvidedFilter<ProvidedFilterModel, string> {
+class AcDGTestFilter extends ProvidedFilter<ProvidedFilterModel, string> {
     private uiModel: ProvidedFilterModel;
     private modelHasChanged = false;
 

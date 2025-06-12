@@ -11,7 +11,7 @@ type RowNodeBlockState = 'needsLoading' | 'loading' | 'loaded' | 'failed';
 
 export type RowNodeBlockEvent = 'loadComplete';
 
-export class InfiniteBlock extends BeanStub<RowNodeBlockEvent> {
+export class AcDGIBlock extends BeanStub<RowNodeBlockEvent> {
     public state: RowNodeBlockState = 'needsLoading';
     public version = 0;
 

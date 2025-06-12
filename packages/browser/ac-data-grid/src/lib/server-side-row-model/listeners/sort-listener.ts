@@ -4,7 +4,7 @@ import { BeanStub, _isServerSideRowModel } from 'ag-grid-community';
 import type { ServerSideRowModel } from '../serverSideRowModel';
 import type { ListenerUtils } from './listenerUtils';
 
-export class SortListener extends BeanStub implements NamedBean {
+export class AcDGSortListener extends BeanStub implements NamedBean {
     beanName = 'ssrmSortSvc' as const;
 
     private sortSvc: SortService;

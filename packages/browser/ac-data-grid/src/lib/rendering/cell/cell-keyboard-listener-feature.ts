@@ -18,7 +18,7 @@ function _isDeleteKey(key: string, alwaysReturnFalseOnBackspace = false) {
     return false;
 }
 
-export class CellKeyboardListenerFeature extends BeanStub {
+export class AcDGCellKeyboardListenerFeature extends BeanStub {
     private eGui: HTMLElement;
 
     constructor(

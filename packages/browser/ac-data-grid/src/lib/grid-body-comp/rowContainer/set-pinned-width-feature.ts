@@ -1,7 +1,7 @@
 import { BeanStub } from '../../context/beanStub';
 import { _setDisplayed, _setFixedWidth } from '../../utils/dom';
 
-export class SetPinnedWidthFeature extends BeanStub {
+export class AcDGSetPinnedWidthFeature extends BeanStub {
     public readonly getWidth: () => number;
 
     constructor(

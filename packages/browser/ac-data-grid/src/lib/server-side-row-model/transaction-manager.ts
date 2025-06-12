@@ -16,7 +16,7 @@ interface IAcDGAsyncTransactionWrapper {
     callback?: (result: ServerSideTransactionResult) => void;
 }
 
-export class TransactionManager extends BeanStub implements NamedBean, IServerSideTransactionManager {
+export class AcDGTransactionManager extends BeanStub implements NamedBean, IServerSideTransactionManager {
     beanName = 'ssrmTxnManager' as const;
 
     private valueCache?: ValueCache;

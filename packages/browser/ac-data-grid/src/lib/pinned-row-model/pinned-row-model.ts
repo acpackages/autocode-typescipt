@@ -8,7 +8,7 @@ import type { RowPinnedType } from '../interfaces/iRowNode';
 import { ManualPinnedRowModel } from './manualPinnedRowModel';
 import { StaticPinnedRowModel } from './staticPinnedRowModel';
 
-export class PinnedRowModel extends BeanStub implements NamedBean, IPinnedRowModel {
+export class AcDGPinnedRowModel extends BeanStub implements NamedBean, IPinnedRowModel {
     beanName = 'pinnedRowModel' as const;
 
     private inner: IPinnedRowModel;

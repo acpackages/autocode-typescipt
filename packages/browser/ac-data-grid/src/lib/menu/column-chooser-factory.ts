@@ -12,7 +12,7 @@ interface IAcDGShowColumnChooserParams {
     headerPosition?: HeaderPosition | null;
 }
 
-export class ColumnChooserFactory extends BeanStub implements NamedBean {
+export class AcDGColumnChooserFactory extends BeanStub implements NamedBean {
     beanName = 'colChooserFactory' as const;
 
     private activeColumnChooser: AgPrimaryCols | undefined;

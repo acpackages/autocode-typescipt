@@ -22,7 +22,7 @@ export interface IHeaderRowContainerComp {
     setCtrls(ctrls: HeaderRowCtrl[]): void;
 }
 
-export class HeaderRowContainerCtrl extends BeanStub implements ScrollPartner {
+export class AcDGHeaderRowContainerCtrl extends BeanStub implements ScrollPartner {
     public comp: IHeaderRowContainerComp;
     public hidden: boolean = false;
     private includeFloatingFilter: boolean = false;

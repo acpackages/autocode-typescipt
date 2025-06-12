@@ -39,7 +39,7 @@ function getTabbedLayoutTemplate(cssClass?: string): ElementParams {
     };
 }
 
-export class TabbedLayout extends TabGuardComp {
+export class AcDGTabbedLayout extends TabGuardComp {
     private readonly eHeader: HTMLElement = RefPlaceholder;
     private readonly eBody: HTMLElement = RefPlaceholder;
 

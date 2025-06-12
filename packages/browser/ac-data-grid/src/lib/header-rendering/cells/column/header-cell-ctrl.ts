@@ -40,7 +40,7 @@ type RefreshFunction =
     | 'measuring'
     | 'resize';
 
-export class HeaderCellCtrl extends AbstractHeaderCellCtrl<IHeaderCellComp, AgColumn, ResizeFeature> {
+export class AcDGHeaderCellCtrl extends AbstractHeaderCellCtrl<IHeaderCellComp, AgColumn, ResizeFeature> {
     private refreshFunctions: { [key in RefreshFunction]?: () => void } = {};
     private selectAllFeature?: SelectAllFeature;
 

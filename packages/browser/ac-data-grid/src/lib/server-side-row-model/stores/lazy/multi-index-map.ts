@@ -1,4 +1,4 @@
-export class MultiIndexMap<K, I extends keyof K> {
+export class AcDGMultiIndexMap<K, I extends keyof K> {
     private indexes: I[];
     private maps: Map<I, Map<any, K>>;
 

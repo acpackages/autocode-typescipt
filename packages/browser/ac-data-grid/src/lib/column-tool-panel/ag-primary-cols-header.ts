@@ -31,7 +31,7 @@ const AgPrimaryColsHeaderElement: ElementParams = {
         { tag: 'ag-input-text-field', ref: 'eFilterTextField', cls: 'ag-column-select-header-filter-wrapper' },
     ],
 };
-export class AgPrimaryColsHeader extends Component<AgPrimaryColsHeaderEvent> {
+export class AcDataGridPrimaryColsHeader extends Component<AgPrimaryColsHeaderEvent> {
     private readonly eExpand: Element = RefPlaceholder;
     private readonly eSelect: AgCheckbox = RefPlaceholder;
     private readonly eFilterTextField: AgInputTextField = RefPlaceholder;

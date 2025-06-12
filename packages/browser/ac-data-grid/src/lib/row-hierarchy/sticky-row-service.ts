@@ -3,7 +3,7 @@ import { BeanStub, _isClientSideRowModel, _isGroupRowsSticky, _isServerSideRowMo
 
 import { StickyRowFeature } from './stickyRowFeature';
 
-export class StickyRowService extends BeanStub implements NamedBean, IStickyRowService {
+export class AcDGStickyRowService extends BeanStub implements NamedBean, IStickyRowService {
     beanName = 'stickyRowSvc' as const;
 
     public createStickyRowFeature(

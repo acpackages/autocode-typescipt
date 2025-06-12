@@ -45,7 +45,7 @@ const AdvancedFilterElement: ElementParams = {
         },
     ],
 };
-export class AdvancedFilterComp extends Component {
+export class AcDGAdvancedFilterComp extends Component {
     private advancedFilter: AdvancedFilterService;
     private advFilterExpSvc: AdvancedFilterExpressionService;
     private filterManager?: FilterManager;

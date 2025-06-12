@@ -22,7 +22,7 @@ enum MoveDirection {
     NONE = 0,
     RIGHT = 1,
 }
-export class ColumnMoveService extends BeanStub implements NamedBean {
+export class AcDGColumnMoveService extends BeanStub implements NamedBean {
     beanName = 'colMoves' as const;
 
     public moveColumnByIndex(fromIndex: number, toIndex: number, source: ColumnEventType): void {

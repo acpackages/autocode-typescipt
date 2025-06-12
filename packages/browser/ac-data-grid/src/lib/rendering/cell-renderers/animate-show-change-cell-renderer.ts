@@ -15,7 +15,7 @@ const AnimateShowChangeCellRendererElement: ElementParams = {
     ],
 };
 
-export class AnimateShowChangeCellRenderer extends Component implements ICellRenderer {
+export class AcDGAnimateShowChangeCellRenderer extends Component implements ICellRenderer {
     private lastValue: number;
 
     private eValue: HTMLElement = RefPlaceholder;

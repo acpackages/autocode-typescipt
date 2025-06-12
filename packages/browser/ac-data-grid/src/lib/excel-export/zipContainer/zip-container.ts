@@ -9,7 +9,7 @@ export interface IAcDGZipFile {
     content?: string | Uint8Array;
 }
 
-export class ZipContainer {
+export class AcDGZipContainer {
     private folders: ZipFile[] = [];
     private files: ZipFile[] = [];
 

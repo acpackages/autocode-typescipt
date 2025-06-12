@@ -6,7 +6,7 @@ import { AgGroupComponentSelector } from '../../../../../widgets/agGroupComponen
 import type { ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class AnimationPanel extends Component {
+export class AcDGAnimationPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

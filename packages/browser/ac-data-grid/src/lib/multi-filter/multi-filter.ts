@@ -57,7 +57,7 @@ function getFilterTitle(filter: IFilterComp, filterDef: IMultiFilterDef): string
     return filter instanceof ProvidedFilter ? filter.getFilterTitle() : 'Filter';
 }
 
-export class MultiFilter extends TabGuardComp implements IFilterComp, IMultiFilter {
+export class AcDGMultiFilter extends TabGuardComp implements IFilterComp, IMultiFilter {
     public readonly filterType = 'multi' as const;
 
     private params: MultiFilterParams;

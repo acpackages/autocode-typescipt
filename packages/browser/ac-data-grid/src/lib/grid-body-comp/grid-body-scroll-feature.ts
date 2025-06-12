@@ -45,7 +45,7 @@ export interface IAcDGScrollPartner {
     onScrollCallback(fn: () => void): void;
 }
 
-export class GridBodyScrollFeature extends BeanStub {
+export class AcDGGridBodyScrollFeature extends BeanStub {
     private ctrlsSvc: CtrlsService;
     private animationFrameSvc?: AnimationFrameService;
     private visibleCols: VisibleColsService;

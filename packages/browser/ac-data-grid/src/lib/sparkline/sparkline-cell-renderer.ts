@@ -22,7 +22,7 @@ function tooltipRenderer(params: AgSparklineTooltipRendererParams<unknown>): AgS
     return { content: `${params.yValue}` };
 }
 
-export class SparklineCellRenderer extends Component implements ICellRenderer {
+export class AcDGSparklineCellRenderer extends Component implements ICellRenderer {
     private readonly eSparkline: HTMLElement = RefPlaceholder;
     private sparklineInstance?: AgChartInstance<any>;
     private sparklineOptions: AgSparklineOptions;

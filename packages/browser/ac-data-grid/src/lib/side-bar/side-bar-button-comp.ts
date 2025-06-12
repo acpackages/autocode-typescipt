@@ -25,7 +25,7 @@ const SideBarButtonElement: ElementParams = {
         },
     ],
 };
-export class SideBarButtonComp extends Component<SideBarButtonCompEvent> {
+export class AcDGSideBarButtonComp extends Component<SideBarButtonCompEvent> {
     public readonly eToggleButton: HTMLButtonElement = RefPlaceholder;
     private readonly eIconWrapper: HTMLElement = RefPlaceholder;
     private readonly eLabel: HTMLElement = RefPlaceholder;

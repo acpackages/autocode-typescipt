@@ -145,7 +145,7 @@ const DEFAULT_CHART_GROUPS: ChartGroupsDef = {
     combinationGroup: ['columnLineCombo', 'areaColumnCombo', 'customCombo'],
 };
 
-export class MiniChartsContainer extends Component {
+export class AcDGMiniChartsContainer extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

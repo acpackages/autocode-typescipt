@@ -16,7 +16,7 @@ type FlexItem = {
     violationType?: 'min' | 'max';
 };
 
-export class ColumnFlexService extends BeanStub implements NamedBean {
+export class AcDGColumnFlexService extends BeanStub implements NamedBean {
     beanName = 'colFlex' as const;
 
     private flexViewportWidth: number;

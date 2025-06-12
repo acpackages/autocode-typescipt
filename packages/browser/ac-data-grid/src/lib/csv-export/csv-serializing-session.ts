@@ -13,7 +13,7 @@ interface IAcDGCsvSerializingParams extends GridSerializingParams {
     columnSeparator: string;
 }
 
-export class CsvSerializingSession extends BaseGridSerializingSession<CsvCustomContent> {
+export class AcDGCsvSerializingSession extends BaseGridSerializingSession<CsvCustomContent> {
     private isFirstLine = true;
     private result: string = '';
     private suppressQuotes: boolean;

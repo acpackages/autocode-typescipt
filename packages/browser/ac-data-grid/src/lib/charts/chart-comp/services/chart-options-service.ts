@@ -42,7 +42,7 @@ const POLAR_AXIS_TYPES: AgPolarAxisType[] = ['angle-category', 'angle-number', '
 
 const VALID_AXIS_TYPES: (AgCartesianAxisType | AgPolarAxisType)[] = [...CARTESIAN_AXIS_TYPES, ...POLAR_AXIS_TYPES];
 
-export class ChartOptionsService extends BeanStub {
+export class AcDGChartOptionsService extends BeanStub {
     private readonly chartController: ChartController;
 
     constructor(chartController: ChartController) {

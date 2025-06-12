@@ -25,7 +25,7 @@ const DefaultFormatPanelDef: ChartFormatPanel = {
 };
 
 const AXIS_KEYS = ['axis', 'horizontalAxis', 'verticalAxis'];
-export class FormatPanel extends Component {
+export class AcDGFormatPanel extends Component {
     private chartPanelFeature: ChartPanelFeature;
     private groupExpansionFeature: GroupExpansionFeature;
 

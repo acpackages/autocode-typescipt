@@ -5,7 +5,7 @@ import { stackData } from '../miniChartHelpers';
 import { MiniLineClass, miniLineData } from './miniLine';
 
 export const miniStackedLineData = stackData(miniLineData);
-export class MiniStackedLineClass extends MiniLineClass {
+export class AcDGMiniStackedLineClass extends MiniLineClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

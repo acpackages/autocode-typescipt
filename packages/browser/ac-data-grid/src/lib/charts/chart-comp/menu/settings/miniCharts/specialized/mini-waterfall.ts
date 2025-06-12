@@ -5,7 +5,7 @@ import type { MiniChartSelector } from '../../miniChartsContainer';
 import { accumulateData } from '../miniChartHelpers';
 import { MiniChartWithAxes } from '../miniChartWithAxes';
 
-export class MiniWaterfallClass extends MiniChartWithAxes {
+export class AcDGMiniWaterfallClass extends MiniChartWithAxes {
     private readonly bars: Rect[];
 
     private data = [4, 3, -3, 6, -3];

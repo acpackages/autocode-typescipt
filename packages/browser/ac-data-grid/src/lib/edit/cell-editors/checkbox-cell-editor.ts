@@ -17,7 +17,7 @@ const CheckboxCellEditorElement: ElementParams = {
         },
     ],
 };
-export class CheckboxCellEditor extends PopupComponent implements ICellEditorComp {
+export class AcDGCheckboxCellEditor extends PopupComponent implements ICellEditorComp {
     constructor() {
         super(CheckboxCellEditorElement, [AgCheckboxSelector]);
     }

@@ -22,7 +22,7 @@ export interface IHeaderRowComp {
 let instanceIdSequence = 0;
 export type HeaderRowCtrlInstanceId = BrandedType<number, 'HeaderRowCtrlInstanceId'>;
 
-export class HeaderRowCtrl extends BeanStub {
+export class AcDGHeaderRowCtrl extends BeanStub {
     public readonly instanceId: HeaderRowCtrlInstanceId = instanceIdSequence++ as HeaderRowCtrlInstanceId;
 
     private comp: IHeaderRowComp;

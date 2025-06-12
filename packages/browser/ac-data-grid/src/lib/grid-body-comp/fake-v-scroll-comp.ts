@@ -18,7 +18,7 @@ const FakeVScrollElement: ElementParams = {
         },
     ],
 };
-export class FakeVScrollComp extends AbstractFakeScrollComp {
+export class AcDGFakeVScrollComp extends AbstractFakeScrollComp {
     constructor() {
         super(FakeVScrollElement, 'vertical');
     }

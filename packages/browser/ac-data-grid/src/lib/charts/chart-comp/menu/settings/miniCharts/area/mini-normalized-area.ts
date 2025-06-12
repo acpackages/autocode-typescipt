@@ -5,7 +5,7 @@ import { normalizeStackData } from '../miniChartHelpers';
 import { MiniStackedAreaClass, miniStackedAreaData } from './miniStackedArea';
 
 export const miniNormalizedAreaData = normalizeStackData(miniStackedAreaData);
-export class MiniNormalizedAreaClass extends MiniStackedAreaClass {
+export class AcDGMiniNormalizedAreaClass extends MiniStackedAreaClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

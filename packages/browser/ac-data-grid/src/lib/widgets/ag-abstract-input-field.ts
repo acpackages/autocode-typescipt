@@ -24,7 +24,7 @@ function buildTemplate(displayFieldTag: keyof HTMLElementTagNameMap): ElementPar
 }
 
 export type AgAbstractInputFieldEvent = AgAbstractFieldEvent;
-export abstract class AgAbstractInputField<
+export abstract class AcDataGridAbstractInputField<
     TElement extends FieldElement,
     TValue,
     TConfig extends AgInputFieldParams = AgInputFieldParams,

@@ -6,7 +6,7 @@ import type { ITextFloatingFilterParams, TextFilterModel } from './iTextFilter';
 import { DEFAULT_TEXT_FILTER_OPTIONS } from './textFilterConstants';
 import { TextFilterModelFormatter } from './textFilterModelFormatter';
 
-export class TextFloatingFilter extends TextInputFloatingFilter<TextFilterModel> {
+export class AcDGTextFloatingFilter extends TextInputFloatingFilter<TextFilterModel> {
     protected filterModelFormatter: SimpleFilterModelFormatter;
     public override init(params: ITextFloatingFilterParams): void {
         super.init(params);

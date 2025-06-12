@@ -13,7 +13,7 @@ import type {
 import type { UpdateParams } from '../chartProxy';
 import { ChartProxy } from '../chartProxy';
 
-export abstract class CartesianChartProxy<
+export abstract class AcDGCartesianChartProxy<
     TSeries extends
         | 'area'
         | 'bar'

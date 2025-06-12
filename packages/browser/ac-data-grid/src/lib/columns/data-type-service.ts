@@ -37,7 +37,7 @@ type DataTypeDefinitions = {
     [cellDataType: string]: (DataTypeDefinition | CoreDataTypeDefinition) & GroupSafeValueFormatter;
 };
 
-export class DataTypeService extends BeanStub implements NamedBean {
+export class AcDGDataTypeService extends BeanStub implements NamedBean {
     beanName = 'dataTypeSvc' as const;
 
     private colModel: ColumnModel;

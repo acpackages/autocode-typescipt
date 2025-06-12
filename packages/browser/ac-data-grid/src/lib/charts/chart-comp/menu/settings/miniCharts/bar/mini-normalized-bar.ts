@@ -8,7 +8,7 @@ const miniNormalizedBarData = [
     [2, 4, 6],
 ];
 
-export class MiniNormalizedBarClass extends MiniStackedBarClass {
+export class AcDGMiniNormalizedBarClass extends MiniStackedBarClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

@@ -34,7 +34,7 @@ interface IAcDGNavigateParams {
     isAsync?: boolean;
 }
 
-export class NavigationService extends BeanStub implements NamedBean {
+export class AcDGNavigationService extends BeanStub implements NamedBean {
     beanName = 'navigation' as const;
 
     private gridBodyCon: GridBodyCtrl;

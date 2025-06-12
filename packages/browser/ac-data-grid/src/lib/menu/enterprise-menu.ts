@@ -54,7 +54,7 @@ const TAB_GENERAL = 'generalMenuTab' as const;
 const TAB_COLUMNS = 'columnsMenuTab' as const;
 const TABS_DEFAULT: ColumnMenuTab[] = [TAB_GENERAL, TAB_FILTER, TAB_COLUMNS];
 
-export class EnterpriseMenuFactory extends BeanStub implements NamedBean, IMenuFactory {
+export class AcDGEnterpriseMenuFactory extends BeanStub implements NamedBean, IMenuFactory {
     beanName = 'enterpriseMenuFactory' as const;
 
     private lastSelectedTab: string;
@@ -359,7 +359,7 @@ export class EnterpriseMenuFactory extends BeanStub implements NamedBean, IMenuF
 }
 
 type TabbedColumnMenuEvent = 'tabSelected' | 'and';
-class TabbedColumnMenu extends BeanStub<TabbedColumnMenuEvent> implements EnterpriseColumnMenu {
+class AcDGTabbedColumnMenu extends BeanStub<TabbedColumnMenuEvent> implements EnterpriseColumnMenu {
     private tabbedLayout: TabbedLayout;
     private hidePopupFunc: (popupParams?: PopupEventParams) => void;
     private mainMenuList: AgMenuList;
@@ -589,7 +589,7 @@ class TabbedColumnMenu extends BeanStub<TabbedColumnMenuEvent> implements Enterp
     }
 }
 
-class ColumnContextMenu extends Component implements EnterpriseColumnMenu {
+class AcDGColumnContextMenu extends Component implements EnterpriseColumnMenu {
     private readonly eColumnMenu: HTMLElement = RefPlaceholder;
 
     private hidePopupFunc: (popupParams?: PopupEventParams) => void;

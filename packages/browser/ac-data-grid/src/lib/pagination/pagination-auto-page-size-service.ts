@@ -4,7 +4,7 @@ import type { RowContainerCtrl } from '../gridBodyComp/rowContainer/rowContainer
 import { _getRowHeightAsNumber } from '../gridOptionsUtils';
 import { _debounce } from '../utils/function';
 
-export class PaginationAutoPageSizeService extends BeanStub implements NamedBean {
+export class AcDGPaginationAutoPageSizeService extends BeanStub implements NamedBean {
     beanName = 'paginationAutoPageSizeSvc' as const;
 
     private centerRowsCtrl: RowContainerCtrl;

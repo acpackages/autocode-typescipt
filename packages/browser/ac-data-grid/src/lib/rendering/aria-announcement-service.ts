@@ -5,7 +5,7 @@ import { _setAriaAtomic, _setAriaLive, _setAriaRelevant } from '../utils/aria';
 import { _clearElement } from '../utils/dom';
 import { _debounce } from '../utils/function';
 
-export class AriaAnnouncementService extends BeanStub implements NamedBean {
+export class AcDGAriaAnnouncementService extends BeanStub implements NamedBean {
     beanName = 'ariaAnnounce' as const;
 
     private descriptionContainer: HTMLElement | null = null;

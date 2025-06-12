@@ -3,7 +3,7 @@ import { BeanStub } from '../context/beanStub';
 import type { IAcDGModelUpdatedEvent } from '../events';
 import type { WithoutGridCommon } from '../interfaces/iCommon';
 
-export class PageBoundsListener extends BeanStub implements NamedBean {
+export class AcDGPageBoundsListener extends BeanStub implements NamedBean {
     beanName = 'pageBoundsListener' as const;
 
     public postConstruct(): void {

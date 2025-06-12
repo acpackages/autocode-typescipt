@@ -7,7 +7,7 @@ import { _createIconNoSpan } from '../utils/icon';
 import { Component } from '../widgets/component';
 
 const DndSourceElement: ElementParams = { tag: 'div', cls: 'ag-drag-handle ag-row-drag', attrs: { draggable: 'true' } };
-export class DndSourceComp extends Component {
+export class AcDGDndSourceComp extends Component {
     constructor(
         private readonly rowNode: RowNode,
         private readonly column: AgColumn,

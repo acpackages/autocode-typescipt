@@ -14,7 +14,7 @@ interface IAcDataGridMenuItemRendererParams {
     isCompact?: boolean;
 }
 const MenuItemElement: ElementParams = { tag: 'div' };
-export class AgMenuItemRenderer extends Component implements IMenuItemComp {
+export class AcDataGridMenuItemRenderer extends Component implements IMenuItemComp {
     private params: IMenuItemParams & AgMenuItemRendererParams;
     private cssClassPrefix: string;
 

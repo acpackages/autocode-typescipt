@@ -8,7 +8,7 @@ import type { ChartTranslationService } from '../../../services/chartTranslation
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 import { getShapeSelectOptions } from './seriesUtils';
 
-export class MarkersPanel extends Component {
+export class AcDGMarkersPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

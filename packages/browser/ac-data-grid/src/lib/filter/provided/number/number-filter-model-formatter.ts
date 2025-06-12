@@ -2,7 +2,7 @@ import type { IFilterOptionDef } from '../../../interfaces/iFilter';
 import { SimpleFilterModelFormatter } from '../simpleFilterModelFormatter';
 import type { NumberFilterModel } from './iNumberFilter';
 
-export class NumberFilterModelFormatter extends SimpleFilterModelFormatter<number> {
+export class AcDGNumberFilterModelFormatter extends SimpleFilterModelFormatter<number> {
     protected conditionToString(condition: NumberFilterModel, options?: IFilterOptionDef): string {
         const { numberOfInputs } = options || {};
         const { filter, filterTo, type } = condition;

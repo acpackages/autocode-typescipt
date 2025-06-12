@@ -30,7 +30,7 @@ export interface IAcDGCreateGroupsParams {
     isStandaloneStructure?: boolean;
 }
 
-export class ColumnGroupService extends BeanStub implements NamedBean {
+export class AcDGColumnGroupService extends BeanStub implements NamedBean {
     beanName = 'colGroupSvc' as const;
 
     public getColumnGroupState(): { groupId: string; open: boolean }[] {

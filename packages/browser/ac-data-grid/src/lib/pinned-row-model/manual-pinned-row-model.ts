@@ -11,7 +11,7 @@ import type { IPinnedRowModel } from '../interfaces/iPinnedRowModel';
 import type { RowPinnedType } from '../interfaces/iRowNode';
 import { PinnedRows, _shouldHidePinnedRows } from './manualPinnedRowUtils';
 
-export class ManualPinnedRowModel extends BeanStub implements IPinnedRowModel {
+export class AcDGManualPinnedRowModel extends BeanStub implements IPinnedRowModel {
     private top: PinnedRows;
     private bottom: PinnedRows;
     /**

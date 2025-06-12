@@ -14,7 +14,7 @@ const enum OverlayServiceState {
     NoRows = 2,
 }
 
-export class OverlayService extends BeanStub implements NamedBean {
+export class AcDGOverlayService extends BeanStub implements NamedBean {
     beanName = 'overlays' as const;
 
     private isClientSide: boolean;

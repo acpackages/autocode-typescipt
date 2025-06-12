@@ -8,7 +8,7 @@ import type { ChartTranslationKey, ChartTranslationService } from '../../../serv
 
 const CANVAS_CLASS = 'ag-chart-mini-thumbnail-canvas';
 
-export abstract class MiniChart extends Component {
+export abstract class AcDGMiniChart extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

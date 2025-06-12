@@ -67,7 +67,7 @@ const MenuItemComponent: ComponentType<IMenuItemComp> = {
 };
 const MenuItemElement: ElementParams = { tag: 'div', cls: 'ag-menu', role: 'presentation' };
 
-export class AgMenuItemComponent extends BeanStub<AgMenuItemComponentEvent> {
+export class AcDataGridMenuItemComponent extends BeanStub<AgMenuItemComponentEvent> {
     private popupSvc?: PopupService;
     private userCompFactory: UserComponentFactory;
     private registry: Registry;

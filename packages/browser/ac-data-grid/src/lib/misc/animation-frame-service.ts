@@ -14,7 +14,7 @@ interface IAcDGTaskList {
     sorted: boolean;
 }
 
-export class AnimationFrameService extends BeanStub implements NamedBean {
+export class AcDGAnimationFrameService extends BeanStub implements NamedBean {
     beanName = 'animationFrameSvc' as const;
 
     // p1 and p2 are create tasks are to do with row and cell creation.

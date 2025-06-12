@@ -28,7 +28,7 @@ import { CheckboxSelectionComponent } from './checkboxSelectionComponent';
 import { RowRangeSelectionContext } from './rowRangeSelectionContext';
 import { SelectAllFeature } from './selectAllFeature';
 
-export abstract class BaseSelectionService extends BeanStub {
+export abstract class AcDGBaseSelectionService extends BeanStub {
     protected isRowSelectable?: IsRowSelectable;
     protected selectionCtx: RowRangeSelectionContext;
 

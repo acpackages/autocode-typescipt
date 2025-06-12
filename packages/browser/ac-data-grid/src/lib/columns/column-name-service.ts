@@ -27,7 +27,7 @@ export function _camelCaseToHumanText(camelCase: string | undefined): string | n
         .join(' ');
 }
 
-export class ColumnNameService extends BeanStub implements NamedBean {
+export class AcDGColumnNameService extends BeanStub implements NamedBean {
     beanName = 'colNames' as const;
 
     public getDisplayNameForColumn(

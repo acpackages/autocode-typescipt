@@ -4,7 +4,7 @@ import type { AgChartsExports } from '../../../../../agChartsExports';
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChartWithAxes } from '../miniChartWithAxes';
 
-export class MiniRangeAreaClass extends MiniChartWithAxes {
+export class AcDGMiniRangeAreaClass extends MiniChartWithAxes {
     private readonly lines: Path[][];
     private readonly areas: Path[];
 

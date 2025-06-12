@@ -13,7 +13,7 @@ import type { ServerSideRowModel } from '../../serverSideRowModel';
 import type { LazyCache } from './lazyCache';
 import type { LazyStore } from './lazyStore';
 
-export class LazyBlockLoadingService extends BeanStub implements NamedBean {
+export class AcDGLazyBlockLoadingService extends BeanStub implements NamedBean {
     beanName = 'lazyBlockLoadingSvc' as const;
 
     private outboundRequests: number = 0;

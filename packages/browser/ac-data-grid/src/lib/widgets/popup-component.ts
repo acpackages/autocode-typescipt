@@ -1,7 +1,7 @@
 import type { IPopupComponent } from '../interfaces/iPopupComponent';
 import { Component } from './component';
 
-export class PopupComponent extends Component implements IPopupComponent<any> {
+export class AcDGPopupComponent extends Component implements IPopupComponent<any> {
     public isPopup(): boolean {
         return true;
     }

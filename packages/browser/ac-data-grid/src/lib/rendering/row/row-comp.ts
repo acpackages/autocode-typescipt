@@ -9,7 +9,7 @@ import type { CellCtrl, CellCtrlInstanceId } from '../cell/cellCtrl';
 import type { ICellRendererComp } from '../cellRenderers/iCellRenderer';
 import type { IRowComp, RowCtrl } from './rowCtrl';
 
-export class RowComp extends Component {
+export class AcDGRowComp extends Component {
     private fullWidthCellRenderer: ICellRendererComp | null | undefined;
 
     private rowCtrl: RowCtrl;

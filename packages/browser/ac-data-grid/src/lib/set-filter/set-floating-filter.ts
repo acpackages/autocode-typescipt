@@ -25,7 +25,7 @@ const SetFloatingFilterElement: ElementParams = {
     ],
 };
 
-export class SetFloatingFilterComp<V = string> extends Component implements IFloatingFilter {
+export class AcDGSetFloatingFilterComp<V = string> extends Component implements IFloatingFilter {
     private colNames: ColumnNameService;
     private readonly eFloatingFilterText: AgInputTextField = RefPlaceholder;
 

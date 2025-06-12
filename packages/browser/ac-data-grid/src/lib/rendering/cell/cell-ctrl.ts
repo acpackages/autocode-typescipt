@@ -87,7 +87,7 @@ export function _getCellCtrlForEventTarget(gos: GridOptionsService, eventTarget:
 let instanceIdSequence = 0;
 export type CellCtrlInstanceId = BrandedType<string, 'CellCtrlInstanceId'>;
 
-export class CellCtrl extends BeanStub {
+export class AcDGCellCtrl extends BeanStub {
     public readonly instanceId: CellCtrlInstanceId;
 
     public eGui: HTMLElement;

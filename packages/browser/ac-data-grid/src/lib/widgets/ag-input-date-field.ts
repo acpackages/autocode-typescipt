@@ -6,7 +6,7 @@ import type { AgInputTextFieldParams } from './agInputTextField';
 import { AgInputTextField } from './agInputTextField';
 import type { ComponentSelector } from './component';
 
-export class AgInputDateField extends AgInputTextField {
+export class AcDataGridInputDateField extends AgInputTextField {
     private min?: string;
     private max?: string;
     private step?: number;

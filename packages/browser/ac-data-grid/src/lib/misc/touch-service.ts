@@ -15,7 +15,7 @@ import { _exists } from '../utils/generic';
 import type { LongTapEvent, TapEvent, TouchListenerEvent } from '../widgets/touchListener';
 import { TouchListener } from '../widgets/touchListener';
 
-export class TouchService extends BeanStub implements NamedBean {
+export class AcDGTouchService extends BeanStub implements NamedBean {
     beanName = 'touchSvc' as const;
 
     public mockBodyContextMenu(

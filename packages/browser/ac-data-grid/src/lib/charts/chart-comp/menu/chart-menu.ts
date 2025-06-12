@@ -23,7 +23,7 @@ type ChartToolbarButtons = {
     };
 };
 
-export class ChartMenu extends Component {
+export class AcDGChartMenu extends Component {
     private chartMenuSvc: ChartMenuService;
     private chartMenuListFactory: ChartMenuListFactory;
     private environment: Environment;

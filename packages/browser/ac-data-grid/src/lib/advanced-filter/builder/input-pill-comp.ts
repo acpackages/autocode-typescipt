@@ -37,7 +37,7 @@ const InputPillElement: ElementParams = {
         },
     ],
 };
-export class InputPillComp extends Component<InputPillCompEvent> {
+export class AcDGIlComp extends Component<InputPillCompEvent> {
     private advFilterExpSvc: AdvancedFilterExpressionService;
 
     public wireBeans(beans: BeanCollection): void {

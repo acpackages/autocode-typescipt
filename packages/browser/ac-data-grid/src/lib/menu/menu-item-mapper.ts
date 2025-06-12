@@ -33,7 +33,7 @@ export function _removeRepeatsFromArray<T>(array: T[], object: T) {
     }
 }
 
-export class MenuItemMapper extends BeanStub implements NamedBean {
+export class AcDGMenuItemMapper extends BeanStub implements NamedBean {
     beanName = 'menuItemMapper' as const;
 
     public mapWithStockItems(

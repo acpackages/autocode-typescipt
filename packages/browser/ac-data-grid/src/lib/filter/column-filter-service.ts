@@ -64,7 +64,7 @@ function setFilterNumberComparator(a: string, b: string): number {
     return parseFloat(a) - parseFloat(b);
 }
 
-export class ColumnFilterService extends BeanStub implements NamedBean {
+export class AcDGColumnFilterService extends BeanStub implements NamedBean {
     beanName: BeanName = 'colFilter';
 
     private allColumnFilters = new Map<string, FilterWrapper>();

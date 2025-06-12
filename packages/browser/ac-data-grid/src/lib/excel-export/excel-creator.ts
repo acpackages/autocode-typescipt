@@ -244,7 +244,7 @@ export const exportMultipleSheetsAsExcel = (params: ExcelExportMultipleSheetPara
     });
 };
 
-export class ExcelCreator
+export class AcDGExcelCreator
     extends BaseCreator<ExcelRow[], ExcelSerializingSession, ExcelExportParams>
     implements NamedBean, IExcelCreator
 {

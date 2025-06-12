@@ -55,7 +55,7 @@ export interface IAcDGParams {
     modules?: Module[];
 }
 
-class GlobalGridOptions {
+class AcDGGlobalGridOptions {
     static gridOptions: GridOptions | undefined = undefined;
     static mergeStrategy: GlobalGridOptionsMergeStrategy = 'shallow';
 
@@ -171,7 +171,7 @@ let nextGridId = 1;
 
 // creates services of grid only, no UI, so frameworks can use this if providing
 // their own UI
-export class GridCoreCreator {
+export class AcDGGridCoreCreator {
     public create(
         eGridDiv: HTMLElement,
         providedOptions: GridOptions,

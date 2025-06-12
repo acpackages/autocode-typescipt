@@ -14,7 +14,7 @@ import { OptionsFactory } from '../../provided/optionsFactory';
 import type { SimpleFilterModelFormatter } from '../../provided/simpleFilterModelFormatter';
 import type { IFloatingFilterComp, IFloatingFilterParams } from '../floatingFilter';
 
-export abstract class SimpleFloatingFilter extends Component implements IFloatingFilterComp<ISimpleFilter> {
+export abstract class AcDGSimpleFloatingFilter extends Component implements IFloatingFilterComp<ISimpleFilter> {
     // this method is on IFloatingFilterComp. because it's not implemented at this level, we have to
     // define it as an abstract method. it gets implemented in sub classes.
     public abstract onParentModelChanged(model: ProvidedFilterModel, event: IAcDGFilterChangedEvent): void;

@@ -54,7 +54,7 @@ enum SelectionMode {
     NORMAL,
     ALL_COLUMNS,
 }
-export class RangeService extends BeanStub implements NamedBean, IRangeService {
+export class AcDGRangeService extends BeanStub implements NamedBean, IRangeService {
     beanName = 'rangeSvc' as const;
 
     private rowModel: IRowModel;

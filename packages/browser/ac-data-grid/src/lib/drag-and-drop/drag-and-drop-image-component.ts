@@ -39,7 +39,7 @@ const DragAndDropElement: ElementParams = {
         },
     ],
 };
-export class DragAndDropImageComponent extends Component implements IDragAndDropImageComponent<any, any> {
+export class AcDGDragAndDropImageComponent extends Component implements IDragAndDropImageComponent<any, any> {
     private dragSource: DragSource | null = null;
 
     private readonly eIcon: HTMLElement = RefPlaceholder;

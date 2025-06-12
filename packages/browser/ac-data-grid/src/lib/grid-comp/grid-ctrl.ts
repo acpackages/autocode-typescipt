@@ -27,7 +27,7 @@ export interface IAcDGOptionalGridComponents {
     watermarkSelector?: ComponentSelector;
 }
 
-export class GridCtrl extends BeanStub {
+export class AcDGGridCtrl extends BeanStub {
     private view: IGridComp;
     private eGridHostDiv: HTMLElement;
     private eGui: HTMLElement;

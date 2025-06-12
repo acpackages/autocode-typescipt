@@ -23,7 +23,7 @@ const CheckboxSelectionComponentElement: ElementParams = {
     ],
 };
 
-export class CheckboxSelectionComponent extends Component {
+export class AcDGCheckboxSelectionComponent extends Component {
     private readonly eCheckbox: AgCheckbox = RefPlaceholder;
 
     private rowNode: RowNode;

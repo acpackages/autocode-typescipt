@@ -9,7 +9,7 @@ const LoadingCellRendererElement: ElementParams = {
         { tag: 'span', ref: 'eLoadingText', cls: 'ag-loading-text' },
     ],
 };
-export class LoadingCellRenderer extends Component implements ILoadingCellRendererComp {
+export class AcDGLoadingCellRenderer extends Component implements ILoadingCellRendererComp {
     private readonly eLoadingIcon: HTMLElement = RefPlaceholder;
     private readonly eLoadingText: HTMLElement = RefPlaceholder;
 

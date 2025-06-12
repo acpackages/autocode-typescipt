@@ -6,7 +6,7 @@ import { _isCellSelectionEnabled, _isClientSideRowModel } from '../gridOptionsUt
 import { RowDragComp } from './rowDragComp';
 import { RowDragFeature } from './rowDragFeature';
 
-export class RowDragService extends BeanStub implements NamedBean {
+export class AcDGRowDragService extends BeanStub implements NamedBean {
     beanName = 'rowDragSvc' as const;
 
     public rowDragFeature?: RowDragFeature;

@@ -9,7 +9,7 @@ export interface IAcDGCoordinate {
     x: number;
     y: number;
 }
-export class MiniAreaColumnComboClass extends MiniChartWithAxes {
+export class AcDGMiniAreaColumnComboClass extends MiniChartWithAxes {
     private columns: Rect[];
     private areas: Path[];
 

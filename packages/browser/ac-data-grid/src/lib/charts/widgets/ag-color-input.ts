@@ -25,7 +25,7 @@ const AgColorInputElement: ElementParams = {
         },
     ],
 };
-export class AgColorInput extends AgInputTextField<AgInputTextFieldParams, AgColorInputEvent> {
+export class AcDataGridColorInput extends AgInputTextField<AgInputTextFieldParams, AgColorInputEvent> {
     private chartTranslation: ChartTranslationService;
     private color: _IUtil['Color'];
 

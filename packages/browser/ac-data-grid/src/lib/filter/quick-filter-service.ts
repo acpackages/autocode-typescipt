@@ -8,7 +8,7 @@ import { _exists } from '../utils/generic';
 import { _warn } from '../validation/logging';
 
 export type QuickFilterServiceEvent = 'quickFilterChanged';
-export class QuickFilterService extends BeanStub<QuickFilterServiceEvent> implements NamedBean {
+export class AcDGQuickFilterService extends BeanStub<QuickFilterServiceEvent> implements NamedBean {
     beanName = 'quickFilter' as const;
 
     // the columns the quick filter should use. this will be all primary columns plus the autoGroupColumns if any exist

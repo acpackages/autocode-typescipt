@@ -1,7 +1,7 @@
 import { BeanStub } from '../context/beanStub';
 import { _isDomLayout } from '../gridOptionsUtils';
 
-export class CenterWidthFeature extends BeanStub {
+export class AcDGCenterWidthFeature extends BeanStub {
     constructor(
         private readonly callback: (width: number) => void,
         private readonly addSpacer: boolean = false

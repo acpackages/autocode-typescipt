@@ -2,7 +2,7 @@ import type { AgInputFieldParams } from '../interfaces/agFieldParams';
 import { AgAbstractInputField } from './agAbstractInputField';
 import type { ComponentSelector } from './component';
 
-export class AgInputTextArea extends AgAbstractInputField<HTMLTextAreaElement, string> {
+export class AcDataGridInputTextArea extends AgAbstractInputField<HTMLTextAreaElement, string> {
     constructor(config?: AgInputFieldParams) {
         super(config, 'ag-text-area', null, 'textarea');
     }

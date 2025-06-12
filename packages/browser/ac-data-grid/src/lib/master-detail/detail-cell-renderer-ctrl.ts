@@ -13,7 +13,7 @@ import type {
 } from 'ag-grid-community';
 import { BeanStub, _addGridCommonParams, _focusInto, _isSameRow, _missing, _warn } from 'ag-grid-community';
 
-export class DetailCellRendererCtrl extends BeanStub implements IDetailCellRendererCtrl {
+export class AcDGDetailCellRendererCtrl extends BeanStub implements IDetailCellRendererCtrl {
     private params: IDetailCellRendererParams;
 
     private comp: IDetailCellRenderer;

@@ -6,7 +6,7 @@ import { RefPlaceholder } from '../../widgets/component';
 import { PopupComponent } from '../../widgets/popupComponent';
 import type { CellEditorInput } from './iCellEditorInput';
 
-export class SimpleCellEditor<
+export class AcDGSimpleCellEditor<
         TValue,
         P extends ICellEditorParams & DefaultProvidedCellEditorParams,
         I extends AgInputTextField,

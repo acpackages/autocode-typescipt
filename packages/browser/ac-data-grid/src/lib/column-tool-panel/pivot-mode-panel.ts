@@ -12,7 +12,7 @@ const PivotModePanelElement: ElementParams = {
         },
     ],
 };
-export class PivotModePanel extends Component {
+export class AcDGPivotModePanel extends Component {
     private readonly cbPivotMode: AgCheckbox = RefPlaceholder;
 
     public postConstruct(): void {

@@ -83,7 +83,7 @@ export interface IAcDGFilterExpressionOperatorsParams {
     translate: (key: keyof typeof ADVANCED_FILTER_LOCALE_TEXT, variableValues?: string[]) => string;
 }
 
-export class TextFilterExpressionOperators<TValue = string>
+export class AcDGTextFilterExpressionOperators<TValue = string>
     implements DataTypeFilterExpressionOperators<string, TValue>
 {
     public operators: { [operator: string]: FilterExpressionOperator<string, TValue> };
@@ -173,7 +173,7 @@ export interface IAcDGScalarFilterExpressionOperatorsParams<ConvertedTValue> ext
     equals: (value: ConvertedTValue, operand: ConvertedTValue) => boolean;
 }
 
-export class ScalarFilterExpressionOperators<ConvertedTValue extends number | Date, TValue = ConvertedTValue>
+export class AcDGScalarFilterExpressionOperators<ConvertedTValue extends number | Date, TValue = ConvertedTValue>
     implements DataTypeFilterExpressionOperators<ConvertedTValue, TValue>
 {
     public operators: { [operator: string]: FilterExpressionOperator<ConvertedTValue, TValue> };
@@ -299,7 +299,7 @@ export class ScalarFilterExpressionOperators<ConvertedTValue extends number | Da
     }
 }
 
-export class BooleanFilterExpressionOperators implements DataTypeFilterExpressionOperators<boolean> {
+export class AcDGBooleanFilterExpressionOperators implements DataTypeFilterExpressionOperators<boolean> {
     public operators: { [operator: string]: FilterExpressionOperator<boolean> };
 
     constructor(private params: FilterExpressionOperatorsParams) {

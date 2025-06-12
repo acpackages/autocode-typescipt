@@ -4,7 +4,7 @@ import type { ScalarFilterParams } from './iScalarFilter';
 import type { SimpleFilterParams } from './iSimpleFilter';
 
 /* Common logic for options, used by both filters and floating filters. */
-export class OptionsFactory {
+export class AcDGOptionsFactory {
     protected customFilterOptions: { [name: string]: IFilterOptionDef } = {};
     public filterOptions: (IFilterOptionDef | string)[];
     public defaultOption: string;

@@ -22,7 +22,7 @@ import { ChangedPath } from '../utils/changedPath';
 import { _error, _warn } from '../validation/logging';
 import { BaseSelectionService } from './baseSelectionService';
 
-export class SelectionService extends BaseSelectionService implements NamedBean, ISelectionService {
+export class AcDGSelectionService extends BaseSelectionService implements NamedBean, ISelectionService {
     beanName = 'selectionSvc' as const;
 
     private selectedNodes = new Map<string, RowNode>();

@@ -19,7 +19,7 @@ export function _isRowNumbersResizerEnabled(gos: GridOptionsService): boolean {
     return true;
 }
 
-export class RowNumbersRowResizeFeature implements IRowNumbersRowResizeFeature {
+export class AcDGRowNumbersRowResizeFeature implements IRowNumbersRowResizeFeature {
     private rowResizer: AgRowNumbersRowResizer | undefined;
 
     constructor(

@@ -53,7 +53,7 @@ function getHeaderCompElementParams(includeSortIndicator: boolean): ElementParam
 const HeaderCompElement = getHeaderCompElementParams(true);
 const HeaderCompElementNoSort = getHeaderCompElementParams(false);
 
-export class HeaderComp extends Component implements IHeaderComp {
+export class AcDGHeaderComp extends Component implements IHeaderComp {
     // All the elements are optional, as they are not guaranteed to be present if the user provides a custom template
     private eFilter?: HTMLElement = RefPlaceholder;
     public eFilterButton?: HTMLElement = RefPlaceholder;

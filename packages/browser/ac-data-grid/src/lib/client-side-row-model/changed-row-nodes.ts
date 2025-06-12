@@ -1,7 +1,7 @@
 import type { RowNode } from '../entities/rowNode';
 import type { IRowNode } from '../interfaces/iRowNode';
 
-export class ChangedRowNodes<TData = any> {
+export class AcDGChangedRowNodes<TData = any> {
     public readonly removals = new Set<RowNode<TData>>();
     public readonly updates = new Set<RowNode<TData>>();
     public readonly adds = new Set<RowNode<TData>>();

@@ -19,10 +19,10 @@ const defaultFns = {
 const dispatchEvent = (beans: BeanCollection, event: AllEvents): void => beans.eventSvc.dispatchEvent(event);
 
 // We use a class for AGGridApi so in stack traces calling grid.api.xxx() if an error is thrown it will print "GridApi.xxx"
-class GridApiClass {}
+class AcDGGridApiClass {}
 Reflect.defineProperty(GridApiClass, 'name', { value: 'GridApi' });
 
-export class ApiFunctionService extends BeanStub implements NamedBean {
+export class AcDGApiFunctionService extends BeanStub implements NamedBean {
     beanName = 'apiFunctionSvc' as const;
 
     public readonly api: GridApi = new GridApiClass() as GridApi;

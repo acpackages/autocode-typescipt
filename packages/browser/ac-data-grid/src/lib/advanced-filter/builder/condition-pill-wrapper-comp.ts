@@ -17,7 +17,7 @@ import type {
 import type { InputPillComp } from './inputPillComp';
 import type { SelectPillComp } from './selectPillComp';
 
-export class ConditionPillWrapperComp extends Component<AdvancedFilterBuilderEvents> {
+export class AcDGConditionPillWrapperComp extends Component<AdvancedFilterBuilderEvents> {
     private advFilterExpSvc: AdvancedFilterExpressionService;
 
     public wireBeans(beans: BeanCollection) {

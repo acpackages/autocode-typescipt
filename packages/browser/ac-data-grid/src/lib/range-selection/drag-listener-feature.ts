@@ -1,6 +1,6 @@
 import { BeanStub, _isCellSelectionEnabled } from 'ag-grid-community';
 
-export class DragListenerFeature extends BeanStub {
+export class AcDGDragListenerFeature extends BeanStub {
     constructor(private readonly eContainer: HTMLElement) {
         super();
     }

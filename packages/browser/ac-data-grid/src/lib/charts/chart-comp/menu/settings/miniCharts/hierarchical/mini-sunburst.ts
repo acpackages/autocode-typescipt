@@ -4,7 +4,7 @@ import type { AgChartsExports } from '../../../../../agChartsExports';
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChartWithPolarAxes } from '../miniChartWithPolarAxes';
 
-export class MiniSunburstClass extends MiniChartWithPolarAxes {
+export class AcDGMiniSunburstClass extends MiniChartWithPolarAxes {
     private readonly series: Group[];
 
     // Hierarchical data using multidimensional array

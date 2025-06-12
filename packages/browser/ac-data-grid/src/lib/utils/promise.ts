@@ -13,7 +13,7 @@ enum AgPromiseStatus {
     RESOLVED,
 }
 
-export class AgPromise<T> {
+export class AcDataGridPromise<T> {
     private status: AgPromiseStatus = AgPromiseStatus.IN_PROGRESS;
     private resolution: T | null = null;
     private waiters: ((value: T | null) => void)[] = [];

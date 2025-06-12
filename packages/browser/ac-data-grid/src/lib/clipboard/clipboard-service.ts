@@ -139,7 +139,7 @@ export function stringToArray(strData: string, delimiter = ','): string[][] {
     return data;
 }
 
-export class ClipboardService extends BeanStub implements NamedBean, IClipboardService {
+export class AcDGClipboardService extends BeanStub implements NamedBean, IClipboardService {
     beanName = 'clipboardSvc' as const;
 
     private clientSideRowModel: IClientSideRowModel | null = null;

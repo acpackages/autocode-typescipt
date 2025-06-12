@@ -3,7 +3,7 @@ import { KeyCode, TabGuardComp } from 'ag-grid-community';
 
 import type { AgMenuItemComponent } from './agMenuItemComponent';
 
-export class AgMenuPanel extends TabGuardComp {
+export class AcDataGridMenuPanel extends TabGuardComp {
     constructor(wrappedComponent: IComponent<any>) {
         super();
 

@@ -10,7 +10,7 @@ import type {
 } from 'ag-grid-community';
 import { BeanStub, _isClientSideRowModel, _warn } from 'ag-grid-community';
 
-export class ChartCrossFilterService extends BeanStub implements NamedBean {
+export class AcDGChartCrossFilterService extends BeanStub implements NamedBean {
     beanName = 'chartCrossFilterSvc' as const;
 
     private colModel: ColumnModel;

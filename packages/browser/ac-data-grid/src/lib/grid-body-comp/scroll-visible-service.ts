@@ -10,7 +10,7 @@ export interface IAcDGSetScrollsVisibleParams {
     verticalScrollShowing: boolean;
 }
 
-export class ScrollVisibleService extends BeanStub implements NamedBean {
+export class AcDGScrollVisibleService extends BeanStub implements NamedBean {
     beanName = 'scrollVisibleSvc' as const;
 
     private ctrlsSvc: CtrlsService;

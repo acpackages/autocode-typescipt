@@ -9,7 +9,7 @@ export interface IAcDataGridInputTextFieldParams extends AgInputFieldParams {
     allowedCharPattern?: string;
 }
 export type AgInputTextFieldEvent = AgAbstractInputFieldEvent;
-export class AgInputTextField<
+export class AcDataGridInputTextField<
     TConfig extends AgInputTextFieldParams = AgInputTextFieldParams,
     TEventType extends string = AgInputTextFieldEvent,
 > extends AgAbstractInputField<HTMLInputElement, string, TConfig, AgInputTextFieldEvent | TEventType> {

@@ -6,7 +6,7 @@ import { getSeriesType } from '../../utils/seriesTypeMapper';
 import { CartesianChartProxy } from '../cartesian/cartesianChartProxy';
 import type { FieldDefinition, UpdateParams } from '../chartProxy';
 
-export class ComboChartProxy extends CartesianChartProxy<'line' | 'bar' | 'area'> {
+export class AcDGComboChartProxy extends CartesianChartProxy<'line' | 'bar' | 'area'> {
     public getAxes(params: UpdateParams): AgCartesianAxisOptions[] {
         const fields = params ? params.fields : [];
         const fieldsMap = new Map(fields.map((f) => [f.colId, f]));

@@ -11,7 +11,7 @@ export const miniStackedColumnData = [
     [6, 9, 12],
     [2, 3, 4],
 ];
-export class MiniStackedColumnClass extends MiniChartWithAxes {
+export class AcDGMiniStackedColumnClass extends MiniChartWithAxes {
     private readonly stackedColumns: any[][];
 
     constructor(

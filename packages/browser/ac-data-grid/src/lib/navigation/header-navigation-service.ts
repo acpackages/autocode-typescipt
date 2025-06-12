@@ -43,7 +43,7 @@ export function getHeaderIndexToFocus(column: AgColumn | AgColumnGroup, currentI
     };
 }
 
-export class HeaderNavigationService extends BeanStub implements NamedBean {
+export class AcDGHeaderNavigationService extends BeanStub implements NamedBean {
     beanName = 'headerNavigation' as const;
 
     private gridBodyCon: GridBodyCtrl;

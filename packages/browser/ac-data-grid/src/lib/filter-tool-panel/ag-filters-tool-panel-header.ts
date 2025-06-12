@@ -34,7 +34,7 @@ const AgFiltersToolPanelHeaderElement: ElementParams = {
         },
     ],
 };
-export class AgFiltersToolPanelHeader extends Component<AgFiltersToolPanelHeaderEvent> {
+export class AcDataGridFiltersToolPanelHeader extends Component<AgFiltersToolPanelHeaderEvent> {
     private readonly eExpand: Element = RefPlaceholder;
     private readonly eFilterTextField: AgInputTextField = RefPlaceholder;
 

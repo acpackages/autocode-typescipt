@@ -13,7 +13,7 @@ const TAB_DATA = 'data';
 const TAB_FORMAT = 'format';
 
 export type TabbedChartMenuEvent = 'closed';
-export class TabbedChartMenu extends Component<TabbedChartMenuEvent> {
+export class AcDGTabbedChartMenu extends Component<TabbedChartMenuEvent> {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

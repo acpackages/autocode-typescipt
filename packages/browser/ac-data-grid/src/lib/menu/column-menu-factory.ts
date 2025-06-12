@@ -6,7 +6,7 @@ import { AgMenuList } from '../widgets/agMenuList';
 import { MENU_ITEM_SEPARATOR, _removeRepeatsFromArray } from './menuItemMapper';
 import type { MenuItemMapper } from './menuItemMapper';
 
-export class ColumnMenuFactory extends BeanStub implements NamedBean {
+export class AcDGColumnMenuFactory extends BeanStub implements NamedBean {
     beanName = 'colMenuFactory' as const;
 
     public createMenu(

@@ -11,7 +11,7 @@ import type { Component, ComponentSelector } from '../widgets/component';
 import { SortIndicatorComp, SortIndicatorSelector } from './sortIndicatorComp';
 
 export const DEFAULT_SORTING_ORDER: SortDirection[] = ['asc', 'desc', null];
-export class SortService extends BeanStub implements NamedBean {
+export class AcDGSortService extends BeanStub implements NamedBean {
     beanName = 'sortSvc' as const;
 
     public progressSort(column: AgColumn, multiSort: boolean, source: ColumnEventType): void {

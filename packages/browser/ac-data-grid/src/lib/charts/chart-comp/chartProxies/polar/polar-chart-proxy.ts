@@ -10,7 +10,7 @@ import type { SeriesGroupType } from 'ag-grid-community';
 import type { UpdateParams } from '../chartProxy';
 import { ChartProxy } from '../chartProxy';
 
-export class PolarChartProxy extends ChartProxy<
+export class AcDGPolarChartProxy extends ChartProxy<
     AgPolarChartOptions,
     'radar-line' | 'radar-area' | 'nightingale' | 'radial-column' | 'radial-bar'
 > {

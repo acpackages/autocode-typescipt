@@ -1,7 +1,7 @@
 import type { IRowModel, IViewportDatasource, NamedBean, RowBounds, RowModelType } from 'ag-grid-community';
 import { BeanStub, RowNode, _getRowHeightAsNumber, _missing, _warn } from 'ag-grid-community';
 
-export class ViewportRowModel extends BeanStub implements NamedBean, IRowModel {
+export class AcDGViewportRowModel extends BeanStub implements NamedBean, IRowModel {
     beanName = 'rowModel' as const;
 
     // rowRenderer tells us these

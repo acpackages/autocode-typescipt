@@ -8,7 +8,7 @@ import type { ComponentSelector } from './component';
 export type FieldElement = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 export type AgAbstractFieldEvent = 'fieldValueChanged';
 
-export abstract class AgAbstractField<
+export abstract class AcDataGridAbstractField<
     TValue,
     TConfig extends AgFieldParams = AgFieldParams,
     TEventType extends string = AgAbstractFieldEvent,

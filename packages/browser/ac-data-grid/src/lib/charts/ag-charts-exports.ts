@@ -6,7 +6,7 @@ import { BeanStub } from 'ag-grid-community';
 type ChartTypes = IntegratedModule;
 
 /** Bean to expose the AG Charts apis from a single location and not require a code dependency on ag-charts-community */
-export class AgChartsExports extends BeanStub implements NamedBean {
+export class AcDataGridChartsExports extends BeanStub implements NamedBean {
     beanName = 'agChartsExports' as const;
 
     isEnterprise = false;

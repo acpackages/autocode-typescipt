@@ -10,7 +10,7 @@ import { _formatNumberCommas, _isClientSideRowModel, _warn } from 'ag-grid-commu
 import { AgNameValue } from './agNameValue';
 import { _getFilteredRowCount, _getTotalRowCount } from './utils';
 
-export class FilteredRowsComp extends AgNameValue implements IStatusPanelComp {
+export class AcDGFilteredRowsComp extends AgNameValue implements IStatusPanelComp {
     public postConstruct(): void {
         this.setLabel('filteredRows', 'Filtered');
 

@@ -3,7 +3,7 @@ import { _createIconNoSpan } from 'ag-grid-community';
 
 import { BaseDropZonePanel } from './baseDropZonePanel';
 
-export class ValuesDropZonePanel extends BaseDropZonePanel {
+export class AcDGValuesDropZonePanel extends BaseDropZonePanel {
     constructor(horizontal: boolean) {
         super(horizontal, 'aggregation');
     }

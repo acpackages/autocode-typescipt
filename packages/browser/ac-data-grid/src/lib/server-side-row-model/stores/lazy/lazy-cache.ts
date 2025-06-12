@@ -30,7 +30,7 @@ interface IAcDGLazyStoreNode {
 
 const DEFAULT_BLOCK_SIZE = 100 as const;
 
-export class LazyCache extends BeanStub {
+export class AcDGLazyCache extends BeanStub {
     private rowRenderer: RowRenderer;
     private blockUtils: BlockUtils;
     private focusSvc: FocusService;

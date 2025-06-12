@@ -15,7 +15,7 @@ import type { ValueService } from '../valueService/valueService';
 import type { RowAccumulator, RowSpanningAccumulator } from './iGridSerializer';
 import type { GridSerializingParams, GridSerializingSession } from './iGridSerializer';
 
-export abstract class BaseGridSerializingSession<T> implements GridSerializingSession<T> {
+export abstract class AcDGBaseGridSerializingSession<T> implements GridSerializingSession<T> {
     public colModel: ColumnModel;
     private colNames: ColumnNameService;
     public rowGroupColsSvc?: IColsService;

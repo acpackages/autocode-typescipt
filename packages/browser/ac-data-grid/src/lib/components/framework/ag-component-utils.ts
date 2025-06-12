@@ -4,7 +4,7 @@ import type { ComponentType } from '../../interfaces/iUserCompDetails';
 import type { ICellRendererComp, ICellRendererParams } from '../../rendering/cellRenderers/iCellRenderer';
 import { _createElement, _loadTemplate } from '../../utils/dom';
 
-export class AgComponentUtils extends BeanStub implements NamedBean {
+export class AcDataGridComponentUtils extends BeanStub implements NamedBean {
     beanName = 'agCompUtils' as const;
 
     public adaptFunction(type: ComponentType, jsCompFunc: any): any {
@@ -12,7 +12,7 @@ export class AgComponentUtils extends BeanStub implements NamedBean {
             return null;
         }
 
-        class Adapter implements ICellRendererComp {
+        class AcDGAdapter implements ICellRendererComp {
             private eGui: HTMLElement;
 
             refresh(): boolean {

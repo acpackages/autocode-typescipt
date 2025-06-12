@@ -34,7 +34,7 @@ const ToolPanelColumnElement: ElementParams = {
         { tag: 'span', ref: 'eLabel', cls: 'ag-column-select-column-label' },
     ],
 };
-export class ToolPanelColumnComp extends Component {
+export class AcDGToolPanelColumnComp extends Component {
     private readonly eLabel: HTMLElement = RefPlaceholder;
     private readonly cbSelect: AgCheckbox = RefPlaceholder;
 

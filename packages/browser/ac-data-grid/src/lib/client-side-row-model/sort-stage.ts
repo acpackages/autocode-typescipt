@@ -43,7 +43,7 @@ export function updateRowNodeAfterSort(rowNode: RowNode): void {
     updateChildIndexes(rowNode);
 }
 
-export class SortStage extends BeanStub implements NamedBean, IRowNodeStage {
+export class AcDGSortStage extends BeanStub implements NamedBean, IRowNodeStage {
     beanName = 'sortStage' as const;
 
     public refreshProps: Set<keyof GridOptions<any>> = new Set(['postSortRows', 'groupDisplayType', 'accentedSort']);

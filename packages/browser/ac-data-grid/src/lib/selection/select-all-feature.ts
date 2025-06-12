@@ -18,7 +18,7 @@ import { _setAriaRole } from '../utils/aria';
 import { _warn } from '../validation/logging';
 import { AgCheckbox } from '../widgets/agCheckbox';
 
-export class SelectAllFeature extends BeanStub {
+export class AcDGSelectAllFeature extends BeanStub {
     private cbSelectAllVisible = false;
     private processingEventFromCheckbox = false;
     private headerCellCtrl: HeaderCellCtrl;

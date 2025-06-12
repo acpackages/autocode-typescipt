@@ -2,7 +2,7 @@ import type { NamedBean } from '../context/bean';
 import { BeanStub } from '../context/beanStub';
 import type { RowNode } from '../entities/rowNode';
 
-export class ValueCache extends BeanStub implements NamedBean {
+export class AcDGValueCache extends BeanStub implements NamedBean {
     beanName = 'valueCache' as const;
 
     private cacheVersion = 0;

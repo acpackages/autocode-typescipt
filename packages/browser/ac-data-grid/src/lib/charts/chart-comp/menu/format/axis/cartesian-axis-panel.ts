@@ -29,7 +29,7 @@ import { GridLinePanel } from './gridLinePanel';
 
 const DEFAULT_TIME_AXIS_FORMAT = '%d %B %Y';
 
-export class CartesianAxisPanel extends Component {
+export class AcDGCartesianAxisPanel extends Component {
     private readonly axisGroup: AgGroupComponent = RefPlaceholder;
     private readonly axisTypeSelect: AgSelect = RefPlaceholder;
     private readonly axisPositionSelect: AgSelect = RefPlaceholder;

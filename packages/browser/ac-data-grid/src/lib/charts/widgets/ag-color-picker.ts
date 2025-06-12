@@ -12,7 +12,7 @@ export interface IAcDataGridColorPickerParams
     pickerAriaLabelValue?: string;
 }
 
-export class AgColorPicker extends AgPickerField<string, AgColorPickerParams & AgPickerFieldParams, string, AgDialog> {
+export class AcDataGridColorPicker extends AgPickerField<string, AgColorPickerParams & AgPickerFieldParams, string, AgDialog> {
     private isDestroyingPicker: boolean;
     private eDisplayFieldColor: HTMLElement;
     private eDisplayFieldText: HTMLElement;

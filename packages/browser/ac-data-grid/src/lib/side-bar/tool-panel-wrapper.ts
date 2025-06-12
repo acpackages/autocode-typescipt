@@ -29,7 +29,7 @@ const ToolPanelElement: ElementParams = {
     cls: 'ag-tool-panel-wrapper',
     role: 'tabpanel',
 };
-export class ToolPanelWrapper extends Component {
+export class AcDGToolPanelWrapper extends Component {
     private toolPanelCompInstance: IToolPanelComp | undefined;
     private toolPanelId: string;
     private resizeBar: AgHorizontalResize;

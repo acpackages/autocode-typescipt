@@ -17,7 +17,7 @@ export interface IAcDGMenuRestoreFocusParams {
     eventSource?: HTMLElement;
 }
 
-export class MenuUtils extends BeanStub implements NamedBean {
+export class AcDGMenuUtils extends BeanStub implements NamedBean {
     beanName = 'menuUtils' as const;
 
     public restoreFocusOnClose(

@@ -4,7 +4,7 @@ import type { AgChartsExports } from '../../../../../agChartsExports';
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniChartWithAxes } from '../miniChartWithAxes';
 
-export class MiniBoxPlotClass extends MiniChartWithAxes {
+export class AcDGMiniBoxPlotClass extends MiniChartWithAxes {
     private readonly boxPlotGroups: Group[];
 
     constructor(

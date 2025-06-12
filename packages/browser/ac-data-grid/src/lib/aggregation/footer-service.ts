@@ -3,7 +3,7 @@ import { BeanStub, _addGridCommonParams, _getGrandTotalRow, _getGroupTotalRowCal
 
 import { _createRowNodeFooter } from './footerUtils';
 
-export class FooterService extends BeanStub implements NamedBean, IFooterService {
+export class AcDGFooterService extends BeanStub implements NamedBean, IFooterService {
     beanName = 'footerSvc' as const;
 
     public addTotalRows(

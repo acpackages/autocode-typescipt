@@ -11,7 +11,7 @@ type AggFuncPreset = 'count' | 'sum' | 'min' | 'max' | 'avg' | 'first' | 'last';
 
 const DEFAULT_AGG_FUNC: AggFuncPreset = 'sum';
 
-export class CategoriesDataPanel extends DragDataPanel {
+export class AcDGCategoriesDataPanel extends DragDataPanel {
     private aggFuncToggle?: AgToggleButton;
     private aggFuncSelect?: AgSelect;
 

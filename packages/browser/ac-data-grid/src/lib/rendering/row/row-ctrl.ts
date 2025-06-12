@@ -81,7 +81,7 @@ interface IAcDGCellCtrlListAndMap {
 export const DOM_DATA_KEY_ROW_CTRL = 'renderedRow';
 
 export type RowCtrlEvent = RenderedRowEvent;
-export class RowCtrl extends BeanStub<RowCtrlEvent> {
+export class AcDGRowCtrl extends BeanStub<RowCtrlEvent> {
     public readonly instanceId: RowCtrlInstanceId;
 
     private tooltipFeature: TooltipFeature | undefined;

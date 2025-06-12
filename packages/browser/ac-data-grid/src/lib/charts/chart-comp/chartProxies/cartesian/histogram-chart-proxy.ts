@@ -3,7 +3,7 @@ import type { AgCartesianAxisOptions, AgHistogramSeriesOptions } from 'ag-charts
 import type { UpdateParams } from '../chartProxy';
 import { CartesianChartProxy } from './cartesianChartProxy';
 
-export class HistogramChartProxy extends CartesianChartProxy<'histogram'> {
+export class AcDGHistogramChartProxy extends CartesianChartProxy<'histogram'> {
     protected override getSeries(params: UpdateParams): AgHistogramSeriesOptions[] {
         const firstField = params.fields[0]; // multiple series are not supported!
         return [

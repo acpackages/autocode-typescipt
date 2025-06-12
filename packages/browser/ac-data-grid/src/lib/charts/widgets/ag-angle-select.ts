@@ -20,7 +20,7 @@ export interface IAcDataGridAngleSelectParams extends AgLabelParams {
 }
 
 export type AgAngleSelectEvent = 'fieldValueChanged';
-export class AgAngleSelect extends AgAbstractLabel<AgAngleSelectParams, AgAngleSelectEvent> {
+export class AcDataGridAngleSelect extends AgAbstractLabel<AgAngleSelectParams, AgAngleSelectEvent> {
     protected dragSvc?: DragService;
 
     public wireBeans(beans: BeanCollection) {

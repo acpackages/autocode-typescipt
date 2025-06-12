@@ -17,7 +17,7 @@ import type { AlignedGrid } from '../interfaces/iAlignedGrid';
 import type { WithoutGridCommon } from '../interfaces/iCommon';
 import { _error, _warn } from '../validation/logging';
 
-export class AlignedGridsService extends BeanStub implements NamedBean {
+export class AcDGAlignedGridsService extends BeanStub implements NamedBean {
     beanName = 'alignedGridsSvc' as const;
 
     // flag to mark if we are consuming. to avoid cyclic events (ie other grid firing back to master

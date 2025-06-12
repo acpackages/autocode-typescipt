@@ -12,7 +12,7 @@ import { _last } from '../utils/array';
 import { _missing } from '../utils/generic';
 import { _warn } from '../validation/logging';
 
-export class CellNavigationService extends BeanStub implements NamedBean {
+export class AcDGCellNavigationService extends BeanStub implements NamedBean {
     beanName = 'cellNavigation' as const;
 
     private rowSpanSvc: RowSpanService | undefined;

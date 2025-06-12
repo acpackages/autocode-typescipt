@@ -45,7 +45,7 @@ export interface IAcDGExcelGridSerializingParams extends ExcelWorksheetConfigPar
     frozenColumnCount?: number;
 }
 
-export class ExcelSerializingSession extends BaseGridSerializingSession<ExcelRow[]> {
+export class AcDGExcelSerializingSession extends BaseGridSerializingSession<ExcelRow[]> {
     private readonly config: ExcelGridSerializingParams & ExcelExportParams;
     private readonly stylesByIds: { [key: string]: ExcelStyle };
 

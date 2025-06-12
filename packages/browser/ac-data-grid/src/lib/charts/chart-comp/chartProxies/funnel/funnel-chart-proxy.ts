@@ -12,7 +12,7 @@ import { ChartProxy } from '../chartProxy';
 type FunnelTypes = AgPyramidSeriesOptions | AgFunnelSeriesOptions | AgConeFunnelSeriesOptions;
 type FunnelChartTypes = FunnelTypes['type'];
 
-export class FunnelChartProxy extends ChartProxy<AgStandaloneChartOptions, FunnelChartTypes> {
+export class AcDGFunnelChartProxy extends ChartProxy<AgStandaloneChartOptions, FunnelChartTypes> {
     protected getUpdateOptions(
         params: UpdateParams,
         commonChartOptions: AgStandaloneChartOptions

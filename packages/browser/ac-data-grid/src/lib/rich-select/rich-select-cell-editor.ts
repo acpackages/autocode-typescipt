@@ -10,7 +10,7 @@ import { PopupComponent, _addGridCommonParams, _missing, _warn } from 'ag-grid-c
 
 import { AgRichSelect } from '../widgets/agRichSelect';
 
-export class RichSelectCellEditor<TData = any, TValue = any> extends PopupComponent implements ICellEditor<TValue> {
+export class AcDGRichSelectCellEditor<TData = any, TValue = any> extends PopupComponent implements ICellEditor<TValue> {
     private params: RichCellEditorParams<TData, TValue>;
     private focusAfterAttached: boolean;
     private richSelect: AgRichSelect<TValue>;

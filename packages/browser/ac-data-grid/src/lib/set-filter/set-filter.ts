@@ -54,7 +54,7 @@ import { processDataPath } from './setFilterUtils';
 import { SetFilterModelValuesType, SetValueModel } from './setValueModel';
 
 /** @param V type of value in the Set Filter */
-export class SetFilter<V = string> extends ProvidedFilter<SetFilterModel, V> implements ISetFilter<V> {
+export class AcDGSetFilter<V = string> extends ProvidedFilter<SetFilterModel, V> implements ISetFilter<V> {
     private rowGroupColsSvc?: IColsService;
     private valueSvc: ValueService;
     private dataTypeSvc?: DataTypeService;
@@ -1319,7 +1319,7 @@ export class SetFilter<V = string> extends ProvidedFilter<SetFilterModel, V> imp
     }
 }
 
-class ModelWrapper<V> implements VirtualListModel {
+class AcDGModelWrapper<V> implements VirtualListModel {
     constructor(private readonly model: SetValueModel<V>) {}
 
     public getRowCount(): number {
@@ -1335,7 +1335,7 @@ class ModelWrapper<V> implements VirtualListModel {
     }
 }
 
-class ModelWrapperWithSelectAll<V> implements VirtualListModel {
+class AcDGModelWrapperWithSelectAll<V> implements VirtualListModel {
     constructor(
         private readonly model: SetValueModel<V>,
         private readonly isSelectAllSelected: () => boolean | undefined
@@ -1367,7 +1367,7 @@ class ModelWrapperWithSelectAll<V> implements VirtualListModel {
 }
 
 // isRowSelected is used by VirtualList to add aria tags for flat lists. We want to suppress this when using trees
-class TreeModelWrapper implements VirtualListModel {
+class AcDGTreeModelWrapper implements VirtualListModel {
     constructor(private readonly model: VirtualListModel) {}
 
     public getRowCount(): number {

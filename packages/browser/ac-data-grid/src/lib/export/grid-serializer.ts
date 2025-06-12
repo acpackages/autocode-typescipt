@@ -27,7 +27,7 @@ import type { GridSerializingSession, RowAccumulator, RowSpanningAccumulator } f
 
 type ProcessGroupHeaderCallback = (params: ProcessGroupHeaderForExportParams) => string;
 
-export class GridSerializer extends BeanStub implements NamedBean {
+export class AcDGGridSerializer extends BeanStub implements NamedBean {
     beanName = 'gridSerializer' as const;
 
     private visibleCols: VisibleColsService;

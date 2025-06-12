@@ -6,7 +6,7 @@ import { _debounce, _logIfDebug } from '../utils/function';
 import type { InfiniteBlock } from './infiniteBlock';
 
 export type RowNodeBlockLoaderEvent = 'blockLoaded';
-export class RowNodeBlockLoader extends BeanStub<RowNodeBlockLoaderEvent> implements NamedBean {
+export class AcDGRowNodeBlockLoader extends BeanStub<RowNodeBlockLoaderEvent> implements NamedBean {
     beanName = 'rowNodeBlockLoader' as const;
 
     private maxConcurrentRequests: number | undefined;

@@ -12,7 +12,7 @@ export const miniLineData = [
     [5, 3, 1],
 ];
 
-export class MiniLineClass extends MiniChartWithAxes {
+export class AcDGMiniLineClass extends MiniChartWithAxes {
     protected lines: Path[];
 
     constructor(

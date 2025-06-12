@@ -33,7 +33,7 @@ const AgPickerFieldElement: ElementParams = {
     ],
 };
 
-export abstract class AgPickerField<
+export abstract class AcDataGridPickerField<
     TValue,
     TConfig extends AgPickerFieldParams = AgPickerFieldParams,
     TEventType extends string = AgPickerFieldEvent,

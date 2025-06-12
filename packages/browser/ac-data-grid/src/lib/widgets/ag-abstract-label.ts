@@ -7,7 +7,7 @@ import type { ComponentEvent, ComponentSelector } from './component';
 import { Component } from './component';
 
 export type AgAbstractLabelEvent = ComponentEvent;
-export abstract class AgAbstractLabel<
+export abstract class AcDataGridAbstractLabel<
     TConfig extends AgLabelParams = AgLabelParams,
     TEventType extends string = AgAbstractLabelEvent,
 > extends Component<TEventType | AgAbstractLabelEvent> {

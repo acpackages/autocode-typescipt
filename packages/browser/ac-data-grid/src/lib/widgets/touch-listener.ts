@@ -16,7 +16,7 @@ export interface IAcDGLongTapEvent extends IAcDataGridEvent<'longTap'> {
 }
 
 export type TouchListenerEvent = 'tap' | 'doubleTap' | 'longTap';
-export class TouchListener implements IEventEmitter<TouchListenerEvent> {
+export class AcDGTouchListener implements IEventEmitter<TouchListenerEvent> {
     private DOUBLE_TAP_MILLIS = 500;
 
     private destroyFuncs: ((...args: any[]) => any)[] = [];

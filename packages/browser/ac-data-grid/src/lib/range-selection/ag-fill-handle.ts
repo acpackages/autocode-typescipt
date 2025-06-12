@@ -43,7 +43,7 @@ const FillHandleElement: ElementParams = {
     tag: 'div',
     cls: 'ag-fill-handle',
 };
-export class AgFillHandle extends AbstractSelectionHandle {
+export class AcDataGridFillHandle extends AbstractSelectionHandle {
     private initialPosition: CellPosition | undefined;
     private initialXY: { x: number; y: number } | null;
     private lastCellMarked: CellPosition | undefined;

@@ -12,7 +12,7 @@ import type { ServerSideRowModel } from '../serverSideRowModel';
 import type { LazyStore } from './lazy/lazyStore';
 import type { StoreFactory } from './storeFactory';
 
-export class StoreUtils extends BeanStub implements NamedBean {
+export class AcDGStoreUtils extends BeanStub implements NamedBean {
     beanName = 'ssrmStoreUtils' as const;
 
     private colModel: ColumnModel;

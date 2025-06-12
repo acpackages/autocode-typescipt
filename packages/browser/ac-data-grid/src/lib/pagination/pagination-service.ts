@@ -4,7 +4,7 @@ import { _exists } from '../utils/generic';
 import type { ComponentSelector } from '../widgets/component';
 import { PaginationSelector } from './paginationComp';
 
-export class PaginationService extends BeanStub implements NamedBean {
+export class AcDGPaginationService extends BeanStub implements NamedBean {
     beanName = 'pagination' as const;
 
     private active: boolean;

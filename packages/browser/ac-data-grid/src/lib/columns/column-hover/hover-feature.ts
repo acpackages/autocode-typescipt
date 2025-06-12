@@ -1,7 +1,7 @@
 import { BeanStub } from '../../context/beanStub';
 import type { AgColumn } from '../../entities/agColumn';
 
-export class HoverFeature extends BeanStub {
+export class AcDGHoverFeature extends BeanStub {
     constructor(
         private readonly columns: AgColumn[],
         private readonly element: HTMLElement

@@ -31,7 +31,7 @@ import type { SSRMParams } from '../../serverSideRowModel';
 import type { StoreUtils } from '../storeUtils';
 import { LazyCache } from './lazyCache';
 
-export class LazyStore extends BeanStub implements IServerSideStore {
+export class AcDGLazyStore extends BeanStub implements IServerSideStore {
     private blockUtils: BlockUtils;
     private storeUtils: StoreUtils;
     private selectionSvc?: ISelectionService;

@@ -6,7 +6,7 @@ import { _isUserSuppressingKeyboardEvent } from '../../utils/keyboard';
 import { PopupComponent } from '../../widgets/popupComponent';
 
 const PopupEditorElement: ElementParams = { tag: 'div', cls: 'ag-popup-editor', attrs: { tabindex: '-1' } };
-export class PopupEditorWrapper extends PopupComponent {
+export class AcDGPopupEditorWrapper extends PopupComponent {
     constructor(private readonly params: ICellEditorParams) {
         super(PopupEditorElement);
     }

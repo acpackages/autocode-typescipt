@@ -18,7 +18,7 @@ export interface IAcDGColumnResizeSet {
     width: number;
 }
 
-export class ColumnResizeService extends BeanStub implements NamedBean {
+export class AcDGColumnResizeService extends BeanStub implements NamedBean {
     beanName = 'colResize' as const;
 
     public setColumnWidths(

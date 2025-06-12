@@ -3,7 +3,7 @@ import { CellRangeType, _isSameRow, _last } from 'ag-grid-community';
 
 import { AbstractSelectionHandle, SelectionHandleType } from './abstractSelectionHandle';
 
-export class AgRangeHandle extends AbstractSelectionHandle {
+export class AcDataGridRangeHandle extends AbstractSelectionHandle {
     protected type = SelectionHandleType.RANGE;
     private endPosition: CellPosition;
     private rangeFixed: boolean = false;

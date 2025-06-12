@@ -21,7 +21,7 @@ import { ToolPanelFilterComp } from './toolPanelFilterComp';
 
 export type ToolPanelFilterItem = ToolPanelFilterGroupComp | ToolPanelFilterComp;
 
-export class ToolPanelFilterGroupComp extends Component {
+export class AcDGToolPanelFilterGroupComp extends Component {
     private filterGroupComp: AgGroupComponent = RefPlaceholder;
 
     private filterGroupName: string | null;

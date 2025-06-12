@@ -12,7 +12,7 @@ export interface IAcDataGridInputNumberFieldParams extends AgInputTextFieldParam
     max?: number;
 }
 
-export class AgInputNumberField extends AgInputTextField<AgInputNumberFieldParams> {
+export class AcDataGridInputNumberField extends AgInputTextField<AgInputNumberFieldParams> {
     private precision?: number;
     private step?: number;
     private min?: number;

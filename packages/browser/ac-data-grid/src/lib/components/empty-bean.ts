@@ -7,7 +7,7 @@ import type { Context } from '../context/context';
  * This is only required for the Components where the ctrl is managed by AG Grid and passed into the React component.
  * Both React and the Ctrl can decide to destroy the EmptyBean which will clean up listeners setup against it.
  */
-export class EmptyBean extends BeanStub {}
+export class AcDGEmptyBean extends BeanStub {}
 
 /**
  * Sets up the logic for managing the lifecycle of a compBean against a ctrl so that we always cleanup

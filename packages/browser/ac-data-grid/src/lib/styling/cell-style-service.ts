@@ -6,7 +6,7 @@ import type { CellCtrl } from '../rendering/cell/cellCtrl';
 import { CellCustomStyleFeature } from './cellCustomStyleFeature';
 import { processClassRules } from './stylingUtils';
 
-export class CellStyleService extends BeanStub implements NamedBean {
+export class AcDGCellStyleService extends BeanStub implements NamedBean {
     beanName = 'cellStyles' as const;
 
     public processAllCellClasses(

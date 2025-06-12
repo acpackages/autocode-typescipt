@@ -83,7 +83,7 @@ interface IAcDGPosition {
     direction: DIRECTION;
 }
 
-export class PopupService extends BeanStub implements NamedBean {
+export class AcDGPopupService extends BeanStub implements NamedBean {
     beanName = 'popupSvc' as const;
 
     private gridCtrl: GridCtrl;

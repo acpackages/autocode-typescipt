@@ -18,7 +18,7 @@ import { MiniChartsContainer } from './miniChartsContainer';
 
 type AnimationDirection = 'left' | 'right';
 
-export class ChartSettingsPanel extends Component {
+export class AcDGChartSettingsPanel extends Component {
     private readonly eMiniChartsContainer: HTMLElement = RefPlaceholder;
     private readonly eNavBar: HTMLElement = RefPlaceholder;
     private readonly eCardSelector: HTMLElement = RefPlaceholder;

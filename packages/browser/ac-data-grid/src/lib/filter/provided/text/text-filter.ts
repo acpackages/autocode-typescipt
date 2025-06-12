@@ -10,7 +10,7 @@ import { DEFAULT_TEXT_FILTER_OPTIONS } from './textFilterConstants';
 import { TextFilterModelFormatter } from './textFilterModelFormatter';
 import { trimInputForFilter } from './textFilterUtils';
 
-export class TextFilter extends SimpleFilter<TextFilterModel, string> {
+export class AcDGTextFilter extends SimpleFilter<TextFilterModel, string> {
     public readonly filterType = 'text' as const;
 
     private readonly defaultFormatter: TextFormatter = (from: string) => from;

@@ -2,7 +2,7 @@ import type { NamedBean } from '../context/bean';
 import { BeanStub } from '../context/beanStub';
 import { _error } from '../validation/logging';
 
-export class ExpressionService extends BeanStub implements NamedBean {
+export class AcDGExpressionService extends BeanStub implements NamedBean {
     beanName = 'expressionSvc' as const;
 
     private cache = {} as any;

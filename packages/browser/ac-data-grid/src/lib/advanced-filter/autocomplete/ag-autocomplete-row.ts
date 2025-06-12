@@ -8,7 +8,7 @@ const AgAutocompleteRowElement: ElementParams = {
     children: [{ tag: 'div', cls: 'ag-autocomplete-row-label' }],
 };
 
-export class AgAutocompleteRow extends Component {
+export class AcDataGridAutocompleteRow extends Component {
     private value: string | undefined;
     private hasHighlighting = false;
 

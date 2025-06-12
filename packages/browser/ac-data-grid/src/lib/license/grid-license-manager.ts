@@ -5,7 +5,7 @@ import type { ILicenseManager } from './shared/licenseManager';
 import { LicenseManager } from './shared/licenseManager';
 import { AgWatermarkSelector } from './watermark';
 
-export class GridLicenseManager extends BeanStub implements NamedBean, IWatermark {
+export class AcDGGridLicenseManager extends BeanStub implements NamedBean, IWatermark {
     beanName = 'licenseManager' as const;
 
     private licenseManager: LicenseManager;

@@ -8,7 +8,7 @@ import { _setDisplayed } from '../../../utils/dom';
 
 /** Provides sync access to async component. Date component can be lazy created - this class encapsulates
  * this by keeping value locally until DateComp has loaded, then passing DateComp the value. */
-export class DateCompWrapper {
+export class AcDGDateCompWrapper {
     private dateComp: IDateComp | null | undefined;
     private tempValue: Date | null;
     private disabled: boolean | null;

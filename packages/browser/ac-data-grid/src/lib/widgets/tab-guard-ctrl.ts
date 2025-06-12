@@ -13,7 +13,7 @@ export interface ITabGuard {
     setTabIndex(tabIndex?: string): void;
 }
 
-export class TabGuardCtrl extends BeanStub {
+export class AcDGTabGuardCtrl extends BeanStub {
     private readonly comp: ITabGuard;
     private readonly eTopGuard: HTMLElement;
     private readonly eBottomGuard: HTMLElement;

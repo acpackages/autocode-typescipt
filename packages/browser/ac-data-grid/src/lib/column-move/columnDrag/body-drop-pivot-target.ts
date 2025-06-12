@@ -4,7 +4,7 @@ import type { AgColumn } from '../../entities/agColumn';
 import type { ColumnPinnedType } from '../../interfaces/iColumn';
 import type { DropListener } from './bodyDropTarget';
 
-export class BodyDropPivotTarget extends BeanStub implements DropListener {
+export class AcDGBodyDropPivotTarget extends BeanStub implements DropListener {
     private columnsToAggregate: AgColumn[] = [];
     private columnsToGroup: AgColumn[] = [];
     private columnsToPivot: AgColumn[] = [];

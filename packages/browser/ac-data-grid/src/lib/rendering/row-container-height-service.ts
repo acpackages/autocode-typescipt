@@ -8,7 +8,7 @@ import { _logIfDebug } from '../utils/function';
  * the max div height actually allows.
  */
 
-export class RowContainerHeightService extends BeanStub implements NamedBean {
+export class AcDGRowContainerHeightService extends BeanStub implements NamedBean {
     beanName = 'rowContainerHeight' as const;
 
     private maxDivHeight: number;

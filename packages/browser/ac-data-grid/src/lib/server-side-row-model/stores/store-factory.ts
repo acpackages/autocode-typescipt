@@ -14,7 +14,7 @@ import { BeanStub, _warn } from 'ag-grid-community';
 import type { SSRMParams } from '../serverSideRowModel';
 import { LazyStore } from './lazy/lazyStore';
 
-export class StoreFactory extends BeanStub implements NamedBean {
+export class AcDGStoreFactory extends BeanStub implements NamedBean {
     beanName = 'ssrmStoreFactory' as const;
 
     private colModel: ColumnModel;

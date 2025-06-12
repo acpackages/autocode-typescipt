@@ -63,7 +63,7 @@ const PINNED_BORDER_WIDTH: Variable = {
 
 let paramsId = 0;
 
-export class Environment extends BeanStub implements NamedBean {
+export class AcDGEnvironment extends BeanStub implements NamedBean {
     beanName = 'environment' as const;
 
     private eGridDiv: HTMLElement;

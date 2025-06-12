@@ -14,7 +14,7 @@ const DateStringCellElement: ElementParams = {
     ref: 'eInput',
     cls: 'ag-cell-editor',
 };
-class DateStringCellEditorInput implements CellEditorInput<string, IDateStringCellEditorParams, AgInputDateField> {
+class AcDGDateStringCellEditorInput implements CellEditorInput<string, IDateStringCellEditorParams, AgInputDateField> {
     private eInput: AgInputDateField;
     private params: IDateStringCellEditorParams;
 
@@ -70,7 +70,7 @@ class DateStringCellEditorInput implements CellEditorInput<string, IDateStringCe
     }
 }
 
-export class DateStringCellEditor extends SimpleCellEditor<string, IDateStringCellEditorParams, AgInputDateField> {
+export class AcDGDateStringCellEditor extends SimpleCellEditor<string, IDateStringCellEditorParams, AgInputDateField> {
     constructor() {
         super(new DateStringCellEditorInput(() => this.beans.dataTypeSvc));
     }

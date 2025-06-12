@@ -54,7 +54,7 @@ function getTemplate(config: PanelOptions): ElementParams {
     };
 }
 
-export class AgPanel<TConfig extends PanelOptions = PanelOptions> extends Component {
+export class AcDataGridPanel<TConfig extends PanelOptions = PanelOptions> extends Component {
     protected closable = true;
 
     protected closeButtonComp: Component | undefined;

@@ -14,7 +14,7 @@ export const HEATMAP_CATEGORY_KEY = 'AG-GRID-DEFAULT-HEATMAP-CATEGORY-KEY';
 export const HEATMAP_SERIES_KEY = 'AG-GRID-DEFAULT-HEATMAP-SERIES-KEY';
 export const HEATMAP_VALUE_KEY = 'AG-GRID-DEFAULT-HEATMAP-VALUE-KEY';
 
-export class HeatmapChartProxy extends ChartProxy<AgCartesianChartOptions, 'heatmap'> {
+export class AcDGHeatmapChartProxy extends ChartProxy<AgCartesianChartOptions, 'heatmap'> {
     protected getUpdateOptions(
         params: UpdateParams,
         commonChartOptions: AgCartesianChartOptions

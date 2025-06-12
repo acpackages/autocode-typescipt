@@ -11,7 +11,7 @@ export interface INoRowsOverlayComp<TData = any, TContext = any>
     extends IOverlayComp<TData, TContext, INoRowsOverlayParams<TData, TContext>> {}
 const NoRowsOverlayElement: ElementParams = { tag: 'span', cls: 'ag-overlay-no-rows-center' };
 
-export class NoRowsOverlayComponent
+export class AcDGNoRowsOverlayComponent
     extends OverlayComponent<any, any, INoRowsOverlayParams>
     implements INoRowsOverlayComp<any, any>
 {

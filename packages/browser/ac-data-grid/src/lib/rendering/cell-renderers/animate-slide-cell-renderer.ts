@@ -10,7 +10,7 @@ const AnimateSlideCellRendererElement: ElementParams = {
     children: [{ tag: 'span', ref: 'eCurrent', cls: 'ag-value-slide-current' }],
 };
 
-export class AnimateSlideCellRenderer extends Component implements ICellRenderer {
+export class AcDGAnimateSlideCellRenderer extends Component implements ICellRenderer {
     private eCurrent: HTMLElement = RefPlaceholder;
     private ePrevious: HTMLElement | null;
 

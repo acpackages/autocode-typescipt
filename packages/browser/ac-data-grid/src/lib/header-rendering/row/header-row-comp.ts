@@ -13,7 +13,7 @@ import type { HeaderRowCtrl, IHeaderRowComp } from './headerRowCtrl';
 
 export type HeaderRowType = 'group' | 'column' | 'filter';
 
-export class HeaderRowComp extends Component {
+export class AcDGHeaderRowComp extends Component {
     private headerComps: { [key: HeaderCellCtrlInstanceId]: AbstractHeaderCellComp<AbstractHeaderCellCtrl> } = {};
 
     constructor(private readonly ctrl: HeaderRowCtrl) {

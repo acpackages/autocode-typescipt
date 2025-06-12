@@ -10,7 +10,7 @@ import type { FormatPanelOptions } from '../formatPanel';
 import { ChartTitlePanel } from './chartTitlePanel';
 import { TitlePanel } from './titlePanel';
 
-export class TitlesPanel extends Component {
+export class AcDGTitlesPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

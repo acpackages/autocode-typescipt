@@ -25,7 +25,7 @@ const AgPillElement: ElementParams = {
         },
     ],
 };
-export class AgPill extends Component {
+export class AcDataGridPill extends Component {
     private readonly eText: HTMLElement = RefPlaceholder;
     private readonly eButton: HTMLElement = RefPlaceholder;
 

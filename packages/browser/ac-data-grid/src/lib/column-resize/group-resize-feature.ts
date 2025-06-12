@@ -15,7 +15,7 @@ interface IAcDGColumnSizeAndRatios {
     groupAfterStartWidth?: number;
     groupAfterRatios?: number[];
 }
-export class GroupResizeFeature extends BeanStub implements IHeaderResizeFeature {
+export class AcDGGroupResizeFeature extends BeanStub implements IHeaderResizeFeature {
     private resizeCols?: AgColumn[];
     private resizeStartWidth: number;
     private resizeRatios?: number[];

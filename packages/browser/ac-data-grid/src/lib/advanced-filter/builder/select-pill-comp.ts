@@ -43,7 +43,7 @@ const SelectPillElement: ElementParams = {
         },
     ],
 };
-export class SelectPillComp extends AgRichSelect<AutocompleteEntry> {
+export class AcDGSelectPillComp extends AgRichSelect<AutocompleteEntry> {
     constructor(private readonly params: SelectPillParams) {
         super({
             ...params,

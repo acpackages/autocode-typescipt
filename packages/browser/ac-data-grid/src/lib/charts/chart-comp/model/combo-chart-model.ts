@@ -5,7 +5,7 @@ import type { ChartDataModel, ColState } from './chartDataModel';
 
 const SUPPORTED_COMBO_CHART_TYPES = new Set(['line', 'groupedColumn', 'stackedColumn', 'area', 'stackedArea']);
 
-export class ComboChartModel extends BeanStub {
+export class AcDGComboChartModel extends BeanStub {
     public seriesChartTypes: SeriesChartType[];
     public savedCustomSeriesChartTypes: SeriesChartType[];
 

@@ -21,7 +21,7 @@ const AdvancedFilterHeaderElement: ElementParams = {
     cls: 'ag-advanced-filter-header',
     role: 'row',
 };
-export class AdvancedFilterHeaderComp extends Component {
+export class AcDGAdvancedFilterHeaderComp extends Component {
     private colModel: ColumnModel;
     private focusSvc: FocusService;
     private ctrlsSvc: CtrlsService;

@@ -6,7 +6,7 @@ import { _addGridCommonParams } from './gridOptionsUtils';
 import type { IEventEmitter } from './interfaces/iEventEmitter';
 import { LocalEventService } from './localEventService';
 
-export class EventService extends BeanStub<AgEventType> implements NamedBean, IEventEmitter<AgEventType> {
+export class AcDGEventService extends BeanStub<AgEventType> implements NamedBean, IEventEmitter<AgEventType> {
     beanName = 'eventSvc' as const;
 
     private readonly globalSvc: LocalEventService<AgEventType> = new LocalEventService();

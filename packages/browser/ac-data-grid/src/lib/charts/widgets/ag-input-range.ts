@@ -7,7 +7,7 @@ interface IInputRange extends AgInputFieldParams {
     step?: number;
 }
 
-export class AgInputRange extends AgAbstractInputField<HTMLInputElement, string, IInputRange> {
+export class AcDataGridInputRange extends AgAbstractInputField<HTMLInputElement, string, IInputRange> {
     private min: number;
     private max: number;
 

@@ -16,7 +16,7 @@ const LoadingOverlayElement: ElementParams = {
     cls: 'ag-overlay-loading-center',
     attrs: { 'aria-live': 'polite', 'aria-atomic': 'true' },
 };
-export class LoadingOverlayComponent
+export class AcDGLoadingOverlayComponent
     extends OverlayComponent<any, any, ILoadingOverlayParams>
     implements ILoadingOverlayComp<any, any>
 {

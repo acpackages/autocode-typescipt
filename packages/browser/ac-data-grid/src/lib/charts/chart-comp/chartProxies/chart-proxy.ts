@@ -66,7 +66,7 @@ export interface IAcDGUpdateParams {
     seriesGroupType?: SeriesGroupType;
 }
 
-export abstract class ChartProxy<
+export abstract class AcDGChartProxy<
     TOptions extends AgChartOptions = AgChartOptions,
     TSeries extends ChartSeriesType = ChartSeriesType,
 > {

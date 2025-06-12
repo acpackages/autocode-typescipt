@@ -8,7 +8,7 @@
 // getInstanceIdForKey('age') => 0
 // getInstanceIdForKey('age') => 1
 // getInstanceIdForKey('country') => 4
-export class GroupInstanceIdCreator {
+export class AcDGGroupInstanceIdCreator {
     // this map contains keys to numbers, so we remember what the last call was
     private existingIds: any = {};
 

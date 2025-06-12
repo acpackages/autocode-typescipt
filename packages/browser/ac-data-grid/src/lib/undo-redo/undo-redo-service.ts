@@ -11,7 +11,7 @@ import type { RowPosition } from '../interfaces/iRowPosition';
 import type { CellValueChange, LastFocusedCell } from './iUndoRedo';
 import { RangeUndoRedoAction, UndoRedoAction, UndoRedoStack } from './undoRedoStack';
 
-export class UndoRedoService extends BeanStub implements NamedBean {
+export class AcDGUndoRedoService extends BeanStub implements NamedBean {
     beanName = 'undoRedo' as const;
 
     private gridBodyCtrl: GridBodyCtrl;

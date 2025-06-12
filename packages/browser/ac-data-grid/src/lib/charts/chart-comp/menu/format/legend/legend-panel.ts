@@ -12,7 +12,7 @@ import type { FontPanelParams } from '../fontPanel';
 import { FontPanel } from '../fontPanel';
 import type { FormatPanelOptions } from '../formatPanel';
 
-export class LegendPanel extends Component {
+export class AcDGLegendPanel extends Component {
     private chartTranslation: ChartTranslationService;
     private readonly chartController: ChartController;
 

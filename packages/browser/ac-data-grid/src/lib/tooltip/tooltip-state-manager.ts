@@ -28,7 +28,7 @@ const INTERACTIVE_HIDE_DELAY = 100;
 let lastTooltipHideTime: number;
 let isLocked = false;
 
-export class TooltipStateManager extends BeanStub {
+export class AcDGTooltipStateManager extends BeanStub {
     private popupSvc?: PopupService;
     private userCompFactory: UserComponentFactory;
 

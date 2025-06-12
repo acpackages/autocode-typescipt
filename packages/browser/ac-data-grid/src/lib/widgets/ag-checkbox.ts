@@ -2,7 +2,7 @@ import type { AgCheckboxParams, LabelAlignment } from '../interfaces/agFieldPara
 import { AgAbstractInputField } from './agAbstractInputField';
 import type { ComponentSelector } from './component';
 
-export class AgCheckbox<TConfig extends AgCheckboxParams = AgCheckboxParams> extends AgAbstractInputField<
+export class AcDataGridCheckbox<TConfig extends AgCheckboxParams = AgCheckboxParams> extends AgAbstractInputField<
     HTMLInputElement,
     boolean,
     TConfig

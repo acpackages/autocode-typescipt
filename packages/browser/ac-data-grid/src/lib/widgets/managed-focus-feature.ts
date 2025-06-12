@@ -13,7 +13,7 @@ export interface IAcDGManagedFocusCallbacks {
 
 export const FOCUS_MANAGED_CLASS = 'ag-focus-managed';
 
-export class ManagedFocusFeature extends BeanStub {
+export class AcDGManagedFocusFeature extends BeanStub {
     constructor(
         private readonly eFocusable: HTMLElement,
         private callbacks: ManagedFocusCallbacks = {}

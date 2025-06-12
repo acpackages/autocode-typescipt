@@ -16,7 +16,7 @@ const AgAutocompleteListElement: ElementParams = {
         },
     ],
 };
-export class AgAutocompleteList extends PopupComponent {
+export class AcDataGridAutocompleteList extends PopupComponent {
     private readonly eList: HTMLElement = RefPlaceholder;
 
     private virtualList: VirtualList<any>;

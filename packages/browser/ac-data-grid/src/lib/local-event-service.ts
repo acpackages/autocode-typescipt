@@ -2,7 +2,7 @@ import type { IAcDataGridEvent, IAcDataGridGridEvent } from './events';
 import type { IEventEmitter, IEventListener, IGlobalEventListener } from './interfaces/iEventEmitter';
 import type { IFrameworkOverrides } from './interfaces/iFrameworkOverrides';
 
-export class LocalEventService<TEventType extends string> implements IEventEmitter<TEventType> {
+export class AcDGLocalEventService<TEventType extends string> implements IEventEmitter<TEventType> {
     private allSyncListeners = new Map<TEventType, Set<IEventListener<TEventType>>>();
     private allAsyncListeners = new Map<TEventType, Set<IEventListener<TEventType>>>();
 

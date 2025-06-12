@@ -25,7 +25,7 @@ import type { IProvidedFilter, ProvidedFilterParams } from './iProvidedFilter';
  * @param M type of filter-model managed by the concrete sub-class that extends this type
  * @param V type of value managed by the concrete sub-class that extends this type
  */
-export abstract class ProvidedFilter<M, V> extends Component implements IProvidedFilter, IFilterComp {
+export abstract class AcDGProvidedFilter<M, V> extends Component implements IProvidedFilter, IFilterComp {
     // each level in the hierarchy will save params with the appropriate type for that level.
     private params: ProvidedFilterParams;
 

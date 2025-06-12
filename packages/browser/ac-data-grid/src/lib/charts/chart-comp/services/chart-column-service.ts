@@ -10,7 +10,7 @@ import type {
 } from 'ag-grid-community';
 import { BeanStub, _getRowNode, _warn } from 'ag-grid-community';
 
-export class ChartColumnService extends BeanStub implements NamedBean {
+export class AcDGChartColumnService extends BeanStub implements NamedBean {
     beanName = 'chartColSvc' as const;
 
     private colModel: ColumnModel;

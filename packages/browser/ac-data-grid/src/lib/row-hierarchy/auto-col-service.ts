@@ -27,7 +27,7 @@ import {
     isColumnGroupAutoCol,
 } from 'ag-grid-community';
 
-export class AutoColService extends BeanStub implements NamedBean, IColumnCollectionService {
+export class AcDGAutoColService extends BeanStub implements NamedBean, IColumnCollectionService {
     beanName = 'autoColSvc' as const;
 
     /** Group auto columns */

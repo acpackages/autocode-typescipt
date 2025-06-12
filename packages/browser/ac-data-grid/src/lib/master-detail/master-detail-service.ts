@@ -17,7 +17,7 @@ import {
     _observeResize,
 } from 'ag-grid-community';
 
-export class MasterDetailService extends BeanStub implements NamedBean, IMasterDetailService {
+export class AcDGMasterDetailService extends BeanStub implements NamedBean, IMasterDetailService {
     beanName: BeanName = 'masterDetailSvc' as const;
 
     public store: { [id: string]: DetailGridInfo | undefined } = {};

@@ -28,7 +28,7 @@ const SelectCellElement: ElementParams = {
         },
     ],
 };
-export class SelectCellEditor extends PopupComponent implements ICellEditorComp {
+export class AcDGSelectCellEditor extends PopupComponent implements ICellEditorComp {
     private focusAfterAttached: boolean;
 
     private valueSvc: ValueService;

@@ -23,7 +23,7 @@ import {
     _getColumnsFromTree,
 } from 'ag-grid-community';
 
-export class PivotResultColsService extends BeanStub implements NamedBean, IPivotResultColsService {
+export class AcDGPivotResultColsService extends BeanStub implements NamedBean, IPivotResultColsService {
     beanName = 'pivotResultCols' as const;
 
     private colModel: ColumnModel;

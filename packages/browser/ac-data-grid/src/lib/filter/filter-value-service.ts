@@ -6,7 +6,7 @@ import type { ColDef, ValueGetterParams } from '../entities/colDef';
 import { _addGridCommonParams } from '../gridOptionsUtils';
 import type { IRowNode } from '../interfaces/iRowNode';
 
-export class FilterValueService extends BeanStub implements NamedBean {
+export class AcDGFilterValueService extends BeanStub implements NamedBean {
     beanName: BeanName = 'filterValueSvc';
 
     public getValue(column: AgColumn, rowNode?: IRowNode | null) {

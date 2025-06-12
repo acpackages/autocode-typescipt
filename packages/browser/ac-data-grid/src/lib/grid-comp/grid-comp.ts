@@ -14,7 +14,7 @@ import { TabGuardComp } from '../widgets/tabGuardComp';
 import type { IGridComp, OptionalGridComponents } from './gridCtrl';
 import { GridCtrl } from './gridCtrl';
 
-export class GridComp extends TabGuardComp {
+export class AcDGGridComp extends TabGuardComp {
     private readonly gridBody: GridBodyComp = RefPlaceholder;
     private readonly sideBar: ISideBar & Component = RefPlaceholder;
     private readonly pagination: TabGuardComp = RefPlaceholder;

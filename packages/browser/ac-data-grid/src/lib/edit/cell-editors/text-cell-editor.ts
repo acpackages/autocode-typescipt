@@ -11,7 +11,7 @@ const TextCellEditorElement: ElementParams = {
     ref: 'eInput',
     cls: 'ag-cell-editor',
 };
-class TextCellEditorInput<TValue = any>
+class AcDGTextCellEditorInput<TValue = any>
     implements CellEditorInput<TValue, ITextCellEditorParams<any, TValue>, AgInputTextField>
 {
     private eInput: AgInputTextField;
@@ -63,7 +63,7 @@ class TextCellEditorInput<TValue = any>
     }
 }
 
-export class TextCellEditor extends SimpleCellEditor<any, ITextCellEditorParams, AgInputTextField> {
+export class AcDGTextCellEditor extends SimpleCellEditor<any, ITextCellEditorParams, AgInputTextField> {
     constructor() {
         super(new TextCellEditorInput());
     }

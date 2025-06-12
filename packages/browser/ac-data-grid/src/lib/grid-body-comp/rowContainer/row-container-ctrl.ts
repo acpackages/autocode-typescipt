@@ -256,7 +256,7 @@ export interface IRowContainerComp {
     setOffsetTop(offset: string): void;
 }
 
-export class RowContainerCtrl extends BeanStub implements ScrollPartner {
+export class AcDGRowContainerCtrl extends BeanStub implements ScrollPartner {
     private readonly options: RowContainerOptions;
 
     private comp: IRowContainerComp;

@@ -21,7 +21,7 @@ export function isColumnGroup(col: Column | ColumnGroup | string): col is AgColu
     return col instanceof AgColumnGroup;
 }
 
-export class AgColumnGroup<TValue = any> extends BeanStub<AgColumnGroupEvent> implements ColumnGroup<TValue> {
+export class AcDataGridColumnGroup<TValue = any> extends BeanStub<AgColumnGroupEvent> implements ColumnGroup<TValue> {
     public readonly isColumn = false as const;
 
     // all the children of this group, regardless of whether they are opened or closed

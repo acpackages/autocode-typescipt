@@ -21,7 +21,7 @@ const DetailCellRendererElement: ElementParams = {
     role: 'gridcell',
     children: [{ tag: 'div', ref: 'eDetailGrid', cls: 'ag-details-grid', role: 'presentation' }],
 };
-export class DetailCellRenderer extends Component implements ICellRenderer {
+export class AcDGDetailCellRenderer extends Component implements ICellRenderer {
     private eDetailGrid: HTMLElement = RefPlaceholder;
 
     private detailApi?: GridApi;

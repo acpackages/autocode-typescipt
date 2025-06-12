@@ -7,7 +7,7 @@ import { AgColorPickerSelector } from '../../../../widgets/agColorPicker';
 import type { ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class CrosshairPanel extends Component {
+export class AcDGCrosshairPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

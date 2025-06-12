@@ -16,7 +16,7 @@ const AgPrimaryColsElement: ElementParams = {
         { tag: 'ag-primary-cols-list', ref: 'primaryColsListPanel' },
     ],
 };
-export class AgPrimaryCols extends Component {
+export class AcDataGridPrimaryCols extends Component {
     private readonly primaryColsHeaderPanel: AgPrimaryColsHeader = RefPlaceholder;
     private readonly primaryColsListPanel: AgPrimaryColsList = RefPlaceholder;
 

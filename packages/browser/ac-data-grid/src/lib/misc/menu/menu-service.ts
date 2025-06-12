@@ -42,7 +42,7 @@ export type ShowColumnMenuParams = (MouseShowMenuParams | ButtonShowMenuParams |
 export type ShowFilterMenuParams = (MouseShowMenuParams | ButtonShowMenuParams | AutoShowMenuParams) &
     BaseShowFilterMenuParams;
 
-export class MenuService extends BeanStub implements NamedBean {
+export class AcDGMenuService extends BeanStub implements NamedBean {
     beanName = 'menuSvc' as const;
 
     private activeMenuFactory?: IMenuFactory;

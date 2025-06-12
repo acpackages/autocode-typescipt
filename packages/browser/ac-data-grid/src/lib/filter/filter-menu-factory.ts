@@ -14,7 +14,7 @@ import { _error } from '../validation/logging';
 import type { PopupService } from '../widgets/popupService';
 import { FilterWrapperComp } from './filterWrapperComp';
 
-export class FilterMenuFactory extends BeanStub implements NamedBean, IMenuFactory {
+export class AcDGFilterMenuFactory extends BeanStub implements NamedBean, IMenuFactory {
     beanName = 'filterMenuFactory' as const;
 
     private popupSvc?: PopupService;

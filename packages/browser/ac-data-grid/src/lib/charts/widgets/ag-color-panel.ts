@@ -12,7 +12,7 @@ const maxRecentColors = 8;
 
 let sharedRecentColors: string[] = [];
 
-export class AgColorPanel extends Component {
+export class AcDataGridColorPanel extends Component {
     private H = 1; // in the [0, 1] range
     private S = 1; // in the [0, 1] range
     private B = 1; // in the [0, 1] range

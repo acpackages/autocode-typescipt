@@ -26,7 +26,7 @@ import type { StoreFactory } from '../stores/storeFactory';
 
 export const GROUP_MISSING_KEY_ID = 'ag-Grid-MissingKey' as const;
 
-export class BlockUtils extends BeanStub implements NamedBean {
+export class AcDGBlockUtils extends BeanStub implements NamedBean {
     beanName = 'ssrmBlockUtils' as const;
 
     private valueSvc: ValueService;

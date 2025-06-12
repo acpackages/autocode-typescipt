@@ -37,7 +37,7 @@ export interface IAcDGDialogOptions extends PanelOptions {
     postProcessPopupParams?: DialogPostProcessPopupParams;
 }
 
-export class AgDialog extends AgPanel<DialogOptions> implements FocusableContainer {
+export class AcDataGridDialog extends AgPanel<DialogOptions> implements FocusableContainer {
     private popupSvc?: PopupService;
 
     public wireBeans(beans: BeanCollection) {

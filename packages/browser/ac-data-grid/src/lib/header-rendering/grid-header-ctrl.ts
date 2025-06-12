@@ -14,7 +14,7 @@ export interface IGridHeaderComp {
     setHeightAndMinHeight(height: string): void;
 }
 
-export class GridHeaderCtrl extends BeanStub {
+export class AcDGGridHeaderCtrl extends BeanStub {
     private comp: IGridHeaderComp;
     public eGui: HTMLElement;
     public headerHeight: number;

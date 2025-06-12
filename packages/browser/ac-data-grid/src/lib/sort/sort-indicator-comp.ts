@@ -25,7 +25,7 @@ const SortIndicatorElement: ElementParams = {
     ],
 };
 
-export class SortIndicatorComp extends Component {
+export class AcDGSortIndicatorComp extends Component {
     // Elements might by undefined when the user provides a custom template
     private eSortOrder?: HTMLElement = RefPlaceholder;
     private eSortAsc?: HTMLElement = RefPlaceholder;

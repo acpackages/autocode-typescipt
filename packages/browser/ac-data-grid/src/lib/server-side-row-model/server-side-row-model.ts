@@ -51,7 +51,7 @@ export interface IAcDGSSRMParams {
     datasource?: IServerSideDatasource;
 }
 
-export class ServerSideRowModel extends BeanStub implements NamedBean, IServerSideRowModel {
+export class AcDGServerSideRowModel extends BeanStub implements NamedBean, IServerSideRowModel {
     beanName = 'rowModel' as const;
 
     private colModel: ColumnModel;

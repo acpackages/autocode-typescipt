@@ -90,7 +90,7 @@ const AdvancedFilterBuilderItemElement: ElementParams = {
         },
     ],
 };
-export class AdvancedFilterBuilderItemComp extends TabGuardComp<AdvancedFilterBuilderEvents> {
+export class AcDGAdvancedFilterBuilderItemComp extends TabGuardComp<AdvancedFilterBuilderEvents> {
     private dragAndDrop: DragAndDropService;
     private advFilterExpSvc: AdvancedFilterExpressionService;
     private registry: Registry;

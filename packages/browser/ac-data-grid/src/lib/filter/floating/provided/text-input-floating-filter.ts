@@ -23,7 +23,7 @@ const TextInputFloatingFilterElement: ElementParams = {
     cls: 'ag-floating-filter-input',
     role: 'presentation',
 };
-export abstract class TextInputFloatingFilter<M extends ModelUnion> extends SimpleFloatingFilter {
+export abstract class AcDGTextInputFloatingFilter<M extends ModelUnion> extends SimpleFloatingFilter {
     private readonly eFloatingFilterInputContainer: HTMLElement = RefPlaceholder;
     private inputSvc: FloatingFilterInputService;
 

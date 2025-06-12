@@ -26,7 +26,7 @@ import { selectAllChildren } from './modelItemUtils';
 import { ToolPanelColumnComp } from './toolPanelColumnComp';
 import { ToolPanelColumnGroupComp } from './toolPanelColumnGroupComp';
 
-class UIColumnModel implements VirtualListModel {
+class AcDGUIColumnModel implements VirtualListModel {
     constructor(private readonly items: ColumnModelItem[]) {}
 
     public getRowCount(): number {
@@ -41,7 +41,7 @@ class UIColumnModel implements VirtualListModel {
 const PRIMARY_COLS_LIST_PANEL_CLASS = 'ag-column-select-list';
 
 export type AgPrimaryColsListEvent = 'groupExpanded' | 'selectionChanged';
-export class AgPrimaryColsList extends Component<AgPrimaryColsListEvent> {
+export class AcDataGridPrimaryColsList extends Component<AgPrimaryColsListEvent> {
     private colModel: ColumnModel;
 
     public wireBeans(beans: BeanCollection) {

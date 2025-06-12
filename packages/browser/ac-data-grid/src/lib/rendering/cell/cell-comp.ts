@@ -19,7 +19,7 @@ import type { ICellRendererComp } from './../cellRenderers/iCellRenderer';
 import type { DndSourceComp } from './../dndSourceComp';
 import type { CellCtrl, ICellComp } from './cellCtrl';
 
-export class CellComp extends Component {
+export class AcDGCellComp extends Component {
     private eCell: HTMLElement;
     private eCellWrapper: HTMLElement | undefined;
     private eCellValue: HTMLElement | undefined;

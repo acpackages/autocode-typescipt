@@ -30,7 +30,7 @@ function _capitalise(str: string): string {
     return str[0].toUpperCase() + str.substring(1).toLowerCase();
 }
 
-export class FontPanel extends Component {
+export class AcDGFontPanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {

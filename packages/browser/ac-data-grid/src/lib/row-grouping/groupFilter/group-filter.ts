@@ -36,7 +36,7 @@ const GroupFilterElement: ElementParams = {
         { tag: 'div', ref: 'eUnderlyingFilter' },
     ],
 };
-export class GroupFilter extends TabGuardComp<GroupFilterEvent> implements IFilterComp {
+export class AcDGGroupFilter extends TabGuardComp<GroupFilterEvent> implements IFilterComp {
     public readonly filterType = 'group' as const;
 
     private filterManager?: FilterManager;

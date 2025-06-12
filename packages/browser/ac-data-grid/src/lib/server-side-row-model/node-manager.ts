@@ -1,7 +1,7 @@
 import type { NamedBean, RowNode } from 'ag-grid-community';
 import { BeanStub, _warn } from 'ag-grid-community';
 
-export class NodeManager extends BeanStub implements NamedBean {
+export class AcDGNodeManager extends BeanStub implements NamedBean {
     beanName = 'ssrmNodeManager' as const;
 
     private rowNodes: Map<string, RowNode> = new Map();

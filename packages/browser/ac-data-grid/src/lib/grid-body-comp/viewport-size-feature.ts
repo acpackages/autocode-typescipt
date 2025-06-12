@@ -8,7 +8,7 @@ import type { RowContainerCtrl } from './rowContainer/rowContainerCtrl';
 // listens to changes in the center viewport size, for column and row virtualisation,
 // and adjusts grid as necessary. there are two viewports, one for horizontal and one for
 // vertical scrolling.
-export class ViewportSizeFeature extends BeanStub {
+export class AcDGViewportSizeFeature extends BeanStub {
     private scrollVisibleSvc: ScrollVisibleService;
 
     public wireBeans(beans: BeanCollection): void {

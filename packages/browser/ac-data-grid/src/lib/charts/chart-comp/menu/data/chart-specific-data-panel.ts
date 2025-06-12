@@ -13,7 +13,7 @@ import {
 import type { ChartMenuContext } from '../chartMenuContext';
 import { ChartMenuParamsFactory } from '../chartMenuParamsFactory';
 
-export class ChartSpecificDataPanel extends Component {
+export class AcDGChartSpecificDataPanel extends Component {
     private chartTranslation: ChartTranslationService;
     private chartSvc: IChartService;
 

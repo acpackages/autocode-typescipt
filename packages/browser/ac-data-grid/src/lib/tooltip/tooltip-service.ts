@@ -12,7 +12,7 @@ import { _getValueUsingField } from '../utils/object';
 import type { ITooltipCtrl, TooltipFeature } from './tooltipFeature';
 import { _isShowTooltipWhenTruncated, _shouldDisplayTooltip } from './tooltipFeature';
 
-export class TooltipService extends BeanStub implements NamedBean {
+export class AcDGTooltipService extends BeanStub implements NamedBean {
     beanName = 'tooltipSvc' as const;
 
     public setupHeaderTooltip(

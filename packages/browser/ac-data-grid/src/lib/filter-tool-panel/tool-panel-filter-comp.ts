@@ -37,7 +37,7 @@ const ToolPanelFilterElement: ElementParams = {
         { tag: 'div', ref: 'agFilterToolPanelBody', cls: 'ag-filter-toolpanel-instance-body ag-filter' },
     ],
 };
-export class ToolPanelFilterComp extends Component<ToolPanelFilterCompEvent> {
+export class AcDGToolPanelFilterComp extends Component<ToolPanelFilterCompEvent> {
     private readonly eFilterToolPanelHeader: HTMLElement = RefPlaceholder;
     private readonly eFilterName: HTMLElement = RefPlaceholder;
     private readonly agFilterToolPanelBody: HTMLElement = RefPlaceholder;

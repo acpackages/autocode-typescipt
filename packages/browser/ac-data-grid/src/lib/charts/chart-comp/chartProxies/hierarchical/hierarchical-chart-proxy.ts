@@ -6,7 +6,7 @@ import type { FieldDefinition, UpdateParams } from '../chartProxy';
 import { ChartProxy } from '../chartProxy';
 import { CATEGORY_LABEL_KEY, createAutoGroupHierarchy, createCategoryHierarchy } from './hierarchicalChartUtils';
 
-export class HierarchicalChartProxy<TSeries extends 'sunburst' | 'treemap'> extends ChartProxy<
+export class AcDGHierarchicalChartProxy<TSeries extends 'sunburst' | 'treemap'> extends ChartProxy<
     AgHierarchyChartOptions,
     TSeries
 > {

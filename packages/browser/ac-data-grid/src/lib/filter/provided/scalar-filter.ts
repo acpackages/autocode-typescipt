@@ -5,7 +5,7 @@ import type { ISimpleFilterModel, ISimpleFilterModelType, Tuple } from './iSimpl
 import { SimpleFilter } from './simpleFilter';
 import { isBlank } from './simpleFilterUtils';
 
-export abstract class ScalarFilter<M extends ISimpleFilterModel, V, E = AgInputTextField> extends SimpleFilter<
+export abstract class AcDGScalarFilter<M extends ISimpleFilterModel, V, E = AgInputTextField> extends SimpleFilter<
     M,
     V,
     E

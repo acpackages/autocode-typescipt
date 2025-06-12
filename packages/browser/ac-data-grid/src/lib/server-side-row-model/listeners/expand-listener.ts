@@ -4,7 +4,7 @@ import { BeanStub, RowNode, _exists, _getRowHeightForNode, _isServerSideRowModel
 import type { ServerSideRowModel } from '../serverSideRowModel';
 import type { StoreFactory } from '../stores/storeFactory';
 
-export class ExpandListener extends BeanStub implements NamedBean {
+export class AcDGExpandListener extends BeanStub implements NamedBean {
     beanName = 'ssrmExpandListener' as const;
 
     private serverSideRowModel: ServerSideRowModel;

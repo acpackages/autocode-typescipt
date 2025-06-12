@@ -3,7 +3,7 @@ import type { MiniChartSelector } from '../../miniChartsContainer';
 import { createColumnRects } from '../miniChartHelpers';
 import { MiniChartWithAxes } from '../miniChartWithAxes';
 
-export class MiniColumnClass extends MiniChartWithAxes {
+export class AcDGMiniColumnClass extends MiniChartWithAxes {
     private readonly columns: any[];
 
     private columnData = [2, 3, 4];

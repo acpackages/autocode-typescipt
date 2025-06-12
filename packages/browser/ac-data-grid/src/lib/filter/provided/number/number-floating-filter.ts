@@ -9,7 +9,7 @@ import { DEFAULT_NUMBER_FILTER_OPTIONS } from './numberFilterConstants';
 import { NumberFilterModelFormatter } from './numberFilterModelFormatter';
 import { getAllowedCharPattern } from './numberFilterUtils';
 
-class FloatingFilterNumberInputService extends BeanStub implements FloatingFilterInputService {
+class AcDGFloatingFilterNumberInputService extends BeanStub implements FloatingFilterInputService {
     private eTextInput: AgInputTextField;
     private eNumberInput: AgInputNumberField;
     private onValueChanged: (e: KeyboardEvent) => void = () => {};
@@ -80,7 +80,7 @@ class FloatingFilterNumberInputService extends BeanStub implements FloatingFilte
     }
 }
 
-export class NumberFloatingFilter extends TextInputFloatingFilter<NumberFilterModel> {
+export class AcDGNumberFloatingFilter extends TextInputFloatingFilter<NumberFilterModel> {
     protected filterModelFormatter: NumberFilterModelFormatter;
     private allowedCharPattern: string | null;
 

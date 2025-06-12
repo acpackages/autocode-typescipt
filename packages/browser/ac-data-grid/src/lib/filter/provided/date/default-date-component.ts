@@ -19,7 +19,7 @@ const DefaultDateElement: ElementParams = {
         },
     ],
 };
-export class DefaultDateComponent extends Component implements IDateComp {
+export class AcDGDefaultDateComponent extends Component implements IDateComp {
     private readonly eDateInput: AgInputTextField = RefPlaceholder;
 
     constructor() {

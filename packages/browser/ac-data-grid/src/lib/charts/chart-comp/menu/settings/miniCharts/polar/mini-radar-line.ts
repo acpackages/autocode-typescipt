@@ -5,7 +5,7 @@ import type { MiniChartSelector } from '../../miniChartsContainer';
 import { createPolarPaths } from '../miniChartHelpers';
 import { MiniChartWithPolarAxes } from '../miniChartWithPolarAxes';
 
-export class MiniRadarLineClass extends MiniChartWithPolarAxes {
+export class AcDGMiniRadarLineClass extends MiniChartWithPolarAxes {
     private readonly lines: Path[];
     private readonly markers: Marker[];
     private readonly markerSize: number = 4;

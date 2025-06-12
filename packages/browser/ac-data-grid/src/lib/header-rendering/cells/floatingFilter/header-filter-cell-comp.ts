@@ -32,7 +32,7 @@ const HeaderFilterCellCompElement: ElementParams = {
     ],
 };
 
-export class HeaderFilterCellComp extends AbstractHeaderCellComp<HeaderFilterCellCtrl> {
+export class AcDGHeaderFilterCellComp extends AbstractHeaderCellComp<HeaderFilterCellCtrl> {
     private readonly eFloatingFilterBody: HTMLElement = RefPlaceholder;
     private readonly eButtonWrapper: HTMLElement = RefPlaceholder;
     private readonly eButtonShowMainFilter: HTMLElement = RefPlaceholder;

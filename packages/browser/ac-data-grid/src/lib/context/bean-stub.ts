@@ -25,7 +25,7 @@ type EventHandlers<TEventKey extends string, TEvent = any> = { [K in TEventKey]?
 
 type AgEventHandlers = { [K in AgEventType]?: (event: AgEventTypeParams[K]) => void };
 
-export abstract class BeanStub<TEventType extends string = BeanStubEvent>
+export abstract class AcDGBeanStub<TEventType extends string = BeanStubEvent>
     implements BaseBean<BeanCollection>, Bean, IEventEmitter<EventOrDestroyed<TEventType>>
 {
     protected localEventService?: LocalEventService<EventOrDestroyed<TEventType>>;

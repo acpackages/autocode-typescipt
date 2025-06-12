@@ -37,7 +37,7 @@ import type {
 
 import { RowNumbersRowResizeFeature, _isRowNumbersResizerEnabled } from './rowNumbersRowResizeFeature';
 
-export class RowNumbersService extends BeanStub implements NamedBean, IRowNumbersService {
+export class AcDGRowNumbersService extends BeanStub implements NamedBean, IRowNumbersService {
     beanName = 'rowNumbersSvc' as const;
 
     public columns: _ColumnCollections | null;

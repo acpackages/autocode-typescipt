@@ -42,7 +42,7 @@ interface IAcDGBatchTransactionItem<TData = any> {
     callback: ((res: RowNodeTransaction<TData>) => void) | undefined;
 }
 
-export class ClientSideRowModel extends BeanStub implements IClientSideRowModel, NamedBean {
+export class AcDGClientSideRowModel extends BeanStub implements IClientSideRowModel, NamedBean {
     beanName = 'rowModel' as const;
 
     private colModel: ColumnModel;

@@ -50,7 +50,7 @@ export function _shouldDisplayTooltip(getElement: () => HTMLElement | undefined)
     };
 }
 
-export class TooltipFeature extends BeanStub {
+export class AcDGTooltipFeature extends BeanStub {
     private tooltip: any;
 
     private tooltipManager: TooltipStateManager | undefined;

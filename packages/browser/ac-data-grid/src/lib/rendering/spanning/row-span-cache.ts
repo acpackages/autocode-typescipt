@@ -11,7 +11,7 @@ export const _doesColumnSpan = (column: AgColumn) => {
     return column.colDef.rowSpan;
 };
 
-export class CellSpan {
+export class AcDGCellSpan {
     // used for distinguishing between types
     public readonly cellSpan = true;
 
@@ -87,7 +87,7 @@ export class CellSpan {
  *
  * Only create if spanning is enabled for this column.
  */
-export class RowSpanCache extends BeanStub {
+export class AcDGRowSpanCache extends BeanStub {
     private centerValueNodeMap: Map<RowNode, CellSpan>;
 
     // pinned rows

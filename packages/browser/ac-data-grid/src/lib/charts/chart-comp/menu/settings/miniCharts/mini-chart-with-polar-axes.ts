@@ -2,7 +2,7 @@ import type { AgChartsExports } from '../../../../agChartsExports';
 import type { ChartTranslationKey } from '../../../services/chartTranslationService';
 import { MiniChart } from './miniChart';
 
-export abstract class MiniChartWithPolarAxes extends MiniChart {
+export abstract class AcDGMiniChartWithPolarAxes extends MiniChart {
     private readonly stroke = 'gray';
     private gridLines: any[];
     protected showRadiusAxisLine: boolean = true;

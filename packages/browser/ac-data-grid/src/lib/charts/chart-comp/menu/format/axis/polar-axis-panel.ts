@@ -11,7 +11,7 @@ import type { FontPanelParams } from '../fontPanel';
 import { FontPanel } from '../fontPanel';
 import type { FormatPanelOptions } from '../formatPanel';
 
-export class PolarAxisPanel extends Component {
+export class AcDGPolarAxisPanel extends Component {
     private readonly axisGroup: AgGroupComponent = RefPlaceholder;
 
     private chartTranslation: ChartTranslationService;

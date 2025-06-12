@@ -8,7 +8,7 @@ import { _debounce } from '../../utils/function';
 import type { CellSpan } from './rowSpanCache';
 import { RowSpanCache } from './rowSpanCache';
 
-export class RowSpanService extends BeanStub<'spannedCellsUpdated'> implements NamedBean {
+export class AcDGRowSpanService extends BeanStub<'spannedCellsUpdated'> implements NamedBean {
     beanName = 'rowSpanSvc' as const;
 
     private spanningColumns: Map<AgColumn, RowSpanCache> = new Map();

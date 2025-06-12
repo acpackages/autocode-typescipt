@@ -10,7 +10,7 @@ import { _getElementSize, _observeResize } from '../../utils/dom';
 import { _debounce } from '../../utils/function';
 import type { CellCtrl } from '../cell/cellCtrl';
 
-export class RowAutoHeightService extends BeanStub implements NamedBean {
+export class AcDGRowAutoHeightService extends BeanStub implements NamedBean {
     beanName = 'rowAutoHeight' as const;
 
     /** grid columns have colDef.autoHeight set */

@@ -5,7 +5,7 @@ import type { ColDef, ColGroupDef } from './entities/colDef';
 import type { PropertyValueChangedEvent } from './gridOptionsService';
 import { _logIfDebug } from './utils/function';
 
-export class SyncService extends BeanStub implements NamedBean {
+export class AcDGSyncService extends BeanStub implements NamedBean {
     beanName = 'syncSvc' as const;
 
     private waitingForColumns: boolean = false;

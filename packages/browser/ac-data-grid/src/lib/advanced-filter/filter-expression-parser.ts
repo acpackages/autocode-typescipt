@@ -9,7 +9,7 @@ import type {
 } from './filterExpressionUtils';
 import { JoinFilterExpressionParser } from './joinFilterExpressionParser';
 
-export class FilterExpressionParser {
+export class AcDGFilterExpressionParser {
     private joinExpressionParser: JoinFilterExpressionParser;
     private valid: boolean = false;
 

@@ -291,7 +291,7 @@ export const DEFAULT_CHART_TRANSLATIONS = {
     avg: 'Average',
 };
 
-export class ChartTranslationService extends BeanStub implements NamedBean {
+export class AcDGChartTranslationService extends BeanStub implements NamedBean {
     beanName = 'chartTranslation' as const;
 
     public translate(toTranslate: ChartTranslationKey): string {

@@ -1,4 +1,4 @@
-export class MD5 {
+export class AcDGMD5 {
     private ieCompatibility = false;
 
     public init(): void {

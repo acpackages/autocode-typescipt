@@ -78,7 +78,7 @@ export interface IAcDGGridChartParams {
     crossFilteringResetCallback?: () => void;
 }
 
-export class GridChartComp extends Component {
+export class AcDGGridChartComp extends Component {
     private crossFilterService: ChartCrossFilterService;
     private chartTranslation: ChartTranslationService;
     private chartMenuSvc: ChartMenuService;

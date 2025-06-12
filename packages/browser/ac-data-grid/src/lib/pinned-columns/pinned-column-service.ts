@@ -16,7 +16,7 @@ import type { WithoutGridCommon } from '../interfaces/iCommon';
 import { _getInnerWidth } from '../utils/dom';
 import { _warn } from '../validation/logging';
 
-export class PinnedColumnService extends BeanStub implements NamedBean {
+export class AcDGPinnedColumnService extends BeanStub implements NamedBean {
     beanName = 'pinnedCols' as const;
 
     private gridBodyCtrl: GridBodyCtrl;

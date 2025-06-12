@@ -31,7 +31,7 @@ const DateFloatingFilterElement: ElementParams = {
     ],
 };
 
-export class DateFloatingFilter extends SimpleFloatingFilter {
+export class AcDGDateFloatingFilter extends SimpleFloatingFilter {
     private readonly eReadOnlyText: AgInputTextField = RefPlaceholder;
     private readonly eDateWrapper: HTMLInputElement = RefPlaceholder;
 

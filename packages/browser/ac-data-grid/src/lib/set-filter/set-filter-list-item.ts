@@ -91,7 +91,7 @@ const SetFilterElement: ElementParams = {
     children: [{ tag: 'ag-checkbox', ref: 'eCheckbox', cls: 'ag-set-filter-item-checkbox' }],
 };
 
-export class SetFilterListItem<V> extends Component<SetFilterListItemEvent> {
+export class AcDGSetFilterListItem<V> extends Component<SetFilterListItemEvent> {
     private readonly eCheckbox: AgCheckbox = RefPlaceholder;
 
     private readonly eGroupOpenedIcon: HTMLElement = RefPlaceholder;

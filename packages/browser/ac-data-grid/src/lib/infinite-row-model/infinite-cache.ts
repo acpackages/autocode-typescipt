@@ -26,7 +26,7 @@ export interface InfiniteCacheParams {
 // scrolled over are not needed to be loaded.
 const MAX_EMPTY_BLOCKS_TO_KEEP = 2;
 
-export class InfiniteCache extends BeanStub {
+export class AcDGICache extends BeanStub {
     private rowCount: number;
     private lastRowIndexKnown = false;
 

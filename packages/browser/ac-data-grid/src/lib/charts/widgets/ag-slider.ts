@@ -14,7 +14,7 @@ export interface IAcDataGridSliderParams extends AgLabelParams {
 }
 
 export type AgSliderEvent = 'fieldValueChanged';
-export class AgSlider extends AgAbstractLabel<AgSliderParams, AgSliderEvent> {
+export class AcDataGridSlider extends AgAbstractLabel<AgSliderParams, AgSliderEvent> {
     protected readonly eLabel: HTMLElement = RefPlaceholder;
     private readonly eSlider: AgInputRange = RefPlaceholder;
     private readonly eText: AgInputNumberField = RefPlaceholder;

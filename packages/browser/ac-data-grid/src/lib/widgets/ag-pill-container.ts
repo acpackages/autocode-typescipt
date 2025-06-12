@@ -27,7 +27,7 @@ const AgPillContainerElement: ElementParams = {
     tag: 'div',
     cls: 'ag-pill-container',
 };
-export class AgPillContainer<TValue> extends Component {
+export class AcDataGridPillContainer<TValue> extends Component {
     private params: PillRendererParams<TValue>;
     private pills: AgPill[] = [];
 

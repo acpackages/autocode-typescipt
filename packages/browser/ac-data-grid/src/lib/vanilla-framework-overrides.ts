@@ -5,7 +5,7 @@ import { AgPromise } from './utils/promise';
 import { setValidationDocLink } from './validation/logging';
 
 /** The base frameworks, eg React & Angular, override this bean with implementations specific to their requirement. */
-export class VanillaFrameworkOverrides implements IFrameworkOverrides {
+export class AcDGVanillaFrameworkOverrides implements IFrameworkOverrides {
     public readonly renderingEngine: 'vanilla' | 'react' = 'vanilla';
     public readonly batchFrameworkComps: boolean = false;
     private baseDocLink: string;

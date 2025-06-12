@@ -1,4 +1,4 @@
-export class AutoScrollService {
+export class AcDGAutoScrollService {
     private tickingInterval: number | null = null;
 
     private scrollHorizontally: boolean;

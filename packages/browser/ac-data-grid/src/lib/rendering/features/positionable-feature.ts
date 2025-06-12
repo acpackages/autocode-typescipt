@@ -82,7 +82,7 @@ interface IAcDGMappedResizer {
 }
 
 export type PositionableFeatureEvent = 'resize';
-export class PositionableFeature extends BeanStub<PositionableFeatureEvent> {
+export class AcDGPositionableFeature extends BeanStub<PositionableFeatureEvent> {
     protected popupSvc?: PopupService;
     private dragSvc?: DragService;
 

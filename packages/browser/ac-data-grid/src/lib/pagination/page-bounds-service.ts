@@ -3,7 +3,7 @@ import { BeanStub } from '../context/beanStub';
 import type { RowBounds } from '../interfaces/iRowModel';
 
 // note that everything in this service is used even when pagination is off
-export class PageBoundsService extends BeanStub implements NamedBean {
+export class AcDGPageBoundsService extends BeanStub implements NamedBean {
     beanName = 'pageBounds' as const;
 
     private topRowBounds?: Required<RowBounds> | null;

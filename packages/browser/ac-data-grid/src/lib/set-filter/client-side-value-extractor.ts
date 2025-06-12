@@ -12,7 +12,7 @@ import { AgPromise, _makeNull } from 'ag-grid-community';
 import { processDataPath } from './setFilterUtils';
 
 /** @param V type of value in the Set Filter */
-export class ClientSideValuesExtractor<V> {
+export class AcDGClientSideValuesExtractor<V> {
     constructor(
         private readonly rowModel: IClientSideRowModel,
         private readonly filterParams: SetFilterParams<any, V>,

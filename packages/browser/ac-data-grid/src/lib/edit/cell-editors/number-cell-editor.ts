@@ -13,7 +13,7 @@ const NumberCellElement: ElementParams = {
     ref: 'eInput',
     cls: 'ag-cell-editor',
 };
-class NumberCellEditorInput implements CellEditorInput<number, INumberCellEditorParams, AgInputNumberField> {
+class AcDGNumberCellEditorInput implements CellEditorInput<number, INumberCellEditorParams, AgInputNumberField> {
     private eInput: AgInputNumberField;
     private params: INumberCellEditorParams;
 
@@ -88,7 +88,7 @@ class NumberCellEditorInput implements CellEditorInput<number, INumberCellEditor
     }
 }
 
-export class NumberCellEditor extends SimpleCellEditor<number, INumberCellEditorParams, AgInputNumberField> {
+export class AcDGNumberCellEditor extends SimpleCellEditor<number, INumberCellEditorParams, AgInputNumberField> {
     constructor() {
         super(new NumberCellEditorInput());
     }

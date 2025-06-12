@@ -9,7 +9,7 @@ import { AgSliderSelector } from '../../../../widgets/agSlider';
 import type { ChartTranslationKey, ChartTranslationService } from '../../../services/chartTranslationService';
 import type { ChartMenuParamsFactory } from '../../chartMenuParamsFactory';
 
-export class ConnectorLinePanel extends Component {
+export class AcDGConnectorLinePanel extends Component {
     private chartTranslation: ChartTranslationService;
 
     public wireBeans(beans: BeanCollection): void {
@@ -34,7 +34,7 @@ export class ConnectorLinePanel extends Component {
                 <ag-color-picker data-ref="lineColorPicker"></ag-color-picker>
                 <ag-slider data-ref="lineStrokeWidthSlider"></ag-slider>
                 <ag-slider data-ref="lineOpacitySlider"></ag-slider>
-                <ag-slider data-ref="lineDashSlider"></ag-slider>                
+                <ag-slider data-ref="lineDashSlider"></ag-slider>
             </ag-group-component>
         </div>`,
             [AgGroupComponentSelector, AgColorPickerSelector, AgSliderSelector],

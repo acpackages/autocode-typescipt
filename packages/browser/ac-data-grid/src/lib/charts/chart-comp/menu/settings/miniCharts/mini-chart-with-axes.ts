@@ -2,7 +2,7 @@ import type { AgChartsExports } from '../../../../agChartsExports';
 import type { ChartTranslationKey } from '../../../services/chartTranslationService';
 import { MiniChart } from './miniChart';
 
-export abstract class MiniChartWithAxes extends MiniChart {
+export abstract class AcDGMiniChartWithAxes extends MiniChart {
     private readonly stroke = 'gray';
     private readonly axisOvershoot = 3;
 

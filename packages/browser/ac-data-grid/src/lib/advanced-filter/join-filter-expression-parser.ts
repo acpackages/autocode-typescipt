@@ -13,7 +13,7 @@ import type {
 } from './filterExpressionUtils';
 import { checkAndUpdateExpression, findEndPosition, getSearchString, updateExpression } from './filterExpressionUtils';
 
-class OperatorParser {
+class AcDGOperatorParser {
     private operators: string[] = [];
     private parsedOperator: 'AND' | 'OR';
     private operatorStartPositions: number[] = [];
@@ -170,7 +170,7 @@ class OperatorParser {
     }
 }
 
-export class JoinFilterExpressionParser {
+export class AcDGJoinFilterExpressionParser {
     private expectingExpression: boolean = true;
     private expectingOperator: boolean = false;
     private expressionParsers: (JoinFilterExpressionParser | ColFilterExpressionParser)[] = [];

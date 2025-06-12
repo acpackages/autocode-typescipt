@@ -9,7 +9,7 @@ export function isProvidedColumnGroup(col: Column | ProvidedColumnGroup | string
 }
 
 export type AgProvidedColumnGroupEvent = 'expandedChanged' | 'expandableChanged';
-export class AgProvidedColumnGroup extends BeanStub<AgProvidedColumnGroupEvent> implements ProvidedColumnGroup {
+export class AcDataGridProvidedColumnGroup extends BeanStub<AgProvidedColumnGroupEvent> implements ProvidedColumnGroup {
     public readonly isColumn = false as const;
 
     public originalParent: AgProvidedColumnGroup | null;

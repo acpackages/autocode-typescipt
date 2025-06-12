@@ -17,7 +17,7 @@ interface IAcDGRangePartition {
  *
  * See AG-9620 for more
  */
-export class RowRangeSelectionContext {
+export class AcDGRowRangeSelectionContext {
     /** Whether the user is currently selecting all nodes either via the header checkbox or API */
     public selectAll = false;
     private rootId: string | null = null;

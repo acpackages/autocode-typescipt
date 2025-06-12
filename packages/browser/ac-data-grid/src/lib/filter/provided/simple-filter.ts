@@ -38,7 +38,7 @@ import {
  * @param V type of value managed by the concrete sub-class that extends this type
  * @param E type of UI element used for collecting user-input
  */
-export abstract class SimpleFilter<M extends ISimpleFilterModel, V, E = AgInputTextField>
+export abstract class AcDGSimpleFilter<M extends ISimpleFilterModel, V, E = AgInputTextField>
     extends ProvidedFilter<M | ICombinedSimpleModel<M>, V>
     implements ISimpleFilter
 {

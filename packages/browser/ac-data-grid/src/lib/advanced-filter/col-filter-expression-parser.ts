@@ -25,7 +25,7 @@ interface IAcDGParser {
     getValidationError(): FilterExpressionValidationError | null;
 }
 
-class ColumnParser implements Parser {
+class AcDGColumnParser implements Parser {
     public readonly type = 'column';
 
     public valid = true;
@@ -106,7 +106,7 @@ class ColumnParser implements Parser {
     }
 }
 
-class OperatorParser implements Parser {
+class AcDGOperatorParser implements Parser {
     public readonly type = 'operator';
 
     public valid = true;
@@ -178,7 +178,7 @@ class OperatorParser implements Parser {
     }
 }
 
-class OperandParser implements Parser {
+class AcDGOperandParser implements Parser {
     public readonly type = 'operand';
 
     public valid = true;
@@ -281,7 +281,7 @@ class OperandParser implements Parser {
 export const COL_FILTER_EXPRESSION_START_CHAR = '[';
 export const COL_FILTER_EXPRESSION_END_CHAR = ']';
 
-export class ColFilterExpressionParser {
+export class AcDGColFilterExpressionParser {
     private endPosition: number | undefined;
     private isAwaiting = true;
     private parser: Parser | undefined;

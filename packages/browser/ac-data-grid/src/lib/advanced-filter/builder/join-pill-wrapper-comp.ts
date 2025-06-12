@@ -10,7 +10,7 @@ import type {
 import type { InputPillComp } from './inputPillComp';
 import type { SelectPillComp } from './selectPillComp';
 
-export class JoinPillWrapperComp extends Component<AdvancedFilterBuilderEvents> {
+export class AcDGJoinPillWrapperComp extends Component<AdvancedFilterBuilderEvents> {
     private advFilterExpSvc: AdvancedFilterExpressionService;
 
     public wireBeans(beans: BeanCollection): void {

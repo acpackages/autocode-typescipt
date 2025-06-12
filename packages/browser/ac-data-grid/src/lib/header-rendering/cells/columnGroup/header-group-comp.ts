@@ -83,7 +83,7 @@ const HeaderGroupCompElement: ElementParams = {
     ],
 };
 
-export class HeaderGroupComp extends Component implements IHeaderGroupComp {
+export class AcDGHeaderGroupComp extends Component implements IHeaderGroupComp {
     public params: IHeaderGroupParams;
 
     private readonly agOpened: HTMLElement = RefPlaceholder;

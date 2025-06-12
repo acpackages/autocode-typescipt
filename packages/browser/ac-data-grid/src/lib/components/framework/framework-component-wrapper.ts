@@ -23,7 +23,7 @@ export interface IAcDGWrappableInterface {
     addMethod(name: string, callback: (...args: any[]) => any): void;
 }
 
-export abstract class BaseComponentWrapper<F extends WrappableInterface> implements FrameworkComponentWrapper {
+export abstract class AcDGBaseComponentWrapper<F extends WrappableInterface> implements FrameworkComponentWrapper {
     public wrap<A extends IComponent<any>>(
         OriginalConstructor: { new (): any },
         mandatoryMethods: string[] | undefined,

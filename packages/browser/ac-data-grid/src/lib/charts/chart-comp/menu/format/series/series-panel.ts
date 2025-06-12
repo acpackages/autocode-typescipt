@@ -39,7 +39,7 @@ type ComposableComponent = Component & {
     addItem: (item: Component) => void;
 };
 
-export class SeriesPanel extends Component {
+export class AcDGSeriesPanel extends Component {
     private readonly seriesGroup: AgGroupComponent = RefPlaceholder;
 
     private chartTranslation: ChartTranslationService;

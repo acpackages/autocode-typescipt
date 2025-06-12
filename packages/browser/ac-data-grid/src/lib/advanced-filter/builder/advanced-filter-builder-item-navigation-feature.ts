@@ -7,7 +7,7 @@ import {
     _stopPropagationForAgGrid,
 } from 'ag-grid-community';
 
-export class AdvancedFilterBuilderItemNavigationFeature extends BeanStub {
+export class AcDGAdvancedFilterBuilderItemNavigationFeature extends BeanStub {
     constructor(
         private readonly eGui: HTMLElement,
         private readonly focusWrapper: HTMLElement,

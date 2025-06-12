@@ -8,7 +8,7 @@ import { _isElementChildOfClass, _isFocusableFormField } from '../../utils/dom';
 import { _isStopPropagationForAgGrid } from '../../utils/event';
 import type { CellCtrl } from './cellCtrl';
 
-export class CellMouseListenerFeature extends BeanStub {
+export class AcDGCellMouseListenerFeature extends BeanStub {
     public lastIPadMouseClickEvent: number;
 
     constructor(

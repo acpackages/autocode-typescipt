@@ -11,7 +11,7 @@ import { HeatmapChartProxy } from './specialized/heatmapChartProxy';
 import { BoxPlotChartProxy } from './statistical/boxPlotChartProxy';
 import { RangeChartProxy } from './statistical/rangeChartProxy';
 
-export class EnterpriseChartProxyFactory extends BeanStub implements NamedBean {
+export class AcDGEnterpriseChartProxyFactory extends BeanStub implements NamedBean {
     beanName: BeanName = 'enterpriseChartProxyFactory';
 
     public createChartProxy(chartProxyParams: ChartProxyParams): ChartProxy | undefined {

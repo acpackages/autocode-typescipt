@@ -3,7 +3,7 @@ import { Component } from './component';
 import type { TabGuardParams } from './tabGuardFeature';
 import { TabGuardFeature } from './tabGuardFeature';
 
-export class TabGuardComp<TLocalEvent extends string = ComponentEvent> extends Component<TLocalEvent> {
+export class AcDGTabGuardComp<TLocalEvent extends string = ComponentEvent> extends Component<TLocalEvent> {
     protected tabGuardFeature: TabGuardFeature;
 
     protected initialiseTabGuard(params: TabGuardParams) {

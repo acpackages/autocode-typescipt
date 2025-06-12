@@ -15,7 +15,7 @@ const RowDragElement: ElementParams = {
     attrs: { 'aria-hidden': 'true' },
 };
 
-export class RowDragComp extends Component {
+export class AcDGRowDragComp extends Component {
     private dragSource: DragSource | null = null;
     private mouseDownListener: (() => void) | undefined;
 
@@ -161,7 +161,7 @@ export class RowDragComp extends Component {
     }
 }
 
-class VisibilityStrategy extends BeanStub {
+class AcDGVisibilityStrategy extends BeanStub {
     constructor(
         private readonly parent: RowDragComp,
         protected readonly rowNode: RowNode,
@@ -199,7 +199,7 @@ class VisibilityStrategy extends BeanStub {
 }
 
 // when non managed, the visibility depends on suppressRowDrag property only
-class NonManagedVisibilityStrategy extends VisibilityStrategy {
+class AcDGNonManagedVisibilityStrategy extends VisibilityStrategy {
     public postConstruct(): void {
         this.addManagedPropertyListener('suppressRowDrag', this.onSuppressRowDrag.bind(this));
 
@@ -227,7 +227,7 @@ class NonManagedVisibilityStrategy extends VisibilityStrategy {
 }
 
 // when managed, the visibility depends on sort, filter and row group, as well as suppressRowDrag property
-class ManagedVisibilityStrategy extends VisibilityStrategy {
+class AcDGManagedVisibilityStrategy extends VisibilityStrategy {
     public postConstruct(): void {
         const listener = this.workOutVisibility.bind(this);
         // we do not show the component if sort, filter or grouping is active

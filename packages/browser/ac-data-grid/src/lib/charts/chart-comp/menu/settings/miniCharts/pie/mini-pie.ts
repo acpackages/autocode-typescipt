@@ -2,7 +2,7 @@ import type { AgChartsExports } from '../../../../../agChartsExports';
 import type { MiniChartSelector } from '../../miniChartsContainer';
 import { MiniDonutClass } from './miniDonut';
 
-export class MiniPieClass extends MiniDonutClass {
+export class AcDGMiniPieClass extends MiniDonutClass {
     constructor(
         container: HTMLElement,
         agChartsExports: AgChartsExports,

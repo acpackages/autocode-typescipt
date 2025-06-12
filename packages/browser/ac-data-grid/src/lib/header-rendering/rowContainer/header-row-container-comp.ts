@@ -17,7 +17,7 @@ const CenterElement: ElementParams = {
     children: [{ tag: 'div', ref: 'eCenterContainer', cls: 'ag-header-container', role: 'rowgroup' }],
 };
 
-export class HeaderRowContainerComp extends Component {
+export class AcDGHeaderRowContainerComp extends Component {
     private eCenterContainer: HTMLElement = RefPlaceholder;
 
     private eRowContainer: HTMLElement;
