@@ -1,0 +1,9 @@
+{
+  "name": "ac-data-grid",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/ac-data-grid/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-data-grid --web",
+  "targets": {}
+}
