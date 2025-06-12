@@ -21,9 +21,13 @@
       "@autocode-ts/ac-data-dictionary": [
         "packages/common/ac-data-dictionary/index.ts"
       ],
+      "@autocode-ts/ac-datagrid": ["packages/browser/ac-datagrid/src/index.ts"],
       "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/index.ts"],
       "@autocode-ts/ac-ng-data-dictionary-editor": [
         "packages/angular/ac-ng-data-dictionary-editor/index.ts"
+      ],
+      "@autocode-ts/ac-ng-datagrid": [
+        "packages/angular/ac-ng-datagrid/src/index.ts"
       ],
       "@autocode-ts/ac-ng-datagrid-on-aggrid": [
         "packages/angular/ac-ng-datagrid-on-aggrid/index.ts"
