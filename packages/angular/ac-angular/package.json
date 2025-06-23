@@ -11,5 +11,8 @@
     "@primeng/themes": "^19.0.7",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }

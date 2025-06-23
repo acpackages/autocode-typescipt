@@ -12,7 +12,12 @@
     "ag-grid-angular": "^33.3.0",
     "ag-grid-community": "^33.3.0",
     "ag-grid-enterprise": "^33.3.2",
+    "intl-ts": "^4.3.2",
+    "moment": "^2.30.1",
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
 }

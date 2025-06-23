@@ -90,4 +90,8 @@ export class TestAgGridBasicComponent {
   handleRowUpdated(event:any){
     console.log("Row Updated",event);
   }
+
+  handleSearchUpdated(){
+    console.log("Search Updated");
+  }
 }

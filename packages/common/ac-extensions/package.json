@@ -15,5 +15,8 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -6,10 +6,8 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IAcDataGridColumn } from '../../interfaces/ac-datagrid-column.interface';
 import { IAcDataGridColumnWidthChangeEvent } from '../../interfaces/ac-datagrid-column-width-change-event.interface';
-import { AcDatagridRowComponent } from '../ac-datagrid-row/ac-datagrid-row.component';
 import { AcBase } from '../../../_base/ac-base.component';
 import { IAcDataGridCellEvent } from '../../interfaces/ac-datagrid-cell-event.interface';
-import { AcDatagridComponent } from '../ac-datagrid/ac-datagrid.component';
 
 @Component({
   selector: 'ac-datagrid-cell',
@@ -21,11 +19,11 @@ import { AcDatagridComponent } from '../ac-datagrid/ac-datagrid.component';
 export class AcDatagridCellComponent extends AcBase {
   @ViewChild("td") cellTd!: ElementRef;
 
-  @Input() dataGridInstance!: AcDatagridComponent;
+  @Input() dataGridInstance!: any;
   @Input() index:number = -1;
   @Input() data: any = {};
   @Input() column: IAcDataGridColumn = {};
-  @Input() rowInstance!: AcDatagridRowComponent;
+  @Input() rowInstance!: any;
 
   @Output() onBlur: EventEmitter<IAcDataGridCellEvent> = new EventEmitter();
   @Output() onChange: EventEmitter<IAcDataGridCellEvent> = new EventEmitter();

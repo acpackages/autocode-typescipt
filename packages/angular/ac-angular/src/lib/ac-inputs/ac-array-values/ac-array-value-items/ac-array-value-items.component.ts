@@ -1,7 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { AcArrayValuesComponent } from '../ac-array-values.component';
 import { AcCommentElementTagDirective } from '../../../directives/ac-comment-element-tag.directive';
 
 @Component({
@@ -15,6 +14,6 @@ export class AcArrayValueItemsComponent extends AcCommentElementTagDirective {
   template!: TemplateRef<any>;
 
   @Input()
-  arrayValuesComponent!: AcArrayValuesComponent;
+  arrayValuesComponent!: any;
 
 }

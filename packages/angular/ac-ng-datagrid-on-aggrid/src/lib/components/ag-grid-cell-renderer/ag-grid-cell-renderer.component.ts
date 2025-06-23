@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { AfterViewInit, Component, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
-import { IAcDataGridColumn } from 'packages/angular/ac-angular/src/index';
+import { IAcDataGridColumn } from '@autocode-ts/ac-angular';
 
 @Component({
   selector: 'ag-grid-cell-renderer',
@@ -56,6 +56,9 @@ export class AgGridCellRendererComponent implements ICellRendererAngularComp, Af
             });
           }
         }
+      }
+      if(this.params.onComponentInit){
+        this.params.onComponentInit(this);
       }
     }
     else {

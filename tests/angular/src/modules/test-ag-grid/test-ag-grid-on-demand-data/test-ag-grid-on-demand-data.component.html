@@ -1,15 +1,37 @@
 Total Rows : {{dataGrid.totalRows}}
 <button class="btn btn-secondary" (click)="dataGrid.exportData()">Export as Excel</button>
-<ac-input class="form-control" #searchInput style="width:100%;height:100%;" placeholder="Search..." />
+<button class="btn btn-secondary" (click)="dataGrid.refreshData()">Refresh Data</button>
+<button class="btn btn-secondary" (click)="handleGetDataGridState()">Get Datagrid State</button>
+<button class="btn btn-secondary" (click)="handleSetDataGridState()">Set Datagrid State</button>
+<button class="btn btn-secondary" (click)="handleGetSelectedData()">Get Selected Data</button>
+<button class="btn btn-secondary" (click)="dataGrid.toggleColumnsCustomizer()">Columns Customizer</button>
+<ac-input class="form-control" #searchInput style="width:100%;height:100%;" placeholder="Search..."  (onDoneTyping)="dataGrid.refreshData()"/>
 <div style="height:75vh;">
   <ac-datagrid-on-ag-grid
     #dataGrid
     [editable]="true"
+    [columns]="columns"
     [pagination]="true"
     [dataOnDemandFunction]="dataFunction"
     [filterSearchValue] = "searchInput.value"
-    [autoAddNewRow]="true">
-    <ac-datagrid-column [allowSelect]="true" [style]="'width:100px;'" />
+    [autoAddNewRow]="true"
+    (onActiveRowChange)="handleActiveRowChange($event)"
+    (onCellFocused)="handleCellFocused($event)"
+    (onCellValueChanged)="handleCellValueChanged($event)"
+    (onCellEditorComponentInit)="handleCellEditorComponentInit($event)"
+    (onCellRenderComponentInit)="handleCellRenderComponentInit($event)"
+    (onColumnVisibilityChanged)="handleColumnVisibilityChanged($event)"
+    (onColumnMoved)="handleColumnWidthChanged($event)"
+    (onColumnResized)="handleColumnWidthChanged($event)"
+    (onRowAdded)="handleRowAdded($event)"
+    (onRowDataModified)="handleRowDataModified($event)"
+    (onRowDeleted)="handleRowDeleted($event)"
+    (onRowFocus)="handleRowFocus($event)"
+    (onRowSelected)="handleRowSelected($event)"
+    (onRowUpdated)="handleRowUpdated($event)"
+    (onStateUpdated)="handleStateUpdated($event)"
+    >
+    <!-- <ac-datagrid-column [allowSelect]="true" [style]="'width:100px;'" />
     <ac-datagrid-column field="account_id">
       <ng-template acDatagridColumnRenderTemplate let-data="data" let-column="column">
         Id : <b>{{data[column.field]}}</b>
@@ -18,7 +40,7 @@ Total Rows : {{dataGrid.totalRows}}
         <ac-input style="width:100%;height:100%;" [autoFocus]="true" [(value)]="data[column.field]" />
       </ng-template>
     </ac-datagrid-column>
-    <ac-datagrid-column field="account_name" [style]="'min-width:100px;'" />
+    <ac-datagrid-column field="account_name" [title]="'Name'" [style]="'min-width:100px;'" />
     <ac-datagrid-column field="account_number" [style]="'min-width:120px;'" />
     <ac-datagrid-column field="account_target" [style]="'min-width:120px;'" />
     <ac-datagrid-column field="account_type" />
@@ -28,6 +50,6 @@ Total Rows : {{dataGrid.totalRows}}
       <ng-template acDatagridColumnRenderTemplate let-data="data" let-column="column">
         <action-column (onDelete)="handleDeleteRow(data)" (onEdit)="handleEditRow(data)"/>
       </ng-template>
-    </ac-datagrid-column>
+    </ac-datagrid-column> -->
   </ac-datagrid-on-ag-grid>
 </div>

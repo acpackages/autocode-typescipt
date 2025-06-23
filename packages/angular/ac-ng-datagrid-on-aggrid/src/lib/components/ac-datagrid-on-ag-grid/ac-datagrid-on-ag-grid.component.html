@@ -1,12 +1,14 @@
 <div style="height:100%;width: 100%;">
   <ag-grid-angular #acGrid style="width: 100%; height: 100%;"
   [defaultColDef]="defaultColDef"
-  [pagination]="pagination"
   [serverSideDatasource]="dataOnDemandFunction?dataSource:undefined"
   [getRowId]="dataOnDemandFunction?getRowId:undefined"
   [quickFilterText]="filterSearchValue"
   [rowModelType]="dataOnDemandFunction?'serverSide':'clientSide'"
   [sideBar]="sideBarOptions"
+  [pagination]="pagination"
+  [paginationPageSize]="defaultPageSize"
+  [paginationPageSizeSelector]="pageSizes"
   [suppressContextMenu] = "true"
   [rowSelection]="selectMultiple?'multiple':'single'"
   [suppressRowClickSelection]="true"
@@ -29,6 +31,7 @@
   (filterOpened)="handleFilterOpened($event)"
   (gridReady)="handleGridReady($event)"
   (paginationChanged)="handlePaginationChanged($event)"
+  (componentStateChanged)="handleComponentStateChanged($event)"
   (rowClicked)="handleRowClicked($event)"
   (rowDataUpdated)="handleRowDataUpdated($event)"
   (rowDoubleClicked)="handleRowDoubleClicked($event)"
@@ -39,5 +42,6 @@
   (selectionChanged)="handleSelectionChanged($event)"
   (sortChanged)="handleSortChanged($event)"
   (stateUpdated)="handleStateUpdated($event)"
+
   />
 </div>

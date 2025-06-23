@@ -20,10 +20,12 @@ export class ActionColumnComponent {
   }
 
   handleDelete(){
+    console.log("On Delete Clicked");
     this.onDelete.emit();
   }
 
   handleEdit(){
+    console.log("On Edit Clicked");
     this.onEdit.emit();
   }
 }

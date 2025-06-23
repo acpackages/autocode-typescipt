@@ -86,7 +86,5 @@ export * from "./lib/directives/ac-element-viewport-listener.directive";
 export * from "./lib/directives/ac-resizable-element.directive";
 
 export * from "./lib/services/autocode.service";
+
 export * from "./lib/utilities/ac-data-controller";
-
-
-

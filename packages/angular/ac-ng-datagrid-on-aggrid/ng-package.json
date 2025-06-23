@@ -1,5 +1,5 @@
 {
-  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../../dist/packages/angular/ac-ng-datagrid-on-aggrid",
   "lib": {
     "entryFile": "src/index.ts"
@@ -11,6 +11,8 @@
     "ag-grid-angular",
     "ag-grid-community",
     "ag-grid-enterprise",
+    "intl-ts",
+    "moment",
     "tslib"
   ]
 }

@@ -8,7 +8,6 @@ import { IAcDataGridRowEvent } from '../../interfaces/ac-datagrid-row-event.inte
 import { IAcDataGridRowDataChangeEvent } from '../../interfaces/ac-datagrid-row-data-change-event.interface';
 import { AcBase } from '../../../_base/ac-base.component';
 import { IAcDataGridCellEvent } from '../../interfaces/ac-datagrid-cell-event.interface';
-import { AcDatagridComponent } from '../ac-datagrid/ac-datagrid.component';
 
 @Component({
     selector: 'ac-datagrid-row',
@@ -19,7 +18,7 @@ import { AcDatagridComponent } from '../ac-datagrid/ac-datagrid.component';
 export class AcDatagridRowComponent extends AcBase{
   @ViewChild("tr") tr!: ElementRef;
 
-  @Input() dataGridInstance!: AcDatagridComponent;
+  @Input() dataGridInstance!: any;
   @Input() index:number = -1;
   @Input() data:any = {};
   @Input() columns:IAcDataGridColumn[] = [];

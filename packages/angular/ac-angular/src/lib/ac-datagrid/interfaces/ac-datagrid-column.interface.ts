@@ -7,10 +7,12 @@ export interface IAcDataGridColumn{
   field?:string,
   dataType?:AcEnumColumnDataType,
   fieldForEdit?:string,
+  allowCustomization?:boolean;
   allowSort?:boolean,
   allowEdit?:boolean,
   allowSelect?:boolean,
   allowFilter?:boolean,
+  cellClass?:string,
   component?:any,
   componentProperties?:any,
   conditionalStyle?:any,
@@ -20,13 +22,16 @@ export interface IAcDataGridColumn{
   index?:number,
   width?:number,
   format?:any,
+  formatDate?:string,
   formatDateTime?:string,
   formatNumber?:string,
   formatString?:string,
   formula?:any,
+  headerClass?:string,
   renderTemplate?:TemplateRef<any>,
   style?:any,
   state?:IAcDatagridColumnState,
-  template?:TemplateRef<any>
+  template?:TemplateRef<any>,
+  valueFormatter?:Function
 
 }

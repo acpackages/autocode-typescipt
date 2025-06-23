@@ -3,7 +3,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
-import { AcArrayValuesComponent } from '../ac-array-values.component';
 import { AcCommentElementTagDirective } from '../../../directives/ac-comment-element-tag.directive';
 
 @Component({
@@ -13,7 +12,7 @@ import { AcCommentElementTagDirective } from '../../../directives/ac-comment-ele
   standalone: false
 })
 export class AcArrayValueItemComponent extends AcCommentElementTagDirective implements AfterViewInit, OnInit {
-  @Input() arrayValuesComponent!: AcArrayValuesComponent;
+  @Input() arrayValuesComponent!: any;
   @Input() index: number = -1;
   @Input() item: any = {};
   @Input() template!: TemplateRef<any>;

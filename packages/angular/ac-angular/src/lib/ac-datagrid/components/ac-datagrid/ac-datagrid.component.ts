@@ -3,12 +3,10 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, ContentChildren, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, Output, QueryList, ViewChild } from '@angular/core';
 import { AcDatagridColumnComponent } from '../ac-datagrid-column/ac-datagrid-column.component';
 import { AcBaseRepeater } from '../../../_base/ac-base-repeater.component';
 import { IAcDataGridColumn } from '../../interfaces/ac-datagrid-column.interface';
-import { AcDatagridRowComponent } from '../ac-datagrid-row/ac-datagrid-row.component';
-import { AcDatagridCellComponent } from '../ac-datagrid-cell/ac-datagrid-cell.component';
 import { IAcFilterField } from '../../../ac-filters/interfaces/ac-filter-field.interface';
 import { AcEnumSort } from '../../../ac-sorting/enums/ac-sort.enum';
 
@@ -41,7 +39,7 @@ export class AcDatagridComponent extends AcBaseRepeater{
   override rows:any = {};
   selectedColumnIndex = -1;
   selectedRowIndex = -1;
-  selectedRow:AcDatagridRowComponent|undefined;
+  selectedRow:any|undefined;
   selectedRowData:any = {};
 
   override ngAfterViewInit(): void {
@@ -51,11 +49,11 @@ export class AcDatagridComponent extends AcBaseRepeater{
 
   editCell(rowIndex:number,columnIndex:number){
     if(this.rows[rowIndex]){
-      const rowInstance:AcDatagridRowComponent = this.rows[rowIndex];
+      const rowInstance:any = this.rows[rowIndex];
       if(rowInstance.cells[columnIndex]){
         this.editingColumnIndex = columnIndex;
         this.editingRowIndex = rowIndex;
-        const cellInstance:AcDatagridCellComponent = rowInstance.cells[columnIndex];
+        const cellInstance:any = rowInstance.cells[columnIndex];
         cellInstance.startEditing();
       }
       else{
@@ -137,7 +135,7 @@ export class AcDatagridComponent extends AcBaseRepeater{
         }
         else if(keyCode=="ARROWLEFT"){
           if(this.rows[this.selectedRowIndex]){
-            const rowInstance:AcDatagridRowComponent = this.rows[this.selectedRowIndex];
+            const rowInstance:any = this.rows[this.selectedRowIndex];
             if(rowInstance.cells[this.selectedColumnIndex - 1]){
               this.selectedColumnIndex--;
               indexChanged = true;
@@ -153,7 +151,7 @@ export class AcDatagridComponent extends AcBaseRepeater{
         }
         else if(keyCode=="ARROWRIGHT"||keyCode=="TAB"){
           if(this.rows[this.selectedRowIndex]){
-            const rowInstance:AcDatagridRowComponent = this.rows[this.selectedRowIndex];
+            const rowInstance:any = this.rows[this.selectedRowIndex];
             if(rowInstance.cells[this.selectedColumnIndex + 1]){
               this.selectedColumnIndex++;
               indexChanged = true;
@@ -224,9 +222,9 @@ export class AcDatagridComponent extends AcBaseRepeater{
   stopActiveEditCell(){
     if(this.editingColumnIndex >=0 && this.editingRowIndex >=0){
       if(this.rows[this.editingRowIndex]){
-        const rowInstance:AcDatagridRowComponent = this.rows[this.editingRowIndex];
+        const rowInstance:any = this.rows[this.editingRowIndex];
         if(rowInstance.cells[this.editingColumnIndex]){
-          const cellInstance:AcDatagridCellComponent = rowInstance.cells[this.editingColumnIndex];
+          const cellInstance:any = rowInstance.cells[this.editingColumnIndex];
           cellInstance.stopEditing();
         }
         else{
