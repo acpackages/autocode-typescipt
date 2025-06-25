@@ -1,6 +1,6 @@
 {
   "name": "@autocode-ts/ac-extensions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./index.cjs",
   "module": "./index.mjs",

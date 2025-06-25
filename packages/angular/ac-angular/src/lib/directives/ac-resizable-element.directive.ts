@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/directive-selector */
 import { Directive, ElementRef, Renderer2, NgZone, Output, EventEmitter } from '@angular/core';
@@ -5,7 +6,8 @@ import { AcBase } from '../_base/ac-base.component';
 import { AutocodeService } from '../services/autocode.service';
 
 @Directive({
-  selector: '[acResizableElement]'
+  selector: '[acResizableElement]',
+  standalone:false
 })
 export class AcResizableElementDirective extends AcBase {
   @Output() onResize = new EventEmitter<{ width: number; height: number }>();

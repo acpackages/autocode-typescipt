@@ -16,6 +16,7 @@ export class TestAgGridBasicComponent {
   @ViewChild("dataGrid") dataGrid:AcDatagridOnAgGridComponent;
   columns:IAcDataGridColumn[] = [
     {
+      allowSelect:true,
       field:"id",
       title:"Id"
     },{
@@ -46,12 +47,37 @@ export class TestAgGridBasicComponent {
   ];
   data:any[] = employeeData;
 
+  ngOnInit(){
+    console.log(this);
+  }
+
   handleActiveRowChange(event:any){
     console.log("Active Row Change",event);
   }
 
   handleCellFocused(event:any){
     console.log("Cell Focused",event);
+  }
+
+  handleCellRenderComponentInit(event: any) {
+    if(event.component){
+      if(event.component == ActionColumnComponent){
+        if(event.componentInstance){
+          console.log("Subscribing for delete event");
+          event.componentInstance.onDelete.subscribe(params => {
+              console.log('Action received via service!', event.data);
+              alert(`Deleting row: ${event.data.name}`);
+          });
+          event.componentInstance.onEdit.subscribe(params => {
+              console.log('Action received via service!', event.data);
+              alert(`Deleting row: ${event.data.name}`);
+              const updatedData: any = { ...event.data, name: 'Updated Name : ' + event.data['name'] };
+              this.dataGrid.updateRow({ data: updatedData,'key':'id' });
+          });
+        }
+      }
+    }
+    console.log("Cell Render Component Init", event);
   }
 
   handleCellValueChanged(event:any){

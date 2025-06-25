@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable prefer-const */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/directive-selector */
@@ -6,6 +7,7 @@ import { AcBase } from '../_base/ac-base.component';
 
 @Directive({
   selector: '[acElementViewportListener]',
+  standalone:false
 })
 export class AcElementViewportListenerDirective extends AcBase {
   @Output() onViewChange: EventEmitter<IViewChangeEvent> = new EventEmitter<IViewChangeEvent>();

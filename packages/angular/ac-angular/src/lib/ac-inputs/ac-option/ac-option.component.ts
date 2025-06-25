@@ -7,7 +7,7 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AcBaseInput } from '../../_base/ac-base-input.component';
 import { AcEnumOptionInputType } from '../enums/ac-input-types.enum';
 import { Autocode } from '@autocode-ts/autocode';
-import '@autocode-ts/ac-extensions';
+import { arrayRemove } from '@autocode-ts/ac-extensions';
 
 @Component({
   selector: 'ac-option',
@@ -81,13 +81,13 @@ export class AcOptionComponent extends AcBaseInput implements OnChanges {
         this._value = [];
       }
       if (isChecked) {
-        this._value.remove(object.optionValueUnchecked);
+        arrayRemove(this._value,object.optionValueUnchecked);
         if (!object._value.includes(object.optionValue)) {
           object._value.push(object.optionValue);
         }
       }
       else {
-        this._value.remove(object.optionValue);
+        arrayRemove(this._value,object.optionValue);
         console.log("Object value unchecked : " + this.optionValueUnchecked);
         if (Autocode.validValue(object.optionValueUnchecked)) {
           console.log("Object value when unchecked : " + this.optionValueUnchecked);

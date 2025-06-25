@@ -6,4 +6,3 @@ export * from './lib/ac-number-extensions';
 export * from './lib/ac-object-extensions';
 export * from './lib/ac-string-extensions';
 
-export * from './ac-extension-methods';

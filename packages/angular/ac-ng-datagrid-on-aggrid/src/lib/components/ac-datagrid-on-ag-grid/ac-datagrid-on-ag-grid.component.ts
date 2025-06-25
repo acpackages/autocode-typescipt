@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import type { ApplyColumnStateParams, CellClickedEvent, CellDoubleClickedEvent, CellFocusedEvent, CellKeyDownEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellValueChangedEvent, ColDef, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, ComponentStateChangedEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FullWidthCellKeyDownEvent, GetRowIdFunc, GetRowIdParams, GridApi, GridReadyEvent, IDatasource, IGetRowsParams, IServerSideDatasource, IServerSideGetRowsParams, IServerSideGroupSelectionState, IServerSideSelectionState, PaginationChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowModelType, RowNode, RowValueChangedEvent, SelectionChangedEvent, ServerSideTransaction, SortChangedEvent, StateUpdatedEvent, ValueFormatterParams } from "ag-grid-community";
 import { AllCommunityModule, ClientSideRowModelModule, InfiniteRowModelModule, ModuleRegistry } from 'ag-grid-community';
@@ -11,10 +11,10 @@ import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AgGridCellEditorComponent } from '../ag-grid-cell-editor/ag-grid-cell-editor.component';
 import { AgGridCellRendererComponent } from '../ag-grid-cell-renderer/ag-grid-cell-renderer.component';
 import { AgGridHeaderCellComponent } from '../ag-grid-header-cell/ag-grid-header-cell.component';
-import { AcEnumStringCase, AcPromiseInstance, AcPromiseManager, Autocode } from '@autocode-ts/autocode';
-import { AcBase, AcDatagridColumnComponent, AutocodeService, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, IAcDataGridFilterCondition, IAcDataGridFilterGroup, IAcDataGridSort, AcEnumColumnDataType, AcEnumFormatString, AcEnumFormatDateTime, AcEnumFormatNumber, AcDataGrid } from '@autocode-ts/ac-angular';
-import '@autocode-ts/ac-extensions';
+import { AcPromiseInstance, AcPromiseManager } from '@autocode-ts/autocode';
+import { AcDatagridColumnComponent, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, IAcDataGridFilterCondition, IAcDataGridFilterGroup, IAcDataGridSort, AcEnumColumnDataType, AcEnumFormatDateTime, AcEnumFormatNumber, AcDataGrid, AcBase } from '@autocode-ts/ac-angular';
 import moment from 'moment';
+import { stringConvertCase } from '@autocode-ts/ac-extensions';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 ModuleRegistry.registerModules([AllEnterpriseModule]);
@@ -237,12 +237,12 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     // hiddenByDefault: true
   };
 
-  constructor(elementRef: ElementRef, autocodeService: AutocodeService, protected changeDetectorRef: ChangeDetectorRef) {
-    super(elementRef, autocodeService);
-  }
+  // constructor(protected changeDetectorRef: ChangeDetectorRef) {
+  //   // super(elementRef, autocodeService);
+  // }
 
   override ngAfterViewInit() {
-    super.ngAfterViewInit();
+    super.ngOnInit();
     this.initAgGrid();
   }
 
@@ -269,9 +269,22 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.events.execute({ eventName: 'rowAdded', args: event });
   }
 
-  deleteRow({ data, index }: { data?: any, index?: number }) {
+  clearSelection() {
+    this.agGridApi.deselectAll();
+  }
+
+  deleteRow({ data, index, key, value }: { data?: any, index?: number, key?: string, value?: any }) {
     if (index >= 0) {
       data = this.agGridApi.getDisplayedRowAtIndex(index);
+    }
+    else if (key && value) {
+      this.agGridApi.forEachNode((node: RowNode) => {
+        if (key) {
+          if (node.data[key] === value) {
+            data = node.data;
+          }
+        }
+      });
     }
     if (data) {
       if (this.isClientSideData) {
@@ -339,8 +352,9 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     const colDef: ColDef = {
       field: column.field,
       headerName: column.title,
-      // width:column.width,
-      width: 90,
+      width: column.width,
+      minWidth: column.minWidth,
+      maxWidth: column.maxWidth,
       type: this.getAgDataTypeFromAcDataType(column.dataType),
       editable: (this.editable == false ? false : true) && (column.allowEdit == false ? false : true),
       filter: column.allowFilter == false ? false : true,
@@ -357,12 +371,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         template: column.editTemplate,
         acDatagridColumn: column,
         onComponentInit: (instance: AgGridCellEditorComponent) => {
-          const event: any = {
-            ...instance,
-            datagridInstance: this
-          };
-          this.onCellEditorComponentInit.emit(event);
-          this.events.execute({ eventName: 'cellEditorComponentInit', args: event });
+          this.onCellEditorComponentInit.emit(instance);
+          this.events.execute({ eventName: 'cellEditorComponentInit', args: instance });
         }
       };
     }
@@ -372,12 +382,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         template: column.renderTemplate,
         acDatagridColumn: column,
         onComponentInit: (instance: AgGridCellEditorComponent) => {
-          const event: any = {
-            ...instance,
-            datagridInstance: this
-          };
-          this.onCellRenderComponentInit.emit(event);
-          this.events.execute({ eventName: 'cellRenderComponentInit', args: event });
+          this.onCellRenderComponentInit.emit(instance);
+          this.events.execute({ eventName: 'cellRenderComponentInit', args: instance });
         }
       };
     }
@@ -388,12 +394,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         componentProperties: column.componentProperties,
         acDatagridColumn: column,
         onComponentInit: (instance: AgGridCellEditorComponent) => {
-          const event: any = {
-            ...instance,
-            datagridInstance: this
-          };
-          this.onCellRenderComponentInit.emit(event);
-          this.events.execute({ eventName: 'cellRenderComponentInit', args: event });
+          this.onCellRenderComponentInit.emit(instance);
+          this.events.execute({ eventName: 'cellRenderComponentInit', args: instance });
         }
       };
     }
@@ -404,12 +406,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         componentProperties: column.editComponentProperties,
         acDatagridColumn: column,
         onComponentInit: (instance: AgGridCellEditorComponent) => {
-          const event: any = {
-            ...instance,
-            datagridInstance: this
-          };
-          this.onCellEditorComponentInit.emit(event);
-          this.events.execute({ eventName: 'cellEditorComponentInit', args: event });
+          this.onCellEditorComponentInit.emit(instance);
+          this.events.execute({ eventName: 'cellEditorComponentInit', args: instance });
         }
       };
     }
@@ -467,7 +465,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
           return formatter.format(params.value);
         }
         else if (column.formatString) {
-          return params.value.convertCase(column.formatString);
+          return stringConvertCase(params.value, column.formatString);
         }
         else {
           return params.value;
@@ -823,6 +821,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   }
 
   refreshData() {
+    this.clearSelection();
     if (this.dataOnDemandFunction) {
       this.agGridApi.refreshServerSide();
     }
@@ -847,7 +846,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
     this.agGridApi.setGridOption('columnDefs', colDefs);
     setTimeout(() => {
-      this.changeDetectorRef.detectChanges();
+      // this.changeDetectorRef.detectChanges();/
     }, 100);
   }
 
@@ -855,9 +854,9 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     if (state) {
       if (state['columns']) {
         const columnState: ApplyColumnStateParams = {
-          state: state['columns']
+          state: state['columns'], applyOrder: true
         };
-        this.agGridApi.applyColumnState(columnState);
+        this.agGridApi.applyColumnState(columnState,);
       }
     }
   }
@@ -878,7 +877,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     else {
       this.agGridApi.forEachNode((node: RowNode) => {
         if (key) {
-          if (node.data[key] === data[key]) {
+          if (node.data[key] == data[key]) {
+            currentData = node.data;
             index = node.rowIndex;
           }
         }
@@ -895,8 +895,13 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         rowNode.setData(data);
       }
       else {
+        data[this.serverSideRowKey] = currentData[this.serverSideRowKey];
         this.agGridApi.applyServerSideTransaction({ update: [data] });
+        rowNode.setData(data);
       }
+      this.agGridApi.flashCells({
+        rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
+      });
       const event: any = {
         data: data
       };

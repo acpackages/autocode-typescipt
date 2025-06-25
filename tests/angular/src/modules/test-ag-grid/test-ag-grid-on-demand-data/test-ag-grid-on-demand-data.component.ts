@@ -21,7 +21,9 @@ export class TestAgGridOnDemandDataComponent {
         allowSelect:true,
         allowSort:false,
         allowFilter:false,
-        width:1250,
+        minWidth:50,
+        maxWidth:50,
+        width:50,
         allowCustomization:false
       },
       {
@@ -133,9 +135,14 @@ export class TestAgGridOnDemandDataComponent {
         if(event.componentInstance){
           console.log("Subscribing for delete event");
           event.componentInstance.onDelete.subscribe(params => {
-        console.log('Action received via service!', event.data);
-        alert(`Deleting account: ${event.data.account_name}`);
-    });
+            this.dataGrid.deleteRow({ value:  event.data['account_id'],'key':'account_id' });
+              alert(`Deleting account: ${event.data.account_name}`);
+          });
+          event.componentInstance.onEdit.subscribe(params => {
+              console.log('Action received via service!', event.data);
+              const updatedData: any = { ...event.data, account_name: 'Updated Name : ' + event.data['account_name'] };
+              this.dataGrid.updateRow({ data: updatedData,'key':'account_id' });
+          });
         }
       }
     }
@@ -164,7 +171,6 @@ export class TestAgGridOnDemandDataComponent {
   }
 
   handleEditRow(data: any) {
-    ;
     const updatedData: any = { ...data, account_name: 'Updated Name : ' + data['account_name'] };
     this.dataGrid.updateRow({ data: updatedData, key: 'id' });
   }

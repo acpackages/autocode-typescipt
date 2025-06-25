@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/directive-selector */
@@ -6,7 +7,8 @@ import { AcBase } from '../_base/ac-base.component';
 import { AutocodeService } from '../services/autocode.service';
 
 @Directive({
-  selector: '[acDimensionChangeListener]'
+  selector: '[acDimensionChangeListener]',
+  standalone:false
 })
 export class AcDimensionChangeListenerDirective extends AcBase{
   @Output() onDimensionChange = new EventEmitter<{ width: number; height: number }>();

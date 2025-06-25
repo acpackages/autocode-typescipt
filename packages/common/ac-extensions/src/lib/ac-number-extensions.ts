@@ -1,50 +1,84 @@
-// TypeScript "extension" for Number
+/**
+ * Utility functions for Number manipulation.
+ */
 
-declare global {
-  interface Number {
-    isEven(): boolean;
-    isOdd(): boolean;
-    format(format: string): string;
-    round(decimals?: number): number;
+/**
+ * Checks if a number is even.
+ * @param num The number to check.
+ * @returns True if the number is even, false otherwise.
+ */
+export function numberIsEven(num: number): boolean {
+  return num % 2 === 0;
+}
+
+/**
+ * Checks if a number is odd.
+ * @param num The number to check.
+ * @returns True if the number is odd, false otherwise.
+ */
+export function numberIsOdd(num: number): boolean {
+  return num % 2 !== 0;
+}
+
+/**
+ * Formats a number according to specified options or a simplified format string.
+ * This function specifically handles '0,0.00' style formats for Intl.NumberFormat.
+ * For more complex formatting, consider dedicated libraries or extend Intl.NumberFormat options.
+ *
+ * @param num The number to format.
+ * @param formatOptions A string like "0,0.00" or Intl.NumberFormatOptions object.
+ * If "DISPLAY", it defaults to { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true }.
+ * @param locale Optional: The locale string (e.g., 'en-US', 'gu-IN'). Defaults to user's locale.
+ * @returns The formatted string.
+ */
+export function numberFormat(
+  num: number,
+  formatOptions: string | Intl.NumberFormatOptions,
+  locale?: string
+): string {
+  let options: Intl.NumberFormatOptions = {};
+
+  if (typeof formatOptions === 'string') {
+    if (formatOptions === 'DISPLAY') {
+      options = {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        useGrouping: true,
+      };
+    } else {
+      // Attempt to parse a simplified format string like "0,0.00"
+      const decimalMatch = formatOptions.match(/0\.([0]+)/);
+      const minimumFractionDigits = decimalMatch ? decimalMatch[1].length : 0;
+      const useGrouping = formatOptions.includes(',');
+
+      options = {
+        minimumFractionDigits,
+        maximumFractionDigits: minimumFractionDigits, // Usually same as min for fixed decimals
+        useGrouping,
+      };
+    }
+  } else {
+    options = formatOptions; // Use provided Intl.NumberFormatOptions directly
   }
+
+  // Use the provided locale or default to undefined (browser's default)
+  return new Intl.NumberFormat(locale, options).format(num);
 }
 
 
-Number.prototype.isEven = function() : boolean {
- return this.valueOf() % 2 === 0;
-}
-
-Number.prototype.isOdd = function() : boolean {
- return this.valueOf() % 2 !== 0;
-}
-
-
-Number.prototype.format = function (format: string): string {
-  if (format === "DISPLAY") {
-    format = "0,0.00"; // Use Intl number options below, not pattern strings
+/**
+ * Rounds a number to a specified number of decimal places.
+ * @param num The number to round.
+ * @param decimals The number of decimal places to round to (default: 2).
+ * @returns The rounded number.
+ */
+export function numberRound(num: number, decimals = 2): number {
+  if (typeof num !== 'number' || isNaN(num)) {
+    return NaN; // Or throw an error, depending on desired behavior for invalid input
   }
-
-  // Intl.NumberFormat doesn't support custom patterns, but can do basic options
-  // We'll parse the format string for decimals and grouping:
-
-  // Simple heuristic: count decimals after '.' in format
-  const decimalMatch = format.match(/0\.([0]+)/);
-  const minimumFractionDigits = decimalMatch ? decimalMatch[1].length : 0;
-
-  const useGrouping = format.includes(',');
-
-  const nf = new Intl.NumberFormat(undefined, {
-    minimumFractionDigits,
-    maximumFractionDigits: minimumFractionDigits,
-    useGrouping,
-  });
-
-  return nf.format(this.valueOf());
-};
-
-Number.prototype.round = function (decimals = 2): number {
+  if (decimals < 0) {
+      console.warn("Rounding to negative decimals might not behave as expected.");
+  }
   const mod = Math.pow(10, decimals);
-  return Math.round(this.valueOf() * mod) / mod;
-};
-
-export {}; // To ensure global augmentation
+  return Math.round(num * mod) / mod;
+}

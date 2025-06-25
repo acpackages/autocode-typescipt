@@ -2,6 +2,7 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { IAcDataGridColumn } from '@autocode-ts/ac-angular';
+import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
   selector: 'ag-grid-cell-renderer',
@@ -21,11 +22,11 @@ export class AgGridCellRendererComponent implements ICellRendererAngularComp, Af
   column?: IAcDataGridColumn;
   params:any;
 
-  agInit(params: any): void {
+  agInit(params: ICellRendererParams): void {
     this.params = params;
-    this.template = params.template;
-    this.component = params.component;
-    this.componentProperties = params.componentProperties;
+    this.template = this.params.template;
+    this.component = this.params.component;
+    this.componentProperties = this.params.componentProperties;
   }
 
   ngAfterViewInit(): void {
@@ -68,7 +69,20 @@ export class AgGridCellRendererComponent implements ICellRendererAngularComp, Af
     }
   }
 
-  refresh(): boolean {
-    return true;
+  destroyView(){
+    if(this.componentRef){
+      this.componentRef?.destroy();
+      this.componentRef = undefined;
+      this.componentInstance = undefined;
+    }
+    this.container.clear();
   }
+
+  refresh(params: ICellRendererParams): boolean {
+      console.log('Cell is refreshing!',params);
+      this.params = params;
+      this.destroyView();
+      this.createView();
+      return true;
+    }
 }

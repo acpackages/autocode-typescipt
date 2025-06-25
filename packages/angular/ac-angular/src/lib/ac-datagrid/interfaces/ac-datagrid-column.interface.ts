@@ -21,6 +21,8 @@ export interface IAcDataGridColumn{
   editComponentProperties?:any
   index?:number,
   width?:number,
+  minWidth?:number,
+  maxWidth?:number,
   format?:any,
   formatDate?:string,
   formatDateTime?:string,

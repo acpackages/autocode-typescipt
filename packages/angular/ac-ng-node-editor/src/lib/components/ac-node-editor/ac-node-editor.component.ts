@@ -6,7 +6,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Injector, Input, OnChanges, Output, TemplateRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { ClassicPreset, GetSchemes, NodeEditor } from 'rete';
-import { AngularArea2D, AngularPlugin, Presets } from 'rete-angular-plugin/15';
+import { AngularArea2D, AngularPlugin, Presets } from 'rete-angular-plugin';
 import { AreaExtensions, AreaPlugin } from 'rete-area-plugin';
 import { AutoArrangePlugin,Presets as ArrangePresets,ArrangeAppliers } from "rete-auto-arrange-plugin";
 import { ClassicFlow, ConnectionPlugin, Presets as ConnectionPresets } from 'rete-connection-plugin';
@@ -408,7 +408,7 @@ export class AcNodeEditorComponent extends AcBase {
   }
 
   getNodesMap() {
-    const result: any = this.editor.getNodes().toObject("id");
+    const result: any = arrayToObject(this.editor.getNodes(),"id");
     return result;
   }
 

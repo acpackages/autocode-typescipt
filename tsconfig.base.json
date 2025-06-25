@@ -21,7 +21,9 @@
       "@autocode-ts/ac-data-dictionary": [
         "packages/common/ac-data-dictionary/index.ts"
       ],
-      "@autocode-ts/ac-data-grid": ["packages/browser/ac-data-grid/src/index.ts"],
+      "@autocode-ts/ac-data-grid": [
+        "packages/browser/ac-data-grid/src/index.ts"
+      ],
       "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/index.ts"],
       "@autocode-ts/ac-ng-data-dictionary-editor": [
         "packages/angular/ac-ng-data-dictionary-editor/index.ts"

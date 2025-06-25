@@ -4,7 +4,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { IAcPage } from '../interfaces/ac-page.interface';
-import '@autocode-ts/ac-extensions';
 import { AcBase } from '../../_base/ac-base.component';
 import { IAcPaginationEvent } from '../interfaces/ac-pagination-event.interface';
 import { AcDataController } from '../../utilities/ac-data-controller';

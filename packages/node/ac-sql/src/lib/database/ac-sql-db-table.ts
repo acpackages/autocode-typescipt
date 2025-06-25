@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-prototype-builtins */
 import { AcDataDictionary, AcDDSelectStatement, AcDDTable, AcEnumDDColumnFormat, AcEnumDDColumnType, AcEnumDDRowEvent, AcEnumDDRowOperation, AcEnumDDSelectMode } from "@autocode-ts/ac-data-dictionary";
-import { AcSqlDbTableColumn } from "./ac-sql-db-table-column";
-import '@autocode-ts/ac-extensions';
 import { AcSqlDbBase } from "./ac-sql-db-base";
 import { AcEncryption, AcEnumSqlDatabaseType, AcResult, Autocode } from "@autocode-ts/autocode";
 import { AcSqlDaoResult } from "../models/ac-sql-dao-result.model";
 import { AcSqlDbRowEvent } from "./ac-sql-db-row-event";
+import { dateFormat } from "@autocode-ts/ac-extensions";
 
 export class AcSqlDbTable extends AcSqlDbBase {
   tableName: string;
@@ -380,7 +379,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
                 try {
                   const date = new Date(value);
                   const format = type === AcEnumDDColumnType.DATETIME ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd';
-                  value = date.format(format); // You must implement `formatDate()`
+                  value = dateFormat(date,format); // You must implement `formatDate()`
                 } catch (ex) {
                   this.logger.warn(`Error while setting dateTimeValue for ${column.columnName} in table ${this.tableName} with value: ${value}`);
                 }

@@ -9,10 +9,10 @@ import { AcBaseInput } from '../_base/ac-base-input.component';
 import { AcSelectOptionComponent } from './ac-select/ac-select-option/ac-select-option.component';
 import { AcArrayValuesComponent } from './ac-array-values/ac-array-values.component';
 import { AcArrayValueItemComponent } from './ac-array-values/ac-array-value-item/ac-array-value-item.component';
-import { AcCommentElementTagDirective } from '../directives/ac-comment-element-tag.directive';
 import { AcArrayValueItemsComponent } from './ac-array-values/ac-array-value-items/ac-array-value-items.component';
 import { AcFilePreviewComponent } from './ac-files/ac-file-preview/ac-file-preview.component';
 import { AcFilesComponent } from './ac-files/ac-files.component';
+import { AcAngularModule } from '../ac-angular.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { AcFilesComponent } from './ac-files/ac-files.component';
     AcTextareaComponent
   ],
   imports: [
-    AcCommentElementTagDirective,
+    AcAngularModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule

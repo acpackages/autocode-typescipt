@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import copy from 'rollup-plugin-copy';
 import path from 'path';
 import fs from 'fs';
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 const outputDir = '../../../dist/packages/common/ac-data-dictionary';
 export default {
   input: path.resolve(process.cwd(), 'src/index.ts'),

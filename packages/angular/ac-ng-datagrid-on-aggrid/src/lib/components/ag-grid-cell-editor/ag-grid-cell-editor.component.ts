@@ -2,6 +2,7 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ICellEditorAngularComp } from 'ag-grid-angular';
 import { IAcDataGridColumn } from '@autocode-ts/ac-angular';
+import { ICellEditorParams, ICellRendererParams } from 'ag-grid-community';
 @Component({
   selector: 'ag-grid-cell-editor',
   // eslint-disable-next-line @angular-eslint/prefer-standalone
@@ -20,12 +21,13 @@ export class AgGridCellEditorComponent implements ICellEditorAngularComp, AfterV
   column?: IAcDataGridColumn;
   params: any;
 
-  agInit(params: any): void {
+  agInit(params: ICellEditorParams): void {
     this.params = params;
-    this.template = params.template;
-    this.component = params.component;
-    this.componentProperties = params.componentProperties;
+    this.template = this.params.template;
+    this.component = this.params.component;
+    this.componentProperties = this.params.componentProperties;
   }
+
 
   ngAfterViewInit(): void {
     this.createView();
@@ -67,6 +69,15 @@ export class AgGridCellEditorComponent implements ICellEditorAngularComp, AfterV
     }
   }
 
+  destroyView(){
+    if(this.componentRef){
+      this.componentRef?.destroy();
+      this.componentRef = undefined;
+      this.componentInstance = undefined;
+    }
+    this.container.clear();
+  }
+
   getValue() {
     return this.data?.[this.column?.field];
   }
@@ -74,4 +85,14 @@ export class AgGridCellEditorComponent implements ICellEditorAngularComp, AfterV
   isPopup(): boolean {
     return false;
   }
+
+  refresh(params: ICellEditorParams): boolean {
+    console.log('Cell is refreshing!',params);
+    this.params = params;
+    this.destroyView();
+    this.createView();
+    return true;
+  }
+
+
 }
