@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable @angular-eslint/component-class-suffix */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-this-alias */
@@ -57,8 +58,6 @@ export class AcBaseRepeater extends AcBase {
     this.dataController.autoAddRecord = this.autoAddNewRow;
     this.dataController.data = this.data;
     this.dataController.on({eventName:'displayDataChange',callback:()=>{
-      // console.log('Data changed @ ');
-      // console.log(new Date().toISOString());
     }});
   }
 
@@ -107,17 +106,13 @@ export class AcBaseRepeater extends AcBase {
   handleRowRemoved() { }
 
   handleRowDataChange(event: any) {
-    // console.log('Row Data Change')
     if(this.autoAddNewRow){
-      // console.log("Auto add new row");
       if(event.index == this.dataController.dataDisplay.length - 1){
-        // console.log('index is new');
         this.dataController.autoAddRecordUpdated();
       }
     }
     this.onRowDataChange.emit(event);
     this.events.execute({eventName:'rowDataChange'});
-    // console.log(event,this);
   }
 
   handleRowDestroy(event: any) {
@@ -129,15 +124,12 @@ export class AcBaseRepeater extends AcBase {
   handleRowInit(event: any) {
     if (event.index != undefined) {
       if(event.index == 0){
-        // console.log(new Date().toISOString());
       }
       this.rows[event.index] = event.instance;
       if(event.index == this.dataController.dataDisplay.length - 1){
-        // console.log(new Date().toISOString());
         event.instance.on('contentElementsLoaded',()=>{
           this.onContentElementsLoaded.emit();
           this.events.execute({eventName:'contentElementsLoaded'});
-          // console.log(new Date().toISOString());
         });
       }
     }

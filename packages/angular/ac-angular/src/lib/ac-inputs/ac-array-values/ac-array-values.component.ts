@@ -88,7 +88,6 @@ export class AcArrayValuesComponent extends AcBaseInput{
 
   public removeItem(item:any){
     const object=this;
-    console.log("Removing Item",item);
     const index=object.items.indexOf(item);
     if(index>=0){
       object.removeItemAtIndex(index);

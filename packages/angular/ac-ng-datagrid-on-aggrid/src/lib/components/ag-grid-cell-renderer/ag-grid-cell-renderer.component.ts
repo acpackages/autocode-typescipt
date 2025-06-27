@@ -79,7 +79,6 @@ export class AgGridCellRendererComponent implements ICellRendererAngularComp, Af
   }
 
   refresh(params: ICellRendererParams): boolean {
-      console.log('Cell is refreshing!',params);
       this.params = params;
       this.destroyView();
       this.createView();

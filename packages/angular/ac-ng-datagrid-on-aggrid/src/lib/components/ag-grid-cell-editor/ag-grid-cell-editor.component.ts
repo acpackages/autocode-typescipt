@@ -87,7 +87,6 @@ export class AgGridCellEditorComponent implements ICellEditorAngularComp, AfterV
   }
 
   refresh(params: ICellEditorParams): boolean {
-    console.log('Cell is refreshing!',params);
     this.params = params;
     this.destroyView();
     this.createView();

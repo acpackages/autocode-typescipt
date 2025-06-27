@@ -27,7 +27,7 @@ import { arrayRemove } from '@autocode-ts/ac-extensions';
   ],
   standalone: false
 })
-export class AcOptionComponent extends AcBaseInput implements OnChanges {
+export class AcOptionComponent extends AcBaseInput  {
   @ViewChild("input") input!: ElementRef;
   @Input() checked: boolean = false;
   @Input() labelElement: Element | undefined;
@@ -63,10 +63,6 @@ export class AcOptionComponent extends AcBaseInput implements OnChanges {
     this.setIsChecked();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
-
   override handleChange(event: any) {
     const object = this;
     this.updateCheckedValue(event.target.checked);
@@ -88,9 +84,7 @@ export class AcOptionComponent extends AcBaseInput implements OnChanges {
       }
       else {
         arrayRemove(this._value,object.optionValue);
-        console.log("Object value unchecked : " + this.optionValueUnchecked);
         if (Autocode.validValue(object.optionValueUnchecked)) {
-          console.log("Object value when unchecked : " + this.optionValueUnchecked);
           if (!object._value.includes(object.optionValueUnchecked)) {
             object._value.push(object.optionValueUnchecked);
           }
@@ -117,7 +111,6 @@ export class AcOptionComponent extends AcBaseInput implements OnChanges {
     if(this.instanceViewInitialized){
       this.updateCheckedValue(this.checked, false);
     }
-    console.log(this);
   }
 
   setIsChecked(): void {

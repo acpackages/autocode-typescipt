@@ -16,7 +16,6 @@ export class AcDataController {
     return this._data;
   }
   set data(value: any[]) {
-    // console.log(new Date().toISOString());
     if(value!=undefined && value != null){
       this._data = value;
     }
@@ -25,7 +24,6 @@ export class AcDataController {
     }
     this.events.execute({eventName:"dataChanged"});
     this.applyDataFilter();
-    // console.log(new Date().toISOString());
   }
 
   private _displayRange: { startIndex: number, endIndex: number } = { startIndex: -1, endIndex: -1 };
@@ -60,7 +58,6 @@ export class AcDataController {
   }
 
   applyDataFilter(): void {
-    // console.log(new Date().toISOString());
     const filteredData:any[] = [];
     let foundFilters:boolean = false;
     if (this.filterGroup) {
@@ -81,11 +78,9 @@ export class AcDataController {
       this.dataFiltered = [...this.data];
     }
     this.applyDataSort();
-    // console.log(new Date().toISOString());
   }
 
   applyDataSort(): void {
-    // console.log(new Date().toISOString());
     if(this.sortOrder && Object.keys(this.sortOrder).length > 0){
       const dataToSort: any[] = [...this.dataFiltered];
       this.dataSorted = dataToSort.sort((a, b) => {
@@ -102,7 +97,6 @@ export class AcDataController {
       this.dataSorted = [...this.dataFiltered];
     }
     this.setDisplayData();
-    // console.log(new Date().toISOString());
   }
 
   autoAddRecordUpdated(){

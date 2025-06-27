@@ -4,7 +4,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { AcBase, AutocodeService } from 'packages/angular/ac-angular/src/index';
-import { AcRuntimeService } from '../../services/ac-runtime.service';
 
 @Component({
     selector: 'ac-repeater',

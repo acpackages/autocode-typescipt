@@ -22,10 +22,10 @@ ModuleRegistry.registerModules([ClientSideRowModelModule, InfiniteRowModelModule
 
 
 @Component({
-  selector: 'ac-datagrid-on-ag-grid',
+  selector: 'ac-datagrid-on-aggrid',
   standalone: false,
-  templateUrl: './ac-datagrid-on-ag-grid.component.html',
-  styleUrl: './ac-datagrid-on-ag-grid.component.scss'
+  templateUrl: './ac-datagrid-on-aggrid.component.html',
+  styleUrl: './ac-datagrid-on-aggrid.component.scss'
 })
 export class AcDatagridOnAgGridComponent extends AcBase {
   @ContentChildren(AcDatagridColumnComponent) columnComponents?: QueryList<AcDatagridColumnComponent>;
@@ -38,7 +38,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Input() dataOnDemandFunction?: Function;
   @Input() defaultPageSize: number = 20;
   @Input() editable: boolean = false;
-  @Input() pagination: boolean = false;
+  @Input() pagination: boolean = true;
   @Input() pageSizes: number[] = [20, 50, 100, 500, 100];
   @Input() filterSearchValue: string = "";
 
@@ -102,6 +102,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
 
   activeRowIndex: number = -1;
   agGridApi!: GridApi;
+  colDefs:ColDef[] = [];
   customComponents = {
     'agGridCellEditor': AgGridCellEditorComponent,
     'agGridCellRenderer': AgGridCellRendererComponent,
@@ -242,7 +243,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   // }
 
   override ngAfterViewInit() {
-    super.ngOnInit();
+    super.ngAfterViewInit();
     this.initAgGrid();
   }
 
@@ -322,6 +323,12 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     else {
       await this.getAllServerSideRows();
       callbackFunction();
+    }
+  }
+
+  focusFirstRow(){
+    if(this.agGridApi && this.colDefs.length>0) {
+      this.agGridApi.setFocusedCell(0,this.colDefs[0].field);
     }
   }
 
@@ -502,6 +509,14 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     return promiseInstance.promise;
   }
 
+  getAvailableData():any[]{
+    const result:any[] = [];
+    this.agGridApi.forEachNode(node => {
+      result.push(node.data);
+    });
+    return result;
+  }
+
   getGridState() {
     const state: any = {};
     state['columns'] = this.agGridApi.getColumnState();
@@ -552,22 +567,16 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   }
 
   handleCellClicked(event: CellClickedEvent) {
-    const eventParams: any = {
-      event: event,
-    };
-    this.onCellClicked.emit(eventParams);
-    this.events.execute({ eventName: 'cellClicked', args: eventParams });
+    this.onCellClicked.emit(event);
+    this.events.execute({ eventName: 'cellClicked', args: event });
   }
 
   handleCellDoubleClicked(event: CellDoubleClickedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onCellDoubleClicked.emit(eventParams);
-    this.events.execute({ eventName: 'cellDoubleClicked', args: eventParams });
+    this.onCellDoubleClicked.emit(event);
+    this.events.execute({ eventName: 'cellDoubleClicked', args: event });
   }
 
-  handleCellFocused(event: CellFocusedEvent) {
+  handleCellFocused(event: any) {
     const rowIndex = event.rowIndex;
     if (this.activeRowIndex != rowIndex) {
       const activeEventParams: any = {
@@ -578,47 +587,32 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       this.events.execute({ eventName: "activeRowChange", args: activeEventParams });
       this.activeRowIndex = rowIndex;
     }
-    const eventParams: any = {
-      index: rowIndex,
-      event: event
-    };
-    this.onCellFocused.emit(eventParams);
-    this.events.execute({ eventName: 'cellFocused', args: eventParams });
+    event.index = rowIndex;
+    this.onCellFocused.emit(event);
+    this.events.execute({ eventName: 'cellFocused', args: event });
   }
 
   handleCellKeyDown(event: CellKeyDownEvent | FullWidthCellKeyDownEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onCellKeyDown.emit(eventParams);
-    this.events.execute({ eventName: 'cellKeyDown', args: eventParams });
+    this.onCellKeyDown.emit(event);
+    this.events.execute({ eventName: 'cellKeyDown', args: event });
   }
 
   handleCellMouseDown(event: CellMouseDownEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onCellMouseDown.emit(eventParams);
-    this.events.execute({ eventName: 'cellMouseDown', args: eventParams });
+    this.onCellMouseDown.emit(event);
+    this.events.execute({ eventName: 'cellMouseDown', args: event });
   }
 
   handleCellMouseOut(event: CellMouseOutEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onCellMouseOut.emit(eventParams);
-    this.events.execute({ eventName: 'cellMouseOut', args: eventParams });
+    this.onCellMouseOut.emit(event);
+    this.events.execute({ eventName: 'cellMouseOut', args: event });
   }
 
   handleCellMouseOver(event: CellMouseOverEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onCellMouseOver.emit(eventParams);
-    this.events.execute({ eventName: 'cellMouseOver', args: eventParams });
+    this.onCellMouseOver.emit(event);
+    this.events.execute({ eventName: 'cellMouseOver', args: event });
   }
 
-  handleCellValueChanged(event: CellValueChangedEvent) {
+  handleCellValueChanged(event: any) {
     const rowIndex = event.rowIndex;
     const rowNode = event.node;
     const rowData = rowNode.data;
@@ -629,53 +623,35 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         this.addRow();
       }
     }
-    const eventParams: any = {
-      data: rowData,
-      index: rowIndex,
-      event: event
-    };
-    this.onCellValueChanged.emit(eventParams);
-    this.events.execute({ eventName: 'cellValueChanged', args: eventParams });
+    event.data = rowData;
+    event.index = rowIndex;
+    this.onCellValueChanged.emit(event);
+    this.events.execute({ eventName: 'cellValueChanged', args: event });
   }
 
   handleColumnHeaderClicked(event: ColumnHeaderClickedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onColumnHeaderClicked.emit(eventParams);
-    this.events.execute({ eventName: 'columnHeaderClicked', args: eventParams });
+    this.onColumnHeaderClicked.emit(event);
+    this.events.execute({ eventName: 'columnHeaderClicked', args: event });
   }
 
   handleColumnMoved(event: ColumnMovedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onColumnMoved.emit(eventParams);
-    this.events.execute({ eventName: 'columnMouved', args: eventParams });
+    this.onColumnMoved.emit(event);
+    this.events.execute({ eventName: 'columnMouved', args: event });
   }
 
   handleColumnResized(event: ColumnResizedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onColumnResized.emit(eventParams);
-    this.events.execute({ eventName: 'columnResized', args: eventParams });
+    this.onColumnResized.emit(event);
+    this.events.execute({ eventName: 'columnResized', args: event });
   }
 
   handleColumnValueChanged(event: ColumnValueChangedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onColumnValueChanged.emit(eventParams);
-    this.events.execute({ eventName: 'columnValueChanged', args: eventParams });
+    this.onColumnValueChanged.emit(event);
+    this.events.execute({ eventName: 'columnValueChanged', args: event });
   }
 
   handleColumnVisible(event: ColumnVisibleEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onColumnVisibilityChanged.emit(eventParams);
-    this.events.execute({ eventName: 'columnVisibilityChanged', args: eventParams });
+    this.onColumnVisibilityChanged.emit(event);
+    this.events.execute({ eventName: 'columnVisibilityChanged', args: event });
   }
 
   handleComponentStateChanged(event: ComponentStateChangedEvent) {
@@ -683,126 +659,81 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   }
 
   handleFilterChanged(event: FilterChangedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onFilterChanged.emit(eventParams);
-    this.events.execute({ eventName: 'filterChanged', args: eventParams });
+    this.onFilterChanged.emit(event);
+    this.events.execute({ eventName: 'filterChanged', args: event });
   }
 
   handleFilterModified(event: FilterModifiedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onFilterModified.emit(eventParams);
-    this.events.execute({ eventName: 'filterModified', args: eventParams });
+    this.onFilterModified.emit(event);
+    this.events.execute({ eventName: 'filterModified', args: event });
   }
 
   handleFilterOpened(event: FilterOpenedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onFilterOpened.emit(eventParams);
-    this.events.execute({ eventName: 'filterOpened', args: eventParams });
+    this.onFilterOpened.emit(event);
+    this.events.execute({ eventName: 'filterOpened', args: event });
   }
 
-  handleGridReady(params: GridReadyEvent) {
-    const eventParams: any = {
-      event: params
-    };
-    this.agGridApi = params.api;
-    this.onGridReady.emit(eventParams);
-    this.events.execute({ eventName: 'gridReady', args: eventParams });
+  handleGridReady(event: GridReadyEvent) {
+    this.agGridApi = event.api;
+    this.onGridReady.emit(event);
+    this.events.execute({ eventName: 'gridReady', args: event });
   }
 
   handlePaginationChanged(event: PaginationChangedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onPaginationChanged.emit(eventParams);
-    this.events.execute({ eventName: 'paginationChanged', args: eventParams });
+    this.onPaginationChanged.emit(event);
+    this.events.execute({ eventName: 'paginationChanged', args: event });
   }
 
   handleRowClicked(event: RowClickedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onRowClicked.emit(eventParams);
-    this.events.execute({ eventName: 'rowClicked', args: eventParams });
+    this.onRowClicked.emit(event);
+    this.events.execute({ eventName: 'rowClicked', args: event });
   }
 
   handleRowDataUpdated(event: RowDataUpdatedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onRowDataUpdated.emit(eventParams);
-    this.events.execute({ eventName: 'rowDataUpdated', args: eventParams });
+    this.onRowDataUpdated.emit(event);
+    this.events.execute({ eventName: 'rowDataUpdated', args: event });
   }
 
   handleRowDoubleClicked(event: RowDoubleClickedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onRowDoubleClicked.emit(eventParams);
-    this.events.execute({ eventName: 'rowDoubleClicked', args: eventParams });
+    this.onRowDoubleClicked.emit(event);
+    this.events.execute({ eventName: 'rowDoubleClicked', args: event });
   }
 
   handleRowEditingStarted(event: RowEditingStartedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onRowEditingStarted.emit(eventParams);
-    this.events.execute({ eventName: 'rowEditingStarted', args: eventParams });
+    this.onRowEditingStarted.emit(event);
+    this.events.execute({ eventName: 'rowEditingStarted', args: event });
   }
 
   handleRowEditingStopped(event: RowEditingStoppedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onRowEditingStopped.emit(eventParams);
-    this.events.execute({ eventName: 'rowEditingStopped', args: eventParams });
+    this.onRowEditingStopped.emit(event);
+    this.events.execute({ eventName: 'rowEditingStopped', args: event });
   }
 
   handleRowSelected(event: any) {
-    const eventParams: any = {
-      event: event
-    }
-    this.onRowSelected.emit(eventParams);
-    this.events.execute({ eventName: 'rowSelected', args: eventParams });
+    this.onRowSelected.emit(event);
+    this.events.execute({ eventName: 'rowSelected', args: event });
   }
 
   handleRowValueChanged(event: RowValueChangedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onRowValueChanged.emit(eventParams);
-    this.events.execute({ eventName: 'rowValueChanged', args: eventParams });
+    this.onRowValueChanged.emit(event);
+    this.events.execute({ eventName: 'rowValueChanged', args: event });
   }
 
   handleSelectionChanged(event: SelectionChangedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onSelectionChanged.emit(eventParams);
-    this.events.execute({ eventName: 'selectionChanged', args: eventParams });
+    this.onSelectionChanged.emit(event);
+    this.events.execute({ eventName: 'selectionChanged', args: event });
   }
 
   handleSortChanged(event: SortChangedEvent) {
-    const eventParams: any = {
-      event: event
-    };
-    this.onSortChanged.emit(eventParams);
-    this.events.execute({ eventName: 'sortChanged', args: eventParams });
+    this.onSortChanged.emit(event);
+    this.events.execute({ eventName: 'sortChanged', args: event });
   }
 
   handleStateUpdated(event: StateUpdatedEvent) {
     const source = event.sources[0];
     if (['columnSizing', 'columnOrder'].includes(source)) {
-      const eventParams: any = {
-        event: event
-      };
-      this.onStateUpdated.emit(eventParams);
-      this.events.execute({ eventName: 'stateUpdated', args: eventParams });
+      this.onStateUpdated.emit(event);
+      this.events.execute({ eventName: 'stateUpdated', args: event });
     }
 
   }
@@ -844,6 +775,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       columnDetails.index = index;
       colDefs.push(this.getAgDataGridColumnFromAcDataGridColumn(columnDetails));
     }
+    this.colDefs = colDefs;
     this.agGridApi.setGridOption('columnDefs', colDefs);
     setTimeout(() => {
       // this.changeDetectorRef.detectChanges();/

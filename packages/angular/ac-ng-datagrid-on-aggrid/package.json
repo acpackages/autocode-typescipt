@@ -9,6 +9,7 @@
     "@autocode-ts/autocode": "^0.0.2",
     "@autocode-ts/ac-angular": "^0.0.2",
     "@autocode-ts/ac-extensions": "^0.0.2",
+    "@popperjs/core": "^2.11.8",
     "ag-grid-angular": "^33.3.0",
     "ag-grid-community": "^33.3.0",
     "ag-grid-enterprise": "^33.3.2",

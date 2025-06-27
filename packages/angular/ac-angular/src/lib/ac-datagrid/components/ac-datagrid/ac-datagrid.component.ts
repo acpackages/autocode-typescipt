@@ -81,7 +81,6 @@ export class AcDatagridComponent extends AcBaseRepeater{
   }
 
   handleCellSelectionChange(){
-    // console.log(new Date().toISOString());
     this.selectedRow = this.rows[this.selectedRowIndex];
     this.selectedRowData = this.selectedRow!.data;
     this.handleSelectedCellChange();

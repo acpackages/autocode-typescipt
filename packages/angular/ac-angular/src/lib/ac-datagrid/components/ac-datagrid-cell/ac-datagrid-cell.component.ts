@@ -150,7 +150,6 @@ export class AcDatagridCellComponent extends AcBase {
   }
 
   selectCell(){
-    // console.log(new Date().toISOString());
     this.rowInstance.dataGridInstance.selectedColumnIndex = this.column.index!;
     this.rowInstance.dataGridInstance.selectedRowIndex = this.rowInstance.index;
     const event: IAcDataGridCellEvent = this.getEventData();;

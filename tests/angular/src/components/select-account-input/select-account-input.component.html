@@ -1,0 +1,28 @@
+<ac-datagrid-dropdown-on-aggrid
+    #dataGridSelect
+    [class]="class"
+    [columns]="columns"
+    [dataOnDemandFunction]="dataFunction"
+    [labelKey]="'account_name'"
+    [valueKey]="'account_id'"
+    [placeholder]="placeholder"
+    [(value)]="value"
+    style="color:red"
+    [defaultSelectedData]="{'account_name':'Default Selected Account','account_id':'1727675470511'}"
+  (onChange)="handleValueChange($event)"
+  (onDropdownShow)="handleDropdownShow()"
+>
+  <!-- <ac-datagrid-dropdown-content>
+    <div> <h3>Header Section</h3></div>
+    <div style="height:250px">
+      <div style="width:50%;display: inline-block;height: 100%;">
+        <ac-datagrid-dropdown-datagrid></ac-datagrid-dropdown-datagrid>
+      </div>
+      <div style="width:50%;display: inline-block;">
+        Sidebar
+      </div>
+
+    </div>
+    <div> <h3>Footer Section</h3></div>
+  </ac-datagrid-dropdown-content> -->
+</ac-datagrid-dropdown-on-aggrid>

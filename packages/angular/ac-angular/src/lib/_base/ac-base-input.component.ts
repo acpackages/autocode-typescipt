@@ -33,7 +33,6 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
 
   @Input() set value(value: any) {
     const object = this; object.setValue(value);
-    this.valueChange.emit(this._value);
   }
 
   @Output() onBlur: EventEmitter<IAcInputEvent> = new EventEmitter();
@@ -55,9 +54,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
 
   constructor(public override elementRef: ElementRef, public override autocodeService: AutocodeService) {
     super(elementRef, autocodeService);
-    console.log(this);
     this.events.subscribe({eventName:"viewInit",callback:(params) => {
-      console.log("Focusing");
       setTimeout(() => {
         if (this.autoFocus) {
           for (const child of this.elementChildren) {
@@ -67,6 +64,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
       }, 100);
     }
     });
+    this.setCssClassStyleFromComponentTag();
   }
 
   handleBlur(event: any) {
@@ -124,8 +122,32 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
     this.onTouchedCallback();
   }
 
+  setCssClassStyleFromComponentTag(){
+    let operationCompleted:boolean = false;
+    if(this.elementRef){
+      if(this.elementRef.nativeElement){
+        operationCompleted = true;
+        if(this.class == ""){
+          if(this.elementRef.nativeElement.className){
+            this.class = this.elementRef.nativeElement.className;
+          }
+        }
+      }
+    }
+    if(!operationCompleted){
+      setTimeout(() => {
+        this.setCssClassStyleFromComponentTag();
+      }, 100);
+    }
+  }
+
   setValue(value: any) {
+    const valueChanged:boolean = this._value != value;
     this._value = value;
+    if(valueChanged){
+      this.handleChange(value);
+      this.valueChange.emit(this._value);
+    }
     this.setFormControlValue(value);
   }
 

@@ -19,13 +19,15 @@ export class ActionColumnComponent {
     // console.log(this);
   }
 
-  handleDelete(){
-    console.log("On Delete Clicked");
+  handleDelete(event:any){
+    event.preventDefault();
+    alert("On Delete Clicked");
     this.onDelete.emit();
   }
 
-  handleEdit(){
-    console.log("On Edit Clicked");
+  handleEdit(vent:any){
+    event.preventDefault();
+    alert("On Edit Clicked");
     this.onEdit.emit();
   }
 }

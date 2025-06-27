@@ -13,7 +13,7 @@ import { Autocode } from '@autocode-ts/autocode';
   styleUrl: './ac-filters.component.css',
   standalone: false
 })
-export class AcFiltersComponent extends AcBase implements OnChanges{
+export class AcFiltersComponent extends AcBase {
   private _dataController:AcDataController  = new AcDataController();
   get dataController(): AcDataController { return this._dataController; }
   @Input() set dataController(value: AcDataController) {
@@ -35,10 +35,6 @@ export class AcFiltersComponent extends AcBase implements OnChanges{
   ];
   comparisonOperators: any[] = [];
   logicalOperators: any[] = [];
-
-  ngOnChanges(changes:SimpleChanges){
-    console.log(changes);
-  }
 
   override ngOnInit() {
     super.ngOnInit();

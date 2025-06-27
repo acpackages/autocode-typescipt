@@ -30,6 +30,10 @@ export * from "./lib/ac-datagrid/interfaces/ac-datagrid-row-event.interface";
 export * from "./lib/ac-datagrid/interfaces/ac-datagrid-sort.interface";
 export * from "./lib/ac-datagrid/interfaces/ac-datagrid.interface";
 
+export * from "./lib/ac-datagrid-dropdown/ac-datagrid-dropdown.module";
+export * from "./lib/ac-datagrid-dropdown/components/ac-datagrid-dropdown-content/ac-datagrid-dropdown-content.component";
+export * from "./lib/ac-datagrid-dropdown/components/ac-datagrid-dropdown-datagrid/ac-datagrid-dropdown-datagrid.component";
+
 export * from "./lib/ac-drag-drop/ac-drag-drop.module";
 
 export * from "./lib/ac-drawer/ac-drawer.module";

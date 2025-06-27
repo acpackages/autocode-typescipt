@@ -1,0 +1,43 @@
+<div class="ac-datagrid-dropdown-wrapper">
+  <input
+  #gridInput
+  type="text"
+  [class]="class"
+  [style]="style"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [readonly]="readonly"
+  (blur)="handleBlur($event)"
+  (change)="handleChange($event)"
+  (click)="handleClick($event)"
+  (keyup)="handleKeyUp($event)"
+  (focus)="handleInputFocus($event)"
+  (input)="handleInputChange($event)"
+  (keydown)="handleInputKeyDown($event)"
+  >
+  <div #gridDropdown class="ac-datagrid-dropdown-container" [style]="'width:'+dropdownWidth+'px;height:'+dropdownHeight+'px;'+(!isDropdownVisible?'display:none':'')">
+    <ng-container *ngIf="isDropdownVisible">
+      <div style="width: 100%; height: 100%;">
+      <ng-container *ngIf="datagridDropdownContent">
+        <ng-content></ng-content>
+      </ng-container>
+      <ng-container *ngIf="datagridDropdownContent === undefined">
+        <ng-container *ngTemplateOutlet="datagridTemplate" />
+      </ng-container>
+      <ng-template #datagridTemplate>
+        <ac-datagrid-on-aggrid #dataGrid
+        [columns]="columns"
+        [dataOnDemandFunction]="dataOnDemandFunction"
+        [defaultPageSize]="defaultPageSize"
+        [pageSizes]="pageSizes"
+        [pagination]="pagination"
+        [filterSearchValue]="gridInput.value"
+        (onViewInit)="handleGridViewInit($event)"
+        (onCellClicked)="handleGridCellClicked($event)"
+        (onCellKeyDown)="handleGridCellKeyDown($event)"
+        ></ac-datagrid-on-aggrid>
+      </ng-template>
+    </div>
+    </ng-container>
+  </div>
+</div>

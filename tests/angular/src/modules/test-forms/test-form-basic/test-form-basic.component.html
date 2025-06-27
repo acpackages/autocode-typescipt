@@ -2,21 +2,21 @@
 <div class="row">
   <div class="col-3"></div>
   <div class="col-6">
-    <form>
+    <form #recordForm="ngForm">
       <div class="p-4">
         <h6>Personal Details</h6>
         <div class="row">
           <div class="col-4 mb-3">
             <label>First Name</label>
-            <ac-input class="form-control" placeholder="First Name" [(value)]="record['first_name']"/>
+            <ac-input class="form-control" placeholder="First Name" [(value)]="record['first_name']" />
           </div>
           <div class="col-4 mb-3">
             <label>Middle Name</label>
-            <ac-input  class="form-control" placeholder="Middle Name" [(value)]="record['middle_name']"/>
+            <ac-input class="form-control" placeholder="Middle Name" [(value)]="record['middle_name']" />
           </div>
           <div class="col-4 mb-3">
             <label>Last Name</label>
-            <ac-input  class="form-control" placeholder="Last Name" [(value)]="record['last_name']"/>
+            <ac-input class="form-control" placeholder="Last Name" [(value)]="record['last_name']" />
           </div>
           <div class="col-4 mb-3">
             <label>Gender</label>
@@ -27,14 +27,20 @@
           </div>
           <div class="col-4 mb-3">
             <label>DOB</label>
-            <ac-input type="datetime-local" class="form-control" placeholder="DOB" [(value)]="record['dob']"/>
+            <ac-input type="datetime-local" class="form-control" placeholder="DOB" [(value)]="record['dob']" />
           </div>
+          <div class="col-4 mb-3">
+            <label>Account</label>
+            <select-account-input class="form-control" placeholder="Select Account" [(ngModel)]="record['account_id']" [(value)]="record['account_id']" name="account_id" />
+          </div>
+
           <div class="col-12 mb-3">
             <label>Meal Preferences</label>
             <div class="row">
               <ng-container *ngFor="let meal of mealPreferences">
                 <div class="col-3">
-                  <ac-option [optionValue]="meal" [optionValueUnchecked]="'Not '+meal" [(value)]="record['meal_preferences']" [name]="'meal_preferences[]'" [labelElement]="label"/>
+                  <ac-option [optionValue]="meal" [optionValueUnchecked]="'Not '+meal"
+                    [(value)]="record['meal_preferences']" [name]="'meal_preferences[]'" [labelElement]="label" />
                   <label #label class="ms-2" [attr.for]="meal">{{meal}}</label>
                 </div>
               </ng-container>
@@ -45,7 +51,8 @@
             <div class="row">
               <ng-container *ngFor="let status of maritialStatuses">
                 <div class="col-3">
-                  <ac-option [type]="'radio'" name="maritial_status" [optionValue]="status" [(value)]="record['maritial_status']" [labelElement]="label"/>
+                  <ac-option [type]="'radio'" name="maritial_status" [optionValue]="status"
+                    [(value)]="record['maritial_status']" [labelElement]="label" />
                   <label #label class="ms-2">{{status}}</label>
                 </div>
               </ng-container>
@@ -67,12 +74,13 @@
                     <ng-template #template let-item let-index="index">
                       <tr>
                         <td>
-                          <ac-input [(value)]="item['label']"/>
+                          <ac-input [(value)]="item['label']" />
                         </td>
                         <td>
-                          <ac-input [(value)]="item['value']"/>
+                          <ac-input [(value)]="item['value']" />
                         </td>
-                        <td><button class="btn btn-danger py-1" type="button" (click)="phoneInput.removeItem(item)">Delete</button></td>
+                        <td><button class="btn btn-danger py-1" type="button"
+                            (click)="phoneInput.removeItem(item)">Delete</button></td>
                       </tr>
                     </ng-template>
                   </ac-array-value-items>
@@ -100,9 +108,10 @@
                           <ac-input [(value)]="item['label']" />
                         </td>
                         <td>
-                          <ac-input [(value)]="item['value']"/>
+                          <ac-input [(value)]="item['value']" />
                         </td>
-                        <td><button class="btn btn-danger py-1" type="button" (click)="emailInput.removeItem(item)">Delete</button></td>
+                        <td><button class="btn btn-danger py-1" type="button"
+                            (click)="emailInput.removeItem(item)">Delete</button></td>
                       </tr>
                     </ng-template>
                   </ac-array-value-items>
@@ -113,7 +122,8 @@
           </div>
           <div class="col-12 mb-3">
             <label>Websites</label>
-            <ac-array-values #websiteInput class="form-control" placeholder="Phone Numbers" [(value)]="record['website']">
+            <ac-array-values #websiteInput class="form-control" placeholder="Phone Numbers"
+              [(value)]="record['website']">
               <table>
                 <thead>
                   <tr>
@@ -127,12 +137,13 @@
                     <ng-template #template let-item let-index="index">
                       <tr>
                         <td>
-                          <ac-input [(value)]="item['label']"/>
+                          <ac-input [(value)]="item['label']" />
                         </td>
                         <td>
-                          <ac-input [(value)]="item['value']"/>
+                          <ac-input [(value)]="item['value']" />
                         </td>
-                        <td><button class="btn btn-danger py-1" type="button" (click)="websiteInput.removeItem(item)">Delete</button></td>
+                        <td><button class="btn btn-danger py-1" type="button"
+                            (click)="websiteInput.removeItem(item)">Delete</button></td>
                       </tr>
                     </ng-template>
                   </ac-array-value-items>
@@ -143,11 +154,11 @@
           </div>
           <div class="col-12 mb-3">
             <label>About</label>
-            <ac-textarea field="about" class="form-control" placeholder="About" [(value)]="record['about']"/>
+            <ac-textarea field="about" class="form-control" placeholder="About" [(value)]="record['about']" />
           </div>
           <div class="col-12 mb-3">
             <label>Profile Picture</label>
-            <ac-files class="form-control" placeholder="Profile Picture" [(value)]="record['profile_picture']"/>
+            <ac-files class="form-control" placeholder="Profile Picture" [(value)]="record['profile_picture']" />
           </div>
         </div>
         <button type="button" class="btn btn-primary" (click)="handleSubmit()">Save Form</button>

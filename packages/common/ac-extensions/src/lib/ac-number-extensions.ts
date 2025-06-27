@@ -76,9 +76,6 @@ export function numberRound(num: number, decimals = 2): number {
   if (typeof num !== 'number' || isNaN(num)) {
     return NaN; // Or throw an error, depending on desired behavior for invalid input
   }
-  if (decimals < 0) {
-      console.warn("Rounding to negative decimals might not behave as expected.");
-  }
   const mod = Math.pow(10, decimals);
   return Math.round(num * mod) / mod;
 }

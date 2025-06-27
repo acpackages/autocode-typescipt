@@ -95,7 +95,6 @@ export class AcNodeEditorComponent extends AcBase {
     if (nodeProperties.data) {
       node.data["data"] = nodeProperties.data;
     }
-    console.log(node,new Date());
     await this.editor.addNode(node);
     let nodePosition:any = {};
     if (nodeProperties) {

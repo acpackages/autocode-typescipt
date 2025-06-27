@@ -21,11 +21,9 @@ export class AcPaginationComponent extends AcBase implements OnChanges {
   @Input() set dataController(value: AcDataController) {
     this._dataController = value;
     this._dataController.on({eventName:'dataFiltered',callback:()=>{
-      console.log(this);
       this.totalResults = this.dataController.dataFiltered.length;
       this.setActivePage(1);
     }});
-    console.log("Setting Display Range");
     this.setActivePage(1);
   }
   private _displayPerPage:number = 25;
