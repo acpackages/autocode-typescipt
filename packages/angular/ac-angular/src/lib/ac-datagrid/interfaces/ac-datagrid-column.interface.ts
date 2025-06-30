@@ -34,6 +34,7 @@ export interface IAcDataGridColumn{
   style?:any,
   state?:IAcDatagridColumnState,
   template?:TemplateRef<any>,
+  useSameComponentForEditing?:any,
   valueFormatter?:Function
 
 }

@@ -45,10 +45,13 @@ export class TestAgGridBasicComponent {
       component:ActionColumnComponent
     }
   ];
-  data:any[] = employeeData;
+  data:any[] = [];
 
   ngOnInit(){
     console.log(this);
+    setTimeout(() => {
+      this.data = employeeData.splice(0,10);
+    }, 1500);
   }
 
   handleActiveRowChange(event:any){

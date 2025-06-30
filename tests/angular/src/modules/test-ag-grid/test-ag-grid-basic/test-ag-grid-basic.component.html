@@ -10,6 +10,7 @@ Total Rows : {{dataGrid.totalRows}}
   [columns]="columns"
   [editable]="true"
   [pagination]="true"
+  [footerTemplate]="footerTemplate"
   [filterSearchValue] = "searchInput.value"
   [selectMultiple]="true"
   [autoAddNewRow]="true"
@@ -45,4 +46,6 @@ Total Rows : {{dataGrid.totalRows}}
     </ac-datagrid-column>
   </ac-datagrid-on-aggrid>
 </div>
-
+<ng-template #footerTemplate>
+  <button class="btn btn-secondary" (click)="dataGrid.addRow()">Add Row</button>
+</ng-template>

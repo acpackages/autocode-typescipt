@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component, ElementRef,forwardRef, ViewChild } from '@angular/core';
+import { Component, ElementRef,forwardRef, Input, ViewChild } from '@angular/core';
 import { AcBaseInput, AutocodeService, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from 'packages/angular/ac-angular/src';
 import { ActionColumnComponent } from '../action-column/action-column.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -28,6 +28,7 @@ import { AcDatagridDropdownOnAgGrid } from 'packages/angular/ac-ng-datagrid-on-a
 })
 export class SelectAccountInputComponent extends AcBaseInput{
   @ViewChild('dataGridSelect') dataGridSelect:AcDatagridDropdownOnAgGrid;
+  @Input() defaultSelectedData:any;
   baseUrl = 'http://autocode.localhost/tests/ac-web/mvc-test/';
   columns:IAcDataGridColumn[] = [
       {
@@ -45,12 +46,11 @@ export class SelectAccountInputComponent extends AcBaseInput{
         title:"Action",
         component:ActionColumnComponent
       }
-    ];
+  ];
   constructor(private httpClient: HttpClient,elementRef:ElementRef,autocodeService:AutocodeService) {
     super(elementRef,autocodeService);
-    console.log(this);
-
   }
+
   dataFunction: Function = async (params: IAcDataGridDataOnDemandParams) => {
     console.warn(params);
     let requestData: any = {};
@@ -72,7 +72,7 @@ export class SelectAccountInputComponent extends AcBaseInput{
     }
     const apiResponse = await this.postData('api/accounts/get', requestData);
     // .then((apiResponse: any) => {
-    console.log(apiResponse);
+    this.log(apiResponse);
     if (apiResponse['status'] == "success") {
       const response: IAcDataGridDataOnDemandResponse = {
         data: apiResponse.rows,
@@ -88,6 +88,26 @@ export class SelectAccountInputComponent extends AcBaseInput{
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
     // this.dataGridSelect.setDropdownSize({height:900,width:800});
+    console.log(this);
+  }
+
+  override focus(){
+    let retryOperation= true;
+    if(this.dataGridSelect){
+      if(this.dataGridSelect.inputElementRef){
+        if(this.dataGridSelect.inputElementRef.nativeElement){
+          retryOperation = false;
+          setTimeout(() => {
+            this.dataGridSelect.inputElementRef.nativeElement.focus();
+          }, 100);
+        }
+      }
+    }
+    if(retryOperation){
+      setTimeout(() => {
+        this.focus();
+      }, 100);
+    }
   }
 
   async postData(endpoint: string, payload: any): Promise<any> {
@@ -98,7 +118,7 @@ export class SelectAccountInputComponent extends AcBaseInput{
         })
       }).pipe().subscribe({
         next: async (data) => {
-          console.log(data);
+          this.log(data);
           resolve(data);
         },
         error: (error) => {
@@ -123,8 +143,13 @@ export class SelectAccountInputComponent extends AcBaseInput{
   }
 
   handleValueChange(event:any){
-    console.log(this);
+    this.log(this);
     // this.value = this.dataGridSelect.value;
+  }
+
+  log(...args:any){
+    // console.trace();
+    // console.log(args);
   }
 
 }

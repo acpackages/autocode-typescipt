@@ -1,9 +1,9 @@
 {
   "name": "@autocode-ts/ac-ng-datagrid-on-aggrid",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "peerDependencies": {
-    "@angular/common": "^19.1.6",
-    "@angular/core": "^19.1.6"
+    "@angular/common": "~20.0.4",
+    "@angular/core": "~20.0.4"
   },
   "dependencies": {
     "@autocode-ts/autocode": "^0.0.2",

@@ -1,17 +1,17 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { AfterViewInit, Component, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { IAcDataGridColumn } from '@autocode-ts/ac-angular';
 import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
-  selector: 'ag-grid-cell-renderer',
+  selector: 'ag-grid-cell-render',
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false,
-  templateUrl: './ag-grid-cell-renderer.component.html',
-  styleUrl: './ag-grid-cell-renderer.component.css'
+  templateUrl: './ag-grid-cell-render.component.html',
+  styleUrl: './ag-grid-cell-render.component.css'
 })
-export class AgGridCellRendererComponent implements ICellRendererAngularComp, AfterViewInit {
+export class AgGridCellRenderComponent implements ICellRendererAngularComp, AfterViewInit,OnDestroy {
   @ViewChild('container', { read: ViewContainerRef, static: true }) container!: ViewContainerRef;
   template?: TemplateRef<any>;
   component?: any;
@@ -33,10 +33,19 @@ export class AgGridCellRendererComponent implements ICellRendererAngularComp, Af
     this.createView();
   }
 
-  createView() {
+  ngOnDestroy(): void {
+    if(this.params.onComponentDestroy){
+      this.params.onComponentDestroy(this);
+    }
+  }
+
+  async createView() {
     if (this.params.data) {
       this.data = this.params.data;
       this.column = this.params.acDatagridColumn;
+      if(this.params.onComponentBeforeInit){
+        await this.params.onComponentBeforeInit(this);
+      }
       const context: any = {
           data: this.data,
           column: this.column,

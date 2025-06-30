@@ -15,6 +15,8 @@
   [rowMultiSelectWithClick]="true"
   (cellClicked)="handleCellClicked($event)"
   (cellDoubleClicked)="handleCellDoubleClicked($event)"
+  (cellEditingStarted)="handleCellEditingStarted($event)"
+  (cellEditingStopped)="handleCellEditingStopped($event)"
   (cellFocused)="handleCellFocused($event)"
   (cellKeyDown)="handleCellKeyDown($event)"
   (cellMouseDown)="handleCellMouseDown($event)"
@@ -42,6 +44,5 @@
   (selectionChanged)="handleSelectionChanged($event)"
   (sortChanged)="handleSortChanged($event)"
   (stateUpdated)="handleStateUpdated($event)"
-
   />
 </div>

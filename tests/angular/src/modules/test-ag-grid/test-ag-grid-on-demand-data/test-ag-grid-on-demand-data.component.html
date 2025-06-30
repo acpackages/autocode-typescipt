@@ -15,11 +15,14 @@ Total Rows : {{dataGrid.totalRows}}
     [pagination]="true"
     [dataOnDemandFunction]="dataFunction"
     [filterSearchValue] = "searchInput.value"
+    [footerTemplate]="footerTemplate"
     [autoAddNewRow]="true"
     (onActiveRowChange)="handleActiveRowChange($event)"
     (onCellFocused)="handleCellFocused($event)"
     (onCellValueChanged)="handleCellValueChanged($event)"
+    (onCellEditorComponentBeforeInit)="handleCellEditorComponentBeforeInit($event)"
     (onCellEditorComponentInit)="handleCellEditorComponentInit($event)"
+    (onCellRenderComponentBeforeInit)="handleCellRenderComponentBeforeInit($event)"
     (onCellRenderComponentInit)="handleCellRenderComponentInit($event)"
     (onColumnVisibilityChanged)="handleColumnVisibilityChanged($event)"
     (onColumnMoved)="handleColumnWidthChanged($event)"
@@ -54,3 +57,6 @@ Total Rows : {{dataGrid.totalRows}}
     </ac-datagrid-column> -->
   </ac-datagrid-on-aggrid>
 </div>
+<ng-template #footerTemplate>
+  <button class="btn btn-secondary" (click)="dataGrid.addRow()">Add Row</button>
+</ng-template>

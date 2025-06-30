@@ -28,7 +28,7 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
   @ContentChildren(AcDatagridColumnComponent) columnComponents?: QueryList<AcDatagridColumnComponent>;
-  @ContentChild(AcDatagridDropdownContentComponent) datagridDropdownContent?:AcDatagridDropdownContentComponent;
+  @ContentChild(AcDatagridDropdownContentComponent) datagridDropdownContent?: AcDatagridDropdownContentComponent;
   @ViewChild('gridDropdown') dropdownElementRef!: ElementRef<HTMLDivElement>;
   @ViewChild('gridInput') inputElementRef!: ElementRef<HTMLInputElement>;
   @ViewChild('datagridTemplate') datagridTemplate: TemplateRef<any>;
@@ -49,23 +49,23 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
   dataGrid?: AcDatagridOnAgGridComponent;
   public isDropdownVisible = false;
   private listeningForResizing = false;
-  private notifyResizedTimeout:any;
+  private notifyResizedTimeout: any;
   private popperInstance: PopperInstance | null = null;
   private resizeObserver!: ResizeObserver;
-  private selectedData: any;
+  selectedData: any;
 
   override ngAfterViewInit() {
-    this.resizeObserver = new ResizeObserver((entries:any) => {
-      if(this.listeningForResizing){
-        if(this.notifyResizedTimeout){
+    this.resizeObserver = new ResizeObserver((entries: any) => {
+      if (this.listeningForResizing) {
+        if (this.notifyResizedTimeout) {
           clearTimeout(this.notifyResizedTimeout);
         }
         this.notifyResizedTimeout = setTimeout(() => {
           this.notifyDropdownResize();
         }, 500);
-      if (this.dataGrid) {
-        this.dataGrid.agGridApi.sizeColumnsToFit();
-      }
+        if (this.dataGrid) {
+          this.dataGrid.agGridApi.sizeColumnsToFit();
+        }
       }
 
     });
@@ -84,18 +84,29 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     }
   }
 
-  checkAndSetDropdownContentComponent(){
-    let retry:boolean = false;
-    if(this.datagridDropdownContent){
+  checkAndSetDropdownContentComponent() {
+    let retry: boolean = false;
+    if (this.datagridDropdownContent) {
       retry = true;
-      if(this.datagridDropdownContent.datagridDropdownDatagrid && this.datagridTemplate){
+      if (this.datagridDropdownContent.datagridDropdownDatagrid && this.datagridTemplate) {
         this.datagridDropdownContent.datagridDropdownDatagrid.datagridTemplate = this.datagridTemplate;
         retry = false;
       }
     }
-    if(retry){
+    if (retry) {
       setTimeout(() => {
         this.checkAndSetDropdownContentComponent();
+      }, 100);
+    }
+  }
+
+  override focus(){
+    if(this.inputElementRef && this.inputElementRef.nativeElement){
+      this.inputElementRef.nativeElement.focus();
+    }
+    else{
+      setTimeout(() => {
+        this.focus();
       }, 100);
     }
   }
@@ -107,9 +118,12 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
         retry = false;
         const requestParams: IAcDataGridDataOnDemandParams = {};
         const successCallback: Function = (response: IAcDataGridDataOnDemandResponse) => {
-          if (response.data.length > 0) {
-            this.setSelectedData(response.data[0]);
+          if (response.data) {
+            if (response.data.length > 0) {
+              this.setSelectedData(response.data[0]);
+            }
           }
+
         };
         requestParams.successCallback = successCallback;
         requestParams.filterGroup = {
@@ -161,12 +175,17 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     }
   }
 
-  handleGridViewInit(event:any){
-    this.dataGrid= event.instance;
+  handleGridViewInit(event: any) {
+    this.dataGrid = event.instance;
   }
 
-  handleInputChange(event: any){
-    if(this.dataGrid){
+  handleInputBlur(event:any){
+    super.handleBlur(event);
+    // if(this.dataGrid.agGridApi.isFoc)
+  }
+
+  handleInputChange(event: any) {
+    if (this.dataGrid) {
       this.dataGrid.refreshData();
     }
   }
@@ -182,7 +201,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
         event.preventDefault();
         this.dataGrid.focusFirstRow();
       }
-      if (event.code.toUpperCase() == "ESCAPE") {
+      else if (event.code.toUpperCase() == "ESCAPE") {
         event.preventDefault();
         this.setSelectedData(this.selectedData);
       }
@@ -202,27 +221,27 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     this.events.execute({eventName:'dropdownHide',args:event});
   }
 
-  getDropdownSize(){
-    const result:any = {width:0,height:0};
+  getDropdownSize() {
+    const result: any = { width: 0, height: 0 };
     if (this.dropdownElementRef) {
-      const dropdownContainer:HTMLElement = this.dropdownElementRef.nativeElement;
+      const dropdownContainer: HTMLElement = this.dropdownElementRef.nativeElement;
       result.width = dropdownContainer.offsetWidth;
       result.height = dropdownContainer.offsetHeight;
     }
     return result;
   }
 
-  notifyDropdownResize(){
+  notifyDropdownResize() {
     const event = this.getDropdownSize();
     this.onDropdownResize.emit(event)
-    this.events.execute({eventName:'dropdownResize',args:event});
+    this.events.execute({ eventName: 'dropdownResize', args: event });
   }
 
-  setDropdownSize({width,height}:{width:number,height:number}){
+  setDropdownSize({ width, height }: { width: number, height: number }) {
     if (this.dropdownElementRef) {
-      const dropdownContainer:HTMLElement = this.dropdownElementRef.nativeElement;
-      dropdownContainer.style.height = height+"px";
-      dropdownContainer.style.width = width+"px";
+      const dropdownContainer: HTMLElement = this.dropdownElementRef.nativeElement;
+      dropdownContainer.style.height = height + "px";
+      dropdownContainer.style.width = width + "px";
     }
     this.dropdownWidth = width;
     this.dropdownHeight = height;
@@ -292,7 +311,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     this.isDropdownVisible = true;
     setTimeout(() => {
       this.listeningForResizing = true;
-    },100);
+    }, 100);
     setTimeout(() => {
       this.popperInstance = createPopper(this.inputElementRef.nativeElement, this.dropdownElementRef.nativeElement, {
         placement: 'bottom-start',
@@ -318,7 +337,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
       });
     });
     this.onDropdownShow.emit(event);
-    this.events.execute({eventName:'dropdownShow',args:event});
+    this.events.execute({ eventName: 'dropdownShow', args: event });
   }
 
 }
