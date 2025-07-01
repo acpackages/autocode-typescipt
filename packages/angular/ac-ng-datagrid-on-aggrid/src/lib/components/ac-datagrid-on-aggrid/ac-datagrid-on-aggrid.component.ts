@@ -5,7 +5,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import type { ApplyColumnStateParams, CellClickedEvent, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellValueChangedEvent, ColDef, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, ComponentStateChangedEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FullWidthCellKeyDownEvent, GetRowIdFunc, GetRowIdParams, GridApi, GridReadyEvent, IDatasource, IGetRowsParams, IServerSideDatasource, IServerSideGetRowsParams, IServerSideGroupSelectionState, IServerSideSelectionState, PaginationChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowModelType, RowNode, RowValueChangedEvent, SelectionChangedEvent, ServerSideTransaction, SortChangedEvent, StateUpdatedEvent, ValueFormatterParams } from "ag-grid-community";
+import type { ApplyColumnStateParams, CellClickedEvent, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColDef, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, ComponentStateChangedEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FullWidthCellKeyDownEvent, GetRowIdFunc, GetRowIdParams, GridApi, GridReadyEvent, IDatasource, IGetRowsParams, IServerSideDatasource, IServerSideGetRowsParams, IServerSideGroupSelectionState, IServerSideSelectionState, PaginationChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowModelType, RowNode, RowValueChangedEvent, SelectionChangedEvent, ServerSideTransaction, SortChangedEvent, StateUpdatedEvent, ValueFormatterParams } from "ag-grid-community";
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AgGridCellEditorComponent } from '../ag-grid-cell-editor/ag-grid-cell-editor.component';
@@ -51,8 +51,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Input() set data(value: any[]) {
     this._data = value;
     let index = 0;
-    if(Array.isArray(this._data)){
-      for(const row of this._data){
+    if (Array.isArray(this._data)) {
+      for (const row of this._data) {
         row[this.rowKey] = index;
         index++;
       }
@@ -65,6 +65,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   }
 
   @Output() onActiveRowChange: EventEmitter<any> = new EventEmitter();
+  @Output() onCellBlurred: EventEmitter<any> = new EventEmitter();
   @Output() onCellClicked: EventEmitter<any> = new EventEmitter();
   @Output() onCellDoubleClicked: EventEmitter<any> = new EventEmitter();
   @Output() onCellEditingStarted: EventEmitter<any> = new EventEmitter();
@@ -237,6 +238,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     return params.data[this.rowKey];
   };
 
+  private lastFocusedCellEvent?: any;
   private lastOnDemandParams: IAcDataGridDataOnDemandParams | undefined;
   private promiseManager: AcPromiseManager = new AcPromiseManager();
   private rowKey: string = "__ac_datagrid_id__";
@@ -266,9 +268,9 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.initGridFooter();
   }
 
-  addRow({ data, append = true }: { data?: any, append?: boolean } = {}) {
+  addRow({ data, append = true,highlightCells = false }: { data?: any, append?: boolean,highlightCells?:boolean } = {}) {
     if (this.isClientSideData) {
-      if(data == undefined){
+      if (data == undefined) {
         data = {};
       }
       data[this.rowKey] = this.agGridApi.getDisplayedRowCount();
@@ -282,6 +284,11 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       const rowNode = this.agGridApi.getDisplayedRowAtIndex(rowIndex);
       this.agGridApi.refreshCells({ rowNodes: [rowNode], force: true });
       this.agGridApi.redrawRows();
+      if(highlightCells){
+        this.agGridApi.flashCells({
+          rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
+        });
+      }
     }
     else {
       if (data == undefined) {
@@ -648,6 +655,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   }
 
   handleCellFocused(event: any) {
+    this.lastFocusedCellEvent = event;
     const rowIndex = event.rowIndex;
     if (this.activeRowIndex != rowIndex) {
       const activeEventParams: any = {
@@ -681,6 +689,9 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   handleCellMouseOver(event: CellMouseOverEvent) {
     this.onCellMouseOver.emit(event);
     this.events.execute({ eventName: 'cellMouseOver', args: event });
+  }
+
+  handleCellSelectionChanged(event: CellSelectionChangedEvent) {
   }
 
   handleCellValueChanged(event: any) {
@@ -745,6 +756,13 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   }
 
   handleGridReady(event: GridReadyEvent) {
+    const gridGui = document.querySelector('.ag-root-wrapper');
+
+    if (gridGui) {
+    gridGui.addEventListener('focusout', (e:any) => {
+      this.notifyCellBlurred();
+    });
+    }
     this.agGridApi = event.api;
     this.onGridReady.emit(event);
     this.events.execute({ eventName: 'gridReady', args: event });
@@ -856,6 +874,41 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     // console.log(args);
   }
 
+  navigateToLastRow({highlightCells = false}:{highlightCells?:boolean} = {}){
+    const pageSize = this.agGridApi.paginationGetPageSize();
+  const newIndex = this.totalRows - 1;
+  if(newIndex>=0){
+    const targetPage = Math.floor(newIndex / pageSize);
+    this.agGridApi.paginationGoToPage(targetPage);
+
+  // Delay scroll until after render
+    setTimeout(() => {
+      const node = this.agGridApi.getDisplayedRowAtIndex(newIndex % pageSize);
+      if (node) {
+        this.agGridApi.ensureIndexVisible(node.rowIndex, 'middle');
+        if(highlightCells){
+          this.agGridApi.flashCells({ rowNodes: [node] });
+        }
+        node.setSelected(true);
+      }
+    });
+  }
+
+
+  // Go to that page
+
+  }
+
+  notifyCellBlurred() {
+    if (this.lastFocusedCellEvent) {
+      let event: any = { ...this.lastFocusedCellEvent };
+      event.type = "cellBlurred";
+      this.onCellBlurred.emit(event);
+      this.events.execute({ eventName: 'cellBlurred', args: event });
+      this.lastFocusedCellEvent = null;
+    }
+  }
+
   refreshData() {
     this.clearSelection();
     if (this.dataOnDemandFunction) {
@@ -904,7 +957,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
-  updateRow({ data, currentData, key, index }: { data: any, currentData?: any, key?: string, index?: number }) {
+  updateRow({ data, currentData, key, index,highlightCells = true }: { data: any, currentData?: any, key?: string, index?: number,highlightCells?:boolean }) {
     if (index >= 0) {
       currentData = this.agGridApi.getDisplayedRowAtIndex(index);
     }
@@ -933,9 +986,12 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         this.agGridApi.applyServerSideTransaction({ update: [data] });
         rowNode.setData(data);
       }
-      this.agGridApi.flashCells({
-        rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
-      });
+      if(highlightCells){
+        this.agGridApi.flashCells({
+          rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
+        });
+      }
+
       const event: any = {
         data: data
       };
@@ -943,7 +999,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       this.events.execute({ eventName: 'rowUpdated', args: event });
     }
     else {
-      this.addRow({ data: data });
+      this.addRow({ data: data,highlightCells : true });
     }
   }
 
