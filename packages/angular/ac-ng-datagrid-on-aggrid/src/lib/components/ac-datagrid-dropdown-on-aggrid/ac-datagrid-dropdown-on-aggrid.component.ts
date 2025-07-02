@@ -1,9 +1,10 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, Output, QueryList, TemplateRef, ViewChild } from '@angular/core';
-import { AcBaseInput, AcDatagridColumnComponent, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, AcDatagridDropdownContentComponent } from '@autocode-ts/ac-angular';
+import { Component, ContentChild, ContentChildren, DOCUMENT, ElementRef, EventEmitter, forwardRef, HostListener, Inject, Input, Output, QueryList, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { AcBaseInput, AcDatagridColumnComponent, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, AcDatagridDropdownContentComponent, AutocodeService } from '@autocode-ts/ac-angular';
 import { createPopper, Instance as PopperInstance } from '@popperjs/core';
 import { AcDatagridOnAgGridComponent } from '../ac-datagrid-on-aggrid/ac-datagrid-on-aggrid.component';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -47,12 +48,18 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
   @Output() onDropdownShow: EventEmitter<any> = new EventEmitter();
 
   dataGrid?: AcDatagridOnAgGridComponent;
-  public isDropdownVisible = false;
+  private intersectionObserver: IntersectionObserver | null = null;
+  protected isDropdownVisible = false;
+  protected isInputVisible = true;
   private listeningForResizing = false;
   private notifyResizedTimeout: any;
   private popperInstance: PopperInstance | null = null;
   private resizeObserver!: ResizeObserver;
   selectedData: any;
+
+  constructor(elementRef: ElementRef, autocodeService: AutocodeService, private renderer: Renderer2, @Inject(DOCUMENT) private document: Document) {
+    super(elementRef, autocodeService);
+  }
 
   override ngAfterViewInit() {
     this.resizeObserver = new ResizeObserver((entries: any) => {
@@ -100,11 +107,11 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     }
   }
 
-  override focus(){
-    if(this.inputElementRef && this.inputElementRef.nativeElement){
+  override focus() {
+    if (this.inputElementRef && this.inputElementRef.nativeElement) {
       this.inputElementRef.nativeElement.focus();
     }
-    else{
+    else {
       setTimeout(() => {
         this.focus();
       }, 100);
@@ -179,8 +186,18 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     this.dataGrid = event.instance;
   }
 
-  handleInputBlur(event:any){
+  handleInputBlur(event: any) {
     super.handleBlur(event);
+    setTimeout(() => {
+      const activeEl = this.document.activeElement;
+      const isFocusStillInside = this.inputElementRef.nativeElement.contains(activeEl) ||
+        this.dropdownElementRef.nativeElement.contains(activeEl);
+
+      if (!isFocusStillInside) {
+        this.hideDropdown();
+      }
+    });
+    // this.
     // if(this.dataGrid.agGridApi.isFoc)
   }
 
@@ -212,13 +229,15 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
   hideDropdown() {
     this.isDropdownVisible = false;
     this.listeningForResizing = false;
+    const dropdownElement = this.dropdownElementRef.nativeElement;
+    this.renderer.setStyle(dropdownElement, 'display', 'none');
     if (this.popperInstance) {
       this.popperInstance.destroy();
       this.popperInstance = null;
     }
-    const event:any = {};
+    const event: any = {};
     this.onDropdownHide.emit(event);
-    this.events.execute({eventName:'dropdownHide',args:event});
+    this.events.execute({ eventName: 'dropdownHide', args: event });
   }
 
   getDropdownSize() {
@@ -260,6 +279,24 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     }
     this.hideDropdown();
   }
+
+  private setupIntersectionObserver(): void {
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        // isIntersecting is true if the element is at least partially visible.
+        if (!entries[0].isIntersecting) {
+          this.isInputVisible = false;
+        }
+        else {
+          this.isInputVisible = true;
+        }
+      },
+      { threshold: 0 } // threshold: 0 means the callback fires as soon as the element is out of view.
+    );
+
+    this.intersectionObserver.observe(this.inputElementRef.nativeElement);
+  }
+
 
   override setValue(value: any) {
     super.setValue(value);
@@ -312,7 +349,8 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     setTimeout(() => {
       this.listeningForResizing = true;
     }, 100);
-    setTimeout(() => {
+    const dropdownElement = this.dropdownElementRef.nativeElement;
+      this.renderer.appendChild(this.document.body, dropdownElement);
       this.popperInstance = createPopper(this.inputElementRef.nativeElement, this.dropdownElementRef.nativeElement, {
         placement: 'bottom-start',
         modifiers: [
@@ -335,7 +373,10 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
           },
         ],
       });
-    });
+      setTimeout(() => {
+        this.renderer.setStyle(dropdownElement, 'display', 'block');
+      }, 50);
+      this.setupIntersectionObserver();
     this.onDropdownShow.emit(event);
     this.events.execute({ eventName: 'dropdownShow', args: event });
   }

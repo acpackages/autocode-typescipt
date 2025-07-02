@@ -29,10 +29,6 @@
             <label>DOB</label>
             <ac-input type="datetime-local" class="form-control" placeholder="DOB" [(value)]="record['dob']" />
           </div>
-          <div class="col-4 mb-3">
-            <label>Account</label>
-            <select-account-input class="form-control" placeholder="Select Account" [(ngModel)]="record['account_id']" [(value)]="record['account_id']" name="account_id" />
-          </div>
 
           <div class="col-12 mb-3">
             <label>Meal Preferences</label>
@@ -161,6 +157,11 @@
             <ac-files class="form-control" placeholder="Profile Picture" [(value)]="record['profile_picture']" />
           </div>
         </div>
+
+          <div class="col-4 mb-3">
+            <label>Account</label>
+            <select-account-input class="form-control" placeholder="Select Account" [(ngModel)]="record['account_id']" [(value)]="record['account_id']" name="account_id" />
+          </div>
         <button type="button" class="btn btn-primary" (click)="handleSubmit()">Save Form</button>
       </div>
     </form>

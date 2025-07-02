@@ -25,26 +25,9 @@
   margin-left: 0px;
   cursor: pointer;
 }
-.ag-cell-inline-editing,.ag-cell-value{
-  overflow: inherit!important;
-
-}
-.ag-cell-value{
-  overflow: inherit!important;
-padding-left: 0px!important;
-padding-right: 0px!important;
-padding-top: 0px!important;
-padding-bottom: 0px!important;
-
-}
 .ag-cell-value input{
   width: 100%;
 
-}
-
-.ag-row{
-  position: relative;
-  transform: none!important;
 }
 
 .ag-center-cols-viewport{
