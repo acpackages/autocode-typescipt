@@ -88,9 +88,10 @@ export class AgGridCellRenderComponent implements ICellRendererAngularComp, Afte
   }
 
   refresh(params: ICellRendererParams): boolean {
+    console.log("Data Refreshed");
       this.params = params;
       this.destroyView();
       this.createView();
       return true;
-    }
+  }
 }

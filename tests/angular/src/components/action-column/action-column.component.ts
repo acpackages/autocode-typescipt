@@ -17,6 +17,7 @@ export class ActionColumnComponent {
 
   constructor(){
     // console.log(this);
+    console.log(this);
   }
 
   handleDelete(event:any){
@@ -25,7 +26,7 @@ export class ActionColumnComponent {
     this.onDelete.emit();
   }
 
-  handleEdit(vent:any){
+  handleEdit(event:any){
     event.preventDefault();
     alert("On Edit Clicked");
     this.onEdit.emit();

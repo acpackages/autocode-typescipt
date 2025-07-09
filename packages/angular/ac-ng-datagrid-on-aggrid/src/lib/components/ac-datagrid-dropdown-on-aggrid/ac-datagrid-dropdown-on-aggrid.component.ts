@@ -46,6 +46,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
   @Output() onDropdownHide: EventEmitter<any> = new EventEmitter();
   @Output() onDropdownResize: EventEmitter<any> = new EventEmitter();
   @Output() onDropdownShow: EventEmitter<any> = new EventEmitter();
+  @Output() onDatagridStateUpdated: EventEmitter<any> = new EventEmitter();
 
   dataGrid?: AcDatagridOnAgGridComponent;
   private intersectionObserver: IntersectionObserver | null = null;
@@ -70,9 +71,6 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
         this.notifyResizedTimeout = setTimeout(() => {
           this.notifyDropdownResize();
         }, 500);
-        if (this.dataGrid) {
-          this.dataGrid.agGridApi.sizeColumnsToFit();
-        }
       }
 
     });
@@ -180,6 +178,10 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
         }
       }
     }
+  }
+
+  handleGridStateUpdated(params:any){
+    this.onDatagridStateUpdated.emit(params);
   }
 
   handleGridViewInit(event: any) {
@@ -373,9 +375,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
           },
         ],
       });
-      setTimeout(() => {
-        this.renderer.setStyle(dropdownElement, 'display', 'block');
-      }, 50);
+      this.renderer.setStyle(dropdownElement, 'display', 'block');
       this.setupIntersectionObserver();
     this.onDropdownShow.emit(event);
     this.events.execute({ eventName: 'dropdownShow', args: event });

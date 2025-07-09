@@ -28,14 +28,7 @@ export class TestAgGridOnDemandDataComponent {
       width: 50,
       allowCustomization: false
     },
-    {
-      field: "account_id",
-      title: "Id",
-      cellClass: "text-center",
-      headerClass: 'text-center',
-      allowEdit:false,
-      component: SelectAccountInputComponent
-    }, {
+     {
       field: "account_name",
       title: "Name"
     },
@@ -65,6 +58,14 @@ export class TestAgGridOnDemandDataComponent {
       field: "action",
       title: "Action",
       component: ActionColumnComponent
+    },
+    {
+      field: "account_id",
+      title: "Id",
+      cellClass: "text-center",
+      headerClass: 'text-center',
+      allowEdit:false,
+      component: SelectAccountInputComponent
     }
   ];
   constructor(private httpClient: HttpClient) {

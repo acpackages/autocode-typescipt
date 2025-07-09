@@ -1,5 +1,6 @@
 Total Rows : {{dataGrid.totalRows}}
 <button class="btn btn-secondary" (click)="dataGrid.exportData()">Export as Excel</button>
+<button class="btn btn-secondary" (click)="dataGrid.refreshData()">Refresh Data</button>
 <button class="btn btn-secondary" (click)="dataGrid.toggleColumnsCustomizer()">Columns Customizer</button>
 <button class="btn btn-secondary" (click)="dataGrid.clearSelection()">Clear Selection</button>
 <ac-input class="form-control" #searchInput style="width:100%;height:100%;" placeholder="Search..."/>

@@ -912,10 +912,12 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   refreshData() {
     this.clearSelection();
     if (this.dataOnDemandFunction) {
-      this.agGridApi.refreshServerSide();
+      this.agGridApi.refreshServerSide({ purge: true });
     }
     else {
-      this.agGridApi.refreshClientSideRowModel();
+      this.agGridApi.updateGridOptions({
+          rowData: this.data,
+        });
     }
   }
 

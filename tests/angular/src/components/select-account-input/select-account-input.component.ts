@@ -88,7 +88,7 @@ export class SelectAccountInputComponent extends AcBaseInput{
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
     // this.dataGridSelect.setDropdownSize({height:900,width:800});
-    console.log(this);
+
   }
 
   override focus(){

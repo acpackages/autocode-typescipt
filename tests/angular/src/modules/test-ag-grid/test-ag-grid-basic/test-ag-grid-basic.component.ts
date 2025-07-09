@@ -16,10 +16,6 @@ export class TestAgGridBasicComponent {
   @ViewChild("dataGrid") dataGrid:AcDatagridOnAgGridComponent;
   columns:IAcDataGridColumn[] = [
     {
-      allowSelect:true,
-      field:"id",
-      title:"Id"
-    },{
       field:"name",
       title:"Name"
     },
@@ -43,6 +39,11 @@ export class TestAgGridBasicComponent {
       field:"action",
       title:"Action",
       component:ActionColumnComponent
+    },
+    {
+      allowSelect:true,
+      field:"id",
+      title:"Id"
     }
   ];
   data:any[] = [];
@@ -62,26 +63,20 @@ export class TestAgGridBasicComponent {
     console.log("Cell Focused",event);
   }
 
-  handleCellRenderComponentInit(event: any) {
-    // if(event.component){
-    //   if(event.component == ActionColumnComponent){
-    //     if(event.componentInstance){
-    //       console.log("Subscribing for delete event");
-    //       event.componentInstance.onDelete.subscribe(params => {
-    //           console.log('Action received via service!', event.data);
-    //           alert(`Deleting row: ${event.data.name}`);
-    //       });
-    //       event.componentInstance.onEdit.subscribe(params => {
-    //           console.log('Action received via service!', event.data);
-    //           alert(`Deleting row: ${event.data.name}`);
-    //           const updatedData: any = { ...event.data, name: 'Updated Name : ' + event.data['name'] };
-    //           this.dataGrid.updateRow({ data: updatedData,'key':'id' });
-    //       });
-    //     }
-    //   }
-    // }
-    // console.log("Cell Render Component Init", event);
-  }
+   handleCellRenderComponentInit(event: any) {
+      if (event.component) {
+        if (event.component == ActionColumnComponent) {
+          if (event.componentInstance) {
+            event.componentInstance.onDelete.subscribe(params => {
+              this.handleDeleteRow(event.data);
+            });
+            event.componentInstance.onEdit.subscribe(params => {
+              this.handleEditRow(event.data);
+            });
+          }
+        }
+      }
+    }
 
   handleCellValueChanged(event:any){
     console.log("Cell Value Changed",event);
@@ -92,6 +87,7 @@ export class TestAgGridBasicComponent {
   }
 
   handleEditRow(data:any){;
+    console.log("Editing data",data);
     const updatedData:any = {...data,name:'Updated Name : '+data['name']};
     this.dataGrid.updateRow({data:updatedData,key:'id'});
   }

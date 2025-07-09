@@ -11,7 +11,7 @@
     "require": "./index.cjs"
   },
   "dependencies": {
-    "@autocode-ts/autocode":"0.0.1"
+    "@autocode-ts/autocode":"0.0.4"
   },
   "publishConfig": {
     "access": "public"
