@@ -24,13 +24,13 @@ interface IAcDGAutoCompleteEvent<T extends AgAutocompleteEvent> extends IAcDataG
     value: string | null;
 }
 
-export interface IAcDGAutocompleteValueChangedEvent extends AutoCompleteEvent<'eventValueChanged'> {}
+export interface IAcDGAutocompleteValueChangedEvent extends AcDgAutoCompleteEvent<'eventValueChanged'> {}
 
-export interface IAcDGAutocompleteValueConfirmedEvent extends AutoCompleteEvent<'eventValueConfirmed'> {
+export interface IAcDGAutocompleteValueConfirmedEvent extends AcDgAutoCompleteEvent<'eventValueConfirmed'> {
     isValid: boolean;
 }
 
-export interface IAcDGAutocompleteOptionSelectedEvent extends AutoCompleteEvent<'eventOptionSelected'> {
+export interface IAcDGAutocompleteOptionSelectedEvent extends AcDgAutoCompleteEvent<'eventOptionSelected'> {
     position: number;
     updateEntry: AutocompleteEntry;
     autocompleteType?: string;

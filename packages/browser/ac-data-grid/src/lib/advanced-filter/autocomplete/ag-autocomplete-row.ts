@@ -1,19 +1,12 @@
 import type { ElementParams } from 'ag-grid-community';
 import { Component, _clearElement, _createElement, _exists } from 'ag-grid-community';
 
-const AgAutocompleteRowElement: ElementParams = {
-    tag: 'div',
-    cls: 'ag-autocomplete-row',
-    role: 'presentation',
-    children: [{ tag: 'div', cls: 'ag-autocomplete-row-label' }],
-};
-
 export class AcDataGridAutocompleteRow extends Component {
     private value: string | undefined;
     private hasHighlighting = false;
 
     constructor() {
-        super(AgAutocompleteRowElement);
+        super(AcDgAutocompleteRowElement);
     }
 
     public setState(value: string, selected: boolean): void {

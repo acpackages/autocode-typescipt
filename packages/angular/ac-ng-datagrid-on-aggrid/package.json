@@ -1,18 +1,18 @@
 {
   "name": "@autocode-ts/ac-ng-datagrid-on-aggrid",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "peerDependencies": {
     "@angular/common": "~20.0.4",
     "@angular/core": "~20.0.4"
   },
   "dependencies": {
     "@autocode-ts/autocode": "^0.0.4",
-    "@autocode-ts/ac-angular": "^0.0.4",
+    "@autocode-ts/ac-angular": "^0.0.5",
     "@autocode-ts/ac-extensions": "^0.0.4",
     "@popperjs/core": "^2.11.8",
-    "ag-grid-angular": "^33.3.0",
-    "ag-grid-community": "^33.3.0",
-    "ag-grid-enterprise": "^33.3.2",
+    "ag-grid-angular": "^34.0.1",
+    "ag-grid-community": "^34.0.1",
+    "ag-grid-enterprise": "^34.0.1",
     "intl-ts": "^4.3.2",
     "moment": "^2.30.1",
     "tslib": "^2.3.0"

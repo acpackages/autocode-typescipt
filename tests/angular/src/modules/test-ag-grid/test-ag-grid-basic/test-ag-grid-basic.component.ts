@@ -119,4 +119,9 @@ export class TestAgGridBasicComponent {
   handleSearchUpdated(){
     console.log("Search Updated");
   }
+
+  handleStateUpdated(event:any){
+    console.log("State Updated");
+    console.log(event);
+  }
 }

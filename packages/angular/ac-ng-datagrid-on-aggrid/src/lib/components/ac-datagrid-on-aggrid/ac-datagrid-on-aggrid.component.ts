@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
@@ -5,21 +6,22 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, TemplateRef, ViewChild } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import type { ApplyColumnStateParams, CellClickedEvent, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColDef, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, ComponentStateChangedEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FullWidthCellKeyDownEvent, GetRowIdFunc, GetRowIdParams, GridApi, GridReadyEvent, IDatasource, IGetRowsParams, IServerSideDatasource, IServerSideGetRowsParams, IServerSideGroupSelectionState, IServerSideSelectionState, PaginationChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowModelType, RowNode, RowValueChangedEvent, SelectionChangedEvent, ServerSideTransaction, SortChangedEvent, StateUpdatedEvent, ValueFormatterParams } from "ag-grid-community";
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
-import { AllEnterpriseModule } from 'ag-grid-enterprise';
+import type { ApplyColumnStateParams, CellClickedEvent, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColDef, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, ComponentStateChangedEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, FullWidthCellKeyDownEvent, GetRowIdFunc, GetRowIdParams, GridApi, GridReadyEvent, IDatasource, IGetRowsParams, IServerSideDatasource, IServerSideGetRowsParams, IServerSideGroupSelectionState, IServerSideSelectionState, PaginationChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowModelType, RowNode, RowValueChangedEvent, SelectionChangedEvent, ServerSideTransaction, SortChangedEvent, StateUpdatedEvent, ValueFormatterParams, RowDragEndEvent } from "ag-grid-community";
+import { AllCommunityModule, ClientSideRowModelModule, ModuleRegistry, RowDragModule } from 'ag-grid-community';
+import { AllEnterpriseModule, TreeDataModule } from 'ag-grid-enterprise';
 import { AgGridCellEditorComponent } from '../ag-grid-cell-editor/ag-grid-cell-editor.component';
 import { AgGridCellRenderComponent } from '../ag-grid-cell-render/ag-grid-cell-render.component';
 import { AgGridHeaderCellComponent } from '../ag-grid-header-cell/ag-grid-header-cell.component';
-import { AcPromiseInstance, AcPromiseManager } from '@autocode-ts/autocode';
+import { AcPromiseInstance, AcPromiseManager, Autocode } from '@autocode-ts/autocode';
 import { AcDatagridColumnComponent, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, IAcDataGridFilterCondition, IAcDataGridFilterGroup, IAcDataGridSort, AcEnumColumnDataType, AcEnumFormatDateTime, AcEnumFormatNumber, AcDataGrid, AcBase } from '@autocode-ts/ac-angular';
+// import { AcDatagridColumnComponent, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, IAcDataGridFilterCondition, IAcDataGridFilterGroup, IAcDataGridSort, AcEnumColumnDataType, AcEnumFormatDateTime, AcEnumFormatNumber, AcDataGrid, AcBase } from 'packages/angular/ac-angular/src/index';
 import moment from 'moment';
-import { stringConvertCase } from '@autocode-ts/ac-extensions';
+import { arrayRemove, stringConvertCase } from '@autocode-ts/ac-extensions';
 
 export const agModulesRegistered: boolean = false;
 export function registerAgModules() {
-  ModuleRegistry.registerModules([AllCommunityModule]);
-  ModuleRegistry.registerModules([AllEnterpriseModule]);
+  ModuleRegistry.registerModules([AllCommunityModule, RowDragModule, ClientSideRowModelModule]);
+  ModuleRegistry.registerModules([AllEnterpriseModule, TreeDataModule]);
 }
 registerAgModules();
 
@@ -41,6 +43,10 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Input() dataOnDemandFunction?: Function;
   @Input() defaultPageSize: number = 20;
   @Input() editable: boolean = false;
+  @Input() groupDefaultExpandedLevel:number = 0;
+  @Input() groupLabelKey?: string;
+  @Input() groupParentKey?: string;
+  @Input() groupChildKey?: string;
   @Input() pagination: boolean = true;
   @Input() pageSizes: number[] = [20, 50, 100, 500, 100];
   @Input() filterSearchValue: string = "";
@@ -50,11 +56,24 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   get data(): any[] { return this._data; }
   @Input() set data(value: any[]) {
     this._data = value;
-    let index = 0;
     if (Array.isArray(this._data)) {
+      this.groupParentIndexes = {};
       for (const row of this._data) {
-        row[this.rowKey] = index;
-        index++;
+        const rowId = Autocode.uniqueId();
+        row[this.rowKey] = rowId;
+        if (this.groupParentKey && row[this.groupParentKey]) {
+          this.groupParentIndexes[row[this.groupParentKey]] = rowId;
+        }
+      }
+      if (this.groupChildKey) {
+        for (const row of this._data) {
+          if (row[this.groupChildKey] && this.groupParentIndexes[row[this.groupChildKey]]) {
+            row[this.rowGroupParentKey] = this.groupParentIndexes[row[this.groupChildKey]];
+          }
+          else {
+            row[this.rowGroupParentKey] = null;
+          }
+        }
       }
     }
     if (this.agGridApi && this.agGrid) {
@@ -97,6 +116,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Output() onRowDataUpdated: EventEmitter<any> = new EventEmitter();
   @Output() onRowDeleted: EventEmitter<any> = new EventEmitter();
   @Output() onRowDoubleClicked: EventEmitter<any> = new EventEmitter();
+  @Output() onRowDragEnd: EventEmitter<any> = new EventEmitter();
+  @Output() onRowDragStart: EventEmitter<any> = new EventEmitter();
   @Output() onRowEditingStarted: EventEmitter<any> = new EventEmitter();
   @Output() onRowEditingStopped: EventEmitter<any> = new EventEmitter();
   @Output() onRowFocus: EventEmitter<any> = new EventEmitter();
@@ -145,10 +166,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         if (requestParams.pageSize > 0) {
           pageSize = requestParams.pageSize
         }
-        let startIndex: number = pageNumber * pageSize;
         for (const row of response.data) {
-          row[this.rowKey] = startIndex;
-          startIndex++;
+          row[this.rowKey] = Autocode.uniqueId();
         }
         params.success({ rowData: response.data, rowCount: response.totalCount });
       }
@@ -233,15 +252,19 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   defaultColDef: ColDef = {
     flex: 1,
   };
-
+  private draggingRow: any;
+  dropTargetRowIndex: number | null = null;
   getRowId: GetRowIdFunc = (params: GetRowIdParams) => {
     return params.data[this.rowKey];
   };
-
+  private groupParentIndexes: any = {};
   private lastFocusedCellEvent?: any;
   private lastOnDemandParams: IAcDataGridDataOnDemandParams | undefined;
+  private notifyStateUpdatedTimeout: any;
+  private previousGroupChildIndex: number = -1;
   private promiseManager: AcPromiseManager = new AcPromiseManager();
   private rowKey: string = "__ac_datagrid_id__";
+  private rowGroupParentKey: string = "__ac_datagrid_parent_id__";
   sideBarOptions = {
     toolPanels: [
       {
@@ -268,12 +291,22 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.initGridFooter();
   }
 
-  addRow({ data, append = true,highlightCells = false }: { data?: any, append?: boolean,highlightCells?:boolean } = {}) {
+  addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}) {
     if (this.isClientSideData) {
       if (data == undefined) {
         data = {};
       }
-      data[this.rowKey] = this.agGridApi.getDisplayedRowCount();
+      data[this.rowKey] = Autocode.uniqueId();
+      if(this.groupChildKey && this.groupParentKey){
+        if(data[this.groupChildKey]){
+          for(const rowData of this.data){
+            if(rowData[this.groupParentKey] == data[this.groupChildKey]){
+              data[this.rowGroupParentKey] = rowData[this.rowKey];
+              break;
+            }
+          }
+        }
+      }
       if (append) {
         this.agGridApi.applyTransaction({ add: [data] });
       }
@@ -284,7 +317,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       const rowNode = this.agGridApi.getDisplayedRowAtIndex(rowIndex);
       this.agGridApi.refreshCells({ rowNodes: [rowNode], force: true });
       this.agGridApi.redrawRows();
-      if(highlightCells){
+      if (highlightCells) {
         this.agGridApi.flashCells({
           rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
         });
@@ -294,7 +327,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       if (data == undefined) {
         data = {};
       }
-      data[this.rowKey] = this.getTotalRowCount();
+      data[this.rowKey] = Autocode.uniqueId();
       this.agGridApi.applyServerSideTransaction({ add: [data] });
     }
     const event: any = {
@@ -408,6 +441,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       cellClass: column.cellClass,
       headerClass: column.headerClass,
       headerCheckboxSelection: column.allowSelect,
+      rowDrag: column.allowRowDrag,
       headerComponent: AgGridHeaderCellComponent
     };
     const handleEditorComponentBeforeInit: Function = (instance: AgGridCellEditorComponent) => {
@@ -550,6 +584,12 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         return column.valueFormatter(params);
       };
     }
+    if (column.showGroupChildCount == false) {
+      if (colDef.cellRendererParams == undefined) {
+        colDef.cellRendererParams = {};
+      }
+      colDef.cellRendererParams['suppressCount'] = true;
+    }
     return colDef;
   }
 
@@ -559,10 +599,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       if (!Array.isArray(response.data)) {
         response.data = [];
       }
-      let startIndex: number = 0;
       for (const row of response.data) {
-        row[this.rowKey] = startIndex;
-        startIndex++;
+        row[this.rowKey] = Autocode.uniqueId();
       }
       this.agGridApi.applyServerSideRowData({ successParams: { rowData: response.data, rowCount: response.totalCount } });
       this.promiseManager.resolve(promiseInstance.id);
@@ -587,6 +625,29 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     const state: any = {};
     state['columns'] = this.agGridApi.getColumnState();
     return state;
+  }
+
+  getGroupedData() {
+    const extractGroupedTree:Function = (nodes: any[]): any[] => {
+      return nodes.map((node) => {
+        const item: any = {
+          level: node.level,
+          data: node.data ?? null,
+        };
+        if (node.group && node.childrenAfterGroup) {
+          item.children = extractGroupedTree(node.childrenAfterGroup);
+        }
+        return item;
+      });
+    };
+    const rootNodes:any[] = [];
+    this.agGridApi.forEachNode((node) => {
+      if (node.data[this.rowGroupParentKey]==null || node.data[this.rowGroupParentKey]==undefined) {
+        rootNodes.push(node);
+      }
+    });
+    const groupedTree = extractGroupedTree(rootNodes);
+    return groupedTree;
   }
 
   async getSelectedData() {
@@ -757,11 +818,10 @@ export class AcDatagridOnAgGridComponent extends AcBase {
 
   handleGridReady(event: GridReadyEvent) {
     const gridGui = document.querySelector('.ag-root-wrapper');
-
     if (gridGui) {
-    gridGui.addEventListener('focusout', (e:any) => {
-      this.notifyCellBlurred();
-    });
+      gridGui.addEventListener('focusout', (e: any) => {
+        this.notifyCellBlurred();
+      });
     }
     this.agGridApi = event.api;
     this.onGridReady.emit(event);
@@ -786,6 +846,76 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   handleRowDoubleClicked(event: RowDoubleClickedEvent) {
     this.onRowDoubleClicked.emit(event);
     this.events.execute({ eventName: 'rowDoubleClicked', args: event });
+  }
+
+  handleRowDragEnd(event: any) {
+    const node = event.node;
+    let currentGroupChildIndex: number = -1;
+    const oldParentId = node.data[this.groupChildKey];
+    let newIntParentId: any = null;
+    let newParentId: any = null;
+    if (this.groupParentKey && this.groupChildKey) {
+      if (node.parent) {
+        const parentNode = node.parent;
+        if (parentNode.data) {
+          newIntParentId = parentNode.data[this.rowKey];
+          newParentId = parentNode.data[this.groupParentKey];
+        }
+        if (parentNode.childrenAfterGroup) {
+          let index = 0;
+          for (const child of parentNode.childrenAfterGroup) {
+            if (child.data) {
+              if (child.data[this.rowKey] == node.data[this.rowKey]) {
+                currentGroupChildIndex = index;
+                break;
+              }
+            }
+            index++;
+          }
+        }
+      }
+      if (node.data[this.groupChildKey] != newParentId) {
+        node.data[this.groupChildKey] = newParentId;
+        node.data[this.rowGroupParentKey] = newIntParentId;
+      }
+    }
+    this.draggingRow = null;
+    const eventParams = {
+      currentGroupChildIndex: currentGroupChildIndex,
+      data: node.data,
+      event: event,
+      newParentId: newParentId,
+      oldParentId: oldParentId,
+      previousGroupChildIndex: this.previousGroupChildIndex
+    };
+    this.onRowDragEnd.emit(eventParams);
+  }
+
+  handleRowDragStart(event: any) {
+    this.draggingRow = event;
+    const node = event.node;
+    this.previousGroupChildIndex = -1;
+    if (node.parent) {
+      const parentNode = node.parent;
+      if (parentNode.childrenAfterGroup) {
+        let index = 0;
+        for (const child of parentNode.childrenAfterGroup) {
+          if (child.data) {
+            if (child.data[this.rowKey] == node.data[this.rowKey]) {
+              this.previousGroupChildIndex = index;
+              break;
+            }
+          }
+          index++;
+        }
+      }
+    }
+    const eventParams = {
+      currentGroupChildIndex: this.previousGroupChildIndex,
+      data: node.data,
+      event: event,
+    };
+    this.onRowDragStart.emit(eventParams);
   }
 
   handleRowEditingStarted(event: RowEditingStartedEvent) {
@@ -821,8 +951,15 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   handleStateUpdated(event: StateUpdatedEvent) {
     const source = event.sources[0];
     if (['columnSizing', 'columnOrder'].includes(source)) {
-      this.onStateUpdated.emit(event);
-      this.events.execute({ eventName: 'stateUpdated', args: event });
+      if (this.notifyStateUpdatedTimeout) {
+        clearTimeout(this.notifyStateUpdatedTimeout);
+      }
+      this.notifyStateUpdatedTimeout = setTimeout(() => {
+
+        this.onStateUpdated.emit(event);
+        this.events.execute({ eventName: 'stateUpdated', args: event });
+      }, 500);
+
     }
 
   }
@@ -833,9 +970,34 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       this.setColumnsFromComponents();
       if (this.dataOnDemandFunction) { /* empty */ }
       else {
-        this.agGridApi.updateGridOptions({
+        const griOptions: any = {
           rowData: this.data,
-        });
+          rowDragManaged: true,
+          suppressMoveWhenRowDragging: true
+
+        };
+        if (this.groupChildKey != undefined && this.groupParentKey != undefined) {
+          griOptions['treeData'] = true;
+          griOptions['treeDataParentIdField'] = this.rowGroupParentKey;
+          for (const colDef of this.colDefs) {
+            if (colDef.field == this.groupLabelKey) {
+              if(colDef.cellRendererParams == undefined){
+                colDef.cellRendererParams = {};
+              }
+              const innerRendererParams = {...colDef.cellRendererParams}
+              if(colDef.cellRenderer){
+                colDef.cellRendererParams.innerRenderer = colDef.cellRenderer;
+                colDef.cellRendererParams.innerRendererParams = innerRendererParams;
+                colDef.cellRenderer = 'agGroupCellRenderer';
+              }
+              griOptions['autoGroupColumnDef'] = { ...colDef };
+              this.colDefs = arrayRemove(this.colDefs, colDef);
+              break;
+            }
+          }
+          this.agGridApi.updateGridOptions({ columnDefs: this.colDefs });
+        }
+        this.agGridApi.updateGridOptions(griOptions);
       }
     }
   }
@@ -874,34 +1036,34 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     // console.log(args);
   }
 
-  navigateToLastRow({highlightCells = false}:{highlightCells?:boolean} = {}){
+  navigateToLastRow({ highlightCells = false }: { highlightCells?: boolean } = {}) {
     const pageSize = this.agGridApi.paginationGetPageSize();
-  const newIndex = this.totalRows - 1;
-  if(newIndex>=0){
-    const targetPage = Math.floor(newIndex / pageSize);
-    this.agGridApi.paginationGoToPage(targetPage);
+    const newIndex = this.totalRows - 1;
+    if (newIndex >= 0) {
+      const targetPage = Math.floor(newIndex / pageSize);
+      this.agGridApi.paginationGoToPage(targetPage);
 
-  // Delay scroll until after render
-    setTimeout(() => {
-      const node = this.agGridApi.getDisplayedRowAtIndex(newIndex % pageSize);
-      if (node) {
-        this.agGridApi.ensureIndexVisible(node.rowIndex, 'middle');
-        if(highlightCells){
-          this.agGridApi.flashCells({ rowNodes: [node] });
+      // Delay scroll until after render
+      setTimeout(() => {
+        const node = this.agGridApi.getDisplayedRowAtIndex(newIndex % pageSize);
+        if (node) {
+          this.agGridApi.ensureIndexVisible(node.rowIndex, 'middle');
+          if (highlightCells) {
+            this.agGridApi.flashCells({ rowNodes: [node] });
+          }
+          node.setSelected(true);
         }
-        node.setSelected(true);
-      }
-    });
-  }
+      });
+    }
 
 
-  // Go to that page
+    // Go to that page
 
   }
 
   notifyCellBlurred() {
     if (this.lastFocusedCellEvent) {
-      let event: any = { ...this.lastFocusedCellEvent };
+      const event: any = { ...this.lastFocusedCellEvent };
       event.type = "cellBlurred";
       this.onCellBlurred.emit(event);
       this.events.execute({ eventName: 'cellBlurred', args: event });
@@ -916,8 +1078,8 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
     else {
       this.agGridApi.updateGridOptions({
-          rowData: this.data,
-        });
+        rowData: this.data,
+      });
     }
   }
 
@@ -959,7 +1121,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
-  updateRow({ data, currentData, key, index,highlightCells = true }: { data: any, currentData?: any, key?: string, index?: number,highlightCells?:boolean }) {
+  updateRow({ data, currentData, key, index, highlightCells = true }: { data: any, currentData?: any, key?: string, index?: number, highlightCells?: boolean }) {
     if (index >= 0) {
       currentData = this.agGridApi.getDisplayedRowAtIndex(index);
     }
@@ -979,6 +1141,16 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       });
     }
     if (index >= 0) {
+      if(this.groupChildKey && this.groupParentKey){
+        if(data[this.groupChildKey]){
+          for(const rowData of this.data){
+            if(rowData[this.groupParentKey] == data[this.groupChildKey]){
+              data[this.rowGroupParentKey] = rowData[this.rowKey];
+              break;
+            }
+          }
+        }
+      }
       const rowNode = this.agGridApi.getDisplayedRowAtIndex(index);
       if (this.isClientSideData) {
         rowNode.setData(data);
@@ -988,7 +1160,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         this.agGridApi.applyServerSideTransaction({ update: [data] });
         rowNode.setData(data);
       }
-      if(highlightCells){
+      if (highlightCells) {
         this.agGridApi.flashCells({
           rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
         });
@@ -1001,9 +1173,9 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       this.events.execute({ eventName: 'rowUpdated', args: event });
     }
     else {
-      this.addRow({ data: data,highlightCells : true });
+      this.addRow({ data: data, highlightCells: true });
     }
   }
-
-
 }
+
+

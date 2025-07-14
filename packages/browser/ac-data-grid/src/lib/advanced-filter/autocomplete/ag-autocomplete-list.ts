@@ -5,17 +5,7 @@ import { VirtualList } from '../../widgets/virtualList';
 import { AgAutocompleteRow } from './agAutocompleteRow';
 import type { AutocompleteEntry } from './autocompleteParams';
 
-const AgAutocompleteListElement: ElementParams = {
-    tag: 'div',
-    cls: 'ag-autocomplete-list-popup',
-    children: [
-        {
-            tag: 'div',
-            ref: 'eList',
-            cls: 'ag-autocomplete-list',
-        },
-    ],
-};
+
 export class AcDataGridAutocompleteList extends PopupComponent {
     private readonly eList: HTMLElement = RefPlaceholder;
 
@@ -36,7 +26,7 @@ export class AcDataGridAutocompleteList extends PopupComponent {
             forceLastSelection?: (lastSelection: AutocompleteEntry, searchString: string) => boolean;
         }
     ) {
-        super(AgAutocompleteListElement);
+        super(AcDgAutocompleteListElement);
     }
 
     public postConstruct(): void {

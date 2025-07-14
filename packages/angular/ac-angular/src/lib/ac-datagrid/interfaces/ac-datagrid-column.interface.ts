@@ -10,6 +10,7 @@ export interface IAcDataGridColumn{
   allowCustomization?:boolean;
   allowSort?:boolean,
   allowEdit?:boolean,
+  allowRowDrag?:boolean,
   allowSelect?:boolean,
   allowFilter?:boolean,
   cellClass?:string,
@@ -36,5 +37,5 @@ export interface IAcDataGridColumn{
   template?:TemplateRef<any>,
   useSameComponentForEditing?:any,
   valueFormatter?:Function
-
+  showGroupChildCount?:boolean
 }
