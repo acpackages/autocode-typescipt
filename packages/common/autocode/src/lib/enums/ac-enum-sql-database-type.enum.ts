@@ -1,11 +1,9 @@
-export const AcEnumSqlDatabaseType = {
-  MARIADB: "mariadb",
-  MSSQL: "mssql",
-  MYSQL: "mysql",
-  ORACLE: "oracle",
-  POSTGRESQL: "postgresql",
-  SQLITE: "sqlite",
-  UNKNOWN: "unknown",
-} as const;
-
-export type AcEnumSqlDatabaseType = typeof AcEnumSqlDatabaseType[keyof typeof AcEnumSqlDatabaseType];
+export enum AcEnumSqlDatabaseType {
+  MariaDB = "mariadb",
+  MsSql = "mssql",
+  MySql = "mysql",
+  Oracle = "oracle",
+  PostgreSql = "postgresql",
+  Sqlite = "sqlite",
+  Unknown = "unknown",
+}

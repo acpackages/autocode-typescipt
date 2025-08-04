@@ -11,7 +11,7 @@ export class AcBaseSqlDao {
   sqlConnection: AcSqlConnection;
 
   constructor() {
-    this.logger = new AcLogger({ logType: AcEnumLogType.PRINT, logMessages: false });
+    this.logger = new AcLogger({ logType: AcEnumLogType.Print, logMessages: false });
     this.sqlConnection = new AcSqlConnection();
   }
 
@@ -67,7 +67,7 @@ export class AcBaseSqlDao {
 
   async executeStatement({
     statement,
-    operation = AcEnumDDRowOperation.UNKNOWN,
+    operation = AcEnumDDRowOperation.Unknown,
     parameters = {},
   }: {
     statement: string;
@@ -126,7 +126,7 @@ export class AcBaseSqlDao {
     statement,
     condition = '',
     parameters = {},
-    mode = AcEnumDDSelectMode.LIST,
+    mode = AcEnumDDSelectMode.List,
     columnFormats = {},
   }: {
     statement: string;

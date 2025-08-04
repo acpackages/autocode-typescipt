@@ -17,7 +17,7 @@ export class AcResult {
   static readonly KEY_PREVIOUS_RESULT = 'previous_result';
   static readonly KEY_STACK_TRACE = 'stack_trace';
   static readonly KEY_STATUS = 'status';
-  static readonly KEY_VALUE = 'value';
+  static readonly KeyValue = 'value';
 
   logger?: AcLogger;
   code: number = AcResult.CODE_NOTHING_EXECUTED;

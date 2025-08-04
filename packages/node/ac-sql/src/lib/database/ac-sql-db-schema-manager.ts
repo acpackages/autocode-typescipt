@@ -4,18 +4,18 @@
 import { AcEnumSqlDatabaseType, AcResult } from "@autocode-ts/autocode";
 import { AcSqlDbBase } from "./ac-sql-db-base";
 import { AcSchemaManagerTables, AcSMDataDictionary, SchemaDetails, TblSchemaDetails, TblSchemaLogs } from "./ac-schema-data-dictionary";
-import { AcDataDictionary, AcDDFunction, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDRowOperation, AcEnumDDSelectMode, AcEnumDDSqlEntity } from "@autocode-ts/ac-data-dictionary";
+import { AcDataDictionary, AcDDFunction, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDRowOperation, AcEnumDDSelectMode, AcEnumSqlEntity } from "@autocode-ts/ac-data-dictionary";
 import { AcSqlDbTable } from "./ac-sql-db-table";
 import { AcSqlDaoResult } from "../models/ac-sql-dao-result.model";
 
 export class AcSqlDbSchemaManager extends AcSqlDbBase {
   acSqlDDTableSchemaDetails = new AcSqlDbTable({
-    tableName: AcSchemaManagerTables.SCHEMA_DETAILS,
-    dataDictionaryName: AcSMDataDictionary.DATA_DICTIONARY_NAME,
+    tableName: AcSchemaManagerTables.SchemaDetails,
+    dataDictionaryName: AcSMDataDictionary.DataDictionaryName,
   });
   acSqlDDTableSchemaLogs = new AcSqlDbTable({
-    tableName: AcSchemaManagerTables.SCHEMA_LOGS,
-    dataDictionaryName: AcSMDataDictionary.DATA_DICTIONARY_NAME,
+    tableName: AcSchemaManagerTables.SchemaLogs,
+    dataDictionaryName: AcSMDataDictionary.DataDictionaryName,
   });
 
   constructor({ dataDictionaryName }: { dataDictionaryName?: string } = {}) {
@@ -31,17 +31,17 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
 
       const versionResult = await this.dao!.getRows({
         statement: this.acSqlDDTableSchemaDetails.getSelectStatement(),
-        condition: `${TblSchemaDetails.AC_SCHEMA_DETAIL_KEY} = @key`,
+        condition: `${TblSchemaDetails.AcSchemaDetailKey} = @key`,
         parameters: {
-          '@key': SchemaDetails.KEY_DATA_DICTIONARY_VERSION,
+          '@key': SchemaDetails.KeyDataDictionaryVersion,
         },
-        mode: AcEnumDDSelectMode.FIRST, // important
+        mode: AcEnumDDSelectMode.First, // important
       });
 
       if (versionResult.isSuccess()) {
         if (versionResult.rows.length > 0) {
           const databaseVersion = versionResult.rows[0][
-            TblSchemaDetails.AC_SCHEMA_DETAIL_NUMERIC_VALUE
+            TblSchemaDetails.AcSchemaDetailNumericValue
           ] as number;
 
           if (this.acDataDictionary.version === databaseVersion) {
@@ -99,7 +99,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
 
         const dropResult = await this.dao!.executeStatement({
           statement: dropStatement,
-          operation: AcEnumDDRowOperation.UNKNOWN,
+          operation: AcEnumDDRowOperation.Unknown,
         });
 
         if (dropResult.isSuccess()) {
@@ -113,12 +113,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
         }
 
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.FUNCTION,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDFunction.functionName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'drop',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: dropResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: dropStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Function,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDFunction.functionName,
+          [TblSchemaLogs.AcSchemaOperation]: 'drop',
+          [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
 
         const createStatement = acDDFunction.getCreateFunctionStatement({ databaseType: this.databaseType });
@@ -126,7 +126,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
 
         const createResult = await this.dao!.executeStatement({
           statement: createStatement,
-          operation: AcEnumDDRowOperation.UNKNOWN,
+          operation: AcEnumDDRowOperation.Unknown,
         });
 
         if (createResult.isSuccess()) {
@@ -140,12 +140,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
         }
 
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.FUNCTION,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDFunction.functionName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Function,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDFunction.functionName,
+          [TblSchemaLogs.AcSchemaOperation]: 'create',
+          [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
       }
 
@@ -168,10 +168,10 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
     try {
       this.logger.log('Creating database relationships...');
 
-      if (this.databaseType === AcEnumSqlDatabaseType.MYSQL) {
+      if (this.databaseType === AcEnumSqlDatabaseType.MySql) {
         const disableCheckStatement = "SET FOREIGN_KEY_CHECKS = 0;";
         this.logger.log(`Executing disable check statement: ${disableCheckStatement}`);
-        const setCheckResult = await this.dao!.executeStatement({ statement: disableCheckStatement, operation: AcEnumDDRowOperation.UNKNOWN });
+        const setCheckResult = await this.dao!.executeStatement({ statement: disableCheckStatement, operation: AcEnumDDRowOperation.Unknown });
         if (setCheckResult.isFailure()) {
           return result.setFromResult({
             result: setCheckResult,
@@ -185,7 +185,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
 
       this.logger.log('Getting and dropping existing relationships...');
       const getDropRelationshipsStatements = `
-      SELECT CONCAT('ALTER TABLE \`', table_name, '\` DROP FOREIGN KEY \`', constraint_name, '\`;') AS drop_query,
+      SELECT CONCAT('ALTER Table \`', table_name, '\` DROP FOREIGN KEY \`', constraint_name, '\`;') AS drop_query,
              constraint_name
       FROM information_schema.table_constraints
       WHERE constraint_type = 'FOREIGN KEY' AND table_schema = @databaseName`;
@@ -195,7 +195,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           const dropRelationshipStatement = row['drop_query'] as string;
           const constraintName = row['constraint_name'] as string;
           this.logger.log(`Executing drop relationship statement: ${dropRelationshipStatement}`);
-          const dropResponse = await this.dao!.executeStatement({ statement: dropRelationshipStatement, operation: AcEnumDDRowOperation.UNKNOWN });
+          const dropResponse = await this.dao!.executeStatement({ statement: dropRelationshipStatement, operation: AcEnumDDRowOperation.Unknown });
           if (dropResponse.isFailure()) {
             return result.setFromResult({
               result: dropResponse,
@@ -206,12 +206,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             this.logger.log('Executed drop relation statement successfully.');
           }
           await this.saveSchemaLogEntry({row:{
-            [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.RELATIONSHIP,
-            [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: constraintName,
-            [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'drop',
-            [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: dropResponse.status,
-            [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: dropRelationshipStatement,
-            [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+            [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Relationship,
+            [TblSchemaLogs.AcSchemaEntityName]: constraintName,
+            [TblSchemaLogs.AcSchemaOperation]: 'drop',
+            [TblSchemaLogs.AcSchemaOperationResult]: dropResponse.status,
+            [TblSchemaLogs.AcSchemaOperationStatement]: dropRelationshipStatement,
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
           }});
         }
       } else {
@@ -238,12 +238,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           this.logger.log('Relationship created successfully.');
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.RELATIONSHIP,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: `${acDDRelationship.sourceTable}.${acDDRelationship.sourceColumn}>${acDDRelationship.destinationTable}.${acDDRelationship.destinationColumn}`,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createRelationshipStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Relationship,
+          [TblSchemaLogs.AcSchemaEntityName]: `${acDDRelationship.sourceTable}.${acDDRelationship.sourceColumn}>${acDDRelationship.destinationTable}.${acDDRelationship.destinationColumn}`,
+          [TblSchemaLogs.AcSchemaOperation]: 'create',
+          [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: createRelationshipStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
       }
 
@@ -276,12 +276,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           });
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.STORED_PROCEDURE,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDStoredProcedure.storedProcedureName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'drop',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: dropResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: dropStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.StoredProcedure,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDStoredProcedure.storedProcedureName,
+          [TblSchemaLogs.AcSchemaOperation]: 'drop',
+          [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
 
         const createStatement = acDDStoredProcedure.getCreateStoredProcedureStatement({ databaseType:this.databaseType });
@@ -297,12 +297,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           });
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.STORED_PROCEDURE,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDStoredProcedure.storedProcedureName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.StoredProcedure,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDStoredProcedure.storedProcedureName,
+          [TblSchemaLogs.AcSchemaOperation]: 'create',
+          [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
       }
       result.setSuccess({ message: 'Stored procedures created successfully', logger:this.logger });
@@ -331,12 +331,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           });
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.TABLE,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDTable.tableName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Table,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDTable.tableName,
+          [TblSchemaLogs.AcSchemaOperation]: 'create',
+          [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
       }
       result.setSuccess({ message: 'Tables created successfully', logger:this.logger });
@@ -370,12 +370,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           });
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.TRIGGER,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDTrigger.triggerName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'drop',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: dropResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: dropStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Trigger,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDTrigger.triggerName,
+          [TblSchemaLogs.AcSchemaOperation]: 'drop',
+          [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
 
         const createStatement = acDDTrigger.getCreateTriggerStatement({ databaseType: this.databaseType });
@@ -391,12 +391,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           });
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.TRIGGER,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDTrigger.triggerName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Trigger,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDTrigger.triggerName,
+          [TblSchemaLogs.AcSchemaOperation]: 'create',
+          [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
       }
       result.setSuccess({ message: 'Triggers created successfully', logger:this.logger });
@@ -433,12 +433,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           });
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.VIEW,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDView.viewName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'drop',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: dropResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: dropStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.View,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDView.viewName,
+          [TblSchemaLogs.AcSchemaOperation]: 'drop',
+          [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
 
         const createStatement = acDDView.getCreateViewStatement({ databaseType: this.databaseType });
@@ -451,12 +451,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           errorViews.push(acDDView);
         }
         await this.saveSchemaLogEntry({row:{
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.VIEW,
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDView.viewName,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+          [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.View,
+          [TblSchemaLogs.AcSchemaEntityName]: acDDView.viewName,
+          [TblSchemaLogs.AcSchemaOperation]: 'create',
+          [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+          [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
         }});
       }
 
@@ -478,12 +478,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
               retryViews.push(acDDView);
             }
             await this.saveSchemaLogEntry({row:{
-              [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.VIEW,
-              [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: acDDView.viewName,
-              [TblSchemaLogs.AC_SCHEMA_OPERATION]: 'create',
-              [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-              [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-              [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date(),
+              [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.View,
+              [TblSchemaLogs.AcSchemaEntityName]: acDDView.viewName,
+              [TblSchemaLogs.AcSchemaOperation]: 'create',
+              [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+              [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date(),
             }});
           }
           this.logger.log(`After iteration ${retryCount}, ${retryViews.length} still has errors`);
@@ -497,7 +497,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           for (const acDDView of errorViews) {
             const createStatement = acDDView.getCreateViewStatement({ databaseType: this.databaseType });
             const errorViewDetails = {
-              [AcDDViewColumn.KEY_COLUMN_NAME]: acDDView.viewName,
+              [AcDDViewColumn.KeyColumnName]: acDDView.viewName,
               create_statement: createStatement,
             };
             this.logger.error(['Error in view', errorViewDetails]);
@@ -601,8 +601,8 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
         const missingInDataDictionaryTables: string[] = [];
 
         for (const tableRow of getTablesResult.rows) {
-          const tableName = tableRow[AcDDTable.KEY_TABLE_NAME];
-          if (tableName !== AcSchemaManagerTables.SCHEMA_DETAILS && tableName !== AcSchemaManagerTables.SCHEMA_LOGS) {
+          const tableName = tableRow[AcDDTable.KeyTableName];
+          if (tableName !== AcSchemaManagerTables.SchemaDetails && tableName !== AcSchemaManagerTables.SchemaLogs) {
             if (currentDataDictionaryTables.includes(tableName)) {
               const tableDifferenceResult: Record<string, any> = {};
               foundTables.push(tableName);
@@ -614,7 +614,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 const missingInDataDictionaryColumns: string[] = [];
 
                 for (const columnRow of getTableColumnsResult.rows) {
-                  const columnName = columnRow[AcDDTableColumn.KEY_COLUMN_NAME];
+                  const columnName = columnRow[AcDDTableColumn.KeyColumnName];
                   if (currentDataDictionaryColumns.includes(columnName)) {
                     foundColumns.push(columnName);
                   } else {
@@ -637,7 +637,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
               if (tableDifferenceResult['missing_columns_in_database'].length > 0 ||
                 tableDifferenceResult["missing_columns_in_data_dictionary"].length > 0) {
                 modifiedTables.push({
-                  [AcDDTable.KEY_TABLE_NAME]: tableName,
+                  [AcDDTable.KeyTableName]: tableName,
                   "difference_details": tableDifferenceResult
                 });
               }
@@ -687,8 +687,8 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 updateDataDictionaryVersion = true;
                 result.setSuccess({ message: 'Schema created successfully', logger: this.logger });
                 await this.saveSchemaDetail({row:{
-                  [TblSchemaDetails.AC_SCHEMA_DETAIL_KEY]: SchemaDetails.KEY_CREATED_ON,
-                  [TblSchemaDetails.AC_SCHEMA_DETAIL_STRING_VALUE]: new Date().toISOString(),
+                  [TblSchemaDetails.AcSchemaDetailKey]: SchemaDetails.KeyCreatedOn,
+                  [TblSchemaDetails.AcSchemaDetailStringValue]: new Date().toISOString(),
                 }});
               } else {
                 return result.setFromResult({
@@ -713,8 +713,8 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                   updateDataDictionaryVersion = true;
                   result.setSuccess({ message: 'Schema updated successfully', logger: this.logger });
                   await this.saveSchemaDetail({row:{
-                    [TblSchemaDetails.AC_SCHEMA_DETAIL_KEY]: SchemaDetails.KEY_LAST_UPDATED_ON,
-                    [TblSchemaDetails.AC_SCHEMA_DETAIL_STRING_VALUE]: new Date().toISOString(),
+                    [TblSchemaDetails.AcSchemaDetailKey]: SchemaDetails.KeyLastUpdatedOn,
+                    [TblSchemaDetails.AcSchemaDetailStringValue]: new Date().toISOString(),
                   }});
                 } else {
                   return result.setFromResult({
@@ -736,8 +736,8 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
           }
           if (updateDataDictionaryVersion) {
             await this.saveSchemaDetail({row:{
-              [TblSchemaDetails.AC_SCHEMA_DETAIL_KEY]: SchemaDetails.KEY_DATA_DICTIONARY_VERSION,
-              [TblSchemaDetails.AC_SCHEMA_DETAIL_NUMERIC_VALUE]: this.acDataDictionary.version,
+              [TblSchemaDetails.AcSchemaDetailKey]: SchemaDetails.KeyDataDictionaryVersion,
+              [TblSchemaDetails.AcSchemaDetailNumericValue]: this.acDataDictionary.version,
             }});
           }
         } else {
@@ -764,25 +764,25 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
   async initSchemaDataDictionary(): Promise<AcResult> {
     const result = new AcResult();
     try {
-      if (!AcDataDictionary.dataDictionaries.hasOwnProperty(AcSMDataDictionary.DATA_DICTIONARY_NAME)) {
+      if (!AcDataDictionary.dataDictionaries.hasOwnProperty(AcSMDataDictionary.DataDictionaryName)) {
         this.logger.log("Registering schema data dictionary...");
         AcDataDictionary.registerDataDictionary({
           jsonData: AcSMDataDictionary.DATA_DICTIONARY,
-          dataDictionaryName: AcSMDataDictionary.DATA_DICTIONARY_NAME,
+          dataDictionaryName: AcSMDataDictionary.DataDictionaryName,
         });
         this.acSqlDDTableSchemaDetails = new AcSqlDbTable({
-          tableName: AcSchemaManagerTables.SCHEMA_DETAILS,
-          dataDictionaryName: AcSMDataDictionary.DATA_DICTIONARY_NAME,
+          tableName: AcSchemaManagerTables.SchemaDetails,
+          dataDictionaryName: AcSMDataDictionary.DataDictionaryName,
         });
         this.acSqlDDTableSchemaLogs = new AcSqlDbTable({
-          tableName: AcSchemaManagerTables.SCHEMA_LOGS,
-          dataDictionaryName: AcSMDataDictionary.DATA_DICTIONARY_NAME,
+          tableName: AcSchemaManagerTables.SchemaLogs,
+          dataDictionaryName: AcSMDataDictionary.DataDictionaryName,
         });
 
         const acSchemaManager = new AcSqlDbSchemaManager();
         acSchemaManager.dao = this.dao;
         acSchemaManager.logger = this.logger;
-        acSchemaManager.useDataDictionary({ dataDictionaryName: AcSMDataDictionary.DATA_DICTIONARY_NAME });
+        acSchemaManager.useDataDictionary({ dataDictionaryName: AcSMDataDictionary.DataDictionaryName });
         acSchemaManager.acDataDictionary = this.acDataDictionary;
 
         const initSchemaResult = await acSchemaManager.initDatabase();
@@ -835,12 +835,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             }
             await this.saveSchemaLogEntry({
               row: {
-                [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.TABLE,
-                [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: tableName,
-                [TblSchemaLogs.AC_SCHEMA_OPERATION]: "create",
-                [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-                [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: createStatement,
-                [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date().toISOString(),
+                [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Table,
+                [TblSchemaLogs.AcSchemaEntityName]: tableName,
+                [TblSchemaLogs.AcSchemaOperation]: "create",
+                [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+                [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
+                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
               },
             });
           }
@@ -848,7 +848,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
 
         if (differences["modified_tables_in_data_dictionary"]) {
           for (const modificationDetails of differences["modified_tables_in_data_dictionary"]) {
-            const tableName = modificationDetails[AcDDTable.KEY_TABLE_NAME];
+            const tableName = modificationDetails[AcDDTable.KeyTableName];
             const tableDifferenceDetails = modificationDetails["difference_details"] as Record<string, any>;
 
             if (tableDifferenceDetails["missing_columns_in_database"]) {
@@ -869,12 +869,12 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 }
                 await this.saveSchemaLogEntry({
                   row: {
-                    [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: AcEnumDDSqlEntity.TABLE,
-                    [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: tableName,
-                    [TblSchemaLogs.AC_SCHEMA_OPERATION]: "modify",
-                    [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: createResult.status,
-                    [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: addStatement,
-                    [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: new Date().toISOString(),
+                    [TblSchemaLogs.AcSchemaEntityType]: AcEnumSqlEntity.Table,
+                    [TblSchemaLogs.AcSchemaEntityName]: tableName,
+                    [TblSchemaLogs.AcSchemaOperation]: "modify",
+                    [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
+                    [TblSchemaLogs.AcSchemaOperationStatement]: addStatement,
+                    [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
                   },
                 });
               }

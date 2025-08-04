@@ -1,8 +1,6 @@
-export const AcEnumEnvironment = {
-  DEVELOPMENT: 'development',
-  LOCAL: 'local',
-  PRODUCTION: 'production',
-  STAGING: 'staging',
-} as const;
-
-export type AcEnumEnvironment = typeof AcEnumEnvironment[keyof typeof AcEnumEnvironment];
+export enum AcEnumEnvironment {
+  Development = 'development',
+  Local = 'local',
+  Production = 'production',
+  Staging = 'staging',
+}

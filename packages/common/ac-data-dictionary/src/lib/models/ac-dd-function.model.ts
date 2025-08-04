@@ -5,13 +5,13 @@ import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocod
 import { AcDataDictionary } from "../..";
 
 export class AcDDFunction {
-  static readonly KEY_FUNCTION_NAME = "function_name";
-  static readonly KEY_FUNCTION_CODE = "function_code";
+  static readonly KeyFunctionName = "function_name";
+  static readonly KeyFunctionCode = "function_code";
 
-  @AcBindJsonProperty({ key: AcDDFunction.KEY_FUNCTION_NAME })
+  @AcBindJsonProperty({ key: AcDDFunction.KeyFunctionName })
   functionName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDFunction.KEY_FUNCTION_CODE })
+  @AcBindJsonProperty({ key: AcDDFunction.KeyFunctionCode })
   functionCode: string = "";
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDFunction {
@@ -37,12 +37,12 @@ export class AcDDFunction {
 
   static getDropFunctionStatement({
     functionName,
-    databaseType = AcEnumSqlDatabaseType.UNKNOWN,
+    databaseType = AcEnumSqlDatabaseType.Unknown,
   }: {
     functionName: string;
     databaseType?: string;
   }): string {
-    return `DROP FUNCTION IF EXISTS ${functionName};`;
+    return `DROP Function IF EXISTS ${functionName};`;
   }
 
   fromJson({ jsonData }: { jsonData: any }): this {
@@ -54,7 +54,7 @@ export class AcDDFunction {
     return AcJsonUtils.getJsonDataFromInstance({ instance: this });
   }
 
-  getCreateFunctionStatement({ databaseType = AcEnumSqlDatabaseType.UNKNOWN }: { databaseType?: string }): string {
+  getCreateFunctionStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string }): string {
     return this.functionCode;
   }
 

@@ -9,7 +9,7 @@ export class AcApiDocRoute {
   static readonly KEY_SUMMARY = 'summary';
   static readonly KEY_DESCRIPTION = 'description';
   static readonly KEY_OPERATION_ID = 'operationId';
-  static readonly KEY_PARAMETERS = 'parameters';
+  static readonly KeyParameters = 'parameters';
   static readonly KEY_REQUEST_BODY = 'requestBody';
   static readonly KEY_RESPONSES = 'responses';
   static readonly KEY_CONSUMES = 'consumes';
@@ -29,7 +29,7 @@ export class AcApiDocRoute {
   @AcBindJsonProperty({ key: AcApiDocRoute.KEY_OPERATION_ID })
   operationId: string = '';
 
-  @AcBindJsonProperty({ key: AcApiDocRoute.KEY_PARAMETERS, arrayType: AcApiDocParameter })
+  @AcBindJsonProperty({ key: AcApiDocRoute.KeyParameters, arrayType: AcApiDocParameter })
   parameters: AcApiDocParameter[] = [];
 
   @AcBindJsonProperty({ key: AcApiDocRoute.KEY_REQUEST_BODY })

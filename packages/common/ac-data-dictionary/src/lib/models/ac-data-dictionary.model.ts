@@ -4,22 +4,22 @@ import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcEnumDDColumnRelationType } from "../..";
 
 export class AcDataDictionary {
-  static readonly KEY_DATA_DICTIONARIES = "data_dictionaries";
-  static readonly KEY_FUNCTIONS = "functions";
-  static readonly KEY_RELATIONSHIPS = "relationships";
-  static readonly KEY_STORED_PROCEDURES = "stored_procedures";
-  static readonly KEY_TABLES = "tables";
-  static readonly KEY_TRIGGERS = "triggers";
-  static readonly KEY_VERSION = "version";
-  static readonly KEY_VIEWS = "views";
+  static readonly KeyDataDictionaries = "data_dictionaries";
+  static readonly KeyFunctions = "functions";
+  static readonly KeyRelationships = "relationships";
+  static readonly KeyStoredProcedures = "stored_procedures";
+  static readonly KeyTables = "tables";
+  static readonly KeyTriggers = "triggers";
+  static readonly KeyVersion = "version";
+  static readonly KeyViews = "views";
 
-  @AcBindJsonProperty({ key: AcDataDictionary.KEY_DATA_DICTIONARIES })
+  @AcBindJsonProperty({ key: AcDataDictionary.KeyDataDictionaries })
   static dataDictionaries: Record<string, any> = {};
 
   functions: Record<string, any> = {};
   relationships: Record<string, any> = {};
 
-  @AcBindJsonProperty({ key: AcDataDictionary.KEY_STORED_PROCEDURES })
+  @AcBindJsonProperty({ key: AcDataDictionary.KeyStoredProcedures })
   storedProcedures: Record<string, any> = {};
 
   tables: Record<string, any> = {};
@@ -133,7 +133,7 @@ export class AcDataDictionary {
   static getTableColumnRelationships({
     tableName,
     columnName,
-    relationType = AcEnumDDColumnRelationType.ANY,
+    relationType = AcEnumDDColumnRelationType.Any,
     dataDictionaryName = "default",
   }: {
     tableName: string,
@@ -150,17 +150,17 @@ export class AcDataDictionary {
           Object.values(sourceTableDetails).forEach(relationshipDetails => {
             const r:any = relationshipDetails;
             const include =
-              (relationType === AcEnumDDColumnRelationType.ANY &&
-                ((tableName === r[AcDDRelationship.KEY_DESTINATION_TABLE] &&
-                  columnName === r[AcDDRelationship.KEY_DESTINATION_COLUMN]) ||
-                  (tableName === r[AcDDRelationship.KEY_SOURCE_TABLE] &&
-                    columnName === r[AcDDRelationship.KEY_SOURCE_COLUMN]))) ||
-              (relationType === AcEnumDDColumnRelationType.SOURCE &&
-                tableName === r[AcDDRelationship.KEY_SOURCE_TABLE] &&
-                columnName === r[AcDDRelationship.KEY_SOURCE_COLUMN]) ||
-              (relationType === AcEnumDDColumnRelationType.DESTINATION &&
-                tableName === r[AcDDRelationship.KEY_DESTINATION_TABLE] &&
-                columnName === r[AcDDRelationship.KEY_DESTINATION_COLUMN]);
+              (relationType === AcEnumDDColumnRelationType.Any &&
+                ((tableName === r[AcDDRelationship.KeyDestinationTable] &&
+                  columnName === r[AcDDRelationship.KeyDestinationColumn]) ||
+                  (tableName === r[AcDDRelationship.KeySourceTable] &&
+                    columnName === r[AcDDRelationship.KeySourceColumn]))) ||
+              (relationType === AcEnumDDColumnRelationType.Source &&
+                tableName === r[AcDDRelationship.KeySourceTable] &&
+                columnName === r[AcDDRelationship.KeySourceColumn]) ||
+              (relationType === AcEnumDDColumnRelationType.Destination &&
+                tableName === r[AcDDRelationship.KeyDestinationTable] &&
+                columnName === r[AcDDRelationship.KeyDestinationColumn]);
             if (include) {
               result.push(AcDDRelationship.instanceFromJson({ jsonData: r }));
             }
@@ -174,7 +174,7 @@ export class AcDataDictionary {
 
   static getTableRelationships({
     tableName,
-    relationType = AcEnumDDColumnRelationType.ANY,
+    relationType = AcEnumDDColumnRelationType.Any,
     dataDictionaryName = "default",
   }: {
     tableName: string,
@@ -190,13 +190,13 @@ export class AcDataDictionary {
           Object.values(sourceTableDetails).forEach(relationshipDetails => {
             const r:any = relationshipDetails;
             const include =
-              (relationType === AcEnumDDColumnRelationType.ANY &&
-                (tableName === r[AcDDRelationship.KEY_DESTINATION_TABLE] ||
-                  tableName === r[AcDDRelationship.KEY_SOURCE_TABLE])) ||
-              (relationType === AcEnumDDColumnRelationType.SOURCE &&
-                tableName === r[AcDDRelationship.KEY_SOURCE_TABLE]) ||
-              (relationType === AcEnumDDColumnRelationType.DESTINATION &&
-                tableName === r[AcDDRelationship.KEY_DESTINATION_TABLE]);
+              (relationType === AcEnumDDColumnRelationType.Any &&
+                (tableName === r[AcDDRelationship.KeyDestinationTable] ||
+                  tableName === r[AcDDRelationship.KeySourceTable])) ||
+              (relationType === AcEnumDDColumnRelationType.Source &&
+                tableName === r[AcDDRelationship.KeySourceTable]) ||
+              (relationType === AcEnumDDColumnRelationType.Destination &&
+                tableName === r[AcDDRelationship.KeyDestinationTable]);
             if (include) {
               result.push(AcDDRelationship.instanceFromJson({ jsonData: r }));
             }
@@ -292,15 +292,15 @@ export class AcDataDictionary {
     const result: string[] = [];
     if (tableName in this.tables) {
       const tableDetails = this.tables[tableName];
-      const tableColumns = tableDetails[AcDDTable.KEY_TABLE_COLUMNS];
+      const tableColumns = tableDetails[AcDDTable.KeyTableColumns];
       if (tableColumns) result.push(...Object.keys(tableColumns));
     }
     return result;
   }
 
   getTableColumnsList({ tableName }: { tableName: string }): any[] {
-    if (tableName in this.tables && typeof this.tables[tableName][AcDDTable.KEY_TABLE_COLUMNS] === 'object') {
-      return Object.values(this.tables[tableName][AcDDTable.KEY_TABLE_COLUMNS]);
+    if (tableName in this.tables && typeof this.tables[tableName][AcDDTable.KeyTableColumns] === 'object') {
+      return Object.values(this.tables[tableName][AcDDTable.KeyTableColumns]);
     }
     return [];
   }
@@ -311,8 +311,8 @@ export class AcDataDictionary {
   }): any[] {
     const result: any[] = [];
     const columnKey = asDestination
-      ? AcDDRelationship.KEY_DESTINATION_TABLE
-      : AcDDRelationship.KEY_SOURCE_TABLE;
+      ? AcDDRelationship.KeyDestinationTable
+      : AcDDRelationship.KeySourceTable;
 
     Object.values(this.relationships).forEach(destinationTableDetails =>
       Object.values(destinationTableDetails).forEach((destinationColumnDetails:any) =>
@@ -331,7 +331,7 @@ export class AcDataDictionary {
 
   getTableTriggersList({ tableName }: { tableName: string }): any[] {
     return Object.values(this.triggers).filter(
-      trigger => trigger[AcDDTrigger.KEY_TABLE_NAME] === tableName
+      trigger => trigger[AcDDTrigger.KeyTableName] === tableName
     );
   }
 

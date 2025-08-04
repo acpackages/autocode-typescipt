@@ -87,7 +87,7 @@ export function arrayRemove<T>(arr: T[], value: T): T[] {
     if (index === -1) {
         return [...arr];
     }
-    return [...arr.slice(0, index), ...arr.slice(index + 1)];
+    return arrayRemoveByIndex(arr,index);
 }
 
 /**
@@ -98,10 +98,8 @@ export function arrayRemove<T>(arr: T[], value: T): T[] {
  * @returns A new array with the element at the specified index removed.
  */
 export function arrayRemoveByIndex<T>(arr: T[], index: number): T[] {
-    if (index < 0 || index >= arr.length) {
-        return [...arr];
-    }
-    return [...arr.slice(0, index), ...arr.slice(index + 1)];
+    arr.splice(index, 1);
+    return arr;
 }
 
 /**

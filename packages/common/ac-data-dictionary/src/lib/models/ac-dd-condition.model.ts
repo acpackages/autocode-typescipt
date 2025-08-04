@@ -3,15 +3,15 @@
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 
 export class AcDDCondition {
-  static readonly KEY_DATABASE_TYPE = "database_type";
-  static readonly KEY_COLUMN_NAME = "column_name";
-  static readonly KEY_OPERATOR = "operator";
-  static readonly KEY_VALUE = "value";
+  static readonly KeyDatabaseType = "database_type";
+  static readonly KeyColumnName = "column_name";
+  static readonly KeyOperator = "operator";
+  static readonly KeyValue = "value";
 
-  @AcBindJsonProperty({ key: AcDDCondition.KEY_DATABASE_TYPE })
+  @AcBindJsonProperty({ key: AcDDCondition.KeyDatabaseType })
   databaseType: string = "";
 
-  @AcBindJsonProperty({ key: AcDDCondition.KEY_COLUMN_NAME })
+  @AcBindJsonProperty({ key: AcDDCondition.KeyColumnName })
   columnName: string = "";
 
   operator: string = "";

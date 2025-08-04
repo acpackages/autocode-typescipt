@@ -6,9 +6,11 @@
     "@angular/core": "~20.0.4"
   },
   "dependencies": {
-    "@autocode-ts/autocode": "^0.0.2",
+    "@autocode-ts/autocode": "^0.0.5",
     "@autocode-ts/ac-angular": "^0.0.2",
+    "@autocode-ts/ac-data-dictionary": "^0.0.2",
     "@autocode-ts/ac-extensions": "^0.0.2",
+    "@autocode-ts/ac-ng-datagrid-on-aggrid": "^0.0.5",
     "tslib": "^2.3.0"
   },
   "sideEffects": false

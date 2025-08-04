@@ -5,11 +5,11 @@ import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 import { AcDDCondition } from "../..";
 
 export class AcDDConditionGroup {
-  static readonly KEY_DATABASE_TYPE = "database_type";
-  static readonly KEY_CONDITIONS = "conditions";
-  static readonly KEY_OPERATOR = "operator";
+  static readonly KeyDatabaseType = "database_type";
+  static readonly KeyConditions = "conditions";
+  static readonly KeyOperator = "operator";
 
-  @AcBindJsonProperty({ key: AcDDConditionGroup.KEY_DATABASE_TYPE })
+  @AcBindJsonProperty({ key: AcDDConditionGroup.KeyDatabaseType })
   databaseType: string = "";
 
   conditions: any[] = [];
@@ -33,9 +33,9 @@ export class AcDDConditionGroup {
     this.conditions.push(
       AcDDCondition.instanceFromJson({
         jsonData: {
-          [AcDDCondition.KEY_COLUMN_NAME]: columnName,
-          [AcDDCondition.KEY_OPERATOR]: operator,
-          [AcDDCondition.KEY_VALUE]: value,
+          [AcDDCondition.KeyColumnName]: columnName,
+          [AcDDCondition.KeyOperator]: operator,
+          [AcDDCondition.KeyValue]: value,
         },
       })
     );
@@ -52,8 +52,8 @@ export class AcDDConditionGroup {
     this.conditions.push(
       AcDDConditionGroup.instanceFromJson({
         jsonData: {
-          [AcDDConditionGroup.KEY_CONDITIONS]: conditions,
-          [AcDDConditionGroup.KEY_OPERATOR]: operator,
+          [AcDDConditionGroup.KeyConditions]: conditions,
+          [AcDDConditionGroup.KeyOperator]: operator,
         },
       })
     );
@@ -63,19 +63,19 @@ export class AcDDConditionGroup {
   fromJson({ jsonData }: { jsonData: any }): this {
     const json = { ...jsonData };
 
-    if (json.hasOwnProperty(AcDDConditionGroup.KEY_CONDITIONS)) {
-      for (const condition of json[AcDDConditionGroup.KEY_CONDITIONS]) {
+    if (json.hasOwnProperty(AcDDConditionGroup.KeyConditions)) {
+      for (const condition of json[AcDDConditionGroup.KeyConditions]) {
         if (condition && typeof condition === "object" && !Array.isArray(condition)) {
-          if (condition.hasOwnProperty(AcDDConditionGroup.KEY_CONDITIONS)) {
+          if (condition.hasOwnProperty(AcDDConditionGroup.KeyConditions)) {
             this.conditions.push(AcDDConditionGroup.instanceFromJson({ jsonData: condition }));
-          } else if (condition.hasOwnProperty(AcDDCondition.KEY_COLUMN_NAME)) {
+          } else if (condition.hasOwnProperty(AcDDCondition.KeyColumnName)) {
             this.conditions.push(AcDDCondition.instanceFromJson({ jsonData: condition }));
           }
         } else {
           this.conditions.push(condition);
         }
       }
-      delete json[AcDDConditionGroup.KEY_CONDITIONS];
+      delete json[AcDDConditionGroup.KeyConditions];
     }
 
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: json });

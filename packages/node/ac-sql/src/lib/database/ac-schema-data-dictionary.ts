@@ -1,144 +1,146 @@
+import { AcDDTable,AcDDTableColumn, AcDDTableColumnProperty, AcEnumDDColumnProperty, AcEnumDDColumnType } from "@autocode-ts/ac-data-dictionary";
+
 export class AcSchemaManagerTables {
-  static readonly SCHEMA_DETAILS = "_ac_schema_details";
-  static readonly SCHEMA_LOGS = "_ac_schema_logs";
+  static readonly SchemaDetails = "_ac_schema_details";
+  static readonly SchemaLogs = "_ac_schema_logs";
 }
 
 export class TblSchemaDetails {
-  static readonly AC_SCHEMA_DETAIL_ID = "ac_schema_detail_id";
-  static readonly AC_SCHEMA_DETAIL_KEY = "ac_schema_detail_key";
-  static readonly AC_SCHEMA_DETAIL_STRING_VALUE = "ac_schema_detail_string_value";
-  static readonly AC_SCHEMA_DETAIL_NUMERIC_VALUE = "ac_schema_detail_numeric_value";
+  static readonly AcSchemaDetailId = "ac_schema_detail_id";
+  static readonly AcSchemaDetailKey = "ac_schema_detail_key";
+  static readonly AcSchemaDetailStringValue = "ac_schema_detail_string_value";
+  static readonly AcSchemaDetailNumericValue = "ac_schema_detail_numeric_value";
 }
 
 export class TblSchemaLogs {
-  static readonly AC_SCHEMA_LOG_ID = "ac_schema_log_id";
-  static readonly AC_SCHEMA_OPERATION = "ac_schema_operation";
-  static readonly AC_SCHEMA_ENTITY_TYPE = "ac_schema_entity_type";
-  static readonly AC_SCHEMA_ENTITY_NAME = "ac_schema_entity_name";
-  static readonly AC_SCHEMA_OPERATION_STATEMENT = "ac_schema_operation_statement";
-  static readonly AC_SCHEMA_OPERATION_RESULT = "ac_schema_operation_result";
-  static readonly AC_SCHEMA_OPERATION_TIMESTAMP = "ac_schema_operation_timestamp";
+  static readonly AcSchemaLogId = "ac_schema_log_id";
+  static readonly AcSchemaOperation = "ac_schema_operation";
+  static readonly AcSchemaEntityType = "ac_schema_entity_type";
+  static readonly AcSchemaEntityName = "ac_schema_entity_name";
+  static readonly AcSchemaOperationStatement = "ac_schema_operation_statement";
+  static readonly AcSchemaOperationResult = "ac_schema_operation_result";
+  static readonly AcSchemaOperationTimestamp = "ac_schema_operation_timestamp";
 }
 
 export class SchemaDetails {
-  static readonly KEY_CREATED_ON = "CREATED_ON";
-  static readonly KEY_DATA_DICTIONARY_VERSION = "DATA_DICTIONARY_VERSION";
-  static readonly KEY_LAST_UPDATED_ON = "LAST_UPDATED_ON";
+  static readonly KeyCreatedOn = "CREATED_ON";
+  static readonly KeyDataDictionaryVersion = "DATA_DICTIONARY_VERSION";
+  static readonly KeyLastUpdatedOn = "LAST_UPDATED_ON";
 }
 
 // Simulated enum references (these should be actual enum definitions in your codebase)
-const AcEnumDDColumnType = {
-  AUTO_INCREMENT: "AUTO_INCREMENT",
-  STRING: "STRING",
-  TEXT: "TEXT",
-  DOUBLE: "DOUBLE",
-  TIMESTAMP: "TIMESTAMP"
-};
+// const AcEnumDDColumnType = {
+//   AUTO_INCREMENT: "AUTO_INCREMENT",
+//   STRING: "STRING",
+//   TEXT: "TEXT",
+//   DOUBLE: "DOUBLE",
+//   TIMESTAMP: "TIMESTAMP"
+// };
 
-const AcEnumDDColumnProperty = {
-  PRIMARY_KEY: "PRIMARY_KEY",
-  CHECK_IN_SAVE: "CHECK_IN_SAVE"
-};
+// const AcEnumDDColumnProperty = {
+//   PrimaryKey: "PrimaryKey",
+//   CheckInSave: "CheckInSave"
+// };
 
-const AcDDTable = {
-  KEY_TABLE_NAME: "tableName",
-  KEY_TABLE_COLUMNS: "columns"
-};
+// const AcDDTable = {
+//   KeyTableName: "tableName",
+//   KeyTableColumns: "columns"
+// };
 
-const AcDDTableColumn = {
-  KEY_COLUMN_NAME: "columnName",
-  KEY_COLUMN_TYPE: "columnType",
-  KEY_COLUMN_PROPERTIES: "properties"
-};
+// const AcDDTableColumn = {
+//   KeyColumnName: "columnName",
+//   KeyColumnType: "columnType",
+//   KeyColumnProperties: "properties"
+// };
 
-const AcDDTableColumnProperty = {
-  KEY_PROPERTY_NAME: "propertyName",
-  KEY_PROPERTY_VALUE: "propertyValue"
-};
+// const AcDDTableColumnProperty = {
+//   KeyPropertyName: "propertyName",
+//   KeyPropertyValue: "propertyValue"
+// };
 
 export class AcSMDataDictionary {
-  static readonly DATA_DICTIONARY_NAME = "_ac_schema";
+  static readonly DataDictionaryName = "_ac_schema";
 
   static readonly DATA_DICTIONARY = {
     version: 1,
     tables: {
-      [AcSchemaManagerTables.SCHEMA_DETAILS]: {
-        [AcDDTable.KEY_TABLE_NAME]: AcSchemaManagerTables.SCHEMA_DETAILS,
-        [AcDDTable.KEY_TABLE_COLUMNS]: {
-          [TblSchemaDetails.AC_SCHEMA_DETAIL_ID]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaDetails.AC_SCHEMA_DETAIL_ID,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.AUTO_INCREMENT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {
-              [AcEnumDDColumnProperty.PRIMARY_KEY]: {
-                [AcDDTableColumnProperty.KEY_PROPERTY_NAME]: AcEnumDDColumnProperty.PRIMARY_KEY,
-                [AcDDTableColumnProperty.KEY_PROPERTY_VALUE]: true,
+      [AcSchemaManagerTables.SchemaDetails]: {
+        [AcDDTable.KeyTableName]: AcSchemaManagerTables.SchemaDetails,
+        [AcDDTable.KeyTableColumns]: {
+          [TblSchemaDetails.AcSchemaDetailId]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaDetails.AcSchemaDetailId,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.AutoIncrement,
+            [AcDDTableColumn.KeyColumnProperties]: {
+              [AcEnumDDColumnProperty.PrimaryKey]: {
+                [AcDDTableColumnProperty.KeyPropertyName]: AcEnumDDColumnProperty.PrimaryKey,
+                [AcDDTableColumnProperty.KeyPropertyValue]: true,
               }
             }
           },
-          [TblSchemaDetails.AC_SCHEMA_DETAIL_KEY]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaDetails.AC_SCHEMA_DETAIL_KEY,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.STRING,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {
-              [AcEnumDDColumnProperty.CHECK_IN_SAVE]: {
-                [AcDDTableColumnProperty.KEY_PROPERTY_NAME]: AcEnumDDColumnProperty.CHECK_IN_SAVE,
-                [AcDDTableColumnProperty.KEY_PROPERTY_VALUE]: true,
+          [TblSchemaDetails.AcSchemaDetailKey]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaDetails.AcSchemaDetailKey,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.String,
+            [AcDDTableColumn.KeyColumnProperties]: {
+              [AcEnumDDColumnProperty.CheckInSave]: {
+                [AcDDTableColumnProperty.KeyPropertyName]: AcEnumDDColumnProperty.CheckInSave,
+                [AcDDTableColumnProperty.KeyPropertyValue]: true,
               }
             }
           },
-          [TblSchemaDetails.AC_SCHEMA_DETAIL_STRING_VALUE]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaDetails.AC_SCHEMA_DETAIL_STRING_VALUE,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.TEXT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaDetails.AcSchemaDetailStringValue]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaDetails.AcSchemaDetailStringValue,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Text,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           },
-          [TblSchemaDetails.AC_SCHEMA_DETAIL_NUMERIC_VALUE]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaDetails.AC_SCHEMA_DETAIL_NUMERIC_VALUE,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.DOUBLE,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaDetails.AcSchemaDetailNumericValue]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaDetails.AcSchemaDetailNumericValue,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Double,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           }
         }
       },
-      [AcSchemaManagerTables.SCHEMA_LOGS]: {
-        [AcDDTable.KEY_TABLE_NAME]: AcSchemaManagerTables.SCHEMA_LOGS,
-        [AcDDTable.KEY_TABLE_COLUMNS]: {
-          [TblSchemaLogs.AC_SCHEMA_LOG_ID]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_LOG_ID,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.AUTO_INCREMENT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {
-              [AcEnumDDColumnProperty.PRIMARY_KEY]: {
-                [AcDDTableColumnProperty.KEY_PROPERTY_NAME]: AcEnumDDColumnProperty.PRIMARY_KEY,
-                [AcDDTableColumnProperty.KEY_PROPERTY_VALUE]: true,
+      [AcSchemaManagerTables.SchemaLogs]: {
+        [AcDDTable.KeyTableName]: AcSchemaManagerTables.SchemaLogs,
+        [AcDDTable.KeyTableColumns]: {
+          [TblSchemaLogs.AcSchemaLogId]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaLogId,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.AutoIncrement,
+            [AcDDTableColumn.KeyColumnProperties]: {
+              [AcEnumDDColumnProperty.PrimaryKey]: {
+                [AcDDTableColumnProperty.KeyPropertyName]: AcEnumDDColumnProperty.PrimaryKey,
+                [AcDDTableColumnProperty.KeyPropertyValue]: true,
               }
             }
           },
-          [TblSchemaLogs.AC_SCHEMA_OPERATION]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_OPERATION,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.STRING,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaLogs.AcSchemaOperation]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaOperation,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.String,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           },
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_ENTITY_TYPE,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.TEXT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaLogs.AcSchemaEntityType]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaEntityType,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Text,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           },
-          [TblSchemaLogs.AC_SCHEMA_ENTITY_NAME]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_ENTITY_NAME,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.TEXT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaLogs.AcSchemaEntityName]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaEntityName,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Text,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           },
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_OPERATION_STATEMENT,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.TEXT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaLogs.AcSchemaOperationStatement]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaOperationStatement,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Text,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           },
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_OPERATION_RESULT,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.TEXT,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaLogs.AcSchemaOperationResult]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaOperationResult,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Text,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           },
-          [TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP]: {
-            [AcDDTableColumn.KEY_COLUMN_NAME]: TblSchemaLogs.AC_SCHEMA_OPERATION_TIMESTAMP,
-            [AcDDTableColumn.KEY_COLUMN_TYPE]: AcEnumDDColumnType.TIMESTAMP,
-            [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: {}
+          [TblSchemaLogs.AcSchemaOperationTimestamp]: {
+            [AcDDTableColumn.KeyColumnName]: TblSchemaLogs.AcSchemaOperationTimestamp,
+            [AcDDTableColumn.KeyColumnType]: AcEnumDDColumnType.Timestamp,
+            [AcDDTableColumn.KeyColumnProperties]: {}
           }
         }
       }

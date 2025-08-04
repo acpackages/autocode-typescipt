@@ -18,7 +18,7 @@ export class AcApiDoc {
   static readonly KEY_TAGS = "tags";
   static readonly KEY_TERMS_OF_SERVICE = "termsOfService";
   static readonly KEY_TITLE = "title";
-  static readonly KEY_VERSION = "version";
+  static readonly KeyVersion = "version";
 
   contact?: AcApiDocContact;
   components: any[] = [];

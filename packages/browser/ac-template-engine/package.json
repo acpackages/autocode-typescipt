@@ -1,0 +1,12 @@
+{
+  "name": "@autocode-ts/ac-template-engine",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/ac-extensions": "^0.0.4"
+  }
+}

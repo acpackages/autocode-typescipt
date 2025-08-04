@@ -1,6 +1,6 @@
 {
   "name": "@autocode-ts/ac-sql",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@autocode-ts/autocode":"0.0.1",
-    "@autocode-ts/ac-extensions":"0.0.1",
-    "@autocode-ts/ac-data-dictionary":"0.0.1",
+    "@autocode-ts/autocode":"0.0.5",
+    "@autocode-ts/ac-extensions":"0.0.4",
+    "@autocode-ts/ac-data-dictionary":"0.0.2",
     "mysql2": "^3.14.1"
   },
   "devDependencies":{

@@ -3,7 +3,7 @@ import { AcBindJsonProperty, AcJsonUtils } from '@autocode-ts/autocode';
 
 export class AcApiDocLink {
   static readonly KEY_OPERATION_ID = 'operationId';
-  static readonly KEY_PARAMETERS = 'parameters';
+  static readonly KeyParameters = 'parameters';
   static readonly KEY_DESCRIPTION = 'description';
 
   @AcBindJsonProperty({key: AcApiDocLink.KEY_OPERATION_ID})

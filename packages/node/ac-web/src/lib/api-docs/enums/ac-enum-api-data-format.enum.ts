@@ -1,13 +1,11 @@
-export const AcEnumApiDataFormat = {
-  BYTE: "byte",
-  BINARY: "binary",
-  DATE: "date",
-  DATETIME: "date-time",
-  PASSWORD: "password",
-  FLOAT: "float",
-  DOUBLE: "double",
-  INT32: "int32",
-  INT64: "int64",
-} as const;
-
-export type AcEnumApiDataFormat = typeof AcEnumApiDataFormat[keyof typeof AcEnumApiDataFormat];
+export enum AcEnumApiDataFormat {
+  Byte = "byte",
+  Binary = "binary",
+  Date = "date",
+  DateTime = "date-time",
+  Password = "password",
+  Float = "float",
+  Double = "double",
+  Int32 = "int32",
+  Int64 = "int64",
+}

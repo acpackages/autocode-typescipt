@@ -22,6 +22,9 @@
       "@autocode-ts/ac-angular": [
         "dist/packages/angular/ac-angular"
       ],
+      "@autocode-ts/ac-browser": [
+        "dist/packages/browser/ac-browser"
+      ],
       "@autocode-ts/ac-data-dictionary": [
         "dist/packages/common/ac-data-dictionary"
       ],

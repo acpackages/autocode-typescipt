@@ -5,13 +5,13 @@ import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocod
 import { AcDataDictionary } from "../..";
 
 export class AcDDStoredProcedure {
-  static readonly KEY_STORED_PROCEDURE_NAME = "stored_procedure_name";
-  static readonly KEY_STORED_PROCEDURE_CODE = "stored_procedure_code";
+  static readonly KeyStoredProcedureName = "stored_procedure_name";
+  static readonly KeyStoredProcedureCode = "stored_procedure_code";
 
-  @AcBindJsonProperty({ key: AcDDStoredProcedure.KEY_STORED_PROCEDURE_NAME })
+  @AcBindJsonProperty({ key: AcDDStoredProcedure.KeyStoredProcedureName })
   storedProcedureName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDStoredProcedure.KEY_STORED_PROCEDURE_CODE })
+  @AcBindJsonProperty({ key: AcDDStoredProcedure.KeyStoredProcedureCode })
   storedProcedureCode: string = "";
 
   static instanceFromJson({jsonData}: { jsonData: { [key: string]: any } }): AcDDStoredProcedure {
@@ -30,7 +30,7 @@ export class AcDDStoredProcedure {
     return result;
   }
 
-  static getDropStoredProcedureStatement({storedProcedureName,databaseType = AcEnumSqlDatabaseType.UNKNOWN}: { storedProcedureName: string; databaseType?: string }): string {
+  static getDropStoredProcedureStatement({storedProcedureName,databaseType = AcEnumSqlDatabaseType.Unknown}: { storedProcedureName: string; databaseType?: string }): string {
     return `DROP PROCEDURE IF EXISTS ${storedProcedureName};`;
   }
 
@@ -39,7 +39,7 @@ export class AcDDStoredProcedure {
     return this;
   }
 
-  getCreateStoredProcedureStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
+  getCreateStoredProcedureStatement({databaseType=AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
     return this.storedProcedureCode;
   }
 

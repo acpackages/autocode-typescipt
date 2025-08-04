@@ -117,7 +117,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         const getRowsStatements: string[] = [];
         for (const name of selectColumnsList) {
           let columnGetRows = "";
-          if (this.databaseType === AcEnumSqlDatabaseType.MYSQL) {
+          if (this.databaseType === AcEnumSqlDatabaseType.MySql) {
             const meta = autoNumberColumns[name];
             columnGetRows =
               `SELECT CONCAT('{"${name}':',IF(MAX(CAST(SUBSTRING(${name}, ${meta["prefix_length"]} + 1) AS UNSIGNED)) IS NULL,0,MAX(CAST(SUBSTRING(${name}, ${meta["prefix_length"]} + 1) AS UNSIGNED))),'}') AS max_json FROM ${this.tableName} WHERE ${name} LIKE '${meta["prefix"]}%' ${checkCondition}`;
@@ -195,7 +195,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
           const selectResponse = await this.getRows({
             condition: conditions.join(" AND "),
             parameters:parameters,
-            mode: AcEnumDDSelectMode.COUNT
+            mode: AcEnumDDSelectMode.Count
           });
           if (selectResponse.isSuccess()) {
             const rowsCount = selectResponse.rowsCount();
@@ -222,7 +222,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
   async deleteRows({ condition = '', primaryKeyValue = '', parameters = {}, executeAfterEvent = true, executeBeforeEvent = true }: { condition?: string, primaryKeyValue?: string, parameters?: Record<string, any>, executeAfterEvent?: boolean, executeBeforeEvent?: boolean }): Promise<AcSqlDaoResult> {
     this.logger.log(`Deleting row with condition : ${condition} & primaryKeyValue ${primaryKeyValue}`);
-    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.DELETE });
+    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Delete });
 
     try {
       let continueOperation = true;
@@ -244,7 +244,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
         rowEvent.condition = condition;
         rowEvent.parameters = parameters;
-        rowEvent.eventType = AcEnumDDRowEvent.BEFORE_DELETE;
+        rowEvent.eventType = AcEnumDDRowEvent.BeforeDelete;
 
         const eventResult = await rowEvent.execute();
         if (eventResult.isSuccess()) {
@@ -307,7 +307,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
       if (continueOperation && executeAfterEvent) {
         const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
-        rowEvent.eventType = AcEnumDDRowEvent.AFTER_DELETE;
+        rowEvent.eventType = AcEnumDDRowEvent.AfterDelete;
         rowEvent.condition = condition;
         rowEvent.parameters = parameters;
         rowEvent.result = result;
@@ -338,7 +338,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
     const rowEvent = new AcSqlDbRowEvent({ tableName:this.tableName, dataDictionaryName:this.dataDictionaryName });
     rowEvent.row = row;
-    rowEvent.eventType = AcEnumDDRowEvent.BEFORE_FORMAT;
+    rowEvent.eventType = AcEnumDDRowEvent.BeforeFormat;
 
     const eventResult = await rowEvent.execute();
     if (eventResult.isSuccess()) {
@@ -362,31 +362,31 @@ export class AcSqlDbTable extends AcSqlDbBase {
           }
 
           if (setColumnValue) {
-            if ([AcEnumDDColumnType.DATE, AcEnumDDColumnType.DATETIME, AcEnumDDColumnType.STRING].includes(type)) {
+            if ([AcEnumDDColumnType.Date, AcEnumDDColumnType.Datetime, AcEnumDDColumnType.String].includes(type)) {
               value = String(value).trim();
 
-              if (type === AcEnumDDColumnType.STRING) {
-                if (formats.includes(AcEnumDDColumnFormat.LOWERCASE)) {
+              if (type === AcEnumDDColumnType.String) {
+                if (formats.includes(AcEnumDDColumnFormat.Lowercase)) {
                   value = value.toLowerCase();
                 }
-                if (formats.includes(AcEnumDDColumnFormat.UPPERCASE)) {
+                if (formats.includes(AcEnumDDColumnFormat.Uppercase)) {
                   value = value.toUpperCase();
                 }
-                if (formats.includes(AcEnumDDColumnFormat.ENCRYPT)) {
+                if (formats.includes(AcEnumDDColumnFormat.Encrypt)) {
                   value = AcEncryption.encrypt({ plainText: value });
                 }
-              } else if ([AcEnumDDColumnType.DATETIME, AcEnumDDColumnType.DATE].includes(type) && value !== "") {
+              } else if ([AcEnumDDColumnType.Datetime, AcEnumDDColumnType.Date].includes(type) && value !== "") {
                 try {
                   const date = new Date(value);
-                  const format = type === AcEnumDDColumnType.DATETIME ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd';
+                  const format = type === AcEnumDDColumnType.Datetime ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd';
                   value = dateFormat(date,format); // You must implement `formatDate()`
                 } catch (ex) {
                   this.logger.warn(`Error while setting dateTimeValue for ${column.columnName} in table ${this.tableName} with value: ${value}`);
                 }
               }
-            } else if ([AcEnumDDColumnType.JSON, AcEnumDDColumnType.MEDIA_JSON].includes(type)) {
+            } else if ([AcEnumDDColumnType.Json, AcEnumDDColumnType.MediaJson].includes(type)) {
               value = typeof value === 'string' ? value : JSON.stringify(value);
-            } else if (type === AcEnumDDColumnType.PASSWORD) {
+            } else if (type === AcEnumDDColumnType.Password) {
               value = AcEncryption.encrypt({ plainText: value });
             }
 
@@ -399,7 +399,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     if (continueOperation) {
       const rowEvent = new AcSqlDbRowEvent({ tableName:this.tableName, dataDictionaryName:this.dataDictionaryName });
       rowEvent.row = row;
-      rowEvent.eventType = AcEnumDDRowEvent.AFTER_FORMAT;
+      rowEvent.eventType = AcEnumDDRowEvent.AfterFormat;
 
       const eventResult = await rowEvent.execute();
       if (eventResult.isSuccess()) {
@@ -423,14 +423,14 @@ export class AcSqlDbTable extends AcSqlDbBase {
     for (const column of this.acDDTable.tableColumns) {
       const formats: string[] = [];
 
-      if ([AcEnumDDColumnType.JSON, AcEnumDDColumnType.MEDIA_JSON].includes(column.columnType as any)) {
-        formats.push(AcEnumDDColumnFormat.JSON);
-      } else if (column.columnType === AcEnumDDColumnType.DATE) {
-        formats.push(AcEnumDDColumnFormat.DATE);
-      } else if (column.columnType === AcEnumDDColumnType.PASSWORD && !getPasswordColumns) {
-        formats.push(AcEnumDDColumnFormat.HIDE_COLUMN);
-      } else if (column.columnType === AcEnumDDColumnType.ENCRYPTED) {
-        formats.push(AcEnumDDColumnFormat.ENCRYPT);
+      if ([AcEnumDDColumnType.Json, AcEnumDDColumnType.MediaJson].includes(column.columnType as any)) {
+        formats.push(AcEnumDDColumnFormat.Json);
+      } else if (column.columnType === AcEnumDDColumnType.Date) {
+        formats.push(AcEnumDDColumnFormat.Date);
+      } else if (column.columnType === AcEnumDDColumnType.Password && !getPasswordColumns) {
+        formats.push(AcEnumDDColumnFormat.HideColumn);
+      } else if (column.columnType === AcEnumDDColumnType.Encrypted) {
+        formats.push(AcEnumDDColumnFormat.Encrypt);
       }
 
       if (formats.length > 0) {
@@ -463,7 +463,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     columnName,
     condition = '',
     orderBy = '',
-    mode = AcEnumDDSelectMode.LIST,
+    mode = AcEnumDDSelectMode.List,
     pageNumber = -1,
     pageSize = -1,
     parameters = {}
@@ -476,7 +476,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     pageSize?: number,
     parameters?: Record<string, any>
   }): Promise<AcSqlDaoResult> {
-    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
+    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
 
     try {
       const actualOrderBy = orderBy !== '' ? orderBy : columnName;
@@ -529,16 +529,16 @@ export class AcSqlDbTable extends AcSqlDbBase {
     let isAutoIncrementSet = false;
     let isPrimaryKeySet = false;
 
-    if (this.databaseType === AcEnumSqlDatabaseType.MYSQL) {
+    if (this.databaseType === AcEnumSqlDatabaseType.MySql) {
       columnType = 'TEXT';
 
       switch (acDDTableColumn.columnType) {
-        case AcEnumDDColumnType.AUTO_INCREMENT:
+        case AcEnumDDColumnType.AutoIncrement:
           columnType = 'INT AUTO_INCREMENT PRIMARY KEY';
           isAutoIncrementSet = true;
           isPrimaryKeySet = true;
           break;
-        case AcEnumDDColumnType.BLOB:
+        case AcEnumDDColumnType.Blob:
           if (size > 0) {
             if (size <= 255) columnType = 'TINYBLOB';
             else if (size <= 65535) columnType = 'BLOB';
@@ -547,19 +547,19 @@ export class AcSqlDbTable extends AcSqlDbBase {
             columnType = 'LONGBLOB';
           }
           break;
-        case AcEnumDDColumnType.DATE:
+        case AcEnumDDColumnType.Date:
           columnType = 'DATE';
           break;
-        case AcEnumDDColumnType.DATETIME:
+        case AcEnumDDColumnType.Datetime:
           columnType = 'DATETIME';
           break;
-        case AcEnumDDColumnType.DOUBLE:
+        case AcEnumDDColumnType.Double:
           columnType = 'DOUBLE';
           break;
-        case AcEnumDDColumnType.UUID:
+        case AcEnumDDColumnType.Uuid:
           columnType = 'CHAR(36)';
           break;
-        case AcEnumDDColumnType.INTEGER:
+        case AcEnumDDColumnType.Integer:
           if (size > 0) {
             if (size <= 255) columnType = 'TINYINT';
             else if (size <= 65535) columnType = 'SMALLINT';
@@ -568,14 +568,14 @@ export class AcSqlDbTable extends AcSqlDbBase {
             columnType = 'INT';
           }
           break;
-        case AcEnumDDColumnType.JSON:
+        case AcEnumDDColumnType.Json:
           columnType = 'LONGTEXT';
           break;
-        case AcEnumDDColumnType.STRING:
+        case AcEnumDDColumnType.String:
           if (size === 0) size = 255;
           columnType = `VARCHAR(${size})`;
           break;
-        case AcEnumDDColumnType.TEXT:
+        case AcEnumDDColumnType.Text:
           if (size > 0) {
             if (size <= 255) columnType = 'TINYTEXT';
             else if (size <= 65535) columnType = 'TEXT';
@@ -584,10 +584,10 @@ export class AcSqlDbTable extends AcSqlDbBase {
             columnType = 'LONGTEXT';
           }
           break;
-        case AcEnumDDColumnType.TIME:
+        case AcEnumDDColumnType.Time:
           columnType = 'TIME';
           break;
-        case AcEnumDDColumnType.TIMESTAMP:
+        case AcEnumDDColumnType.Timestamp:
           columnType = 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP';
           break;
       }
@@ -600,20 +600,20 @@ export class AcSqlDbTable extends AcSqlDbBase {
       // if (defaultValue != null) result += ` DEFAULT ${defaultValue}`;
     }
 
-    else if (this.databaseType === AcEnumSqlDatabaseType.SQLITE) {
+    else if (this.databaseType === AcEnumSqlDatabaseType.Sqlite) {
       switch (acDDTableColumn.columnType) {
-        case AcEnumDDColumnType.AUTO_INCREMENT:
+        case AcEnumDDColumnType.AutoIncrement:
           columnType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
           isAutoIncrementSet = true;
           isPrimaryKeySet = true;
           break;
-        case AcEnumDDColumnType.DOUBLE:
+        case AcEnumDDColumnType.Double:
           columnType = 'REAL';
           break;
-        case AcEnumDDColumnType.BLOB:
+        case AcEnumDDColumnType.Blob:
           columnType = 'BLOB';
           break;
-        case AcEnumDDColumnType.INTEGER:
+        case AcEnumDDColumnType.Integer:
           columnType = 'INTEGER';
           break;
         default:
@@ -636,7 +636,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     selectStatement = "",
     condition = "",
     orderBy = "",
-    mode = AcEnumDDSelectMode.LIST,
+    mode = AcEnumDDSelectMode.List,
     pageNumber = -1,
     pageSize = -1,
     parameters = {},
@@ -649,7 +649,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     pageSize?: number;
     parameters?: { [key: string]: any };
   }): Promise<AcSqlDaoResult> {
-    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
+    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     try {
       const actualSelectStatement = selectStatement !== "" ? selectStatement : this.getSelectStatement();
       const sqlStatement = AcDDSelectStatement.generateSqlStatement({
@@ -682,7 +682,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
   }: {
     acDDSelectStatement: AcDDSelectStatement;
   }): Promise<AcSqlDaoResult> {
-    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
+    let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     try {
       const sqlStatement = acDDSelectStatement.getSqlStatement();
       const sqlParameters = acDDSelectStatement.parameters;
@@ -727,7 +727,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean,
     executeBeforeEvent?: boolean,
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.INSERT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
     try {
       this.logger.log(["Inserting row with data : ", row]);
       let continueOperation = true;
@@ -736,8 +736,8 @@ export class AcSqlDbTable extends AcSqlDbBase {
       if (validateResult.isSuccess()) {
         for (const column of this.acDDTable.tableColumns) {
           if (
-            (column.columnType === AcEnumDDColumnType.UUID ||
-              (column.columnType === AcEnumDDColumnType.STRING && column.isPrimaryKey())) &&
+            (column.columnType === AcEnumDDColumnType.Uuid ||
+              (column.columnType === AcEnumDDColumnType.String && column.isPrimaryKey())) &&
             !(column.columnName in row)
           ) {
             row[column.columnName] = Autocode.uuid();
@@ -755,7 +755,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               dataDictionaryName: this.dataDictionaryName
             });
             rowEvent.row = row;
-            rowEvent.eventType = AcEnumDDRowEvent.BEFORE_INSERT;
+            rowEvent.eventType = AcEnumDDRowEvent.BeforeInsert;
             const eventResult = await rowEvent.execute();
             this.logger.log(["Before insert result", eventResult]);
             if (eventResult.isSuccess()) {
@@ -803,7 +803,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
                   tableName: this.tableName,
                   dataDictionaryName: this.dataDictionaryName
                 });
-                rowEvent.eventType = AcEnumDDRowEvent.AFTER_INSERT;
+                rowEvent.eventType = AcEnumDDRowEvent.AfterInsert;
                 rowEvent.result = result;
                 const eventResult = await rowEvent.execute();
                 if (!eventResult.isSuccess()) {
@@ -840,7 +840,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean,
     executeBeforeEvent?: boolean,
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.INSERT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
     try {
       this.logger.log(["Inserting rows : ", rows]);
       let continueOperation = true;
@@ -854,8 +854,8 @@ export class AcSqlDbTable extends AcSqlDbBase {
           if (validateResult.isSuccess()) {
             for (const column of this.acDDTable.tableColumns) {
               if (
-                (column.columnType === AcEnumDDColumnType.UUID ||
-                  (column.columnType === AcEnumDDColumnType.STRING && column.isPrimaryKey())) &&
+                (column.columnType === AcEnumDDColumnType.Uuid ||
+                  (column.columnType === AcEnumDDColumnType.String && column.isPrimaryKey())) &&
                 !(column.columnName in row)
               ) {
                 row[column.columnName] = Autocode.uuid();
@@ -873,7 +873,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
                   dataDictionaryName: this.dataDictionaryName
                 });
                 rowEvent.row = row;
-                rowEvent.eventType = AcEnumDDRowEvent.BEFORE_INSERT;
+                rowEvent.eventType = AcEnumDDRowEvent.BeforeInsert;
                 const eventResult = await rowEvent.execute();
                 this.logger.log(["Before insert result", eventResult]);
                 if (eventResult.isSuccess()) {
@@ -928,7 +928,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
                 tableName: this.tableName,
                 dataDictionaryName: this.dataDictionaryName
               });
-              rowEvent.eventType = AcEnumDDRowEvent.AFTER_INSERT;
+              rowEvent.eventType = AcEnumDDRowEvent.AfterInsert;
               rowEvent.result = result;
               rowEvent.row = row;
               const eventResult = await rowEvent.execute();
@@ -969,10 +969,10 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean,
     executeBeforeEvent?: boolean
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.UNKNOWN});
+    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Unknown});
     try {
       let continueOperation = true;
-      let operation:AcEnumDDRowOperation = AcEnumDDRowOperation.UNKNOWN;
+      let operation:AcEnumDDRowOperation = AcEnumDDRowOperation.Unknown;
       const primaryKeyColumn = this.acDDTable.getPrimaryKeyColumnName();
       let primaryKeyValue = row[primaryKeyColumn];
       let condition = "";
@@ -1012,23 +1012,23 @@ export class AcSqlDbTable extends AcSqlDbBase {
             if (primaryKeyColumn in existingRecord) {
               primaryKeyValue = existingRecord[primaryKeyColumn];
               row[primaryKeyColumn] = primaryKeyValue;
-              operation = AcEnumDDRowOperation.UPDATE;
+              operation = AcEnumDDRowOperation.Update;
             } else {
               continueOperation = false;
               result.message = "Row does not have primary key value";
             }
           } else {
-            operation = AcEnumDDRowOperation.INSERT;
+            operation = AcEnumDDRowOperation.Insert;
           }
         } else {
           continueOperation = false;
           result.setFromResult({ result: getResult });
         }
       } else {
-        operation = AcEnumDDRowOperation.INSERT;
+        operation = AcEnumDDRowOperation.Insert;
       }
 
-      if (![AcEnumDDRowOperation.INSERT, AcEnumDDRowOperation.UPDATE].includes(operation as any)) {
+      if (![AcEnumDDRowOperation.Insert, AcEnumDDRowOperation.Update].includes(operation as any)) {
         result.message = "Invalid Operation";
         continueOperation = false;
       }
@@ -1038,7 +1038,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (executeBeforeEvent) {
           const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName,dataDictionaryName:this.dataDictionaryName});
           rowEvent.row = row;
-          rowEvent.eventType = AcEnumDDRowEvent.BEFORE_SAVE;
+          rowEvent.eventType = AcEnumDDRowEvent.BeforeSave;
           const eventResult = await rowEvent.execute();
           if (eventResult.isSuccess()) {
             row = rowEvent.row;
@@ -1052,15 +1052,15 @@ export class AcSqlDbTable extends AcSqlDbBase {
           }
         }
 
-        if (operation === AcEnumDDRowOperation.INSERT) {
+        if (operation === AcEnumDDRowOperation.Insert) {
           result.setFromResult({ result: await this.insertRow({ row }) });
-        } else if (operation === AcEnumDDRowOperation.UPDATE) {
+        } else if (operation === AcEnumDDRowOperation.Update) {
           result.setFromResult({ result: await this.updateRow({ row }) });
         }
 
         if (continueOperation && executeAfterEvent) {
           const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
-          rowEvent.eventType = AcEnumDDRowEvent.AFTER_SAVE;
+          rowEvent.eventType = AcEnumDDRowEvent.AfterSave;
           rowEvent.result = result;
           const eventResult = await rowEvent.execute();
           if (!eventResult.isSuccess()) {
@@ -1083,7 +1083,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean,
     executeBeforeEvent?: boolean
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.UNKNOWN});
+    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Unknown});
     try {
       let continueOperation = true;
       const primaryKeyColumn = this.acDDTable.getPrimaryKeyColumnName();
@@ -1151,7 +1151,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         for (const row of [...rowsToInsert, ...rowsToUpdate]) {
           const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName,dataDictionaryName: this.dataDictionaryName});
           rowEvent.row = row;
-          rowEvent.eventType = AcEnumDDRowEvent.BEFORE_SAVE;
+          rowEvent.eventType = AcEnumDDRowEvent.BeforeSave;
           const eventResult = await rowEvent.execute();
           if (eventResult.isSuccess()) {
             Object.assign(row, rowEvent.row);
@@ -1264,7 +1264,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeBeforeEvent?: boolean;
   }): Promise<AcSqlDaoResult> {
     this.logger.log(["Updating row with data : ", row]);
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.UPDATE});
+    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Update});
     try {
       let continueOperation = true;
       validateResult ??= await this.validateValues({ row, isInsert: false });
@@ -1293,7 +1293,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             this.logger.log("Executing before update event");
             const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName,dataDictionaryName: this.dataDictionaryName});
             rowEvent.row = row;
-            rowEvent.eventType = AcEnumDDRowEvent.BEFORE_UPDATE;
+            rowEvent.eventType = AcEnumDDRowEvent.BeforeUpdate;
             const eventResult = await rowEvent.execute();
             if (eventResult.isSuccess()) {
               this.logger.log(["Before event result", eventResult]);
@@ -1330,7 +1330,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
               if (continueOperation && executeAfterEvent) {
                 const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
-                rowEvent.eventType = AcEnumDDRowEvent.AFTER_UPDATE;
+                rowEvent.eventType = AcEnumDDRowEvent.AfterUpdate;
                 rowEvent.result = result;
                 const eventResult = await rowEvent.execute();
                 if (eventResult.isSuccess()) {
@@ -1367,7 +1367,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean;
     executeBeforeEvent?: boolean;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.UPDATE});
+    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Update});
     try {
       let continueOperation = true;
       const rowsWithConditions: {
@@ -1419,7 +1419,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             rowEvent.row = rowDetails.row;
             rowEvent.condition = rowDetails.condition;
             rowEvent.parameters = rowDetails.parameters;
-            rowEvent.eventType = AcEnumDDRowEvent.BEFORE_UPDATE;
+            rowEvent.eventType = AcEnumDDRowEvent.BeforeUpdate;
             const eventResult = await rowEvent.execute();
             if (!eventResult.isSuccess()) {
               this.logger.error(["Before event result", eventResult]);
@@ -1456,7 +1456,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
             if (continueOperation && executeAfterEvent) {
               const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
-              rowEvent.eventType = AcEnumDDRowEvent.AFTER_UPDATE;
+              rowEvent.eventType = AcEnumDDRowEvent.AfterUpdate;
               rowEvent.result = result;
               const eventResult = await rowEvent.execute();
               if (!eventResult.isSuccess()) {
@@ -1527,15 +1527,15 @@ export class AcSqlDbTable extends AcSqlDbBase {
         }
 
         if (continueOperation) {
-          if (column.columnType === AcEnumDDColumnType.INTEGER || column.columnType === AcEnumDDColumnType.DOUBLE) {
+          if (column.columnType === AcEnumDDColumnType.Integer || column.columnType === AcEnumDDColumnType.Double) {
             if (value != null && typeof value !== "number") {
               result.setFailure({ message: `Invalid numeric value for column : ${column.columnName}` });
               break;
             }
           } else if (
-            column.columnType === AcEnumDDColumnType.DATE ||
-            column.columnType === AcEnumDDColumnType.DATETIME ||
-            column.columnType === AcEnumDDColumnType.TIME
+            column.columnType === AcEnumDDColumnType.Date ||
+            column.columnType === AcEnumDDColumnType.Datetime ||
+            column.columnType === AcEnumDDColumnType.Time
           ) {
             if (value != null && value !== "NOW") {
               try {

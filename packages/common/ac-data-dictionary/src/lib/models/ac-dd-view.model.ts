@@ -5,17 +5,17 @@ import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocod
 import { AcDataDictionary, AcDDViewColumn } from "../..";
 
 export class AcDDView {
-  static readonly KEY_VIEW_NAME = "view_name";
-  static readonly KEY_VIEW_COLUMNS = "view_columns";
-  static readonly KEY_VIEW_QUERY = "view_query";
+  static readonly KeyViewName = "view_name";
+  static readonly KeyViewColumns = "view_columns";
+  static readonly KeyViewQuery = "view_query";
 
-  @AcBindJsonProperty({ key: AcDDView.KEY_VIEW_NAME })
+  @AcBindJsonProperty({ key: AcDDView.KeyViewName })
   viewName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDView.KEY_VIEW_QUERY })
+  @AcBindJsonProperty({ key: AcDDView.KeyViewQuery })
   viewQuery: string = "";
 
-  @AcBindJsonProperty({ key: AcDDView.KEY_VIEW_COLUMNS })
+  @AcBindJsonProperty({ key: AcDDView.KeyViewColumns })
   viewColumns: Record<string, AcDDViewColumn> = {};
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDView {
@@ -37,25 +37,25 @@ export class AcDDView {
 
   fromJson({ jsonData }: { jsonData: any }): AcDDView {
     const json = { ...jsonData };
-    if (json.hasOwnProperty(AcDDView.KEY_VIEW_COLUMNS) && typeof json[AcDDView.KEY_VIEW_COLUMNS] === 'object') {
-      const columns = json[AcDDView.KEY_VIEW_COLUMNS] as Record<string, any>;
+    if (json.hasOwnProperty(AcDDView.KeyViewColumns) && typeof json[AcDDView.KeyViewColumns] === 'object') {
+      const columns = json[AcDDView.KeyViewColumns] as Record<string, any>;
       for (const columnName in columns) {
         if (columns.hasOwnProperty(columnName)) {
           this.viewColumns[columnName] = AcDDViewColumn.instanceFromJson({ jsonData: columns[columnName] });
         }
       }
-      delete json[AcDDView.KEY_VIEW_COLUMNS];
+      delete json[AcDDView.KeyViewColumns];
     }
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: json });
     return this;
   }
 
-  static getDropViewStatement({viewName,databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { viewName: string; databaseType?: string }): string {
-    return `DROP VIEW IF EXISTS ${viewName};`;
+  static getDropViewStatement({viewName,databaseType=AcEnumSqlDatabaseType.Unknown}: { viewName: string; databaseType?: string }): string {
+    return `DROP View IF EXISTS ${viewName};`;
   }
 
-  getCreateViewStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
-    return `CREATE VIEW ${this.viewName} AS ${this.viewQuery};`;
+  getCreateViewStatement({databaseType=AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
+    return `CREATE View ${this.viewName} AS ${this.viewQuery};`;
   }
 
   toJson(): Record<string, any> {

@@ -1,10 +1,8 @@
-export const AcEnumCssUnit = {
-  PX: 'px',
-  CM: 'cm',
-  MM: 'mm',
-  IN: 'in',
-  PT: 'pt',
-  PC: 'pc',
-} as const;
-
-export type AcEnumCssUnit = typeof AcEnumCssUnit[keyof typeof AcEnumCssUnit];
+export enum AcEnumCssUnit {
+  Px = 'px',
+  Cm = 'cm',
+  Mm = 'mm',
+  In = 'in',
+  Pt = 'pt',
+  Pc = 'pc',
+}

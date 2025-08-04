@@ -1,0 +1,16 @@
+export const AcDraggableAttributeName = {
+  acDraggable: 'ac-draggable',
+  acDraggableElement: 'ac-draggable-element',
+  acDraggableElementId: 'ac-draggable-element-id',
+  acDraggableElementTags: 'ac-draggable-element-tags',
+  acDraggableHandle: 'ac-draggable-handle',
+  acDraggableId: 'ac-draggable-id',
+  acDraggableLockXAxis: 'ac-draggable-lock-x-axis',
+  acDraggableLockYAxis: 'ac-draggable-lock-y-axis',
+  acDraggableSnapGridSize: 'ac-draggable-snap-grid-size',
+  acDraggableSort: 'ac-draggable-sort',
+  acDraggableSortElement: 'ac-draggable-sort-element',
+  acDraggableTarget: 'ac-draggable-target',
+  acDraggableTargetId: 'ac-draggable-target-id',
+  acDraggableTargetAcceptedTags: 'ac-draggable-target-accepted-tags',
+}

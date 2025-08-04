@@ -99,6 +99,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Output() onCellMouseOver: EventEmitter<any> = new EventEmitter();
   @Output() onCellRenderComponentBeforeInit: EventEmitter<any> = new EventEmitter();
   @Output() onCellRenderComponentDestroy: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellRenderComponentInit: EventEmitter<any> = new EventEmitter();
   @Output() onCellValueChanged: EventEmitter<any> = new EventEmitter();
   @Output() onColumnHeaderClicked: EventEmitter<any> = new EventEmitter();
@@ -111,9 +112,11 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Output() onFilterOpened: EventEmitter<any> = new EventEmitter();
   @Output() onGridReady: EventEmitter<any> = new EventEmitter();
   @Output() onPaginationChanged: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowAdded: EventEmitter<any> = new EventEmitter();
   @Output() onRowClicked: EventEmitter<any> = new EventEmitter();
   @Output() onRowDataUpdated: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowDeleted: EventEmitter<any> = new EventEmitter();
   @Output() onRowDoubleClicked: EventEmitter<any> = new EventEmitter();
   @Output() onRowDragEnd: EventEmitter<any> = new EventEmitter();
@@ -122,12 +125,14 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Output() onRowEditingStopped: EventEmitter<any> = new EventEmitter();
   @Output() onRowFocus: EventEmitter<any> = new EventEmitter();
   @Output() onRowSelected: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowUpdated: EventEmitter<any> = new EventEmitter();
   @Output() onRowValueChanged: EventEmitter<any> = new EventEmitter();
   @Output() onSelectionChanged: EventEmitter<any> = new EventEmitter();
   @Output() onSortChanged: EventEmitter<any> = new EventEmitter();
   @Output() onStateUpdated: EventEmitter<any> = new EventEmitter();
 
+  /* Done */
   get totalRows(): number {
     let result: number = 0;
     if (this.agGridApi) {
@@ -291,6 +296,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.initGridFooter();
   }
 
+  /* Done */
   addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}) {
     if (this.isClientSideData) {
       if (data == undefined) {
@@ -337,10 +343,12 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.events.execute({ eventName: 'rowAdded', args: event });
   }
 
+  /* Done */
   clearSelection() {
     this.agGridApi.deselectAll();
   }
 
+  /* Done */
   deleteRow({ data, index, key, value }: { data?: any, index?: number, key?: string, value?: any }) {
     if (index >= 0) {
       data = this.agGridApi.getDisplayedRowAtIndex(index);
@@ -375,6 +383,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
+  /* Done */
   async exportData({ format = 'excel', fileName = 'Datagrid Export.xlsx' }: { format?: string, fileName?: string } = {}) {
     const callbackFunction: Function = () => {
       if (format.toLowerCase() == 'excel') {
@@ -393,17 +402,20 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
+  /* Done */
   focusFirstRow() {
     if (this.agGridApi && this.colDefs.length > 0) {
       this.agGridApi.setFocusedCell(0, this.colDefs[0].field);
     }
   }
 
+  /* Done */
   getAcFilterOperatorFromAgGridOperator(operator: any) {
     const result = operator;
     return result;
   }
 
+  /* Done */
   getAgDataTypeFromAcDataType(dataType: any) {
     let result: any = 'text';
     if (dataType == AcEnumColumnDataType.boolean) {
@@ -422,6 +434,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
 
   }
 
+  /* Done */
   private getAgDataGridColumnFromAcDataGridColumn(column: IAcDataGridColumn): ColDef {
     let editable: boolean = this.editable;
     if (column.allowEdit != undefined) {
@@ -627,6 +640,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     return state;
   }
 
+  /* Done */
   getGroupedData() {
     const extractGroupedTree:Function = (nodes: any[]): any[] => {
       return nodes.map((node) => {
@@ -650,6 +664,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     return groupedTree;
   }
 
+  /* Done */
   async getSelectedData() {
     let selectedData: any[] = [];
     const promiseInstance: AcPromiseInstance = this.promiseManager.create();
@@ -675,6 +690,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     return promiseInstance.promise;
   }
 
+  /* Done */
   getTotalRowCount() {
     if (!this.agGridApi) {
       return;
@@ -964,6 +980,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
 
   }
 
+  /* Skipped */
   initAgGrid() {
     if (this.agGrid) {
       this.agGridApi = this.agGrid.api;
@@ -1031,11 +1048,13 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     // let rowsContainer:any = this.elementRef.nativeElement.getByClassName(".ag-center-cols-container");
   }
 
+  /* Skipped */
   log(...args: any) {
     // console.trace();
     // console.log(args);
   }
 
+  /* Done */
   navigateToLastRow({ highlightCells = false }: { highlightCells?: boolean } = {}) {
     const pageSize = this.agGridApi.paginationGetPageSize();
     const newIndex = this.totalRows - 1;
@@ -1055,10 +1074,6 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         }
       });
     }
-
-
-    // Go to that page
-
   }
 
   notifyCellBlurred() {
@@ -1083,6 +1098,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
+  /* Skipped */
   setColumnsFromComponents() {
     if (this.columnComponents) {
       for (const column of this.columnComponents) {
@@ -1112,6 +1128,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
+  /* Done */
   toggleColumnsCustomizer() {
     const isOpen = !!this.agGridApi.getOpenedToolPanel();
     if (isOpen) {
@@ -1121,6 +1138,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
   }
 
+  /* Done */
   updateRow({ data, currentData, key, index, highlightCells = true }: { data: any, currentData?: any, key?: string, index?: number, highlightCells?: boolean }) {
     if (index >= 0) {
       currentData = this.agGridApi.getDisplayedRowAtIndex(index);

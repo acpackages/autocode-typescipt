@@ -3,13 +3,13 @@
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 
 export class AcDDTableProperty {
-  static readonly KEY_PROPERTY_NAME = "property_name";
-  static readonly KEY_PROPERTY_VALUE = "property_value";
+  static readonly KeyPropertyName = "property_name";
+  static readonly KeyPropertyValue = "property_value";
 
-  @AcBindJsonProperty({ key: AcDDTableProperty.KEY_PROPERTY_NAME })
+  @AcBindJsonProperty({ key: AcDDTableProperty.KeyPropertyName })
   propertyName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDTableProperty.KEY_PROPERTY_VALUE })
+  @AcBindJsonProperty({ key: AcDDTableProperty.KeyPropertyValue })
   propertyValue: any = null;
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDTableProperty {

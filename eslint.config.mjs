@@ -14,8 +14,8 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.vue'],
     rules: {
-      "@typescript-eslint/no-unsafe-function-type": "off",
-      "@angular-eslint/prefer-inject": "off",
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@angular-eslint/prefer-inject': 'off',
       '@nx/enforce-module-boundaries': [
         'error',
         {

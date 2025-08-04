@@ -16,7 +16,7 @@ export class AcApiDocUtils {
     dataType: string;
   }): string {
     if (
-      dataType === AcEnumDDColumnType.AUTO_INCREMENT ||
+      dataType === AcEnumDDColumnType.AutoIncrement ||
       dataType === AcEnumDDColumnType.INTEGER
     ) {
       return AcEnumApiDataFormat.INT64;
@@ -38,7 +38,7 @@ export class AcApiDocUtils {
     dataType: string;
   }): string {
     if (
-      dataType === AcEnumDDColumnType.AUTO_INCREMENT ||
+      dataType === AcEnumDDColumnType.AutoIncrement ||
       dataType === AcEnumDDColumnType.INTEGER
     ) {
       return AcEnumApiDataType.INTEGER;

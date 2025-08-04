@@ -1,0 +1,22 @@
+{
+  "name": "@autocode-ts/ac-browser",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/ac-extensions": "^0.0.4",
+    "@autocode-ts/ac-template-engine": "^0.0.1",
+    "overlayscrollbars": "^2.11.4"
+  },
+  "exports": {
+    "./css/ac-datagrid.css": {
+      "default": "./css/ac-datagrid.css"
+    }
+  },
+  "files": [
+    "lib"
+  ]
+}

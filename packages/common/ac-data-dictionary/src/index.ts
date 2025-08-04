@@ -2,8 +2,6 @@ export * from './lib/enums/ac-enum-dd-column-format.enum';
 export * from './lib/enums/ac-enum-dd-column-property.enum';
 export * from './lib/enums/ac-enum-dd-column-relation-type.enum';
 export * from './lib/enums/ac-enum-dd-column-type.enum';
-export * from './lib/enums/ac-enum-dd-condition-operator.enum';
-export * from './lib/enums/ac-enum-dd-logical-operator.enum';
 export * from './lib/enums/ac-enum-dd-row-event.enum';
 export * from './lib/enums/ac-enum-dd-row-operation.enum';
 export * from './lib/enums/ac-enum-dd-select-mode.enum';

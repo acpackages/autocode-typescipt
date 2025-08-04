@@ -93,7 +93,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     condition?: string;
     parameters?: Record<string, any>;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.DELETE });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Delete });
     let db: Connection | null = null;
     try {
       db = await this._getConnection();
@@ -146,7 +146,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
 
   override async executeStatement({
     statement,
-    operation = AcEnumDDRowOperation.UNKNOWN,
+    operation = AcEnumDDRowOperation.Unknown,
     parameters = {},
   }: {
     statement: string;
@@ -184,10 +184,10 @@ export class AcMysqlDao extends AcBaseSqlDao {
       if (formattedRow.hasOwnProperty(key)) {
         let value = formattedRow[key];
         if (typeof value === 'string') {
-          if (formats.includes(AcEnumDDColumnFormat.ENCRYPT)) {
+          if (formats.includes(AcEnumDDColumnFormat.Encrypt)) {
             value = AcEncryption.decrypt({ encryptedText: value });
           }
-          if (formats.includes(AcEnumDDColumnFormat.JSON)) {
+          if (formats.includes(AcEnumDDColumnFormat.Json)) {
             try {
               value = JSON.parse(value);
             } catch {
@@ -195,7 +195,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
             }
           }
         }
-        if (formats.includes(AcEnumDDColumnFormat.HIDE_COLUMN)) {
+        if (formats.includes(AcEnumDDColumnFormat.HideColumn)) {
           delete formattedRow[key];
         } else {
           formattedRow[key] = value;
@@ -214,7 +214,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     let db: Connection | null = null;
     try {
       db = await this._getConnection();
-      const statement = "SELECT ROUTINE_NAME, DATA_TYPE, CREATED, DEFINER FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = @databaseName AND ROUTINE_TYPE = 'FUNCTION'";
+      const statement = "SELECT ROUTINE_NAME, DATA_TYPE, CREATED, DEFINER FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = @databaseName AND ROUTINE_TYPE = 'Function'";
       const { statement: updatedStatement, statementParametersMap } = this.setSqlStatementParameters({
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
@@ -222,7 +222,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [results] = await db.execute(updatedStatement, statementParametersMap);
       for (const row of results as any[]) {
         result.rows.push({
-          [AcDDFunction.KEY_FUNCTION_NAME]: row['ROUTINE_NAME'],
+          [AcDDFunction.KeyFunctionName]: row['ROUTINE_NAME'],
         });
       }
       result.setSuccess();
@@ -247,7 +247,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [results] = await db.execute(updatedStatement, statementParametersMap);
       for (const row of results as any[]) {
         result.rows.push({
-          [AcDDStoredProcedure.KEY_STORED_PROCEDURE_NAME]: row['ROUTINE_NAME'],
+          [AcDDStoredProcedure.KeyStoredProcedureName]: row['ROUTINE_NAME'],
         });
       }
       result.setSuccess();
@@ -264,7 +264,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     let db: Connection | null = null;
     try {
       db = await this._getConnection();
-      const statement = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = @databaseName AND TABLE_TYPE='BASE TABLE'";
+      const statement = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = @databaseName AND TABLE_TYPE='BASE Table'";
       const { statement: updatedStatement, statementParametersMap } = this.setSqlStatementParameters({
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
@@ -272,7 +272,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [results] = await db.execute(updatedStatement, statementParametersMap);
       for (const row of results as any[]) {
         result.rows.push({
-          [AcDDTable.KEY_TABLE_NAME]: row['TABLE_NAME'],
+          [AcDDTable.KeyTableName]: row['TABLE_NAME'],
         });
       }
       result.setSuccess();
@@ -297,7 +297,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [results] = await db.execute(updatedStatement, statementParametersMap);
       for (const row of results as any[]) {
         result.rows.push({
-          [AcDDTrigger.KEY_TRIGGER_NAME]: row['TRIGGER_NAME'],
+          [AcDDTrigger.KeyTriggerName]: row['TRIGGER_NAME'],
         });
       }
       result.setSuccess();
@@ -322,7 +322,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const [results] = await db.execute(updatedStatement, statementParametersMap);
       for (const row of results as any[]) {
         result.rows.push({
-          [AcDDView.KEY_VIEW_NAME]: row['TABLE_NAME'],
+          [AcDDView.KeyViewName]: row['TABLE_NAME'],
         });
       }
       result.setSuccess();
@@ -334,19 +334,19 @@ export class AcMysqlDao extends AcBaseSqlDao {
     return result;
   }
 
-  override async getRows({ statement, condition = "", parameters = {}, mode = AcEnumDDSelectMode.LIST, columnFormats = {} }: {
+  override async getRows({ statement, condition = "", parameters = {}, mode = AcEnumDDSelectMode.List, columnFormats = {} }: {
     statement: string;
     condition?: string;
     parameters?: Record<string, any>;
     mode?: string;
     columnFormats?: Record<string, string[]>;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     let db: Connection | null = null;
     try {
       db = await this._getConnection();
       let updatedStatement = statement;
-      if (mode === AcEnumDDSelectMode.COUNT) {
+      if (mode === AcEnumDDSelectMode.Count) {
         updatedStatement = `SELECT COUNT(*) AS records_count FROM (${statement}) AS records_list`;
       }
       if (condition) {
@@ -357,7 +357,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         passedParameters: parameters,
       });
       const [results]:any = await db.execute(finalStatement, statementParametersMap);
-      if (mode === AcEnumDDSelectMode.COUNT) {
+      if (mode === AcEnumDDSelectMode.Count) {
         const row = results[0].assoc();
         result.totalRows = row['records_count'];
       } else {
@@ -375,7 +375,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
   }
 
   override async getTableColumns({ tableName }: { tableName: string }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     let db: Connection | null = null;
     try {
       db = await this._getConnection();
@@ -388,18 +388,18 @@ export class AcMysqlDao extends AcBaseSqlDao {
       for (const row of results as any[]) {
         const properties: Record<string, any> = {};
         if (row['Null'] !== 'YES') {
-          properties[AcEnumDDColumnProperty.NOT_NULL] = false;
+          properties[AcEnumDDColumnProperty.NotNull] = false;
         }
         if (row['Key'] === 'PRI') {
-          properties[AcEnumDDColumnProperty.PRIMARY_KEY] = true;
+          properties[AcEnumDDColumnProperty.PrimaryKey] = true;
         }
         if (row['Default'] !== null) {
-          properties[AcEnumDDColumnProperty.DEFAULT_VALUE] = row['Default'];
+          properties[AcEnumDDColumnProperty.DefaultValue] = row['Default'];
         }
         result.rows.push({
-          [AcDDTableColumn.KEY_COLUMN_NAME]: row['Field'],
-          [AcDDTableColumn.KEY_COLUMN_TYPE]: row['Type'],
-          [AcDDTableColumn.KEY_COLUMN_PROPERTIES]: properties,
+          [AcDDTableColumn.KeyColumnName]: row['Field'],
+          [AcDDTableColumn.KeyColumnType]: row['Type'],
+          [AcDDTableColumn.KeyColumnProperties]: properties,
         });
       }
       result.setSuccess();
@@ -412,7 +412,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
   }
 
   override async getViewColumns({ viewName }: { viewName: string }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.SELECT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     let db: Connection | null = null;
     try {
       db = await this._getConnection();
@@ -425,18 +425,18 @@ export class AcMysqlDao extends AcBaseSqlDao {
       for (const row of results as any[]) {
         const properties: Record<string, any> = {};
         if (row['Null'] !== 'YES') {
-          properties[AcEnumDDColumnProperty.NOT_NULL] = false;
+          properties[AcEnumDDColumnProperty.NotNull] = false;
         }
         if (row['Key'] === 'PRI') {
-          properties[AcEnumDDColumnProperty.PRIMARY_KEY] = true;
+          properties[AcEnumDDColumnProperty.PrimaryKey] = true;
         }
         if (row['Default'] !== null) {
-          properties[AcEnumDDColumnProperty.DEFAULT_VALUE] = row['Default'];
+          properties[AcEnumDDColumnProperty.DefaultValue] = row['Default'];
         }
         result.rows.push({
-          [AcDDViewColumn.KEY_COLUMN_NAME]: row['Field'],
-          [AcDDViewColumn.KEY_COLUMN_TYPE]: row['Type'],
-          [AcDDViewColumn.KEY_COLUMN_PROPERTIES]: properties,
+          [AcDDViewColumn.KeyColumnName]: row['Field'],
+          [AcDDViewColumn.KeyColumnType]: row['Type'],
+          [AcDDViewColumn.KeyColumnProperties]: properties,
         });
       }
       result.setSuccess();
@@ -455,7 +455,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     tableName: string;
     row: Record<string, any>;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.INSERT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
     let db: Connection | undefined;
     try {
       db = await this._getConnection();
@@ -490,7 +490,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     tableName: string;
     rows: Array<Record<string, any>>;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.INSERT });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
     let db: Connection | undefined;
     try {
       db = await this._getConnection();
@@ -536,7 +536,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     condition?: string;
     parameters?: Record<string, any>;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.UPDATE });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Update });
     let db: Connection | undefined;
     try {
       db = await this._getConnection();
@@ -566,7 +566,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
     tableName: string;
     rowsWithConditions: Array<Record<string, any>>;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.UPDATE });
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Update });
     let db: Connection | undefined;
     try {
       db = await this._getConnection();

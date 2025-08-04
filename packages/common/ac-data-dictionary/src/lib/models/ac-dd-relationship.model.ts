@@ -5,29 +5,29 @@ import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocod
 import { AcDataDictionary } from "../..";
 
 export class AcDDRelationship {
-  static readonly KEY_CASCADE_DELETE_DESTINATION = "cascade_delete_destination";
-  static readonly KEY_CASCADE_DELETE_SOURCE = "cascade_delete_source";
-  static readonly KEY_DESTINATION_COLUMN = "destination_column";
-  static readonly KEY_DESTINATION_TABLE = "destination_table";
-  static readonly KEY_SOURCE_COLUMN = "source_column";
-  static readonly KEY_SOURCE_TABLE = "source_table";
+  static readonly KeyCascadeDeleteDestination = "cascade_delete_destination";
+  static readonly KeyCascadeDeleteSource = "cascade_delete_source";
+  static readonly KeyDestinationColumn = "destination_column";
+  static readonly KeyDestinationTable = "destination_table";
+  static readonly KeySourceColumn = "source_column";
+  static readonly KeySourceTable = "source_table";
 
-  @AcBindJsonProperty({ key: AcDDRelationship.KEY_CASCADE_DELETE_DESTINATION })
+  @AcBindJsonProperty({ key: AcDDRelationship.KeyCascadeDeleteDestination })
   cascadeDeleteDestination: boolean = false;
 
-  @AcBindJsonProperty({ key: AcDDRelationship.KEY_CASCADE_DELETE_SOURCE })
+  @AcBindJsonProperty({ key: AcDDRelationship.KeyCascadeDeleteSource })
   cascadeDeleteSource: boolean = false;
 
-  @AcBindJsonProperty({ key: AcDDRelationship.KEY_DESTINATION_COLUMN })
+  @AcBindJsonProperty({ key: AcDDRelationship.KeyDestinationColumn })
   destinationColumn: string = "";
 
-  @AcBindJsonProperty({ key: AcDDRelationship.KEY_DESTINATION_TABLE })
+  @AcBindJsonProperty({ key: AcDDRelationship.KeyDestinationTable })
   destinationTable: string = "";
 
-  @AcBindJsonProperty({ key: AcDDRelationship.KEY_SOURCE_COLUMN })
+  @AcBindJsonProperty({ key: AcDDRelationship.KeySourceColumn })
   sourceColumn: string = "";
 
-  @AcBindJsonProperty({ key: AcDDRelationship.KEY_SOURCE_TABLE })
+  @AcBindJsonProperty({ key: AcDDRelationship.KeySourceTable })
   sourceTable: string = "";
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDRelationship {
@@ -74,8 +74,8 @@ export class AcDDRelationship {
     return this;
   }
 
-  getCreateRelationshipStatement({ databaseType = AcEnumSqlDatabaseType.UNKNOWN }: { databaseType?: string } = {}): string {
-    return `ALTER TABLE ${this.destinationTable} ADD FOREIGN KEY (${this.destinationColumn}) REFERENCES ${this.sourceTable}(${this.sourceColumn});`;
+  getCreateRelationshipStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string } = {}): string {
+    return `ALTER Table ${this.destinationTable} ADD FOREIGN KEY (${this.destinationColumn}) REFERENCES ${this.sourceTable}(${this.sourceColumn});`;
   }
 
   toJson(): Record<string, any> {

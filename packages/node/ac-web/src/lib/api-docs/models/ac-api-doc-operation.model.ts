@@ -6,14 +6,14 @@ import { AcApiDocResponse } from "./ac-api-doc-response.model";
 
 export class AcApiDocOperation {
   static readonly KEY_DESCRIPTION = "description";
-  static readonly KEY_PARAMETERS = "parameters";
+  static readonly KeyParameters = "parameters";
   static readonly KEY_RESPONSES = "responses";
   static readonly KEY_SUMMARY = "summary";
 
   summary?: string;
   description?: string;
 
-  @AcBindJsonProperty({ key: AcApiDocOperation.KEY_PARAMETERS, arrayType: AcApiDocParameter })
+  @AcBindJsonProperty({ key: AcApiDocOperation.KeyParameters, arrayType: AcApiDocParameter })
   parameters: AcApiDocParameter[] = [];
 
   responses: Record<string, AcApiDocResponse> = {};
@@ -56,7 +56,7 @@ export class AcApiDocOperation {
     }
 
     if (this.parameters.length > 0) {
-      json[AcApiDocOperation.KEY_PARAMETERS] = this.parameters.map(param => param.toJson());
+      json[AcApiDocOperation.KeyParameters] = this.parameters.map(param => param.toJson());
     }
 
     if (Object.keys(this.responses).length > 0) {

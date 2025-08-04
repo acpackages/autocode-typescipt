@@ -1,10 +1,7 @@
-
-export const AcEnumDDSelectMode = {
-  ALL: "all",
-  COUNT: "count",
-  FIRST: "first",
-  LIST: "list",
-  LIST_WITH_COUNT: "list_with_count",
-} as const;
-
-export type AcEnumDDSelectMode = typeof AcEnumDDSelectMode[keyof typeof AcEnumDDSelectMode];
+export enum AcEnumDDSelectMode {
+  All = "all",
+  Count = "count",
+  First = "first",
+  List = "list",
+  ListWithCount = "list_with_count",
+}

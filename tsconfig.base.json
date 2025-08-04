@@ -18,12 +18,17 @@
     "baseUrl": ".",
     "paths": {
       "@autocode-ts/ac-angular": ["dist/packages/angular/ac-angular"],
+      "@autocode-ts/ac-browser": ["packages/browser/ac-browser/src/index.ts"],
       "@autocode-ts/ac-data-dictionary": [
         "packages/common/ac-data-dictionary/index.ts"
       ],
-      "@autocode-ts/ac-datagrid": [
-        "packages/browser/ac-datagrid/src/index.ts"
+      "@autocode-ts/ac-data-dictionary-browser": [
+        "packages/browser/ac-data-dictionary-browser/src/index.ts"
       ],
+      "@autocode-ts/ac-data-dictionary-designer": [
+        "packages/browser/ac-data-dictionary-designer/src/index.ts"
+      ],
+      "@autocode-ts/ac-datagrid": ["packages/browser/ac-datagrid/src/index.ts"],
       "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/index.ts"],
       "@autocode-ts/ac-ng-data-dictionary-editor": [
         "packages/angular/ac-ng-data-dictionary-editor/index.ts"
@@ -62,11 +67,18 @@
         "packages/angular/ac-ng-runtime/src/index.ts"
       ],
       "@autocode-ts/ac-react": ["packages/react/ac-react/index.ts"],
+      "@autocode-ts/ac-repeater": ["packages/browser/ac-repeater/src/index.ts"],
       "@autocode-ts/ac-sql": ["packages/node/ac-sql/index.ts"],
+      "@autocode-ts/ac-template-engine": [
+        "packages/browser/ac-template-engine/src/index.ts"
+      ],
       "@autocode-ts/ac-vue": ["packages/vue/ac-vue/index.ts"],
       "@autocode-ts/ac-web": ["packages/node/ac-web/index.ts"],
       "@autocode-ts/ac-web-on-express": [
         "packages/node/ac-web-on-express/index.ts"
+      ],
+      "@autocode-ts/ag-datagrid-on-ag-grid": [
+        "packages/browser/ac-datagrid-on-ag-grid/src/index.ts"
       ],
       "@autocode-ts/autocode": ["packages/common/autocode/index.ts"]
     }

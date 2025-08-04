@@ -2,12 +2,12 @@
 import { AcJsonUtils } from "@autocode-ts/autocode";
 
 export class AcSqlConnection {
-  static readonly KEY_CONNECTION_PORT = 'port';
-  static readonly KEY_CONNECTION_HOSTNAME = 'hostname';
-  static readonly KEY_CONNECTION_USERNAME = 'username';
-  static readonly KEY_CONNECTION_PASSWORD = 'password';
-  static readonly KEY_CONNECTION_DATABASE = 'database';
-  static readonly KEY_CONNECTION_OPTIONS = 'options';
+  static readonly KeyConnectionPort = 'port';
+  static readonly KeyConnectionHostname = 'hostname';
+  static readonly KeyConnectionUsername = 'username';
+  static readonly KeyConnectionPassword = 'password';
+  static readonly KeyConnectionDatabase = 'database';
+  static readonly KeyConnectionOptions = 'options';
 
   port: number = 0;
   hostname: string = '';

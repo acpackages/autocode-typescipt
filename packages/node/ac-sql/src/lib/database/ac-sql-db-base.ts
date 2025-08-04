@@ -9,7 +9,7 @@ import { AcMysqlDao } from "../daos/ac-mysql-dao";
 export class AcSqlDbBase {
   acDataDictionary!: AcDataDictionary;
   dao: AcBaseSqlDao | null = null;
-  databaseType: string = AcEnumSqlDatabaseType.UNKNOWN;
+  databaseType: string = AcEnumSqlDatabaseType.Unknown;
   dataDictionaryName: string = 'default';
   events!: AcEvents;
   logger!: AcLogger;
@@ -19,9 +19,9 @@ export class AcSqlDbBase {
     this.databaseType = AcSqlDatabase.databaseType;
     this.sqlConnection = AcSqlDatabase.sqlConnection;
     this.useDataDictionary({ dataDictionaryName });
-    this.logger = new AcLogger({ logType: AcEnumLogType.PRINT, logMessages: true });
+    this.logger = new AcLogger({ logType: AcEnumLogType.Print, logMessages: true });
 
-    if (this.databaseType === AcEnumSqlDatabaseType.MYSQL) {
+    if (this.databaseType === AcEnumSqlDatabaseType.MySql) {
       this.dao = new AcMysqlDao();
       this.dao.setSqlConnection({ sqlConnection: this.sqlConnection! });
     }

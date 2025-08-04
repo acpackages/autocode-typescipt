@@ -1,11 +1,8 @@
-
-export const AcEnumDDSqlEntity = {
-  FUNCTION: "function",
-  RELATIONSHIP: "relationship",
-  STORED_PROCEDURE: "stored_procedure",
-  TABLE: "table",
-  TRIGGER: "trigger",
-  VIEW: "view",
-} as const;
-
-export type AcEnumDDSqlEntity = typeof AcEnumDDSqlEntity[keyof typeof AcEnumDDSqlEntity];
+export enum AcEnumSqlEntity {
+  Function = "function",
+  Relationship = "relationship",
+  StoredProcedure = "stored_procedure",
+  Table = "table",
+  Trigger = "trigger",
+  View = "view",
+}

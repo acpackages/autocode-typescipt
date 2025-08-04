@@ -1,9 +1,7 @@
-export const AcEnumLogType = {
-  CONSOLE: 'console',
-  PRINT: 'print',
-  HTML: 'html',
-  SQLITE: 'sqlite',
-  TEXT: 'text',
-} as const;
-
-export type AcEnumLogType = typeof AcEnumLogType[keyof typeof AcEnumLogType];
+export enum AcEnumLogType {
+  Console = 'console',
+  Print = 'print',
+  Html = 'html',
+  Sqlite = 'sqlite',
+  Text = 'text',
+}

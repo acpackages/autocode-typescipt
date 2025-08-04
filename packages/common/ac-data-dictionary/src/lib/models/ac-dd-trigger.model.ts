@@ -4,25 +4,25 @@ import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocod
 import { AcDataDictionary } from "../..";
 
 export class AcDDTrigger {
-  static readonly KEY_ROW_OPERATION = "row_operation";
-  static readonly KEY_TABLE_NAME = "table_name";
-  static readonly KEY_TRIGGER_CODE = "trigger_code";
-  static readonly KEY_TRIGGER_EXECUTION = "trigger_execution";
-  static readonly KEY_TRIGGER_NAME = "trigger_name";
+  static readonly KeyRowOperation = "row_operation";
+  static readonly KeyTableName = "table_name";
+  static readonly KeyTriggerCode = "trigger_code";
+  static readonly KeyTriggerExecution = "trigger_execution";
+  static readonly KeyTriggerName = "trigger_name";
 
-  @AcBindJsonProperty({ key: AcDDTrigger.KEY_ROW_OPERATION })
+  @AcBindJsonProperty({ key: AcDDTrigger.KeyRowOperation })
   rowOperation: string = "";
 
-  @AcBindJsonProperty({ key: AcDDTrigger.KEY_TRIGGER_EXECUTION })
+  @AcBindJsonProperty({ key: AcDDTrigger.KeyTriggerExecution })
   triggerExecution: string = "";
 
-  @AcBindJsonProperty({ key: AcDDTrigger.KEY_TABLE_NAME })
+  @AcBindJsonProperty({ key: AcDDTrigger.KeyTableName })
   tableName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDTrigger.KEY_TRIGGER_NAME })
+  @AcBindJsonProperty({ key: AcDDTrigger.KeyTriggerName })
   triggerName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDTrigger.KEY_TRIGGER_CODE })
+  @AcBindJsonProperty({ key: AcDDTrigger.KeyTriggerCode })
   triggerCode: string = "";
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDTrigger {
@@ -42,15 +42,15 @@ export class AcDDTrigger {
     return result;
   }
 
-  static getDropTriggerStatement({triggerName,databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { triggerName: string; databaseType?: string }): string {
+  static getDropTriggerStatement({triggerName,databaseType=AcEnumSqlDatabaseType.Unknown}: { triggerName: string; databaseType?: string }): string {
     // default for databaseType param if not provided
-    return `DROP TRIGGER IF EXISTS ${triggerName};`;
+    return `DROP Trigger IF EXISTS ${triggerName};`;
   }
 
-  getCreateTriggerStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
+  getCreateTriggerStatement({databaseType=AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
     let result = '';
-    if ([AcEnumSqlDatabaseType.MYSQL, AcEnumSqlDatabaseType.SQLITE].includes(databaseType as any)) {
-      result = `CREATE TRIGGER ${this.triggerName} ${this.triggerExecution} ${this.rowOperation} ON ${this.tableName} FOR EACH ROW BEGIN ${this.triggerCode} END;`;
+    if ([AcEnumSqlDatabaseType.MySql, AcEnumSqlDatabaseType.Sqlite].includes(databaseType as any)) {
+      result = `CREATE Trigger ${this.triggerName} ${this.triggerExecution} ${this.rowOperation} ON ${this.tableName} FOR EACH ROW BEGIN ${this.triggerCode} END;`;
     }
     return result;
   }

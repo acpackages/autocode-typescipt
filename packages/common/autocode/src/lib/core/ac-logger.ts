@@ -4,7 +4,7 @@ import { AcBackgroundFile } from './ac-background-file';
 import { Autocode } from './autocode';
 
 export class AcLogger {
-  logType: AcEnumLogType = AcEnumLogType.CONSOLE;
+  logType: AcEnumLogType = AcEnumLogType.Console;
   logMessages: boolean = true;
   prefix: string = "";
   logDirectory: string = "";
@@ -28,7 +28,7 @@ export class AcLogger {
     prefix = "",
     logDirectory = "logs",
     logFileName = "",
-    logType = AcEnumLogType.CONSOLE,
+    logType = AcEnumLogType.Console,
   }:{
     logMessages?:boolean,
     prefix?:string,
@@ -73,7 +73,7 @@ export class AcLogger {
 
   closeLogFile() {
     if (this.logFileCreated && this.logFile) {
-      if (this.logType === AcEnumLogType.HTML) {
+      if (this.logType === AcEnumLogType.Html) {
         this.logFile.writeAsString("\n\t\t</table>\n\t</body>\n</html>");
       }
       this.logFile.close(); // Ensure to close the log file
@@ -84,7 +84,7 @@ export class AcLogger {
     if(!Autocode.isBrowser()){
 
       this.logFile = new AcBackgroundFile(this.logFilePath);
-      if (this.logType === AcEnumLogType.HTML) {
+      if (this.logType === AcEnumLogType.Html) {
         this.logFile.writeAsString("<html lang=\"eng\">\n\t<style>\n\t\t[ac-logger-message-data=timestamp]{\n\t\t\t width:225px;\n\t\t\t vertical-align:top;\n\t\t}\n\t\t[ac-logger-message-type=warn]{\n\t\t\t color:orange;\n\t\t}\n\t\t[ac-logger-message-type=error]{\n\t\t\t color:red;\n\t\t}\n\t\t[ac-logger-message-type=success]{\n\t\t\t color:green;\n\t\t}\n\t\t[ac-logger-message-type=info]{\n\t\t\t color:blue;\n\t\t}\n\t\t[ac-logger-message-type=debug]{\n\t\t\t color:magenta;\n\t\t}</style>\n\t<body>\n\t\t<table>");
       }
 
@@ -108,14 +108,14 @@ export class AcLogger {
     if (this.logMessages) {
       if (Array.isArray(args)) {
         for (const message of args) {
-          if (this.logType !== AcEnumLogType.CONSOLE) {
+          if (this.logType !== AcEnumLogType.Console) {
             this._writeToFile(message, type);
           } else {
             this._consoleMessage(message, type);
           }
         }
       } else {
-        if (this.logType !== AcEnumLogType.CONSOLE) {
+        if (this.logType !== AcEnumLogType.Console) {
           this._writeToFile(args, type);
         } else {
           this._consoleMessage(args, type);
@@ -140,7 +140,7 @@ export class AcLogger {
         catch(ex){ /* empty */ }
       }
       message = message.toString();
-      if (this.logType === AcEnumLogType.HTML) {
+      if (this.logType === AcEnumLogType.Html) {
         this._writeHtml(timestamp, message, type);
       } else {
         this._writeText(timestamp, message, type);

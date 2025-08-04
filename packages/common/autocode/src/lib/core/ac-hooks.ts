@@ -3,27 +3,22 @@ import { AcHookExecutionResult } from "../models/ac-hook-execution-result.model"
 import { Autocode } from "./autocode";
 
 export class AcHooks {
-  private static _hooks: Record<string, Record<string, Function>> = {};
+  private hooks: Record<string, Record<string, Function>> = {};
+  private allHookCallbacks: Record<string, Function> = {};
 
-  static execute({
-    hookName,
-    args = [],
-  }: {
-    hookName: string;
-    args?: any[];
-  }): AcHookExecutionResult {
+  execute({ hookName, args = [] }: { hookName: string; args?: any; }): AcHookExecutionResult {
     const result = new AcHookExecutionResult();
     try {
       const functionResults: Record<string, any> = {};
       let continueOperation = true;
 
-      if (AcHooks._hooks[hookName]) {
-        const functionsToExecute = AcHooks._hooks[hookName];
+      if (this.hooks[hookName]) {
+        const functionsToExecute = this.hooks[hookName];
 
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
           if (!continueOperation) break;
 
-          const functionResult = fun(...args);
+          const functionResult = fun(args);
 
           if (functionResult != null) {
             functionResults[functionId] = functionResult;
@@ -39,6 +34,24 @@ export class AcHooks {
         }
       }
 
+      for (const [functionId, fun] of Object.entries(this.allHookCallbacks)) {
+          if (!continueOperation) break;
+
+          const functionResult = fun(hookName, args);
+
+          if (functionResult != null) {
+            functionResults[functionId] = functionResult;
+
+            if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
+              continueOperation = false;
+            }
+
+            if (functionResult.continueOperation !== true) {
+              result.continueOperation = false;
+            }
+          }
+        }
+
       if (Object.keys(functionResults).length > 0) {
         result.hasResults = true;
         result.results = functionResults;
@@ -52,26 +65,41 @@ export class AcHooks {
     return result;
   }
 
-  static subscribe({
+  subscribe({
     hookName,
     callback,
   }: {
     hookName: string;
     callback: Function;
   }): string {
-    if (!AcHooks._hooks[hookName]) {
-      AcHooks._hooks[hookName] = {};
+    if (!this.hooks[hookName]) {
+      this.hooks[hookName] = {};
     }
     const subscriptionId = Autocode.uniqueId();
-    AcHooks._hooks[hookName][subscriptionId] = callback;
+    this.hooks[hookName][subscriptionId] = callback;
+    return subscriptionId;
+  }
+
+  subscribeAllHooks({ callback }: { callback: Function }): string {
+    const subscriptionId = Autocode.uniqueId();
+    this.allHookCallbacks[subscriptionId] = callback;
     return subscriptionId;
   }
 
   unsubscribe({ subscriptionId }: { subscriptionId: string }): void {
-    for (const hookFunctions of Object.values(AcHooks._hooks)) {
+    for (const hookFunctions of Object.values(this.hooks)) {
       if (hookFunctions[subscriptionId]) {
         delete hookFunctions[subscriptionId];
       }
     }
   }
+
+  unsubscribeAllHooks({ subscriptionId }: { subscriptionId: string }): void {
+    if (this.allHookCallbacks[subscriptionId]) {
+      delete this.allHookCallbacks[subscriptionId];
+    }
+  }
+
 }
+
+export const acHooks = new AcHooks();

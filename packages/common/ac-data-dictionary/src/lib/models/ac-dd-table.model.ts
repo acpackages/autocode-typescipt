@@ -6,17 +6,17 @@ import { AcDataDictionary, AcDDTableColumn, AcDDTableProperty, AcEnumDDTableProp
 
 
 export class AcDDTable {
-  static readonly KEY_TABLE_COLUMNS = "table_columns";
-  static readonly KEY_TABLE_NAME = "table_name";
-  static readonly KEY_TABLE_PROPERTIES = "table_properties";
+  static readonly KeyTableColumns = "table_columns";
+  static readonly KeyTableName = "table_name";
+  static readonly KeyTableProperties = "table_properties";
 
-  @AcBindJsonProperty({ key: AcDDTable.KEY_TABLE_COLUMNS })
+  @AcBindJsonProperty({ key: AcDDTable.KeyTableColumns })
   tableColumns: AcDDTableColumn[] = [];
 
-  @AcBindJsonProperty({ key: AcDDTable.KEY_TABLE_NAME })
+  @AcBindJsonProperty({ key: AcDDTable.KeyTableName })
   tableName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDTable.KEY_TABLE_PROPERTIES })
+  @AcBindJsonProperty({ key: AcDDTable.KeyTableProperties })
   tableProperties: AcDDTableProperty[] = [];
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDTable {
@@ -25,8 +25,8 @@ export class AcDDTable {
     return instance;
   }
 
-  static getDropTableStatement({tableName,databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { tableName: string; databaseType?: string }): string {
-    return `DROP TABLE IF EXISTS ${tableName};`;
+  static getDropTableStatement({tableName,databaseType=AcEnumSqlDatabaseType.Unknown}: { tableName: string; databaseType?: string }): string {
+    return `DROP Table IF EXISTS ${tableName};`;
   }
 
   static getInstance({tableName,dataDictionaryName="default"}: { tableName: string; dataDictionaryName?: string }): AcDDTable {
@@ -48,11 +48,11 @@ export class AcDDTable {
     return this.tableColumns.map((column) => column.columnName);
   }
 
-  getCreateTableStatement({databaseType=AcEnumSqlDatabaseType.UNKNOWN}: { databaseType?: string } = {}): string {
+  getCreateTableStatement({databaseType=AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
     const columnDefinitions = this.tableColumns
       .map((column) => column.getColumnDefinitionForStatement({ databaseType }))
       .filter((def) => def !== "");
-    return `CREATE TABLE IF NOT EXISTS ${this.tableName} (${columnDefinitions.join(", ")});`;
+    return `CREATE Table IF NOT EXISTS ${this.tableName} (${columnDefinitions.join(", ")});`;
   }
 
   getPrimaryKeyColumnName(): string {
@@ -84,7 +84,7 @@ export class AcDDTable {
   getPluralName(): string {
     let result = this.tableName;
     for (const property of this.tableProperties) {
-      if (property.propertyName === AcEnumDDTableProperty.PLURAL_NAME) {
+      if (property.propertyName === AcEnumDDTableProperty.PluralName) {
         result = property.propertyValue;
         break;
       }
@@ -95,7 +95,7 @@ export class AcDDTable {
   getSingularName(): string {
     let result = this.tableName;
     for (const property of this.tableProperties) {
-      if (property.propertyName === AcEnumDDTableProperty.SINGULAR_NAME) {
+      if (property.propertyName === AcEnumDDTableProperty.SingularName) {
         result = property.propertyValue;
         break;
       }
@@ -109,20 +109,20 @@ export class AcDDTable {
 
   fromJson({ jsonData }: { jsonData: any }): this {
 
-    if (AcDDTable.KEY_TABLE_COLUMNS in jsonData && typeof jsonData[AcDDTable.KEY_TABLE_COLUMNS] === "object" && !Array.isArray(jsonData[AcDDTable.KEY_TABLE_COLUMNS])) {
-      for (const [columnName, columnData] of Object.entries(jsonData[AcDDTable.KEY_TABLE_COLUMNS])) {
+    if (AcDDTable.KeyTableColumns in jsonData && typeof jsonData[AcDDTable.KeyTableColumns] === "object" && !Array.isArray(jsonData[AcDDTable.KeyTableColumns])) {
+      for (const [columnName, columnData] of Object.entries(jsonData[AcDDTable.KeyTableColumns])) {
         const column = AcDDTableColumn.instanceFromJson({ jsonData: columnData });
         column.table = this;
         this.tableColumns.push(column);
       }
-      delete jsonData[AcDDTable.KEY_TABLE_COLUMNS];
+      delete jsonData[AcDDTable.KeyTableColumns];
     }
 
-    if (AcDDTable.KEY_TABLE_PROPERTIES in jsonData && typeof jsonData[AcDDTable.KEY_TABLE_PROPERTIES] === "object" && !Array.isArray(jsonData[AcDDTable.KEY_TABLE_PROPERTIES])) {
-      for (const propertyData of Object.values(jsonData[AcDDTable.KEY_TABLE_PROPERTIES])) {
+    if (AcDDTable.KeyTableProperties in jsonData && typeof jsonData[AcDDTable.KeyTableProperties] === "object" && !Array.isArray(jsonData[AcDDTable.KeyTableProperties])) {
+      for (const propertyData of Object.values(jsonData[AcDDTable.KeyTableProperties])) {
         this.tableProperties.push(AcDDTableProperty.instanceFromJson({ jsonData: propertyData }));
       }
-      delete jsonData[AcDDTable.KEY_TABLE_PROPERTIES];
+      delete jsonData[AcDDTable.KeyTableProperties];
     }
 
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });

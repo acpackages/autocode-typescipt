@@ -1,7 +1,5 @@
-export const AcEnumDDColumnRelationType = {
-  ANY: "any",
-  SOURCE: "source",
-  DESTINATION: "destination",
-} as const;
-
-export type AcEnumDDColumnRelationType = typeof AcEnumDDColumnRelationType[keyof typeof AcEnumDDColumnRelationType];
+export enum AcEnumDDColumnRelationType {
+  Any = "any",
+  Source = "source",
+  Destination = "destination",
+}

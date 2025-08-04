@@ -2,68 +2,68 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDataDictionary, AcDDCondition, AcDDConditionGroup, AcDDTableColumn, AcEnumDDColumnType, AcEnumDDConditionOperator, AcEnumDDLogicalOperator } from "../..";
+import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils, AcEnumLogicalOperator, AcEnumConditionOperator } from "@autocode-ts/autocode";
+import { AcDataDictionary, AcDDCondition, AcDDConditionGroup, AcDDTableColumn, AcEnumDDColumnType } from "../..";
 
 export class AcDDSelectStatement {
-  static readonly KEY_CONDITION = "condition";
-  static readonly KEY_CONDITION_GROUP = "condition_group";
-  static readonly KEY_DATABASE_TYPE = "database_type";
-  static readonly KEY_DATA_DICTIONARY_NAME = "data_dictionary_name";
-  static readonly KEY_EXCLUDE_COLUMNS = "exclude_columns";
-  static readonly KEY_INCLUDE_COLUMNS = "include_columns";
-  static readonly KEY_ORDER_BY = "order_by";
-  static readonly KEY_PAGE_NUMBER = "page_number";
-  static readonly KEY_PAGE_SIZE = "page_size";
-  static readonly KEY_PARAMETERS = "parameters";
-  static readonly KEY_SELECT_STATEMENT = "select_statement";
-  static readonly KEY_SQL_STATEMENT = "sql_statement";
-  static readonly KEY_TABLE_NAME = "table_name";
+  static readonly KeyCondition = "condition";
+  static readonly KeyConditionGroup = "condition_group";
+  static readonly KeyDatabaseType = "database_type";
+  static readonly KeyDataDictionaryName = "data_dictionary_name";
+  static readonly KeyExcludeColumns = "exclude_columns";
+  static readonly KeyIncludeColumns = "include_columns";
+  static readonly KeyOrderBy = "order_by";
+  static readonly KeyPageNumber = "page_number";
+  static readonly KeyPageSize = "page_size";
+  static readonly KeyParameters = "parameters";
+  static readonly KeySelectStatement = "select_statement";
+  static readonly KeySqlStatement = "sql_statement";
+  static readonly KeyTableName = "table_name";
 
   condition: string = "";
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_CONDITION_GROUP })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyConditionGroup })
   conditionGroup!: AcDDConditionGroup;
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_DATABASE_TYPE })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyDatabaseType })
   databaseType: string = "";
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_DATA_DICTIONARY_NAME })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyDataDictionaryName })
   dataDictionaryName: string = "";
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_EXCLUDE_COLUMNS })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyExcludeColumns })
   excludeColumns: string[] = [];
 
   groupStack: AcDDConditionGroup[] = [];
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_INCLUDE_COLUMNS })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyIncludeColumns })
   includeColumns: string[] = [];
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_ORDER_BY })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyOrderBy })
   orderBy: string = "";
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_PAGE_NUMBER })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyPageNumber })
   pageNumber: number = 0;
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_PAGE_SIZE })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyPageSize })
   pageSize: number = 0;
 
   parameters: Record<string, any> = {};
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_SELECT_STATEMENT })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeySelectStatement })
   selectStatement: string = "";
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_SQL_STATEMENT })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeySqlStatement })
   sqlStatement: string = "";
 
-  @AcBindJsonProperty({ key: AcDDSelectStatement.KEY_TABLE_NAME })
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyTableName })
   tableName: string = "";
 
   constructor({ tableName = "", dataDictionaryName = "default" }: { tableName?: string, dataDictionaryName?: string } = {}) {
     this.tableName = tableName;
     this.dataDictionaryName = dataDictionaryName;
     this.conditionGroup = new AcDDConditionGroup();
-    this.conditionGroup.operator = AcEnumDDLogicalOperator.AND;
+    this.conditionGroup.operator = AcEnumLogicalOperator.And;
     this.groupStack.push(this.conditionGroup);
   }
 
@@ -73,7 +73,7 @@ export class AcDDSelectStatement {
     orderBy = "",
     pageNumber = 0,
     pageSize = 0,
-    databaseType = AcEnumSqlDatabaseType.UNKNOWN
+    databaseType = AcEnumSqlDatabaseType.Unknown
   }: {
     selectStatement?: string,
     condition?: string,
@@ -106,7 +106,7 @@ export class AcDDSelectStatement {
     return this;
   }
 
-  addConditionGroup({ conditions, operator = AcEnumDDLogicalOperator.AND }: { conditions: any[], operator?: string }): this {
+  addConditionGroup({ conditions, operator = AcEnumLogicalOperator.And }: { conditions: any[], operator?: string }): this {
     this.groupStack[this.groupStack.length - 1].addConditionGroup({ conditions, operator });
     return this;
   }
@@ -164,10 +164,10 @@ export class AcDDSelectStatement {
   }
 
   setConditionsFromFilters({ filters }: { filters: Record<string, any> }): this {
-    if (filters.hasOwnProperty(AcDDConditionGroup.KEY_CONDITIONS)) {
-      const operator = filters[AcDDConditionGroup.KEY_OPERATOR] ?? AcEnumDDLogicalOperator.AND;
+    if (filters.hasOwnProperty(AcDDConditionGroup.KeyConditions)) {
+      const operator = filters[AcDDConditionGroup.KeyOperator] ?? AcEnumLogicalOperator.And;
       this.addConditionGroup({
-        conditions: filters[AcDDConditionGroup.KEY_CONDITIONS],
+        conditions: filters[AcDDConditionGroup.KeyConditions],
         operator
       });
     }
@@ -185,7 +185,7 @@ export class AcDDSelectStatement {
     };
 
     switch (acDDCondition.operator) {
-      case AcEnumDDConditionOperator.BETWEEN:
+      case AcEnumConditionOperator.Between:
         if (Array.isArray(acDDCondition.value) && acDDCondition.value.length === 2) {
           const p1 = newParam(acDDCondition.value[0]);
           this.condition += `${colName} BETWEEN ${p1}`;
@@ -193,50 +193,50 @@ export class AcDDSelectStatement {
           this.condition += ` AND ${p2}`;
         }
         break;
-      case AcEnumDDConditionOperator.CONTAINS:
+      case AcEnumConditionOperator.Contains:
         return this.setSqlLikeStringCondition({ acDDCondition });
-      case AcEnumDDConditionOperator.ENDS_WITH:
+      case AcEnumConditionOperator.EndsWith:
         return this.setSqlLikeStringCondition({ acDDCondition, includeInBetween: false, includeStart: false });
-      case AcEnumDDConditionOperator.STARTS_WITH:
+      case AcEnumConditionOperator.StartsWith:
         return this.setSqlLikeStringCondition({ acDDCondition, includeInBetween: false, includeEnd: false });
-      case AcEnumDDConditionOperator.EQUAL_TO:
+      case AcEnumConditionOperator.EqualTo:
         parameterName = newParam(acDDCondition.value);
         this.condition += `${colName} = ${parameterName}`;
         break;
-      case AcEnumDDConditionOperator.NOT_EQUAL_TO:
+      case AcEnumConditionOperator.NotEqualTo:
         parameterName = newParam(acDDCondition.value);
         this.condition += `${colName} != ${parameterName}`;
         break;
-      case AcEnumDDConditionOperator.GREATER_THAN:
+      case AcEnumConditionOperator.GreaterThan:
         parameterName = newParam(acDDCondition.value);
         this.condition += `${colName} > ${parameterName}`;
         break;
-      case AcEnumDDConditionOperator.GREATER_THAN_EQUAL_TO:
+      case AcEnumConditionOperator.GreaterThanEqualTo:
         parameterName = newParam(acDDCondition.value);
         this.condition += `${colName} >= ${parameterName}`;
         break;
-      case AcEnumDDConditionOperator.LESS_THAN:
+      case AcEnumConditionOperator.LessThan:
         parameterName = newParam(acDDCondition.value);
         this.condition += `${colName} < ${parameterName}`;
         break;
-      case AcEnumDDConditionOperator.LESS_THAN_EQUAL_TO:
+      case AcEnumConditionOperator.LessThanEqualTo:
         parameterName = newParam(acDDCondition.value);
         this.condition += `${colName} <= ${parameterName}`;
         break;
-      case AcEnumDDConditionOperator.IN:
-      case AcEnumDDConditionOperator.NOT_IN:
+      case AcEnumConditionOperator.In:
+      case AcEnumConditionOperator.NotIn:
         parameterName = newParam(
           typeof acDDCondition.value === "string" ? acDDCondition.value.split(",") : acDDCondition.value
         );
-        this.condition += `${colName} ${acDDCondition.operator === AcEnumDDConditionOperator.NOT_IN ? "NOT " : ""}IN (${parameterName})`;
+        this.condition += `${colName} ${acDDCondition.operator === AcEnumConditionOperator.NotIn ? "NOT " : ""}IN (${parameterName})`;
         break;
-      case AcEnumDDConditionOperator.IS_NULL:
+      case AcEnumConditionOperator.IsNull:
         this.condition += `${colName} IS NULL`;
         break;
-      case AcEnumDDConditionOperator.IS_NOT_NULL:
+      case AcEnumConditionOperator.IsNotNull:
         this.condition += `${colName} IS NOT NULL`;
         break;
-      case AcEnumDDConditionOperator.IS_EMPTY:
+      case AcEnumConditionOperator.IsEmpty:
         this.condition += `${colName} = ''`;
         break;
       default:
@@ -284,7 +284,7 @@ export class AcDDSelectStatement {
       parts.push(`${colCheck} LIKE ${param}`);
     };
 
-    if (tableColumn.columnType === AcEnumDDColumnType.JSON) {
+    if (tableColumn.columnType === AcEnumDDColumnType.Json) {
       if (includeStart) addCondition(`%"${jsonCol}":"${likeValue}%"%`);
       if (includeInBetween) addCondition(`%"${jsonCol}":"%${likeValue}%"%`);
       if (includeEnd) addCondition(`%"${jsonCol}":"%${likeValue}"%`);

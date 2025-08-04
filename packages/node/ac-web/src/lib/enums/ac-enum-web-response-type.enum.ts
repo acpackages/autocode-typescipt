@@ -1,12 +1,10 @@
-export const AcEnumWebResponseType = {
-  DOWNLOAD: "download",
-  FILE: "file",
-  HTML: "html",
-  JSON: "json",
-  REDIRECT: "redirect",
-  RAW: "raw",
-  TEXT: "text",
-  VIEW: "view",
-} as const;
-
-export type AcEnumWebResponseType = typeof AcEnumWebResponseType[keyof typeof AcEnumWebResponseType];
+export enum AcEnumWebResponseType {
+  Download = "download",
+  File = "file",
+  Html = "html",
+  Json = "json",
+  Redirect = "redirect",
+  Raw = "raw",
+  Text = "text",
+  View = "view",
+}

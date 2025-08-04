@@ -6,16 +6,16 @@ import { Autocode } from "./autocode";
 
 export class AcEvents {
   private events: Record<string, Record<string, Function>> = {};
+  private allEventCallbacks: Record<string, Function> = {};
 
   execute({ eventName, args }: { eventName: string; args?: any }): AcEventExecutionResult {
     const result = new AcEventExecutionResult();
-
     try {
       const functionResults: Record<string, AcEventExecutionResult> = {};
       if (this.events[eventName]) {
         const functionsToExecute = this.events[eventName];
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
-          const functionResult = Array.isArray(args) ? fun(...args) : fun(args);
+          const functionResult = fun(args);
           if (
             functionResult &&
             functionResult instanceof AcEventExecutionResult &&
@@ -23,6 +23,16 @@ export class AcEvents {
           ) {
             functionResults[functionId] = functionResult;
           }
+        }
+      }
+      for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
+        const functionResult = fun(eventName, args);
+        if (
+          functionResult &&
+          functionResult instanceof AcEventExecutionResult &&
+          functionResult.status === 'success'
+        ) {
+          functionResults[functionId] = functionResult;
         }
       }
       if (Object.keys(functionResults).length > 0) {
@@ -46,12 +56,24 @@ export class AcEvents {
     return subscriptionId;
   }
 
+  subscribeAllEvents({ callback }: { callback: Function }): string {
+    const subscriptionId = Autocode.uniqueId();
+    this.allEventCallbacks[subscriptionId] = callback;
+    return subscriptionId;
+  }
+
   unsubscribe({ subscriptionId }: { subscriptionId: string }): void {
     for (const eventName in this.events) {
       const eventFunctions = this.events[eventName];
       if (eventFunctions[subscriptionId]) {
         delete eventFunctions[subscriptionId];
       }
+    }
+  }
+
+  unsubscribeAllEvents({ subscriptionId }: { subscriptionId: string }): void {
+    if (this.allEventCallbacks[subscriptionId]) {
+      delete this.allEventCallbacks[subscriptionId];
     }
   }
 }

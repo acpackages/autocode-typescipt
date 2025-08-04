@@ -1,0 +1,84 @@
+
+import { AcDatagridHtmlPlaceholder, AcDatagridRowDraggingHtmlPlaceholder, AcDatagridTreeTableHtmlPlaceholder, AcPaginationHtmlPlaceholder } from '@autocode-ts/ac-browser';
+import { AcRouter } from './utils/ac-router';
+import { DashboardPage } from './pages/dashboard/dashboard.page';
+import { AggridLocalData } from './pages/ag-grid/local-data.page';
+import { DatagridLocalData } from './pages/datagrid/local-data.page';
+import { DatagridLocalDataTree } from './pages/datagrid/local-data-tree.page';
+import { DraggableAxisLockPage } from './pages/draggable/axis-lock';
+import { DraggableBasicPage } from './pages/draggable/basic';
+import { DraggableCloneRevertPage } from './pages/draggable/clone-revert';
+import { DraggableGroupedTestPage } from './pages/draggable/groupped';
+import { DraggableSnapGridPage } from './pages/draggable/snap-grid';
+import { DraggableSortablePage } from './pages/draggable/sortable';
+import { InputBasicPage } from './pages/inputs/basic.page';
+import { TemplateEnginePage } from './pages/template-engine/template-engine.page';
+import { AggridLocalDataTree } from './pages/ag-grid/local-data-tree.page';
+import { CollapseTestPage } from './pages/collapse/collapse-all-tests.page';
+
+AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
+AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
+AcPaginationHtmlPlaceholder.next = `<i class="fa-solid fa-angle-right"></i>`;
+AcPaginationHtmlPlaceholder.last = `<i class="fa-solid fa-angles-right"></i>`;
+
+AcDatagridHtmlPlaceholder.appliedFilter = `<i class="fa-solid fa-filter"></i>`;
+AcDatagridHtmlPlaceholder.filter = `<i class="fa-solid fa-align-center" style='transform: rotate(179deg);'></i>`;
+AcDatagridHtmlPlaceholder.sort = `<i class="fa-solid fa-sort"></i>`;
+AcDatagridHtmlPlaceholder.resize = `&nbsp;`;
+AcDatagridHtmlPlaceholder.sortAscending = `<i class="fa-solid fa-arrow-down-short-wide"></i>`;
+AcDatagridHtmlPlaceholder.sortDescending = `<i class="fa-solid fa-arrow-down-wide-short"></i>`;
+
+AcDatagridRowDraggingHtmlPlaceholder.drag = `<i class="fa-solid fa-grip-lines"></i>`;
+
+AcDatagridTreeTableHtmlPlaceholder.treeClosed = `<i class="fa-solid fa-plus"></i>`;
+AcDatagridTreeTableHtmlPlaceholder.treeOpen = `<i class="fa-solid fa-minus"></i>`;
+
+window.addEventListener('DOMContentLoaded', () => {
+  AcRouter.registerRoute({label:'Dashboard',path:'/',componentTag:'dashboard-page',component:DashboardPage});
+  AcRouter.registerRouteGroup({
+    label:'AGGrid',
+    routes:[
+      {label:'Local Data', path: '/aggrid/local-data', componentTag: 'aggrid-local-data', component: AggridLocalData },
+      {label:'Local Data Tree', path: '/aggrid/local-data-tree', componentTag: 'aggrid-local-data-tree', component: AggridLocalDataTree },
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Collapse',
+    routes:[
+      {label:'All Directions', path: '/collapse/all-directions', componentTag: 'collapse-all-directions', component: CollapseTestPage },
+      // {label:'Local Data Tree', path: '/aggrid/local-data-tree', componentTag: 'aggrid-local-data-tree', component: AggridLocalDataTree },
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Datagrid',
+    routes:[
+      {label:'Local Data', path: '/datagrid/local-data', componentTag: 'datagrid-local-data', component: DatagridLocalData },
+      {label:'Local Data Tree', path: '/datagrid/local-data-tree', componentTag: 'datagrid-local-data-tree', component: DatagridLocalDataTree },
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Drag/Drop',
+    routes:[
+      {label:'Axis Lock', path: '/draggable/axis-lock', componentTag: 'draggable-axis-lock', component: DraggableAxisLockPage },
+      {label:'Basic', path: '/draggable/basic', componentTag: 'draggable-basic', component: DraggableBasicPage },
+      {label:'Clone/Revert', path: '/draggable/clone-revert', componentTag: 'draggable-clone-revert', component: DraggableCloneRevertPage },
+      {label:'Grouped', path: '/draggable/grouped', componentTag: 'draggable-grouped', component: DraggableGroupedTestPage },
+      {label:'Snap Grid', path: '/draggable/snap-grid', componentTag: 'draggable-snap-grid', component: DraggableSnapGridPage },
+      {label:'Sortable', path: '/draggable/sortable', componentTag: 'draggable-sortable', component: DraggableSortablePage },
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Inputs',
+    routes:[
+      {label:'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Template Engine',
+    routes:[
+      {label:'Basic', path: '/template-engine', componentTag: 'template-engine', component: TemplateEnginePage }
+    ]
+  });
+  window.addEventListener('popstate', () => AcRouter.loadRoute(location.pathname));
+  AcRouter.loadRoute(location.pathname);
+});
