@@ -7,6 +7,7 @@ export * from './ac-enum-http-response-code.enum';
 export * from './ac-enum-log-type.enum';
 export * from './ac-enum-logical-operator.enum';
 export * from './ac-enum-programming-language.enum';
+export * from './ac-enum-sort-order.enum';
 export * from './ac-enum-sql-database-type.enum';
 export * from './ac-enum-sql-entity.enum';
 export * from './ac-enum-string-case.enum';

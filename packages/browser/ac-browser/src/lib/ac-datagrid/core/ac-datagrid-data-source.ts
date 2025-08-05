@@ -6,7 +6,7 @@ import { AcEnumSortDirection } from "../../enums/ac-enum-sort-direction.enum";
 import { IAcDatagridDisplayedRowsChangeEvent } from "../interfaces/event-args/ac-datagrid-displayed-rows-change-event.interface";
 import { IAcDatagridTotalRowsChangeEvent } from "../interfaces/event-args/ac-datagrid-total-rows-change-event.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
-import { IAcDatagriDataChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-data-change-hook-args.interface";
+import { IAcDatagridDataChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-data-change-hook-args.interface";
 import { IAcDatagridRowHookArgs } from "../interfaces/hook-args/ac-datagrid-row-hook-args.interface";
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 
@@ -25,7 +25,7 @@ export class AcDatagridDataSource {
     this.events.execute({ eventName: AcEnumDatagridEvent.DisplayedRowsChange, args: eventArgs });
   }
 
-  _totalRows: number = 0;
+  private _totalRows: number = 0;
   get totalRows(): number {
     return this._totalRows;
   }
@@ -52,52 +52,13 @@ export class AcDatagridDataSource {
     this.datagridApi = datagridApi;
   }
 
-  getTreeChildrenDatagridRows({ parentValue }: { parentValue?: any } = {}) {
-    const treeChildren: AcDatagridRow[] = [];
-    if (this.datagridApi.treeDataChildKey && this.datagridApi.treeDataParentKey) {
-      for (const datagridRow of this.datagridRows) {
-        if (parentValue) {
-          if (datagridRow.data[this.datagridApi.treeDataChildKey] == parentValue) {
-            treeChildren.push(datagridRow);
-          }
-        }
-        else {
-          if (!Autocode.validValue(datagridRow.data[this.datagridApi.treeDataChildKey])) {
-            treeChildren.push(datagridRow);
-          }
-        }
-      }
-      if (this.datagridApi.sortOrder.length > 0) {
-        treeChildren.sort((a: AcDatagridRow, b: AcDatagridRow): number => {
-          let index = 0;
-          for (const datagridColumn of this.datagridApi.sortOrder) {
-            const field = datagridColumn.colDef.field;
-            const valA: any = a.data[field];
-            const valB: any = b.data[field];
-            let result = 0;
-            if (typeof valA === "string") {
-              result = valA.localeCompare(valB);
-            } else {
-              result = valA - valB;
-            }
-            if (result !== 0) {
-              index = datagridColumn.sortDirection == AcEnumSortDirection.Ascending ? result : -result;
-              break;
-            }
-          }
-          return index;
-        });
-      }
-    }
-    return treeChildren;
+  getData({ startIndex = 0, rowsCount = 100}: { startIndex?: number; rowsCount?: number; } = {}){
+    //
   }
 
   processData() {
     this.processedDatagridRows = [...this.datagridRows];
-    if (this.datagridApi.isTreeData) {
-      this.processedDatagridRows = this.getTreeChildrenDatagridRows();
-      this.totalRows = this.processedDatagridRows.length;
-    }
+    this.totalRows = this.processedDatagridRows.length;
     if (this.datagridApi.sortOrder.length > 0) {
       this.processedDatagridRows.sort((a: AcDatagridRow, b: AcDatagridRow): number => {
         let index = 0;
@@ -122,8 +83,8 @@ export class AcDatagridDataSource {
     this.setDisplayedData();
   }
 
-  setData({ data }: { data: any[] }) {
-    const hookArgs: IAcDatagriDataChangeHookArgs = {
+  setData({ data,startIndex,totalCount }: { data: any[],startIndex?:number,totalCount?:number }) {
+    const hookArgs: IAcDatagridDataChangeHookArgs = {
       data: data,
       datagridApi: this.datagridApi,
       oldData: this.data
@@ -136,7 +97,7 @@ export class AcDatagridDataSource {
       const datagridRow: AcDatagridRow = new AcDatagridRow({
         data: row,
         index: index,
-        datagridApi:this.datagridApi
+        datagridApi: this.datagridApi
       });
       this.datagridRows.push(datagridRow);
       const hookArgs: IAcDatagridRowHookArgs = {
@@ -154,36 +115,17 @@ export class AcDatagridDataSource {
 
   setDisplayedData() {
     let displayedRows: AcDatagridRow[] = [];
-    if (this.datagridApi.isTreeData) {
-      const treeRootData: AcDatagridRow[] = this.getTreeChildrenDatagridRows();
-      if (this.datagridApi.usePagination && this.datagridApi.pagination) {
-        const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
-        const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
-        if (startIndex >= 0 && endIndex >= 0) {
-          for (let index = startIndex; index <= endIndex; index++) {
-            if (treeRootData.length > index) {
-              displayedRows.push(treeRootData[index]);
-            }
-          }
+    if (this.datagridApi.usePagination && this.datagridApi.pagination) {
+      const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
+      const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
+      if (startIndex >= 0 && endIndex >= 0) {
+        for (let index = startIndex; index <= endIndex; index++) {
+          displayedRows.push(this.processedDatagridRows[index]);
         }
-      }
-      else {
-        displayedRows = treeRootData;
       }
     }
     else {
-      if (this.datagridApi.usePagination && this.datagridApi.pagination) {
-        const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
-        const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
-        if (startIndex >= 0 && endIndex >= 0) {
-          for (let index = startIndex; index <= endIndex; index++) {
-            displayedRows.push(this.processedDatagridRows[index]);
-          }
-        }
-      }
-      else {
-        displayedRows = this.processedDatagridRows;
-      }
+      displayedRows = this.processedDatagridRows;
     }
     this.displayedDatagridRows = displayedRows;
   }

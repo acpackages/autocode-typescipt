@@ -6,9 +6,11 @@ import { AcFilter } from "./ac-filter.model";
 
 export class AcFilterGroup {
   static readonly KEY_FILTERS = "filters";
+  static readonly KEY_FILTER_GROUPS = "filter_groups";
   static readonly KEY_OPERATOR = "operator";
 
   filters: AcFilter[] = [];
+  filterGroups: AcFilterGroup[] = [];
   operator: AcEnumLogicalOperator = AcEnumLogicalOperator.And;
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcFilter {
@@ -40,6 +42,11 @@ export class AcFilterGroup {
 
   addFilterModel({filter}: {filter: AcFilter;}): this{
     this.filters.push(filter);
+    return this;
+  }
+
+  addFilterGroupModel({filterGroup}: {filterGroup: AcFilterGroup;}): this{
+    this.filterGroups.push(filterGroup);
     return this;
   }
 

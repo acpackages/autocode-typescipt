@@ -108,28 +108,6 @@ export class AcDatagridApi {
     return result;
   }
 
-  private _treeDataChildKey?: string;
-  get treeDataChildKey(): string | undefined {
-    return this._treeDataChildKey;
-  }
-  set treeDataChildKey(value: string) {
-    this._treeDataChildKey = value;
-    if (this._treeDataParentKey) {
-      this.isTreeData = true;
-    }
-  }
-
-  private _treeDataParentKey?: string;
-  get treeDataParentKey(): string | undefined {
-    return this._treeDataParentKey;
-  }
-  set treeDataParentKey(value: string) {
-    this._treeDataParentKey = value;
-    if (this._treeDataChildKey) {
-      this.isTreeData = true;
-    }
-  }
-
   private _usePagination: boolean = false;
   get usePagination(): boolean {
     return this._usePagination;
@@ -178,7 +156,6 @@ export class AcDatagridApi {
   hoverCellId?: string;
   hoverColumnId?: string;
   hoverRowId?: string;
-  isTreeData: boolean = false
   pagination?: AcPagination;
   sortOrder: AcDatagridColumn[] = [];
 

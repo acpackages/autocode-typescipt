@@ -1,6 +1,7 @@
 export const AcEnumDatagridHook = {
   BeforeColDefsChange: 'beforeColDefsChange',
   BeforeDataChange: 'beforeDataChange',
+  BeforeGetOnDemandData: 'beforeGetOnDemandData',
   BeforeHeaderColumnCellsCreated: 'beforeHeaderColumnCellsCreated',
   BeforeRowCellsCreated: 'beforeRowCellsCreated',
   BodyCreated: 'bodyCreated',
@@ -16,6 +17,7 @@ export const AcEnumDatagridHook = {
   DisplayedRowsChange: 'displayedRowsChange',
   ExtensionEnabled: 'extensionEnabled',
   FooterCreated: 'footerCreated',
+  GetOnDemandDataSuccessCallback: 'getOnDemandDataSuccessCallback',
   HeaderCreated: 'headerCreated',
   HeaderColumnCellsCreated: 'headerColumnCellsCreated',
   RowCellsCreated: 'rowCellsCreated',

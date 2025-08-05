@@ -15,6 +15,7 @@ import { InputBasicPage } from './pages/inputs/basic.page';
 import { TemplateEnginePage } from './pages/template-engine/template-engine.page';
 import { AggridLocalDataTree } from './pages/ag-grid/local-data-tree.page';
 import { CollapseTestPage } from './pages/collapse/collapse-all-tests.page';
+import { AggridOnDemandData } from './pages/ag-grid/on-demand-data.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -40,6 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
     routes:[
       {label:'Local Data', path: '/aggrid/local-data', componentTag: 'aggrid-local-data', component: AggridLocalData },
       {label:'Local Data Tree', path: '/aggrid/local-data-tree', componentTag: 'aggrid-local-data-tree', component: AggridLocalDataTree },
+      {label:'On-Demand Data', path: '/aggrid/on-demand-data', componentTag: 'on-demand-data', component: AggridOnDemandData },
     ]
   });
   AcRouter.registerRouteGroup({

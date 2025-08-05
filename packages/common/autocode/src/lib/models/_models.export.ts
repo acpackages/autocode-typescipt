@@ -5,3 +5,5 @@ export * from './ac-filter.model';
 export * from './ac-hook-execution-result.model';
 export * from './ac-hook-result.model';
 export * from './ac-result.model';
+export * from './ac-sort-order.model';
+export * from './ac-sort.model';

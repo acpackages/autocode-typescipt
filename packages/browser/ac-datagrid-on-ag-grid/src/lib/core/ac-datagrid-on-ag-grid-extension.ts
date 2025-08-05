@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColDef, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow } from '@autocode-ts/ac-browser';
-import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, AgEventListener, CellClickedEvent } from 'ag-grid-community';
+import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColDef, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridOnDemandRequestArgs, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs } from '@autocode-ts/ac-browser';
+import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, CellClickedEvent, IServerSideGetRowsParams, RowModelType, IServerSideDatasource } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AcDatagridRowSelectionExtensionOnAgGrid } from './ac-datagrid-row-selection-extension-on-ag-grid';
 import { IAcDatagriOnAgGridColDefsChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-col-defs-set-hook-args.interface';
@@ -14,6 +14,7 @@ import { IAcDatagridRowAddHookArgs } from 'packages/browser/ac-browser/src/lib/a
 import { IAcDatagriOnAgGridRowAddHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowUpdateHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface';
 import { IAcDatagridDataExportXlsxExportCallHookArgs } from 'packages/browser/ac-browser/src/lib/ac-datagrid/extensions/data-export-xlsx/interfaces/ac-datagrid-data-export-xlsx-export-call-hook-args.interface';
+import { AcEnumConditionOperator, AcEnumLogicalOperator, AcFilterGroup, AcSortOrder } from '@autocode-ts/autocode';
 
 export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   agGridElement = document.createElement('div');
@@ -24,13 +25,29 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   dataExportXlsxExtension?: AcDatagridDataExportXlsxExtension;
   data: any[] = [];
   gridApi!: GridApi;
+  gridOptions: GridOptions = {
+    alwaysMultiSort: true,
+    getRowId: (params: GetRowIdParams) => {
+      return params.data[this.rowKey];
+    },
+    pagination: false,
+  };
   isClientSideData: boolean = true;
+  onDemandDataSource: IServerSideDatasource = {
+    getRows: (params: IServerSideGetRowsParams) => {
+      console.log("Server side datasource");
+      this.onDemandRequestParams = params;
+      this.datagridApi.dataSource.getData();
+    }
+  };
+  onDemandRequestParams?: IServerSideGetRowsParams;
   rowKey: string = "__ac_row_id__";
   rowParentKey: string = "__ac_row_parent_id__";
   rowNumbersExtension?: AcDatagridRowNumbersExtension;
 
   constructor() {
     super();
+    console.log(this);
     this.registerModules();
   }
 
@@ -83,9 +100,99 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     return colDef;
   }
 
-  private getDatagridCell({data,colDef}:{data:any,colDef:ColDef}){
+  private getConditionOperator({ agGridOperator }: { agGridOperator: string }): AcEnumConditionOperator {
+    let result: AcEnumConditionOperator = AcEnumConditionOperator.EqualTo;
+    switch (agGridOperator) {
+      case "blank":
+      case "empty":
+        result = AcEnumConditionOperator.IsEmpty;
+        break;
+      case "contains":
+        result = AcEnumConditionOperator.Contains;
+        break;
+      case "endsWith":
+        result = AcEnumConditionOperator.EndsWith;
+        break;
+      case "equals":
+        result = AcEnumConditionOperator.EqualTo;
+        break;
+      case "greaterThan":
+        result = AcEnumConditionOperator.GreaterThan;
+        break;
+      case "greaterThanOrEqual":
+        result = AcEnumConditionOperator.GreaterThanEqualTo;
+        break;
+      case "inRange":
+        result = AcEnumConditionOperator.Between;
+        break;
+      case "lessThan":
+        result = AcEnumConditionOperator.LessThan;
+        break;
+      case "lessThanOrEqual":
+        result = AcEnumConditionOperator.LessThanEqualTo;
+        break;
+      case "notBlank":
+        // result = AcEnumConditionOperator.IsNotEmpty;
+        break;
+      case "notEqual":
+        result = AcEnumConditionOperator.NotEqualTo;
+        break;
+      case "notContains":
+        // result = AcEnumConditionOperator.NotContains;
+        break;
+      case "startsWith":
+        result = AcEnumConditionOperator.StartsWith;
+        break;
+    }
+    return result;
+  }
+
+  private getDatagridCell({ data, colDef }: { data: any, colDef: ColDef }) {
     const rowId = data[this.rowKey];
     const colField = colDef.field;
+  }
+
+  private handleBeforeGetOnDemandData(args: IAcDatagridBeforeGetOnDemandDataHookArgs) {
+    const requestArgs: IAcDatagridOnDemandRequestArgs = args.requestArgs;
+    if (this.onDemandRequestParams && this.onDemandRequestParams.request) {
+      const agGridRequest: any = this.onDemandRequestParams.request;
+      if (agGridRequest.startRow != undefined && agGridRequest.endRow != undefined) {
+        requestArgs.startIndex = agGridRequest.startRow;
+        const pageSize: number = agGridRequest.endRow - agGridRequest.startRow;
+        requestArgs.rowsCount = pageSize;
+      }
+      if (agGridRequest.filterModel) {
+        const filterColumns: string[] = Object.keys(agGridRequest.filterModel);
+        if (filterColumns.length > 0) {
+          const filterGroup: AcFilterGroup = new AcFilterGroup();
+          filterGroup.operator = AcEnumLogicalOperator.And;
+          for (const column of filterColumns) {
+            const filterModel = agGridRequest.filterModel[column];
+            if (filterModel.conditions) {
+              const columnFilterGroup: AcFilterGroup = new AcFilterGroup();
+              columnFilterGroup.operator = AcEnumLogicalOperator.And;
+              for (const condition of filterModel.conditions) {
+                columnFilterGroup.addFilter({ key: column, value: condition.value, operator: this.getConditionOperator({ agGridOperator: condition.type }) });
+              }
+              filterGroup.addFilterGroupModel({ filterGroup: columnFilterGroup });
+            }
+            else {
+              filterGroup.addFilter({ key: column, value: filterModel.filter, operator: this.getConditionOperator({ agGridOperator: filterModel.type }) });
+            }
+          }
+          requestArgs.filterGroup = filterGroup;
+        }
+      }
+      if (agGridRequest.sortModel) {
+        if (agGridRequest.length > 0) {
+          const sortOrder: AcSortOrder = new AcSortOrder();
+          for (const sortModel of agGridRequest.sortModel) {
+            sortOrder.addSort({ key: sortModel.colId, order: sortModel.sort });
+          }
+          requestArgs.sortOrder = sortOrder;
+        }
+      }
+    }
   }
 
   private handleColumnsCustomizerToggle(args: IAcDatagridColumnsCustomizerHookArgs) {
@@ -108,7 +215,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
     this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.DataChange, args: hookArgs });
     this.data = data;
+    this.gridOptions['rowData'] = this.data;
     this.gridApi.setGridOption('rowData', this.data);
+
   }
 
   private handleDataExportXlsx(args: IAcDatagridDataExportXlsxExportCallHookArgs) {
@@ -118,6 +227,18 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     else {
       // await this.getAllServerSideRows();
       // callbackFunction();
+    }
+  }
+
+  private handleDataSourceTypeChange(args: IAcDatagridDataSourceTypeChangeHookArgs) {
+    if (args.dataSourceType == AcEnumDataSourceType.Offline) {
+      this.isClientSideData = true;
+    }
+    else {
+      this.isClientSideData = false;
+      this.gridOptions['rowModelType'] = 'serverSide';
+      this.gridOptions['serverSideDatasource'] = this.onDemandDataSource;
+      this.initAgGrid('serverSide');
     }
   }
 
@@ -136,15 +257,37 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
   }
 
+  private handleGetOnDemandDataSuccessCallback(args: IAcDatagridGetOnDemandDataSuccessCallbackHookArgs) {
+    console.log(args);
+    if (this.onDemandRequestParams) {
+      const response = args.responseArgs;
+      console.log(response);
+      this.onDemandRequestParams.success({ rowData: response.data, rowCount: response.totalCount })
+      setTimeout(() => {
+        // this.onDemandRequestParams = undefined;
+      }, 150);
+    }
+  }
+
   override handleHook({ hookName, hookArgs }: { hookName: string; hookArgs: any; }): void {
-    if (hookName == AcEnumDatagridHook.ColDefsChange) {
+    // console.log(`Hook ${hookName}`,hookArgs);
+    if (hookName == AcEnumDatagridHook.BeforeGetOnDemandData) {
+      this.handleBeforeGetOnDemandData(hookArgs);
+    }
+    else if (hookName == AcEnumDatagridHook.ColDefsChange) {
       this.setColumnDefs();
     }
     else if (hookName == AcEnumDatagridHook.DataChange) {
       this.handleDataChange();
     }
+    else if (hookName == AcEnumDatagridHook.DataSourceTypeChange) {
+      this.handleDataSourceTypeChange(hookArgs);
+    }
     else if (hookName == AcEnumDatagridHook.ExtensionEnabled) {
       this.handleExtensionEnabled(hookArgs);
+    }
+    else if (hookName == AcEnumDatagridHook.GetOnDemandDataSuccessCallback) {
+      this.handleGetOnDemandDataSuccessCallback(hookArgs);
     }
     else if (hookName == AcEnumDatagridHook.RowAdd) {
       this.handleRowAdd(hookArgs);
@@ -266,20 +409,12 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   private handleUsePaginationChange() {
+    this.gridOptions['pagination'] = this.datagridApi.usePagination;
     this.gridApi.setGridOption('pagination', this.datagridApi.usePagination);
   }
 
   override init(): void {
-    this.datagridApi.datagrid.element.innerHTML = "";
-    this.datagridApi.datagrid.element.append(this.agGridElement);
-    const gridOptions: GridOptions = {
-      alwaysMultiSort: true,
-      getRowId: (params: GetRowIdParams) => {
-        return params.data[this.rowKey];
-      },
-      pagination: this.datagridApi.usePagination,
-    };
-    this.gridApi = createGrid(this.datagridApi.datagrid.element, gridOptions);
+    this.initAgGrid('clientSide');
     // this.gridApi.addEventListener('rowDataUpdated', (args: any) => {});
     new AcDatagridRowSelectionExtensionOnAgGrid({ agGridExtension: this });
     new AcDatagridTreeTableExtensionOnAgGrid({ agGridExtension: this });
@@ -290,9 +425,16 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.registerAgGridListeners();
   }
 
-  registerAgGridListeners(){
-    this.gridApi.addEventListener('cellClicked',(event:CellClickedEvent)=>{
-      event.event
+  private initAgGrid(modelType: RowModelType) {
+    this.datagridApi.datagrid.element.innerHTML = "";
+    this.datagridApi.datagrid.element.append(this.agGridElement);
+    this.gridOptions['rowModelType'] = modelType;
+    this.gridApi = createGrid(this.datagridApi.datagrid.element, this.gridOptions);
+  }
+
+  registerAgGridListeners() {
+    this.gridApi.addEventListener('cellClicked', (event: CellClickedEvent) => {
+      // event.event
     });
   }
 
@@ -314,6 +456,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       colDefs: colDefs
     }
     this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.ColDefsChange, args: hookArgs });
+    this.gridOptions['columnDefs'] = this.colDefs;
     this.gridApi.setGridOption('columnDefs', this.colDefs);
   }
 
@@ -376,6 +519,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         };;
       }
     }
+    this.gridOptions['sideBar'] = sideBarOptions;
     this.gridApi.setGridOption('sideBar', sideBarOptions);
   }
 
@@ -386,6 +530,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         showRowNumbers = true;
       }
     }
+    this.gridOptions['rowNumbers'] = showRowNumbers;
     this.gridApi.setGridOption('rowNumbers', showRowNumbers);
   }
 

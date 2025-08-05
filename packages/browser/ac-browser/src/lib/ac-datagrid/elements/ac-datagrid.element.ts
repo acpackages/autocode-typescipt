@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AcEnumDataSourceType } from "../../enums/ac-enum-data-source-type.enum";
 import { acAddClassToElement } from "../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
@@ -19,21 +20,25 @@ export class AcDatagridElement {
     this.initElement();
   }
 
-  handleClick(event:any){
+  private handleClick(event:any){
     console.log(this.datagridApi);
     // this.datagridApi.setFocusedCell({cell:this.cell});
   }
 
-  handleKeyUp(event:any){
+  private handleKeyUp(event:any){
     console.log(event);
     // this.datagridApi.setFocusedCell({cell:this.cell});
   }
 
-  handleFocus(event:any){
+  private handleFocus(event:any){
     console.log(event);
   }
 
-  initElement(){
+  init(){
+    this.datagridApi.dataSource.getData();
+  }
+
+  private initElement(){
     acAddClassToElement({cssClass:AcDatagridCssClassName.acDatagrid,element:this.element});
     acAddClassToElement({cssClass:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
     this.element.append(this.containerElement);
@@ -46,7 +51,7 @@ export class AcDatagridElement {
     return this.datagridApi.on({eventName:eventName,callback:callback});
   }
 
-  registerEvents(){
+  private registerEvents(){
     this.element.addEventListener('click',(e:any)=>{
       this.handleClick(e);
     });

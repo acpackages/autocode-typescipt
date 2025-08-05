@@ -1,4 +1,5 @@
 export * from './ac-datagrid-api-hook-args.interface';
+export * from './ac-datagrid-before-get-on-demand-data-hook-args.interface';
 export * from './ac-datagrid-body-hook-args.interface';
 export * from './ac-datagrid-cell-hook-args.interface';
 export * from './ac-datagrid-coldefs-change-hook-args.interface';
@@ -7,6 +8,7 @@ export * from './ac-datagrid-data-change-hook-args.interface';
 export * from './ac-datagrid-data-source-type-change-hook-args.interface';
 export * from './ac-datagrid-extension-enabled-hook-args.interface';
 export * from './ac-datagrid-footer-hook-args.interface';
+export * from './ac-datagrid-get-on-demand-data-success-callback-hook-args.interface';
 export * from './ac-datagrid-header-hook-args.interface';
 export * from './ac-datagrid-row-add-hook-args.interface';
 export * from './ac-datagrid-row-delete-hook-args.interface';

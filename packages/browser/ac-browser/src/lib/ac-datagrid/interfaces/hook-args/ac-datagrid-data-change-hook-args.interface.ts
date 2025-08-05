@@ -1,6 +1,6 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 
-export interface IAcDatagriDataChangeHookArgs{
+export interface IAcDatagridDataChangeHookArgs{
   data:any[],
   datagridApi:AcDatagridApi,
   oldData:any[]
