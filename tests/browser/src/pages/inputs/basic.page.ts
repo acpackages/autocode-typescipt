@@ -1,4 +1,4 @@
-import { AcEnumInputType, AcOptionElement, AcSelectElement, AcTextAreaElement, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { AcEnumInputType, AcOptionInput, AcSelectInput, AcTextAreaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcReactiveValueProxy } from "@autocode-ts/ac-template-engine";
 
@@ -65,7 +65,7 @@ export class InputBasicPage extends HTMLElement {
     const allInputsGroup = createCard('Real-Life Inputs', 'real-inputs');
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {
-      const input = new AcTextInputElement();
+      const input = new AcTextInput();
       input.type = type;
       input.bindKey = key;
       input.bindToReactiveValueProxy = this.proxyInstance;
@@ -94,7 +94,7 @@ export class InputBasicPage extends HTMLElement {
     addInput(AcEnumInputType.Image, 'Profile Picture', 'profile_picture');
 
     // Textarea: About Me
-    const textarea = new AcTextAreaElement();
+    const textarea = new AcTextAreaInput();
     textarea.bindKey = 'about_me';
     textarea.bindToReactiveValueProxy = this.proxyInstance;
     textarea.init();
@@ -108,7 +108,7 @@ export class InputBasicPage extends HTMLElement {
     allInputsGroup.appendChild(radioLabel);
 
     ['Email', 'Phone', 'In-app'].forEach((method) => {
-      const radio = new AcOptionElement();
+      const radio = new AcOptionInput();
       radio.type = AcEnumInputType.Radio;
       radio.name = 'contact_preference';
       radio.valueWhenChecked = method;
@@ -135,7 +135,7 @@ export class InputBasicPage extends HTMLElement {
     allInputsGroup.appendChild(checkboxLabel);
 
     ['Apple', 'Banana', 'Mango'].forEach((fruit) => {
-      const checkbox = new AcOptionElement();
+      const checkbox = new AcOptionInput();
       checkbox.type = AcEnumInputType.Checkbox;
       checkbox.valueWhenChecked = fruit;
       checkbox.bindKey = 'interested_fruits';
@@ -155,7 +155,7 @@ export class InputBasicPage extends HTMLElement {
     });
 
     // Select: Preferred Framework
-    const select = new AcSelectElement();
+    const select = new AcSelectInput();
     select.bindKey = 'preferred_framework';
     select.bindToReactiveValueProxy = this.proxyInstance;
     select.selectOptions = ['Angular', 'React', 'Vue.js', 'Svelte'];

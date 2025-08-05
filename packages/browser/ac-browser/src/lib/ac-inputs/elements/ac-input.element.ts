@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcInputBase } from "../core/ac-input-base";
 
-export class AcInputElement extends AcInputBase{
+export class AcInput extends AcInputBase{
   protected _type:string = '';
   get type():string{
     return this._type;

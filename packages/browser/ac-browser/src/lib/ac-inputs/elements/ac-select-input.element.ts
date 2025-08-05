@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcInputBase } from "../core/ac-input-base";
 
-export class AcSelectElement extends AcInputBase{
+export class AcSelectInput extends AcInputBase{
   private _labelKey:string = 'label';
   get labelKey():string{
     return this._labelKey;

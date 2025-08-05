@@ -2,7 +2,7 @@
 import { AcInputBase } from "../core/ac-input-base";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 
-export class AcTextAreaElement extends AcInputBase{
+export class AcTextAreaInput extends AcInputBase{
   protected _type:string = AcEnumInputType.Textarea;
 
   protected _cols: number = 0;

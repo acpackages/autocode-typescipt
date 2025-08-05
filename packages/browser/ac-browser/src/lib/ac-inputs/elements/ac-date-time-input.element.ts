@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { DateTime } from "luxon";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcInputElement } from "./ac-input-element.element";
+import { AcInput } from "./ac-input.element";
 
-export class AcDateTimeInputElement extends AcInputElement{
+export class AcDateTimeInput extends AcInput{
   protected override _type: AcEnumInputType.DateTimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week = AcEnumInputType.DateTimeLocal;
   override get type():AcEnumInputType.DateTimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week{
     return this._type;

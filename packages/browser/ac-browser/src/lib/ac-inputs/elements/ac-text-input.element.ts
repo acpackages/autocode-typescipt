@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcInputElement } from "./ac-input-element.element";
+import { AcInput } from "./ac-input.element";
 
-export class AcTextInputElement extends AcInputElement{
+export class AcTextInput extends AcInput{
   protected override _type: string = AcEnumInputType.Text;
   override get type():string{
     return this._type;

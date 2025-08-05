@@ -6,7 +6,7 @@ import { AcInputBase } from "../core/ac-input-base";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcEnumReactiveValueProxyEvent, IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 
-export class AcOptionElement extends AcInputBase {
+export class AcOptionInput extends AcInputBase {
   private _isArray: boolean = false;
   get isArray(): boolean {
     return this._isArray;
