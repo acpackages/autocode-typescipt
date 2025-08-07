@@ -3,6 +3,12 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-ts/autocode";
 import { AcDataDictionary, AcDDRelationship, AcDDTable, AcDDTableColumnProperty, AcEnumDDColumnProperty, AcEnumDDColumnType } from "../..";
+// import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
+// import { AcDDTable } from "./ac-dd-table.model";
+// import { AcDataDictionary } from "./ac-data-dictionary.model";
+// import { AcEnumDDColumnProperty } from "../enums/ac-enum-dd-column-property.enum";
+// import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
+// import { AcDDRelationship } from "./ac-dd-relationship.model";
 
 export class AcDDTableColumn {
   static readonly KeyColumnName = "column_name";

@@ -6,7 +6,7 @@ Total Rows : {{dataGrid.totalRows}}
 <button class="btn btn-secondary" (click)="handleGetGroupedData()">Get Group Data</button>
 <ac-input class="form-control" #searchInput style="width:100%;height:100%;" placeholder="Search..."/>
 <div style="height:70vh;">
-  <ac-datagrid-on-aggrid
+  <ac-datagrid-on-ag-grid
   #dataGrid
   [data]="data"
   [columns]="columns"
@@ -34,7 +34,7 @@ Total Rows : {{dataGrid.totalRows}}
   (onRowUpdated)="handleRowUpdated($event)"
   >
 <ac-datagrid-column [allowSort]="false" [allowEdit]="false" [allowFilter]="false" [style]="'max-width:100px;'" />
-  </ac-datagrid-on-aggrid>
+  </ac-datagrid-on-ag-grid>
 </div>
 <ng-template #footerTemplate>
   <button class="btn btn-secondary" (click)="dataGrid.addRow()">Add Row</button>

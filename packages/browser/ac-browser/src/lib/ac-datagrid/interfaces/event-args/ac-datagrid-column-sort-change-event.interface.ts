@@ -1,10 +1,10 @@
-import { AcEnumSortDirection } from "../../../enums/ac-enum-sort-direction.enum";
+import { AcEnumSortOrder } from "@autocode-ts/autocode";
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 import { AcDatagridColumn } from "../../models/ac-datagrid-column.model";
 
 export interface IAcDatagridColumnSortChangeEvent{
-  oldSortDirection:AcEnumSortDirection,
-  sortDirection:AcEnumSortDirection,
+  oldSortOrder:AcEnumSortOrder,
+  sortOrder:AcEnumSortOrder,
   datagridColumn:AcDatagridColumn,
   datagridApi:AcDatagridApi
 }

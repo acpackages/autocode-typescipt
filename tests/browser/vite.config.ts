@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
+import path from 'path';
 
 export default defineConfig(() => ({
   root: __dirname,
@@ -15,10 +16,15 @@ export default defineConfig(() => ({
     host: 'localhost',
   },
   plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
+   resolve: {
+    alias: {
+      '@autocode-ts/autocode': path.resolve(__dirname, '../../packages/common/autocode/src'),
+      // '@autocode-ts/ac-browser': path.resolve(__dirname, '../../packages/common/ac-browser/src'),
+      '@autocode-ts/ac-data-dictionary': path.resolve(__dirname, '../../packages/common/ac-data-dictionary/src'),
+      // add others as needed
+    },
+  },
+
   build: {
     outDir: '../../dist/tests/browser',
     emptyOutDir: true,

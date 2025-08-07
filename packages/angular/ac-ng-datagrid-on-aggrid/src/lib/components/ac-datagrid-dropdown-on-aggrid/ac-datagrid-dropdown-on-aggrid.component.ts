@@ -6,7 +6,7 @@
 import { Component, ContentChild, ContentChildren, DOCUMENT, ElementRef, EventEmitter, forwardRef, HostListener, Inject, Input, Output, QueryList, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 import { AcBaseInput, AcDatagridColumnComponent, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse, AcDatagridDropdownContentComponent, AutocodeService } from '@autocode-ts/ac-angular';
 import { createPopper, Instance as PopperInstance } from '@popperjs/core';
-import { AcDatagridOnAgGridComponent } from '../ac-datagrid-on-aggrid/ac-datagrid-on-aggrid.component';
+import { AcDatagridOnAgGridComponent } from '../ac-datagrid-on-ag-grid/ac-datagrid-on-ag-grid.component';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({

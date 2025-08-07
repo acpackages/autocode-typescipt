@@ -13,18 +13,21 @@ export class AcPaginationApi {
     return this._activePage;
   }
   set activePage(value:number){
-    const previousActivePage:number = this._activePage;
-    this._activePage = value;
-    this.updateDisplayedRows();
-    const eventParams:IAcPaginationPageChangeEvent = {
-      totalPages: this.totalPages,
-      activePage: this.activePage,
-      previousActivePage: previousActivePage,
-      startRow:this.startRow,
-      endRow:this.endRow,
-      paginationApi:this
-    };
-    this.events.execute({eventName:AcEnumPaginationEvent.PageChange,args:eventParams});
+    if(value != this._activePage){
+      const previousActivePage:number = this._activePage;
+      this._activePage = value;
+      this.updateDisplayedRows();
+      const eventParams:IAcPaginationPageChangeEvent = {
+        totalPages: this.totalPages,
+        activePage: this.activePage,
+        previousActivePage: previousActivePage,
+        startRow:this.startRow,
+        endRow:this.endRow,
+        paginationApi:this
+      };
+      this.events.execute({eventName:AcEnumPaginationEvent.PageChange,args:eventParams});
+    }
+
   }
 
   private _activePageSize:number = 50;
@@ -32,15 +35,17 @@ export class AcPaginationApi {
     return this._activePageSize;
   }
   set activePageSize(value:number){
-    const previousPageSize:number = this._activePageSize;
-    this._activePageSize = value;
-    const eventParams:IAcPaginationPageSizeChangeEvent = {
-      previousPageSize: previousPageSize,
-      pageSize:value,
-      paginationApi:this
-    };
-    this.events.execute({eventName:AcEnumPaginationEvent.PageChange,args:eventParams});
-    this.activePage = Math.ceil((this.startRow) / value);
+    if(value != this._activePageSize){
+      const previousPageSize:number = this._activePageSize;
+      this._activePageSize = value;
+      const eventParams:IAcPaginationPageSizeChangeEvent = {
+        previousPageSize: previousPageSize,
+        pageSize:value,
+        paginationApi:this
+      };
+      this.events.execute({eventName:AcEnumPaginationEvent.PageChange,args:eventParams});
+      this.activePage = Math.ceil((this.startRow) / value);
+    }
   }
 
   private _totalRows: number = 0;
@@ -48,8 +53,10 @@ export class AcPaginationApi {
     return this._totalRows;
   }
   set totalRows(value:number){
-    this._totalRows = value;
-    this.updateDisplayedRows();
+    if(value != this._totalRows){
+      this._totalRows = value;
+      this.updateDisplayedRows();
+    }
   }
 
   endRow:number = 0;

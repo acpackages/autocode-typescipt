@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents, Autocode } from "@autocode-ts/autocode";
+import { AcEnumSortOrder, AcEvents } from "@autocode-ts/autocode";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcDatagridApi } from "./ac-datagrid-api";
-import { AcEnumSortDirection } from "../../enums/ac-enum-sort-direction.enum";
 import { IAcDatagridDisplayedRowsChangeEvent } from "../interfaces/event-args/ac-datagrid-displayed-rows-change-event.interface";
 import { IAcDatagridTotalRowsChangeEvent } from "../interfaces/event-args/ac-datagrid-total-rows-change-event.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
@@ -59,11 +58,11 @@ export class AcDatagridDataSource {
   processData() {
     this.processedDatagridRows = [...this.datagridRows];
     this.totalRows = this.processedDatagridRows.length;
-    if (this.datagridApi.sortOrder.length > 0) {
+    if (this.datagridApi.sortOrder.sortOrders.length > 0) {
       this.processedDatagridRows.sort((a: AcDatagridRow, b: AcDatagridRow): number => {
         let index = 0;
-        for (const datagridColumn of this.datagridApi.sortOrder) {
-          const field = datagridColumn.colDef.field;
+        for (const sort of this.datagridApi.sortOrder.sortOrders) {
+          const field = sort.key;
           const valA: any = a.data[field];
           const valB: any = b.data[field];
           let result = 0;
@@ -73,7 +72,7 @@ export class AcDatagridDataSource {
             result = valA - valB;
           }
           if (result !== 0) {
-            index = datagridColumn.sortDirection == AcEnumSortDirection.Ascending ? result : -result;
+            index = sort.order == AcEnumSortOrder.Ascending ? result : -result;
             break;
           }
         }

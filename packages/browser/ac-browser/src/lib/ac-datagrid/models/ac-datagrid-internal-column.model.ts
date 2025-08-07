@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
-import { AcEnumSortDirection } from "../../enums/ac-enum-sort-direction.enum";
+import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { AcDatagridDefaultColumnConfig } from "../consts/ac-datagrid-default-column-config.const";
 
 export class AcDatagridInternalColumn {
@@ -12,7 +11,7 @@ export class AcDatagridInternalColumn {
   filterGroup: AcFilterGroup = new AcFilterGroup();
   hooks: AcHooks = new AcHooks();
   index: number = -1;
-  sortDirection: AcEnumSortDirection = AcEnumSortDirection.None;
+  sortOrder: AcEnumSortOrder = AcEnumSortOrder.None;
   width: number = 200;
 
   constructor({ index = -1, width = AcDatagridDefaultColumnConfig.width }: { index?: number, width?: number }) {

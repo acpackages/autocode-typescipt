@@ -103,11 +103,11 @@ export class AcDatagridHeaderInternalCellElement {
   //   // Sorting click
   //   this.sortElement.addEventListener('click', () => {
   //     const current = this.datagridColumn.sortDirection;
-  //     const next = current === AcEnumSortDirection.None
-  //       ? AcEnumSortDirection.Ascending
-  //       : current === AcEnumSortDirection.Ascending
-  //         ? AcEnumSortDirection.Descending
-  //         : AcEnumSortDirection.None;
+  //     const next = current === AcEnumSortOrder.None
+  //       ? AcEnumSortOrder.Ascending
+  //       : current === AcEnumSortOrder.Ascending
+  //         ? AcEnumSortOrder.Descending
+  //         : AcEnumSortOrder.None;
 
   //     this.datagridApi.setColumnSortDirection({ datagridColumn: this.datagridColumn, sortDirection: next });
   //   });
@@ -186,7 +186,7 @@ export class AcDatagridHeaderInternalCellElement {
   // }
 
   // renderSort() {
-  //   if (this.datagridColumn.sortDirection == AcEnumSortDirection.Ascending) {
+  //   if (this.datagridColumn.sortDirection == AcEnumSortOrder.Ascending) {
   //     this.sortElement.innerHTML = AcDatagridHtmlPlaceholder.sortAscending;
   //   }
   //   else if (this.datagridColumn.sortDirection == AcEnumSortDirection.Descending) {

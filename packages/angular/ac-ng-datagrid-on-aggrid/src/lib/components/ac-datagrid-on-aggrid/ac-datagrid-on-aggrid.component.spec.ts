@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AcDatagridOnAgGridComponent } from './ac-datagrid-on-aggrid.component';
+import { AcDatagridOnAgGridComponent } from './ac-datagrid-on-ag-grid.component';
 
 describe('AcDatagridOnAgGridComponent', () => {
   let component: AcDatagridOnAgGridComponent;

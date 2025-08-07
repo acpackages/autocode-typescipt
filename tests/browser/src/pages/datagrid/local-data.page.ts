@@ -2,11 +2,11 @@
 import { AcDatagridRowSelectionExtension } from 'packages/browser/ac-browser/src/lib/ac-datagrid/extensions/_extensions.export';
 import './../../../../../packages/browser/ac-browser/src/lib/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/ac-pagination/css/ac-pagination.css';
-import { AcDatagridElement, AcDatagridApi, AcEnumDatagridExtension, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcEnumDatagridExtension, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
 
 export class DatagridLocalData extends HTMLElement {
   public static observedAttributes = [];
-  datagrid!: AcDatagridElement;
+  datagrid!: AcDatagrid;
   datagridApi!:AcDatagridApi;
 
   async connectedCallback() {
@@ -15,7 +15,7 @@ export class DatagridLocalData extends HTMLElement {
       <div class="local-datagrid-container" style="height:80vh;"></div>
     `;
     this.innerHTML = html;
-    this.datagrid = new AcDatagridElement();
+    this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowNumbers});
     const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection});

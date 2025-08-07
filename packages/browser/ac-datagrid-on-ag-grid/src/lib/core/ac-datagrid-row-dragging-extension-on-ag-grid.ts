@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridApi, AcDatagridRowDraggingExtension, AcDatagridTreeTableExtension, AcEnumDatagridExtension, AcEnumDatagridHook, AcEnumDatagridRowDraggingHook, IAcDatagridExtensionEnabledHookArgs } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
-import { ColDef, GridApi, RowDragEndEvent, RowDragEnterEvent } from "ag-grid-community";
+import { ColDef, GridApi, RowDragCancelEvent, RowDragEndEvent, RowDragEnterEvent, RowDragLeaveEvent, RowDragMoveEvent } from "ag-grid-community";
 import { AcEnumDatagridOnAgGridHook } from "../enums/ac-enum-datagrid-on-ag-grid-hook.enum";
 import { IAcDatagriOnAgGridColDefsChangeHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-col-defs-set-hook-args.interface";
 
@@ -35,6 +35,15 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
     });
     this.gridApi.addEventListener('rowDragEnd', (args: RowDragEndEvent) => {
       this.handleAgGridRowDragEnd(args);
+    });
+    this.gridApi.addEventListener('rowDragCancel', (args: RowDragCancelEvent) => {
+      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragCancel({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:args}),event:args.event});
+    });
+    this.gridApi.addEventListener('rowDragLeave', (args: RowDragLeaveEvent) => {
+      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragLeave({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:args}),event:args.event});
+    });
+    this.gridApi.addEventListener('rowDragMove', (args: RowDragMoveEvent) => {
+      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragOver({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:args}),event:args.event});
     });
   }
 
@@ -79,7 +88,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
       };
       console.log(eventParams);
     }
-    // this.onRowDragEnd.emit(eventParams);
+    this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragEnd({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:event}),event:event.event});
   }
 
   private handleAgGridRowDragStart(event: RowDragEnterEvent) {
@@ -101,13 +110,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
         }
       }
     }
-    const eventParams = {
-      currentGroupChildIndex: this.previousGroupChildIndex,
-      data: node.data,
-      event: event,
-    };
-    console.log(eventParams);
-    // this.onRowDragStart.emit(eventParams);
+    this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragStart({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:event}),event:event.event});
   }
 
   private handleBeforeColDefsChange(event: IAcDatagriOnAgGridColDefsChangeHookArgs) {

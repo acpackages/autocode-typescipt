@@ -1,12 +1,12 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ag-datagrid-on-ag-grid';
+import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import './../../../../../packages/browser/ac-browser/src/lib/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/ac-pagination/css/ac-pagination.css';
-import { AcDatagridElement, AcDatagridApi, AcDatagridExtensionManager, AcDatagridTreeTableExtension, AcEnumDatagridExtension, AcDatagridRowSelectionExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridColumnDraggingExtension, AcDatagridDataExportXlsxExtension, AcDatagridColumnsCustomizerExtension } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridTreeTableExtension, AcEnumDatagridExtension, AcDatagridRowSelectionExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridColumnDraggingExtension, AcDatagridDataExportXlsxExtension, AcDatagridColumnsCustomizerExtension, AcEnumDatagridEvent } from '@autocode-ts/ac-browser';
 import { PageHeader } from '../../components/page-header/page-header.component';
 
 export class AggridLocalDataTree extends HTMLElement {
-  datagrid!: AcDatagridElement;
+  datagrid!: AcDatagrid;
   datagridApi!: AcDatagridApi;
   pageHeader: PageHeader = new PageHeader();
   agGridExtension!: AcDatagridOnAgGridExtension;
@@ -24,7 +24,7 @@ export class AggridLocalDataTree extends HTMLElement {
     this.innerHTML = html;
     this.style.height = '100vh;'
     this.prepend(this.pageHeader.element);
-    this.pageHeader.pageTitle = 'AGGrid on AcDatagridElement : Offline Data';
+    this.pageHeader.pageTitle = 'AGGrid on AcDatagrid : Offline Data';
     this.initDatagrid();
   }
 
@@ -32,7 +32,7 @@ export class AggridLocalDataTree extends HTMLElement {
     const gridDiv = document.querySelector<HTMLElement>('#aggridContainer');
     if (gridDiv) {
       AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
-      this.datagrid = new AcDatagridElement();
+      this.datagrid = new AcDatagrid();
       this.datagridApi = this.datagrid.datagridApi;
 
       this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
@@ -153,6 +153,29 @@ export class AggridLocalDataTree extends HTMLElement {
         ]
       });
 
+      this.datagridApi.events.subscribeAllEvents({callback:(eventName:string,args:any)=>{
+              const identifiedEvents:any[] = [
+                AcEnumDatagridEvent.CellClick,
+                AcEnumDatagridEvent.CellDoubleClick,
+                AcEnumDatagridEvent.CellEditingStart,
+                AcEnumDatagridEvent.CellEditingStop,
+                AcEnumDatagridEvent.CellFocus,
+                AcEnumDatagridEvent.CellKeyDown,
+                AcEnumDatagridEvent.CellMouseDown,
+                AcEnumDatagridEvent.CellMouseLeave,
+                AcEnumDatagridEvent.CellMouseOver,
+                AcEnumDatagridEvent.CellRendererElementInit,
+                AcEnumDatagridEvent.CellValueChange,
+                AcEnumDatagridEvent.ColumnHeaderClick,
+                AcEnumDatagridEvent.PaginationChange,
+                AcEnumDatagridEvent.RowClick,
+                AcEnumDatagridEvent.RowDoubleClick,
+                AcEnumDatagridEvent.SortOrderChange
+              ];
+              if(!identifiedEvents.includes(eventName)){
+                console.log(`Found event : ${eventName}`,args);
+              }
+            }});
     }
   }
 

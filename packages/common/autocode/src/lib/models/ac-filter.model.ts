@@ -2,9 +2,9 @@ import { AcEnumConditionOperator } from "../enums/ac-enum-condition-operator.enu
 import { AcJsonUtils } from "../utils/ac-json-utils";
 
 export class AcFilter {
-  static readonly KEY_KEY = "key";
-  static readonly KEY_OPERATOR = "operator";
-  static readonly KEY_VALUE = "value";
+  static readonly KeyKey = "key";
+  static readonly KeyOperator = "operator";
+  static readonly KeyValue = "value";
 
   key?: string;
   operator: AcEnumConditionOperator = AcEnumConditionOperator.Unknown;

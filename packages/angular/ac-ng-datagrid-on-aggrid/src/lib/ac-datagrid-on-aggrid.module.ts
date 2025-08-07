@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgGridAngular } from 'ag-grid-angular';
-import { AcDatagridOnAgGridComponent } from './components/ac-datagrid-on-aggrid/ac-datagrid-on-aggrid.component';
+import { AcDatagridOnAgGridComponent } from './components/ac-datagrid-on-ag-grid/ac-datagrid-on-ag-grid.component';
 import { AgGridCellEditorComponent } from './components/ag-grid-cell-editor/ag-grid-cell-editor.component';
 import { AgGridCellRenderComponent } from './components/ag-grid-cell-render/ag-grid-cell-render.component';
 import { AgGridHeaderCellComponent } from './components/ag-grid-header-cell/ag-grid-header-cell.component';

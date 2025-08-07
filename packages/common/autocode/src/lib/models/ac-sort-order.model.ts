@@ -3,7 +3,7 @@ import { AcJsonUtils } from "../utils/ac-json-utils";
 import { AcSort } from "./ac-sort.model";
 
 export class AcSortOrder {
-  static readonly KEY_SORT_ORDERS = "sort_orders";
+  static readonly KeySorts = "sort_orders";
 
   sortOrders: AcSort[] = [];
 
@@ -17,7 +17,9 @@ export class AcSortOrder {
     if(removeIfExist){
       this.sortOrders = this.sortOrders.filter((item)=>{return item.key != key});
     }
-    this.sortOrders.push(AcSort.instanceWithValues({key:key,order:order}));
+    if(order!=AcEnumSortOrder.None){
+      this.sortOrders.push(AcSort.instanceWithValues({key:key,order:order}));
+    }
   }
 
   cloneInstance():AcSortOrder{

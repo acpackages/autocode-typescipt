@@ -2,20 +2,20 @@ import { AcBindJsonProperty } from "../annotations/ac-bind-json-property.annotat
 
 
 export class AcCronJob {
-  static readonly KEY_CALLBACK = "callback";
-  static readonly KEY_DURATION = "duration";
-  static readonly KEY_EXECUTION = "execution";
-  static readonly KEY_ID = "id";
-  static readonly KEY_LAST_EXECUTION_TIME = "last_execution_time";
+  static readonly KeyCallback = "callback";
+  static readonly KeyDuration = "duration";
+  static readonly KeyExecution = "execution";
+  static readonly KeyId = "id";
+  static readonly KeyLastExecutionTime = "last_execution_time";
 
   id!: string;
   execution!: string;
   duration!: Record<string, number>;
 
-  @AcBindJsonProperty({ key: AcCronJob.KEY_CALLBACK, skipInToJson: true })
+  @AcBindJsonProperty({ key: AcCronJob.KeyCallback, skipInToJson: true })
   callback: ()=>any;
 
-  @AcBindJsonProperty({ key: AcCronJob.KEY_LAST_EXECUTION_TIME })
+  @AcBindJsonProperty({ key: AcCronJob.KeyLastExecutionTime })
   lastExecutionTime?: Date;
 
   constructor({

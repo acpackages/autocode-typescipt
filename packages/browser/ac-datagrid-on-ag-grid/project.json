@@ -4,6 +4,6 @@
   "sourceRoot": "packages/browser/ac-datagrid-on-ag-grid/src",
   "projectType": "library",
   "tags": [],
-  "// targets": "to see all targets run: nx show project ag-datagrid-on-ag-grid --web",
+  "// targets": "to see all targets run: nx show project ac-datagrid-on-ag-grid --web",
   "targets": {}
 }

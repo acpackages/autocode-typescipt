@@ -2,7 +2,7 @@
 import { Component, ViewChild } from '@angular/core'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AcEnumFormatDateTime, AcEnumFormatNumber, IAcDataGridColumn, IAcDataGridDataOnDemandParams, IAcDataGridDataOnDemandResponse } from '@autocode-ts/ac-angular';
-import { AcDatagridOnAgGridComponent } from 'packages/angular/ac-ng-datagrid-on-aggrid/src/lib/components/ac-datagrid-on-aggrid/ac-datagrid-on-aggrid.component';
+import { AcDatagridOnAgGridComponent } from 'packages/angular/ac-ng-datagrid-on-aggrid/src/lib/components/ac-datagrid-on-ag-grid/ac-datagrid-on-ag-grid.component';
 import { SelectAccountInputComponent } from 'tests/angular/src/components/select-account-input/select-account-input.component';
 import { ActionColumnComponent } from 'tests/angular/src/components/action-column/action-column.component';
 

@@ -33,7 +33,7 @@ export default defineConfig(() => ({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
-      name: 'ag-datagrid-on-ag-grid',
+      name: 'ac-datagrid-on-ag-grid',
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.

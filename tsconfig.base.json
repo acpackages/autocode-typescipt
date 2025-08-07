@@ -17,70 +17,35 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-ts/ac-angular": ["dist/packages/angular/ac-angular"],
+      "@autocode-ts/autocode": ["packages/common/autocode/index.ts"],
+      "@autocode-ts/ac-angular": ["packages/angular/ac-angular/src/index,ts"],
       "@autocode-ts/ac-browser": ["packages/browser/ac-browser/src/index.ts"],
-      "@autocode-ts/ac-data-dictionary": [
-        "packages/common/ac-data-dictionary/index.ts"
-      ],
-      "@autocode-ts/ac-data-dictionary-browser": [
-        "packages/browser/ac-data-dictionary-browser/src/index.ts"
-      ],
-      "@autocode-ts/ac-data-dictionary-designer": [
-        "packages/browser/ac-data-dictionary-designer/src/index.ts"
-      ],
+      "@autocode-ts/ac-data-dictionary": ["packages/common/ac-data-dictionary/index.ts"],
+      "@autocode-ts/ac-data-dictionary-browser": ["packages/browser/ac-data-dictionary-browser/src/index.ts"],
+      "@autocode-ts/ac-data-dictionary-editor": ["packages/browser/ac-data-dictionary-editor/src/index.ts"],
       "@autocode-ts/ac-datagrid": ["packages/browser/ac-datagrid/src/index.ts"],
       "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/index.ts"],
-      "@autocode-ts/ac-ng-data-dictionary-editor": [
-        "packages/angular/ac-ng-data-dictionary-editor/index.ts"
-      ],
-      "@autocode-ts/ac-ng-data-grid": [
-        "packages/angular/ac-ng-data-grid/src/index.ts"
-      ],
-      "@autocode-ts/ac-ng-data-grid-on-aggrid": [
-        "packages/angular/ac-ng-data-grid-on-aggrid/index.ts"
-      ],
-      "@autocode-ts/ac-ng-drag-drop-builder": [
-        "packages/angular/ac-ng-drag-drop-builder/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-audio-recording": [
-        "packages/angular/ac-ng-input-audio-recording/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-on-ngselect": [
-        "packages/angular/ac-ng-input-on-ngselect/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-on-quill": [
-        "packages/angular/ac-ng-input-on-quill/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-on-tinymce": [
-        "packages/angular/ac-ng-input-on-tinymce/index.ts"
-      ],
-      "@autocode-ts/ac-ng-media-library": [
-        "packages/angular/ac-ng-media-library/src/index.ts"
-      ],
-      "@autocode-ts/ac-ng-menu-editor": [
-        "packages/angular/ac-ng-menu-editor/src/index.ts"
-      ],
-      "@autocode-ts/ac-ng-node-editor": [
-        "packages/angular/ac-ng-node-editor/index.ts"
-      ],
-      "@autocode-ts/ac-ng-runtime": [
-        "packages/angular/ac-ng-runtime/src/index.ts"
-      ],
+      "@autocode-ts/ac-ng-data-dictionary-editor": ["packages/angular/ac-ng-data-dictionary-editor/index.ts"],
+      "@autocode-ts/ac-ng-data-grid": ["packages/angular/ac-ng-data-grid/src/index.ts"],
+      "@autocode-ts/ac-ng-data-grid-on-aggrid": ["packages/angular/ac-ng-data-grid-on-aggrid/index.ts"],
+      "@autocode-ts/ac-ng-drag-drop-builder": ["packages/angular/ac-ng-drag-drop-builder/index.ts"],
+      "@autocode-ts/ac-ng-input-audio-recording": ["packages/angular/ac-ng-input-audio-recording/index.ts"],
+      "@autocode-ts/ac-ng-input-on-ngselect": ["packages/angular/ac-ng-input-on-ngselect/index.ts"],
+      "@autocode-ts/ac-ng-input-on-quill": ["packages/angular/ac-ng-input-on-quill/index.ts"],
+      "@autocode-ts/ac-ng-input-on-tinymce": ["packages/angular/ac-ng-input-on-tinymce/index.ts"],
+      "@autocode-ts/ac-ng-media-library": ["packages/angular/ac-ng-media-library/src/index.ts"],
+      "@autocode-ts/ac-ng-menu-editor": ["packages/angular/ac-ng-menu-editor/src/index.ts"],
+      "@autocode-ts/ac-ng-node-editor": ["packages/angular/ac-ng-node-editor/index.ts"],
+      "@autocode-ts/ac-ng-runtime": ["packages/angular/ac-ng-runtime/src/index.ts"],
       "@autocode-ts/ac-react": ["packages/react/ac-react/index.ts"],
       "@autocode-ts/ac-repeater": ["packages/browser/ac-repeater/src/index.ts"],
       "@autocode-ts/ac-sql": ["packages/node/ac-sql/index.ts"],
-      "@autocode-ts/ac-template-engine": [
-        "packages/browser/ac-template-engine/src/index.ts"
-      ],
+      "@autocode-ts/ac-template-engine": ["packages/browser/ac-template-engine/src/index.ts"],
       "@autocode-ts/ac-vue": ["packages/vue/ac-vue/index.ts"],
       "@autocode-ts/ac-web": ["packages/node/ac-web/index.ts"],
-      "@autocode-ts/ac-web-on-express": [
-        "packages/node/ac-web-on-express/index.ts"
-      ],
-      "@autocode-ts/ag-datagrid-on-ag-grid": [
-        "packages/browser/ac-datagrid-on-ag-grid/src/index.ts"
-      ],
-      "@autocode-ts/autocode": ["packages/common/autocode/index.ts"]
+      "@autocode-ts/ac-web-on-express": ["packages/node/ac-web-on-express/index.ts"],
+      "@autocode-ts/ac-datagrid-on-ag-grid": ["packages/browser/ac-datagrid-on-ag-grid/src/index.ts"],
+
     }
   },
   "exclude": ["node_modules", "tmp"]

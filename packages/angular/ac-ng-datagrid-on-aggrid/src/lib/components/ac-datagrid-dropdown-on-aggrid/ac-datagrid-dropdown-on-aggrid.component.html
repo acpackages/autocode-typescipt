@@ -25,7 +25,7 @@
         <ng-container *ngTemplateOutlet="datagridTemplate" />
       </ng-container>
       <ng-template #datagridTemplate>
-        <ac-datagrid-on-aggrid #dataGrid
+        <ac-datagrid-on-ag-grid #dataGrid
         [columns]="columns"
         [dataOnDemandFunction]="dataOnDemandFunction"
         [defaultPageSize]="defaultPageSize"
@@ -36,7 +36,7 @@
         (onCellClicked)="handleGridCellClicked($event)"
         (onCellKeyDown)="handleGridCellKeyDown($event)"
         (onStateUpdated)="handleGridStateUpdated($event)"
-        ></ac-datagrid-on-aggrid>
+        ></ac-datagrid-on-ag-grid>
       </ng-template>
     </div>
     </ng-container>

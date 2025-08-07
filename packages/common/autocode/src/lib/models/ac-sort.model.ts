@@ -2,8 +2,8 @@ import { AcEnumSortOrder } from "../enums/ac-enum-sort-order.enum";
 import { AcJsonUtils } from "../utils/ac-json-utils";
 
 export class AcSort {
-  static readonly KEY_KEY = "key";
-  static readonly KEY_ORDER = "order";
+  static readonly Keykey = "key";
+  static readonly KeyOrder = "order";
 
   key!: string;
   order: AcEnumSortOrder = AcEnumSortOrder.None;

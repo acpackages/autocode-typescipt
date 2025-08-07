@@ -25,6 +25,11 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
     this.gridApi.addEventListener('rowSelected', (args: RowSelectedEvent) => {
       this.handleAgGridRowSelected(args);
     });
+
+
+          // this.gridApi.addEventListener('selectionChanged', (event: SelectionChangedEvent) => {
+          //   this.datagridApi.eventHandler.handleSelectionChange({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+          // });
   }
 
   private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {

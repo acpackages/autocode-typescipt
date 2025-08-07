@@ -4,31 +4,31 @@ import { AcLogger } from "../core/ac-logger";
 import { AcJsonUtils } from "../utils/ac-json-utils";
 
 export class AcResult {
-  static readonly CODE_NOTHING_EXECUTED = 0;
-  static readonly CODE_SUCCESS = 1;
-  static readonly CODE_FAILURE = -1;
-  static readonly CODE_EXCEPTION = -2;
+  static readonly CodeNothingExecuted = 0;
+  static readonly CodeSuccess = 1;
+  static readonly CodeFailure = -1;
+  static readonly CodeException = -2;
 
-  static readonly KEY_CODE = 'code';
-  static readonly KEY_EXCEPTION = 'exception';
-  static readonly KEY_LOG = 'log';
-  static readonly KEY_MESSAGE = 'message';
-  static readonly KEY_OTHER_DETAILS = 'other_details';
-  static readonly KEY_PREVIOUS_RESULT = 'previous_result';
-  static readonly KEY_STACK_TRACE = 'stack_trace';
-  static readonly KEY_STATUS = 'status';
+  static readonly KeyCode = 'code';
+  static readonly KeyException = 'exception';
+  static readonly KeyLog = 'log';
+  static readonly KeyMesssage = 'message';
+  static readonly KeyOtherDetails = 'other_details';
+  static readonly KeyPreviousResult = 'previous_result';
+  static readonly KeyStackTrace = 'stack_trace';
+  static readonly KeyStatus = 'status';
   static readonly KeyValue = 'value';
 
   logger?: AcLogger;
-  code: number = AcResult.CODE_NOTHING_EXECUTED;
+  code: number = AcResult.CodeNothingExecuted;
   exception: any = null;
   log: any[] = [];
   message: string = 'Nothing executed';
 
-  @AcBindJsonProperty({ key: AcResult.KEY_OTHER_DETAILS })
+  @AcBindJsonProperty({ key: AcResult.KeyOtherDetails })
   otherDetails: any[] = [];
 
-  @AcBindJsonProperty({ key: AcResult.KEY_STACK_TRACE })
+  @AcBindJsonProperty({ key: AcResult.KeyStackTrace })
   stackTrace: any;
 
   status: string = 'failure';
@@ -45,7 +45,7 @@ export class AcResult {
   }
 
   isException(): boolean {
-    return this.status === 'failure' && this.code === AcResult.CODE_EXCEPTION;
+    return this.status === 'failure' && this.code === AcResult.CodeException;
   }
 
   isFailure(): boolean {
@@ -99,7 +99,7 @@ export class AcResult {
     logger?: AcLogger;
   }= {}): AcResult {
     this.status = 'success';
-    this.code = AcResult.CODE_SUCCESS;
+    this.code = AcResult.CodeSuccess;
 
     if (value !== undefined) {
       this.value = value;
@@ -123,7 +123,7 @@ export class AcResult {
     logger?: AcLogger;
   }): AcResult {
     this.status = 'failure';
-    this.code = AcResult.CODE_FAILURE;
+    this.code = AcResult.CodeFailure;
 
     if (message) {
       this.message = message;
@@ -147,7 +147,7 @@ export class AcResult {
     logException?: boolean;
     stackTrace?: any;
   }): AcResult {
-    this.code = AcResult.CODE_EXCEPTION;
+    this.code = AcResult.CodeException;
     this.exception = exception;
     this.stackTrace = stackTrace ?? '';
     this.message = message ?? (exception?.toString?.() ?? 'Unknown exception');

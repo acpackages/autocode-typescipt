@@ -1,11 +1,11 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagridElement, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs } from '@autocode-ts/ac-browser';
-import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ag-datagrid-on-ag-grid';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs } from '@autocode-ts/ac-browser';
+import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
 
 export class AggridOnDemandData extends HTMLElement {
-  datagrid!: AcDatagridElement;
+  datagrid!: AcDatagrid;
   datagridApi!: AcDatagridApi;
   pageHeader: PageHeader = new PageHeader();
   agGridExtension!: AcDatagridOnAgGridExtension;
@@ -23,7 +23,7 @@ export class AggridOnDemandData extends HTMLElement {
     this.innerHTML = html;
     this.style.height = '100vh;'
     this.prepend(this.pageHeader.element);
-    this.pageHeader.pageTitle = 'AGGrid on AcDatagridElement : On Demand Data';
+    this.pageHeader.pageTitle = 'AGGrid on AcDatagrid : On Demand Data';
     this.initDatagrid();
   }
 
@@ -31,7 +31,7 @@ export class AggridOnDemandData extends HTMLElement {
     const gridDiv = document.querySelector<HTMLElement>('#aggridContainer');
     if (gridDiv) {
       AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
-      this.datagrid = new AcDatagridElement();
+      this.datagrid = new AcDatagrid();
       this.datagridApi = this.datagrid.datagridApi;
       this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
       this.columnsCustomizerExtension = this.datagridApi.enableExtension( {extensionName:AcEnumDatagridExtension.ColumnsCustomizer}) as AcDatagridColumnsCustomizerExtension;
@@ -51,7 +51,7 @@ export class AggridOnDemandData extends HTMLElement {
           const response = await res.json();
           const callbackResponse:IAcDatagridOnDemandResponseArgs  = {
             data:response.rows,
-            totalCount:1000
+            totalCount:response.total_rows
           };
           args.successCallback(callbackResponse);
           this.datagridApi.data = response.rows;
@@ -176,10 +176,30 @@ export class AggridOnDemandData extends HTMLElement {
         }
       }});
       this.datagridApi.events.subscribeAllEvents({callback:(eventName:string,args:any)=>{
-        const skipEvents:any[] = [
-          AcEnumDatagridEvent.CellRendererElementInit
+        // console.log(`Detected event : ${eventName}`,args);
+        const identifiedEvents:any[] = [
+          AcEnumDatagridEvent.CellClick,
+          AcEnumDatagridEvent.CellDoubleClick,
+          AcEnumDatagridEvent.CellEditingStart,
+          AcEnumDatagridEvent.CellEditingStop,
+          AcEnumDatagridEvent.CellFocus,
+          AcEnumDatagridEvent.CellKeyDown,
+          AcEnumDatagridEvent.CellMouseDown,
+          AcEnumDatagridEvent.CellMouseLeave,
+          AcEnumDatagridEvent.CellMouseOver,
+          AcEnumDatagridEvent.CellRendererElementInit,
+          AcEnumDatagridEvent.CellValueChange,
+
+          AcEnumDatagridEvent.ColumnHeaderClick,
+
+          AcEnumDatagridEvent.PaginationChange,
+
+          AcEnumDatagridEvent.RowClick,
+          AcEnumDatagridEvent.RowDoubleClick,
+
+          AcEnumDatagridEvent.SortOrderChange
         ];
-        if(!skipEvents.includes(eventName)){
+        if(!identifiedEvents.includes(eventName)){
           console.log(`Found event : ${eventName}`,args);
         }
       }});

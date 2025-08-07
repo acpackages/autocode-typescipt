@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
-import { AcEnumSortDirection } from "../../enums/ac-enum-sort-direction.enum";
+import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { IAcDatagridColDef } from "../interfaces/ac-datagrid-col-def.interface";
 import { AcEnumDatagridColumnDataType } from "../enums/ac-enum-datagrid-column-data-type.enum";
 import { AcDatagridHeaderCellElement } from "../elements/ac-datagrid-header-cell.element";
@@ -18,7 +17,7 @@ export class AcDatagridColumn {
   headerCellInstance?: AcDatagridHeaderCellElement;
   hooks: AcHooks = new AcHooks();
   index: number = -1;
-  sortDirection: AcEnumSortDirection = AcEnumSortDirection.None;
+  sortOrder: AcEnumSortOrder = AcEnumSortOrder.None;
   width: number = AcDatagridDefaultColumnConfig.width;
 
   get allowEdit(): boolean {

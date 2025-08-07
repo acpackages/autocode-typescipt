@@ -16,60 +16,24 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-ts/autocode": [
-        "dist/packages/common/autocode"
-      ],
-      "@autocode-ts/ac-angular": [
-        "dist/packages/angular/ac-angular"
-      ],
-      "@autocode-ts/ac-browser": [
-        "dist/packages/browser/ac-browser"
-      ],
-      "@autocode-ts/ac-data-dictionary": [
-        "dist/packages/common/ac-data-dictionary"
-      ],
-      "@autocode-ts/ac-ng-data-dictionary-editor": [
-        "dist/packages/angular/ac-ng-data-dictionary-editor"
-      ],
-      "@autocode-ts/autocode-datagrid-on-aggrid-angular": [
-        "dist/packages/angular/autocode-datagrid-on-aggrid-angular"
-      ],
-      "@autocode-ts/ac-ng-drag-drop-builder": [
-        "dist/packages/angular/ac-ng-drag-drop-builder"
-      ],
-      "@autocode-ts/ac-extensions": [
-        "dist/packages/common/ac-extensions"
-      ],
-      "@autocode-ts/ac-ng-input-audio-recording": [
-        "dist/packages/angular/ac-ng-input-audio-recording"
-      ],
-      "@autocode-ts/ac-ng-input-on-ngselect": [
-        "dist/packages/angular/ac-ng-input-on-ngselect"
-      ],
-      "@autocode-ts/ac-ng-input-on-quill": [
-        "dist/packages/angular/ac-ng-input-on-quill"
-      ],
-      "@autocode-ts/ac-ng-input-on-tinymce": [
-        "dist/packages/angular/ac-ng-input-on-tinymce"
-      ],
-      "@autocode-ts/ac-ng-node-editor": [
-        "dist/packages/angular/ac-ng-node-editor"
-      ],
-      "@autocode-ts/ac-react": [
-        "dist/packages/react/ac-react"
-      ],
-      "@autocode-ts/ac-sql": [
-        "dist/packages/node/ac-sql"
-      ],
-      "@autocode-ts/ac-vue": [
-        "dist/packages/vue/ac-vue"
-      ],
-      "@autocode-ts/ac-web": [
-        "dist/packages/node/ac-web"
-      ],
-      "@autocode-ts/ac-web-on-express": [
-        "dist/packages/node/ac-web-on-express"
-      ]
+      "@autocode-ts/autocode": ["dist/packages/common/autocode"],
+      "@autocode-ts/ac-angular": ["dist/packages/angular/ac-angular"],
+      "@autocode-ts/ac-browser": ["dist/packages/browser/ac-browser"],
+      "@autocode-ts/ac-data-dictionary": ["dist/packages/common/ac-data-dictionary"],
+      "@autocode-ts/ac-ng-data-dictionary-editor": ["dist/packages/angular/ac-ng-data-dictionary-editor"],
+      "@autocode-ts/autocode-datagrid-on-aggrid-angular": ["dist/packages/angular/autocode-datagrid-on-aggrid-angular"],
+      "@autocode-ts/ac-ng-drag-drop-builder": ["dist/packages/angular/ac-ng-drag-drop-builder"],
+      "@autocode-ts/ac-extensions": ["dist/packages/common/ac-extensions"],
+      "@autocode-ts/ac-ng-input-audio-recording": ["dist/packages/angular/ac-ng-input-audio-recording"],
+      "@autocode-ts/ac-ng-input-on-ngselect": ["dist/packages/angular/ac-ng-input-on-ngselect"],
+      "@autocode-ts/ac-ng-input-on-quill": ["dist/packages/angular/ac-ng-input-on-quill"],
+      "@autocode-ts/ac-ng-input-on-tinymce": ["dist/packages/angular/ac-ng-input-on-tinymce"],
+      "@autocode-ts/ac-ng-node-editor": ["dist/packages/angular/ac-ng-node-editor"],
+      "@autocode-ts/ac-react": ["dist/packages/react/ac-react"],
+      "@autocode-ts/ac-sql": ["dist/packages/node/ac-sql"],
+      "@autocode-ts/ac-vue": ["dist/packages/vue/ac-vue"],
+      "@autocode-ts/ac-web": ["dist/packages/node/ac-web"],
+      "@autocode-ts/ac-web-on-express": ["dist/packages/node/ac-web-on-express"]
     }
   },
   "exclude": ["node_modules", "tmp"]

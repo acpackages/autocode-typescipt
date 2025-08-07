@@ -27,10 +27,10 @@ registerAgModules();
 
 
 @Component({
-  selector: 'ac-datagrid-on-aggrid',
+  selector: 'ac-datagrid-on-ag-grid',
   standalone: false,
-  templateUrl: './ac-datagrid-on-aggrid.component.html',
-  styleUrl: './ac-datagrid-on-aggrid.component.scss'
+  templateUrl: './ac-datagrid-on-ag-grid.component.html',
+  styleUrl: './ac-datagrid-on-ag-grid.component.scss'
 })
 export class AcDatagridOnAgGridComponent extends AcBase {
   @ContentChildren(AcDatagridColumnComponent) columnComponents?: QueryList<AcDatagridColumnComponent>;
@@ -85,41 +85,59 @@ export class AcDatagridOnAgGridComponent extends AcBase {
 
   @Output() onActiveRowChange: EventEmitter<any> = new EventEmitter();
   @Output() onCellBlurred: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellClicked: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellDoubleClicked: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellEditingStarted: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellEditingStopped: EventEmitter<any> = new EventEmitter();
   @Output() onCellEditorComponentBeforeInit: EventEmitter<any> = new EventEmitter();
   @Output() onCellEditorComponentDestroy: EventEmitter<any> = new EventEmitter();
   @Output() onCellEditorComponentInit: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellFocused: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellKeyDown: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellMouseDown: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellMouseOut: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellMouseOver: EventEmitter<any> = new EventEmitter();
   @Output() onCellRenderComponentBeforeInit: EventEmitter<any> = new EventEmitter();
   @Output() onCellRenderComponentDestroy: EventEmitter<any> = new EventEmitter();
   /* Done */
   @Output() onCellRenderComponentInit: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onCellValueChanged: EventEmitter<any> = new EventEmitter();
   @Output() onColumnHeaderClicked: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onColumnMoved: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onColumnResized: EventEmitter<any> = new EventEmitter();
   @Output() onColumnValueChanged: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onColumnVisibilityChanged: EventEmitter<any> = new EventEmitter();
   @Output() onFilterChanged: EventEmitter<any> = new EventEmitter();
   @Output() onFilterModified: EventEmitter<any> = new EventEmitter();
   @Output() onFilterOpened: EventEmitter<any> = new EventEmitter();
   @Output() onGridReady: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onPaginationChanged: EventEmitter<any> = new EventEmitter();
   /* Done */
   @Output() onRowAdded: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowClicked: EventEmitter<any> = new EventEmitter();
   @Output() onRowDataUpdated: EventEmitter<any> = new EventEmitter();
   /* Done */
   @Output() onRowDeleted: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowDoubleClicked: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowDragEnd: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onRowDragStart: EventEmitter<any> = new EventEmitter();
   @Output() onRowEditingStarted: EventEmitter<any> = new EventEmitter();
   @Output() onRowEditingStopped: EventEmitter<any> = new EventEmitter();
@@ -129,6 +147,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   @Output() onRowUpdated: EventEmitter<any> = new EventEmitter();
   @Output() onRowValueChanged: EventEmitter<any> = new EventEmitter();
   @Output() onSelectionChanged: EventEmitter<any> = new EventEmitter();
+  /* Done */
   @Output() onSortChanged: EventEmitter<any> = new EventEmitter();
   @Output() onStateUpdated: EventEmitter<any> = new EventEmitter();
 
@@ -709,28 +728,33 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     return allColumns.map(col => col.getColDef());
   }
 
+  /* Done */
   handleCellClicked(event: CellClickedEvent) {
     this.onCellClicked.emit(event);
     this.events.execute({ eventName: 'cellClicked', args: event });
   }
 
+  /* Done */
   handleCellDoubleClicked(event: CellDoubleClickedEvent) {
     this.onCellDoubleClicked.emit(event);
     this.events.execute({ eventName: 'cellDoubleClicked', args: event });
   }
 
+  /* Done */
   handleCellEditingStarted(event: CellEditingStartedEvent) {
     this.onCellEditingStarted.emit(event);
     this.events.execute({ eventName: 'cellEditingStarted', args: event });
     this.log("Cell Editing Started");
   }
 
+  /* Done */
   handleCellEditingStopped(event: CellEditingStoppedEvent) {
     this.onCellEditingStopped.emit(event);
     this.events.execute({ eventName: 'cellEditingStopped', args: event });
     this.log("Cell Editing Stopped");
   }
 
+  /* Done */
   handleCellFocused(event: any) {
     this.lastFocusedCellEvent = event;
     const rowIndex = event.rowIndex;
@@ -748,29 +772,35 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.events.execute({ eventName: 'cellFocused', args: event });
   }
 
+  /* Done */
   handleCellKeyDown(event: CellKeyDownEvent | FullWidthCellKeyDownEvent) {
     this.onCellKeyDown.emit(event);
     this.events.execute({ eventName: 'cellKeyDown', args: event });
   }
 
+  /* Done */
   handleCellMouseDown(event: CellMouseDownEvent) {
     this.onCellMouseDown.emit(event);
     this.events.execute({ eventName: 'cellMouseDown', args: event });
   }
 
+  /* Done */
   handleCellMouseOut(event: CellMouseOutEvent) {
     this.onCellMouseOut.emit(event);
     this.events.execute({ eventName: 'cellMouseOut', args: event });
   }
 
+  /* Done */
   handleCellMouseOver(event: CellMouseOverEvent) {
     this.onCellMouseOver.emit(event);
     this.events.execute({ eventName: 'cellMouseOver', args: event });
   }
 
+  /* Skipped */
   handleCellSelectionChanged(event: CellSelectionChangedEvent) {
   }
 
+  /* Done */
   handleCellValueChanged(event: any) {
     const rowIndex = event.rowIndex;
     const rowNode = event.node;
@@ -788,45 +818,54 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.events.execute({ eventName: 'cellValueChanged', args: event });
   }
 
+  /* Done */
   handleColumnHeaderClicked(event: ColumnHeaderClickedEvent) {
     this.onColumnHeaderClicked.emit(event);
     this.events.execute({ eventName: 'columnHeaderClicked', args: event });
   }
 
+  /* Done */
   handleColumnMoved(event: ColumnMovedEvent) {
     this.onColumnMoved.emit(event);
     this.events.execute({ eventName: 'columnMouved', args: event });
   }
 
+  /* Done */
   handleColumnResized(event: ColumnResizedEvent) {
     this.onColumnResized.emit(event);
     this.events.execute({ eventName: 'columnResized', args: event });
   }
 
+  /* Started */
   handleColumnValueChanged(event: ColumnValueChangedEvent) {
     this.onColumnValueChanged.emit(event);
     this.events.execute({ eventName: 'columnValueChanged', args: event });
   }
 
+  /* Done */
   handleColumnVisible(event: ColumnVisibleEvent) {
     this.onColumnVisibilityChanged.emit(event);
     this.events.execute({ eventName: 'columnVisibilityChanged', args: event });
   }
 
+  /* Started */
   handleComponentStateChanged(event: ComponentStateChangedEvent) {
     // this.log(event);
   }
 
+  /* Started */
   handleFilterChanged(event: FilterChangedEvent) {
     this.onFilterChanged.emit(event);
     this.events.execute({ eventName: 'filterChanged', args: event });
   }
 
+  /* Started */
   handleFilterModified(event: FilterModifiedEvent) {
     this.onFilterModified.emit(event);
     this.events.execute({ eventName: 'filterModified', args: event });
   }
 
+  /* Started */
   handleFilterOpened(event: FilterOpenedEvent) {
     this.onFilterOpened.emit(event);
     this.events.execute({ eventName: 'filterOpened', args: event });
@@ -844,26 +883,31 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.events.execute({ eventName: 'gridReady', args: event });
   }
 
+  /* Done */
   handlePaginationChanged(event: PaginationChangedEvent) {
     this.onPaginationChanged.emit(event);
     this.events.execute({ eventName: 'paginationChanged', args: event });
   }
 
+  /* Done */
   handleRowClicked(event: RowClickedEvent) {
     this.onRowClicked.emit(event);
     this.events.execute({ eventName: 'rowClicked', args: event });
   }
 
+  /* Started */
   handleRowDataUpdated(event: RowDataUpdatedEvent) {
     this.onRowDataUpdated.emit(event);
     this.events.execute({ eventName: 'rowDataUpdated', args: event });
   }
 
+  /* Done */
   handleRowDoubleClicked(event: RowDoubleClickedEvent) {
     this.onRowDoubleClicked.emit(event);
     this.events.execute({ eventName: 'rowDoubleClicked', args: event });
   }
 
+  /* Done */
   handleRowDragEnd(event: any) {
     const node = event.node;
     let currentGroupChildIndex: number = -1;
@@ -907,6 +951,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.onRowDragEnd.emit(eventParams);
   }
 
+  /* Done */
   handleRowDragStart(event: any) {
     this.draggingRow = event;
     const node = event.node;
@@ -934,36 +979,43 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     this.onRowDragStart.emit(eventParams);
   }
 
+  /* Started */
   handleRowEditingStarted(event: RowEditingStartedEvent) {
     this.onRowEditingStarted.emit(event);
     this.events.execute({ eventName: 'rowEditingStarted', args: event });
   }
 
+  /* Started */
   handleRowEditingStopped(event: RowEditingStoppedEvent) {
     this.onRowEditingStopped.emit(event);
     this.events.execute({ eventName: 'rowEditingStopped', args: event });
   }
 
+  /* Started */
   handleRowSelected(event: any) {
     this.onRowSelected.emit(event);
     this.events.execute({ eventName: 'rowSelected', args: event });
   }
 
+  /* Started */
   handleRowValueChanged(event: RowValueChangedEvent) {
     this.onRowValueChanged.emit(event);
     this.events.execute({ eventName: 'rowValueChanged', args: event });
   }
 
+  /* Started */
   handleSelectionChanged(event: SelectionChangedEvent) {
     this.onSelectionChanged.emit(event);
     this.events.execute({ eventName: 'selectionChanged', args: event });
   }
 
+  /* Done */
   handleSortChanged(event: SortChangedEvent) {
     this.onSortChanged.emit(event);
     this.events.execute({ eventName: 'sortChanged', args: event });
   }
 
+  /* Started */
   handleStateUpdated(event: StateUpdatedEvent) {
     const source = event.sources[0];
     if (['columnSizing', 'columnOrder'].includes(source)) {

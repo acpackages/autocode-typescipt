@@ -5,10 +5,18 @@ export abstract class AcDatagridExtension{
   hookId = '';
 
   init(){
-    // init implementation in child
+    // Init implementation in child
+  }
+
+  getState():any{
+    // Get state implementation
   }
 
   handleHook({hookName,hookArgs}:{hookName:string,hookArgs:any}){
     // Hooks implementation
+  }
+
+  setState({stateValue}:{stateValue:any}){
+    // Set state implementation
   }
 }

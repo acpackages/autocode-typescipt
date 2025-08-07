@@ -3,7 +3,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IAcDataGridColumn } from 'packages/angular/ac-angular/src';
 import { ActionColumnComponent } from 'tests/angular/src/components/action-column/action-column.component';
-import { AcDatagridOnAgGridComponent } from 'packages/angular/ac-ng-datagrid-on-aggrid/src/lib/components/ac-datagrid-on-aggrid/ac-datagrid-on-aggrid.component';
+import { AcDatagridOnAgGridComponent } from 'packages/angular/ac-ng-datagrid-on-aggrid/src/lib/components/ac-datagrid-on-ag-grid/ac-datagrid-on-ag-grid.component';
 import { developmentTaskData } from '../../data/development-tasks';
 
 @Component({

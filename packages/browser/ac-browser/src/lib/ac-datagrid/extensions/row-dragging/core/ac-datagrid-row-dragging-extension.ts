@@ -12,6 +12,7 @@ import { AcEnumDatagridRowDraggingHook } from "../_row-dragging.export";
 import { AcDatagridRowDraggingCell } from "../elements/ac-row-dragging-cell.element";
 import { AcDatagridRowDraggingHeaderCell } from "../elements/ac-row-dragging-header-cell.element";
 import { IAcDatagridRowDraggingHookArgs } from "../interfaces/ac-datagrid-row-dragging-hook-args.interface";
+import { AcDatagridRowDraggingEventHandler } from "./ac-datagrid-row-dragging-event-handler";
 
 export class AcDatagridRowDraggingExtension extends AcDatagridExtension {
   private _allowRowDragging:boolean = false;
@@ -32,10 +33,12 @@ export class AcDatagridRowDraggingExtension extends AcDatagridExtension {
   datagridInternalColumn: AcDatagridInternalColumn = new AcDatagridInternalColumn({
     width: 35,
   });
+  rowDraggingEventHandler!:AcDatagridRowDraggingEventHandler;
 
   override init(): void {
     const draggableSort = new AcDraggableSort({element:this.datagridApi.datagrid.datagridBody.element});
     this.draggableApi = draggableSort.draggableApi;
+    this.rowDraggingEventHandler = new AcDatagridRowDraggingEventHandler({rowDraggingExtension:this});
   }
 
   override handleHook({ hookName, hookArgs }: { hookName: string; hookArgs: any; }): void {

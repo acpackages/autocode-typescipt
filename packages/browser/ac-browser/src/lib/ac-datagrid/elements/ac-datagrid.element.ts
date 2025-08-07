@@ -8,7 +8,7 @@ import { AcDatagridBodyElement } from "./ac-datagrid-body.element";
 import { AcDatagridFooterElement } from "./ac-datagrid-footer.element";
 import { AcDatagridHeaderElement } from "./ac-datagrid-header.element";
 
-export class AcDatagridElement {
+export class AcDatagrid {
   containerElement:HTMLElement = document.createElement('div');
   datagridApi:AcDatagridApi = new AcDatagridApi({datagrid:this});
   datagridBody:AcDatagridBodyElement =  new AcDatagridBodyElement({datagridApi:this.datagridApi});

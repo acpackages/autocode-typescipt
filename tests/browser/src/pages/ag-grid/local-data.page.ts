@@ -1,11 +1,11 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagridElement, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension } from '@autocode-ts/ac-browser';
-import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ag-datagrid-on-ag-grid';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension } from '@autocode-ts/ac-browser';
+import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
 
 export class AggridLocalData extends HTMLElement {
-  datagrid!: AcDatagridElement;
+  datagrid!: AcDatagrid;
   datagridApi!: AcDatagridApi;
   pageHeader: PageHeader = new PageHeader();
   agGridExtension!: AcDatagridOnAgGridExtension;
@@ -22,7 +22,7 @@ export class AggridLocalData extends HTMLElement {
     this.innerHTML = html;
     this.style.height = '100vh;'
     this.prepend(this.pageHeader.element);
-    this.pageHeader.pageTitle = 'AGGrid on AcDatagridElement : Offline Data';
+    this.pageHeader.pageTitle = 'AGGrid on AcDatagrid : Offline Data';
     this.initDatagrid();
   }
 
@@ -30,7 +30,7 @@ export class AggridLocalData extends HTMLElement {
     const gridDiv = document.querySelector<HTMLElement>('#aggridContainer');
     if (gridDiv) {
       AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
-      this.datagrid = new AcDatagridElement();
+      this.datagrid = new AcDatagrid();
       this.datagridApi = this.datagrid.datagridApi;
 
       this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;

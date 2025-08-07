@@ -4,7 +4,6 @@ export class AcJsonUtils {
   static getJsonDataFromInstance({ instance }: { instance: any }): Record<string, any> {
     const result: Record<string, any> = {};
     const metadata = getAcBindJsonMetadata(instance);
-
     for (const key of Object.keys(instance)) {
       const attr = metadata.get(key) || {};
       if (attr.skipInToJson) continue;
@@ -63,7 +62,6 @@ export class AcJsonUtils {
     jsonData: Record<string, any>;
   }) {
     const metadata = getAcBindJsonMetadata(instance);
-
     for (const key of Object.keys(instance)) {
       this._setInstancePropertyValueFromJson({
         instance,
@@ -95,7 +93,6 @@ export class AcJsonUtils {
     if (!(jsonKey in jsonData)) return;
 
     let value = jsonData[jsonKey];
-
     if (attr?.arrayType && Array.isArray(value)) {
       const typeConstructor = attr.arrayType();
       value = value.map((item: any) => {
@@ -106,9 +103,10 @@ export class AcJsonUtils {
         });
         return obj;
       });
-    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    }
+    else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       const typeConstructor = instance[key]?.constructor;
-      if (typeof typeConstructor === 'function') {
+      if (typeof typeConstructor === 'function' && typeConstructor.name != 'Object') {
         const obj = new typeConstructor();
         this.setInstancePropertiesFromJsonData({
           instance: obj,
@@ -117,7 +115,6 @@ export class AcJsonUtils {
         value = obj;
       }
     }
-
     instance[key] = value;
   }
 }

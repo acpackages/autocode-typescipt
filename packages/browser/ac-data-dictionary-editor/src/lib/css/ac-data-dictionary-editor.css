@@ -1,0 +1,23 @@
+.ac-dde-datagrid-wrapper{
+  display: flex;
+  flex-direction: row;
+  height:100%;
+  width:100%;
+}
+
+.ac-dde-tables-wrapper{
+  width:30%
+}
+
+.ac-dde-table-details-wrapper{
+  width:-webkit-fill-available;
+}
+
+.ac-dde-container,.ac-dde-tables-container{
+  height:100%;
+  width:100%;
+}
+.ac-dde-table-columns-container, .ac-dde-table-relationships-container{
+  height:50%;
+  width:100%;
+}

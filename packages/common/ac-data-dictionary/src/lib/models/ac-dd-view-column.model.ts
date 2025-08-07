@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 import { AcDDTableColumnProperty } from "../..";
+// import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
+
 export class AcDDViewColumn {
   static readonly KeyColumnName = "column_name";
   static readonly KeyColumnProperties = "column_properties";

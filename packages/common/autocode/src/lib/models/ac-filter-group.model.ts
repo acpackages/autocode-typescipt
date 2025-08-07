@@ -5,9 +5,9 @@ import { AcFilter } from "./ac-filter.model";
 
 
 export class AcFilterGroup {
-  static readonly KEY_FILTERS = "filters";
-  static readonly KEY_FILTER_GROUPS = "filter_groups";
-  static readonly KEY_OPERATOR = "operator";
+  static readonly KeyFilters = "filters";
+  static readonly KeyFiltergroups = "filter_groups";
+  static readonly KeyOperator = "operator";
 
   filters: AcFilter[] = [];
   filterGroups: AcFilterGroup[] = [];

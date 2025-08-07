@@ -16,6 +16,9 @@ import { TemplateEnginePage } from './pages/template-engine/template-engine.page
 import { AggridLocalDataTree } from './pages/ag-grid/local-data-tree.page';
 import { CollapseTestPage } from './pages/collapse/collapse-all-tests.page';
 import { AggridOnDemandData } from './pages/ag-grid/on-demand-data.page';
+import { DDEEditorDatagridPage } from './pages/data-dictionary-editor/datagrid.page';
+import { ResizableTestPage } from './pages/resizable/resizable-test-page.page';
+import { ResizablePanelsTestPage } from './pages/resizable/resizable-panels-test-page.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -52,6 +55,12 @@ window.addEventListener('DOMContentLoaded', () => {
     ]
   });
   AcRouter.registerRouteGroup({
+    label:'Data Dictionary',
+    routes:[
+      {label:'Editor', path: '/data-dictionary/datagrid', componentTag: 'data-dictionary-editor', component: DDEEditorDatagridPage}
+    ]
+  })
+  AcRouter.registerRouteGroup({
     label:'Datagrid',
     routes:[
       {label:'Local Data', path: '/datagrid/local-data', componentTag: 'datagrid-local-data', component: DatagridLocalData },
@@ -73,6 +82,13 @@ window.addEventListener('DOMContentLoaded', () => {
     label:'Inputs',
     routes:[
       {label:'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Resizable',
+    routes:[
+      {label:'Basic', path: '/resizable/basic', componentTag: 'resizable-basic', component: ResizableTestPage },
+      {label:'Resizable Panels', path: '/resizable/panels', componentTag: 'resizable-panels', component: ResizablePanelsTestPage }
     ]
   });
   AcRouter.registerRouteGroup({

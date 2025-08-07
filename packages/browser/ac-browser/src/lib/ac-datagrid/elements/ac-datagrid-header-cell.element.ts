@@ -3,8 +3,7 @@
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { acAddClassToElement, acSwapElementsWithAnimation } from "../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
-import { AcEnumSortDirection } from "../../enums/ac-enum-sort-direction.enum";
-import { AcFilter } from "@autocode-ts/autocode";
+import { AcEnumSortOrder, AcFilter } from "@autocode-ts/autocode";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridHtmlPlaceholder } from "../consts/ac-datagrid-html-placeholder.const";
@@ -129,14 +128,14 @@ export class AcDatagridHeaderCellElement {
 
     // Sorting click
     this.sortElement.addEventListener('click', () => {
-      const current = this.datagridColumn.sortDirection;
-      const next = current === AcEnumSortDirection.None
-        ? AcEnumSortDirection.Ascending
-        : current === AcEnumSortDirection.Ascending
-          ? AcEnumSortDirection.Descending
-          : AcEnumSortDirection.None;
+      const current = this.datagridColumn.sortOrder;
+      const next = current === AcEnumSortOrder.None
+        ? AcEnumSortOrder.Ascending
+        : current === AcEnumSortOrder.Ascending
+          ? AcEnumSortOrder.Descending
+          : AcEnumSortOrder.None;
 
-      this.datagridApi.setColumnSortDirection({ datagridColumn: this.datagridColumn, sortDirection: next });
+      this.datagridApi.setColumnSortOrder({ datagridColumn: this.datagridColumn, sortOrder: next });
     });
 
     // Resizing mouse events
@@ -213,10 +212,10 @@ export class AcDatagridHeaderCellElement {
   }
 
   renderSort() {
-    if (this.datagridColumn.sortDirection == AcEnumSortDirection.Ascending) {
+    if (this.datagridColumn.sortOrder == AcEnumSortOrder.Ascending) {
       this.sortElement.innerHTML = AcDatagridHtmlPlaceholder.sortAscending;
     }
-    else if (this.datagridColumn.sortDirection == AcEnumSortDirection.Descending) {
+    else if (this.datagridColumn.sortOrder == AcEnumSortOrder.Descending) {
       this.sortElement.innerHTML = AcDatagridHtmlPlaceholder.sortDescending;
     }
     else {

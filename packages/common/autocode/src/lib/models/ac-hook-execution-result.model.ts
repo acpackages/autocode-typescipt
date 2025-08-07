@@ -3,14 +3,14 @@ import { AcBindJsonProperty } from "../annotations/ac-bind-json-property.annotat
 import { AcResult } from "./ac-result.model";
 
 export class AcHookExecutionResult extends AcResult {
-  static readonly KEY_CONTINUE_OPERATION = "continue_operation";
-  static readonly KEY_HAS_RESULTS = "has_results";
-  static readonly KEY_RESULTS = "results";
+  static readonly KeyContinueOperation = "continue_operation";
+  static readonly KeyHasResults = "has_results";
+  static readonly KeyResults = "results";
 
-  @AcBindJsonProperty({ key: AcHookExecutionResult.KEY_CONTINUE_OPERATION })
+  @AcBindJsonProperty({ key: AcHookExecutionResult.KeyContinueOperation })
   continueOperation: boolean = true;
 
-  @AcBindJsonProperty({ key: AcHookExecutionResult.KEY_HAS_RESULTS })
+  @AcBindJsonProperty({ key: AcHookExecutionResult.KeyHasResults })
   hasResults: boolean = false;
 
   results: { [key: string]: any } = {};

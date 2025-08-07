@@ -6,6 +6,7 @@ export * from './lib/ac-floating-scrollbar/_ac-floating-scrollbar.export';
 export * from './lib/ac-inputs/_ac-inputs.export';
 export * from './lib/ac-pagination/_ac-pagination.export';
 export * from './lib/ac-repeater/_ac-repeater.export';
+export * from './lib/ac-resizable/_ac-resizable.export';
 export * from './lib/core/_core.export';
 export * from './lib/enums/_enums.export';
 export * from './lib/utils/_utils.export';

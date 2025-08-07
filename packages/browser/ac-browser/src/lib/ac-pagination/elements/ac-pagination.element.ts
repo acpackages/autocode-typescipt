@@ -9,9 +9,15 @@ export class AcPagination {
   get activePage():number{
     return this.paginationApi.activePage;
   }
+  set activePage(value:number){
+    this.paginationApi.activePage = value;
+  }
 
   get activePageSize():number{
     return this.paginationApi.activePageSize;
+  }
+  set activePageSize(value:number){
+    this.paginationApi.activePageSize = value;
   }
 
   get endRow():number{
@@ -33,7 +39,9 @@ export class AcPagination {
   get totalRows():number{
     return this.paginationApi.totalRows;
   }
-
+  set totalRows(value:number){
+    this.paginationApi.totalRows = value;
+  }
   element:HTMLElement = document.createElement('div');
   pageDisplayedRowsLabel:AcPageDisplayedRowsLabel;
   pageNavigationButtons:AcPageNavigationButtons;

@@ -30,8 +30,6 @@ export class AcOptionInput extends AcInputBase {
         this.value = this.valueWhenUnchecked;
       }
     }
-    console.log(this.value, value, this.valueWhenChecked);
-
   }
 
   private _labelElement: HTMLElement | undefined;
