@@ -17,38 +17,44 @@ export class AcHooks {
 
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
           if (!continueOperation) break;
+          try {
+            const functionResult = fun(args);
 
-          const functionResult = fun(args);
+            if (functionResult) {
+              functionResults[functionId] = functionResult;
 
-          if (functionResult != null) {
-            functionResults[functionId] = functionResult;
+              if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
+                continueOperation = false;
+              }
 
-            if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
-              continueOperation = false;
+              if (functionResult.continueOperation !== true) {
+                result.continueOperation = false;
+              }
             }
-
-            if (functionResult.continueOperation !== true) {
-              result.continueOperation = false;
-            }
+          } catch (ex) {
+            console.error(ex);
           }
         }
       }
 
       for (const [functionId, fun] of Object.entries(this.allHookCallbacks)) {
           if (!continueOperation) break;
+          try {
+            const functionResult = fun(hookName, args);
 
-          const functionResult = fun(hookName, args);
+            if (functionResult) {
+              functionResults[functionId] = functionResult;
 
-          if (functionResult != null) {
-            functionResults[functionId] = functionResult;
+              if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
+                continueOperation = false;
+              }
 
-            if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
-              continueOperation = false;
+              if (functionResult.continueOperation !== true) {
+                result.continueOperation = false;
+              }
             }
-
-            if (functionResult.continueOperation !== true) {
-              result.continueOperation = false;
-            }
+          } catch (ex) {
+            console.error(ex);
           }
         }
 
@@ -60,6 +66,7 @@ export class AcHooks {
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
+      console.error(ex);
     }
 
     return result;

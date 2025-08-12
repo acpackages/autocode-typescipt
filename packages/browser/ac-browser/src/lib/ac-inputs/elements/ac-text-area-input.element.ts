@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acAddClassToElement } from "../../utils/ac-element-functions";
+import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcInputBase } from "../core/ac-input-base";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 
@@ -62,4 +64,9 @@ export class AcTextAreaInput extends AcInputBase{
   }
 
   override element: HTMLTextAreaElement = document.createElement('textarea');
+
+  override init(): void {
+    super.init();
+    acAddClassToElement({cssClass:AcInputCssClassName.acTextAreaInput,element:this.element});
+  }
 }

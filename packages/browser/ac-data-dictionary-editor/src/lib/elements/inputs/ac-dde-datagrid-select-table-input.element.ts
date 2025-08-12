@@ -1,0 +1,46 @@
+import { IAcDatagridCellRendererElement, IAcDatagridCellRendererElementArgs, AcSelectInput } from '@autocode-ts/ac-browser';
+import { AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
+import { AcDDEApi, AcEnumDDEHook } from '../../_ac-data-dictionary-editor.export';
+export class AcDDEDatagridSelectTableInput implements IAcDatagridCellRendererElement{
+  selectInput:AcSelectInput = new AcSelectInput();
+  editorApi!:AcDDEApi;
+  value:any;
+
+  destroy?(): void {
+    this.selectInput.destroy();
+  }
+
+  focus?(): void {
+    this.selectInput.element.focus();
+  }
+
+  getElement(): HTMLElement {
+    return this.selectInput.element;
+  }
+
+  init(args: IAcDatagridCellRendererElementArgs): void {
+    this.selectInput.init();
+    this.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+    if(args.datagridCell.datagridColumn.columnDefinition.cellRendererElementParams && args.datagridCell.datagridColumn.columnDefinition.cellRendererElementParams['editorApi']){
+      this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellRendererElementParams['editorApi'];
+      this.editorApi.hooks.subscribe({hookName:AcEnumDDEHook.DataLoaded,callback:()=>{
+        this.setOptions();
+      }});
+      this.setOptions();
+    }
+  }
+
+  refresh(args: IAcDatagridCellRendererElementArgs): void {
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+  }
+
+  setOptions(){
+    const options:any[] = [];
+    for(const row of Object.values(this.editorApi.dataStorage.tables)){
+      options.push({'label':row.table_name,'value':row.table_id});
+    }
+    this.selectInput.selectOptions = options;
+    this.selectInput.value = this.value;
+  }
+
+}

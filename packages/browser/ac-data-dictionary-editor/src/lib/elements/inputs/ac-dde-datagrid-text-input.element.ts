@@ -12,11 +12,12 @@ export class AcDDEDatagridTextInput implements IAcDatagridCellRendererElement{
   }
 
   init(args: IAcDatagridCellRendererElementArgs): void {
-    this.textInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.colDef.field]!;
+    this.textInput.init();
+    this.textInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
   }
 
   refresh(args: IAcDatagridCellRendererElementArgs): void {
-    this.textInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.colDef.field]!;
+    this.textInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
   }
 
 }

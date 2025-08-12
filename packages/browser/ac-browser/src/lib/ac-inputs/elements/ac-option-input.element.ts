@@ -5,6 +5,8 @@ import { Autocode } from "@autocode-ts/autocode";
 import { AcInputBase } from "../core/ac-input-base";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcEnumReactiveValueProxyEvent, IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { acAddClassToElement } from "../../utils/ac-element-functions";
+import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 
 export class AcOptionInput extends AcInputBase {
   private _isArray: boolean = false;
@@ -72,6 +74,7 @@ export class AcOptionInput extends AcInputBase {
 
   override init(): void {
     super.init();
+    acAddClassToElement({cssClass:AcInputCssClassName.acOptionInput,element:this.element});
     if (this.isArray == undefined || this.isArray == null) {
       if (this.type == AcEnumInputType.Checkbox) {
         this.isArray = true;

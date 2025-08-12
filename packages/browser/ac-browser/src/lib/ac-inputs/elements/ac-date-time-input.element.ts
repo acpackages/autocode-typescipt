@@ -2,6 +2,8 @@
 import { DateTime } from "luxon";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcInput } from "./ac-input.element";
+import { acAddClassToElement } from "../../utils/ac-element-functions";
+import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 
 export class AcDateTimeInput extends AcInput{
   protected override _type: AcEnumInputType.DateTimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week = AcEnumInputType.DateTimeLocal;
@@ -46,5 +48,6 @@ export class AcDateTimeInput extends AcInput{
   override init(): void {
     this.type = this._type;
     super.init();
+    acAddClassToElement({cssClass:AcInputCssClassName.acDateTimeInput,element:this.element});
   }
 }

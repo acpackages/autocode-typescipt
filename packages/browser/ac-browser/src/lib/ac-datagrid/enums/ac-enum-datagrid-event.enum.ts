@@ -1,5 +1,5 @@
 export const AcEnumDatagridEvent = {
-  // activeRowChange: 'activeRowChange',
+  ActiveRowChange: 'activeRowChange',
   CellBlur: 'cellBlur',
   CellClick: 'cellClick',
   CellDoubleClick: 'cellDoubleClick',

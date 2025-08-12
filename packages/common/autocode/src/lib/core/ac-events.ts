@@ -15,7 +15,23 @@ export class AcEvents {
       if (this.events[eventName]) {
         const functionsToExecute = this.events[eventName];
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
-          const functionResult = fun(args);
+          try{
+            const functionResult = fun(args);
+            if (
+              functionResult &&
+              functionResult instanceof AcEventExecutionResult &&
+              functionResult.status === 'success'
+            ) {
+              functionResults[functionId] = functionResult;
+            }
+          } catch (ex) {
+            console.error(ex);
+          }
+        }
+      }
+      for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
+        try{
+          const functionResult = fun(eventName, args);
           if (
             functionResult &&
             functionResult instanceof AcEventExecutionResult &&
@@ -23,16 +39,8 @@ export class AcEvents {
           ) {
             functionResults[functionId] = functionResult;
           }
-        }
-      }
-      for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
-        const functionResult = fun(eventName, args);
-        if (
-          functionResult &&
-          functionResult instanceof AcEventExecutionResult &&
-          functionResult.status === 'success'
-        ) {
-          functionResults[functionId] = functionResult;
+        } catch (ex) {
+          console.error(ex);
         }
       }
       if (Object.keys(functionResults).length > 0) {
@@ -42,6 +50,7 @@ export class AcEvents {
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
+      console.error(ex);
     }
 
     return result;

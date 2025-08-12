@@ -51,7 +51,7 @@ export class AggridLocalData extends HTMLElement {
       this.rowSelectionExtension.allowMultipleSelection = true;
 
       this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
-      this.datagridApi.colDefs = [
+      this.datagridApi.columnDefinitions = [
         { field: 'action', title: "", allowSort: false, cellRendererElement:ActionsDatagridColumn,width:65},
         { field: 'customer_id', title: "Id" },
         { field: 'first_name', title: "First Name", allowEdit:true },

@@ -39,7 +39,7 @@ export class AcDatagridCellEditorElement implements IAcDatagridCellEditorElement
   }
 
   refresh(args: IAcDatagridCellRendererElementArgs): void {
-    this.element.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.colDef.field];
+    this.element.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field];
   }
 
   initElement() {
@@ -53,10 +53,10 @@ export class AcDatagridCellEditorElement implements IAcDatagridCellEditorElement
   }
 
   render() {
-    this.element.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.colDef.field];
+    this.element.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field];
     this.element.addEventListener('input', (e: any) => {
       console.log("Value changed");
-      // this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.colDef.field] = this.element.value;
+      // this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
     });
   }
 

@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acAddClassToElement } from "../../utils/ac-element-functions";
+import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcInput } from "./ac-input.element";
 
@@ -46,12 +48,14 @@ export class AcNumberInput extends AcInput{
     }
   }
 
+  override element: HTMLInputElement = document.createElement('input');
+
   override init(): void {
     if(this.type == ''){
       this.type = AcEnumInputType.Number;
     }
     super.init();
+    acAddClassToElement({cssClass:AcInputCssClassName.acNumberInput,element:this.element});
   }
 
-  override element: HTMLInputElement = document.createElement('input');
 }

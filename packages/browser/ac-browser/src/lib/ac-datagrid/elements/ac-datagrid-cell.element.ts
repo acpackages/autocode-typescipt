@@ -34,8 +34,8 @@ export class AcDatagridCellElement {
       datagridRow: datagridRow,
       instance: this
     });
-    if (this.datagridColumn.colDef.cellRendererElement) {
-      this.cellRenderer = new this.datagridColumn.colDef.cellRendererElement();
+    if (this.datagridColumn.columnDefinition.cellRendererElement) {
+      this.cellRenderer = new this.datagridColumn.columnDefinition.cellRendererElement();
       const elementInitEventArgs: IAcDatagridCellRendererElementInitEvent = {
         datagridApi: this.datagridApi,
         datagridCell: this.datagridCell,
@@ -85,8 +85,8 @@ export class AcDatagridCellElement {
 
   enterEditMode() {
     if (this.cellEditor == undefined) {
-      if (this.datagridColumn.colDef.cellEditorElement) {
-        this.cellEditor = new this.datagridColumn.colDef.cellEditorElement();
+      if (this.datagridColumn.columnDefinition.cellEditorElement) {
+        this.cellEditor = new this.datagridColumn.columnDefinition.cellEditorElement();
         const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {
           datagridApi: this.datagridApi,
           datagridCell: this.datagridCell,

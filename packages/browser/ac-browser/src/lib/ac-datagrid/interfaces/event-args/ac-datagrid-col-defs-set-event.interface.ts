@@ -1,9 +1,9 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 import { AcDatagridColumn } from "../../models/ac-datagrid-column.model";
-import { IAcDatagridColDef } from "../ac-datagrid-col-def.interface";
+import { IAcDatagridColumnDefinition } from "../ac-datagrid-column-definition.interface";
 
 export interface IAcDatagridColDefsSetEvent{
-  colDefs:IAcDatagridColDef[],
+  columnDefinitions:IAcDatagridColumnDefinition[],
   datagridColumns:AcDatagridColumn[],
   datagridApi:AcDatagridApi
 }

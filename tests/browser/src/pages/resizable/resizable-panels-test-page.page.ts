@@ -1,4 +1,4 @@
-import { AcEnumResizePanelDirection, AcResizablePanels } from '@autocode-ts/ac-browser'; // Adjust path as needed
+import { AcEnumResizePanelDirection, AcResizablePanels, AcEnumResizableEvent } from '@autocode-ts/ac-browser'; // Adjust path as needed
 
 export class ResizablePanelsTestPage extends HTMLElement {
   connectedCallback() {
@@ -33,11 +33,22 @@ export class ResizablePanelsTestPage extends HTMLElement {
     // Initialize AcResizablePanels for both directions
     const horizontalPanels = new AcResizablePanels({element:document.getElementById('horizontal-panels')!,direction:AcEnumResizePanelDirection.Horizontal});
     const verticalPanels = new AcResizablePanels({element:document.getElementById('vertical-panels')!,direction: AcEnumResizePanelDirection.Vertical});
+    horizontalPanels.on({eventName:AcEnumResizableEvent.resize,callback:(args:any)=>{
+      console.log("Horizontal Panels Resized",args);
+    }})
+    verticalPanels.on({eventName:AcEnumResizableEvent.resize,callback:(args:any)=>{
+      console.log("Vertical Panels Resized",args);
+    }})
 
     setTimeout(() => {
-      // verticalPanels.setPanelSize({index:1,size:95});
-    }, 2500);
-
+      horizontalPanels.setPanelSizes({panelSizes:[
+        {index:0,size:10},
+        {index:1,size:10},
+        {index:2,size:20},
+        // {index:3,size:40}
+      ]});
+      // verticalPanels.setPanelSize({index:2,size:10});
+    }, 1500);
 
   }
 }

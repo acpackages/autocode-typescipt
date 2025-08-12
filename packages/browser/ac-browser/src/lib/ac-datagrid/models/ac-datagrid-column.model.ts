@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
-import { IAcDatagridColDef } from "../interfaces/ac-datagrid-col-def.interface";
+import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
 import { AcEnumDatagridColumnDataType } from "../enums/ac-enum-datagrid-column-data-type.enum";
 import { AcDatagridHeaderCellElement } from "../elements/ac-datagrid-header-cell.element";
 import { AcDatagridDefaultColumnConfig } from "../consts/ac-datagrid-default-column-config.const";
@@ -9,7 +9,7 @@ import { AcDatagridApi } from "../core/ac-datagrid-api";
 
 export class AcDatagridColumn {
   acColumnId: string = Autocode.uuid();
-  colDef!: IAcDatagridColDef;
+  columnDefinition!: IAcDatagridColumnDefinition;
   datagridApi!: AcDatagridApi;
   dataType: AcEnumDatagridColumnDataType = AcEnumDatagridColumnDataType.string;
   extensionData: Record<string, any> = {};
@@ -21,23 +21,23 @@ export class AcDatagridColumn {
   width: number = AcDatagridDefaultColumnConfig.width;
 
   get allowEdit(): boolean {
-    return this.colDef.allowEdit == true;
+    return this.columnDefinition.allowEdit == true;
   }
   get allowFilter(): boolean {
-    return this.colDef.allowFilter == true;
+    return this.columnDefinition.allowFilter == true;
   }
   get allowResize(): boolean {
-    return this.colDef.allowResize == true;
+    return this.columnDefinition.allowResize == true;
   }
   get allowSort(): boolean {
-    return this.colDef.allowSort == undefined || this.colDef.allowSort == true;
+    return this.columnDefinition.allowSort == undefined || this.columnDefinition.allowSort == true;
   }
   get title(): string {
-    return this.colDef.title ?? this.colDef.field;
+    return this.columnDefinition.title ?? this.columnDefinition.field;
   }
 
-  constructor({ colDef,datagridApi,index = -1,width = AcDatagridDefaultColumnConfig.width }: { colDef: IAcDatagridColDef,datagridApi:AcDatagridApi,index?:number,width?:number }) {
-    this.colDef = colDef;
+  constructor({ columnDefinition,datagridApi,index = -1,width = AcDatagridDefaultColumnConfig.width }: { columnDefinition: IAcDatagridColumnDefinition,datagridApi:AcDatagridApi,index?:number,width?:number }) {
+    this.columnDefinition = columnDefinition;
     this.datagridApi = datagridApi;
     this.index = index;
     this.width = width;

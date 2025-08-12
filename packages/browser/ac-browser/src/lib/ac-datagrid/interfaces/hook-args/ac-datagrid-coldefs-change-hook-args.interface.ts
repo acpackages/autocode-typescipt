@@ -1,8 +1,8 @@
-import { IAcDatagridColDef } from "../../_ac-datagrid.export";
+import { IAcDatagridColumnDefinition } from "../../_ac-datagrid.export";
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 
 export interface IAcDatagridColDefsChangeHookArgs{
-  colDefs:IAcDatagridColDef[],
+  columnDefinitions:IAcDatagridColumnDefinition[],
   datagridApi:AcDatagridApi,
-  oldColDefs:IAcDatagridColDef[]
+  oldColumnDefinitions:IAcDatagridColumnDefinition[]
 }

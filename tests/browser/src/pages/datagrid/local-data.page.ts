@@ -21,11 +21,11 @@ export class DatagridLocalData extends HTMLElement {
     const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection});
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowDragging});
     this.datagridApi.usePagination = true
-    this.datagridApi.allowRowSelect = true;
+    // this.datagridApi.allowRowSelect = true;
     this.datagridApi.dataSourceType = AcEnumDataSourceType.Offline;
     console.log(this.getElementsByClassName("local-datagrid-container"));
     this.getElementsByClassName("local-datagrid-container")[0].append(this.datagrid.element);
-    this.datagridApi.colDefs = [
+    this.datagridApi.columnDefinitions = [
       {field:'customer_id',title:"Id"},
       {field:'first_name',title:"First Name"},
       {field:'last_name',title:"Last Name"},

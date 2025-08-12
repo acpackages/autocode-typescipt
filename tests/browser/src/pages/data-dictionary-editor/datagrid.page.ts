@@ -1,6 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
-import { AcDataDictionaryEditor, AcDDEApi } from '@autocode-ts/ac-data-dictionary-editor';
+import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
+import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import {dataDictionaryJson} from './../../../../data/data_dictionary';
 
@@ -10,11 +11,11 @@ export class DDEEditorDatagridPage  extends HTMLElement {
   pageHeader: PageHeader = new PageHeader();
   async connectedCallback() {
     const html = `
-      <div id="editorContainer" class="editor-container" style="height:calc(100vh - 60px);"></div>
+      <div id="editorContainer" class="editor-container" style="height:calc(100vh);"></div>
     `;
     this.innerHTML = html;
     this.style.height = '100vh;'
-    this.prepend(this.pageHeader.element);
+    // this.prepend(this.pageHeader.element);
     this.pageHeader.pageTitle = 'Data Dictionary Editor';
     this.initDatagrid();
   }
@@ -22,9 +23,15 @@ export class DDEEditorDatagridPage  extends HTMLElement {
   async initDatagrid() {
     const gridDiv = document.querySelector<HTMLElement>('#editorContainer');
     if (gridDiv) {
+      AcDDEExtensionManager.register(AcCodeGeneratorDDEExtension);
       this.dataDictionaryEditor = new AcDataDictionaryEditor();
       this.editorApi = this.dataDictionaryEditor.editorApi;
-      this.editorApi.loadDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'Test'});
+      this.editorApi.hooks.subscribeAllHooks({callback:(hookName:string,hookArgs:any)=>{
+        console.log(`Found hook : ${hookName}`,hookArgs);
+      }});
+      this.editorApi.enableExtension({extensionName:AcEnumDDEExtension.ImportExport});
+      this.editorApi.enableExtension({extensionName:AcCodeGeneratorDDEExtension.extensionName});
+      this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'Test'});
       gridDiv.append(this.dataDictionaryEditor.element);
       // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
 

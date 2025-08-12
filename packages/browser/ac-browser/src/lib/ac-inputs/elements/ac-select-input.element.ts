@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acAddClassToElement } from "../../utils/ac-element-functions";
+import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcInputBase } from "../core/ac-input-base";
 
 export class AcSelectInput extends AcInputBase{
@@ -28,6 +30,11 @@ export class AcSelectInput extends AcInputBase{
   }
 
   override element: HTMLSelectElement = document.createElement('select');
+
+  override init(): void {
+    super.init();
+    acAddClassToElement({cssClass:AcInputCssClassName.acSelectInput,element:this.element});
+  }
 
   setSelectOptionElements(){
     this.element.innerHTML = '';

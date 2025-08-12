@@ -40,7 +40,7 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRendererEle
   }
 
   render() {
-    this.element.innerHTML = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.colDef.field];
+    this.element.innerHTML = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field];
   }
 
 }

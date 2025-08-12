@@ -1,7 +1,6 @@
 import { AcFilterGroup, AcSortOrder } from "@autocode-ts/autocode";
-import { AcDatagridRow, AcEnumDatagridHook, IAcDatagridDataChangeHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs } from "../_ac-datagrid.export";
+import { AcDatagridRow, AcEnumDatagridHook, IAcDatagridDataChangeHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs, IAcDatagridRowHookArgs } from "../_ac-datagrid.export";
 import { AcDatagridDataSource } from "./ac-datagrid-data-source";
-import { IAcDatagridRowHookArgs } from "../interfaces/event-args/ac-datagrid-row-hook-args.interface";
 import { IAcDatagridBeforeGetOnDemandDataHookArgs } from "../interfaces/hook-args/ac-datagrid-before-get-on-demand-data-hook-args.interface";
 
 export class AcDatagridOnDemandDataSource extends AcDatagridDataSource {

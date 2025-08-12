@@ -56,7 +56,7 @@ export class AggridLocalDataTree extends HTMLElement {
       this.treeTableExtension.treeDataDisplayKey = 'name';
 
       this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
-      this.datagridApi.colDefs = [
+      this.datagridApi.columnDefinitions = [
         { field: 'name', title: "Name", width: 300 },
         { field: 'description', title: "Description", width: 900 },
         { field: 'category_id', title: "Id" },

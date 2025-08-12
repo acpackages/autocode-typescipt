@@ -1,4 +1,4 @@
-import { AcDatagridColumn, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent } from "../_ac-datagrid.export";
+import { AcDatagridColumn, IAcDatagridActiveRowChangeEvent, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent } from "../_ac-datagrid.export";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-event.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
@@ -64,6 +64,17 @@ export class AcDatagridEventHandler {
       event: event
     };
     this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.CellFocus, args: eventArgs });
+    const datagridRow = datagridCell.datagridRow;
+    if (this.datagridApi.activeDatagridRow == undefined || this.datagridApi.activeDatagridRow.acRowId != datagridRow.acRowId) {
+      const activeEventParams: IAcDatagridActiveRowChangeEvent = {
+        oldActiveDatagridRow: this.datagridApi.activeDatagridRow,
+        activeDatagridRow:datagridRow,
+        datagridApi: this.datagridApi,
+        event:event
+      };
+      this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.ActiveRowChange, args: activeEventParams });
+      this.datagridApi.activeDatagridRow = datagridRow;
+    }
   }
 
   handleCellKeyDown({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {

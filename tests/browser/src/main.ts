@@ -19,6 +19,14 @@ import { AggridOnDemandData } from './pages/ag-grid/on-demand-data.page';
 import { DDEEditorDatagridPage } from './pages/data-dictionary-editor/datagrid.page';
 import { ResizableTestPage } from './pages/resizable/resizable-test-page.page';
 import { ResizablePanelsTestPage } from './pages/resizable/resizable-panels-test-page.page';
+import { DrawerTestPage } from './pages/drawer/drawer-test-page.page';
+import { DropdownTestPage } from './pages/dropdown/dropdown-test-page.page';
+import { MessageTestPage } from './pages/message/message-test-page.page';
+import { ModalTestPage } from './pages/modal/modal-test-page.page';
+import { AnimatedModalTestPage } from './pages/modal/animated-modal-test-page.page';
+import { PopoverTestPage } from './pages/popover/popover-test-page.page';
+import { BasicScrollTrackTestPage } from './pages/scroll-track/basic-scroll-track-test.page';
+import { SlidesBasicTestPage } from './pages/slides/slides-basic-test.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -79,9 +87,40 @@ window.addEventListener('DOMContentLoaded', () => {
     ]
   });
   AcRouter.registerRouteGroup({
+    label:'Drawer',
+    routes:[
+      {label:'All Directions', path: '/drawer/all-directions', componentTag: 'drawer-all-directions', component: DrawerTestPage },
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Dropdown',
+    routes:[
+      {label:'Basic', path: '/dropdown/basic', componentTag: 'dropdown-basic', component: DropdownTestPage },
+    ]
+  });
+  AcRouter.registerRouteGroup({
     label:'Inputs',
     routes:[
       {label:'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Message',
+    routes:[
+      {label:'All', path: '/message/all', componentTag: 'message-all', component: MessageTestPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Modal',
+    routes:[
+      {label:'Basic', path: '/modal/basic', componentTag: 'modal-basic', component: ModalTestPage },
+      {label:'Animated', path: '/modal/animated', componentTag: 'modal-animated', component: AnimatedModalTestPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Popover',
+    routes:[
+      {label:'Basic', path: '/popover/basic', componentTag: 'popover-basic', component: PopoverTestPage }
     ]
   });
   AcRouter.registerRouteGroup({
@@ -89,6 +128,18 @@ window.addEventListener('DOMContentLoaded', () => {
     routes:[
       {label:'Basic', path: '/resizable/basic', componentTag: 'resizable-basic', component: ResizableTestPage },
       {label:'Resizable Panels', path: '/resizable/panels', componentTag: 'resizable-panels', component: ResizablePanelsTestPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label:'Scroll Track',
+    routes:[
+      {label:'Basic', path: '/scroll-track/basic', componentTag: 'scroll-track-basic', component: BasicScrollTrackTestPage }
+    ]
+  });
+   AcRouter.registerRouteGroup({
+    label:'Slides',
+    routes:[
+      {label:'Basic', path: '/slides/basic', componentTag: 'slides-basic', component: SlidesBasicTestPage }
     ]
   });
   AcRouter.registerRouteGroup({

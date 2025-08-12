@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcPagination } from "../../ac-pagination/elements/ac-pagination.element";
 import { AcDatagrid } from "../elements/ac-datagrid.element";
-import { IAcDatagridColDef } from "../interfaces/ac-datagrid-col-def.interface";
+import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
 import { AcEnumSortOrder, AcEvents, AcFilter, AcFilterGroup, AcHooks, AcSortOrder } from "@autocode-ts/autocode";
 import { AcDatagridDataSource } from "./ac-datagrid-data-source";
 import { AcEnumDataSourceType } from "../../enums/ac-enum-data-source-type.enum";
@@ -35,28 +35,27 @@ import { IAcDatagridRowAddHookArgs } from "../interfaces/hook-args/ac-datagrid-r
 import { IAcDatagridRowDeleteHookArgs } from "../interfaces/hook-args/ac-datagrid-row-delete-hook-args.interface";
 import { IAcDatagridRowUpdateHookArgs } from "../interfaces/hook-args/ac-datagrid-row-update-hook-args.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
-import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-event.interface";
 import { AcDatagridEventHandler } from "./ac-datagrid-event-handler";
 
 export class AcDatagridApi {
 
-  private _colDefs: IAcDatagridColDef[] = [];
-  get colDefs(): IAcDatagridColDef[] {
-    return this._colDefs;
+  private _columnDefinitions: IAcDatagridColumnDefinition[] = [];
+  get columnDefinitions(): IAcDatagridColumnDefinition[] {
+    return this._columnDefinitions;
   }
-  set colDefs(value: IAcDatagridColDef[]) {
+  set columnDefinitions(value: IAcDatagridColumnDefinition[]) {
     const hookArgs: IAcDatagridColDefsChangeHookArgs = {
-      colDefs: value,
+      columnDefinitions: value,
       datagridApi: this,
-      oldColDefs: this._colDefs
+      oldColumnDefinitions: this._columnDefinitions
     };
     this.hooks.execute({ hookName: AcEnumDatagridHook.BeforeColDefsChange, args: hookArgs });
-    this._colDefs = value;
+    this._columnDefinitions = value;
     this.datagridColumns = [];
     let index = 0;
-    for (const column of this._colDefs) {
+    for (const column of this._columnDefinitions) {
       const datagridColumn: AcDatagridColumn = new AcDatagridColumn({
-        colDef: column,
+        columnDefinition: column,
         datagridApi:this,
         index: index
       });
@@ -70,7 +69,7 @@ export class AcDatagridApi {
     }
     this.hooks.execute({ hookName: AcEnumDatagridHook.ColDefsChange, args: hookArgs });
     const event: IAcDatagridColDefsSetEvent = {
-      colDefs: value,
+      columnDefinitions: value,
       datagridColumns: this.datagridColumns,
       datagridApi: this
     };
@@ -136,6 +135,7 @@ export class AcDatagridApi {
     }, 100);
   }
 
+  activeDatagridRow:AcDatagridRow | undefined;
   columnDragPlaceholderElementCreator: Function = (args: IAcDatagridColumnDragPlaceholderCreatorArgs): HTMLElement => {
     const element = document.createElement('span');
     element.innerHTML = args.datagridColumn.title;
@@ -294,7 +294,7 @@ export class AcDatagridApi {
   getColumnByField({field}:{field:string}):AcDatagridColumn | undefined{
   let result: AcDatagridColumn | undefined;
       for (const column of this.datagridColumns) {
-        if (column.colDef.field == field) {
+        if (column.columnDefinition.field == field) {
           result = column;
           break;
         }
@@ -320,6 +320,9 @@ export class AcDatagridApi {
         result = row;
         break;
       }
+    }
+    if(result == undefined){
+      console.error(`Cannot find row for index : ${index}`)
     }
     return result;
   }
@@ -353,7 +356,7 @@ export class AcDatagridApi {
     const oldSortOrder: AcEnumSortOrder = datagridColumn.sortOrder;
     datagridColumn.sortOrder = sortOrder;
     if (sortOrder != AcEnumSortOrder.None) {
-      this.sortOrder.addSort({key:datagridColumn.colDef.field,order:sortOrder});
+      this.sortOrder.addSort({key:datagridColumn.columnDefinition.field,order:sortOrder});
     }
     const eventArgs: IAcDatagridColumnSortChangeEvent = {
       datagridColumn: datagridColumn,

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { AcImportExportDDEExtension } from "../extensions/import-export/core/ac-dde-import-export-extension";
 import { IAcDDEExtension } from "../interfaces/ac-dde-extension.interface";
 import { AcDDEExtension } from "./ac-dde-extension";
 
@@ -27,6 +28,7 @@ export class AcDDEExtensionManager {
   static registerBuiltInExtensions(){
     if(!this.builtInExtensionsRegistered){
       this.builtInExtensionsRegistered = true;
+      this.register(AcImportExportDDEExtension);
     }
   }
 }

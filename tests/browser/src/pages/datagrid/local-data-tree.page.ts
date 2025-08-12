@@ -34,13 +34,13 @@ export class DatagridLocalDataTree extends HTMLElement {
         }
     }})
     // this.datagridApi.allowRowDrag = true;
-    this.datagridApi.treeDataParentKey = 'category_id';
-    this.datagridApi.treeDataChildKey = 'parent_category_id';
+    // this.datagridApi.treeDataParentKey = 'category_id';
+    // this.datagridApi.treeDataChildKey = 'parent_category_id';
     this.datagridApi.usePagination = false;
     this.datagrid.datagridApi.dataSourceType = AcEnumDataSourceType.Offline;
     console.log(this.getElementsByClassName("local-datagrid-container"));
     this.getElementsByClassName("local-datagrid-container")[0].append(this.datagrid.element);
-    this.datagridApi.colDefs = [
+    this.datagridApi.columnDefinitions = [
       {field:'name',title:"Name",width:300},
       {field:'description',title:"Description",width:900},
       {field:'category_id',title:"Id"},

@@ -1,3 +1,4 @@
+export * from './ac-datagrid-active-row-change-event.interface';
 export * from './ac-datagrid-cell-editor-element-init-event.interface';
 export * from './ac-datagrid-cell-event.interface';
 export * from './ac-datagrid-cell-renderer-element-init-event.interface';

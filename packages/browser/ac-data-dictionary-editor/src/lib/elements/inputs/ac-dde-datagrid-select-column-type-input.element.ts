@@ -16,6 +16,7 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRender
   }
 
   init(args: IAcDatagridCellRendererElementArgs): void {
+    this.selectInput.init();
     this.selectInput.selectOptions = [
       {label:'Auto Increment',value:AcEnumDDColumnType.AutoIncrement},
       {label:'Auto Index',value:AcEnumDDColumnType.AutoIndex},
@@ -27,7 +28,7 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRender
       {label:'Encrypted',value:AcEnumDDColumnType.Encrypted},
       {label:'Integer',value:AcEnumDDColumnType.Integer},
       {label:'Json',value:AcEnumDDColumnType.Json},
-      {label:'Media Json',value:AcEnumDDColumnType.MediaJson},
+      // {label:'Media Json',value:AcEnumDDColumnType.MediaJson},
       {label:'Password',value:AcEnumDDColumnType.Password},
       {label:'String',value:AcEnumDDColumnType.String},
       {label:'Text',value:AcEnumDDColumnType.Text},
@@ -37,11 +38,11 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRender
       {label:'UUID',value:AcEnumDDColumnType.Uuid},
       {label:'Yes/No',value:AcEnumDDColumnType.YesNo}
     ];
-    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.colDef.field]!
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!
   }
 
   refresh(args: IAcDatagridCellRendererElementArgs): void {
-    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.colDef.field]!;
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
   }
 
 }
