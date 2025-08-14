@@ -1,8 +1,15 @@
 import { AcDDView } from "@autocode-ts/ac-data-dictionary";
 
+export const AcDDEViewRowKey = {
+  dataDictionaryId:'data_dictionary_id',
+  viewId:'view_id',
+  viewName:AcDDView.KeyViewName,
+  viewQuery:AcDDView.KeyViewQuery,
+}
+
 export interface IAcDDEViewRow{
-  view_id:string;
   data_dictionary_id:string;
-  [AcDDView.KeyViewName]:string;
-  [AcDDView.KeyViewQuery]:string;
+  view_id:string;
+  view_name:string;
+  view_query:string;
 }

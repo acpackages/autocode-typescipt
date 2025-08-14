@@ -57,7 +57,6 @@ export class AcDatagridDataSource {
   }
 
   processData() {
-    console.log(DateTime.now().toISOTime(),"Processing data in source");
     this.processedDatagridRows = [...this.datagridRows];
     this.totalRows = this.processedDatagridRows.length;
     if (this.datagridApi.sortOrder.sortOrders.length > 0) {
@@ -81,7 +80,6 @@ export class AcDatagridDataSource {
         return index;
       });
     }
-    console.log(DateTime.now().toISOTime(),"Processed data in source");
     this.setDisplayedData();
   }
 
@@ -95,7 +93,6 @@ export class AcDatagridDataSource {
     this.data = data;
     let index = 0;
     this.datagridRows = [];
-    console.log(DateTime.now().toISOTime(),"Setting datagrid data in source");
     for (const row of this.data) {
       const datagridRow: AcDatagridRow = new AcDatagridRow({
         data: row,
@@ -110,31 +107,27 @@ export class AcDatagridDataSource {
       this.datagridApi.hooks.execute({ hookName: AcEnumDatagridHook.DatagridRowCreated, args: hookArgs });
       index++;
     }
-    console.log(DateTime.now().toISOTime(),"Set datagrid data in source");
     this.datagridApi.hooks.execute({ hookName: AcEnumDatagridHook.DataChange, args: hookArgs });
-    console.log(DateTime.now().toISOTime(),"Notified hook datagrid data in source");
     this.allDataAvailable = true;
     this.totalRows = index;
-    this.processData();
+    // this.processData();
   }
 
   setDisplayedData() {
-    console.log(DateTime.now().toISOTime(),"Setting displayed data in source");
-    // let displayedRows: AcDatagridRow[] = [];
-    // if (this.datagridApi.usePagination && this.datagridApi.pagination) {
-    //   const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
-    //   const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
-    //   if (startIndex >= 0 && endIndex >= 0) {
-    //     for (let index = startIndex; index <= endIndex; index++) {
-    //       displayedRows.push(this.processedDatagridRows[index]);
-    //     }
-    //   }
-    // }
-    // else {
-    //   displayedRows = this.processedDatagridRows;
-    // }
-    // this.displayedDatagridRows = displayedRows;
-    console.log(DateTime.now().toISOTime(),"Set displayed data in source");
+    let displayedRows: AcDatagridRow[] = [];
+    if (this.datagridApi.usePagination && this.datagridApi.pagination) {
+      const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
+      const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
+      if (startIndex >= 0 && endIndex >= 0) {
+        for (let index = startIndex; index <= endIndex; index++) {
+          displayedRows.push(this.processedDatagridRows[index]);
+        }
+      }
+    }
+    else {
+      displayedRows = this.processedDatagridRows;
+    }
+    this.displayedDatagridRows = displayedRows;
   }
 
 }

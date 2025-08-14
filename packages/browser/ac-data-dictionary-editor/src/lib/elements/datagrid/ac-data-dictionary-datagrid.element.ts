@@ -78,6 +78,10 @@ export class AcDataDictionaryDatagrid {
       return row.table_id == tableId;
     };
 
+    this.tableColumnsDatagrid.applyFilter();
+      this.tableRelationshipsDatagrid.applyFilter();
+      this.tableTriggersDatagrid.applyFilter();
+
     this.initElement();
   }
 

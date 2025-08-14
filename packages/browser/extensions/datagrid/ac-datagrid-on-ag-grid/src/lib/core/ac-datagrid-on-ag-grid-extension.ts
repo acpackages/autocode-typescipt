@@ -459,6 +459,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   override init(): void {
     this.initAgGrid('clientSide');
+    // this.agGridEventHandler = new AcDatagridOnAgGridEventHandler({ agGridExtension: this });
+    // this.agGridEventHandler.registerAgGridListeners();
     new AcDatagridRowSelectionExtensionOnAgGrid({ agGridExtension: this });
     new AcDatagridTreeTableExtensionOnAgGrid({ agGridExtension: this });
     new AcDatagridRowDraggingExtensionOnAgGrid({ agGridExtension: this });
@@ -473,8 +475,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.datagridApi.datagrid.element.append(this.agGridElement);
     this.gridOptions['rowModelType'] = modelType;
     this.gridApi = createGrid(this.datagridApi.datagrid.element, this.gridOptions);
-    this.agGridEventHandler = new AcDatagridOnAgGridEventHandler({ agGridExtension: this });
-    this.agGridEventHandler.registerAgGridListeners();
   }
 
   private registerModules() {

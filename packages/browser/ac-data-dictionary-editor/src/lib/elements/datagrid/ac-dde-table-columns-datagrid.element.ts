@@ -62,13 +62,10 @@ export class AcDDETableColumnsDatagrid {
 
   applyFilter() {
     let data = this.data;
-    console.log(DateTime.now().toISOTime(),"Filtering data");
     if (this.filterFunction != undefined) {
       data = data.filter((item: IAcDDETableColumnRow) => this.filterFunction!(item));
     }
-    console.log(DateTime.now().toISOTime(),"Filtered data");
     this.datagridApi.data = data;
-    console.log(DateTime.now().toISOTime(),"Set datagrid data");
   }
 
   initElement() {
@@ -78,12 +75,9 @@ export class AcDDETableColumnsDatagrid {
 
   setColumnsData() {
     if(this.editorApi.activeDataDictionary){
-      console.log(DateTime.now().toISOTime(),"Setting data");
       this.data = Object.values(this.editorApi.dataStorage.tableColumns);
-      console.log(DateTime.now().toISOTime(),"Data set",);
       this.applyFilter();
     }
-
   }
 
 

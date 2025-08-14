@@ -81,9 +81,7 @@ export class AcDatagridApi {
     return this.dataSource.data;
   }
   set data(value: any[]) {
-    console.log(DateTime.now().toISOTime(),"Setting datagrid data in api");
     this.dataSource?.setData({ data: value });
-    console.log(DateTime.now().toISOTime(),"Set datagrid data in api");
   }
 
   private _dataSourceType: AcEnumDataSourceType = AcEnumDataSourceType.Unknown;

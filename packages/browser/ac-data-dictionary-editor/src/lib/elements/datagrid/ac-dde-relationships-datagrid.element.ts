@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcEnumDDEHook, IAcDDERelationshipRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDECssClassName, AcDDERelationshipRowKey, AcEnumDDEHook, IAcDDERelationshipRow } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridApi } from "@autocode-ts/ac-browser";
 import { AcDDRelationship } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
@@ -35,31 +35,37 @@ export class AcDDERelationshipsDatagrid {
     this.datagridApi = this.ddeDatagrid.datagridApi;
     this.ddeDatagrid.columnDefinitions = [
       {
-        'field': AcDDRelationship.KeyDestinationColumn, 'title': 'Foreign Key Column',
+        'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Table',
         cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
           editorApi: this.editorApi
         },useCellEditorForRenderer:true
       },
       {
-        'field': AcDDRelationship.KeySourceTable, 'title': 'Primary Key Table',
+        'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Column',
+        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDERelationshipRowKey.sourceTableId, 'title': 'Primary Key Table',
         cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
         },useCellEditorForRenderer:true
       },
       {
-        'field': AcDDRelationship.KeySourceColumn, 'title': 'Primary Key Column',
+        'field': AcDDERelationshipRowKey.sourceColumnId, 'title': 'Primary Key Column',
         cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
           editorApi: this.editorApi
         },useCellEditorForRenderer:true
       },
       {
-        'field': AcDDRelationship.KeyCascadeDeleteSource, 'title': 'Cascade Delete Source',
+        'field': AcDDERelationshipRowKey.cascadeDeleteSource, 'title': 'Cascade Delete Source',
         cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
           editorApi: this.editorApi
         },useCellEditorForRenderer:true
       },
       {
-        'field': AcDDRelationship.KeyCascadeDeleteDestination, 'title': 'Cascade Delete Dest',
+        'field': AcDDERelationshipRowKey.cascadeDeleteDestination, 'title': 'Cascade Delete Destination',
         cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
           editorApi: this.editorApi
         },useCellEditorForRenderer:true

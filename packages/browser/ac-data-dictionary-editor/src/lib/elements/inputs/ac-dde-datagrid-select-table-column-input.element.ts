@@ -1,10 +1,10 @@
-import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement, AcDatagridCell } from '@autocode-ts/ac-browser';
 import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
 import { AcDDEApi } from '../../core/ac-dde-api';
 export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEditorElement {
   editorApi!: AcDDEApi;
   selectInput: AcSelectInput = new AcSelectInput();
-  value: any;
+  datagridCell!: AcDatagridCell;
 
   destroy(): void {
     this.selectInput.destroy();
@@ -24,9 +24,9 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
 
   init(args: IAcDatagridCellElementArgs): void {
     this.selectInput.init();
-    this.value = args.datagridCell.cellValue;
-    if (args.datagridCell.datagridColumn.columnDefinition.cellRendererElementParams && args.datagridCell.datagridColumn.columnDefinition.cellRendererElementParams['editorApi']) {
-      this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellRendererElementParams['editorApi'];
+    this.datagridCell = args.datagridCell;
+    if (args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']) {
+      this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];
       this.editorApi.hooks.subscribe({
         hookName: AcEnumDDEHook.DataLoaded, callback: () => {
           this.setOptions();
@@ -34,7 +34,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
       });
       this.setOptions();
     }
-
+    this.selectInput.value = this.datagridCell.cellValue;
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
@@ -44,11 +44,10 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
   setOptions() {
     const options: any[] = [{ 'label': 'Select Column', 'value': '' }];
     for (const row of Object.values(this.editorApi.dataStorage.tableColumns)) {
-      options.push({ 'label': row.column_name, 'value': row.column_id });
+      // options.push({ 'label': row.column_name, 'value': row.column_id });
     }
     this.selectInput.selectOptions = options;
-    this.selectInput.value = this.value;
-    console.log('Setting options');
+    this.selectInput.value = this.datagridCell.cellValue;
   }
 
 }

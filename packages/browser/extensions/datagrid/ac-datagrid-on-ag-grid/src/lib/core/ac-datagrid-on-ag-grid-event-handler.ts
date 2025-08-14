@@ -102,19 +102,19 @@ export class AcDatagridOnAgGridEventHandler {
       }
     });
     this.gridApi.addEventListener('modelUpdated', (event: ModelUpdatedEvent) => {
-      const orderedRows: any[] = [];
-      for(const row of this.datagridApi.datagridRows){
-        row.displayIndex = -1;
-      }
-      const displayedRows:AcDatagridRow[] = [];
-      let index:number = -1;
-      this.gridApi.forEachNodeAfterFilterAndSort(node => {
-        index++;
-        const datagridRow = this.datagridApi.getRowById({rowId:node.data[this.agGridExtension.rowKey]})!;
-        datagridRow.displayIndex = index;
-        displayedRows.push(datagridRow);
-      });
-      this.datagridApi.dataSource.displayedDatagridRows = displayedRows;
+      // const orderedRows: any[] = [];
+      // for(const row of this.datagridApi.datagridRows){
+      //   row.displayIndex = -1;
+      // }
+      // const displayedRows:AcDatagridRow[] = [];
+      // let index:number = -1;
+      // this.gridApi.forEachNodeAfterFilterAndSort(node => {
+      //   index++;
+      //   const datagridRow = this.datagridApi.getRowById({rowId:node.data[this.agGridExtension.rowKey]})!;
+      //   datagridRow.displayIndex = index;
+      //   displayedRows.push(datagridRow);
+      // });
+      // this.datagridApi.dataSource.displayedDatagridRows = displayedRows;
     });
     this.gridApi.addEventListener('paginationChanged', (event: PaginationChangedEvent) => {
       if (this.datagridApi.pagination) {

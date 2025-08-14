@@ -1,8 +1,16 @@
 import { AcDDFunction } from "@autocode-ts/ac-data-dictionary";
 
-export interface IAcDDEFunctionRow{
-  function_id:string;
-  data_dictionary_id:string;
-  [AcDDFunction.KeyFunctionName]:string;
-  [AcDDFunction.KeyFunctionCode]:string;
+export const AcDDEFunctionRowKey = {
+  dataDictionaryId:'data_dictionary_id',
+  functionId:'function_id',
+  functionName:AcDDFunction.KeyFunctionName,
+  functionCode:AcDDFunction.KeyFunctionCode,
 }
+
+export interface IAcDDEFunctionRow{
+  data_dictionary_id:string;
+  function_id:string;
+  function_name:string;
+  function_code:string;
+}
+

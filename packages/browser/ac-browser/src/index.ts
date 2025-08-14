@@ -12,6 +12,7 @@ export * from './lib/ac-pagination/_ac-pagination.export';
 export * from './lib/ac-popover/_ac-popover.export';
 export * from './lib/ac-repeater/_ac-repeater.export';
 export * from './lib/ac-resizable/_ac-resizable.export';
+export * from './lib/ac-scrollable/_ac-scrollable.export';
 export * from './lib/ac-scroll-track/_ac-scroll-track.export';
 export * from './lib/ac-slides/_ac-slides.export';
 export * from './lib/core/_core.export';

@@ -27,6 +27,7 @@ import { AnimatedModalTestPage } from './pages/modal/animated-modal-test-page.pa
 import { PopoverTestPage } from './pages/popover/popover-test-page.page';
 import { BasicScrollTrackTestPage } from './pages/scroll-track/basic-scroll-track-test.page';
 import { SlidesBasicTestPage } from './pages/slides/slides-basic-test.page';
+import { VirtualTestScrollPage } from './pages/scrollable/virtual-test-scroll.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -134,6 +135,12 @@ window.addEventListener('DOMContentLoaded', () => {
     label:'Scroll Track',
     routes:[
       {label:'Basic', path: '/scroll-track/basic', componentTag: 'scroll-track-basic', component: BasicScrollTrackTestPage }
+    ]
+  });
+   AcRouter.registerRouteGroup({
+    label:'Scrollable',
+    routes:[
+      {label:'Virtual', path: '/scrollable/virtual', componentTag: 'virtual-scroll', component: VirtualTestScrollPage }
     ]
   });
    AcRouter.registerRouteGroup({

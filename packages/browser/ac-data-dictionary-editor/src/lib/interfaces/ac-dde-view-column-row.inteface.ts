@@ -1,12 +1,23 @@
-import { AcDDViewColumn } from "packages/common/ac-data-dictionary/src";
+import { AcDDViewColumn } from "@autocode-ts/ac-data-dictionary";
+
+export const AcDDEViewColumnRowKey = {
+  columnId:'column_id',
+  columnName:AcDDViewColumn.KeyColumnName,
+  columnProperties:AcDDViewColumn.KeyColumnProperties,
+  columnSource:AcDDViewColumn.KeyColumnSource,
+  columnSourceName:AcDDViewColumn.KeyColumnSourceName,
+  columnType:AcDDViewColumn.KeyColumnType,
+  dataDictionaryId:'data_dictionary_id',
+  viewId:'view_id',
+}
 
 export interface IAcDDEViewColumnRow{
   column_id:string;
-  view_id:string;
+  column_name:string;
+  column_properties:any;
+  column_source:string;
+  column_source_name:string;
+  column_type:string;
   data_dictionary_id:string;
-  [AcDDViewColumn.KeyColumnName]:string;
-  [AcDDViewColumn.KeyColumnType]:string;
-  [AcDDViewColumn.KeyColumnSource]:string;
-  [AcDDViewColumn.KeyColumnSourceName]:string;
-  [AcDDViewColumn.KeyColumnProperties]:any;
+  view_id:string;
 }

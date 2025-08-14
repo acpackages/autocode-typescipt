@@ -1,8 +1,15 @@
 import { AcDDStoredProcedure } from "@autocode-ts/ac-data-dictionary";
 
+export const AcDDEStoredProcedureRowKey = {
+  dataDictionaryId:'data_dictionary_id',
+  storedProcedureCode:AcDDStoredProcedure.KeyStoredProcedureCode,
+  storedProcedureId:'stored_procedure_id',
+  storedProcedureName:AcDDStoredProcedure.KeyStoredProcedureName
+}
+
 export interface IAcDDEStoredProcedureRow{
-  stored_procedure_id:string;
   data_dictionary_id:string;
-  [AcDDStoredProcedure.KeyStoredProcedureName]:string;
-  [AcDDStoredProcedure.KeyStoredProcedureCode]:string;
+  stored_procedure_code:string;
+  stored_procedure_id:string;
+  stored_procedure_name:string;
 }

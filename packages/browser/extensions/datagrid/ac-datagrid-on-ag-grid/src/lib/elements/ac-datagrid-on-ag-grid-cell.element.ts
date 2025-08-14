@@ -27,7 +27,6 @@ export class AcDatagridOnAgGridCell implements ICellRendererComp {
   }
   init?(params: ICellRendererParams|any): AgPromise<void> | void {
     this.params = params;
-    // console.log(this);
     this.agGridExtension = params.agGridExtension;
     this.datagridColumn = params.datagridColumn;
     this.datagridApi = params.datagridApi;
@@ -35,13 +34,6 @@ export class AcDatagridOnAgGridCell implements ICellRendererComp {
     const cellElement = new AcDatagridCellElement({ datagridApi: this.datagridApi, datagridRow: this.datagridRow, datagridColumn: this.datagridColumn });
     this.datagridCell = cellElement.datagridCell;
     this.params.eGridCell.addEventListener('focusin',()=>{cellElement.focus();});
-    // this.params.eGridCell.addEventListener('focusout');
-    // const elementInitEventArgs: IAcDatagridCellRendererElementInitEvent = {
-    //   datagridApi: this.datagridApi,
-    //   datagridCell: this.datagridCell,
-    //   cellRendererElementInstance: this.instance,
-    // }
-    // this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.CellRendererElementInit, args: elementInitEventArgs });
   }
 
   refresh(params: ICellRendererParams<any, any, any>): boolean {
