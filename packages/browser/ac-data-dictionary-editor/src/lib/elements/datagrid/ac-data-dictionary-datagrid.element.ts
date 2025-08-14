@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AcDDEApi, AcDDECssClassName, AcEnumDDEHook, IAcDDERelationshipRow, IAcDDETableColumnRow, IAcDDETableRow, IAcDDETriggerRow } from "../../_ac-data-dictionary-editor.export";
-import { acAddClassToElement, AcDatagridExtensionManager,AcEnumResizePanelDirection,AcResizableAttributeName, AcResizablePanels } from '@autocode-ts/ac-browser';
+import { acAddClassToElement, AcEnumResizePanelDirection,AcResizableAttributeName, AcResizablePanels } from '@autocode-ts/ac-browser';
 import { AcDDETableColumnPropertiesDatagrid } from "./ac-dde-table-column-properties-datagrid.element";
 import { AcDDETableColumnsDatagrid } from "./ac-dde-table-columns-datagrid.element";
 import { AcDDETablePropertiesDatagrid } from "./ac-dde-table-properties-datagrid.element";
-import { AcDDETableRelationshipsDatagrid } from "./ac-dde-table-relationships-datagrid.element";
 import { AcDDETablesDatagrid } from "./ac-dde-tables-datagrid.element";
-import { AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDDETriggersDatagrid } from "./ac-dde-triggers-datagrid.element";
+import { AcDDERelationshipsDatagrid } from "./ac-dde-relationships-datagrid.element";
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDataDictionaryDatagrid {
@@ -29,7 +28,7 @@ export class AcDataDictionaryDatagrid {
   tableColumnPropertiesDatagrid!:AcDDETableColumnPropertiesDatagrid;
   tableColumnsDatagrid!:AcDDETableColumnsDatagrid;
   tablePropertiesDatagrid!:AcDDETablePropertiesDatagrid;
-  tableRelationshipsDatagrid!:AcDDETableRelationshipsDatagrid;
+  tableRelationshipsDatagrid!:AcDDERelationshipsDatagrid;
   tablesDatagrid!:AcDDETablesDatagrid;
   tableTriggersDatagrid!:AcDDETriggersDatagrid;
 
@@ -40,17 +39,16 @@ export class AcDataDictionaryDatagrid {
   constructor({editorApi}:{editorApi:AcDDEApi}){
     this.editorApi = editorApi;
     this.tableColumnPropertiesDatagrid = new AcDDETableColumnPropertiesDatagrid({editorApi:this.editorApi});
-    this.tableColumnsDatagrid = new AcDDETableColumnsDatagrid({editorApi:this.editorApi});
     this.tablePropertiesDatagrid = new AcDDETablePropertiesDatagrid({editorApi:this.editorApi});
-    this.tableRelationshipsDatagrid = new AcDDETableRelationshipsDatagrid({editorApi:this.editorApi});
-    this.tableTriggersDatagrid = new AcDDETriggersDatagrid({editorApi:this.editorApi});
-    this.tablesDatagrid = new AcDDETablesDatagrid({editorApi:this.editorApi});
 
+    this.tablesDatagrid = new AcDDETablesDatagrid({editorApi:this.editorApi});
     this.tablesDatagrid.hooks.subscribe({hookName:AcEnumDDEHook.DatagridActiveTableChange,callback:()=>{
       this.tableColumnsDatagrid.applyFilter();
       this.tableRelationshipsDatagrid.applyFilter();
       this.tableTriggersDatagrid.applyFilter();
     }});
+
+    this.tableColumnsDatagrid = new AcDDETableColumnsDatagrid({editorApi:this.editorApi});
     this.tableColumnsDatagrid.filterFunction = (row:IAcDDETableColumnRow)=>{
       let tableId:any = undefined;
       if(this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow){
@@ -59,6 +57,8 @@ export class AcDataDictionaryDatagrid {
       }
       return row.table_id == tableId;
     };
+
+    this.tableRelationshipsDatagrid = new AcDDERelationshipsDatagrid({editorApi:this.editorApi});
     this.tableRelationshipsDatagrid.filterFunction = (row:IAcDDERelationshipRow)=>{
       let tableId:any = undefined;
       if(this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow){
@@ -67,6 +67,8 @@ export class AcDataDictionaryDatagrid {
       }
       return row.destination_table_id == tableId;
     };
+
+    this.tableTriggersDatagrid = new AcDDETriggersDatagrid({editorApi:this.editorApi});
     this.tableTriggersDatagrid.filterFunction = (row:IAcDDETriggerRow)=>{
       let tableId:any = undefined;
       if(this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow){

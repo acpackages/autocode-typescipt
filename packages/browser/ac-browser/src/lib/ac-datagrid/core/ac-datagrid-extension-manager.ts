@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcColumnDraggingDatagridExtension, AcColumnsCustomizerDatagridExtension, AcDataExportXlsxDatagridExtension } from "../_ac-datagrid.export";
+import { AcAfterRowsFooterDatagridExtension, AcAutoAddNewRowDatagridExtension, AcColumnDraggingDatagridExtension, AcColumnsCustomizerDatagridExtension, AcDataExportXlsxDatagridExtension } from "../_ac-datagrid.export";
 import { AcRowDraggingDatagridExtension } from "../extensions/row-dragging/core/ac-datagrid-row-dragging-extension";
 import { AcRowNumberDatagridExtension } from "../extensions/row-numbers/core/ac-datagrid-row-numbers-extension";
 import { AcRowSelectionDatagridExtension } from "../extensions/row-selection/core/ac-datagrid-row-selection-extension";
@@ -30,6 +30,8 @@ export class AcDatagridExtensionManager {
 
   static registerBuiltInExtensions(){
     if(!this.builtInExtensionsRegistered){
+      AcDatagridExtensionManager.register(AcAfterRowsFooterDatagridExtension);
+      AcDatagridExtensionManager.register(AcAutoAddNewRowDatagridExtension);
       AcDatagridExtensionManager.register(AcColumnsCustomizerDatagridExtension);
       AcDatagridExtensionManager.register(AcColumnDraggingDatagridExtension);
       AcDatagridExtensionManager.register(AcDataExportXlsxDatagridExtension);

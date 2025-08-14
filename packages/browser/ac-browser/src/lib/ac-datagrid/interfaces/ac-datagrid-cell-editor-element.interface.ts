@@ -1,4 +1,4 @@
-import { IAcDatagridCellRendererElementArgs } from "./callback-args/ac-datagrid-cell-renderer-element-args.interface";
+import { IAcDatagridCellElementArgs } from "./callback-args/ac-datagrid-cell-renderer-element-args.interface";
 
 export interface IAcDatagridCellEditorElement{
   destroy?():void;
@@ -6,6 +6,6 @@ export interface IAcDatagridCellEditorElement{
   blur?(): void;
   getElement():HTMLElement;
   getValue(): any;
-  init(args:IAcDatagridCellRendererElementArgs):void;
-  refresh(args:IAcDatagridCellRendererElementArgs):void;
+  init(args:IAcDatagridCellElementArgs):void;
+  refresh(args:IAcDatagridCellElementArgs):void;
 }

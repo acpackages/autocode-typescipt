@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDDECssClassName, AcEnumDDEHook, IAcDDERelationshipRow } from "../../_ac-data-dictionary-editor.export";
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi } from "@autocode-ts/ac-browser";
 import { AcDDRelationship } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
 import { AcDDEDatagridSelectTableColumnInput } from "../inputs/ac-dde-datagrid-select-table-column-input.element";
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
+import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 
-export class AcDDETableRelationshipsDatagrid {
+export class AcDDERelationshipsDatagrid {
   data:any[] = [];
-  datagrid!: AcDatagrid;
+  ddeDatagrid:AcDDEDatagrid = new AcDDEDatagrid();
   datagridApi!: AcDatagridApi;
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
@@ -32,45 +32,37 @@ export class AcDDETableRelationshipsDatagrid {
     }
 
   initDatagrid() {
-    this.datagrid = new AcDatagrid();
-    this.datagridApi = this.datagrid.datagridApi;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
-    this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
-    this.datagridApi.columnDefinitions = [
+    this.datagridApi = this.ddeDatagrid.datagridApi;
+    this.ddeDatagrid.columnDefinitions = [
       {
         'field': AcDDRelationship.KeyDestinationColumn, 'title': 'Foreign Key Column',
-        cellRendererElement: AcDDEDatagridSelectTableColumnInput, cellRendererElementParams: {
+        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }
+        },useCellEditorForRenderer:true
       },
       {
         'field': AcDDRelationship.KeySourceTable, 'title': 'Primary Key Table',
-        cellRendererElement: AcDDEDatagridSelectTableInput, cellRendererElementParams: {
+        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }
+        },useCellEditorForRenderer:true
       },
       {
         'field': AcDDRelationship.KeySourceColumn, 'title': 'Primary Key Column',
-        cellRendererElement: AcDDEDatagridSelectTableColumnInput, cellRendererElementParams: {
+        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }
+        },useCellEditorForRenderer:true
       },
       {
         'field': AcDDRelationship.KeyCascadeDeleteSource, 'title': 'Cascade Delete Source',
-        cellRendererElement: AcDDEDatagridYesNoInput, cellRendererElementParams: {
+        cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }
+        },useCellEditorForRenderer:true
       },
       {
         'field': AcDDRelationship.KeyCascadeDeleteDestination, 'title': 'Cascade Delete Dest',
-        cellRendererElement: AcDDEDatagridYesNoInput, cellRendererElementParams: {
+        cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }
+        },useCellEditorForRenderer:true
        }
     ];
 
@@ -84,7 +76,7 @@ export class AcDDETableRelationshipsDatagrid {
   }
 
   initElement() {
-    this.element.append(this.datagrid.element);
+    this.element.append(this.ddeDatagrid.element);
     acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 

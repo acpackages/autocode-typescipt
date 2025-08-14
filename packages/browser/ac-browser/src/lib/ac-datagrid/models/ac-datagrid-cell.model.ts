@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcHooks, Autocode } from "@autocode-ts/autocode";
 import { AcDatagridCellElement } from "../elements/ac-datagrid-cell.element";
 import { AcDatagridRow } from "./ac-datagrid-row.model";
@@ -10,14 +11,31 @@ export class AcDatagridCell {
   datagridRow!: AcDatagridRow;
   datagridColumn!: AcDatagridColumn;
   extensionData: Record<string, any> = {};
+  isFocused:boolean = false;
   hooks: AcHooks = new AcHooks();
   instance?: AcDatagridCellElement;
 
   get acColumnId(): string {
     return this.datagridColumn.acColumnId;
   }
+  get columnKey(): string {
+    return this.datagridColumn.columnKey;
+  }
   get acRowId(): string {
     return this.datagridRow.acRowId;
+  }
+
+  get cellValue(): any {
+    return this.datagridRow.data[this.columnKey];
+  }
+  set cellValue(value:any) {
+    const oldValue = this.cellValue;
+    if(oldValue != value){
+      console.log(oldValue,value);
+      console.trace();
+      this.datagridRow.data[this.columnKey] = value;
+      this.datagridApi.eventHandler.handleCellValueChange({datagridCell:this});
+    }
   }
 
   constructor({ datagridApi,datagridColumn, datagridRow, instance }:
@@ -25,6 +43,7 @@ export class AcDatagridCell {
     this.datagridApi = datagridApi;
     this.datagridColumn = datagridColumn;
     this.datagridRow = datagridRow;
+    this.datagridRow.datagridCells.push(this);
     this.instance = instance;
   }
 }

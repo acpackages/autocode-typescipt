@@ -1,13 +1,13 @@
-import { IAcDatagridCellRendererElement, IAcDatagridCellRendererElementArgs, AcSelectInput } from '@autocode-ts/ac-browser';
+import {  IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
 import { AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
-export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRendererElement{
+export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditorElement{
   selectInput:AcSelectInput = new AcSelectInput();
 
-  destroy?(): void {
+  destroy(): void {
     this.selectInput.destroy();
   }
 
-  focus?(): void {
+  focus(): void {
     this.selectInput.element.focus();
   }
 
@@ -15,7 +15,11 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRender
     return this.selectInput.element;
   }
 
-  init(args: IAcDatagridCellRendererElementArgs): void {
+  getValue() {
+    return this.selectInput.value;
+  }
+
+  init(args: IAcDatagridCellElementArgs): void {
     this.selectInput.init();
     this.selectInput.selectOptions = [
       {label:'Auto Increment',value:AcEnumDDColumnType.AutoIncrement},
@@ -28,7 +32,6 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRender
       {label:'Encrypted',value:AcEnumDDColumnType.Encrypted},
       {label:'Integer',value:AcEnumDDColumnType.Integer},
       {label:'Json',value:AcEnumDDColumnType.Json},
-      // {label:'Media Json',value:AcEnumDDColumnType.MediaJson},
       {label:'Password',value:AcEnumDDColumnType.Password},
       {label:'String',value:AcEnumDDColumnType.String},
       {label:'Text',value:AcEnumDDColumnType.Text},
@@ -38,11 +41,11 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellRender
       {label:'UUID',value:AcEnumDDColumnType.Uuid},
       {label:'Yes/No',value:AcEnumDDColumnType.YesNo}
     ];
-    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!
+    this.selectInput.value = args.datagridCell.cellValue
   }
 
-  refresh(args: IAcDatagridCellRendererElementArgs): void {
-    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+  refresh(args: IAcDatagridCellElementArgs): void {
+    this.selectInput.value = args.datagridCell.cellValue;
   }
 
 }

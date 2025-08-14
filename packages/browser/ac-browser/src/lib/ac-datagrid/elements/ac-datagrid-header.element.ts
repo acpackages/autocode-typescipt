@@ -44,6 +44,5 @@ export class AcDatagridHeaderElement {
       this.datagridHeaderCells.push(headerCell);
     }
     this.datagridApi.hooks.execute({hookName:AcEnumDatagridHook.HeaderColumnCellsCreated,args:hookArgs});
-    console.log(this);
   }
 }

@@ -1,0 +1,14 @@
+.ac-datagrid-cell-container{
+  height:100%!important;
+  width: 100%!important;
+}
+
+.ac-datagrid-cell{
+  /* width: -webkit-fill-available!important; */
+  border:none;
+  height: 100%;
+}
+
+.ag-center-cols-viewport{
+  min-height: max-content!important;
+}

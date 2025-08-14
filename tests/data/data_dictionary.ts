@@ -87,7 +87,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -147,7 +147,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "remarks": {
@@ -288,7 +288,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -431,7 +431,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "log_file_path": {
@@ -501,7 +501,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "attribute_label": {
@@ -555,7 +555,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -752,7 +752,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -792,7 +792,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -906,7 +906,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -951,7 +951,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -1000,7 +1000,7 @@ export const dataDictionaryJson = {
         },
         "request_attachments": {
           "column_name": "request_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "request_remarks": {
@@ -1010,7 +1010,7 @@ export const dataDictionaryJson = {
         },
         "response_attachments": {
           "column_name": "response_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "response_remarks": {
@@ -1030,7 +1030,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -1080,7 +1080,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -1100,7 +1100,7 @@ export const dataDictionaryJson = {
         },
         "delivery_attachments": {
           "column_name": "delivery_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "delivery_location": {
@@ -1194,7 +1194,7 @@ export const dataDictionaryJson = {
         },
         "asset_images": {
           "column_name": "asset_images",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -1332,7 +1332,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -1392,7 +1392,7 @@ export const dataDictionaryJson = {
         },
         "insurance_attachments": {
           "column_name": "insurance_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -1402,7 +1402,7 @@ export const dataDictionaryJson = {
         },
         "license_attachments": {
           "column_name": "license_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -1502,7 +1502,7 @@ export const dataDictionaryJson = {
         },
         "warranty_attachments": {
           "column_name": "warranty_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -1547,7 +1547,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "automated_task_event": {
@@ -1633,7 +1633,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "automated_task_id": {
@@ -1718,7 +1718,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "backup_details": {
@@ -1852,7 +1852,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "booking_id": {
@@ -1952,7 +1952,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "checklist_id": {
@@ -1997,7 +1997,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "checklist_id": {
@@ -2057,7 +2057,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -2155,7 +2155,7 @@ export const dataDictionaryJson = {
         },
         "logo_url": {
           "column_name": "logo_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -2383,7 +2383,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -2468,7 +2468,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -2551,7 +2551,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -2749,7 +2749,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -2872,7 +2872,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "denomination_id": {
@@ -2917,7 +2917,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "currency_code": {
@@ -2983,7 +2983,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -3137,7 +3137,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -3233,7 +3233,7 @@ export const dataDictionaryJson = {
         },
         "customer_image_url": {
           "column_name": "customer_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -3455,7 +3455,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "remarks": {
@@ -3480,7 +3480,7 @@ export const dataDictionaryJson = {
         },
         "widget_image_url": {
           "column_name": "widget_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "widget_name": {
@@ -3505,7 +3505,7 @@ export const dataDictionaryJson = {
         },
         "widget_properties": {
           "column_name": "widget_properties",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "widget_type": {
@@ -3520,7 +3520,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -3589,7 +3589,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "field_details": {
@@ -3664,7 +3664,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -3882,7 +3882,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -4052,7 +4052,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -4181,7 +4181,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -4299,7 +4299,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -4390,7 +4390,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "attendance_id": {
@@ -4455,7 +4455,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -4576,7 +4576,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -4707,7 +4707,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -4918,7 +4918,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -5063,7 +5063,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -5201,7 +5201,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -5483,7 +5483,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -5634,7 +5634,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -5739,7 +5739,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -5875,7 +5875,7 @@ export const dataDictionaryJson = {
         },
         "employee_image_url": {
           "column_name": "employee_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -6111,7 +6111,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -6214,7 +6214,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -6387,7 +6387,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -6577,7 +6577,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_attribute_id": {
@@ -6651,7 +6651,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -6675,7 +6675,7 @@ export const dataDictionaryJson = {
         },
         "category_image_url": {
           "column_name": "category_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -6758,7 +6758,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "conta_type": {
@@ -6823,7 +6823,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_id": {
@@ -6873,7 +6873,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "conta_type": {
@@ -6938,7 +6938,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -7002,7 +7002,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_id": {
@@ -7047,7 +7047,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "document_id": {
@@ -7067,7 +7067,7 @@ export const dataDictionaryJson = {
         },
         "item_request_attachment": {
           "column_name": "item_request_attachment",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_request_id": {
@@ -7167,7 +7167,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -7329,7 +7329,7 @@ export const dataDictionaryJson = {
         },
         "item_image_url": {
           "column_name": "item_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -7575,7 +7575,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_cost": {
@@ -7727,7 +7727,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_cost": {
@@ -7868,7 +7868,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -7997,7 +7997,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -8102,7 +8102,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "lift_asset_id": {
@@ -8142,7 +8142,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "destination_location": {
@@ -8222,7 +8222,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -8306,7 +8306,7 @@ export const dataDictionaryJson = {
         },
         "location_image_url": {
           "column_name": "location_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -8504,7 +8504,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "category_id": {
@@ -8554,7 +8554,7 @@ export const dataDictionaryJson = {
         },
         "item_image_url": {
           "column_name": "item_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_name": {
@@ -8608,7 +8608,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -8633,7 +8633,7 @@ export const dataDictionaryJson = {
         },
         "delivery_attachments": {
           "column_name": "delivery_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "delivery_location_id": {
@@ -8643,7 +8643,7 @@ export const dataDictionaryJson = {
         },
         "delivery_recordings": {
           "column_name": "delivery_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "delivery_remarks": {
@@ -8759,12 +8759,12 @@ export const dataDictionaryJson = {
         },
         "request_attachments": {
           "column_name": "request_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "request_audio_recordings": {
           "column_name": "request_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "request_item_details": {
@@ -8802,12 +8802,12 @@ export const dataDictionaryJson = {
         },
         "response_attachments": {
           "column_name": "response_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "response_audio_recordings": {
           "column_name": "response_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "trip_id": {
@@ -8923,7 +8923,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -9079,7 +9079,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -9139,7 +9139,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -9159,7 +9159,7 @@ export const dataDictionaryJson = {
         },
         "mini_project_drawings": {
           "column_name": "mini_project_drawings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "mini_project_id": {
@@ -9214,7 +9214,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -9328,7 +9328,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -9419,7 +9419,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -9541,7 +9541,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "document_name": {
@@ -9576,7 +9576,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "contra_id": {
@@ -9636,7 +9636,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -9754,7 +9754,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -9832,7 +9832,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -9943,7 +9943,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10071,7 +10071,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "description": {
@@ -10165,7 +10165,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10252,7 +10252,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10349,7 +10349,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10458,7 +10458,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10578,7 +10578,7 @@ export const dataDictionaryJson = {
         },
         "project_service_input_value_images": {
           "column_name": "project_service_input_value_images",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10670,7 +10670,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10823,7 +10823,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10891,7 +10891,7 @@ export const dataDictionaryJson = {
         },
         "project_service_images": {
           "column_name": "project_service_images",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -10948,7 +10948,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -11028,7 +11028,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -11093,7 +11093,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -11258,7 +11258,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -11389,12 +11389,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "mandatory_document_id": {
@@ -11449,7 +11449,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercial_invoice_id": {
@@ -11634,7 +11634,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercial_invoice_item_id": {
@@ -11704,7 +11704,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercial_invoice_amount": {
@@ -11962,7 +11962,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercial_invoice_item_id": {
@@ -12002,12 +12002,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "document_name": {
@@ -12086,7 +12086,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -12224,12 +12224,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_remarks": {
@@ -12285,7 +12285,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "container_item_id": {
@@ -12295,12 +12295,12 @@ export const dataDictionaryJson = {
         },
         "damaged_attachments": {
           "column_name": "damaged_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_audio_attachments": {
           "column_name": "damaged_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_quantity": {
@@ -12350,12 +12350,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_remarks": {
@@ -12375,12 +12375,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "arrival_attachments": {
           "column_name": "arrival_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "arrival_audio_recordings": {
           "column_name": "arrival_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "arrival_date_est": {
@@ -12410,7 +12410,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "checklist_id": {
@@ -12534,12 +12534,12 @@ export const dataDictionaryJson = {
         },
         "dispatch_attachments": {
           "column_name": "dispatch_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "dispatch_audio_recordings": {
           "column_name": "dispatch_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "dispatch_datetime_location": {
@@ -12638,12 +12638,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_end_time": {
@@ -12689,12 +12689,12 @@ export const dataDictionaryJson = {
         },
         "damaged_attachments": {
           "column_name": "damaged_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_audio_recordings": {
           "column_name": "damaged_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_remarks": {
@@ -12719,12 +12719,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_end_time": {
@@ -12760,17 +12760,17 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_attachments": {
           "column_name": "damaged_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_audio_attachments": {
           "column_name": "damaged_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_quantity": {
@@ -12835,12 +12835,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_remarks": {
@@ -12860,12 +12860,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "damaged_attachments": {
           "column_name": "damaged_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_audio_recordings": {
           "column_name": "damaged_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "damaged_remarks": {
@@ -12905,12 +12905,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_end_time": {
@@ -12965,7 +12965,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -13149,7 +13149,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "invoice_item_id": {
@@ -13220,7 +13220,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -13428,7 +13428,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "currency_code": {
@@ -13637,7 +13637,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_link_id": {
@@ -13706,7 +13706,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -13969,7 +13969,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercial_invoice_item_id": {
@@ -14034,7 +14034,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -14167,12 +14167,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_remarks": {
@@ -14188,7 +14188,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -14314,12 +14314,12 @@ export const dataDictionaryJson = {
         },
         "unloading_attachments": {
           "column_name": "unloading_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_audio_recordings": {
           "column_name": "unloading_audio_recordings",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unloading_end_time": {
@@ -14350,7 +14350,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercial_invoice_item_id": {
@@ -14390,7 +14390,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "container_item_id": {
@@ -14455,7 +14455,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -14649,7 +14649,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_link_id": {
@@ -14743,7 +14743,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "commercials_linked": {
@@ -15161,7 +15161,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_description": {
@@ -15260,7 +15260,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "currency_code": {
@@ -15331,7 +15331,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_link_id": {
@@ -15376,7 +15376,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "quote_id": {
@@ -15568,7 +15568,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -15666,7 +15666,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_description": {
@@ -15765,7 +15765,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_link_id": {
@@ -15829,7 +15829,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -16035,12 +16035,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "discount_cd_percentage": {
@@ -16159,7 +16159,7 @@ export const dataDictionaryJson = {
         },
         "return_attachments": {
           "column_name": "return_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "return_item_id": {
@@ -16199,12 +16199,12 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -16307,7 +16307,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -16449,7 +16449,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -16534,7 +16534,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "contra_id": {
@@ -16750,7 +16750,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -16790,7 +16790,7 @@ export const dataDictionaryJson = {
         },
         "request_attachments": {
           "column_name": "request_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -16810,7 +16810,7 @@ export const dataDictionaryJson = {
         },
         "response_attachments": {
           "column_name": "response_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -16869,7 +16869,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "container_item_status": {
@@ -16988,7 +16988,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -17156,7 +17156,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "delivery_mode": {
@@ -17318,7 +17318,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "remarks": {
@@ -17406,7 +17406,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -17553,7 +17553,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -17615,7 +17615,7 @@ export const dataDictionaryJson = {
         },
         "request_attachments": {
           "column_name": "request_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "request_remarks": {
@@ -17625,7 +17625,7 @@ export const dataDictionaryJson = {
         },
         "response_attachments": {
           "column_name": "response_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "response_remarks": {
@@ -17675,12 +17675,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "maintenance_expense_id": {
@@ -17720,7 +17720,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "customer_return_date": {
@@ -17821,12 +17821,12 @@ export const dataDictionaryJson = {
         },
         "request_attachments": {
           "column_name": "request_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "request_audio_attachments": {
           "column_name": "request_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "request_remarks": {
@@ -17836,12 +17836,12 @@ export const dataDictionaryJson = {
         },
         "response_attachments": {
           "column_name": "response_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "response_audio_attachments": {
           "column_name": "response_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "response_remarks": {
@@ -17904,7 +17904,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "details": {
@@ -18012,7 +18012,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -18128,7 +18128,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "currency_code": {
@@ -18267,7 +18267,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -18404,12 +18404,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "currency_code": {
@@ -18537,7 +18537,7 @@ export const dataDictionaryJson = {
         },
         "sketch_attachments": {
           "column_name": "sketch_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "total_cost": {
@@ -18558,7 +18558,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "remarks": {
@@ -18646,7 +18646,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -18803,12 +18803,12 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "document_payment_id": {
@@ -18909,7 +18909,7 @@ export const dataDictionaryJson = {
         },
         "return_attachments": {
           "column_name": "return_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "return_date": {
@@ -18997,12 +18997,12 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -19123,7 +19123,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -19210,7 +19210,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -19293,7 +19293,7 @@ export const dataDictionaryJson = {
         },
         "service_images": {
           "column_name": "service_images",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -19411,7 +19411,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -19651,12 +19651,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "contra_id": {
@@ -19681,7 +19681,7 @@ export const dataDictionaryJson = {
         },
         "signature_attachment": {
           "column_name": "signature_attachment",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "signature_datetime": {
@@ -19729,7 +19729,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "contra_id": {
@@ -19844,7 +19844,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "found_quantity": {
@@ -19918,7 +19918,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audit_status": {
@@ -20000,7 +20000,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "destination_inventory_tracking_id": {
@@ -20114,12 +20114,12 @@ export const dataDictionaryJson = {
         },
         "packing_attachments": {
           "column_name": "packing_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "packing_audio_attachments": {
           "column_name": "packing_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "packing_remarks": {
@@ -20154,12 +20154,12 @@ export const dataDictionaryJson = {
         },
         "unpacking_attachments": {
           "column_name": "unpacking_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unpacking_audio_attachments": {
           "column_name": "unpacking_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unpacking_remarks": {
@@ -20184,12 +20184,12 @@ export const dataDictionaryJson = {
         },
         "packing_attachments": {
           "column_name": "packing_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "packing_audio_attachments": {
           "column_name": "packing_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "packing_name": {
@@ -20234,12 +20234,12 @@ export const dataDictionaryJson = {
         },
         "unpacking_attachments": {
           "column_name": "unpacking_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unpacking_audio_attachments": {
           "column_name": "unpacking_audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "unpacking_remarks": {
@@ -20259,7 +20259,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -20274,7 +20274,7 @@ export const dataDictionaryJson = {
         },
         "dispatch_attachments": {
           "column_name": "dispatch_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "dispatch_date": {
@@ -20294,7 +20294,7 @@ export const dataDictionaryJson = {
         },
         "receive_attachments": {
           "column_name": "receive_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "receive_date": {
@@ -20386,7 +20386,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "inventory_tracking_id": {
@@ -20475,7 +20475,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -20562,7 +20562,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -20602,7 +20602,7 @@ export const dataDictionaryJson = {
         },
         "storage_image_url": {
           "column_name": "storage_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -20691,12 +20691,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "comment_message": {
@@ -20746,7 +20746,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "contra_id": {
@@ -20866,12 +20866,12 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "audio_attachments": {
           "column_name": "audio_attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "deadline_datetime": {
@@ -20989,7 +20989,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -21114,7 +21114,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -21235,7 +21235,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "equipment_id": {
@@ -21290,7 +21290,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "location_destination": {
@@ -21345,7 +21345,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "employee_id": {
@@ -21400,7 +21400,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "contra_id": {
@@ -21455,7 +21455,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "destination_location": {
@@ -21540,7 +21540,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "company_id": {
@@ -21619,7 +21619,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "authenticator_details": {
@@ -21713,7 +21713,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -21852,7 +21852,7 @@ export const dataDictionaryJson = {
       "table_columns": {
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {}
         },
         "item_id": {
@@ -21923,7 +21923,7 @@ export const dataDictionaryJson = {
         },
         "attachments": {
           "column_name": "attachments",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",
@@ -22161,7 +22161,7 @@ export const dataDictionaryJson = {
         },
         "vendor_image_url": {
           "column_name": "vendor_image_url",
-          "column_type": "media_json",
+          "column_type": "json",
           "column_properties": {
             "column_title": {
               "property_name": "column_title",

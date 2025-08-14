@@ -46,7 +46,7 @@ export class AcDatagridHeaderCellElement {
       }
     });
     this.datagridColumn.hooks.subscribe({
-      hookName: AcEnumDatagridHook.ColumnResize, callback: (event: IAcDatagridColumnResizeEvent) => {
+      hookName: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
         this.setCellWidth();
       }
     });
@@ -142,7 +142,7 @@ export class AcDatagridHeaderCellElement {
     document.addEventListener('mousemove', (event: MouseEvent) => {
       if (this.isResizing) {
         const newWidth = this.startWidth + (event.clientX - this.startX);
-        this.datagridApi.setColumnWidth({ datagridColumn: this.datagridColumn, width: newWidth });
+        // this.datagridApi.setColumnWidth({ datagridColumn: this.datagridColumn, width: newWidth });
       }
     });
 

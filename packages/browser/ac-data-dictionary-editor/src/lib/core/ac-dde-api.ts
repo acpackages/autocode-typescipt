@@ -20,6 +20,7 @@ import { IAcDDETriggerRow } from "../interfaces/ac-dde-trigger-row.inteface";
 import { IAcDDEFunctionRow } from "../interfaces/ac-dde-function-row.inteface";
 import { AcDataDictionaryEditor } from "../elements/core/ac-data-dictionary-editor.element";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { AcEnumDDETab, IAcDDEHookArgs } from "../_ac-data-dictionary-editor.export";
 
 export class AcDDEApi {
   private _activeDataDictionary?:IAcDDEDataDictionaryRow;
@@ -35,6 +36,19 @@ export class AcDDEApi {
       oldActiveDataDictionary: oldActiveDataDictionary,
     };
     this.hooks.execute({ hookName: AcEnumDDEHook.ActiveDataDictionaryChange, args: hookArgs });
+  }
+
+  private _activeEditorTab:AcEnumDDETab = AcEnumDDETab.DataDictionaryEditor;
+  get activeEditorTab():AcEnumDDETab{
+    return this._activeEditorTab;
+  }
+  set activeEditorTab(value:AcEnumDDETab){
+    this._activeEditorTab = value;
+    const hookArgs: IAcDDEHookArgs = {
+      editorApi: this,
+      value: value,
+    };
+    this.hooks.execute({ hookName: AcEnumDDEHook.EditorTabChange, args: hookArgs });
   }
 
   dataStorage: AcDDEDataStorage = new AcDDEDataStorage({ editorApi: this });
@@ -292,7 +306,5 @@ export class AcDDEApi {
     }
     return dataDictionary;
   }
-
-
 
 }

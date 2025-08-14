@@ -4,6 +4,7 @@ export const AcEnumDDEHook = {
   DataLoaded: 'dataLoaded',
   DatagridActiveTableChange: 'datagridActiveTableChange',
   EditorInit: 'editorInit',
+  EditorTabChange: 'editorTabChange',
   ExtensionEnabled: 'extensionEnabled',
   MenuGroupAdd: 'menuGroupAdd'
 }

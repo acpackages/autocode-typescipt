@@ -1,4 +1,4 @@
-export enum AcDDETab {
+export enum AcEnumDDETab {
   DataDictionaryEditor = 'dataDictionaryEditor',
   Functions = 'functions',
   Relationships = 'relationships',

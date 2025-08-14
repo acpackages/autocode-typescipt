@@ -1,4 +1,4 @@
-import { acAddClassToElement, AcDatagridApi, AcDatagridCell, IAcDatagridCellRendererElement, IAcDatagridCellRendererElementArgs } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AcDatagridCell, IAcDatagridCellRendererElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
   datagridApi!:AcDatagridApi;
@@ -15,7 +15,7 @@ export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
     return this.element;
   }
 
-  init(args: IAcDatagridCellRendererElementArgs): void {
+  init(args: IAcDatagridCellElementArgs): void {
     this.datagridApi = args.datagridApi;
     this.datagridCell = args.datagridCell;
     this.initElement();
@@ -41,7 +41,7 @@ export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
 
   }
 
-  refresh(args: IAcDatagridCellRendererElementArgs): void {
+  refresh(args: IAcDatagridCellElementArgs): void {
     console.log("Refreshing data",args);
   }
 

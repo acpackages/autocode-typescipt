@@ -12,8 +12,17 @@ export class AcDatagridRow {
   extensionData: Record<string, any> = {};
   hooks: AcHooks = new AcHooks();
   index: number = -1;
+  displayIndex:number = -1;
   instance?: AcDatagridRowElement;
   datagridCells: AcDatagridCell[] = [];
+
+  get isFirst(): boolean {
+    return this.displayIndex == 0;
+  }
+
+  get isLast(): boolean {
+    return this.displayIndex == this.datagridApi.displayedDatagridRows.length - 1;
+  }
 
   constructor({ data = {},datagridApi, index = -1 }: { data?: any,datagridApi:AcDatagridApi, index?: number }) {
     this.data = data;

@@ -4,4 +4,5 @@ import { AcDatagridColumn } from "../../models/ac-datagrid-column.model";
 export interface IAcDatagridColumnHookArgs{
   datagridApi:AcDatagridApi,
   datagridColumn:AcDatagridColumn,
+  event?:any
 }

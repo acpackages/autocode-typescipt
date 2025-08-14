@@ -9,7 +9,7 @@ export enum AcEnumDDColumnType {
   Encrypted = "encrypted",
   Integer = "integer",
   Json = "json",
-  MediaJson = "media_json",
+  // MediaJson = "media_json",
   Password = "password",
   String = "string",
   Text = "text",

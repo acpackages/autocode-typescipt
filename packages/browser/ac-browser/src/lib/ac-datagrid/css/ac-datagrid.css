@@ -90,6 +90,7 @@
   flex-direction: row;
   width: fit-content;
 }
+
 .ac-datagrid-cell,.ac-datagrid-header-cell{
   border-right: 1px solid #b0b0b0;
   border-bottom: 1px solid #b0b0b0;

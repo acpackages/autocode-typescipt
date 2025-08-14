@@ -1,5 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
+import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
 import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
 import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator';
 import { PageHeader } from '../../components/page-header/page-header.component';
@@ -27,7 +28,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       this.dataDictionaryEditor = new AcDataDictionaryEditor();
       this.editorApi = this.dataDictionaryEditor.editorApi;
       this.editorApi.hooks.subscribeAllHooks({callback:(hookName:string,hookArgs:any)=>{
-        console.log(`Found hook : ${hookName}`,hookArgs);
+        // console.log(`Found hook : ${hookName}`,hookArgs);
       }});
       this.editorApi.enableExtension({extensionName:AcEnumDDEExtension.ImportExport});
       this.editorApi.enableExtension({extensionName:AcCodeGeneratorDDEExtension.extensionName});

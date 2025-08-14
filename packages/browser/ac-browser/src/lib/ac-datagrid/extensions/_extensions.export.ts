@@ -1,3 +1,5 @@
+export * from './after-rows-footer/_after-rows-footer.export';
+export * from './auto-add-new-row/_auto-add-new-row.export';
 export * from './column-dragging/_column-dragging.export';
 export * from './columns-customizer/_columns-customizer.export';
 export * from './data-export-xlsx/_data-export-xlsx.export';

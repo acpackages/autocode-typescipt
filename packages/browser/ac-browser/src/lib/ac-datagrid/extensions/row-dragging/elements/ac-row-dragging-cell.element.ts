@@ -36,27 +36,11 @@ export class AcDatagridRowDraggingCell {
     this.dragHandle.innerHTML = AcDatagridRowDraggingHtmlPlaceholder.drag;
     this.element.setAttribute(AcDraggableAttributeName.acDraggableHandle,"");
     this.setCellWidth();
-    this.setRowDraggable();
 
-  }
-
-  setRowDraggable(){
-    if(this.datagridRow && this.datagridRow.instance && this.datagridRow.instance.element){
-      this.draggableSortInstance =  this.extension.draggableApi.registerDraggableSortElement({element:this.datagridRow.instance!.element});
-      this.draggableSortInstance.elementInstance.registerHandle(this.dragHandle);
-    }
-    else{
-      setTimeout(() => {
-        this.setRowDraggable();
-      }, 100);
-    }
   }
 
   setCellWidth() {
     const width = this.datagridInternalColumn.width;
-    if (this.datagridApi.isTreeData && this.datagridInternalColumn.index == 0) {
-      // width = width - (AcDatagridDefaultRowConfig.treeChildPadding * this.datagridRow.treeDepth);
-    }
     this.element.style.width = `${width}px`;
   }
 }

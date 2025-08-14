@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import { AcDDEExtension, IAcDDEExtension, IAcDDEMenuGroup } from "@autocode-ts/ac-data-dictionary-editor";
+import { AcDataDictionaryDartCodeGenerator } from "./ac-data-dictionary-dart-code-generator";
 
 export class AcDDECodeGeneratorExtension extends AcDDEExtension {
   override init(): void {
@@ -8,15 +9,18 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
       label:'Code Generator',
       menuItems:[
         {
-          label:'Dart File',
+          label:'Dart Data Dictionary File',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
-              console.log(this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id}));
+              const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id});
+              console.log(codeGenerator);
+              console.log(codeGenerator.getDataDictionaryString());
             }
           }
         },
         {
-          label:'Typescript File',
+          label:'Typescript Data Dictionary File',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               console.log(this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id}));

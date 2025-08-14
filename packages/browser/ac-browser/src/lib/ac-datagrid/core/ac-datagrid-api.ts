@@ -36,6 +36,7 @@ import { IAcDatagridRowDeleteHookArgs } from "../interfaces/hook-args/ac-datagri
 import { IAcDatagridRowUpdateHookArgs } from "../interfaces/hook-args/ac-datagrid-row-update-hook-args.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { AcDatagridEventHandler } from "./ac-datagrid-event-handler";
+import { DateTime } from "luxon";
 
 export class AcDatagridApi {
 
@@ -80,7 +81,9 @@ export class AcDatagridApi {
     return this.dataSource.data;
   }
   set data(value: any[]) {
+    console.log(DateTime.now().toISOTime(),"Setting datagrid data in api");
     this.dataSource?.setData({ data: value });
+    console.log(DateTime.now().toISOTime(),"Set datagrid data in api");
   }
 
   private _dataSourceType: AcEnumDataSourceType = AcEnumDataSourceType.Unknown;
@@ -130,9 +133,7 @@ export class AcDatagridApi {
       this.dataSource.setDisplayedData();
     }
     this.hooks.execute({ hookName: AcEnumDatagridHook.UsePaginationChange, args: hookArgs });
-    setTimeout(() => {
-      this.datagrid.datagridFooter.setPagination();
-    }, 100);
+    this.datagrid.datagridFooter.setPagination();
   }
 
   activeDatagridRow:AcDatagridRow | undefined;
@@ -208,7 +209,7 @@ export class AcDatagridApi {
         }
       }
     }
-    this.setColumnWidth({ datagridColumn: datagridColumn, width: maxWidth });
+    // this.setColumnWidth({ datagridColumn: datagridColumn, width: maxWidth });
   }
 
   deleteRow({ data, rowId, key, value, highlightCells = false }: { data?: any, rowId?: string, key?: string, value?: any, highlightCells?: boolean }) {
@@ -370,19 +371,19 @@ export class AcDatagridApi {
     this.dataSource.processData();
   }
 
-  setColumnWidth({ datagridColumn, width }: { datagridColumn: AcDatagridColumn, width: number }) {
-    const oldWidth: number = datagridColumn.width;
-    datagridColumn.width = width;
-    const eventArgs: IAcDatagridColumnResizeEvent = {
-      datagridColumn: datagridColumn,
-      oldWidth: oldWidth,
-      width: width,
-      datagridApi: this
-    };
-    this.hooks.execute({ hookName: AcEnumDatagridHook.ColumnResize, args: eventArgs });
-    datagridColumn.hooks.execute({ hookName: AcEnumDatagridHook.ColumnResize, args: eventArgs });
-    this.events.execute({ eventName: AcEnumDatagridEvent.ColumnResize, args: eventArgs });
-  }
+  // setColumnWidth({ datagridColumn, width }: { datagridColumn: AcDatagridColumn, width: number }) {
+  //   const oldWidth: number = datagridColumn.width;
+  //   datagridColumn.width = width;
+  //   const eventArgs: IAcDatagridColumnResizeEvent = {
+  //     datagridColumn: datagridColumn,
+  //     oldWidth: oldWidth,
+  //     width: width,
+  //     datagridApi: this
+  //   };
+  //   this.hooks.execute({ hookName: AcEnumDatagridHook.ColumnWidthChange, args: eventArgs });
+  //   datagridColumn.hooks.execute({ hookName: AcEnumDatagridHook.ColumnWidthChange, args: eventArgs });
+  //   this.events.execute({ eventName: AcEnumDatagridEvent.ColumnResize, args: eventArgs });
+  // }
 
   setDataSourceType({ dataSourceType }: { dataSourceType: AcEnumDataSourceType }) {
     const hookArgs: IAcDatagridDataSourceTypeChangeHookArgs = {

@@ -1,6 +1,6 @@
 import { AcDatagridApi, AcDatagridCell } from "../../_ac-datagrid.export";
 
-export interface IAcDatagridCellRendererElementArgs{
+export interface IAcDatagridCellElementArgs{
   datagridApi:AcDatagridApi;
   datagridCell:AcDatagridCell;
 }

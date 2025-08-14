@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acAddClassToElement } from "../../utils/ac-element-functions";
-import { IAcDatagridCellRendererElement, IAcDatagridCellRendererElementArgs } from "../_ac-datagrid.export";
+import { IAcDatagridCellRendererElement, IAcDatagridCellElementArgs } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
@@ -19,7 +19,7 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRendererEle
     return this.element;
   }
 
-  init(args: IAcDatagridCellRendererElementArgs): void {
+  init(args: IAcDatagridCellElementArgs): void {
     this.datagridApi = args.datagridApi;
     this.datagridCell = args.datagridCell;
     this.initElement();
@@ -35,7 +35,7 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRendererEle
     this.render();
   }
 
-  refresh(args: IAcDatagridCellRendererElementArgs): void {
+  refresh(args: IAcDatagridCellElementArgs): void {
     this.render();
   }
 

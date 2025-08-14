@@ -24,6 +24,12 @@ export function acRemoveClassFromElement({cssClass,element}:{cssClass:string,ele
   }
 }
 
+export function acSetElementAttributes({attributes,element}:{attributes:any,element:Element}){
+  for(const attributeName of Object.keys(attributes)){
+    element.setAttribute(attributeName,attributes[attributeName]);
+  }
+}
+
 export function acSwapElementsWithAnimation({
   element1,
   element2,

@@ -13,5 +13,13 @@
     "ag-charts-types": "^11.3.2",
     "ag-grid-community": "^34.0.1",
     "ag-grid-enterprise": "^34.0.1"
-  }
+  },
+  "exports": {
+    "./css/ac-datagrid-on-ag-grid.css": {
+      "default": "./css/ac-datagrid-on-ag-grid.css"
+    }
+  },
+  "files": [
+    "lib"
+  ]
 }

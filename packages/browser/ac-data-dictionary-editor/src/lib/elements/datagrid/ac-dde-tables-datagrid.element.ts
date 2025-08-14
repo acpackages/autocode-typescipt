@@ -1,13 +1,13 @@
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, IAcDatagridActiveRowChangeEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDDECssClassName, AcEnumDDEHook, IAcDDETableRow } from "../../_ac-data-dictionary-editor.export";
 import { AcDDTable } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 
 export class AcDDETablesDatagrid {
-  datagrid!: AcDatagrid;
+  ddeDatagrid:AcDDEDatagrid = new AcDDEDatagrid();
   datagridApi!: AcDatagridApi;
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
@@ -17,26 +17,18 @@ export class AcDDETablesDatagrid {
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
-    this.initDatagrid();
     this.initElement();
+    this.initDatagrid();
   }
 
   initDatagrid() {
-    this.datagrid = new AcDatagrid();
-    this.datagridApi = this.datagrid.datagridApi;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
-    this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
-    this.datagridApi.columnDefinitions = [
+    this.datagridApi = this.ddeDatagrid.datagridApi;
+    this.ddeDatagrid.columnDefinitions = [
       {
         'field': AcDDTable.KeyTableName, 'title': 'Table Name',
-        cellRendererElement: AcDDEDatagridTextInput, cellRendererElementParams: {
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }
+        },useCellEditorForRenderer:true
       }
     ];
 
@@ -67,7 +59,7 @@ export class AcDDETablesDatagrid {
   }
 
   initElement() {
-    this.element.append(this.datagrid.element);
+    this.element.append(this.ddeDatagrid.element);
     acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 

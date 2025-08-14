@@ -5,6 +5,8 @@ import { AcEnumDatagridColumnDataType } from "../enums/ac-enum-datagrid-column-d
 import { AcDatagridHeaderCellElement } from "../elements/ac-datagrid-header-cell.element";
 import { AcDatagridDefaultColumnConfig } from "../consts/ac-datagrid-default-column-config.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
+import { IAcDatagridColumnHookArgs } from "../interfaces/hook-args/ac-datagrid-column-hook-args.interface";
+import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
 
 
 export class AcDatagridColumn {
@@ -18,7 +20,6 @@ export class AcDatagridColumn {
   hooks: AcHooks = new AcHooks();
   index: number = -1;
   sortOrder: AcEnumSortOrder = AcEnumSortOrder.None;
-  width: number = AcDatagridDefaultColumnConfig.width;
 
   get allowEdit(): boolean {
     return this.columnDefinition.allowEdit == true;
@@ -32,11 +33,30 @@ export class AcDatagridColumn {
   get allowSort(): boolean {
     return this.columnDefinition.allowSort == undefined || this.columnDefinition.allowSort == true;
   }
+  get columnKey(): string {
+    return this.columnDefinition.field;
+  }
   get title(): string {
     return this.columnDefinition.title ?? this.columnDefinition.field;
   }
 
-  constructor({ columnDefinition,datagridApi,index = -1,width = AcDatagridDefaultColumnConfig.width }: { columnDefinition: IAcDatagridColumnDefinition,datagridApi:AcDatagridApi,index?:number,width?:number }) {
+  _width: number = AcDatagridDefaultColumnConfig.width;
+  get width(): number {
+    return this._width;
+  }
+  set width(value: number) {
+    this._width = value;
+    const hookArgs: IAcDatagridColumnHookArgs = {
+      datagridApi: this.datagridApi,
+      datagridColumn: this,
+    };
+    this.hooks.execute({ hookName: AcEnumDatagridHook.ColumnWidthChange, args: hookArgs });
+  }
+
+
+
+
+  constructor({ columnDefinition, datagridApi, index = -1, width = AcDatagridDefaultColumnConfig.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {
     this.columnDefinition = columnDefinition;
     this.datagridApi = datagridApi;
     this.index = index;

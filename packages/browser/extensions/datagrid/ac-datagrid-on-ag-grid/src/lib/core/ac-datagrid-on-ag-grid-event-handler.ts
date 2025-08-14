@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridApi, AcDatagridColumn } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, AcDatagridCell, AcDatagridColumn, AcDatagridRow } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
-import { CellClickedEvent, GridApi, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellFocusedEvent, CellKeyDownEvent, CellMouseDownEvent, FullWidthCellKeyDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, PaginationChangedEvent, ComponentStateChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEndEvent, RowDragEnterEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowSelectedEvent, RowValueChangedEvent, SelectionChangedEvent, SortChangedEvent, StateUpdatedEvent } from "ag-grid-community";
+import { CellClickedEvent, GridApi, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellFocusedEvent, CellKeyDownEvent, CellMouseDownEvent, FullWidthCellKeyDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, PaginationChangedEvent, ComponentStateChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEndEvent, RowDragEnterEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowSelectedEvent, RowValueChangedEvent, SelectionChangedEvent, SortChangedEvent, StateUpdatedEvent, ModelUpdatedEvent } from "ag-grid-community";
 import { AcEnumSortOrder } from "@autocode-ts/autocode";
 
 export class AcDatagridOnAgGridEventHandler {
   agGridExtension!: AcDatagridOnAgGridExtension;
   datagridApi!: AcDatagridApi;
   gridApi!: GridApi;
-  columnResizeTimeouts: any = {};
+  focusedDatagridCell?: AcDatagridCell;
 
   constructor({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }) {
     this.agGridExtension = agGridExtension;
@@ -48,11 +49,6 @@ export class AcDatagridOnAgGridEventHandler {
         this.datagridApi.eventHandler.handleCellEditingStop({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
       }
     });
-    this.gridApi.addEventListener('cellFocused', (event: CellFocusedEvent | any) => {
-      if (this.checkEventHasColumnDetail(event)) {
-        this.datagridApi.eventHandler.handleCellFocus({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }) });
-      }
-    });
     this.gridApi.addEventListener('cellKeyDown', (event: CellKeyDownEvent | FullWidthCellKeyDownEvent) => {
       if (this.checkEventHasColumnDetail(event)) {
         this.datagridApi.eventHandler.handleCellKeyDown({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
@@ -84,22 +80,15 @@ export class AcDatagridOnAgGridEventHandler {
       }
     });
     this.gridApi.addEventListener('columnMoved', (event: ColumnMovedEvent) => {
-      console.log(event);
       if (this.checkEventHasColumnDetail(event)) {
-        console.log(event);
         this.datagridApi.eventHandler.handleColumnPositionChange({ datagridColumn: this.agGridExtension.getDatagridColumnFromEvent({ event: event }) });
       }
     });
     this.gridApi.addEventListener('columnResized', (event: ColumnResizedEvent) => {
       if (this.checkEventHasColumnDetail(event)) {
-        const datagridColumn:AcDatagridColumn = this.agGridExtension.getDatagridColumnFromEvent({ event: event });
-        if(this.columnResizeTimeouts[datagridColumn.acColumnId]){
-          clearTimeout(this.columnResizeTimeouts[datagridColumn.acColumnId]);
-        }
-        this.columnResizeTimeouts[datagridColumn.acColumnId] = setTimeout(() => {
-          this.datagridApi.eventHandler.handleColumnResize({ datagridColumn: datagridColumn});
-          delete this.columnResizeTimeouts[datagridColumn.acColumnId];
-        }, 300);
+        const datagridColumn: AcDatagridColumn = this.agGridExtension.getDatagridColumnFromEvent({ event: event });
+        datagridColumn.width = event.column!.getActualWidth();
+        this.datagridApi.eventHandler.handleColumnResize({ datagridColumn: datagridColumn });
       }
     });
     this.gridApi.addEventListener('columnValueChanged', (event: ColumnValueChangedEvent) => {
@@ -111,6 +100,21 @@ export class AcDatagridOnAgGridEventHandler {
       if (this.checkEventHasColumnDetail(event)) {
         this.datagridApi.eventHandler.handleColumnVisibilityChange({ datagridColumn: this.agGridExtension.getDatagridColumnFromEvent({ event: event }) });
       }
+    });
+    this.gridApi.addEventListener('modelUpdated', (event: ModelUpdatedEvent) => {
+      const orderedRows: any[] = [];
+      for(const row of this.datagridApi.datagridRows){
+        row.displayIndex = -1;
+      }
+      const displayedRows:AcDatagridRow[] = [];
+      let index:number = -1;
+      this.gridApi.forEachNodeAfterFilterAndSort(node => {
+        index++;
+        const datagridRow = this.datagridApi.getRowById({rowId:node.data[this.agGridExtension.rowKey]})!;
+        datagridRow.displayIndex = index;
+        displayedRows.push(datagridRow);
+      });
+      this.datagridApi.dataSource.displayedDatagridRows = displayedRows;
     });
     this.gridApi.addEventListener('paginationChanged', (event: PaginationChangedEvent) => {
       if (this.datagridApi.pagination) {
@@ -130,11 +134,9 @@ export class AcDatagridOnAgGridEventHandler {
     });
 
     this.gridApi.addEventListener('rowEditingStarted', (event: RowEditingStartedEvent) => {
-      console.log("Row editing start");
       this.datagridApi.eventHandler.handleRowEditingStart({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
     });
     this.gridApi.addEventListener('rowEditingStopped', (event: RowEditingStoppedEvent) => {
-      console.log("Row editing stop");
       this.datagridApi.eventHandler.handleRowEditingStop({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
     });
     this.gridApi.addEventListener('rowSelected', (event: RowSelectedEvent) => {

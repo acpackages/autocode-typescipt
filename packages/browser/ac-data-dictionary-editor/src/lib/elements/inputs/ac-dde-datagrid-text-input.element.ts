@@ -1,23 +1,31 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellRendererElement, IAcDatagridCellRendererElementArgs, AcTextInput } from '@autocode-ts/ac-browser';
-export class AcDDEDatagridTextInput implements IAcDatagridCellRendererElement{
+import { IAcDatagridCellElementArgs, AcTextInput, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
+export class AcDDEDatagridTextInput implements IAcDatagridCellEditorElement{
   textInput:AcTextInput = new AcTextInput();
 
-  destroy?(): void {
+  destroy(): void {
     this.textInput.destroy();
+  }
+
+  focus(): void {
+    this.textInput.element.focus();
   }
 
   getElement(): HTMLElement {
     return this.textInput.element;
   }
 
-  init(args: IAcDatagridCellRendererElementArgs): void {
-    this.textInput.init();
-    this.textInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+  getValue() {
+    return this.textInput.value;
   }
 
-  refresh(args: IAcDatagridCellRendererElementArgs): void {
-    this.textInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+  init(args: IAcDatagridCellElementArgs): void {
+    this.textInput.init();
+    this.textInput.value = args.datagridCell.cellValue;
+  }
+
+  refresh(args: IAcDatagridCellElementArgs): void {
+    this.textInput.value = args.datagridCell.cellValue;
   }
 
 }

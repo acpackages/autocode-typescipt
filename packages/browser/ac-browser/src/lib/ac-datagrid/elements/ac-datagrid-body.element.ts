@@ -40,7 +40,7 @@ export class AcDatagridBodyElement {
     acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridBody, element: this.element });
     acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridRowsContainer, element: this.rowsContainer });
     this.element.append(this.rowsContainer);
-    this.floatingScrollbar = new AcFloatingScrollbar({element:this.element,parentElement:this.datagridApi.datagrid.containerElement});
+    // this.floatingScrollbar = new AcFloatingScrollbar({element:this.element,parentElement:this.datagridApi.datagrid.containerElement});
     this.registerListeners();
     this.setDisplayRows();
   }

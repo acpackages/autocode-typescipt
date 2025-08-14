@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellRendererElement, IAcDatagridCellRendererElementArgs, AcOptionInput, acAddClassToElement } from '@autocode-ts/ac-browser';
-export class AcDDEDatagridYesNoInput implements IAcDatagridCellRendererElement{
+import { IAcDatagridCellElementArgs, AcOptionInput, acAddClassToElement, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
+export class AcDDEDatagridYesNoInput implements IAcDatagridCellEditorElement{
   optionInput:AcOptionInput = new AcOptionInput();
   element:HTMLElement = document.createElement('div');
 
@@ -8,19 +8,27 @@ export class AcDDEDatagridYesNoInput implements IAcDatagridCellRendererElement{
     this.optionInput.destroy();
   }
 
+  focus(): void {
+    this.optionInput.element.focus();
+  }
+
   getElement(): HTMLElement {
     return this.element;
   }
 
-  init(args: IAcDatagridCellRendererElementArgs): void {
+  getValue() {
+    return this.optionInput.checked;
+  }
+
+  init(args: IAcDatagridCellElementArgs): void {
     this.element.append(this.optionInput.element);
     acAddClassToElement({cssClass:'ac-option-input-wrap',element:this.element});
     this.optionInput.init();
-    this.optionInput.checked = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+    this.optionInput.checked = args.datagridCell.cellValue;
   }
 
-  refresh(args: IAcDatagridCellRendererElementArgs): void {
-    this.optionInput.checked = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field]!;
+  refresh(args: IAcDatagridCellElementArgs): void {
+    this.optionInput.checked = args.datagridCell.cellValue;
   }
 
 }

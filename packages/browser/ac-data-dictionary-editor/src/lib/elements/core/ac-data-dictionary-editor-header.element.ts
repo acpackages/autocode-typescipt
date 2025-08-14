@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { acAddClassToElement, AcSelectInput } from "@autocode-ts/ac-browser";
-import { AcDDEApi, AcDDETab, AcEnumDDEHook, IAcDDEActiveDataDictionaryChangeHookArgs, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroup, IAcDDEMenuGroupAddHookArgs, IAcDDEMenuItem } from "../../_ac-data-dictionary-editor.export";
+import { AcDDEApi, AcEnumDDETab, AcEnumDDEHook, IAcDDEActiveDataDictionaryChangeHookArgs, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroup, IAcDDEMenuGroupAddHookArgs, IAcDDEMenuItem } from "../../_ac-data-dictionary-editor.export";
 import { AcDDESelectDataDictionaryInput } from "../inputs/ac-dde-select-data-dictionary-input.element";
 
 export class AcDataDictionaryEditorHeader {
-  activeView: AcDDETab = AcDDETab.DataDictionaryEditor;
+  activeView: AcEnumDDETab = AcEnumDDETab.DataDictionaryEditor;
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
   dropdown: HTMLElement = document.createElement('div');
@@ -20,7 +21,6 @@ export class AcDataDictionaryEditorHeader {
       this.element.querySelector('[ac-dde-data=active_data_dictionary_name]')!.innerHTML = args.activeDataDictionary.data_dictionary_name;
     }});
     this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.MenuGroupAdd, callback: (args: IAcDDEMenuGroupAddHookArgs) => {
-      console.log(args);
       this.addMenuGroup({ menuGroup: args.menuGroup });
     }});
     this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.DataLoaded, callback: (args: IAcDDEHookArgs) => {
@@ -30,7 +30,6 @@ export class AcDataDictionaryEditorHeader {
   }
 
   private addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }): void {
-    console.log(menuGroup);
 
     const menuGroupElement: HTMLElement = document.createElement('li');
     acAddClassToElement({ cssClass: 'nav-item dropdown', element: menuGroupElement });
@@ -77,14 +76,14 @@ export class AcDataDictionaryEditorHeader {
           <ul class="navbar-nav menu-groups">
             <li class="nav-item dropdown">
               <button type="button" class="btn btn-primary dropdown-toggle me-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Data Dictionary : <span ac-dde-data="active_data_dictionary_name"></span>
+                Data Dictionary : <span ac-dde-data="active_data_dictionary_name">(No Data Dictionary Selected)</span>
               </button>
               <ul class="dropdown-menu data-dictionary-select-items">
               </ul>
             </li>
             <li class="nav-item dropdown">
               <button type="button" class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                View : Editor
+                <span ac-dde-data="active_tab_name"></span>
               </button>
               <ul class="dropdown-menu tab-menu-items">
               </ul>
@@ -100,55 +99,55 @@ export class AcDataDictionaryEditorHeader {
       {
         label: 'Editor',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.DataDictionaryEditor });
+          this.setActiveTab({ tab: AcEnumDDETab.DataDictionaryEditor });
         }
       },
       {
         label: 'Tables',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.Tables });
+          this.setActiveTab({ tab: AcEnumDDETab.Tables });
         }
       },
       {
         label: 'Table Columns',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.TableColumns });
+          this.setActiveTab({ tab: AcEnumDDETab.TableColumns });
         }
       },
       {
         label: 'Views',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.Views });
+          this.setActiveTab({ tab: AcEnumDDETab.Views });
         }
       },
       {
         label: 'View Columns',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.ViewColumns });
+          this.setActiveTab({ tab: AcEnumDDETab.ViewColumns });
         }
       },
       {
         label: 'Triggers',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.Triggers });
+          this.setActiveTab({ tab: AcEnumDDETab.Triggers });
         }
       },
       {
         label: 'Relationships',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.Relationships });
+          this.setActiveTab({ tab: AcEnumDDETab.Relationships });
         }
       },
       {
         label: 'Stored Procedures',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.StoredProcedures });
+          this.setActiveTab({ tab: AcEnumDDETab.StoredProcedures });
         }
       },
       {
         label: 'Functions',
         callback: () => {
-          this.setActiveTab({ tab: AcDDETab.Functions });
+          this.setActiveTab({ tab: AcEnumDDETab.Functions });
         }
       },
     ];
@@ -162,6 +161,7 @@ export class AcDataDictionaryEditorHeader {
       });
       this.element.querySelector('.tab-menu-items')?.append(menuItem);
     }
+    this.setActiveTab({tab:AcEnumDDETab.Tables});
   }
 
   private setDataDictionaryDropdown(){
@@ -179,12 +179,42 @@ export class AcDataDictionaryEditorHeader {
       if(this.editorApi.activeDataDictionary == undefined){
         this.editorApi.activeDataDictionary = row;
       }
-      console.log(row);
       this.element.querySelector('.data-dictionary-select-items')?.append(createMenuItem(row));
     }
   }
 
-  setActiveTab({ tab }: { tab: AcDDETab }) {
-    alert('active Menu ' + tab);
+  setActiveTab({ tab }: { tab: AcEnumDDETab }) {
+    let label:string = '(No Tab)';
+    switch(tab){
+      case AcEnumDDETab.DataDictionaryEditor:
+        label = 'Editor';
+        break;
+      case AcEnumDDETab.Functions:
+        label = 'Functions';
+        break;
+      case AcEnumDDETab.Relationships:
+        label = 'Relationships';
+        break;
+      case AcEnumDDETab.StoredProcedures:
+        label = 'Stored Procedures';
+        break;
+      case AcEnumDDETab.TableColumns:
+        label = 'Table Columns';
+        break;
+      case AcEnumDDETab.Tables:
+        label = 'Tables';
+        break;
+      case AcEnumDDETab.Triggers:
+        label = 'Triggers';
+        break;
+      case AcEnumDDETab.ViewColumns:
+        label = 'View Columns';
+        break;
+      case AcEnumDDETab.Views:
+        label = 'Views';
+        break;
+    }
+    this.element.querySelector('[ac-dde-data=active_tab_name]')!.innerHTML = label;
+    this.editorApi.activeEditorTab = tab;
   }
 }
