@@ -72,8 +72,8 @@ export class AcOptionInput extends AcInputBase {
 
   override element: HTMLInputElement = document.createElement('input');
 
-  override init(): void {
-    super.init();
+  constructor() {
+    super();
     acAddClassToElement({cssClass:AcInputCssClassName.acOptionInput,element:this.element});
     if (this.isArray == undefined || this.isArray == null) {
       if (this.type == AcEnumInputType.Checkbox) {

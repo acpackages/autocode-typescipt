@@ -10,37 +10,31 @@ export class AcScrollable {
   private elementHeightFallback: number;
   private elementResizeObserver!: ResizeObserver;
   private mutationObserver!: MutationObserver;
-  private options?:IAcScrollableOptions;
+  private options?: IAcScrollableOptions;
   private resizeObserver!: ResizeObserver;
   private renderedElements: IAcScrollingElement[] = [];
   private scrollingElements: IAcScrollingElement[] = [];
   private scrollTop = 0;
-  private isRendering:boolean = false;
+  private isRendering: boolean = false;
 
-
-
-  constructor({element,options = {}}:{element: HTMLElement, options?: IAcScrollableOptions}) {
+  constructor({ element, options = {} }: { element: HTMLElement, options?: IAcScrollableOptions }) {
     this.element = element;
     this.options = options;
     this.elementHeight = element.clientHeight;
     this.elementHeightFallback = options.elementHeight ?? 50;
-
     this.element.style.overflowY = "auto";
-    this.element.addEventListener("scroll", () => this.onScroll());
+    this.element.addEventListener("scroll", () => this.handleScroll());
     this.registerExistingElements();
     this.initObservers();
   }
 
-  addItem(element: HTMLElement) {
-    // Calculate height
+  addElement({ element }: { element: HTMLElement }) {
     const temp = element.cloneNode(true) as HTMLElement;
     temp.style.visibility = "hidden";
     this.element.appendChild(temp);
     const height = temp.offsetHeight || this.elementHeightFallback;
     this.element.removeChild(temp);
-
-    this.registerScrollingElement({element:element,height:height});
-
+    this.registerScrollingElement({ element: element, height: height });
     this.render();
   }
 
@@ -48,8 +42,6 @@ export class AcScrollable {
     let startIndex = 0;
     let endIndex = this.scrollingElements.length - 1;
     let y = 0;
-
-    // Find start index
     for (let i = 0; i < this.scrollingElements.length; i++) {
       if (y + this.scrollingElements[i].height >= this.scrollTop) {
         startIndex = i;
@@ -57,8 +49,6 @@ export class AcScrollable {
       }
       y += this.scrollingElements[i].height;
     }
-
-    // Find end index
     y = 0;
     for (let i = startIndex; i < this.scrollingElements.length; i++) {
       y += this.scrollingElements[i].height;
@@ -67,29 +57,29 @@ export class AcScrollable {
         break;
       }
     }
-
-    let buffer:number = 2;
-    if(this.options && this.options.bufferCount && this.options.bufferCount>0){
+    let buffer: number = 2;
+    if (this.options && this.options.bufferCount && this.options.bufferCount > 0) {
       buffer = this.options.bufferCount;
     }
-
     startIndex = Math.max(0, startIndex - buffer);
     endIndex = Math.min(this.scrollingElements.length - 1, endIndex + buffer);
-
     return { startIndex, endIndex };
   }
 
-   private initObservers() {
-    // Watch for child add/remove
+  private handleScroll() {
+    this.scrollTop = this.element.scrollTop;
+    this.render();
+  }
+
+  private initObservers() {
     this.mutationObserver = new MutationObserver((mutations) => {
-      if(!this.isRendering){
+      if (!this.isRendering) {
         let needsRender = false;
         for (const mutation of mutations) {
           if (mutation.type === "childList") {
             mutation.addedNodes.forEach((node) => {
               if (node instanceof HTMLElement) {
-                console.log('Added element');
-                  if (!node.hasAttribute(AcScrollableAttributeName.acScrollingElementId)&&!node.hasAttribute(AcScrollableAttributeName.acScrollingSpacer)) {
+                if (!node.hasAttribute(AcScrollableAttributeName.acScrollingElementId) && !node.hasAttribute(AcScrollableAttributeName.acScrollingSpacer)) {
                   const height = node.offsetHeight || this.elementHeightFallback;
                   this.registerScrollingElement({ element: node, height });
                   needsRender = true;
@@ -98,7 +88,6 @@ export class AcScrollable {
             });
             mutation.removedNodes.forEach((node) => {
               if (node instanceof HTMLElement) {
-                console.log('Removed element');
                 const id = node.getAttribute(AcScrollableAttributeName.acScrollingElementId);
                 if (id) {
                   this.scrollingElements = this.scrollingElements.filter(el => el.id !== id);
@@ -113,13 +102,10 @@ export class AcScrollable {
           this.render();
         }
       }
-
     });
     this.mutationObserver.observe(this.element, { childList: true });
-
-    // Watch for size changes
     this.resizeObserver = new ResizeObserver((entries) => {
-      if(!this.isRendering){
+      if (!this.isRendering) {
         let needsRender = false;
         for (const entry of entries) {
           const target = entry.target as HTMLElement;
@@ -149,102 +135,123 @@ export class AcScrollable {
       }
     });
     this.elementResizeObserver.observe(this.element);
-
     this.scrollingElements.forEach(el => {
       this.resizeObserver.observe(el.element);
     });
   }
 
-  private registerScrollingElement(data: Partial<IAcScrollingElement> & Pick<IAcScrollingElement, 'element' | 'height'>){
-    const id:string = Autocode.uuid();
-    data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId,id);
-    if(data.index == undefined){
-      data.index = this.scrollingElements.length;
-    }
-    const scrollingElement: IAcScrollingElement = {
-      element:data.element,
-      id:id,
-      index: data.index,
-      height:data.height
-    };
-    this.scrollingElements.push(scrollingElement);
-    if(this.resizeObserver){
-      this.resizeObserver.observe(data.element);
-    }
-
-  }
-
-  private onScroll() {
-    this.scrollTop = this.element.scrollTop;
+  moveElement({fromIndex,toIndex}:{fromIndex: number, toIndex: number}) {
+    if (
+      fromIndex < 0 || fromIndex >= this.scrollingElements.length ||
+      toIndex < 0 || toIndex >= this.scrollingElements.length
+    ) return;
+    const [moved] = this.scrollingElements.splice(fromIndex, 1);
+    this.scrollingElements.splice(toIndex, 0, moved);
+    this.reindexScrollingElements();
     this.render();
   }
 
-  registerExistingElements(){
+  private registerScrollingElement(data: Partial<IAcScrollingElement> & Pick<IAcScrollingElement, 'element' | 'height'>) {
+    const id: string = Autocode.uuid();
+    data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
+    if (data.index == undefined) {
+      data.index = this.scrollingElements.length;
+    }
+    const scrollingElement: IAcScrollingElement = {
+      element: data.element,
+      id: id,
+      index: data.index,
+      height: data.height
+    };
+    this.scrollingElements.push(scrollingElement);
+    if (this.resizeObserver) {
+      this.resizeObserver.observe(data.element);
+    }
+  }
+
+  registerExistingElements() {
     const children = Array.from(this.element.children) as HTMLElement[];
     this.scrollingElements = [];
     children.forEach((el, index) => {
       const height = el.offsetHeight || this.elementHeightFallback;
-      this.registerScrollingElement({element:el,height:height,index:index});
+      this.registerScrollingElement({ element: el, height: height, index: index });
     });
     this.element.innerHTML = '';
     this.render();
   }
 
-  // removeScrollingElement
+  private reindexScrollingElements() {
+    this.scrollingElements.forEach((se, idx) => {
+      se.index = idx;
+    });
+  }
+
+  removeElement({ element, id, index }: { index?: number, id?:string, element?: HTMLElement }){
+    if (index == undefined && element) {
+      index = this.scrollingElements.findIndex(se => se.element === element);
+    }
+    else if (index == undefined && id) {
+      index = this.scrollingElements.findIndex(se => se.id === id);
+    }
+    if (index != undefined) {
+      const removed = this.scrollingElements.splice(index, 1)[0];
+      if (removed) {
+        this.resizeObserver.unobserve(removed.element);
+        removed.element.remove();
+        this.reindexScrollingElements();
+        this.render();
+      }
+    }
+  }
 
   private render() {
     this.isRendering = true;
     const { startIndex, endIndex } = this.getVisibleRange();
-
-    // Clear DOM
     this.element.innerHTML = "";
-
-    // Add spacer before
     const topSpacer = document.createElement("div");
-    topSpacer.style.height =
-      this.scrollingElements
-        .slice(0, startIndex)
-        .reduce((sum, el) => sum + el.height, 0) + "px";
-    topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer,'');
-    topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerBefore,'');
+    topSpacer.style.height = this.scrollingElements.slice(0, startIndex).reduce((sum, el) => sum + el.height, 0) + "px";
+    topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
+    topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerBefore, '');
     this.element.appendChild(topSpacer);
-
-    // Render visible items
     this.renderedElements = [];
     for (let i = startIndex; i <= endIndex; i++) {
       this.renderedElements.push(this.scrollingElements[i]);
       this.element.appendChild(this.scrollingElements[i].element);
     }
-
-    // Add spacer after
     const bottomSpacer = document.createElement("div");
-    bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer,'');
-    bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerAfter,'');
-    bottomSpacer.style.height =
-      this.scrollingElements
-        .slice(endIndex + 1)
-        .reduce((sum, el) => sum + el.height, 0) + "px";
+    bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
+    bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerAfter, '');
+    bottomSpacer.style.height = this.scrollingElements.slice(endIndex + 1).reduce((sum, el) => sum + el.height, 0) + "px";
     this.element.appendChild(bottomSpacer);
     setTimeout(() => {
       this.isRendering = false;
     }, 10);
   }
 
-  scrollToIndex(index: number) {
+  replaceElementAt({index,newElement}:{index: number, newElement: HTMLElement}) {
   if (index < 0 || index >= this.scrollingElements.length) return;
-
-  const scrollY = this.scrollingElements
-    .slice(0, index)
-    .reduce((sum, el) => sum + el.height, 0);
-
-  this.element.scrollTop = scrollY;
-  this.render();
-}
-
-scrollToElement(element: HTMLElement) {
-  const index = this.scrollingElements.findIndex(se => se.element === element);
-  if (index !== -1) {
-    this.scrollToIndex(index);
+    const old = this.scrollingElements[index];
+    this.resizeObserver.unobserve(old.element);
+    const height = newElement.offsetHeight || this.elementHeightFallback;
+    this.scrollingElements[index] = {
+      ...old,
+      element: newElement,
+      height
+    };
+    newElement.setAttribute(AcScrollableAttributeName.acScrollingElementId,this.scrollingElements[index].id);
+    this.resizeObserver.observe(newElement);
+    this.render();
   }
-}
+
+  scrollTo({ element, index }: { index?: number, element?: HTMLElement }) {
+    if (index == undefined && element) {
+      index = this.scrollingElements.findIndex(se => se.element === element);
+    }
+    if (index != undefined) {
+      if (index < 0 || index >= this.scrollingElements.length) return;
+      const scrollY = this.scrollingElements.slice(0, index).reduce((sum, el) => sum + el.height, 0);
+      this.element.scrollTop = scrollY;
+      this.render();
+    }
+  }
 }

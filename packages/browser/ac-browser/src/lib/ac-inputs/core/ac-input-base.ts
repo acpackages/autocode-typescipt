@@ -119,6 +119,10 @@ export class AcInputBase {
   element: any = document.createElement('input');
   events: AcEvents = new AcEvents();
 
+  constructor(){
+      this.registerBaseEvents();
+  }
+
   destroy() {
     const eventArgs: IAcInputEvent = {
       instance: this
@@ -130,7 +134,6 @@ export class AcInputBase {
     if (this.value == undefined || this.value == null) {
       this.value = this.defaultValue;
     }
-    this.registerBaseEvents();
     const eventArgs: IAcInputEvent = {
       instance: this
     };

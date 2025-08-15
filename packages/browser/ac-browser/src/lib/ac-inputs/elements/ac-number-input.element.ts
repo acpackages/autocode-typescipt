@@ -50,11 +50,11 @@ export class AcNumberInput extends AcInput{
 
   override element: HTMLInputElement = document.createElement('input');
 
-  override init(): void {
+  constructor() {
+    super();
     if(this.type == ''){
       this.type = AcEnumInputType.Number;
     }
-    super.init();
     acAddClassToElement({cssClass:AcInputCssClassName.acNumberInput,element:this.element});
   }
 

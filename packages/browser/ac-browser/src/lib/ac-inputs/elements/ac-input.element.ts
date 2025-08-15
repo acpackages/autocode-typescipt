@@ -20,8 +20,8 @@ export class AcInput extends AcInputBase{
 
   override element: HTMLInputElement = document.createElement('input');
 
-  override init(): void {
-    super.init();
+  constructor() {
+    super();
     acAddClassToElement({cssClass:AcInputCssClassName.acInput,element:this.element});
   }
 }

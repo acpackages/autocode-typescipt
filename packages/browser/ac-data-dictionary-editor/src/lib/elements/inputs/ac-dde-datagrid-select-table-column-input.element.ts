@@ -42,9 +42,9 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
   }
 
   setOptions() {
-    const options: any[] = [{ 'label': 'Select Column', 'value': '' }];
+    const options: any[] = [];
     for (const row of Object.values(this.editorApi.dataStorage.tableColumns)) {
-      // options.push({ 'label': row.column_name, 'value': row.column_id });
+      options.push({ 'label': row.column_name, 'value': row.column_id });
     }
     this.selectInput.selectOptions = options;
     this.selectInput.value = this.datagridCell.cellValue;

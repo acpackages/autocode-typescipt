@@ -38,9 +38,9 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditorEleme
   }
 
   setOptions(){
-    const options:any[] = [{'label':'Select Table','value':''}];
+    const options:any[] = [];
     for(const row of Object.values(this.editorApi.dataStorage.tables)){
-      // options.push({'label':row.table_name,'value':row.table_id});
+      options.push({'label':row.table_name,'value':row.table_id});
     }
     this.selectInput.selectOptions = options;
     this.selectInput.value = this.value;
