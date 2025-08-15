@@ -28,6 +28,7 @@ import { PopoverTestPage } from './pages/popover/popover-test-page.page';
 import { BasicScrollTrackTestPage } from './pages/scroll-track/basic-scroll-track-test.page';
 import { SlidesBasicTestPage } from './pages/slides/slides-basic-test.page';
 import { VirtualTestScrollPage } from './pages/scrollable/virtual-test-scroll.page';
+import { VirtualScrollDirectDomTestPage } from './pages/scrollable/virtual-scroll-direct-dom-test.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -140,7 +141,8 @@ window.addEventListener('DOMContentLoaded', () => {
    AcRouter.registerRouteGroup({
     label:'Scrollable',
     routes:[
-      {label:'Virtual', path: '/scrollable/virtual', componentTag: 'virtual-scroll', component: VirtualTestScrollPage }
+      {label:'Virtual Using API', path: '/scrollable/virtual-api', componentTag: 'virtual-scroll-api', component: VirtualTestScrollPage },
+      {label:'Virtual through DOM', path: '/scrollable/virtual-dom', componentTag: 'virtual-scroll-dom', component: VirtualScrollDirectDomTestPage }
     ]
   });
    AcRouter.registerRouteGroup({

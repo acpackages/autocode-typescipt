@@ -55,16 +55,16 @@ export class VirtualTestScrollPage extends HTMLElement {
     `;
 
     const container = this.querySelector('.scroll-container') as HTMLElement;
-    this.acScrollable = new AcScrollable(container);
+    this.acScrollable = new AcScrollable({element:container,options:{bufferCount:5}});
 
     // Add initial items
-    for (let i = 1; i <= 5000; i++) {
+    for (let i = 1; i <= 1000; i++) {
       this.addRandomHeightItem(i);
     }
 
     // Controls
     this.querySelector('#addBtn')?.addEventListener('click', () => {
-      this.addRandomHeightItem(this.acScrollable['items'].length + 1);
+      // this.addRandomHeightItem(this.acScrollable.scrollingElements.length + 1);
     });
 
     this.querySelector('#scrollTopBtn')?.addEventListener('click', () => {
