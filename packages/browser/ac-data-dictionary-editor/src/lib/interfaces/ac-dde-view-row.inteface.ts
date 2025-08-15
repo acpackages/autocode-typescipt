@@ -5,6 +5,7 @@ export const AcDDEViewRowKey = {
   viewId:'view_id',
   viewName:AcDDView.KeyViewName,
   viewQuery:AcDDView.KeyViewQuery,
+  extensionsData:'extensions_data'
 }
 
 export interface IAcDDEViewRow{
@@ -12,4 +13,5 @@ export interface IAcDDEViewRow{
   view_id:string;
   view_name:string;
   view_query:string;
+  extensions_data:any;
 }

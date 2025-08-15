@@ -30,7 +30,8 @@
       "@autocode-ts/ac-ng-input-on-tinymce": ["dist/packages/angular/ac-ng-input-on-tinymce"],
       "@autocode-ts/ac-ng-node-editor": ["dist/packages/angular/ac-ng-node-editor"],
       "@autocode-ts/ac-react": ["dist/packages/react/ac-react"],
-      "@autocode-ts/ac-sql": ["dist/packages/node/ac-sql"],
+      "@autocode-ts/ac-sql": ["dist/packages/common/ac-sql"],
+      "@autocode-ts/ac-sql-node": ["dist/packages/node/ac-sql-node"],
       "@autocode-ts/ac-vue": ["dist/packages/vue/ac-vue"],
       "@autocode-ts/ac-web": ["dist/packages/node/ac-web"],
       "@autocode-ts/ac-web-on-express": ["dist/packages/node/ac-web-on-express"]

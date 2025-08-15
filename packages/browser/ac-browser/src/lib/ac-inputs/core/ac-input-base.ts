@@ -130,6 +130,10 @@ export class AcInputBase {
     this.events.execute({ eventName: AcEnumInputEvent.Destroy, args: eventArgs });
   }
 
+  focus(){
+    this.element.focus();
+  }
+
   init() {
     if (this.value == undefined || this.value == null) {
       this.value = this.defaultValue;

@@ -27,7 +27,7 @@ export const AcDDETableColumnRowKey = {
   size:AcEnumDDColumnProperty.Size,
   tableId:'table_id',
   uniqueKey:AcEnumDDColumnProperty.UniqueKey,
-
+  extensionsData:'extensions_data'
 }
 
 export interface IAcDDETableColumnRow {
@@ -57,4 +57,5 @@ export interface IAcDDETableColumnRow {
   size?: number;
   table_id: string;
   unique_key?: boolean;
+  extensions_data:any;
 }

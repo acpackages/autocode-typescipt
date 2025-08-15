@@ -8,7 +8,8 @@ export const AcDDERelationshipRowKey = {
   destinationTableId:'destination_table_id',
   relationshipId:'relationship_id',
   sourceColumnId:'source_column_id',
-  sourceTableId:'source_table_id'
+  sourceTableId:'source_table_id',
+  extensionsData:'extensions_data'
 }
 
 export interface IAcDDERelationshipRow{
@@ -20,4 +21,5 @@ export interface IAcDDERelationshipRow{
   relationship_id:string;
   source_column_id:string;
   source_table_id:string;
+  extensions_data:any;
 }

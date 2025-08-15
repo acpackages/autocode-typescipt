@@ -1,6 +1,6 @@
 {
-  "name": "@autocode-ts/ac-sql",
-  "version": "0.0.2",
+  "name": "@autocode-ts/ac-sql-node",
+  "version": "0.0.1",
   "type": "module",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -15,6 +15,7 @@
     "@autocode-ts/autocode":"0.0.5",
     "@autocode-ts/ac-extensions":"0.0.4",
     "@autocode-ts/ac-data-dictionary":"0.0.2",
+    "@autocode-ts/ac-sql":"0.0.1",
     "mysql2": "^3.14.1"
   },
   "devDependencies":{

@@ -4,11 +4,10 @@
 /* eslint-disable no-prototype-builtins */
 // ac-mysql-dao.ts
 
-import { Connection, ConnectionOptions, createConnection, QueryResult } from 'mysql2/promise';
-import { AcBaseSqlDao } from './ac-base-sql-dao';
+import { Connection, ConnectionOptions, createConnection } from 'mysql2/promise';
+import { AcBaseSqlDao, AcSqlDaoResult } from "@autocode-ts/ac-sql";
 import { AcDDFunction, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnFormat, AcEnumDDColumnProperty, AcEnumDDRowOperation, AcEnumDDSelectMode } from '@autocode-ts/ac-data-dictionary';
 import { AcEncryption, AcResult } from '@autocode-ts/autocode';
-import { AcSqlDaoResult } from '../models/ac-sql-dao-result.model';
 
 export class AcMysqlDao extends AcBaseSqlDao {
   private async _getConnection(): Promise<Connection> {

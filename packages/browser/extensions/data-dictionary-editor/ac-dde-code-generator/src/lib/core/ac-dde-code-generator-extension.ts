@@ -2,6 +2,7 @@
 
 import { AcDDEExtension, IAcDDEExtension, IAcDDEMenuGroup } from "@autocode-ts/ac-data-dictionary-editor";
 import { AcDataDictionaryDartCodeGenerator } from "./ac-data-dictionary-dart-code-generator";
+import { AcBrowser } from "@autocode-ts/ac-browser";
 
 export class AcDDECodeGeneratorExtension extends AcDDEExtension {
   override init(): void {
@@ -9,18 +10,17 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
       label:'Code Generator',
       menuItems:[
         {
-          label:'Dart Data Dictionary File',
+          label:'Dart Data Dictionary',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
               codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id});
-              console.log(codeGenerator);
-              console.log(codeGenerator.getDataDictionaryString());
+              AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data_dictionary.dart'});
             }
           }
         },
         {
-          label:'Typescript Data Dictionary File',
+          label:'Typescript Data Dictionary',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               console.log(this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id}));
@@ -31,6 +31,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
     }
     this.editorApi.addMenuGroup({menuGroup:menuGroup});
   }
+
 
 }
 

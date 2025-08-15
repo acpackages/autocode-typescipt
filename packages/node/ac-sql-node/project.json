@@ -1,7 +1,7 @@
 {
-  "name": "ac-sql",
+  "name": "ac-sql-node",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/node/ac-sql/src",
+  "sourceRoot": "packages/node/ac-sql-node/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,7 +9,7 @@
       "executor": "nx:run-commands",
       "options": {
         "command": "rollup -c rollup.config.mjs",
-        "cwd": "packages/node/ac-sql"
+        "cwd": "packages/node/ac-sql-node"
       }
     }
   }

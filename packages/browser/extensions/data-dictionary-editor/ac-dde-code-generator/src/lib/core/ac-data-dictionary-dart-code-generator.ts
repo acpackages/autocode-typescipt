@@ -2,30 +2,11 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringToCamelCase, stringToPascalCase } from '@autocode-ts/ac-extensions';
-import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
+import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
 import { AcDDECodeGeneratorDefaultConfig } from '../consts/ac-dde-code-generator-default-config.const';
+import { boolColumnProperties, numberColumnProperties, stringColumnProperties } from '../consts/ac-dde-property-groups.const';
 
 export class AcDataDictionaryDartCodeGenerator {
-  boolColumnProperties: any[] = [
-    AcEnumDDColumnProperty.AutoIncrement,
-    AcEnumDDColumnProperty.CheckInAutoNumber,
-    AcEnumDDColumnProperty.CheckInModify,
-    AcEnumDDColumnProperty.CheckInSave,
-    AcEnumDDColumnProperty.ForeignKey,
-    AcEnumDDColumnProperty.InSearchQuery,
-    AcEnumDDColumnProperty.IsSelectDistinct,
-    AcEnumDDColumnProperty.NotNull,
-    AcEnumDDColumnProperty.PrimaryKey,
-    AcEnumDDColumnProperty.Required,
-    AcEnumDDColumnProperty.SetNullBeforeDelete,
-    AcEnumDDColumnProperty.UniqueKey
-  ];
-  stringColumnProperties: any[] = [
-    AcEnumDDColumnProperty.AutoNumberPrefix,
-    AcEnumDDColumnProperty.ColumnTitle,
-    AcEnumDDColumnProperty.Format,
-    AcEnumDDColumnProperty.Remarks
-  ];
   dataDictionaryJson: any = {};
   tabsCount: number = 0;
 
@@ -136,39 +117,45 @@ export class AcDataDictionaryDartCodeGenerator {
   }
 
   getDDColumnProperties({ columnDetails }: { columnDetails: any }): string {
-    let result: string = ``;
-
+    let result: string = `{`;
+    this.tabsCount++;
     const propertiesJson: string[] = [];
-    if (columnDetails & columnDetails[AcDDTableColumn.KeyColumnProperties]) {
+    if (columnDetails && columnDetails[AcDDTableColumn.KeyColumnProperties]) {
       const properties = columnDetails[AcDDTableColumn.KeyColumnProperties];
-      const propertyEnumObj = AcEnumDDColumnProperty as any;
-
-      for (const key of Object.keys(AcEnumDDColumnProperty)) {
-        let includeProperty: boolean = true;
-        if (this.boolColumnProperties.includes(propertyEnumObj[key])) {
-          includeProperty = false;
-          if (properties[propertyEnumObj[key]] == true) {
-            includeProperty = true;
-          }
+      for (const key of Object.keys(properties)) {
+        const value = properties[key][AcDDTableColumnProperty.KeyPropertyValue];
+        let propertyKey = stringToCamelCase(key.replaceAll('_',' '));
+        let propertyValue = `${value}`;
+        let validProperty:boolean = false;
+        if(boolColumnProperties.includes(key) && value == true){
+          validProperty = true;
         }
-        if (includeProperty) {
-          propertiesJson.push(
-            `AcEnumDDColumnProperty.${key} : ${properties[propertyEnumObj[key]]}`
-          );
+        else if(numberColumnProperties.includes(key) && value){
+          validProperty = true;
         }
-
+        else if(stringColumnProperties.includes(key) && value){
+          validProperty = true;
+          propertyValue = `"${value}"`;
+        }
+        if(validProperty){
+          let propertyJson:string = '';
+          propertyJson += `${this.tabs}AcEnumDDColumnProperty.${propertyKey} : {\n`;
+          this.tabsCount++;
+          propertyJson += `${this.tabs}AcDDTableColumnProperty.keyPropertyName : AcEnumDDColumnProperty.${propertyKey},\n`;
+          propertyJson += `${this.tabs}AcDDTableColumnProperty.keyPropertyValue : ${propertyValue}\n`;
+          this.tabsCount--;
+          propertyJson += `${this.tabs}}`;
+          propertiesJson.push(propertyJson);
+        }
       }
     }
 
     if (propertiesJson.length > 0) {
-      result = `{\n`;
-      this.tabsCount++;
-      result += this.tabs;
-      result += propertiesJson.join(`,\n${this.tabs}`);
-      this.tabsCount--;
-      result += `\n${this.tabs}`;
+      result += `\n`+propertiesJson.join(`,\n`)+``;
     }
+    this.tabsCount--;
 
+    result += `\n${this.tabs}}`;
     return result;
   }
 
@@ -235,14 +222,16 @@ export class AcDataDictionaryDartCodeGenerator {
 
   getDDKeysString(): string {
     let result: string = ``;
-    result += this.tabs + `/* Keys Start */\n\n\n`;
+    result += this.tabs + `/* Keys Start */\n`;
     if (this.dataDictionaryJson) {
       if(this.dataDictionaryJson[AcDataDictionary.KeyTables]){
         const tableKeys:string[] = [];
         const tableColumnKeys:string[] = [];
         for (const tableDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyTables] as any[])) {
           const tableName = tableDetails[AcDDTable.KeyTableName];
-          tableKeys.push(`static const ${stringToCamelCase(tableName)} = "${tableName}";`);
+          this.tabsCount++;
+          tableKeys.push(`${this.tabs}static const ${stringToCamelCase(tableName)} = "${tableName}";`);
+          this.tabsCount--;
 
           const columnKeys:string[] = [];
           this.tabsCount++;
@@ -266,8 +255,7 @@ export class AcDataDictionaryDartCodeGenerator {
         result += this.tabs + `/* Table Keys End */\n`;
       }
     }
-    result += `\n\n`;
-    result += this.tabs + `/* Keys End */\n\n`;
+    result += this.tabs + `/* Keys End */\n`;
     return result;
   }
 
@@ -361,7 +349,7 @@ export class AcDataDictionaryDartCodeGenerator {
     this.tabsCount++;
     result += `${this.tabs}AcDDTableColumn.keyColumnName : ${keyName},\n`;
     result += `${this.tabs}AcDDTableColumn.keyColumnType : ${this.getDDColumnTypeString({columnType:columnDetails[AcDDTableColumn.KeyColumnType]})},\n`;
-    result += `${this.tabs}AcDDTableColumn.keyColumnProperties : {${this.getDDColumnProperties({columnDetails:columnDetails[AcDDTableColumn.KeyColumnType]})}}\n`;
+    result += `${this.tabs}AcDDTableColumn.keyColumnProperties : ${this.getDDColumnProperties({columnDetails:columnDetails})}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;
@@ -407,7 +395,7 @@ export class AcDataDictionaryDartCodeGenerator {
     result += `${this.tabs}AcDDViewColumn.keyColumnSource : "${columnSource}",\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnSourceName : "${columnSourceName}",\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnType : ${this.getDDColumnTypeString({columnType:columnDetails[AcDDViewColumn.KeyColumnType]})},\n`;
-    result += `${this.tabs}AcDDViewColumn.keyColumnProperties : {${this.getDDColumnProperties({columnDetails:columnDetails[AcDDViewColumn.KeyColumnType]})}}\n`;
+    result += `${this.tabs}AcDDViewColumn.keyColumnProperties : ${this.getDDColumnProperties({columnDetails:columnDetails})}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;

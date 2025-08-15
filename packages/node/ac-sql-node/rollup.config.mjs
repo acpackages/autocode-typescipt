@@ -7,7 +7,7 @@ import copy from 'rollup-plugin-copy';
 import path from 'path';
 import pkg from './package.json' with { type: 'json' };
 
-const outputDir = '../../../dist/packages/node/ac-sql';
+const outputDir = '../../../dist/packages/node/ac-sql-node';
 
 export default {
   input: path.resolve(process.cwd(), 'src/index.ts'),
@@ -25,7 +25,7 @@ export default {
     {
       file: path.join(outputDir, 'index.umd.js'),
       format: 'umd',
-      name: 'Autocode SQL',
+      name: 'Autocode SQL Node',
       sourcemap: true
     }
   ],

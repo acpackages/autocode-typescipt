@@ -9,6 +9,7 @@ export const AcDDEViewColumnRowKey = {
   columnType:AcDDViewColumn.KeyColumnType,
   dataDictionaryId:'data_dictionary_id',
   viewId:'view_id',
+  extensionsData:'extensions_data'
 }
 
 export interface IAcDDEViewColumnRow{
@@ -20,4 +21,5 @@ export interface IAcDDEViewColumnRow{
   column_type:string;
   data_dictionary_id:string;
   view_id:string;
+  extensions_data:any;
 }

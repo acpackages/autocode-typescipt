@@ -9,7 +9,7 @@ export class AcDDEDatagridYesNoInput implements IAcDatagridCellEditorElement{
   }
 
   focus(): void {
-    this.optionInput.element.focus();
+    this.optionInput.focus();
   }
 
   getElement(): HTMLElement {

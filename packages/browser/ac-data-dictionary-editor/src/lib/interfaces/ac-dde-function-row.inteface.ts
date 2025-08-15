@@ -5,6 +5,7 @@ export const AcDDEFunctionRowKey = {
   functionId:'function_id',
   functionName:AcDDFunction.KeyFunctionName,
   functionCode:AcDDFunction.KeyFunctionCode,
+  extensionsData:'extensions_data'
 }
 
 export interface IAcDDEFunctionRow{
@@ -12,5 +13,6 @@ export interface IAcDDEFunctionRow{
   function_id:string;
   function_name:string;
   function_code:string;
+  extensions_data:any;
 }
 

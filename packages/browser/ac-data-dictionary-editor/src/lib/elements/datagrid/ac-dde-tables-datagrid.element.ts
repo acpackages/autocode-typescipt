@@ -1,6 +1,6 @@
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcEnumDDEHook, IAcDDETableRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDECssClassName, AcDDETableRowKey, AcEnumDDEHook, IAcDDETableRow } from "../../_ac-data-dictionary-editor.export";
 import { AcDDTable } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
@@ -25,7 +25,49 @@ export class AcDDETablesDatagrid {
     this.datagridApi = this.ddeDatagrid.datagridApi;
     this.ddeDatagrid.columnDefinitions = [
       {
-        'field': AcDDTable.KeyTableName, 'title': 'Table Name',
+        'field': AcDDETableRowKey.tableName, 'title': 'Table Name',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.singularName, 'title': 'Singular Name',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.pluralName, 'title': 'Plural Name',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.selectQuery, 'title': 'Select Query',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.selectQueryColumns, 'title': 'Query Columns',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.selectRequestColumns, 'title': 'Request Columns',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.orderBy, 'title': 'Order By',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        },useCellEditorForRenderer:true
+      },
+      {
+        'field': AcDDETableRowKey.viewId, 'title': 'View',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         },useCellEditorForRenderer:true

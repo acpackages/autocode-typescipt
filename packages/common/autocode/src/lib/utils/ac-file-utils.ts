@@ -56,6 +56,10 @@ export class AcFileUtils {
     return AcFileUtils.mimeFromExtension({ extension: ext });
   }
 
+  static mimeFromFileName({ filename }: { filename: string }): string | undefined {
+    return AcFileUtils.mimeFromPath({ path: filename });
+  }
+
   static mimeFromFile({ file }: { file: { path?: string, name?: string } }): string | undefined {
     const filePath = file.path || file.name || '';
     return AcFileUtils.mimeFromPath({ path: filePath });

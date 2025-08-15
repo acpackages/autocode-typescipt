@@ -10,7 +10,7 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditorEleme
   }
 
   focus(): void {
-    this.selectInput.element.focus();
+    this.selectInput.focus();
   }
 
   getElement(): HTMLElement {

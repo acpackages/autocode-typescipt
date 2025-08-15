@@ -7,7 +7,8 @@ export const AcDDETriggerRowKey = {
   triggerCode:AcDDTrigger.KeyTriggerCode,
   triggerExecution:AcDDTrigger.KeyTriggerExecution,
   triggerId:'trigger_id',
-  triggerName:AcDDTrigger.KeyTriggerName
+  triggerName:AcDDTrigger.KeyTriggerName,
+  extensionsData:'extensions_data'
 }
 
 export interface IAcDDETriggerRow{
@@ -18,4 +19,5 @@ export interface IAcDDETriggerRow{
   trigger_execution:string;
   trigger_id:string;
   trigger_name:string;
+  extensions_data:any;
 }
