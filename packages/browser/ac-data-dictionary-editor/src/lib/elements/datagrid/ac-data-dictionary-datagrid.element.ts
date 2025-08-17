@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcDDEApi, AcDDECssClassName, AcEnumDDEHook, IAcDDERelationshipRow, IAcDDETableColumnRow, IAcDDETableRow, IAcDDETriggerRow } from "../../_ac-data-dictionary-editor.export";
-import { acAddClassToElement, AcEnumResizePanelDirection,AcResizableAttributeName, AcResizablePanels } from '@autocode-ts/ac-browser';
+import { AcDDEApi, AcDDECssClassName, AcDDETableColumnRowKey, AcEnumDDEHook, IAcDDERelationshipRow, IAcDDETableColumnRow, IAcDDETableRow, IAcDDETriggerRow } from "../../_ac-data-dictionary-editor.export";
+import { acAddClassToElement, AcEnumDatagridEvent, AcEnumResizePanelDirection,AcResizableAttributeName, AcResizablePanels, IAcDatagridRowEvent } from '@autocode-ts/ac-browser';
 import { AcDDETableColumnPropertiesDatagrid } from "./ac-dde-table-column-properties-datagrid.element";
 import { AcDDETableColumnsDatagrid } from "./ac-dde-table-columns-datagrid.element";
 import { AcDDETablePropertiesDatagrid } from "./ac-dde-table-properties-datagrid.element";
@@ -43,20 +43,30 @@ export class AcDataDictionaryDatagrid {
 
     this.tablesDatagrid = new AcDDETablesDatagrid({editorApi:this.editorApi});
     this.tablesDatagrid.hooks.subscribe({hookName:AcEnumDDEHook.DatagridActiveTableChange,callback:()=>{
-      this.tableColumnsDatagrid.applyFilter();
-      this.tableRelationshipsDatagrid.applyFilter();
-      this.tableTriggersDatagrid.applyFilter();
+      console.log('Active row change');
+      if(this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow){
+        this.activeTable = this.tablesDatagrid.datagridApi.activeDatagridRow.data;
+        console.log('Active table change');
+        this.tableColumnsDatagrid.applyFilter();
+        this.tableRelationshipsDatagrid.applyFilter();
+        this.tableTriggersDatagrid.applyFilter();
+      }
     }});
-
     this.tableColumnsDatagrid = new AcDDETableColumnsDatagrid({editorApi:this.editorApi});
     this.tableColumnsDatagrid.filterFunction = (row:IAcDDETableColumnRow)=>{
       let tableId:any = undefined;
+      console.log('Filtering table columns');
       if(this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow){
         const activeRow:IAcDDETableRow = this.tablesDatagrid.datagridApi.activeDatagridRow.data;
         tableId = activeRow.table_id;
       }
+      console.log(tableId);
       return row.table_id == tableId;
     };
+    this.tableColumnsDatagrid.datagridApi.on({eventName:AcEnumDatagridEvent.RowAdd,callback:(args:IAcDatagridRowEvent)=>{
+      console.log(this);
+      args.datagridRow.data[AcDDETableColumnRowKey.tableId] = this.activeTable!.table_id;
+    }})
 
     this.tableRelationshipsDatagrid = new AcDDERelationshipsDatagrid({editorApi:this.editorApi});
     this.tableRelationshipsDatagrid.filterFunction = (row:IAcDDERelationshipRow)=>{

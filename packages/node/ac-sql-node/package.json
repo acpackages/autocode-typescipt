@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "tslib": "^2.3.0",
-    "@autocode-ts/autocode":"0.0.5",
+    "@autocode-ts/autocode":"0.0.6",
     "@autocode-ts/ac-extensions":"0.0.4",
     "@autocode-ts/ac-data-dictionary":"0.0.2",
     "@autocode-ts/ac-sql":"0.0.1",
-    "mysql2": "^3.14.1"
+    "mysql2": "^3.14.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies":{
     "@types/node": "^20.17.50"

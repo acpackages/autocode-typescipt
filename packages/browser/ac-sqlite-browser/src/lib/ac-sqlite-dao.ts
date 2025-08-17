@@ -4,36 +4,55 @@
 /* eslint-disable no-prototype-builtins */
 // ac-sqlite-dao.ts
 
-import sqlite3 from "sqlite3";
-import { open, Database } from "sqlite";
-import { AcBaseSqlDao, AcSqlDaoResult } from "@autocode-ts/ac-sql";
-import { AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnFormat, AcEnumDDColumnProperty, AcEnumDDRowOperation, AcEnumDDSelectMode } from "@autocode-ts/ac-data-dictionary";
-import { AcEncryption, AcResult } from "@autocode-ts/autocode";
+import initSqlJs, { Database, SqlJsStatic, QueryExecResult } from "sql.js";
+import { AcBaseSqlDao, AcDatabaseTypeDaoClassMap, AcSqlDaoResult } from "@autocode-ts/ac-sql";
+import {
+  AcDDTable,
+  AcDDTableColumn,
+  AcDDTrigger,
+  AcDDView,
+  AcDDViewColumn,
+  AcEnumDDColumnFormat,
+  AcEnumDDColumnProperty,
+  AcEnumDDRowOperation,
+  AcEnumDDSelectMode,
+} from "@autocode-ts/ac-data-dictionary";
+import { AcEncryption, AcEnumSqlDatabaseType, AcResult } from "@autocode-ts/autocode";
 
 export class AcSqliteDao extends AcBaseSqlDao {
+  private SQL!: SqlJsStatic;
+  private db!: Database;
+
   private async _getConnection(): Promise<Database> {
-    const db = await open({
-      filename: this.sqlConnection.database, // in sqlite, "database" is just a file path
-      driver: sqlite3.Database,
-    });
-    return db;
+    if (!this.SQL) {
+      this.SQL = await initSqlJs({
+         locateFile: file => `https://sql.js.org/dist/${file}`
+      });
+    }
+    if (!this.db) {
+      this.db = new this.SQL.Database();
+    }
+    return this.db;
   }
 
-  // No concept of "connection without database" in sqlite
-  private async _getConnectionWithoutDatabase(): Promise<Database> {
-    return this._getConnection();
+  private _exec(db: Database, sql: string, params: any[] = []): QueryExecResult[] {
+    const stmt = db.prepare(sql);
+    stmt.bind(params);
+    const result: QueryExecResult[] = [];
+    while (stmt.step()) {
+      result.push({
+        columns: stmt.getColumnNames(),
+        values: [stmt.get()],
+      });
+    }
+    stmt.free();
+    return result;
   }
 
   override async checkDatabaseExist(): Promise<AcResult> {
     const result = new AcResult();
     try {
-      // Check if file exists
-      const fs = await import("fs");
-      const exists = fs.existsSync(this.sqlConnection.database);
-      result.setSuccess({
-        value: exists,
-        message: exists ? "Database exists" : "Database does not exist",
-      });
+      result.setSuccess({ value: true, message: "sql.js always has an in-memory DB" });
     } catch (ex) {
       result.setException({ exception: ex });
     }
@@ -42,22 +61,20 @@ export class AcSqliteDao extends AcBaseSqlDao {
 
   override async checkTableExist({ tableName }: { tableName: string }): Promise<AcResult> {
     const result = new AcResult();
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
-      const row = await db.get(
-        `SELECT name FROM sqlite_master WHERE type='table' AND name=?`,
+      const db = await this._getConnection();
+      const rows = this._exec(
+        db,
+        "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
         [tableName]
       );
-      const exists = !!row;
+      const exists = rows.length > 0;
       result.setSuccess({
         value: exists,
         message: exists ? "Table exists" : "Table does not exist",
       });
     } catch (ex) {
       result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
     }
     return result;
   }
@@ -65,9 +82,8 @@ export class AcSqliteDao extends AcBaseSqlDao {
   override async createDatabase(): Promise<AcResult> {
     const result = new AcResult();
     try {
-      // Opening sqlite file auto-creates it if not exists
       await this._getConnection();
-      result.setSuccess({ value: true, message: "Database created (sqlite file)" });
+      result.setSuccess({ value: true, message: "Database created (in-memory or file)" });
     } catch (ex) {
       result.setException({ exception: ex });
     }
@@ -84,23 +100,21 @@ export class AcSqliteDao extends AcBaseSqlDao {
     parameters?: Record<string, any>;
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Delete });
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
+      const db = await this._getConnection();
       const whereClause = condition ? `WHERE ${condition}` : "";
       const statement = `DELETE FROM ${tableName} ${whereClause}`;
       const { statement: updatedStatement, statementParametersMap } =
-        this.setSqlStatementParameters({
-          statement,
-          passedParameters: parameters,
-        });
-      const res = await db.run(updatedStatement, Object.values(statementParametersMap!));
-      result.affectedRowsCount = res.changes ?? 0;
+        this.setSqlStatementParameters({ statement, passedParameters: parameters });
+      const stmt = db.prepare(updatedStatement);
+      stmt.bind(Object.values(statementParametersMap!));
+      let changes = 0;
+      while (stmt.step()) changes++;
+      stmt.free();
+      result.affectedRowsCount = db.getRowsModified();
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
     }
     return result;
   }
@@ -113,25 +127,25 @@ export class AcSqliteDao extends AcBaseSqlDao {
     parameters?: Record<string, any>;
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
-      await db.exec("BEGIN TRANSACTION");
+      const db = await this._getConnection();
+      db.exec("BEGIN");
       for (const statement of statements) {
         const { statement: updatedStatement, statementParametersMap } =
-          this.setSqlStatementParameters({
-            statement,
-            passedParameters: parameters,
-          });
-        await db.run(updatedStatement, Object.values(statementParametersMap!));
+          this.setSqlStatementParameters({ statement, passedParameters: parameters });
+        const stmt = db.prepare(updatedStatement);
+        stmt.bind(Object.values(statementParametersMap!));
+        while (stmt.step()) {
+          //
+        }
+        stmt.free();
       }
-      await db.exec("COMMIT");
+      db.exec("COMMIT");
       result.setSuccess();
     } catch (ex) {
-      if (db) await db.exec("ROLLBACK");
+      const db = await this._getConnection();
+      db.exec("ROLLBACK");
       result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
     }
     return result;
   }
@@ -146,20 +160,19 @@ export class AcSqliteDao extends AcBaseSqlDao {
     parameters?: Record<string, any>;
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation });
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
+      const db = await this._getConnection();
       const { statement: updatedStatement, statementParametersMap } =
-        this.setSqlStatementParameters({
-          statement,
-          passedParameters: parameters,
-        });
-      await db.run(updatedStatement, Object.values(statementParametersMap!));
+        this.setSqlStatementParameters({ statement, passedParameters: parameters });
+      const stmt = db.prepare(updatedStatement);
+      stmt.bind(Object.values(statementParametersMap!));
+      while (stmt.step()) {
+        //
+      }
+      stmt.free();
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
     }
     return result;
   }
@@ -198,85 +211,68 @@ export class AcSqliteDao extends AcBaseSqlDao {
     return formattedRow;
   }
 
-  override async getConnectionObject({ includeDatabase = true }: { includeDatabase?: boolean }): Promise<any> {
-    return await this._getConnection();
-  }
-
-  // --- Metadata methods (SQLite does not support FUNCTIONS/PROCEDURES like MySQL) ---
-  override async getDatabaseFunctions(): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult();
-    result.setSuccess({ value: true, message: "SQLite does not support functions metadata" });
-    return result;
-  }
-
-  override async getDatabaseStoredProcedures(): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult();
-    result.setSuccess({ value: true, message: "SQLite does not support stored procedures" });
-    return result;
-  }
-
   override async getDatabaseTables(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
-      const rows = await db.all(`SELECT name FROM sqlite_master WHERE type='table'`);
-      for (const row of rows) {
-        result.rows.push({ [AcDDTable.KeyTableName]: row["name"] });
+      const db = await this._getConnection();
+      const stmt = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
+      while (stmt.step()) {
+        const row = stmt.getAsObject();
+        result.rows.push({
+          [AcDDTable.KeyTableName]: row["name"],
+        });
       }
+      stmt.free();
       result.setSuccess();
     } catch (ex: any) {
-      result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
+      result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
 
   override async getDatabaseTriggers(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
-      const rows = await db.all(`SELECT name, tbl_name, sql FROM sqlite_master WHERE type='trigger'`);
-      for (const row of rows) {
+      const db = await this._getConnection();
+      const stmt = db.prepare("SELECT name, tbl_name, sql FROM sqlite_master WHERE type='trigger'");
+      while (stmt.step()) {
+        const row = stmt.getAsObject();
         result.rows.push({
           [AcDDTrigger.KeyTriggerName]: row["name"],
+          table: row["tbl_name"],
+          definition: row["sql"],
         });
       }
+      stmt.free();
       result.setSuccess();
     } catch (ex: any) {
-      result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
+      result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
 
   override async getDatabaseViews(): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult();
-    let db: Database | null = null;
     try {
-      db = await this._getConnection();
-      const rows = await db.all(`SELECT name FROM sqlite_master WHERE type='view'`);
-      for (const row of rows) {
+      const db = await this._getConnection();
+      const stmt = db.prepare("SELECT name, sql FROM sqlite_master WHERE type='view'");
+      while (stmt.step()) {
+        const row = stmt.getAsObject();
         result.rows.push({
           [AcDDView.KeyViewName]: row["name"],
+          definition: row["sql"],
         });
       }
+      stmt.free();
       result.setSuccess();
     } catch (ex: any) {
-      result.setException({ exception: ex });
-    } finally {
-      if (db) await db.close();
+      result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
 
-  // --- Similar rewrites for getRows, getTableColumns, insertRow, insertRows, updateRow, updateRows ---
-  // (use `db.all`, `db.get`, `db.run` accordingly, with sqlite_master/PRAGMA queries for schema info)
 
-    override async getRows({
+  override async getRows({
     statement,
     condition = "",
     parameters = {},
@@ -299,19 +295,19 @@ export class AcSqliteDao extends AcBaseSqlDao {
       if (condition) {
         updatedStatement += ` WHERE ${condition}`;
       }
-      const { statement: finalStatement, statementParametersMap } = this.setSqlStatementParameters({
-        statement: updatedStatement,
-        passedParameters: parameters,
-      });
-      if (mode === AcEnumDDSelectMode.Count) {
-        const row: any = await db.get(finalStatement, statementParametersMap);
-        result.totalRows = row?.records_count ?? 0;
-      } else {
-        const rows: any[] = await db.all(finalStatement, statementParametersMap);
-        for (const row of rows) {
+      const { statement: finalStatement, statementParametersMap } =
+        this.setSqlStatementParameters({ statement: updatedStatement, passedParameters: parameters });
+      const stmt = db.prepare(finalStatement);
+      stmt.bind(Object.values(statementParametersMap!));
+      while (stmt.step()) {
+        const row = stmt.getAsObject();
+        if (mode === AcEnumDDSelectMode.Count) {
+          result.totalRows = row["records_count"] as number;
+        } else {
           result.rows.push(this.formatRow({ row, columnFormats }));
         }
       }
+      stmt.free();
       result.setSuccess();
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
@@ -323,24 +319,35 @@ export class AcSqliteDao extends AcBaseSqlDao {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     try {
       const db = await this._getConnection();
-      const rows: any[] = await db.all(`PRAGMA table_info(${tableName})`);
-      for (const row of rows) {
-        const properties: Record<string, any> = {};
-        if (row.notnull === 1) {
-          properties[AcEnumDDColumnProperty.NotNull] = true;
+      const execResult = db.exec(`PRAGMA table_info(${tableName})`);
+
+      if (execResult.length > 0) {
+        const { columns, values } = execResult[0];
+        for (const row of values) {
+          const rowObj: Record<string, any> = {};
+          columns.forEach((col, idx) => {
+            rowObj[col] = row[idx];
+          });
+
+          const properties: Record<string, any> = {};
+          if (rowObj["notnull"] === 1) {
+            properties[AcEnumDDColumnProperty.NotNull] = true;
+          }
+          if (rowObj["pk"] === 1) {
+            properties[AcEnumDDColumnProperty.PrimaryKey] = true;
+          }
+          if (rowObj["dflt_value"] !== null) {
+            properties[AcEnumDDColumnProperty.DefaultValue] = rowObj["dflt_value"];
+          }
+
+          result.rows.push({
+            [AcDDTableColumn.KeyColumnName]: rowObj["name"],
+            [AcDDTableColumn.KeyColumnType]: rowObj["type"],
+            [AcDDTableColumn.KeyColumnProperties]: properties,
+          });
         }
-        if (row.pk === 1) {
-          properties[AcEnumDDColumnProperty.PrimaryKey] = true;
-        }
-        if (row.dflt_value !== null) {
-          properties[AcEnumDDColumnProperty.DefaultValue] = row.dflt_value;
-        }
-        result.rows.push({
-          [AcDDTableColumn.KeyColumnName]: row.name,
-          [AcDDTableColumn.KeyColumnType]: row.type,
-          [AcDDTableColumn.KeyColumnProperties]: properties,
-        });
       }
+
       result.setSuccess();
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
@@ -351,32 +358,43 @@ export class AcSqliteDao extends AcBaseSqlDao {
   override async getViewColumns({ viewName }: { viewName: string }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     try {
-      // SQLite exposes view columns via PRAGMA table_info as well
       const db = await this._getConnection();
-      const rows: any[] = await db.all(`PRAGMA table_info(${viewName})`);
-      for (const row of rows) {
-        const properties: Record<string, any> = {};
-        if (row.notnull === 1) {
-          properties[AcEnumDDColumnProperty.NotNull] = true;
+      const execResult = db.exec(`PRAGMA table_info(${viewName})`);
+
+      if (execResult.length > 0) {
+        const { columns, values } = execResult[0];
+        for (const row of values) {
+          const rowObj: Record<string, any> = {};
+          columns.forEach((col, idx) => {
+            rowObj[col] = row[idx];
+          });
+
+          const properties: Record<string, any> = {};
+          if (rowObj["notnull"] === 1) {
+            properties[AcEnumDDColumnProperty.NotNull] = true;
+          }
+          if (rowObj["pk"] === 1) {
+            properties[AcEnumDDColumnProperty.PrimaryKey] = true;
+          }
+          if (rowObj["dflt_value"] !== null) {
+            properties[AcEnumDDColumnProperty.DefaultValue] = rowObj["dflt_value"];
+          }
+
+          result.rows.push({
+            [AcDDViewColumn.KeyColumnName]: rowObj["name"],
+            [AcDDViewColumn.KeyColumnType]: rowObj["type"],
+            [AcDDViewColumn.KeyColumnProperties]: properties,
+          });
         }
-        if (row.pk === 1) {
-          properties[AcEnumDDColumnProperty.PrimaryKey] = true;
-        }
-        if (row.dflt_value !== null) {
-          properties[AcEnumDDColumnProperty.DefaultValue] = row.dflt_value;
-        }
-        result.rows.push({
-          [AcDDViewColumn.KeyColumnName]: row.name,
-          [AcDDViewColumn.KeyColumnType]: row.type,
-          [AcDDViewColumn.KeyColumnProperties]: properties,
-        });
       }
+
       result.setSuccess();
     } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
+
 
   override async insertRow({
     tableName,
@@ -391,11 +409,14 @@ export class AcSqliteDao extends AcBaseSqlDao {
       const columns = Object.keys(row);
       const placeholders = columns.map(() => "?").join(", ");
       const sql = `INSERT INTO ${tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
-      const values = columns.map(c => row[c]);
-      const insertResult = await db.run(sql, values);
-      result.lastInsertedId = insertResult.lastID;
+      const stmt = db.prepare(sql);
+      stmt.bind(columns.map((c) => row[c]));
+      stmt.step();
+      stmt.free();
+      const idRes = this._exec(db, "SELECT last_insert_rowid() as id");
+      result.lastInsertedId = idRes[0]?.values[0][0] ?? 0;
       result.setSuccess();
-    } catch (ex:any) {
+    } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -409,24 +430,24 @@ export class AcSqliteDao extends AcBaseSqlDao {
     rows: Array<Record<string, any>>;
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
-    const db = await this._getConnection();
     try {
+      const db = await this._getConnection();
       if (rows.length > 0) {
         const columns = Object.keys(rows[0]);
         const placeholders = columns.map(() => "?").join(", ");
         const sql = `INSERT INTO ${tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
-        await db.exec("BEGIN");
+        db.exec("BEGIN");
         for (const row of rows) {
-          const values = columns.map(c => row[c]);
-          await db.run(sql, values);
+          this._exec(db, sql, columns.map((c) => row[c]));
         }
-        await db.exec("COMMIT");
+        db.exec("COMMIT");
         result.setSuccess();
       } else {
         result.setSuccess({ value: true, message: "No rows to insert." });
       }
-    } catch (ex:any) {
-      await db.exec("ROLLBACK");
+    } catch (ex: any) {
+      const db = await this._getConnection();
+      db.exec("ROLLBACK");
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -445,15 +466,14 @@ export class AcSqliteDao extends AcBaseSqlDao {
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Update });
     try {
-
       const db = await this._getConnection();
       const setValues = Object.keys(row).map((key) => `${key} = ?`).join(", ");
       const sql = `UPDATE ${tableName} SET ${setValues} ${condition ? "WHERE " + condition : ""}`;
       const values = [...Object.values(row), ...Object.values(parameters)];
-      const updateResult = await db.run(sql, values);
-      result.affectedRowsCount = updateResult.changes;
+      this._exec(db, sql, values);
+      result.affectedRowsCount = db.getRowsModified();
       result.setSuccess();
-    } catch (ex:any) {
+    } catch (ex: any) {
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -467,9 +487,9 @@ export class AcSqliteDao extends AcBaseSqlDao {
     rowsWithConditions: Array<Record<string, any>>;
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Update });
-    const db = await this._getConnection();
     try {
-      await db.exec("BEGIN");
+      const db = await this._getConnection();
+      db.exec("BEGIN");
       for (const rowWithCondition of rowsWithConditions) {
         if ("row" in rowWithCondition && "condition" in rowWithCondition) {
           const row = rowWithCondition["row"] as Record<string, any>;
@@ -478,18 +498,22 @@ export class AcSqliteDao extends AcBaseSqlDao {
           const setValues = Object.keys(row).map((key) => `${key} = ?`).join(", ");
           const sql = `UPDATE ${tableName} SET ${setValues} WHERE ${condition}`;
           const values = [...Object.values(row), ...Object.values(conditionParameters)];
-          const updateResult = await db.run(sql, values);
-          result.affectedRowsCount = (result.affectedRowsCount ?? 0) + updateResult.changes;
+          this._exec(db, sql, values);
+          result.affectedRowsCount = (result.affectedRowsCount ?? 0) + db.getRowsModified();
         }
       }
-      await db.exec("COMMIT");
+      db.exec("COMMIT");
       result.setSuccess();
-    } catch (ex:any) {
-      await db.exec("ROLLBACK");
+    } catch (ex: any) {
+      const db = await this._getConnection();
+      db.exec("ROLLBACK");
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
+}
 
 
+export function initSqliteBrowserDao(){
+  AcDatabaseTypeDaoClassMap[AcEnumSqlDatabaseType.Sqlite] = AcSqliteDao;
 }

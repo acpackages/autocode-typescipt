@@ -4,7 +4,7 @@ import { AcDataDictionary } from "@autocode-ts/ac-data-dictionary";
 import { AcBaseSqlDao } from "../daos/ac-base-sql-dao";
 import { AcSqlConnection } from "../models/ac-sql-connection.model";
 import { AcSqlDatabase } from "./ac-sql-database";
-import { AcMysqlDao } from "../daos/ac-mysql-dao";
+import { AcDatabaseTypeDaoClassMap } from "../consts/ac-database-type-dao-class-map.const";
 
 export class AcSqlDbBase {
   acDataDictionary!: AcDataDictionary;
@@ -18,13 +18,11 @@ export class AcSqlDbBase {
   constructor({ dataDictionaryName = 'default' }: { dataDictionaryName?: string } = {}) {
     this.databaseType = AcSqlDatabase.databaseType;
     this.sqlConnection = AcSqlDatabase.sqlConnection;
+    if(AcDatabaseTypeDaoClassMap[this.databaseType] != undefined){
+      this.dao = new AcDatabaseTypeDaoClassMap[this.databaseType]();
+    }
     this.useDataDictionary({ dataDictionaryName });
     this.logger = new AcLogger({ logType: AcEnumLogType.Print, logMessages: true });
-
-    if (this.databaseType === AcEnumSqlDatabaseType.MySql) {
-      this.dao = new AcMysqlDao();
-      this.dao.setSqlConnection({ sqlConnection: this.sqlConnection! });
-    }
   }
 
   useDataDictionary({ dataDictionaryName = 'default' }: { dataDictionaryName?: string }) {

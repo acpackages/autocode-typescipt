@@ -3,6 +3,7 @@
 import { AcDDEExtension, IAcDDEExtension, IAcDDEMenuGroup } from "@autocode-ts/ac-data-dictionary-editor";
 import { AcDataDictionaryDartCodeGenerator } from "./ac-data-dictionary-dart-code-generator";
 import { AcBrowser } from "@autocode-ts/ac-browser";
+import { AcDataDictionaryTypescriptCodeGenerator } from "./ac-data-dictionary-typescript-code-generator";
 
 export class AcDDECodeGeneratorExtension extends AcDDEExtension {
   override init(): void {
@@ -14,7 +15,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
-              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id});
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id!});
               AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data_dictionary.dart'});
             }
           }
@@ -23,7 +24,9 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
           label:'Typescript Data Dictionary',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
-              console.log(this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id}));
+              const codeGenerator:AcDataDictionaryTypescriptCodeGenerator = new AcDataDictionaryTypescriptCodeGenerator();
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id!});
+              AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data_dictionary.ts'});
             }
           }
         },

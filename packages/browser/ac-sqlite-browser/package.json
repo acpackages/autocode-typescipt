@@ -1,5 +1,5 @@
 {
-  "name": "@autocode-ts/ac-sql",
+  "name": "@autocode-ts/ac-sqlite-browser",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -8,7 +8,12 @@
   "dependencies": {
     "@autocode-ts/autocode":"0.0.6",
     "@autocode-ts/ac-extensions":"0.0.4",
-    "@autocode-ts/ac-data-dictionary":"0.0.2"
+    "@autocode-ts/ac-data-dictionary":"0.0.2",
+    "@autocode-ts/ac-sql":"0.0.1",
+    "sql.js": "^1.13.0"
+  },
+  "devDependencies": {
+    "@types/sql.js": "^1.4.9"
   },
   "publishConfig": {
     "access": "public"

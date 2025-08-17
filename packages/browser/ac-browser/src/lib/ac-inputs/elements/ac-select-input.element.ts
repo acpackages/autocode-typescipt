@@ -60,6 +60,7 @@ export class AcSelectInput extends AcInputBase {
       border: "none",
       outline: "none",
       boxSizing: "border-box",
+      background:'transparent'
     });
     this.element.appendChild(this.inputElement);
 

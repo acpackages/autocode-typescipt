@@ -1,5 +1,6 @@
 import { AcDatagrid, AcDatagridAfterRowsFooterExtension, AcDatagridApi, AcDatagridAutoAddNewRowExtension, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, IAcDatagridColumnDefinition } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName } from "@autocode-ts/ac-datagrid-on-ag-grid";
+import { AcDDEApi } from "../../core/ac-dde-api";
 
 export class AcDDEDatagrid {
   get columnDefinitions():IAcDatagridColumnDefinition[]{
@@ -11,6 +12,7 @@ export class AcDDEDatagrid {
 
   datagrid!: AcDatagrid;
   datagridApi!: AcDatagridApi;
+  editorApi!: AcDDEApi;
   element!: HTMLElement;
   footerElement:HTMLElement = document.createElement('div');
 
@@ -24,7 +26,8 @@ export class AcDDEDatagrid {
   private rowDraggingExtension!:AcDatagridRowDraggingExtension;
   private agGridExtension!:AcDatagridOnAgGridExtension;
 
-  constructor() {
+  constructor({ editorApi }: { editorApi: AcDDEApi }) {
+    this.editorApi = editorApi;
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     this.element = this.datagrid.element;
@@ -38,8 +41,6 @@ export class AcDDEDatagrid {
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
     this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
-    // this.datagridApi.usePagination = true;
-    // this.autoAddNewRowExtension.autoAddNewRow = true;
     this.footerElement.innerHTML = `<button class="btn btn-primary btn-add-new" type="button">Add New</button>`;
     const addNewButton:HTMLElement = this.footerElement.querySelector('.btn-add-new')!;
     addNewButton.addEventListener('click',(event:MouseEvent)=>{

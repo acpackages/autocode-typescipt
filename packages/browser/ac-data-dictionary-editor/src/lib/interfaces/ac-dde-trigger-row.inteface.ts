@@ -12,12 +12,12 @@ export const AcDDETriggerRowKey = {
 }
 
 export interface IAcDDETriggerRow{
-  data_dictionary_id:string;
-  row_operation:string;
-  table_id:string;
-  trigger_code:string;
-  trigger_execution:string;
-  trigger_id:string;
-  trigger_name:string;
-  extensions_data:any;
+  data_dictionary_id?:string;
+  row_operation?:string;
+  table_id?:string;
+  trigger_code?:string;
+  trigger_execution?:string;
+  trigger_id?:string;
+  trigger_name?:string;
+  extensions_data?:any;
 }

@@ -9,10 +9,10 @@ export const AcDDEFunctionRowKey = {
 }
 
 export interface IAcDDEFunctionRow{
-  data_dictionary_id:string;
-  function_id:string;
-  function_name:string;
-  function_code:string;
-  extensions_data:any;
+  data_dictionary_id?:string;
+  function_id?:string;
+  function_name?:string;
+  function_code?:string;
+  extensions_data?:any;
 }
 

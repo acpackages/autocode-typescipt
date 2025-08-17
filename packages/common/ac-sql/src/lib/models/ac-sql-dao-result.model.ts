@@ -17,7 +17,7 @@ export class AcSqlDaoResult extends AcResult {
   affectedRowsCount?: number;
 
   @AcBindJsonProperty({ key: AcSqlDaoResult.KeyLastInsertedId })
-  lastInsertedId?: number;
+  lastInsertedId?: any;
 
   @AcBindJsonProperty({ key: AcSqlDaoResult.KeyLastInsertedId })
   lastInsertedIds?: any;

@@ -9,9 +9,9 @@ export const AcDDEStoredProcedureRowKey = {
 }
 
 export interface IAcDDEStoredProcedureRow{
-  data_dictionary_id:string;
-  stored_procedure_code:string;
-  stored_procedure_id:string;
-  stored_procedure_name:string;
-  extensions_data:any;
+  data_dictionary_id?:string;
+  stored_procedure_code?:string;
+  stored_procedure_id?:string;
+  stored_procedure_name?:string;
+  extensions_data?:any;
 }

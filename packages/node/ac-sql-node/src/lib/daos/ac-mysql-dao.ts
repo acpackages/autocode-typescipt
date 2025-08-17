@@ -599,6 +599,4 @@ export class AcMysqlDao extends AcBaseSqlDao {
     }
     return result;
   }
-
-
 }

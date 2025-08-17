@@ -9,9 +9,9 @@ export const AcDDEViewRowKey = {
 }
 
 export interface IAcDDEViewRow{
-  data_dictionary_id:string;
-  view_id:string;
-  view_name:string;
-  view_query:string;
-  extensions_data:any;
+  data_dictionary_id?:string;
+  view_id?:string;
+  view_name?:string;
+  view_query?:string;
+  extensions_data?:any;
 }

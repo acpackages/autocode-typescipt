@@ -120,7 +120,7 @@ export class AcInputBase {
   events: AcEvents = new AcEvents();
 
   constructor(){
-      this.registerBaseEvents();
+    //
   }
 
   destroy() {
@@ -138,6 +138,7 @@ export class AcInputBase {
     if (this.value == undefined || this.value == null) {
       this.value = this.defaultValue;
     }
+    this.registerBaseEvents();
     const eventArgs: IAcInputEvent = {
       instance: this
     };

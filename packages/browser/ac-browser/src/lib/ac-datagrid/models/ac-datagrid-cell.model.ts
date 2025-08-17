@@ -31,8 +31,6 @@ export class AcDatagridCell {
   set cellValue(value:any) {
     const oldValue = this.cellValue;
     if(oldValue != value){
-      console.log(oldValue,value);
-      console.trace();
       this.datagridRow.data[this.columnKey] = value;
       this.datagridApi.eventHandler.handleCellValueChange({datagridCell:this});
     }

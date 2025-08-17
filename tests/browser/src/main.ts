@@ -29,6 +29,7 @@ import { BasicScrollTrackTestPage } from './pages/scroll-track/basic-scroll-trac
 import { SlidesBasicTestPage } from './pages/slides/slides-basic-test.page';
 import { VirtualTestScrollPage } from './pages/scrollable/virtual-test-scroll.page';
 import { VirtualScrollDirectDomTestPage } from './pages/scrollable/virtual-scroll-direct-dom-test.page';
+import { SQLiteDaoTestPage } from './pages/dao/sqlite-dao-test-page.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -65,11 +66,17 @@ window.addEventListener('DOMContentLoaded', () => {
     ]
   });
   AcRouter.registerRouteGroup({
+    label:'Dao',
+    routes:[
+      {label:'Slite', path: '/dao/sqlite', componentTag: 'dao-sqlite', component: SQLiteDaoTestPage}
+    ]
+  });
+  AcRouter.registerRouteGroup({
     label:'Data Dictionary',
     routes:[
       {label:'Editor', path: '/data-dictionary/datagrid', componentTag: 'data-dictionary-editor', component: DDEEditorDatagridPage}
     ]
-  })
+  });
   AcRouter.registerRouteGroup({
     label:'Datagrid',
     routes:[

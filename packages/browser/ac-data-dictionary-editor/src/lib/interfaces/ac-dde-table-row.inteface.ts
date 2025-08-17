@@ -19,7 +19,7 @@ export const AcDDETableRowKey = {
 
 export interface IAcDDETableRow {
   additional_filter_columns?:string,
-  data_dictionary_id:string;
+  data_dictionary_id?:string;
   index?:number,
   order_by?:string,
   plural_name?:string,
@@ -28,8 +28,8 @@ export interface IAcDDETableRow {
   select_request_columns?:string,
   singular_name?:string,
   view_id?:string,
-  table_id:string;
-  table_name:string;
-  table_properties:any;
-  extensions_data:any;
+  table_id?:string;
+  table_name?:string;
+  table_properties?:any;
+  extensions_data?:any;
 }

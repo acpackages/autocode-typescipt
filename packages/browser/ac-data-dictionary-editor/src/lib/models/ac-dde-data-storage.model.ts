@@ -54,31 +54,31 @@ export class AcDDEDataStorage {
     return this;
   }
 
-  addDataDictionary(data: Omit<IAcDDEDataDictionaryRow, 'data_dictionary_id'>): string {
+  addDataDictionary(data: Omit<IAcDDEDataDictionaryRow, 'data_dictionary_id'>): IAcDDEDataDictionaryRow {
     const row: IAcDDEDataDictionaryRow = { data_dictionary_id: Autocode.uuid(), ...data };
-    this.dataDictionaries[row.data_dictionary_id]=row;
-    return row.data_dictionary_id;
+    this.dataDictionaries[row.data_dictionary_id!]=row;
+    return this.dataDictionaries[row.data_dictionary_id!];
   }
 
-  addFunction(data: Omit<IAcDDEFunctionRow, 'function_id'>): string {
+  addFunction(data: Omit<IAcDDEFunctionRow, 'function_id'>): IAcDDEFunctionRow {
     const row: IAcDDEFunctionRow = { function_id: Autocode.uuid(), ...data };
-    this.functions[row.function_id]=row;
-    return row.function_id;
+    this.functions[row.function_id!]=row;
+    return row;
   }
 
-  addRelationship(data: Omit<IAcDDERelationshipRow, 'relationship_id'>): string {
+  addRelationship(data: Omit<IAcDDERelationshipRow, 'relationship_id'>): IAcDDERelationshipRow {
     const row: IAcDDERelationshipRow = { relationship_id: Autocode.uuid(), ...data };
-    this.relationships[row.relationship_id] = row;
-    return row.relationship_id;
+    this.relationships[row.relationship_id!] = row;
+    return row;
   }
 
-  addStoredProcedure(data: Omit<IAcDDEStoredProcedureRow, 'stored_procedure_id'>): string {
+  addStoredProcedure(data: Omit<IAcDDEStoredProcedureRow, 'stored_procedure_id'>): IAcDDEStoredProcedureRow {
     const row: IAcDDEStoredProcedureRow = { stored_procedure_id: Autocode.uuid(), ...data };
-    this.storedProcedures[row.stored_procedure_id] = row;
-    return row.stored_procedure_id;
+    this.storedProcedures[row.stored_procedure_id!] = row;
+    return row;
   }
 
-  addTableColumn(data: Omit<IAcDDETableColumnRow, 'column_id'>): string {
+  addTableColumn(data: Omit<IAcDDETableColumnRow, 'column_id'>): IAcDDETableColumnRow {
     const row: IAcDDETableColumnRow|any = { column_id: Autocode.uuid(), ...data };
     this.tableColumns[row.column_id] = row;
     if(data.column_properties){
@@ -87,31 +87,31 @@ export class AcDDEDataStorage {
         row[propertyKey] = properties[propertyKey][AcDDTableColumnProperty.KeyPropertyValue];
       }
     }
-    return row.column_id;
+    return row;
   }
 
-  addTable(data: Omit<IAcDDETableRow, 'table_id'>): string {
+  addTable(data: Omit<IAcDDETableRow, 'table_id'>): IAcDDETableRow {
     const row: IAcDDETableRow = { table_id: Autocode.uuid(), ...data };
-    this.tables[row.table_id] = row;
-    return row.table_id;
+    this.tables[row.table_id!] = row;
+    return row;
   }
 
-  addTrigger(data: Omit<IAcDDETriggerRow, 'trigger_id'>): string {
+  addTrigger(data: Omit<IAcDDETriggerRow, 'trigger_id'>): IAcDDETriggerRow {
     const row: IAcDDETriggerRow = { trigger_id: Autocode.uuid(), ...data };
-    this.triggers[row.trigger_id] = row;
-    return row.trigger_id;
+    this.triggers[row.trigger_id!] = row;
+    return row;
   }
 
-  addViewColumn(data: Omit<IAcDDEViewColumnRow, 'column_id'>): string {
+  addViewColumn(data: Omit<IAcDDEViewColumnRow, 'column_id'>): IAcDDEViewColumnRow {
     const row: IAcDDEViewColumnRow = { column_id: Autocode.uuid(), ...data };
-    this.viewColumns[row.column_id] = row;
-    return row.column_id;
+    this.viewColumns[row.column_id!] = row;
+    return row;
   }
 
-  addView(data: Omit<IAcDDEViewRow, 'view_id'>): string {
+  addView(data: Omit<IAcDDEViewRow, 'view_id'>): IAcDDEViewRow {
     const row: IAcDDEViewRow = { view_id: Autocode.uuid(), ...data };
-    this.views[row.view_id] = row;
-    return row.view_id;
+    this.views[row.view_id!] = row;
+    return row;
   }
 
   getTable({tableName,dataDictionaryId}:{tableName:string,dataDictionaryId:string}):IAcDDETableRow | undefined{
