@@ -13,13 +13,13 @@ export const AcDDEViewColumnRowKey = {
 }
 
 export interface IAcDDEViewColumnRow{
-  column_id?:string;
+  column_id:string;
   column_name?:string;
   column_properties?:any;
   column_source?:string;
   column_source_name?:string;
   column_type?:string;
-  data_dictionary_id?:string;
+  data_dictionary_id:string;
   view_id?:string;
   extensions_data?:any;
 }

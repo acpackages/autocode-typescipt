@@ -15,6 +15,19 @@ export class AcDDEImportExportExtension extends AcDDEExtension {
           if(this.editorApi.activeDataDictionary){
             AcBrowser.downloadJsonObjectAsFile({data:this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id}),filename:'data_dictionary.json'});
           }
+        }},
+        {label:'Import JSON',callback:async ()=>{
+          const files = await AcBrowser.pickFiles({accept:'.json'});
+          if(files.length > 0){
+            const jsonString = await files[0].text();
+            try{
+              const dataDictionaryJson = JSON.parse(jsonString);
+              this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'default'});
+            }
+            catch(ex){
+              alert("Error parsing json");
+            }
+          }
         }}
       ]
     }

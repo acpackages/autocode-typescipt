@@ -114,6 +114,60 @@ export class AcDDEDataStorage {
     return row;
   }
 
+  deleteDataDictionary({data_dictionary_id}: {data_dictionary_id:string}): IAcDDEDataDictionaryRow {
+     const row = this.dataDictionaries[data_dictionary_id];
+    delete this.dataDictionaries[data_dictionary_id];
+    return row;
+  }
+
+  deleteFunction({function_id}: {function_id:string}): IAcDDEFunctionRow {
+    const row = this.functions[function_id];
+    delete this.functions[function_id];
+    return row;
+  }
+
+  deleteRelationship({relationship_id}: {relationship_id:string}): IAcDDERelationshipRow {
+     const row = this.relationships[relationship_id];
+    delete this.relationships[relationship_id];
+    return row;
+  }
+
+  deleteStoredProcedure({stored_procedure_id}: {stored_procedure_id:string}): IAcDDEStoredProcedureRow {
+     const row = this.storedProcedures[stored_procedure_id];
+    delete this.storedProcedures[stored_procedure_id];
+    return row;
+  }
+
+  deleteTableColumn({column_id}: {column_id:string}): IAcDDETableColumnRow {
+    const row = this.tableColumns[column_id];
+    delete this.tableColumns[column_id];
+    return row;
+  }
+
+  deleteTable({table_id}: {table_id:string}): IAcDDETableRow {
+     const row = this.tables[table_id];
+    delete this.tables[table_id];
+    return row;
+  }
+
+  deleteTrigger({trigger_id}: {trigger_id:string}): IAcDDETriggerRow {
+     const row = this.triggers[trigger_id];
+    delete this.triggers[trigger_id];
+    return row;
+  }
+
+  deleteViewColumn({view_column_id}: {view_column_id:string}): IAcDDEViewColumnRow {
+     const row = this.viewColumns[view_column_id];
+    delete this.viewColumns[view_column_id];
+    return row;
+  }
+
+  deleteView({view_id}: {view_id:string}): IAcDDEViewRow {
+     const row = this.views[view_id];
+    delete this.views[view_id];
+    return row;
+  }
+
   getTable({tableName,dataDictionaryId}:{tableName:string,dataDictionaryId:string}):IAcDDETableRow | undefined{
     let result:IAcDDETableRow|undefined;
     result = Object.values(this.tables).find((item)=>{return item.data_dictionary_id == dataDictionaryId && item.table_name == tableName});

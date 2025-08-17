@@ -46,7 +46,7 @@ export class AcDDERelationshipsDatagrid {
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }
+        },width:50,maxWidth:50,minWidth:50
       },
       {
         'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Table',

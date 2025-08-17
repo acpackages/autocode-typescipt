@@ -76,7 +76,7 @@ export class AcDataDictionaryEditorHeader {
           <ul class="navbar-nav menu-groups">
             <li class="nav-item dropdown">
               <button type="button" class="btn btn-primary dropdown-toggle me-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Data Dictionary : <span ac-dde-data="active_data_dictionary_name">(No Data Dictionary Selected)</span>
+                <span ac-dde-data="active_data_dictionary_name">(No Data Dictionary Selected)</span>
               </button>
               <ul class="dropdown-menu data-dictionary-select-items">
               </ul>

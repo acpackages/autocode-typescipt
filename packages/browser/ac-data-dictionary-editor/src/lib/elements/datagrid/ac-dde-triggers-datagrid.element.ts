@@ -35,7 +35,7 @@ export class AcDDETriggersDatagrid {
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }
+        },width:50,maxWidth:50,minWidth:50
       },
       {
         'field': AcDDTrigger.KeyTriggerExecution, 'title': 'Execution',

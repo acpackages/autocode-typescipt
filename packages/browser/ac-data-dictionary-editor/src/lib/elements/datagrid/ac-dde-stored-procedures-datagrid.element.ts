@@ -43,7 +43,7 @@ export class AcDDEStoredProceduresDatagrid {
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }
+        },width:50,maxWidth:50,minWidth:50
       },
       {
         'field': AcDDStoredProcedure.KeyStoredProcedureName, 'title': 'Procedure Name',

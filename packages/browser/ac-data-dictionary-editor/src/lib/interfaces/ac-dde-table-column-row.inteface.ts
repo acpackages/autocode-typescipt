@@ -37,12 +37,12 @@ export interface IAcDDETableColumnRow {
   check_in_auto_number?: boolean;
   check_in_modify?: boolean;
   check_in_save?: boolean;
-  column_id?: string;
+  column_id: string;
   column_name?: string;
   column_properties?: any;
   column_title?: string;
   column_type?: any;
-  data_dictionary_id?: string;
+  data_dictionary_id: string;
   default_value?: any;
   foreign_key?: boolean;
   format?: any;

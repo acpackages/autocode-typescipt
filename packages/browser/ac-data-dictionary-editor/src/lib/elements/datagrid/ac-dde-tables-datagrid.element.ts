@@ -28,12 +28,13 @@ export class AcDDETablesDatagrid {
     this.datagridApi.on({eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
       const row = this.editorApi.dataStorage.addTable({data_dictionary_id:this.editorApi.activeDataDictionary?.data_dictionary_id,...args.datagridRow.data});
       args.datagridRow.data = row;
+      this.data.push(row);
     }});
     this.ddeDatagrid.columnDefinitions = [
       {
         'field': '', 'title': '',cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }
+        },width:50,maxWidth:50,minWidth:50
       },
       {
         'field': AcDDETableRowKey.tableName, 'title': 'Table Name',

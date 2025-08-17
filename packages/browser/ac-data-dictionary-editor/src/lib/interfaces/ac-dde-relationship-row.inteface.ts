@@ -15,10 +15,10 @@ export const AcDDERelationshipRowKey = {
 export interface IAcDDERelationshipRow{
   cascade_delete_destination?:string;
   cascade_delete_source?:string;
-  data_dictionary_id?:string;
+  data_dictionary_id:string;
   destination_column_id?:string;
   destination_table_id?:string;
-  relationship_id?:string;
+  relationship_id:string;
   source_column_id?:string;
   source_table_id?:string;
   extensions_data?:any;

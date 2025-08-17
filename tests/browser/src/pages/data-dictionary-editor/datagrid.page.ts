@@ -32,7 +32,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       }});
       this.editorApi.enableExtension({extensionName:AcEnumDDEExtension.ImportExport});
       this.editorApi.enableExtension({extensionName:AcCodeGeneratorDDEExtension.extensionName});
-      this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'Test'});
+      // this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'Test'});
       gridDiv.append(this.dataDictionaryEditor.element);
       // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
 

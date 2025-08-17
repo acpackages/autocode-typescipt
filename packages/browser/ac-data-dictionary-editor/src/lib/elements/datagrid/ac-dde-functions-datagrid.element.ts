@@ -43,7 +43,7 @@ export class AcDDEFunctionsDatagrid {
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }
+        },width:50,maxWidth:50,minWidth:50
       },
       {
         'field': AcDDFunction.KeyFunctionName, 'title': 'Function Name',
