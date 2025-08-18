@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDEDatagridTextInput, AcEnumDDEHook, IAcDDEFunctionRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDECssClassName, AcDDEDatagridTextInput, AcDDEFunctionRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEFunctionRow } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDFunction } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
 export class AcDDEFunctionsDatagrid {
   data: any[] = [];
@@ -39,11 +41,16 @@ export class AcDDEFunctionsDatagrid {
         this.data.push(row);
       }
     });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteFunction({ function_id: args.datagridRow.data[AcDDEFunctionRowKey.functionId] });
+      }
+    });
     this.ddeDatagrid.columnDefinitions = [
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        },width:50,maxWidth:50,minWidth:50
+        }, width: 50, maxWidth: 50, minWidth: 50
       },
       {
         'field': AcDDFunction.KeyFunctionName, 'title': 'Function Name',
@@ -65,6 +72,11 @@ export class AcDDEFunctionsDatagrid {
         this.setFunctionsData();
       }
     });
+    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Function, (args: IAcReactiveValueProxyEvent) => {
+      if (args.event == 'delete') {
+        arrayRemoveByKey(this.data, AcDDEFunctionRowKey.functionId, args.oldValue[AcDDEFunctionRowKey.functionId]);
+      }
+    });
 
     this.setFunctionsData();
   }
@@ -75,7 +87,7 @@ export class AcDDEFunctionsDatagrid {
   }
 
   setFunctionsData() {
-    this.data = Object.values(this.editorApi.dataStorage.functions);
+    this.data = Object.values(this.editorApi.dataStorage.getFunctions({ dataDictionaryId: this.editorApi.activeDataDictionary?.data_dictionary_id }));
     this.applyFilter();
   }
 }

@@ -18,7 +18,7 @@ export class AcDataDictionaryEditorHeader {
     this.initElement();
     this.setDataDictionaryDropdown();
     this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
-      this.element.querySelector('[ac-dde-data=active_data_dictionary_name]')!.innerHTML = args.activeDataDictionary.data_dictionary_name;
+      this.element.querySelector('[ac-dde-data=active_data_dictionary_name]')!.innerHTML = args.activeDataDictionary.data_dictionary_name!;
     }});
     this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.MenuGroupAdd, callback: (args: IAcDDEMenuGroupAddHookArgs) => {
       this.addMenuGroup({ menuGroup: args.menuGroup });
@@ -169,13 +169,13 @@ export class AcDataDictionaryEditorHeader {
       const menuItem:HTMLElement = document.createElement('li');
       menuItem.style.cursor = 'pointer';
       acAddClassToElement({ cssClass: 'dropdown-item', element: menuItem });
-      menuItem.innerHTML = row.data_dictionary_name;
+      menuItem.innerHTML = row.data_dictionary_name!;
       menuItem.addEventListener('click', () => {
       // menuItem.callback();
       });
       return menuItem;
     };
-    for(const row of Object.values(this.editorApi.dataStorage.dataDictionaries)){
+    for(const row of this.editorApi.dataStorage.getDataDictionaries()){
       if(this.editorApi.activeDataDictionary == undefined){
         this.editorApi.activeDataDictionary = row;
       }

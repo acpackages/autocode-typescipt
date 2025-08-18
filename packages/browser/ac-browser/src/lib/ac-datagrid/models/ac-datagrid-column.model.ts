@@ -36,11 +36,12 @@ export class AcDatagridColumn {
   get columnKey(): string {
     return this.columnDefinition.field;
   }
+
   get title(): string {
     return this.columnDefinition.title ?? this.columnDefinition.field;
   }
 
-  _width: number = AcDatagridDefaultColumnConfig.width;
+  private _width: number = AcDatagridDefaultColumnConfig.width;
   get width(): number {
     return this._width;
   }
@@ -52,9 +53,6 @@ export class AcDatagridColumn {
     };
     this.hooks.execute({ hookName: AcEnumDatagridHook.ColumnWidthChange, args: hookArgs });
   }
-
-
-
 
   constructor({ columnDefinition, datagridApi, index = -1, width = AcDatagridDefaultColumnConfig.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {
     this.columnDefinition = columnDefinition;

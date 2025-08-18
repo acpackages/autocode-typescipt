@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcDDEApi, AcDDECssClassName, AcEnumDDETab, AcDDETableColumnsDatagrid, AcDDETablesDatagrid, AcDDETriggersDatagrid, AcEnumDDEHook, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroupAddHookArgs } from "../../_ac-data-dictionary-editor.export";
+import { AcDDEApi, AcDDECssClassName, AcEnumDDETab, AcDDETableColumnsDatagrid, AcDDETablesDatagrid, AcDDETriggersDatagrid, AcEnumDDEHook, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroupAddHookArgs, AcDataDictionaryDatagrid } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridExtensionManager, acSetElementAttributes } from '@autocode-ts/ac-browser';
 import { AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
-import { AcDataDictionaryDatagrid } from "./../datagrid/ac-data-dictionary-datagrid.element";
 import { AcDataDictionaryEditorHeader } from "./ac-data-dictionary-editor-header.element";
 import { AcDDERelationshipsDatagrid } from "../datagrid/ac-dde-relationships-datagrid.element";
 import { AcDDEFunctionsDatagrid } from "../datagrid/ac-dde-functions-datagrid.element";
@@ -19,7 +18,7 @@ export class AcDataDictionaryEditor {
   tabsContainer:HTMLElement = document.createElement('div');
   element: HTMLElement = document.createElement('div');
 
-  dataDictionaryDatagrid?: AcDataDictionaryDatagrid;
+  datagridEditor?: AcDataDictionaryDatagrid;
   header!: AcDataDictionaryEditorHeader;
   functionsDatagrid?: AcDDEFunctionsDatagrid;
   relationshipsDatagrid?: AcDDERelationshipsDatagrid;
@@ -93,9 +92,9 @@ export class AcDataDictionaryEditor {
       return element;
     }
     if(tab == AcEnumDDETab.DataDictionaryEditor){
-      if(this.dataDictionaryDatagrid == undefined){
-        this.dataDictionaryDatagrid = new AcDataDictionaryDatagrid({editorApi:this.editorApi});
-        const tabContent = getElementTab(tab,this.dataDictionaryDatagrid.element);
+      if(this.datagridEditor == undefined){
+        this.datagridEditor = new AcDataDictionaryDatagrid({editorApi:this.editorApi});
+        const tabContent = getElementTab(tab,this.datagridEditor.element);
         this.bodyElement.appendChild(tabContent);
       }
     }

@@ -11,7 +11,6 @@ import { AcEnumDatagridOnAgGridHook } from '../enums/ac-enum-datagrid-on-ag-grid
 import { IAcDatagriOnAgGridDataChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-data-set-hook-args.interface';
 import { AcDatagridTreeTableExtensionOnAgGrid } from './ac-datagrid-tree-table-extension-on-ag-grid';
 import { AcDatagridRowDraggingExtensionOnAgGrid } from './ac-datagrid-row-dragging-extension-on-ag-grid';
-import { AcDatagridOnAgGridCellRendererElement } from '../elements/ac-datagrid-on-ag-grid-cell-renderer-element.element';
 import { IAcDatagridRowAddHookArgs } from 'packages/browser/ac-browser/src/lib/ac-datagrid/interfaces/hook-args/ac-datagrid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowAddHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowUpdateHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface';
@@ -193,6 +192,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       datagridRow = this.datagridApi.getRowByIndex({ index: event.rowIndex })!;
     }
     return datagridRow;
+  }
+
+  override getState() {
+    return this.gridApi.getState();
   }
 
   private handleBeforeGetOnDemandData(args: IAcDatagridBeforeGetOnDemandDataHookArgs) {
@@ -459,8 +462,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   override init(): void {
     this.initAgGrid('clientSide');
-    // this.agGridEventHandler = new AcDatagridOnAgGridEventHandler({ agGridExtension: this });
-    // this.agGridEventHandler.registerAgGridListeners();
+    this.agGridEventHandler = new AcDatagridOnAgGridEventHandler({ agGridExtension: this });
+    this.agGridEventHandler.registerAgGridListeners();
     new AcDatagridRowSelectionExtensionOnAgGrid({ agGridExtension: this });
     new AcDatagridTreeTableExtensionOnAgGrid({ agGridExtension: this });
     new AcDatagridRowDraggingExtensionOnAgGrid({ agGridExtension: this });
@@ -596,6 +599,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
     this.gridOptions['rowNumbers'] = showRowNumbers;
     this.gridApi.setGridOption('rowNumbers', showRowNumbers);
+  }
+
+  override setState({ stateValue }: { stateValue: any; }): void {
+    this.gridApi.setState(stateValue);
   }
 
 }

@@ -98,6 +98,7 @@ export const AcEnumDatagridEvent = {
   RowTouchMove: 'rowTouchMove',
   RowTouchStart: 'rowTouchStart',
   RowUpdate: 'rowUpdate',
+  StateChange: 'stateChange',
   SortOrderChange: 'sortOrderChange',
   TotalRowsChange: 'totalRowsChange'
 }

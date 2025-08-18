@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDEDatagridTextInput, AcEnumDDEHook, IAcDDEStoredProcedureRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDECssClassName, AcDDEDatagridTextInput, AcDDEStoredProcedureRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEStoredProcedureRow } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDStoredProcedure } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
 export class AcDDEStoredProceduresDatagrid {
   data: any[] = [];
@@ -39,11 +41,16 @@ export class AcDDEStoredProceduresDatagrid {
         this.data.push(row);
       }
     });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteStoredProcedure({ stored_procedure_id: args.datagridRow.data[AcDDEStoredProcedureRowKey.storedProcedureId] });
+      }
+    });
     this.ddeDatagrid.columnDefinitions = [
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        },width:50,maxWidth:50,minWidth:50
+        }, width: 50, maxWidth: 50, minWidth: 50
       },
       {
         'field': AcDDStoredProcedure.KeyStoredProcedureName, 'title': 'Procedure Name',
@@ -65,6 +72,12 @@ export class AcDDEStoredProceduresDatagrid {
       }
     });
 
+    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.StoredProcedure, (args: IAcReactiveValueProxyEvent) => {
+      if (args.event == 'delete') {
+        arrayRemoveByKey(this.data, AcDDEStoredProcedureRowKey.storedProcedureId, args.oldValue[AcDDEStoredProcedureRowKey.storedProcedureId]);
+      }
+    });
+
     this.setStoredProcedureData();
   }
 
@@ -74,7 +87,7 @@ export class AcDDEStoredProceduresDatagrid {
   }
 
   setStoredProcedureData() {
-    this.data = Object.values(this.editorApi.dataStorage.storedProcedures);
+    this.data = Object.values(this.editorApi.dataStorage.getStoredProcedures({ dataDictionaryId: this.editorApi.activeDataDictionary?.data_dictionary_id }));
     this.applyFilter();
   }
 }

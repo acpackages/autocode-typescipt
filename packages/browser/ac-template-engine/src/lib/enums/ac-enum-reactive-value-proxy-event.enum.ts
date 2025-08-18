@@ -1,4 +1,7 @@
 export enum AcEnumReactiveValueProxyEvent{
+  Add = 'add',
   Change = 'change',
-  Set = 'set'
+  Delete = 'delete',
+  Set = 'set',
+  Update = 'update'
 }

@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDERelationshipRowKey, AcEnumDDEHook, IAcDDERelationshipRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDECssClassName, AcDDERelationshipRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDERelationshipRow } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
-import { AcDDRelationship } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
 import { AcDDEDatagridSelectTableColumnInput } from "../inputs/ac-dde-datagrid-select-table-column-input.element";
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
 export class AcDDERelationshipsDatagrid {
   data: any[] = [];
@@ -42,15 +43,20 @@ export class AcDDERelationshipsDatagrid {
         this.data.push(row);
       }
     });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteRelationship({ relationship_id: args.datagridRow.data[AcDDERelationshipRowKey.relationshipId] });
+      }
+    });
     this.ddeDatagrid.columnDefinitions = [
       {
         'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        },width:50,maxWidth:50,minWidth:50
+        }, width: 50, maxWidth: 50, minWidth: 50
       },
       {
-        'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Table',
-        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
+        'field': AcDDERelationshipRowKey.destinationTableId, 'title': 'Foreign Key Table',
+        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
@@ -92,6 +98,12 @@ export class AcDDERelationshipsDatagrid {
       }
     });
 
+    this.editorApi.dataStorage.on('change',AcEnumDDEEntity.Relationship,(args:IAcReactiveValueProxyEvent)=>{
+          if(args.event == 'delete'){
+            arrayRemoveByKey(this.data, AcDDERelationshipRowKey.relationshipId, args.oldValue[AcDDERelationshipRowKey.relationshipId]);
+          }
+        });
+
     this.setRelationshipsData();
   }
 
@@ -101,7 +113,7 @@ export class AcDDERelationshipsDatagrid {
   }
 
   setRelationshipsData() {
-    this.data = Object.values(this.editorApi.dataStorage.relationships);
+    this.data = Object.values(this.editorApi.dataStorage.getRelationships({dataDictionaryId:this.editorApi.activeDataDictionary?.data_dictionary_id}));
     this.applyFilter();
   }
 }

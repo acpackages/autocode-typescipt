@@ -4,7 +4,8 @@ import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-
 import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
 import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator';
 import { PageHeader } from '../../components/page-header/page-header.component';
-import {dataDictionaryJson} from './../../../../data/data_dictionary';
+import { dataDictionaryJson } from './../../../../data/act-data-dictionary-v1';
+// import { dataDictionaryJson } from './../../../../data/data_dictionary';
 
 export class DDEEditorDatagridPage  extends HTMLElement {
   dataDictionaryEditor!: AcDataDictionaryEditor;
@@ -32,7 +33,8 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       }});
       this.editorApi.enableExtension({extensionName:AcEnumDDEExtension.ImportExport});
       this.editorApi.enableExtension({extensionName:AcCodeGeneratorDDEExtension.extensionName});
-      // this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'Test'});
+      this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'default'});
+      // this.editorApi.addDataDictionaryJson({dataDictionaryJson:{},dataDictionaryName:'accountea'});
       gridDiv.append(this.dataDictionaryEditor.element);
       // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
 

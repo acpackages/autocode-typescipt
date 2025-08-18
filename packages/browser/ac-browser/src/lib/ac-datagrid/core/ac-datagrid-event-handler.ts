@@ -2,6 +2,7 @@ import { AcDatagridColumn, AcEnumDatagridHook, IAcDatagridActiveRowChangeEvent, 
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-event.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
+import { IAcDatagridStateChangeEvent } from "../interfaces/event-args/ac-datagrid-state-change-event.interface";
 import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { AcDatagridApi } from "./ac-datagrid-api";
@@ -243,8 +244,8 @@ export class AcDatagridEventHandler {
       datagridColumn: datagridColumn,
       event: event
     };
-    console.log(this.datagridApi.events);
     this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.ColumnPositionChange, args: eventArgs });
+    this.notifyStateChange();
   }
 
   handleColumnResize({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
@@ -259,6 +260,7 @@ export class AcDatagridEventHandler {
       };
       this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.ColumnResize, args: eventArgs });
       delete this.columnResizeTimeouts[datagridColumn.acColumnId];
+      this.notifyStateChange();
     }, 300);
 
   }
@@ -279,6 +281,7 @@ export class AcDatagridEventHandler {
       event: event
     };
     this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.ColumnVisibilityChange, args: eventArgs });
+    this.notifyStateChange();
   }
 
   handlePaginationChange() {
@@ -483,6 +486,16 @@ export class AcDatagridEventHandler {
       event: event
     };
     this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.SortOrderChange, args: eventArgs });
+  }
+
+  private notifyStateChange(){
+    this.datagridApi.datagridState.refresh();
+    const eventArgs: IAcDatagridStateChangeEvent = {
+      datagridApi: this.datagridApi,
+      datagridStateJson: this.datagridApi.datagridState.toJson(),
+      event: event
+    };
+    this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.StateChange, args: eventArgs });
   }
 
 }

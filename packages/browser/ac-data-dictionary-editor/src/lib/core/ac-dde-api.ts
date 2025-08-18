@@ -11,23 +11,16 @@ import { AcEnumDDEHook } from "../enums/ac-enum-dde-hooks.enum";
 import { AcDDEExtensionManager } from "./ac-dde-extension-manager";
 import { IAcDDEExtensionEnabledHookArgs } from "../interfaces/hook-args/ac-dde-extension-enabled-hook-args.interface";
 import { IAcDDEDataDictionaryRow } from "../interfaces/ac-dde-data-dictionary-row.inteface";
-import { IAcDDETableRow } from "../interfaces/ac-dde-table-row.inteface";
-import { IAcDDETableColumnRow } from "../interfaces/ac-dde-table-column-row.inteface";
-import { IAcDDEViewRow } from "../interfaces/ac-dde-view-row.inteface";
-import { IAcDDEViewColumnRow } from "../interfaces/ac-dde-view-column-row.inteface";
-import { IAcDDERelationshipRow } from "../interfaces/ac-dde-relationship-row.inteface";
-import { IAcDDETriggerRow } from "../interfaces/ac-dde-trigger-row.inteface";
-import { IAcDDEFunctionRow } from "../interfaces/ac-dde-function-row.inteface";
 import { AcDataDictionaryEditor } from "../elements/core/ac-data-dictionary-editor.element";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 import { AcEnumDDETab, IAcDDEHookArgs } from "../_ac-data-dictionary-editor.export";
 
 export class AcDDEApi {
-  private _activeDataDictionary?:IAcDDEDataDictionaryRow;
-  get activeDataDictionary():IAcDDEDataDictionaryRow|undefined{
+  private _activeDataDictionary?: IAcDDEDataDictionaryRow;
+  get activeDataDictionary(): IAcDDEDataDictionaryRow | undefined {
     return this._activeDataDictionary;
   }
-  set activeDataDictionary(value:IAcDDEDataDictionaryRow){
+  set activeDataDictionary(value: IAcDDEDataDictionaryRow) {
     const oldActiveDataDictionary = this._activeDataDictionary;
     this._activeDataDictionary = value;
     const hookArgs: IAcDDEActiveDataDictionaryChangeHookArgs = {
@@ -38,11 +31,11 @@ export class AcDDEApi {
     this.hooks.execute({ hookName: AcEnumDDEHook.ActiveDataDictionaryChange, args: hookArgs });
   }
 
-  private _activeEditorTab:AcEnumDDETab = AcEnumDDETab.DataDictionaryEditor;
-  get activeEditorTab():AcEnumDDETab{
+  private _activeEditorTab: AcEnumDDETab = AcEnumDDETab.DataDictionaryEditor;
+  get activeEditorTab(): AcEnumDDETab {
     return this._activeEditorTab;
   }
-  set activeEditorTab(value:AcEnumDDETab){
+  set activeEditorTab(value: AcEnumDDETab) {
     this._activeEditorTab = value;
     const hookArgs: IAcDDEHookArgs = {
       editorApi: this,
@@ -52,13 +45,13 @@ export class AcDDEApi {
   }
 
   dataStorage: AcDDEDataStorage = new AcDDEDataStorage({ editorApi: this });
-  editor!:AcDataDictionaryEditor;
+  editor!: AcDataDictionaryEditor;
   events: AcEvents = new AcEvents();
   extensions: Record<string, AcDDEExtension> = {};
   hooks: AcHooks = new AcHooks();
   menus: IAcDDEMenuGroup[] = [];
 
-  constructor({editor}:{editor:AcDataDictionaryEditor}){
+  constructor({ editor }: { editor: AcDataDictionaryEditor }) {
     editor = this.editor;
     AcDDEExtensionManager.registerBuiltInExtensions();
   }
@@ -75,7 +68,12 @@ export class AcDDEApi {
       for (const tableDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyTables]) as any[]) {
         const tableName = tableDetails[AcDDTable.KeyTableName];
         const tableColumns = tableDetails[AcDDTable.KeyTableColumns];
-        const tableRow = this.dataStorage.addTable({ data_dictionary_id: dataDictionaryId, table_name: tableName, table_properties: {} });
+        const tableProperties = tableDetails[AcDDTable.KeyTableProperties];
+        const tableRow = this.dataStorage.addTable({
+          data_dictionary_id: dataDictionaryId,
+          table_name: tableName,
+          table_properties: tableProperties
+        });
 
         for (const columnDetails of Object.values(tableColumns) as any[]) {
           const columnName = columnDetails[AcDDTableColumn.KeyColumnName];
@@ -106,44 +104,76 @@ export class AcDDEApi {
 
     if (dataDictionaryJson[AcDataDictionary.KeyTriggers]) {
       for (const triggerDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyTriggers]) as any[]) {
-        const triggerId = this.dataStorage.addTrigger({
-          data_dictionary_id: dataDictionaryId,
-          trigger_name: triggerDetails[AcDDTrigger.KeyTriggerName],
-          row_operation: triggerDetails[AcDDTrigger.KeyRowOperation],
-          table_id: this.dataStorage.getTable({ tableName: triggerDetails[AcDDTrigger.KeyTableName], dataDictionaryId: dataDictionaryId! })!.table_id,
-          trigger_code: triggerDetails[AcDDTrigger.KeyTriggerCode],
-          trigger_execution: triggerDetails[AcDDTrigger.KeyTriggerExecution]
-        });
+        const tableRows = this.dataStorage.getTables({ tableName: triggerDetails[AcDDTrigger.KeyTableName], dataDictionaryId: dataDictionaryId! });
+        if (tableRows.length > 0) {
+          const triggerId = this.dataStorage.addTrigger({
+            data_dictionary_id: dataDictionaryId,
+            trigger_name: triggerDetails[AcDDTrigger.KeyTriggerName],
+            row_operation: triggerDetails[AcDDTrigger.KeyRowOperation],
+            table_id: tableRows[0].table_id,
+            trigger_code: triggerDetails[AcDDTrigger.KeyTriggerCode],
+            trigger_execution: triggerDetails[AcDDTrigger.KeyTriggerExecution]
+          });
+        }
       }
     }
 
     if (dataDictionaryJson[AcDataDictionary.KeyRelationships]) {
       const relationshipRows: any = [];
-      for (const relationshipDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyRelationships]) as any[]) {
-        const destinationTable = this.dataStorage.getTable({ tableName: relationshipDetails[AcDDRelationship.KeyDestinationTable], dataDictionaryId: dataDictionaryId! });
-        const sourceTable = this.dataStorage.getTable({ tableName: relationshipDetails[AcDDRelationship.KeySourceTable], dataDictionaryId: dataDictionaryId! });
-        if (sourceTable && destinationTable) {
-          const sourceTableId = sourceTable.table_id;
-          const destinationTableId = destinationTable.table_id;
+      for (const l1Details of Object.values(dataDictionaryJson[AcDataDictionary.KeyRelationships]) as any[]) {
+        for (const l2Details of Object.values(l1Details) as any[]) {
+          for (const l3Details of Object.values(l2Details) as any[]) {
+            for (const relationshipDetails of Object.values(l3Details) as any[]) {
+              // console.log(relationshipDetails);
+              const destinationTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeyDestinationTable], dataDictionaryId: dataDictionaryId! });
+              const sourceTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeySourceTable], dataDictionaryId: dataDictionaryId! });
+              if (sourceTableRows.length > 0 && destinationTableRows.length > 0) {
+                const sourceTableId = sourceTableRows[0].table_id;
+                const destinationTableId = destinationTableRows[0].table_id;
 
-          const sourceColumn = this.dataStorage.getTableColumn({ columnName: relationshipDetails[AcDDRelationship.KeySourceColumn], dataDictionaryId: dataDictionaryId!, tableId: sourceTableId! })
-          const destinationColumn = this.dataStorage.getTableColumn({ columnName: relationshipDetails[AcDDRelationship.KeyDestinationColumn], dataDictionaryId: dataDictionaryId!, tableId: destinationTableId! });
+                const sourceColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeySourceColumn], dataDictionaryId: dataDictionaryId!, tableId: sourceTableId! })
+                const destinationColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeyDestinationColumn], dataDictionaryId: dataDictionaryId!, tableId: destinationTableId! });
 
-          if (sourceColumn && destinationColumn) {
-            const relationshipId = this.dataStorage.addRelationship({
-              data_dictionary_id: dataDictionaryId,
-              source_table_id: sourceTableId,
-              source_column_id: sourceColumn.column_id,
-              destination_column_id: destinationColumn.column_id,
-              destination_table_id: destinationTableId,
-              cascade_delete_destination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
-              cascade_delete_source: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
-            });
+                if (sourceColumnRows.length > 0 && destinationColumnRows.length > 0) {
+                  const relationshipId = this.dataStorage.addRelationship({
+                    data_dictionary_id: dataDictionaryId,
+                    source_table_id: sourceTableId,
+                    source_column_id: sourceColumnRows[0].column_id,
+                    destination_column_id: destinationColumnRows[0].column_id,
+                    destination_table_id: destinationTableId,
+                    cascade_delete_destination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
+                    cascade_delete_source: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
+                  });
+                }
+              }
+            }
           }
-
         }
-
       }
+      // for (const relationshipDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyRelationships]) as any[]) {
+      //   const destinationTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeyDestinationTable], dataDictionaryId: dataDictionaryId! });
+      //   const sourceTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeySourceTable], dataDictionaryId: dataDictionaryId! });
+      //   if (sourceTableRows.length > 0 && destinationTableRows.length > 0) {
+      //     const sourceTableId = sourceTableRows[0].table_id;
+      //     const destinationTableId = destinationTableRows[0].table_id;
+
+      //     const sourceColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeySourceColumn], dataDictionaryId: dataDictionaryId!, tableId: sourceTableId! })
+      //     const destinationColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeyDestinationColumn], dataDictionaryId: dataDictionaryId!, tableId: destinationTableId! });
+
+      //     if (sourceColumnRows.length > 0 && destinationColumnRows.length > 0) {
+      //       const relationshipId = this.dataStorage.addRelationship({
+      //         data_dictionary_id: dataDictionaryId,
+      //         source_table_id: sourceTableId,
+      //         source_column_id: sourceColumnRows[0].column_id,
+      //         destination_column_id: destinationColumnRows[0].column_id,
+      //         destination_table_id: destinationTableId,
+      //         cascade_delete_destination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
+      //         cascade_delete_source: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
+      //       });
+      //     }
+
+      //   }
+      // }
     }
 
     if (dataDictionaryJson[AcDataDictionary.KeyFunctions]) {
@@ -211,14 +241,15 @@ export class AcDDEApi {
       [AcDataDictionary.KeyStoredProcedures]: {},
       [AcDataDictionary.KeyFunctions]: {},
     };
-    if (this.dataStorage.dataDictionaries[dataDictionaryId]) {
-      const dataDictionartRow: IAcDDEDataDictionaryRow = this.dataStorage.dataDictionaries[dataDictionaryId];
+    const dataDictionaryRows = this.dataStorage.getDataDictionaries({ dataDictionaryId: dataDictionaryId });
+    if (dataDictionaryRows.length > 0) {
+      const dataDictionartRow: IAcDDEDataDictionaryRow = dataDictionaryRows[0];
       dataDictionary[AcDataDictionary.KeyVersion] = dataDictionartRow.data_dictionary_version;
 
       const tables: any = {};
-      for (const tableRow of Object.values(this.dataStorage.tables).filter((row: IAcDDETableRow) => { return row.data_dictionary_id == dataDictionartRow.data_dictionary_id })) {
+      for (const tableRow of this.dataStorage.getTables({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
         const columns: any = {};
-        for (const columnRow of Object.values(this.dataStorage.tableColumns).filter((row: IAcDDETableColumnRow) => { return row.table_id == tableRow.table_id })) {
+        for (const columnRow of this.dataStorage.getTableColumns({ tableId: tableRow.table_id! })) {
           columns[columnRow.column_name!] = {
             [AcDDTableColumn.KeyColumnName]: columnRow.column_name,
             [AcDDTableColumn.KeyColumnType]: columnRow.column_type,
@@ -234,9 +265,9 @@ export class AcDDEApi {
       dataDictionary[AcDataDictionary.KeyTables] = tables;
 
       const views: any = {};
-      for (const viewRow of Object.values(this.dataStorage.views).filter((row: IAcDDEViewRow) => { return row.data_dictionary_id == dataDictionartRow.data_dictionary_id })) {
+      for (const viewRow of this.dataStorage.getViews({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
         const columns: any = {};
-        for (const columnRow of Object.values(this.dataStorage.viewColumns).filter((row: IAcDDEViewColumnRow) => { return row.view_id == viewRow.view_id })) {
+        for (const columnRow of this.dataStorage.getViewColumns({ viewId: viewRow.view_id })) {
           columns[columnRow.column_name!] = {
             [AcDDViewColumn.KeyColumnName]: columnRow.column_name,
             [AcDDViewColumn.KeyColumnType]: columnRow.column_type,
@@ -254,32 +285,32 @@ export class AcDDEApi {
       dataDictionary[AcDataDictionary.KeyViews] = views;
 
       const relationships: any[] = [];
-      for (const relationshipRow of Object.values(this.dataStorage.relationships).filter((row: IAcDDERelationshipRow) => { return row.data_dictionary_id == dataDictionartRow.data_dictionary_id })) {
+      for (const relationshipRow of this.dataStorage.getRelationships({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
         if (
-          this.dataStorage.tableColumns[relationshipRow.destination_column_id!] &&
-          this.dataStorage.tableColumns[relationshipRow.source_column_id!] &&
-          this.dataStorage.tables[relationshipRow.destination_table_id!] &&
-          this.dataStorage.tables[relationshipRow.source_table_id!]
+          this.dataStorage.hasTableColumnWithId(relationshipRow.destination_column_id!) &&
+          this.dataStorage.hasTableColumnWithId(relationshipRow.source_column_id!) &&
+          this.dataStorage.hasTableWithId(relationshipRow.destination_table_id!) &&
+          this.dataStorage.hasTableWithId(relationshipRow.source_table_id!)
         ) {
           relationships.push({
             [AcDDRelationship.KeyCascadeDeleteDestination]: relationshipRow.cascade_delete_destination,
             [AcDDRelationship.KeyCascadeDeleteSource]: relationshipRow.cascade_delete_source,
-            [AcDDRelationship.KeyDestinationColumn]: this.dataStorage.tableColumns[relationshipRow.destination_column_id!].column_name,
-            [AcDDRelationship.KeyDestinationTable]: this.dataStorage.tables[relationshipRow.destination_table_id!].table_name,
-            [AcDDRelationship.KeySourceColumn]: this.dataStorage.tableColumns[relationshipRow.source_column_id!].column_name,
-            [AcDDRelationship.KeySourceTable]: this.dataStorage.tables[relationshipRow.source_table_id!].table_name
+            [AcDDRelationship.KeyDestinationColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.destination_column_id })[0].column_name,
+            [AcDDRelationship.KeyDestinationTable]: this.dataStorage.getTables({ tableId: relationshipRow.destination_table_id })[0].table_name,
+            [AcDDRelationship.KeySourceColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.source_column_id })[0].column_name,
+            [AcDDRelationship.KeySourceTable]: this.dataStorage.getTables({ tableId: relationshipRow.source_table_id })[0].table_name
           });
         }
       }
       dataDictionary[AcDataDictionary.KeyRelationships] = relationships;
 
       const triggers: any = {};
-      for (const triggerRow of Object.values(this.dataStorage.triggers).filter((row: IAcDDETriggerRow) => { return row.data_dictionary_id == dataDictionartRow.data_dictionary_id })) {
-        if (this.dataStorage.tableColumns[triggerRow.table_id!]) {
+      for (const triggerRow of this.dataStorage.getTriggers({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        if (this.dataStorage.hasTableWithId(triggerRow.table_id!)) {
           triggers[triggerRow.trigger_name!] = ({
             [AcDDTrigger.KeyTriggerExecution]: triggerRow.trigger_execution,
             [AcDDTrigger.KeyRowOperation]: triggerRow.row_operation,
-            [AcDDTrigger.KeyTableName]: this.dataStorage.tables[triggerRow.table_id!].table_name,
+            [AcDDTrigger.KeyTableName]: this.dataStorage.getTables({ tableId: triggerRow.table_id })[0].table_name,
             [AcDDTrigger.KeyTriggerName]: triggerRow.trigger_name,
             [AcDDTrigger.KeyTriggerCode]: triggerRow.trigger_code,
           });
@@ -288,7 +319,7 @@ export class AcDDEApi {
       dataDictionary[AcDataDictionary.KeyTriggers] = triggers;
 
       const functions: any = {};
-      for (const functionRow of Object.values(this.dataStorage.functions).filter((row: IAcDDEFunctionRow) => { return row.data_dictionary_id == dataDictionartRow.data_dictionary_id })) {
+      for (const functionRow of this.dataStorage.getFunctions({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
         functions[functionRow.function_name!] = ({
           [AcDDFunction.KeyFunctionName]: functionRow.function_name,
           [AcDDFunction.KeyFunctionCode]: functionRow.function_code
@@ -297,10 +328,10 @@ export class AcDDEApi {
       dataDictionary[AcDataDictionary.KeyFunctions] = functions;
 
       const storedProcedures: any = {};
-      for (const storedProcedureRow of Object.values(this.dataStorage.functions).filter((row: IAcDDEFunctionRow) => { return row.data_dictionary_id == dataDictionartRow.data_dictionary_id })) {
-        functions[storedProcedureRow.function_name!] = ({
-          [AcDDFunction.KeyFunctionName]: storedProcedureRow.function_name,
-          [AcDDFunction.KeyFunctionCode]: storedProcedureRow.function_code
+      for (const storedProcedureRow of this.dataStorage.getStoredProcedures({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        functions[storedProcedureRow.stored_procedure_name!] = ({
+          [AcDDStoredProcedure.KeyStoredProcedureName]: storedProcedureRow.stored_procedure_name,
+          [AcDDStoredProcedure.KeyStoredProcedureCode]: storedProcedureRow.stored_procedure_code
         });
       }
       dataDictionary[AcDataDictionary.KeyFunctions] = storedProcedures;

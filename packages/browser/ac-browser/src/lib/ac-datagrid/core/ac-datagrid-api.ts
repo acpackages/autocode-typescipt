@@ -9,7 +9,7 @@ import { AcEnumDataSourceType } from "../../enums/ac-enum-data-source-type.enum"
 import { acAddClassToElement, acRemoveClassFromElement } from "../../utils/ac-element-functions";
 import { AcDatagridOnDemandDataSource } from "./ac-datagrid-on-demand-data-source";
 import { AcEnumPaginationEvent } from "../../ac-pagination/_ac-pagination.export";
-import { arrayRemove } from "@autocode-ts/ac-extensions";
+import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { IAcDatagridColDefsSetEvent } from "../interfaces/event-args/ac-datagrid-col-defs-set-event.interface";
@@ -18,7 +18,6 @@ import { IAcDatagridRowDragPlaceholderCreatorArgs } from "../interfaces/callback
 import { IAcDatagridRowPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-row-position-change-event.interface";
 import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-column-position-change-event.interface";
 import { IAcDatagridTotalRowsChangeEvent } from "../interfaces/event-args/ac-datagrid-total-rows-change-event.interface";
-import { IAcDatagridColumnResizeEvent } from "../interfaces/event-args/ac-datagrid-column-resize-event.interface";
 import { IAcDatagridColumnSortChangeEvent } from "../interfaces/event-args/ac-datagrid-column-sort-change-event.interface";
 import { IAcDatagridColumnFilterChangeEvent } from "../interfaces/event-args/ac-datagrid-column-filter-change-event.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
@@ -27,7 +26,7 @@ import { AcDatagridExtensionManager } from "./ac-datagrid-extension-manager";
 import { IAcPaginationPageChangeEvent } from "../../ac-pagination/interfaces/event-params/ac-page-change-event.interface";
 import { IAcDatagridColDefsChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-coldefs-change-hook-args.interface";
 import { IAcDatagridDataSourceTypeChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-data-source-type-change-hook-args.interface";
-import { IAcDatagridColumnHookArgs, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowFocusHookArgs, IAcDatagridRowHookArgs, IAcDatagridUsePaginationChangeHookArgs } from "../_ac-datagrid.export";
+import { AcDatagridState, IAcDatagridColumnHookArgs, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowFocusHookArgs, IAcDatagridRowHookArgs, IAcDatagridUsePaginationChangeHookArgs } from "../_ac-datagrid.export";
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
 import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
@@ -36,7 +35,6 @@ import { IAcDatagridRowDeleteHookArgs } from "../interfaces/hook-args/ac-datagri
 import { IAcDatagridRowUpdateHookArgs } from "../interfaces/hook-args/ac-datagrid-row-update-hook-args.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { AcDatagridEventHandler } from "./ac-datagrid-event-handler";
-import { DateTime } from "luxon";
 
 export class AcDatagridApi {
 
@@ -147,6 +145,7 @@ export class AcDatagridApi {
   };
   datagrid!: AcDatagrid;
   datagridColumns: AcDatagridColumn[] = [];
+  datagridState:AcDatagridState = new AcDatagridState();
   dataSource!: AcDatagridDataSource;
   eventHandler!:AcDatagridEventHandler;
   events: AcEvents = new AcEvents();
@@ -161,7 +160,8 @@ export class AcDatagridApi {
 
   constructor({ datagrid }: { datagrid: AcDatagrid }) {
     AcDatagridExtensionManager.registerBuiltInExtensions();
-    this.datagrid = datagrid;
+    this.datagrid = datagrid
+    this.datagridState.datagridApi = this;
     this.eventHandler = new AcDatagridEventHandler({datagridApi:this});
     this.dataSourceType = AcEnumDataSourceType.Unknown;
   }
@@ -228,7 +228,7 @@ export class AcDatagridApi {
       return valid;
     });
     if (datagridRow) {
-      arrayRemove(this.dataSource.datagridRows, datagridRow);
+      arrayRemoveByKey(this.dataSource.datagridRows,'acRowId',datagridRow.acRowId);
       const deleteHookArgs: IAcDatagridRowDeleteHookArgs = {
         datagridApi: this,
         datagridRow: datagridRow,

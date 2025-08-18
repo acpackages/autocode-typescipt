@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acAddClassToElement, acRemoveClassFromElement, acSwapElementsWithAnimation } from "../../utils/ac-element-functions";
+import { acAddClassToElement, acRemoveClassFromElement } from "../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcDatagridCellEditorElement } from "./ac-datagrid-cell-editor.element";
 import { AcDatagridCellRendererElement } from "./ac-datagrid-cell-renderer.element";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
-import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-column-position-change-event.interface";
 import { IAcDatagridColumnResizeEvent } from "../interfaces/event-args/ac-datagrid-column-resize-event.interface";
 import { AcEnumDatagridHook, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellHookArgs, IAcDatagridCellRendererElement, IAcDatagridCellRendererElementInitEvent } from "../_ac-datagrid.export";
 import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
@@ -17,6 +16,7 @@ export class AcDatagridCellElement {
   cellContainer: HTMLElement = document.createElement('div');
   cellEditor?: AcDatagridCellEditorElement;
   cellRenderer!: IAcDatagridCellRendererElement;
+  checkCellValueChangeTimeout: any;
   datagridApi: AcDatagridApi;
   datagridCell!: AcDatagridCell;
   datagridColumn!: AcDatagridColumn;
@@ -33,7 +33,7 @@ export class AcDatagridCellElement {
     this.datagridCell = new AcDatagridCell({
       datagridColumn: datagridColumn,
       datagridRow: datagridRow,
-      datagridApi:this.datagridApi,
+      datagridApi: this.datagridApi,
       instance: this
     });
     if (this.datagridColumn.columnDefinition.cellRendererElement) {
@@ -46,14 +46,10 @@ export class AcDatagridCellElement {
       this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.CellRendererElementInit, args: elementInitEventArgs });
     }
     else if (this.datagridColumn.columnDefinition.cellEditorElement && this.datagridColumn.columnDefinition.useCellEditorForRenderer == true) {
-      this.cellRenderer = new this.datagridColumn.columnDefinition.cellEditorElement();
-      this.cellEditor = this.cellRenderer as any;
-      const elementInitEventArgs: IAcDatagridCellRendererElementInitEvent = {
-        datagridApi: this.datagridApi,
-        datagridCell: this.datagridCell,
-        cellRendererElementInstance: this.cellRenderer,
+      this.initEditorElement();
+      if (this.cellEditor) {
+        this.cellRenderer = this.cellEditor;
       }
-      this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.CellRendererElementInit, args: elementInitEventArgs });
     }
     else {
       this.cellRenderer = new AcDatagridCellRendererElement();
@@ -96,18 +92,43 @@ export class AcDatagridCellElement {
 
   }
 
-  blur(){
-    if(this.cellEditor){
-      this.datagridCell.cellValue = this.cellEditor.getValue();
-    }
+  blur() {
+    this.checkCellValueChange(false);
   }
 
-  destroy(){
+  destroy() {
     //
   }
 
   enterEditMode() {
-    if (this.cellEditor == undefined && this.datagridColumn.columnDefinition.useCellEditorForRenderer != true) {
+    this.initEditorElement();
+    if (this.cellEditor) {
+      this.cellContainer.innerHTML = "";
+      this.cellContainer.append(this.cellEditor!.getElement());
+    }
+    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
+    this.element.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
+    this.isEditing = true;
+  }
+
+  exitEditMode() {
+    this.isEditing = false;
+    acRemoveClassFromElement({ cssClass: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
+    if (this.cellEditor) {
+      this.cellContainer.innerHTML = "";
+      this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+      this.cellContainer.append(this.cellRenderer.getElement());
+    }
+  }
+
+  focus() {
+    if (this.cellRenderer && this.cellRenderer.focus) {
+      this.cellRenderer.focus();
+    }
+  }
+
+  initEditorElement() {
+    if (this.cellEditor == undefined) {
       if (this.datagridColumn.columnDefinition.cellEditorElement) {
         this.cellEditor = new this.datagridColumn.columnDefinition.cellEditorElement();
         const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {
@@ -123,29 +144,6 @@ export class AcDatagridCellElement {
       if (this.cellEditor) {
         this.cellEditor.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
       }
-    }
-    if(this.cellEditor){
-      this.cellContainer.innerHTML = "";
-      this.cellContainer.append(this.cellEditor!.getElement());
-    }
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
-    this.element.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
-    this.isEditing = true;
-  }
-
-  exitEditMode() {
-    this.isEditing = false;
-    acRemoveClassFromElement({ cssClass: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
-    if(this.cellEditor){
-      this.cellContainer.innerHTML = "";
-      this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-      this.cellContainer.append(this.cellRenderer.getElement());
-    }
-  }
-
-  focus(){
-    if(this.cellRenderer && this.cellRenderer.focus){
-      this.cellRenderer.focus();
     }
   }
 
@@ -181,6 +179,7 @@ export class AcDatagridCellElement {
     });
     this.element.addEventListener('keyup', (e: KeyboardEvent) => {
       this.datagridApi.eventHandler.handleCellKeyUp({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
     });
 
     this.element.addEventListener('click', (e: MouseEvent) => {
@@ -201,10 +200,10 @@ export class AcDatagridCellElement {
     this.element.addEventListener('mouseleave', (e: MouseEvent) => {
       this.datagridApi.eventHandler.handleCellMouseLeave({ datagridCell: this.datagridCell, event: e });
       if (this.datagridApi.hoverCellId == this.datagridCell.acCellId) {
-          this.datagridApi.hoverCellId = undefined;
-          this.datagridApi.hoverColumnId = undefined;
-          this.datagridApi.hoverRowId = undefined;
-        }
+        this.datagridApi.hoverCellId = undefined;
+        this.datagridApi.hoverColumnId = undefined;
+        this.datagridApi.hoverRowId = undefined;
+      }
     });
     this.element.addEventListener('mousemove', (e: MouseEvent) => {
       this.datagridApi.eventHandler.handleCellMouseMove({ datagridCell: this.datagridCell, event: e });
@@ -214,6 +213,7 @@ export class AcDatagridCellElement {
     });
     this.element.addEventListener('mouseup', (e: MouseEvent) => {
       this.datagridApi.eventHandler.handleCellMouseUp({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
     });
 
     this.element.addEventListener('touchcancel', (e: TouchEvent) => {
@@ -221,6 +221,7 @@ export class AcDatagridCellElement {
     }, { passive: true });
     this.element.addEventListener('touchend', (e: TouchEvent) => {
       this.datagridApi.eventHandler.handleCellTouchEnd({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
     }, { passive: true });
     this.element.addEventListener('touchmove', (e: TouchEvent) => {
       this.datagridApi.eventHandler.handleCellTouchMove({ datagridCell: this.datagridCell, event: e });
@@ -237,6 +238,24 @@ export class AcDatagridCellElement {
     //   // width = width - (AcDatagridDefaultRowConfig.treeChildPadding * this.datagridRow.treeDepth);
     // }
     this.element.style.width = `${width}px`;
+  }
+
+  private checkCellValueChange(delayCheck: boolean = true) {
+    const checkFunction: Function = () => {
+      if (this.cellEditor && this.datagridCell.cellValue != this.cellEditor.getValue()) {
+        this.datagridCell.cellValue = this.cellEditor.getValue();
+      }
+    };
+    if (this.checkCellValueChangeTimeout) {
+      clearTimeout(this.checkCellValueChangeTimeout);
+    }
+    if (delayCheck) {
+      this.checkCellValueChangeTimeout = setTimeout(checkFunction, 500);
+    }
+    else {
+      checkFunction();
+    }
+
   }
 
 }

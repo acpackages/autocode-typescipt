@@ -90,6 +90,13 @@ export function arrayRemove<T>(arr: T[], value: T): T[] {
     return arrayRemoveByIndex(arr,index);
 }
 
+export function arrayRemoveByKey<T>(arr: T[],key:string, value: any): T[] {
+    const index = arr.findIndex((element:any, index, array)=>{
+      return element[key] == value;
+    });
+    return arrayRemoveByIndex(arr,index);
+}
+
 /**
  * Returns a new array with the element at the given index removed.
  * Does not modify the original array.

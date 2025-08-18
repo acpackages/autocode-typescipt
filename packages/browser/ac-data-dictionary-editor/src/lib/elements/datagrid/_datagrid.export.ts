@@ -1,4 +1,4 @@
-export * from './ac-data-dictionary-datagrid.element';
+export * from './ac-datagrid-editor.element';
 export * from './ac-dde-table-column-properties-datagrid.element';
 export * from './ac-dde-table-columns-datagrid.element';
 export * from './ac-dde-table-properties-datagrid.element';
