@@ -98,13 +98,15 @@ export class AcLogger {
     }
   }
 
-  _consoleMessage(message: any, type: string) {
+  private _consoleMessage(message: any, type: string) {
     const label = this.prefix ? `${this.prefix} : ` : "";
     const consoleColor = this.messageColors[type] || this.messageColors['default'];
-    console.log(`${label}${message}`);
+    if(Array.isArray(message)){
+      console.log(...message);
+    }
   }
 
-  _loggerMessage(args: any, type: string) {
+  private _loggerMessage(args: any, type: string) {
     if (this.logMessages) {
       if (Array.isArray(args)) {
         for (const message of args) {
@@ -124,7 +126,7 @@ export class AcLogger {
     }
   }
 
-  _writeToFile(message: any, type: string) {
+  private _writeToFile(message: any, type: string) {
     if(Autocode.isBrowser()){
       this._consoleMessage(message, type);
     }
@@ -148,7 +150,7 @@ export class AcLogger {
     }
   }
 
-  _writeHtml(timestamp: string, message: string, type: string) {
+  private _writeHtml(timestamp: string, message: string, type: string) {
     if(this.logFile){
       if (message) {
         this.logFile.writeAsString(`\n\t\t\t<tr ac-logger-message-row ac-logger-message-type="${type}"><td ac-logger-message-data="timestamp">${timestamp}</td><td ac-logger-message-data="message">${message}</td></tr>`);
@@ -158,7 +160,7 @@ export class AcLogger {
     }
   }
 
-  _writeText(timestamp: string, message: string, type: string) {
+  private _writeText(timestamp: string, message: string, type: string) {
     if(this.logFile){
       this.logFile.writeAsString(`\n${timestamp} => ${message}`);
     }

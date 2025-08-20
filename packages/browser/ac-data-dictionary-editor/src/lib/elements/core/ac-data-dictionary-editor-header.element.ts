@@ -23,10 +23,10 @@ export class AcDataDictionaryEditorHeader {
     this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.MenuGroupAdd, callback: (args: IAcDDEMenuGroupAddHookArgs) => {
       this.addMenuGroup({ menuGroup: args.menuGroup });
     }});
-    this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.DataLoaded, callback: (args: IAcDDEHookArgs) => {
+    this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.DataDictionarySet, callback: (args: IAcDDEHookArgs) => {
       this.setDataDictionaryDropdown();
     }});
-
+    console.log(this);
   }
 
   private addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }): void {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
+import { AcEnumSortOrder, AcEvents, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
 import { AcEnumDatagridColumnDataType } from "../enums/ac-enum-datagrid-column-data-type.enum";
 import { AcDatagridHeaderCellElement } from "../elements/ac-datagrid-header-cell.element";
@@ -14,6 +14,7 @@ export class AcDatagridColumn {
   columnDefinition!: IAcDatagridColumnDefinition;
   datagridApi!: AcDatagridApi;
   dataType: AcEnumDatagridColumnDataType = AcEnumDatagridColumnDataType.string;
+  events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   filterGroup: AcFilterGroup = new AcFilterGroup();
   headerCellInstance?: AcDatagridHeaderCellElement;
@@ -60,4 +61,9 @@ export class AcDatagridColumn {
     this.index = index;
     this.width = width;
   }
+
+  on({eventName,callback}:{eventName:string,callback:Function}):string{
+    return this.events.subscribe({eventName,callback});
+  }
+
 }

@@ -6,9 +6,9 @@ import { AcDDViewColumn } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-select-column-type-input.element";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
-import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
-import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
+import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
 export class AcDDEViewColumnsDatagrid {
   data: any[] = [];
@@ -51,7 +51,7 @@ export class AcDDEViewColumnsDatagrid {
     ];
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataLoaded, callback: () => {
+      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setColumnsData();
       }
     });

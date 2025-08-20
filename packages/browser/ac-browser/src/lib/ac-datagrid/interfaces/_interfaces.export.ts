@@ -4,4 +4,6 @@ export * from './hook-args/_hook-args.export';
 export * from './ac-datagrid-cell-editor-element.interface';
 export * from './ac-datagrid-cell-renderer-element.interface';
 export * from './ac-datagrid-column-definition.interface';
+export * from './ac-datagrid-column-state.interface';
 export * from './ac-datagrid-extension.interface';
+export * from './ac-datagrid-state.interface';

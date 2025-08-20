@@ -60,7 +60,7 @@ export class AcDDTable {
   }
 
   getPrimaryKeyColumnName(): string {
-    const primaryKeyColumn = this.getPrimaryKeyColumn();
+    const primaryKeyColumn = this.getPrimaryKeyColumn()
     return primaryKeyColumn ? primaryKeyColumn.columnName : "";
   }
 
@@ -70,7 +70,8 @@ export class AcDDTable {
   }
 
   getPrimaryKeyColumns(): AcDDTableColumn[] {
-    return this.tableColumns.filter((column) => column.isPrimaryKey());
+    const columns = this.tableColumns.filter((column) => column.isPrimaryKey());
+    return columns;
   }
 
   getSearchQueryColumnNames(): string[] {
@@ -112,24 +113,25 @@ export class AcDDTable {
   }
 
   fromJson({ jsonData }: { jsonData: any }): this {
+    const json = { ...jsonData };
 
-    if (AcDDTable.KeyTableColumns in jsonData && typeof jsonData[AcDDTable.KeyTableColumns] === "object" && !Array.isArray(jsonData[AcDDTable.KeyTableColumns])) {
-      for (const [columnName, columnData] of Object.entries(jsonData[AcDDTable.KeyTableColumns])) {
+    if (AcDDTable.KeyTableColumns in json && typeof json[AcDDTable.KeyTableColumns] === "object" && !Array.isArray(json[AcDDTable.KeyTableColumns])) {
+      for (const [columnName, columnData] of Object.entries(json[AcDDTable.KeyTableColumns])) {
         const column = AcDDTableColumn.instanceFromJson({ jsonData: columnData });
         column.table = this;
         this.tableColumns.push(column);
       }
-      delete jsonData[AcDDTable.KeyTableColumns];
+      delete json[AcDDTable.KeyTableColumns];
     }
 
-    if (AcDDTable.KeyTableProperties in jsonData && typeof jsonData[AcDDTable.KeyTableProperties] === "object" && !Array.isArray(jsonData[AcDDTable.KeyTableProperties])) {
-      for (const propertyData of Object.values(jsonData[AcDDTable.KeyTableProperties])) {
+    if (AcDDTable.KeyTableProperties in json && typeof json[AcDDTable.KeyTableProperties] === "object" && !Array.isArray(json[AcDDTable.KeyTableProperties])) {
+      for (const propertyData of Object.values(json[AcDDTable.KeyTableProperties])) {
         this.tableProperties.push(AcDDTableProperty.instanceFromJson({ jsonData: propertyData }));
       }
-      delete jsonData[AcDDTable.KeyTableProperties];
+      delete json[AcDDTable.KeyTableProperties];
     }
 
-    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });
+    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: json });
     return this;
   }
 

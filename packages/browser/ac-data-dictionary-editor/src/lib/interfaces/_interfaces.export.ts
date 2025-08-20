@@ -1,3 +1,4 @@
+export * from './event-args/_event-args.export';
 export * from './hook-args/_hook-args.export';
 export * from './ac-dde-data-dictionary-row.inteface';
 export * from './ac-dde-extension.interface';

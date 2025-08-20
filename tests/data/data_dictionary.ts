@@ -1,4 +1,6 @@
 export const dataDictionaryJson = {
+  "name": "unifi",
+  "version": 1,
   "tables": {
     "access_groups": {
       "table_name": "access_groups",

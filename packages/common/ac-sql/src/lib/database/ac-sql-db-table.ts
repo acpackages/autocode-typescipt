@@ -9,13 +9,12 @@ import { AcSqlDbRowEvent } from "./ac-sql-db-row-event";
 import { dateFormat } from "@autocode-ts/ac-extensions";
 
 export class AcSqlDbTable extends AcSqlDbBase {
-  tableName: string;
-  acDDTable: AcDDTable;
+  tableName!: string;
+  acDDTable!: AcDDTable;
 
   constructor({ tableName, dataDictionaryName = "default" }: { tableName: string, dataDictionaryName?: string }) {
     super({ dataDictionaryName });
-    this.tableName = tableName;
-    this.acDDTable = AcDDTable.getInstance({ tableName, dataDictionaryName });
+    this.setTable({tableName:tableName});
   }
 
   async cascadeDeleteRows({ rows }: { rows: Array<Record<string, any>> }): Promise<AcResult> {
@@ -46,7 +45,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
           this.logger.log(`Performing cascade delete with related table ${deleteTableName} and column ${deleteColumnName} with value ${deleteColumnValue}`);
           if (deleteTableName && deleteColumnName) {
-            if (Autocode.validPrimaryKey({value:deleteColumnValue})) {
+            if (Autocode.validPrimaryKey({ value: deleteColumnValue })) {
               this.logger.log(`Deleting related rows for primary key value : ${deleteColumnValue}`);
               const deleteCondition = `${deleteColumnName} = :deleteColumnValue`;
               const deleteAcTable = new AcSqlDbTable({ tableName: deleteTableName, dataDictionaryName: this.dataDictionaryName });
@@ -57,7 +56,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               if (deleteResult.isSuccess()) {
                 this.logger.log(`Cascade delete successful for ${deleteTableName}`);
               } else {
-                return result.setFromResult({ result: deleteResult, message: `Error in cascade delete: ${deleteResult.message}`, logger:this.logger });
+                return result.setFromResult({ result: deleteResult, message: `Error in cascade delete: ${deleteResult.message}`, logger: this.logger });
               }
             } else {
               this.logger.log("No value for cascade delete records");
@@ -166,7 +165,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       const primaryKeyColumnName = this.acDDTable.getPrimaryKeyColumnName();
 
       if (primaryKeyColumnName) {
-        if (row.hasOwnProperty(primaryKeyColumnName) && Autocode.validPrimaryKey({value:row[primaryKeyColumnName]})) {
+        if (row.hasOwnProperty(primaryKeyColumnName) && Autocode.validPrimaryKey({ value: row[primaryKeyColumnName] })) {
           conditions.push(`${primaryKeyColumnName} != @primaryKeyValue`);
           parameters["@primaryKeyValue"] = row[primaryKeyColumnName];
         }
@@ -194,7 +193,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
           this.logger.log("Searching for Unique Records getting Repeated");
           const selectResponse = await this.getRows({
             condition: conditions.join(" AND "),
-            parameters:parameters,
+            parameters: parameters,
             mode: AcEnumDDSelectMode.Count
           });
           if (selectResponse.isSuccess()) {
@@ -215,7 +214,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         result.setSuccess();
       }
     } catch (ex: any) {
-      result.setException({ exception: ex, stackTrace: ex.stack, logger:this.logger, logException: true });
+      result.setException({ exception: ex, stackTrace: ex.stack, logger: this.logger, logException: true });
     }
     return result;
   }
@@ -335,8 +334,21 @@ export class AcSqlDbTable extends AcSqlDbBase {
   }): Promise<AcResult> {
     const result = new AcResult();
     let continueOperation = true;
+    row = {...row};
 
-    const rowEvent = new AcSqlDbRowEvent({ tableName:this.tableName, dataDictionaryName:this.dataDictionaryName });
+    const columnNames = this.acDDTable.getColumnNames();
+    for(const key of Object.keys(row)){
+      if(columnNames.includes(key)){
+        if(row[key] == undefined){
+          row[key] = null;
+        }
+      }
+      else{
+        delete row[key];
+      }
+    }
+
+    const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
     rowEvent.row = row;
     rowEvent.eventType = AcEnumDDRowEvent.BeforeFormat;
 
@@ -353,10 +365,10 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (row.hasOwnProperty(column.columnName) || insertMode) {
           let setColumnValue = row.hasOwnProperty(column.columnName);
           const formats = column.getColumnFormats();
-          const type:any = column.columnType;
+          const type: any = column.columnType;
           let value = row[column.columnName] ?? "";
 
-          if (value === "" && column.getDefaultValue() !== null && insertMode) {
+          if (value === "" && column.getDefaultValue() != null && insertMode) {
             value = column.getDefaultValue();
             setColumnValue = true;
           }
@@ -379,15 +391,20 @@ export class AcSqlDbTable extends AcSqlDbBase {
                 try {
                   const date = new Date(value);
                   const format = type === AcEnumDDColumnType.Datetime ? 'yyyy-MM-dd HH:mm:ss' : 'yyyy-MM-dd';
-                  value = dateFormat(date,format); // You must implement `formatDate()`
+                  value = dateFormat(date, format); // You must implement `formatDate()`
                 } catch (ex) {
                   this.logger.warn(`Error while setting dateTimeValue for ${column.columnName} in table ${this.tableName} with value: ${value}`);
                 }
               }
-            } else if ([AcEnumDDColumnType.Json, AcEnumDDColumnType.MediaJson].includes(type)) {
+            } else if ([AcEnumDDColumnType.Json].includes(type)) {
               value = typeof value === 'string' ? value : JSON.stringify(value);
             } else if (type === AcEnumDDColumnType.Password) {
               value = AcEncryption.encrypt({ plainText: value });
+            }
+            else if (type === AcEnumDDColumnType.Uuid && insertMode) {
+              if(value == undefined || value == null){
+                value = Autocode.uuid();
+              }
             }
 
             row[column.columnName] = value;
@@ -397,7 +414,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     }
 
     if (continueOperation) {
-      const rowEvent = new AcSqlDbRowEvent({ tableName:this.tableName, dataDictionaryName:this.dataDictionaryName });
+      const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
       rowEvent.row = row;
       rowEvent.eventType = AcEnumDDRowEvent.AfterFormat;
 
@@ -423,7 +440,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     for (const column of this.acDDTable.tableColumns) {
       const formats: string[] = [];
 
-      if ([AcEnumDDColumnType.Json, AcEnumDDColumnType.MediaJson].includes(column.columnType as any)) {
+      if ([AcEnumDDColumnType.Json].includes(column.columnType as any)) {
         formats.push(AcEnumDDColumnFormat.Json);
       } else if (column.columnType === AcEnumDDColumnType.Date) {
         formats.push(AcEnumDDColumnFormat.Date);
@@ -521,7 +538,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
   getColumnDefinitionForStatement(columnName: string): string {
     let result = '';
-    const acDDTableColumn = this.acDDTable.getColumn({columnName})!;
+    const acDDTableColumn = this.acDDTable.getColumn({ columnName })!;
     let columnType = acDDTableColumn.columnType;
     const defaultValue = acDDTableColumn.getDefaultValue();
     let size = acDDTableColumn.getSize();
@@ -648,7 +665,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     pageNumber?: number;
     pageSize?: number;
     parameters?: { [key: string]: any };
-  }): Promise<AcSqlDaoResult> {
+  } = {}): Promise<AcSqlDaoResult> {
     let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     try {
       const actualSelectStatement = selectStatement !== "" ? selectStatement : this.getSelectStatement();
@@ -694,7 +711,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       });
 
       if (result.rows.length > 0) {
-        const countSqlStatement = acDDSelectStatement.getSqlStatement({skipLimit:true}); // skipLimit = true
+        const countSqlStatement = acDDSelectStatement.getSqlStatement({ skipLimit: true }); // skipLimit = true
         const countResult = await this.dao!.getRows({
           statement: countSqlStatement,
           parameters: sqlParameters,
@@ -729,6 +746,14 @@ export class AcSqlDbTable extends AcSqlDbBase {
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
     try {
+
+      const columnNames = this.acDDTable.getColumnNames();
+      row = { ...row };
+      for (const key of Object.keys(row)) {
+        if (!columnNames.includes(key)) {
+          delete row[key];
+        }
+      }
       this.logger.log(["Inserting row with data : ", row]);
       let continueOperation = true;
       validateResult = validateResult ?? await this.validateValues({ row, isInsert: true });
@@ -748,6 +773,15 @@ export class AcSqlDbTable extends AcSqlDbBase {
         let primaryKeyValue = row[primaryKeyColumn];
 
         if (Object.keys(row).length > 0) {
+          const formatResult = await this.formatValues({ row,insertMode:true });
+
+          if (formatResult.isSuccess()) {
+            row = formatResult.value;
+          } else {
+            continueOperation = false;
+            result.setFromResult({ result: formatResult });
+          }
+
           if (continueOperation && executeBeforeEvent) {
             this.logger.log("Executing before insert event");
             const rowEvent = new AcSqlDbRowEvent({
@@ -778,7 +812,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               result.primaryKeyColumn = primaryKeyColumn;
               result.primaryKeyValue = primaryKeyValue;
               if (primaryKeyColumn.length > 0) {
-                if (!Autocode.validPrimaryKey({value:primaryKeyValue}) && Autocode.validPrimaryKey({value:insertResult.lastInsertedId})) {
+                if (!Autocode.validPrimaryKey({ value: primaryKeyValue }) && Autocode.validPrimaryKey({ value: insertResult.lastInsertedId })) {
                   primaryKeyValue = insertResult.lastInsertedId;
                 }
               }
@@ -844,6 +878,8 @@ export class AcSqlDbTable extends AcSqlDbBase {
     try {
       this.logger.log(["Inserting rows : ", rows]);
       let continueOperation = true;
+
+      const columnNames = this.acDDTable.getColumnNames();
       const rowsToInsert: Record<string, any>[] = [];
       const primaryKeyValues: any[] = [];
       const primaryKeyColumn = this.acDDTable.getPrimaryKeyColumnName();
@@ -852,6 +888,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (continueOperation) {
           const validateResult = await this.validateValues({ row, isInsert: true });
           if (validateResult.isSuccess()) {
+
             for (const column of this.acDDTable.tableColumns) {
               if (
                 (column.columnType === AcEnumDDColumnType.Uuid ||
@@ -866,6 +903,16 @@ export class AcSqlDbTable extends AcSqlDbBase {
             }
 
             if (Object.keys(row).length > 0) {
+              const formatResult = await this.formatValues({ row,insertMode:true });
+
+              if (formatResult.isSuccess()) {
+                row = formatResult.value;
+              } else {
+                continueOperation = false;
+                result.setFromResult({ result: formatResult });
+                break;
+              }
+
               if (continueOperation && executeBeforeEvent) {
                 this.logger.log("Executing before insert event");
                 const rowEvent = new AcSqlDbRowEvent({
@@ -969,16 +1016,16 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean,
     executeBeforeEvent?: boolean
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Unknown});
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Unknown });
     try {
       let continueOperation = true;
-      let operation:AcEnumDDRowOperation = AcEnumDDRowOperation.Unknown;
+      let operation: AcEnumDDRowOperation = AcEnumDDRowOperation.Unknown;
       const primaryKeyColumn = this.acDDTable.getPrimaryKeyColumnName();
       let primaryKeyValue = row[primaryKeyColumn];
       let condition = "";
       let conditionParameters: Record<string, any> = {};
 
-      if (Autocode.validPrimaryKey({value:primaryKeyValue})) {
+      if (Autocode.validPrimaryKey({ value: primaryKeyValue })) {
         this.logger.log("Found primary key value so primary key value will be used");
         condition = `${primaryKeyColumn} = :primaryKeyValue`;
         conditionParameters[":primaryKeyValue"] = primaryKeyValue;
@@ -998,9 +1045,6 @@ export class AcSqlDbTable extends AcSqlDbBase {
             conditionParameters[`:${key}`] = checkInSaveColumns[key];
           }
           condition = checkConditions.join(" AND ");
-        } else {
-          continueOperation = false;
-          result.setFailure({value:"No values to check in save", logger:this.logger});
         }
       }
 
@@ -1028,7 +1072,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         operation = AcEnumDDRowOperation.Insert;
       }
 
-      if (![AcEnumDDRowOperation.Insert, AcEnumDDRowOperation.Update].includes(operation as any)) {
+      if (continueOperation && ![AcEnumDDRowOperation.Insert, AcEnumDDRowOperation.Update].includes(operation as any)) {
         result.message = "Invalid Operation";
         continueOperation = false;
       }
@@ -1036,7 +1080,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       if (continueOperation) {
         this.logger.log(`Executing operation ${operation} in save.`);
         if (executeBeforeEvent) {
-          const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName,dataDictionaryName:this.dataDictionaryName});
+          const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
           rowEvent.row = row;
           rowEvent.eventType = AcEnumDDRowEvent.BeforeSave;
           const eventResult = await rowEvent.execute();
@@ -1059,7 +1103,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         }
 
         if (continueOperation && executeAfterEvent) {
-          const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
+          const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
           rowEvent.eventType = AcEnumDDRowEvent.AfterSave;
           rowEvent.result = result;
           const eventResult = await rowEvent.execute();
@@ -1083,7 +1127,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean,
     executeBeforeEvent?: boolean
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Unknown});
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Unknown });
     try {
       let continueOperation = true;
       const primaryKeyColumn = this.acDDTable.getPrimaryKeyColumnName();
@@ -1096,7 +1140,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         let condition = "";
         let conditionParameters: Record<string, any> = {};
 
-        if (Autocode.validPrimaryKey({value:primaryKeyValue})) {
+        if (Autocode.validPrimaryKey({ value: primaryKeyValue })) {
           this.logger.log("Found primary key value so primary key value will be used");
           condition = `${primaryKeyColumn} = :primaryKeyValue`;
           conditionParameters[":primaryKeyValue"] = primaryKeyValue;
@@ -1118,7 +1162,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             condition = checkConditions.join(" AND ");
           } else {
             continueOperation = false;
-            result.setFailure({value:"No values to check in save", logger:this.logger});
+            result.setFailure({ value: "No values to check in save", logger: this.logger });
           }
         }
 
@@ -1149,7 +1193,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
       if (continueOperation && executeBeforeEvent) {
         for (const row of [...rowsToInsert, ...rowsToUpdate]) {
-          const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName,dataDictionaryName: this.dataDictionaryName});
+          const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
           rowEvent.row = row;
           rowEvent.eventType = AcEnumDDRowEvent.BeforeSave;
           const eventResult = await rowEvent.execute();
@@ -1189,7 +1233,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       }
 
       if (continueOperation) {
-        result.setSuccess({message:"Rows saved successfully"});
+        result.setSuccess({ message: "Rows saved successfully" });
         if (result.rows.length > 0) {
           combinedRows.push(...result.rows);
         }
@@ -1199,6 +1243,14 @@ export class AcSqlDbTable extends AcSqlDbBase {
       result.setException({ exception: ex, logger: this.logger, logException: true });
     }
     return result;
+  }
+
+  setTable({tableName,dataDictionaryName}:{tableName:string,dataDictionaryName?:string}){
+    this.tableName = tableName;
+    if(dataDictionaryName == undefined){
+      dataDictionaryName = this.dataDictionaryName;
+    }
+    this.acDDTable = AcDDTable.getInstance({ tableName, dataDictionaryName });
   }
 
   async setValuesNullBeforeDelete({
@@ -1220,7 +1272,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       for (const acRelationship of tableRelationships) {
         if (continueOperation) {
           if (acRelationship.destinationTable === this.tableName) {
-            const column = this.acDDTable.getColumn({columnName:acRelationship.destinationColumn});
+            const column = this.acDDTable.getColumn({ columnName: acRelationship.destinationColumn });
             if (column && column.isSetValuesNullBeforeDelete()) {
               const setNullStatement = `UPDATE ${acRelationship.sourceTable} SET ${acRelationship.sourceColumn} = NULL WHERE ${acRelationship.sourceColumn} IN (SELECT ${acRelationship.destinationColumn} FROM ${this.tableName} WHERE ${condition})`;
               this.logger.log(["Executing set null statement", setNullStatement]);
@@ -1264,8 +1316,10 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeBeforeEvent?: boolean;
   }): Promise<AcSqlDaoResult> {
     this.logger.log(["Updating row with data : ", row]);
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Update});
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Update });
     try {
+
+
       let continueOperation = true;
       validateResult ??= await this.validateValues({ row, isInsert: false });
 
@@ -1275,14 +1329,17 @@ export class AcSqlDbTable extends AcSqlDbBase {
         const primaryKeyValue = row[primaryKeyColumn];
 
         const formatResult = await this.formatValues({ row });
+
         if (formatResult.isSuccess()) {
           row = formatResult.value;
         } else {
           continueOperation = false;
+          result.setFromResult({ result: formatResult });
         }
+
         this.logger.log(["Formatted data : ", row]);
 
-        if (!condition && Autocode.validPrimaryKey({value:primaryKeyValue})) {
+        if (!condition && Autocode.validPrimaryKey({ value: primaryKeyValue })) {
           condition = `${primaryKeyColumn} = :primaryKeyValue`;
           parameters = { ":primaryKeyValue": primaryKeyValue };
         }
@@ -1291,7 +1348,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (Object.keys(row).length > 0) {
           if (continueOperation && executeBeforeEvent) {
             this.logger.log("Executing before update event");
-            const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName,dataDictionaryName: this.dataDictionaryName});
+            const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
             rowEvent.row = row;
             rowEvent.eventType = AcEnumDDRowEvent.BeforeUpdate;
             const eventResult = await rowEvent.execute();
@@ -1329,7 +1386,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               }
 
               if (continueOperation && executeAfterEvent) {
-                const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
+                const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
                 rowEvent.eventType = AcEnumDDRowEvent.AfterUpdate;
                 rowEvent.result = result;
                 const eventResult = await rowEvent.execute();
@@ -1367,9 +1424,11 @@ export class AcSqlDbTable extends AcSqlDbBase {
     executeAfterEvent?: boolean;
     executeBeforeEvent?: boolean;
   }): Promise<AcSqlDaoResult> {
-    const result = new AcSqlDaoResult({operation:AcEnumDDRowOperation.Update});
+    const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Update });
     try {
       let continueOperation = true;
+      const columnNames = this.acDDTable.getColumnNames();
+
       const rowsWithConditions: {
         row: { [key: string]: any };
         condition: string;
@@ -1380,24 +1439,27 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
       for (let index = 0; index < rows.length && continueOperation; index++) {
         let row = rows[index];
+
         this.logger.log(["Updating row with data : ", row]);
 
         const validateResult = await this.validateValues({ row, isInsert: false });
         if (validateResult.isSuccess()) {
           this.logger.log(["Validation result : ", validateResult]);
           const primaryKeyValue = row[primaryKeyColumn];
+
           const formatResult = await this.formatValues({ row });
 
           if (formatResult.isSuccess()) {
             row = formatResult.value;
           } else {
             continueOperation = false;
+            result.setFromResult({ result: formatResult });
             break;
           }
 
           this.logger.log(["Formatted data : ", row]);
 
-          if (Object.keys(row).length > 0 && Autocode.validPrimaryKey({value:primaryKeyValue})) {
+          if (Object.keys(row).length > 0 && Autocode.validPrimaryKey({ value: primaryKeyValue })) {
             const condition = `${primaryKeyColumn} = :primaryKeyValue${index}`;
             const parameters = { [`:primaryKeyValue${index}`]: primaryKeyValue };
             primaryKeyValues.push(primaryKeyValue);
@@ -1415,7 +1477,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (executeBeforeEvent) {
           for (const rowDetails of rowsWithConditions) {
             this.logger.log("Executing before update event");
-            const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
+            const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
             rowEvent.row = rowDetails.row;
             rowEvent.condition = rowDetails.condition;
             rowEvent.parameters = rowDetails.parameters;
@@ -1455,7 +1517,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             }
 
             if (continueOperation && executeAfterEvent) {
-              const rowEvent = new AcSqlDbRowEvent({tableName:this.tableName, dataDictionaryName:this.dataDictionaryName});
+              const rowEvent = new AcSqlDbRowEvent({ tableName: this.tableName, dataDictionaryName: this.dataDictionaryName });
               rowEvent.eventType = AcEnumDDRowEvent.AfterUpdate;
               rowEvent.result = result;
               const eventResult = await rowEvent.execute();
@@ -1478,8 +1540,6 @@ export class AcSqlDbTable extends AcSqlDbBase {
     }
     return result;
   }
-
-
 
   async updateValueLengthWithChars({
     value,

@@ -4,7 +4,7 @@ import { AcDDECssClassName, AcDDETableRowKey, AcEnumDDEEntity, AcEnumDDEHook, IA
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
-import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
@@ -104,7 +104,7 @@ export class AcDDETablesDatagrid {
 
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataLoaded, callback: () => {
+      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setTablesData();
       }
     });

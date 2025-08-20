@@ -20,9 +20,13 @@ export class AcSqlDbBase {
     this.sqlConnection = AcSqlDatabase.sqlConnection;
     if(AcDatabaseTypeDaoClassMap[this.databaseType] != undefined){
       this.dao = new AcDatabaseTypeDaoClassMap[this.databaseType]();
+      if(this.dao && this,this.sqlConnection){
+        this.dao!.setSqlConnection({ sqlConnection: this.sqlConnection! });
+      }
+
     }
     this.useDataDictionary({ dataDictionaryName });
-    this.logger = new AcLogger({ logType: AcEnumLogType.Print, logMessages: true });
+    this.logger = new AcLogger({ logType: AcEnumLogType.Console, logMessages: true });
   }
 
   useDataDictionary({ dataDictionaryName = 'default' }: { dataDictionaryName?: string }) {

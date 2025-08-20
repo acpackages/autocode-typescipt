@@ -5,7 +5,7 @@ import { AcDDECssClassName, AcDDEDatagridTextInput, AcDDEStoredProcedureRowKey, 
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDStoredProcedure } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
-import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
@@ -67,7 +67,7 @@ export class AcDDEStoredProceduresDatagrid {
     ];
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataLoaded, callback: () => {
+      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setStoredProcedureData();
       }
     });

@@ -601,8 +601,14 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.gridApi.setGridOption('rowNumbers', showRowNumbers);
   }
 
-  override setState({ stateValue }: { stateValue: any; }): void {
-    this.gridApi.setState(stateValue);
+  override setState({ state }: { state: any; }): void {
+    if(state){
+      this.agGridEventHandler.ignoreEvents = true;
+      this.gridApi.setState(state);
+      setTimeout(() => {
+        this.agGridEventHandler.ignoreEvents = false;
+      }, 100);
+    }
   }
 
 }

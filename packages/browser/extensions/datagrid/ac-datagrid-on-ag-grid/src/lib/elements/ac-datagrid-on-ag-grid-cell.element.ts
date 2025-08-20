@@ -31,10 +31,14 @@ export class AcDatagridOnAgGridCell implements ICellRendererComp {
     this.datagridColumn = params.datagridColumn;
     this.datagridApi = params.datagridApi;
     this.datagridRow = this.datagridApi.getRowById({ rowId: params.data[this.agGridExtension.rowKey] })!;
-    const cellElement = new AcDatagridCellElement({ datagridApi: this.datagridApi, datagridRow: this.datagridRow, datagridColumn: this.datagridColumn });
-    this.datagridCell = cellElement.datagridCell;
-    this.params.eGridCell.addEventListener('focusin',()=>{cellElement.focus();});
-    this.params.eGridCell.addEventListener('focusout',()=>{cellElement.blur();});
+    let datagridCell:any = this.datagridRow.getCellForColumn({datagridColumn:this.datagridColumn});
+    if(datagridCell == undefined){
+      const cellElement = new AcDatagridCellElement({ datagridApi: this.datagridApi, datagridRow: this.datagridRow, datagridColumn: this.datagridColumn });
+      datagridCell = cellElement.datagridCell;
+    }
+    this.datagridCell = datagridCell;
+    this.params.eGridCell.addEventListener('focusin',()=>{this.datagridCell.instance!.focus();});
+    this.params.eGridCell.addEventListener('focusout',()=>{this.datagridCell.instance!.blur();});
   }
 
   refresh(params: ICellRendererParams<any, any, any>): boolean {

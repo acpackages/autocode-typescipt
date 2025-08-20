@@ -9,7 +9,7 @@ import { AcEnumDataSourceType } from "../../enums/ac-enum-data-source-type.enum"
 import { acAddClassToElement, acRemoveClassFromElement } from "../../utils/ac-element-functions";
 import { AcDatagridOnDemandDataSource } from "./ac-datagrid-on-demand-data-source";
 import { AcEnumPaginationEvent } from "../../ac-pagination/_ac-pagination.export";
-import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
+import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { IAcDatagridColDefsSetEvent } from "../interfaces/event-args/ac-datagrid-col-defs-set-event.interface";
@@ -26,7 +26,7 @@ import { AcDatagridExtensionManager } from "./ac-datagrid-extension-manager";
 import { IAcPaginationPageChangeEvent } from "../../ac-pagination/interfaces/event-params/ac-page-change-event.interface";
 import { IAcDatagridColDefsChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-coldefs-change-hook-args.interface";
 import { IAcDatagridDataSourceTypeChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-data-source-type-change-hook-args.interface";
-import { AcDatagridState, IAcDatagridColumnHookArgs, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowFocusHookArgs, IAcDatagridRowHookArgs, IAcDatagridUsePaginationChangeHookArgs } from "../_ac-datagrid.export";
+import { IAcDatagridColumnHookArgs, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowFocusHookArgs, IAcDatagridRowHookArgs, IAcDatagridState, IAcDatagridUsePaginationChangeHookArgs } from "../_ac-datagrid.export";
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
 import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
@@ -35,6 +35,7 @@ import { IAcDatagridRowDeleteHookArgs } from "../interfaces/hook-args/ac-datagri
 import { IAcDatagridRowUpdateHookArgs } from "../interfaces/hook-args/ac-datagrid-row-update-hook-args.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { AcDatagridEventHandler } from "./ac-datagrid-event-handler";
+import { AcDatagridState } from "./ac-datagrid-state";
 
 export class AcDatagridApi {
 
@@ -145,7 +146,7 @@ export class AcDatagridApi {
   };
   datagrid!: AcDatagrid;
   datagridColumns: AcDatagridColumn[] = [];
-  datagridState:AcDatagridState = new AcDatagridState();
+  datagridState:AcDatagridState;
   dataSource!: AcDatagridDataSource;
   eventHandler!:AcDatagridEventHandler;
   events: AcEvents = new AcEvents();
@@ -161,7 +162,7 @@ export class AcDatagridApi {
   constructor({ datagrid }: { datagrid: AcDatagrid }) {
     AcDatagridExtensionManager.registerBuiltInExtensions();
     this.datagrid = datagrid
-    this.datagridState.datagridApi = this;
+    this.datagridState = new AcDatagridState({datagridApi:this});
     this.eventHandler = new AcDatagridEventHandler({datagridApi:this});
     this.dataSourceType = AcEnumDataSourceType.Unknown;
   }
@@ -337,6 +338,11 @@ export class AcDatagridApi {
     return result;
   }
 
+  getState():IAcDatagridState{
+    this.datagridState.refresh();
+    return this.datagridState.toJson();
+  }
+
   setColumnFilter({ datagridColumn, filter }: { datagridColumn: AcDatagridColumn, filter: AcFilter }) {
     const oldFilterGroup: AcFilterGroup = datagridColumn.filterGroup.cloneInstance();;
     datagridColumn.filterGroup.addFilterModel({ filter: filter });
@@ -419,6 +425,10 @@ export class AcDatagridApi {
     if (this.focusedCell && this.focusedCell.instance && this.focusedCell.instance.element) {
       acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellFocused, element: this.focusedCell.instance.element });
     }
+  }
+
+  setState({state}:{state:IAcDatagridState}){
+    this.datagridState.apply(state);
   }
 
   updateColumnPosition({ datagidColumn, oldDatagridColumn }: { datagidColumn: AcDatagridColumn, oldDatagridColumn: AcDatagridColumn }) {

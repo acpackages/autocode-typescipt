@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcHooks, Autocode } from "@autocode-ts/autocode";
+import { AcEvents, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { AcDatagridRowElement } from "../elements/ac-datagrid-row.element";
 import { AcDatagridCell } from "./ac-datagrid-cell.model";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
@@ -9,6 +9,7 @@ export class AcDatagridRow {
   acRowId: string = Autocode.uuid();
   data: any;
   datagridApi!: AcDatagridApi;
+  events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   hooks: AcHooks = new AcHooks();
   index: number = -1;
@@ -30,18 +31,18 @@ export class AcDatagridRow {
     this.index = index;
   }
 
-  getCellForColumn({datagridColumn}:{datagridColumn:AcDatagridColumn}):AcDatagridCell|undefined{
-    let cell:AcDatagridCell|undefined;
-    for(const existingCell of this.datagridCells){
-      if(existingCell.datagridColumn.acColumnId == datagridColumn.acColumnId){
-        cell = existingCell;
-        break;
-      }
-    }
-    if(cell == undefined){
+  getCellForColumn({datagridColumn,createIfNotFound=false}:{datagridColumn:AcDatagridColumn,createIfNotFound?:boolean}):AcDatagridCell|undefined{
+    let cell:AcDatagridCell|undefined = this.datagridCells.find((cell)=>{
+      return cell.acColumnId == datagridColumn.acColumnId;
+    });
+    if(cell == undefined && createIfNotFound){
       cell = new AcDatagridCell({datagridApi:this.datagridApi,datagridColumn:datagridColumn,datagridRow:this});
       this.datagridCells.push(cell);
     }
     return cell;
+  }
+
+  on({eventName,callback}:{eventName:string,callback:Function}):string{
+    return this.events.subscribe({eventName,callback});
   }
 }

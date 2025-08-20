@@ -14,6 +14,7 @@ import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTab
 export class AcDataDictionary {
   static readonly KeyDataDictionaries = "data_dictionaries";
   static readonly KeyFunctions = "functions";
+  static readonly KeyName = "name";
   static readonly KeyRelationships = "relationships";
   static readonly KeyStoredProcedures = "stored_procedures";
   static readonly KeyTables = "tables";

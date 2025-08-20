@@ -52,6 +52,7 @@ export class AcDataDictionaryDartCodeGenerator {
     result += `static final Map<String,Map<String,dynamic>> ${AcDDECodeGeneratorDefaultConfig.dataDictionaryConstName} = {\n`;
     this.tabsCount++;
 
+    result += `${this.tabs}AcDataDictionary.keyName : ${this.dataDictionaryJson[AcDataDictionary.KeyName]},\n`;
     result += `${this.tabs}AcDataDictionary.keyVersion : ${this.dataDictionaryJson[AcDataDictionary.KeyVersion]},\n`;
     result += `${this.tabs}AcDataDictionary.keyTables : {\n`;
     const tableStrings: string[] = [];

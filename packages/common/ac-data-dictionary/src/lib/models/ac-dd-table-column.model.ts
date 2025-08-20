@@ -20,7 +20,7 @@ export class AcDDTableColumn {
   columnName: string = "";
 
   @AcBindJsonProperty({ key: AcDDTableColumn.KeyColumnProperties })
-  columnProperties: Map<string, AcDDTableColumnProperty> = new Map();
+  columnProperties: Record<string, AcDDTableColumnProperty> = {};
 
   @AcBindJsonProperty({ key: AcDDTableColumn.KeyColumnType })
   columnType: string = "text";
@@ -31,7 +31,7 @@ export class AcDDTableColumn {
   @AcBindJsonProperty({ skipInFromJson: true, skipInToJson: true })
   table?: AcDDTable;
 
-  static getInstance({tableName,columnName,dataDictionaryName="default"}: { tableName: string; columnName: string; dataDictionaryName?: string }): AcDDTableColumn {
+  static getInstance({ tableName, columnName, dataDictionaryName = "default" }: { tableName: string; columnName: string; dataDictionaryName?: string }): AcDDTableColumn {
     return AcDataDictionary.getTableColumn({ tableName, columnName, dataDictionaryName })!;
   }
 
@@ -41,42 +41,41 @@ export class AcDDTableColumn {
     return instance;
   }
 
-  static getDropColumnStatement({tableName,columnName,databaseType =AcEnumSqlDatabaseType.Unknown}: { tableName: string; columnName: string; databaseType?: string }): string {
-    // databaseType is ignored in your original, keep same behavior
+  static getDropColumnStatement({ tableName, columnName, databaseType = AcEnumSqlDatabaseType.Unknown }: { tableName: string; columnName: string; databaseType?: string }): string {
     return `ALTER Table ${tableName} DROP COLUMN ${columnName};`;
   }
 
   checkInAutoNumber(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.CheckInAutoNumber)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.CheckInAutoNumber)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.CheckInAutoNumber]) {
+      return this.columnProperties[AcEnumDDColumnProperty.CheckInAutoNumber].propertyValue === true;
     }
     return false;
   }
 
   checkInModify(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.CheckInModify)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.CheckInModify)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.CheckInModify]) {
+      return this.columnProperties[AcEnumDDColumnProperty.CheckInModify].propertyValue === true;
     }
     return false;
   }
 
   checkInSave(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.CheckInSave)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.CheckInSave)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.CheckInSave]) {
+      return this.columnProperties[AcEnumDDColumnProperty.CheckInSave].propertyValue === true;
     }
     return false;
   }
 
   getAutoNumberLength(): number {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.AutoNumberLength)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.AutoNumberLength)?.propertyValue ?? 0;
+    if (this.columnProperties[AcEnumDDColumnProperty.AutoNumberLength]) {
+      return this.columnProperties[AcEnumDDColumnProperty.AutoNumberLength].propertyValue ?? 0;
     }
     return 0;
   }
 
   getAutoNumberPrefix(): string {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.AutoNumberPrefix)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.AutoNumberPrefix)?.propertyValue ?? "";
+    if (this.columnProperties[AcEnumDDColumnProperty.AutoNumberPrefix]) {
+      return this.columnProperties[AcEnumDDColumnProperty.AutoNumberPrefix].propertyValue ?? "";
     }
     return "";
   }
@@ -86,34 +85,34 @@ export class AcDDTableColumn {
   }
 
   getDefaultValue(): any {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.DefaultValue)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.DefaultValue)?.propertyValue;
+    if (this.columnProperties[AcEnumDDColumnProperty.DefaultValue]) {
+      return this.columnProperties[AcEnumDDColumnProperty.DefaultValue].propertyValue;
     }
-    return undefined;
+    return null;
   }
 
   getColumnFormats(): string[] {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.Format)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.Format)?.propertyValue ?? [];
+    if (this.columnProperties[AcEnumDDColumnProperty.Format]) {
+      return this.columnProperties[AcEnumDDColumnProperty.Format].propertyValue ?? [];
     }
     return [];
   }
 
   getColumnTitle(): string {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.ColumnTitle)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.ColumnTitle)?.propertyValue ?? this.columnName;
+    if (this.columnProperties[AcEnumDDColumnProperty.ColumnTitle]) {
+      return this.columnProperties[AcEnumDDColumnProperty.ColumnTitle].propertyValue ?? this.columnName;
     }
     return this.columnName;
   }
 
-  getAddColumnStatement({tableName,databaseType = AcEnumSqlDatabaseType.Unknown}: { tableName: string; databaseType?: string }): string {
+  getAddColumnStatement({ tableName, databaseType = AcEnumSqlDatabaseType.Unknown }: { tableName: string; databaseType?: string }): string {
     if (databaseType === AcEnumSqlDatabaseType.MySql) {
       return `ALTER Table ${tableName} ADD COLUMN ${this.getColumnDefinitionForStatement({ databaseType })}`;
     }
     return "";
   }
 
-  getColumnDefinitionForStatement({databaseType = AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
+  getColumnDefinitionForStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string } = {}): string {
     let columnTypeLocal = this.columnType;
     let result = "";
     const defaultValue = this.getDefaultValue();
@@ -240,7 +239,15 @@ export class AcDDTableColumn {
   }
 
   fromJson({ jsonData }: { jsonData: any }): AcDDTableColumn {
-    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });
+    const json = { ...jsonData };
+
+    if (AcDDTableColumn.KeyColumnProperties in json && typeof json[AcDDTableColumn.KeyColumnProperties] === "object" && !Array.isArray(json[AcDDTableColumn.KeyColumnProperties])) {
+      for (const propertyData of Object.values(json[AcDDTableColumn.KeyColumnProperties]) as any) {
+        this.columnProperties[propertyData.property_name] = AcDDTableColumnProperty.instanceFromJson({ jsonData: propertyData });
+      }
+      delete json[AcDDTableColumn.KeyColumnProperties];
+    }
+    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: json });
     return this;
   }
 
@@ -252,15 +259,15 @@ export class AcDDTableColumn {
   }
 
   getSize(): number {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.Size)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.Size)?.propertyValue ?? 0;
+    if (this.columnProperties[AcEnumDDColumnProperty.Size]) {
+      return this.columnProperties[AcEnumDDColumnProperty.Size].propertyValue ?? 0;
     }
     return 0;
   }
 
   isAutoIncrement(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.AutoIncrement)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.AutoIncrement)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.AutoIncrement]) {
+      return this.columnProperties[AcEnumDDColumnProperty.AutoIncrement].propertyValue === true;
     }
     if (this.columnType === AcEnumDDColumnType.AutoIncrement) {
       return true;
@@ -277,8 +284,8 @@ export class AcDDTableColumn {
   }
 
   isInSearchQuery(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.InSearchQuery)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.InSearchQuery)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.InSearchQuery]) {
+      return this.columnProperties[AcEnumDDColumnProperty.InSearchQuery].propertyValue === true;
     }
     return false;
   }
@@ -288,54 +295,55 @@ export class AcDDTableColumn {
   }
 
   isNotNull(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.NotNull)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.NotNull)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.NotNull]) {
+      return this.columnProperties[AcEnumDDColumnProperty.NotNull].propertyValue === true;
     }
     return false;
   }
 
   isPrimaryKey(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.PrimaryKey)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.PrimaryKey)?.propertyValue === true;
+    let result = false;
+    if (this.columnProperties[AcEnumDDColumnProperty.PrimaryKey]) {
+      result = this.columnProperties[AcEnumDDColumnProperty.PrimaryKey].propertyValue == true;
     }
     if (this.columnType === AcEnumDDColumnType.AutoIncrement) {
-      return true;
+      result = true;
     }
-    return false;
+    return result;
   }
 
   isRequired(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.Required)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.Required)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.Required]) {
+      return this.columnProperties[AcEnumDDColumnProperty.Required].propertyValue === true;
     }
     return false;
   }
 
   isSelectDistinct(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.IsSelectDistinct)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.IsSelectDistinct)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.IsSelectDistinct]) {
+      return this.columnProperties[AcEnumDDColumnProperty.IsSelectDistinct].propertyValue === true;
     }
     return false;
   }
 
 
   isSetValuesNullBeforeDelete(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.SetNullBeforeDelete)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.SetNullBeforeDelete)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.SetNullBeforeDelete]) {
+      return this.columnProperties[AcEnumDDColumnProperty.SetNullBeforeDelete].propertyValue === true;
     }
     return false;
   }
 
   isUniqueKey(): boolean {
-    if (this.columnProperties.has(AcEnumDDColumnProperty.UniqueKey)) {
-      return this.columnProperties.get(AcEnumDDColumnProperty.UniqueKey)?.propertyValue === true;
+    if (this.columnProperties[AcEnumDDColumnProperty.UniqueKey]) {
+      return this.columnProperties[AcEnumDDColumnProperty.UniqueKey].propertyValue === true;
     }
     return false;
   }
 
   // Serialization and Deserialization with AcJsonUtils - stub implementations here
 
-   toJson(): Record<string, any> {
+  toJson(): Record<string, any> {
     return AcJsonUtils.getJsonDataFromInstance({ instance: this });
   }
 

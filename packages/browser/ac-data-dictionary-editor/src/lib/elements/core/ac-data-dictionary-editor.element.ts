@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcDDEApi, AcDDECssClassName, AcEnumDDETab, AcDDETableColumnsDatagrid, AcDDETablesDatagrid, AcDDETriggersDatagrid, AcEnumDDEHook, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroupAddHookArgs, AcDataDictionaryDatagrid } from "../../_ac-data-dictionary-editor.export";
+import { AcDDEApi, AcDDECssClassName, AcEnumDDETab, AcDDETableColumnsDatagrid, AcDDETablesDatagrid, AcDDETriggersDatagrid, AcEnumDDEHook, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroupAddHookArgs, AcDDEDatagridEditor } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridExtensionManager, acSetElementAttributes } from '@autocode-ts/ac-browser';
 import { AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataDictionaryEditorHeader } from "./ac-data-dictionary-editor-header.element";
@@ -18,7 +18,7 @@ export class AcDataDictionaryEditor {
   tabsContainer:HTMLElement = document.createElement('div');
   element: HTMLElement = document.createElement('div');
 
-  datagridEditor?: AcDataDictionaryDatagrid;
+  datagridEditor?: AcDDEDatagridEditor;
   header!: AcDataDictionaryEditorHeader;
   functionsDatagrid?: AcDDEFunctionsDatagrid;
   relationshipsDatagrid?: AcDDERelationshipsDatagrid;
@@ -93,7 +93,7 @@ export class AcDataDictionaryEditor {
     }
     if(tab == AcEnumDDETab.DataDictionaryEditor){
       if(this.datagridEditor == undefined){
-        this.datagridEditor = new AcDataDictionaryDatagrid({editorApi:this.editorApi});
+        this.datagridEditor = new AcDDEDatagridEditor({editorApi:this.editorApi});
         const tabContent = getElementTab(tab,this.datagridEditor.element);
         this.bodyElement.appendChild(tabContent);
       }

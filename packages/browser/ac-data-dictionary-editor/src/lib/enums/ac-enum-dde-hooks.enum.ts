@@ -1,10 +1,11 @@
 export const AcEnumDDEHook = {
   ActiveDataDictionaryChange: 'activeDataDictionaryChange',
   BeforeMenuGroupAdd: 'beforeMenuGroupAdd',
-  DataLoaded: 'dataLoaded',
+  DataDictionarySet: 'dataDictionarySet',
   DatagridActiveTableChange: 'datagridActiveTableChange',
   EditorInit: 'editorInit',
   EditorTabChange: 'editorTabChange',
   ExtensionEnabled: 'extensionEnabled',
-  MenuGroupAdd: 'menuGroupAdd'
+  MenuGroupAdd: 'menuGroupAdd',
+  StateChange: 'stateChange'
 }

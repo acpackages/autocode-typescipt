@@ -3,10 +3,10 @@ import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName } from "@a
 import { AcDDEApi } from "../../core/ac-dde-api";
 
 export class AcDDEDatagrid {
-  get columnDefinitions():IAcDatagridColumnDefinition[]{
+  get columnDefinitions(): IAcDatagridColumnDefinition[] {
     return this.datagridApi.columnDefinitions;
   }
-  set columnDefinitions(value:IAcDatagridColumnDefinition[]){
+  set columnDefinitions(value: IAcDatagridColumnDefinition[]) {
     this.datagridApi.columnDefinitions = value;
   }
 
@@ -14,17 +14,20 @@ export class AcDDEDatagrid {
   datagridApi!: AcDatagridApi;
   editorApi!: AcDDEApi;
   element!: HTMLElement;
-  footerElement:HTMLElement = document.createElement('div');
+  footerElement: HTMLElement = document.createElement('div');
 
-  private afterRowsExtension!:AcDatagridAfterRowsFooterExtension;
-  private autoAddNewRowExtension!:AcDatagridAutoAddNewRowExtension;
-  private columnDraggingExtension!:AcDatagridColumnDraggingExtension;
-  private columnsCustomizerExtension!:AcDatagridColumnsCustomizerExtension;
-  private exportXlsxExtension!:AcDatagridDataExportXlsxExtension;
-  private rowNumbersExtension!:AcDatagridRowNumbersExtension;
-  private rowSelectionExtension!:AcDatagridRowSelectionExtension;
-  private rowDraggingExtension!:AcDatagridRowDraggingExtension;
-  private agGridExtension!:AcDatagridOnAgGridExtension;
+  private afterRowsExtension!: AcDatagridAfterRowsFooterExtension;
+  private autoAddNewRowExtension!: AcDatagridAutoAddNewRowExtension;
+  private columnDraggingExtension!: AcDatagridColumnDraggingExtension;
+  private columnsCustomizerExtension!: AcDatagridColumnsCustomizerExtension;
+  private exportXlsxExtension!: AcDatagridDataExportXlsxExtension;
+  private rowNumbersExtension!: AcDatagridRowNumbersExtension;
+  private rowSelectionExtension!: AcDatagridRowSelectionExtension;
+  private rowDraggingExtension!: AcDatagridRowDraggingExtension;
+  private agGridExtension!: AcDatagridOnAgGridExtension;
+  newRowDataFunction:Function = ()=>{
+    return {};
+  };
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
@@ -42,14 +45,16 @@ export class AcDDEDatagrid {
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
     this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
     this.footerElement.innerHTML = `<button class="btn btn-primary btn-add-new" type="button">Add New</button>`;
-    const addNewButton:HTMLElement = this.footerElement.querySelector('.btn-add-new')!;
-    addNewButton.addEventListener('click',(event:MouseEvent)=>{
-      this.datagridApi.addRow();
+    const addNewButton: HTMLElement = this.footerElement.querySelector('.btn-add-new')!;
+    addNewButton.addEventListener('click', (event: MouseEvent) => {
+      this.datagridApi.addRow({data:this.newRowDataFunction()});
     });
     this.afterRowsExtension.footerElement = this.footerElement;
-    this.datagridApi.on({eventName:AcEnumDatagridEvent.StateChange,callback:(args:any)=>{
-      console.log(args);
-    }})
-    }
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.StateChange, callback: (args: any) => {
+        console.log(args);
+      }
+    })
+  }
 
 }

@@ -2,10 +2,12 @@
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
 import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
-import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator';
+import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator'
+import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson } from './../../../../data/act-data-dictionary-v1';
 // import { dataDictionaryJson } from './../../../../data/data_dictionary';
+// import { dataDictionaryJson } from './../../../../data/dde-data-dictionary';
 
 export class DDEEditorDatagridPage  extends HTMLElement {
   dataDictionaryEditor!: AcDataDictionaryEditor;
@@ -25,6 +27,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
   async initDatagrid() {
     const gridDiv = document.querySelector<HTMLElement>('#editorContainer');
     if (gridDiv) {
+      AcDDEExtensionManager.register(AcBrowserStorageDDEExtension);
       AcDDEExtensionManager.register(AcCodeGeneratorDDEExtension);
       this.dataDictionaryEditor = new AcDataDictionaryEditor();
       this.editorApi = this.dataDictionaryEditor.editorApi;
@@ -32,9 +35,10 @@ export class DDEEditorDatagridPage  extends HTMLElement {
         // console.log(`Found hook : ${hookName}`,hookArgs);
       }});
       this.editorApi.enableExtension({extensionName:AcEnumDDEExtension.ImportExport});
+      this.editorApi.enableExtension({extensionName:AcBrowserStorageDDEExtension.extensionName});
       this.editorApi.enableExtension({extensionName:AcCodeGeneratorDDEExtension.extensionName});
-      this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'default'});
-      // this.editorApi.addDataDictionaryJson({dataDictionaryJson:{},dataDictionaryName:'accountea'});
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson});
+      this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'accountea'});
       gridDiv.append(this.dataDictionaryEditor.element);
       // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
 

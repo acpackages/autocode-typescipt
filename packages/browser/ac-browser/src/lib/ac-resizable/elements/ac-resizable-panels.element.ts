@@ -52,6 +52,14 @@ export class AcResizablePanels {
     this.resizeObserver.disconnect();
   }
 
+  getPanelSizes() {
+    const panelSizes:IAcResizablePanelSize[] = [];
+    for(const panel of this.panels){
+      panelSizes.push({index:panel.index,size:panel.size});
+    }
+    return panelSizes;
+  }
+
   private observePanelSizes() {
     this.resizeObserver = new ResizeObserver(() => {
       this.updatePanelSizes();
@@ -253,6 +261,7 @@ export class AcResizablePanels {
         this.updateTimeout = undefined;
         const event: IAcResizablePanelResizeEvent = {
           panels: this.panels,
+          panelSizes:this.getPanelSizes(),
           resizableInstance: this
         }
         this.events.execute({ eventName: AcEnumResizableEvent.resize, args: event });

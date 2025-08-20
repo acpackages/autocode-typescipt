@@ -10,7 +10,7 @@ import { AcDDEDatagridNumberInput } from "../inputs/ac-dde-datagrid-number-input
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridSelectOptionsInput } from "../inputs/ac-dde-datagrid-select-options-input.element";
 import { AcDDEDatagridSelectFormatInput } from "../inputs/ac-dde-datagrid-select-format-input.elemen";
-import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 

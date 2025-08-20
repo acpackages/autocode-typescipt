@@ -220,12 +220,14 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
+    datagridCell.hooks.execute({ hookName: AcEnumDatagridHook.CellValueChange, args: hookArgs });
     this.datagridApi.hooks.execute({ hookName: AcEnumDatagridHook.CellValueChange, args: hookArgs });
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
       event: event
     };
+    datagridCell.events.execute({ eventName: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
     this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
   }
 
@@ -492,7 +494,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.datagridState.refresh();
     const eventArgs: IAcDatagridStateChangeEvent = {
       datagridApi: this.datagridApi,
-      datagridStateJson: this.datagridApi.datagridState.toJson(),
+      datagridState: this.datagridApi.datagridState.toJson(),
       event: event
     };
     this.datagridApi.events.execute({ eventName: AcEnumDatagridEvent.StateChange, args: eventArgs });

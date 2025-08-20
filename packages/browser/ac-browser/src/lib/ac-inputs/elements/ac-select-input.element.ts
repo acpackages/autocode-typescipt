@@ -238,6 +238,9 @@ export class AcSelectInput extends AcInputBase {
     this.listEl.innerHTML = "";
     for (let i = 0; i < this._filteredOptions.length; i++) {
       const row = this.buildOptionElement(this._filteredOptions[i], i);
+      if(this.name == 'source_column_id'){
+        console.log(row);
+      }
       this.listEl.appendChild(row);
     }
     this.scrollable.registerExistingElements();

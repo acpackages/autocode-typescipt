@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -18,17 +19,15 @@ import {
   AcEnumDDSelectMode,
 } from "@autocode-ts/ac-data-dictionary";
 import { AcEncryption, AcEnumSqlDatabaseType, AcResult } from "@autocode-ts/autocode";
+import { AcBrowser } from "@autocode-ts/ac-browser";
 
 export class AcSqliteDao extends AcBaseSqlDao {
+  static wasmUrl:string = "https://sql.js.org/dist/sql-wasm.wasm";
   private SQL!: SqlJsStatic;
   private db!: Database;
 
   private async _getConnection(): Promise<Database> {
-    if (!this.SQL) {
-      this.SQL = await initSqlJs({
-         locateFile: file => `https://sql.js.org/dist/${file}`
-      });
-    }
+    this.db = (await this.loadFromIndexedDB())!;
     if (!this.db) {
       this.db = new this.SQL.Database();
     }
@@ -52,7 +51,15 @@ export class AcSqliteDao extends AcBaseSqlDao {
   override async checkDatabaseExist(): Promise<AcResult> {
     const result = new AcResult();
     try {
-      result.setSuccess({ value: true, message: "sql.js always has an in-memory DB" });
+
+      const db = await this.loadFromIndexedDB();
+      if (db) {
+        result.setSuccess({ value: true, message: "found database in indexedDB" });
+      }
+      else {
+        result.setSuccess({ value: false, message: "did not find database in indexedDB" });
+      }
+
     } catch (ex) {
       result.setException({ exception: ex });
     }
@@ -83,7 +90,8 @@ export class AcSqliteDao extends AcBaseSqlDao {
     const result = new AcResult();
     try {
       await this._getConnection();
-      result.setSuccess({ value: true, message: "Database created (in-memory or file)" });
+      result.setSuccess({ value: true, message: "Database created" });
+      await this.saveToIndexedDB();
     } catch (ex) {
       result.setException({ exception: ex });
     }
@@ -113,6 +121,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
       stmt.free();
       result.affectedRowsCount = db.getRowsModified();
       result.setSuccess();
+      await this.saveToIndexedDB();
     } catch (ex) {
       result.setException({ exception: ex });
     }
@@ -142,6 +151,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
       }
       db.exec("COMMIT");
       result.setSuccess();
+      await this.saveToIndexedDB();
     } catch (ex) {
       const db = await this._getConnection();
       db.exec("ROLLBACK");
@@ -171,6 +181,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
       }
       stmt.free();
       result.setSuccess();
+      await this.saveToIndexedDB();
     } catch (ex) {
       result.setException({ exception: ex });
     }
@@ -225,6 +236,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
       stmt.free();
       result.setSuccess();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -246,6 +258,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
       stmt.free();
       result.setSuccess();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -266,11 +279,11 @@ export class AcSqliteDao extends AcBaseSqlDao {
       stmt.free();
       result.setSuccess();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
-
 
   override async getRows({
     statement,
@@ -310,6 +323,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
       stmt.free();
       result.setSuccess();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -350,6 +364,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
 
       result.setSuccess();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -390,11 +405,11 @@ export class AcSqliteDao extends AcBaseSqlDao {
 
       result.setSuccess();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
-
 
   override async insertRow({
     tableName,
@@ -411,16 +426,22 @@ export class AcSqliteDao extends AcBaseSqlDao {
       const sql = `INSERT INTO ${tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
       const stmt = db.prepare(sql);
       stmt.bind(columns.map((c) => row[c]));
-      stmt.step();
+      stmt.step();  // <-- actually executes
       stmt.free();
-      const idRes = this._exec(db, "SELECT last_insert_rowid() as id");
-      result.lastInsertedId = idRes[0]?.values[0][0] ?? 0;
+
+      // get last insert ID
+      const idRes = db.exec("SELECT last_insert_rowid() AS id");
+      result.lastInsertedId = idRes[0]?.values?.[0]?.[0] ?? 0;
+
       result.setSuccess();
+      await this.saveToIndexedDB();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
+
 
   override async insertRows({
     tableName,
@@ -430,26 +451,45 @@ export class AcSqliteDao extends AcBaseSqlDao {
     rows: Array<Record<string, any>>;
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Insert });
+    let db: Database | null = null;
+
     try {
-      const db = await this._getConnection();
+      db = await this._getConnection();
+
       if (rows.length > 0) {
         const columns = Object.keys(rows[0]);
         const placeholders = columns.map(() => "?").join(", ");
         const sql = `INSERT INTO ${tableName} (${columns.join(", ")}) VALUES (${placeholders})`;
+
         db.exec("BEGIN");
+
+        const stmt = db.prepare(sql);
         for (const row of rows) {
-          this._exec(db, sql, columns.map((c) => row[c]));
+          stmt.bind(columns.map((c) => row[c]));
+          stmt.step();
+          stmt.reset(); // important for reuse
         }
+        stmt.free();
+
         db.exec("COMMIT");
+
         result.setSuccess();
+        await this.saveToIndexedDB();
       } else {
         result.setSuccess({ value: true, message: "No rows to insert." });
       }
     } catch (ex: any) {
-      const db = await this._getConnection();
-      db.exec("ROLLBACK");
+      console.error(ex);
+      if (db) {
+        try {
+          db.exec("ROLLBACK");
+        } catch {
+          //
+        }
+      }
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
+
     return result;
   }
 
@@ -473,7 +513,9 @@ export class AcSqliteDao extends AcBaseSqlDao {
       this._exec(db, sql, values);
       result.affectedRowsCount = db.getRowsModified();
       result.setSuccess();
+      await this.saveToIndexedDB();
     } catch (ex: any) {
+      console.error(ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
@@ -504,16 +546,106 @@ export class AcSqliteDao extends AcBaseSqlDao {
       }
       db.exec("COMMIT");
       result.setSuccess();
+      await this.saveToIndexedDB();
     } catch (ex: any) {
+      console.error(ex);
       const db = await this._getConnection();
       db.exec("ROLLBACK");
       result.setException({ exception: ex, stackTrace: ex.stack });
     }
     return result;
   }
+
+  private loadFromIndexedDB(): Promise<Database | null> {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open("sqljs_dbs", 1);
+
+      request.onupgradeneeded = () => {
+        // Make sure the store exists
+        if (!request.result.objectStoreNames.contains("databases")) {
+          request.result.createObjectStore("databases");
+        }
+      };
+
+      request.onsuccess = () => {
+        const db = request.result; // <- keep a reference
+        const tx = db.transaction("databases", "readonly");
+        const store = tx.objectStore("databases");
+
+        const getReq = store.get(this.sqlConnection.database);
+
+        getReq.onsuccess = async () => {
+          if (!this.SQL) {
+            this.SQL = await initSqlJs({
+              locateFile: file => AcSqliteDao.wasmUrl
+            });
+          }
+          if (getReq.result) {
+            const data = new Uint8Array(getReq.result as ArrayBuffer);
+            resolve(new this.SQL.Database(data));
+          } else {
+            resolve(null);
+          }
+        };
+
+        getReq.onerror = () => reject(getReq.error);
+
+        tx.oncomplete = () => {
+          db.close(); // ✅ always close to avoid "database is locked" errors
+        };
+      };
+
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+
+  private saveToIndexedDB(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open("sqljs_dbs", 1);
+
+      request.onupgradeneeded = () => {
+        const dbInstance = request.result;
+        if (!dbInstance.objectStoreNames.contains("databases")) {
+          dbInstance.createObjectStore("databases");
+        }
+      };
+
+      request.onsuccess = () => {
+        const dbInstance = request.result;
+        const tx = dbInstance.transaction("databases", "readwrite");
+        const store = tx.objectStore("databases");
+        if (this.sqlConnection.database) {
+          // Store ArrayBuffer instead of Uint8Array
+          const putReq = store.put(this.db.export().buffer, this.sqlConnection.database);
+
+          putReq.onsuccess = () => {
+            resolve();
+          };
+          putReq.onerror = () => {
+            reject(putReq.error);
+          };
+        }
+
+
+      };
+
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  downloadDatabaseFile() {
+    // Export database as Uint8Array
+    const data:any = this.db.export();
+
+    // Create a blob with correct MIME type
+    const blob = new Blob([data], { type: "application/octet-stream" });
+
+    AcBrowser.downloadFile({ content: blob, filename: `${this.sqlConnection.database}.sqlite` });
+  }
 }
 
 
-export function initSqliteBrowserDao(){
+export function initSqliteBrowserDao() {
   AcDatabaseTypeDaoClassMap[AcEnumSqlDatabaseType.Sqlite] = AcSqliteDao;
 }

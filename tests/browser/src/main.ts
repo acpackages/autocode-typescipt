@@ -30,6 +30,7 @@ import { SlidesBasicTestPage } from './pages/slides/slides-basic-test.page';
 import { VirtualTestScrollPage } from './pages/scrollable/virtual-test-scroll.page';
 import { VirtualScrollDirectDomTestPage } from './pages/scrollable/virtual-scroll-direct-dom-test.page';
 import { SQLiteDaoTestPage } from './pages/dao/sqlite-dao-test-page.page';
+import { AcSqliteDao } from '@autocode-ts/ac-sqlite-browser';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -47,6 +48,8 @@ AcDatagridRowDraggingHtmlPlaceholder.drag = `<i class="fa-solid fa-grip-lines"><
 
 AcDatagridTreeTableHtmlPlaceholder.treeClosed = `<i class="fa-solid fa-plus"></i>`;
 AcDatagridTreeTableHtmlPlaceholder.treeOpen = `<i class="fa-solid fa-minus"></i>`;
+
+AcSqliteDao.wasmUrl = './assets/vendor/sql.js/sql-wasm.wasm';
 
 window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRoute({label:'Dashboard',path:'/',componentTag:'dashboard-page',component:DashboardPage});

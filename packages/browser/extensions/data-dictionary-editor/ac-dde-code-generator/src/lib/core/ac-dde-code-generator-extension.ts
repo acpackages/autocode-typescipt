@@ -39,6 +39,6 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
 }
 
 export const AcCodeGeneratorDDEExtension: IAcDDEExtension = {
-  extensionName: 'codeGeneratorExtension',
+  extensionName: 'browserStorageExtension',
   extensionClass: AcDDECodeGeneratorExtension
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcHooks, Autocode } from "@autocode-ts/autocode";
+import { AcEvents, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { AcDatagridCellElement } from "../elements/ac-datagrid-cell.element";
 import { AcDatagridRow } from "./ac-datagrid-row.model";
 import { AcDatagridColumn } from "./ac-datagrid-column.model";
@@ -10,6 +10,7 @@ export class AcDatagridCell {
   datagridApi!: AcDatagridApi;
   datagridRow!: AcDatagridRow;
   datagridColumn!: AcDatagridColumn;
+  events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   isFocused:boolean = false;
   hooks: AcHooks = new AcHooks();
@@ -43,5 +44,9 @@ export class AcDatagridCell {
     this.datagridRow = datagridRow;
     this.datagridRow.datagridCells.push(this);
     this.instance = instance;
+  }
+
+  on({eventName,callback}:{eventName:string,callback:Function}):string{
+    return this.events.subscribe({eventName,callback});
   }
 }

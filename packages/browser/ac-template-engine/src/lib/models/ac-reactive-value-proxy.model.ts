@@ -3,7 +3,7 @@ import { IAcReactiveValueProxyEvent } from "../interfaces/ac-reactive-value-prox
 import { AcEnumReactiveValueProxyEvent } from "../enums/ac-enum-reactive-value-proxy-event.enum";
 export class AcReactiveValueProxy {
   value: any;
-  valueProxy!: any;
+  valueProxy: ProxyConstructor;
   private events: AcEvents = new AcEvents();
   constructor(value: any) {
     this.value = value;

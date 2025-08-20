@@ -1,0 +1,9 @@
+{
+  "name": "ac-dde-browser-storage",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/extensions/data-dictionary-editor/ac-dde-browser-storage/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-dde-browser-storage --web",
+  "targets": {}
+}

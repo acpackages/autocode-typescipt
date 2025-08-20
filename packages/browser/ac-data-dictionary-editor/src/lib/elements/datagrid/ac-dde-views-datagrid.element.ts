@@ -6,9 +6,9 @@ import { AcDDView } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
-import { AcDDEDatagridRowAction } from "../components/ac-dde-datagrid-row-action.element";
+import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
-import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
+import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 
 export class AcDDEViewsDatagrid {
   ddeDatagrid: AcDDEDatagrid;
@@ -64,7 +64,7 @@ export class AcDDEViewsDatagrid {
     });
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataLoaded, callback: () => {
+      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setViewsData();
       }
     });

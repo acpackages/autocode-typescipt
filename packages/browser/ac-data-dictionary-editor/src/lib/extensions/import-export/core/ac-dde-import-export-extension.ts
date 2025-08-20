@@ -22,7 +22,7 @@ export class AcDDEImportExportExtension extends AcDDEExtension {
             const jsonString = await files[0].text();
             try{
               const dataDictionaryJson = JSON.parse(jsonString);
-              this.editorApi.addDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'default'});
+              this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson});
             }
             catch(ex){
               alert("Error parsing json");

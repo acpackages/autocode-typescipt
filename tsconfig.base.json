@@ -32,6 +32,9 @@
       "@autocode-ts/ac-datagrid-on-ag-grid": [
         "packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/index.ts"
       ],
+      "@autocode-ts/ac-dde-browser-storage": [
+        "packages/browser/extensions/data-dictionary-editor/ac-dde-browser-storage/src/index.ts"
+      ],
       "@autocode-ts/ac-dde-code-generator": [
         "packages/browser/extensions/data-dictionary-editor/ac-dde-code-generator/src/index.ts"
       ],

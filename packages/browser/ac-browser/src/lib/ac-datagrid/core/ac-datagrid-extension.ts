@@ -16,7 +16,7 @@ export abstract class AcDatagridExtension{
     // Hooks implementation
   }
 
-  setState({stateValue}:{stateValue:any}){
+  setState({state}:{state:any}){
     // Set state implementation
   }
 }

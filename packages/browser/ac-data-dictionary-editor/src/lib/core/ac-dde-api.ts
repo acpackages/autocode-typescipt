@@ -4,7 +4,6 @@
 import { AcEvents, AcHooks } from "@autocode-ts/autocode";
 import { AcDDTableColumn, AcDDTable, AcDataDictionary, AcDDView, AcDDViewColumn, AcDDTrigger, AcDDRelationship, AcDDFunction, AcDDStoredProcedure } from "@autocode-ts/ac-data-dictionary";
 import { IAcDDEMenuGroup } from "../interfaces/ac-dde-menu-group.interface";
-import { AcDDEDataStorage } from "../models/ac-dde-data-storage.model";
 import { AcDDEExtension } from "./ac-dde-extension";
 import { IAcDDEMenuGroupAddHookArgs } from "../interfaces/hook-args/ac-dde-menu-group-add-hook-args.interface";
 import { AcEnumDDEHook } from "../enums/ac-enum-dde-hooks.enum";
@@ -13,7 +12,10 @@ import { IAcDDEExtensionEnabledHookArgs } from "../interfaces/hook-args/ac-dde-e
 import { IAcDDEDataDictionaryRow } from "../interfaces/ac-dde-data-dictionary-row.inteface";
 import { AcDataDictionaryEditor } from "../elements/core/ac-data-dictionary-editor.element";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
-import { AcEnumDDETab, IAcDDEHookArgs } from "../_ac-data-dictionary-editor.export";
+import { AcDDEEventHandler, AcEnumDDETab, IAcDDEHookArgs } from "../_ac-data-dictionary-editor.export";
+import { IAcDDEState } from "../interfaces/ac-dde-state.interface";
+import { AcDDEState } from "./ac-dde-state";
+import { AcDDEDataStorage } from "./ac-dde-data-storage";
 
 export class AcDDEApi {
   private _activeDataDictionary?: IAcDDEDataDictionaryRow;
@@ -44,24 +46,189 @@ export class AcDDEApi {
     this.hooks.execute({ hookName: AcEnumDDEHook.EditorTabChange, args: hookArgs });
   }
 
-  dataStorage: AcDDEDataStorage = new AcDDEDataStorage({ editorApi: this });
+  dataStorage: AcDDEDataStorage;
   editor!: AcDataDictionaryEditor;
+  editorState: AcDDEState;
   events: AcEvents = new AcEvents();
+  eventHandler: AcDDEEventHandler;
   extensions: Record<string, AcDDEExtension> = {};
   hooks: AcHooks = new AcHooks();
   menus: IAcDDEMenuGroup[] = [];
 
   constructor({ editor }: { editor: AcDataDictionaryEditor }) {
     editor = this.editor;
+    this.eventHandler = new AcDDEEventHandler({editorApi:this});
+    this.dataStorage = new AcDDEDataStorage({ editorApi: this });
+    this.editorState = new AcDDEState({ editorApi: this });
     AcDDEExtensionManager.registerBuiltInExtensions();
   }
 
-  addDataDictionaryJson({ dataDictionaryJson, dataDictionaryName }: { dataDictionaryName: string, dataDictionaryJson: any }) {
+  addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }) {
+    this.menus.push(menuGroup);
+    const hookArgs: IAcDDEMenuGroupAddHookArgs = {
+      editorApi: this,
+      menuGroup: menuGroup
+    };
+    this.hooks.execute({ hookName: AcEnumDDEHook.MenuGroupAdd, args: hookArgs });
+  }
+
+  enableExtension({ extensionName }: { extensionName: string }): AcDDEExtension | null {
+    if (AcDDEExtensionManager.hasExtension({ extensionName: extensionName })) {
+      const extensionInstance = AcDDEExtensionManager.createInstance({ extensionName: extensionName });
+      if (extensionInstance) {
+        extensionInstance.editorApi = this;
+        const hookId: string = this.hooks.subscribeAllHooks({
+          callback: (hookName: string, args: any) => {
+            extensionInstance.handleHook({ hookName: hookName, hookArgs: args });
+          }
+        });
+        extensionInstance.hookId = hookId;
+        extensionInstance.init();
+        this.extensions[extensionName] = extensionInstance;
+        const hookArgs: IAcDDEExtensionEnabledHookArgs = {
+          extensionName: extensionName,
+          editorApi: this,
+        };
+        this.hooks.execute({ hookName: AcEnumDDEHook.ExtensionEnabled, args: hookArgs });
+        return extensionInstance;
+      }
+    }
+    return null;
+  }
+
+  getDataDictionaryJson({ dataDictionaryId }: { dataDictionaryId: string }) {
+    const dataDictionary: any = {
+      [AcDataDictionary.KeyName]: 0,
+      [AcDataDictionary.KeyVersion]: 0,
+      [AcDataDictionary.KeyTables]: {},
+      [AcDataDictionary.KeyViews]: {},
+      [AcDataDictionary.KeyRelationships]: [],
+      [AcDataDictionary.KeyStoredProcedures]: {},
+      [AcDataDictionary.KeyFunctions]: {},
+    };
+    const dataDictionaryRows = this.dataStorage.getDataDictionaries({ dataDictionaryId: dataDictionaryId });
+    if (dataDictionaryRows.length > 0) {
+      const dataDictionartRow: IAcDDEDataDictionaryRow = dataDictionaryRows[0];
+      dataDictionary[AcDataDictionary.KeyVersion] = dataDictionartRow.data_dictionary_version;
+      dataDictionary[AcDataDictionary.KeyName] = dataDictionartRow.data_dictionary_name;
+
+      const tables: any = {};
+      for (const tableRow of this.dataStorage.getTables({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        const columns: any = {};
+        for (const columnRow of this.dataStorage.getTableColumns({ tableId: tableRow.table_id! })) {
+          columns[columnRow.column_name!] = {
+            [AcDDTableColumn.KeyColumnName]: columnRow.column_name,
+            [AcDDTableColumn.KeyColumnType]: columnRow.column_type,
+            [AcDDTableColumn.KeyColumnProperties]: columnRow.column_properties
+          };
+        }
+        tables[tableRow.table_name!] = {
+          [AcDDTable.KeyTableName]: tableRow.table_name,
+          [AcDDTable.KeyTableColumns]: columns,
+          [AcDDTable.KeyTableProperties]: tableRow.table_properties
+        };
+      }
+      dataDictionary[AcDataDictionary.KeyTables] = tables;
+
+      const views: any = {};
+      for (const viewRow of this.dataStorage.getViews({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        const columns: any = {};
+        for (const columnRow of this.dataStorage.getViewColumns({ viewId: viewRow.view_id })) {
+          columns[columnRow.column_name!] = {
+            [AcDDViewColumn.KeyColumnName]: columnRow.column_name,
+            [AcDDViewColumn.KeyColumnType]: columnRow.column_type,
+            [AcDDViewColumn.KeyColumnProperties]: columnRow.column_properties,
+            [AcDDViewColumn.KeyColumnSource]: columnRow.column_source,
+            [AcDDViewColumn.KeyColumnSourceName]: columnRow.column_source_name,
+          };
+        }
+        views[viewRow.view_name!] = {
+          [AcDDView.KeyViewName]: viewRow.view_name,
+          [AcDDView.KeyViewColumns]: columns,
+          [AcDDView.KeyViewQuery]: viewRow.view_query,
+        };
+      }
+      dataDictionary[AcDataDictionary.KeyViews] = views;
+
+      const relationships: any[] = [];
+      for (const relationshipRow of this.dataStorage.getRelationships({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        if (
+          this.dataStorage.hasTableColumnWithId(relationshipRow.destination_column_id!) &&
+          this.dataStorage.hasTableColumnWithId(relationshipRow.source_column_id!) &&
+          this.dataStorage.hasTableWithId(relationshipRow.destination_table_id!) &&
+          this.dataStorage.hasTableWithId(relationshipRow.source_table_id!)
+        ) {
+          relationships.push({
+            [AcDDRelationship.KeyCascadeDeleteDestination]: relationshipRow.cascade_delete_destination,
+            [AcDDRelationship.KeyCascadeDeleteSource]: relationshipRow.cascade_delete_source,
+            [AcDDRelationship.KeyDestinationColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.destination_column_id })[0].column_name,
+            [AcDDRelationship.KeyDestinationTable]: this.dataStorage.getTables({ tableId: relationshipRow.destination_table_id })[0].table_name,
+            [AcDDRelationship.KeySourceColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.source_column_id })[0].column_name,
+            [AcDDRelationship.KeySourceTable]: this.dataStorage.getTables({ tableId: relationshipRow.source_table_id })[0].table_name
+          });
+        }
+      }
+      dataDictionary[AcDataDictionary.KeyRelationships] = relationships;
+
+      const triggers: any = {};
+      for (const triggerRow of this.dataStorage.getTriggers({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        if (this.dataStorage.hasTableWithId(triggerRow.table_id!)) {
+          triggers[triggerRow.trigger_name!] = ({
+            [AcDDTrigger.KeyTriggerExecution]: triggerRow.trigger_execution,
+            [AcDDTrigger.KeyRowOperation]: triggerRow.row_operation,
+            [AcDDTrigger.KeyTableName]: this.dataStorage.getTables({ tableId: triggerRow.table_id })[0].table_name,
+            [AcDDTrigger.KeyTriggerName]: triggerRow.trigger_name,
+            [AcDDTrigger.KeyTriggerCode]: triggerRow.trigger_code,
+          });
+        }
+      }
+      dataDictionary[AcDataDictionary.KeyTriggers] = triggers;
+
+      const functions: any = {};
+      for (const functionRow of this.dataStorage.getFunctions({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        functions[functionRow.function_name!] = ({
+          [AcDDFunction.KeyFunctionName]: functionRow.function_name,
+          [AcDDFunction.KeyFunctionCode]: functionRow.function_code
+        });
+      }
+      dataDictionary[AcDataDictionary.KeyFunctions] = functions;
+
+      const storedProcedures: any = {};
+      for (const storedProcedureRow of this.dataStorage.getStoredProcedures({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+        functions[storedProcedureRow.stored_procedure_name!] = ({
+          [AcDDStoredProcedure.KeyStoredProcedureName]: storedProcedureRow.stored_procedure_name,
+          [AcDDStoredProcedure.KeyStoredProcedureCode]: storedProcedureRow.stored_procedure_code
+        });
+      }
+      dataDictionary[AcDataDictionary.KeyFunctions] = storedProcedures;
+    }
+    return dataDictionary;
+  }
+
+  getState(): IAcDDEState {
+    return this.editorState.toJson();
+  }
+
+  on({eventName,callback}:{eventName:string,callback:Function}):string{
+    return this.events.subscribe({eventName,callback});
+  }
+
+  setDataDictionaryJson({ dataDictionaryJson, dataDictionaryName }: { dataDictionaryName?: string, dataDictionaryJson: any }) {
     let version: number = 0;
     if (dataDictionaryJson[AcDataDictionary.KeyVersion]) {
       version = dataDictionaryJson[AcDataDictionary.KeyVersion];
     }
-    const dataDictionaryRow = this.dataStorage.addDataDictionary({ data_dictionary_name: dataDictionaryName, data_dictionary_version: version });
+    if(dataDictionaryName == undefined && dataDictionaryJson[AcDataDictionary.KeyName]){
+      dataDictionaryName = dataDictionaryJson[AcDataDictionary.KeyName];
+    }
+    const dataDictionaries = this.dataStorage.getDataDictionaries({dataDictionaryName:dataDictionaryName});
+    let dataDictionaryRow:IAcDDEDataDictionaryRow;
+    if(dataDictionaries.length > 0){
+      dataDictionaryRow = dataDictionaries[0];
+    }
+    else{
+      dataDictionaryRow = this.dataStorage.addDataDictionary({ data_dictionary_name: dataDictionaryName, data_dictionary_version: version });
+    }
     const dataDictionaryId = dataDictionaryRow.data_dictionary_id;
 
     if (dataDictionaryJson[AcDataDictionary.KeyTables]) {
@@ -196,147 +363,11 @@ export class AcDDEApi {
       }
     }
 
-    this.hooks.execute({ hookName: AcEnumDDEHook.DataLoaded });
+    this.hooks.execute({ hookName: AcEnumDDEHook.DataDictionarySet });
   }
 
-  addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }) {
-    this.menus.push(menuGroup);
-    const hookArgs: IAcDDEMenuGroupAddHookArgs = {
-      editorApi: this,
-      menuGroup: menuGroup
-    };
-    this.hooks.execute({ hookName: AcEnumDDEHook.MenuGroupAdd, args: hookArgs });
-  }
-
-  enableExtension({ extensionName }: { extensionName: string }): AcDDEExtension | null {
-    if (AcDDEExtensionManager.hasExtension({ extensionName: extensionName })) {
-      const extensionInstance = AcDDEExtensionManager.createInstance({ extensionName: extensionName });
-      if (extensionInstance) {
-        extensionInstance.editorApi = this;
-        const hookId: string = this.hooks.subscribeAllHooks({
-          callback: (hookName: string, args: any) => {
-            extensionInstance.handleHook({ hookName: hookName, hookArgs: args });
-          }
-        });
-        extensionInstance.hookId = hookId;
-        extensionInstance.init();
-        this.extensions[extensionName] = extensionInstance;
-        const hookArgs: IAcDDEExtensionEnabledHookArgs = {
-          extensionName: extensionName,
-          editorApi: this,
-        };
-        this.hooks.execute({ hookName: AcEnumDDEHook.ExtensionEnabled, args: hookArgs });
-        return extensionInstance;
-      }
-    }
-    return null;
-  }
-
-  getDataDictionaryJson({ dataDictionaryId }: { dataDictionaryId: string }) {
-    const dataDictionary: any = {
-      [AcDataDictionary.KeyVersion]: 0,
-      [AcDataDictionary.KeyTables]: {},
-      [AcDataDictionary.KeyViews]: {},
-      [AcDataDictionary.KeyRelationships]: [],
-      [AcDataDictionary.KeyStoredProcedures]: {},
-      [AcDataDictionary.KeyFunctions]: {},
-    };
-    const dataDictionaryRows = this.dataStorage.getDataDictionaries({ dataDictionaryId: dataDictionaryId });
-    if (dataDictionaryRows.length > 0) {
-      const dataDictionartRow: IAcDDEDataDictionaryRow = dataDictionaryRows[0];
-      dataDictionary[AcDataDictionary.KeyVersion] = dataDictionartRow.data_dictionary_version;
-
-      const tables: any = {};
-      for (const tableRow of this.dataStorage.getTables({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        const columns: any = {};
-        for (const columnRow of this.dataStorage.getTableColumns({ tableId: tableRow.table_id! })) {
-          columns[columnRow.column_name!] = {
-            [AcDDTableColumn.KeyColumnName]: columnRow.column_name,
-            [AcDDTableColumn.KeyColumnType]: columnRow.column_type,
-            [AcDDTableColumn.KeyColumnProperties]: columnRow.column_properties
-          };
-        }
-        tables[tableRow.table_name!] = {
-          [AcDDTable.KeyTableName]: tableRow.table_name,
-          [AcDDTable.KeyTableColumns]: columns,
-          [AcDDTable.KeyTableProperties]: tableRow.table_properties
-        };
-      }
-      dataDictionary[AcDataDictionary.KeyTables] = tables;
-
-      const views: any = {};
-      for (const viewRow of this.dataStorage.getViews({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        const columns: any = {};
-        for (const columnRow of this.dataStorage.getViewColumns({ viewId: viewRow.view_id })) {
-          columns[columnRow.column_name!] = {
-            [AcDDViewColumn.KeyColumnName]: columnRow.column_name,
-            [AcDDViewColumn.KeyColumnType]: columnRow.column_type,
-            [AcDDViewColumn.KeyColumnProperties]: columnRow.column_properties,
-            [AcDDViewColumn.KeyColumnSource]: columnRow.column_source,
-            [AcDDViewColumn.KeyColumnSourceName]: columnRow.column_source_name,
-          };
-        }
-        views[viewRow.view_name!] = {
-          [AcDDView.KeyViewName]: viewRow.view_name,
-          [AcDDView.KeyViewColumns]: columns,
-          [AcDDView.KeyViewQuery]: viewRow.view_query,
-        };
-      }
-      dataDictionary[AcDataDictionary.KeyViews] = views;
-
-      const relationships: any[] = [];
-      for (const relationshipRow of this.dataStorage.getRelationships({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        if (
-          this.dataStorage.hasTableColumnWithId(relationshipRow.destination_column_id!) &&
-          this.dataStorage.hasTableColumnWithId(relationshipRow.source_column_id!) &&
-          this.dataStorage.hasTableWithId(relationshipRow.destination_table_id!) &&
-          this.dataStorage.hasTableWithId(relationshipRow.source_table_id!)
-        ) {
-          relationships.push({
-            [AcDDRelationship.KeyCascadeDeleteDestination]: relationshipRow.cascade_delete_destination,
-            [AcDDRelationship.KeyCascadeDeleteSource]: relationshipRow.cascade_delete_source,
-            [AcDDRelationship.KeyDestinationColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.destination_column_id })[0].column_name,
-            [AcDDRelationship.KeyDestinationTable]: this.dataStorage.getTables({ tableId: relationshipRow.destination_table_id })[0].table_name,
-            [AcDDRelationship.KeySourceColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.source_column_id })[0].column_name,
-            [AcDDRelationship.KeySourceTable]: this.dataStorage.getTables({ tableId: relationshipRow.source_table_id })[0].table_name
-          });
-        }
-      }
-      dataDictionary[AcDataDictionary.KeyRelationships] = relationships;
-
-      const triggers: any = {};
-      for (const triggerRow of this.dataStorage.getTriggers({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        if (this.dataStorage.hasTableWithId(triggerRow.table_id!)) {
-          triggers[triggerRow.trigger_name!] = ({
-            [AcDDTrigger.KeyTriggerExecution]: triggerRow.trigger_execution,
-            [AcDDTrigger.KeyRowOperation]: triggerRow.row_operation,
-            [AcDDTrigger.KeyTableName]: this.dataStorage.getTables({ tableId: triggerRow.table_id })[0].table_name,
-            [AcDDTrigger.KeyTriggerName]: triggerRow.trigger_name,
-            [AcDDTrigger.KeyTriggerCode]: triggerRow.trigger_code,
-          });
-        }
-      }
-      dataDictionary[AcDataDictionary.KeyTriggers] = triggers;
-
-      const functions: any = {};
-      for (const functionRow of this.dataStorage.getFunctions({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        functions[functionRow.function_name!] = ({
-          [AcDDFunction.KeyFunctionName]: functionRow.function_name,
-          [AcDDFunction.KeyFunctionCode]: functionRow.function_code
-        });
-      }
-      dataDictionary[AcDataDictionary.KeyFunctions] = functions;
-
-      const storedProcedures: any = {};
-      for (const storedProcedureRow of this.dataStorage.getStoredProcedures({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        functions[storedProcedureRow.stored_procedure_name!] = ({
-          [AcDDStoredProcedure.KeyStoredProcedureName]: storedProcedureRow.stored_procedure_name,
-          [AcDDStoredProcedure.KeyStoredProcedureCode]: storedProcedureRow.stored_procedure_code
-        });
-      }
-      dataDictionary[AcDataDictionary.KeyFunctions] = storedProcedures;
-    }
-    return dataDictionary;
+  setState(state: IAcDDEState): void {
+    this.editorState.apply(state);
   }
 
 }

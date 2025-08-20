@@ -33,14 +33,21 @@ export class SQLiteDaoTestPage extends HTMLElement {
       this.dao = new AcSqliteDao();
       this.dao.setSqlConnection({sqlConnection:AcSqlConnection.instanceFromJson({jsonData:{[AcSqlConnection.KeyConnectionDatabase]:'test'}})});
 
-      this.dao.executeStatement({statement:`
-        CREATE TABLE users (
-          id INTEGER PRIMARY KEY,
-          name TEXT NOT NULL,
-          age INTEGER DEFAULT 18
-        );
-        CREATE VIEW user_names AS SELECT name FROM users;
-      `});
+      // console.log(await this.dao.executeStatement({statement:`
+      //   CREATE TABLE users (
+      //     id INTEGER PRIMARY KEY,
+      //     name TEXT NOT NULL,
+      //     age INTEGER DEFAULT 18
+      //   );
+      //   CREATE VIEW user_names AS SELECT name FROM users;
+      // `}));
+
+      console.log(await this.dao.insertRow({row:{'name':'test','id':1},tableName:'users'}));
+      console.log(await this.dao.getRows({statement:'SELECT * FROM users'}));
+      console.log(await this.dao.updateRow({row:{'name':'test-modified'},tableName:'users',condition:'id = @id',parameters:{'@id':'1'}}));
+      console.log(await this.dao.getRows({statement:'SELECT * FROM users',condition:'id = @id',parameters:{'@id':'2'}}));
+      console.log(await this.dao.deleteRows({tableName:'users',condition:'id = @id',parameters:{'@id':'1'}}));
+      console.log(await this.dao.getRows({statement:'SELECT * FROM users'}));
 
       const tests: { title: string; fn: () => Promise<AcSqlDaoResult> }[] = [
         { title: "Get Tables", fn: () => this.dao.getDatabaseTables() },
