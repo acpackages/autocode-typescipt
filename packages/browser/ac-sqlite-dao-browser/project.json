@@ -1,0 +1,9 @@
+{
+  "name": "ac-sqlite-dao-browser",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/ac-sqlite-dao-browser/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-sqlite-dao-browser --web",
+  "targets": {}
+}

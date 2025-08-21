@@ -63,7 +63,7 @@ export class CollapseTestPage extends HTMLElement {
         <div class="mb-2">
           <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Toggle ${title}</button>
         </div>
-        <div style="height:300px;width:100%;display:flex;flex-direction:${flexDirection};">
+        <div style="width:100%;display:flex;flex-direction:${flexDirection};">
         `+ (flexDirection == AcEnumCollapseDirection.BottomRightToTopLeft ? `<div style=''>` : ``) + `<div ac-collapse-content class="border bg-white p-3" style="overflow: hidden; width: 100%; height: 100%;float:right">
               <div>
                 <p>This is content for <strong>${title}</strong> direction collapse.</p>

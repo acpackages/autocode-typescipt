@@ -1,4 +1,4 @@
-import { AcEnumInputType, AcOptionInput, AcSelectInput, AcTextAreaInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { AcEnumInputType, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTextAreaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcReactiveValueProxy } from "@autocode-ts/ac-template-engine";
 
@@ -25,6 +25,7 @@ export class InputBasicPage extends HTMLElement {
     resume_file: '',       // placeholder for file input
     profile_picture: '',   // placeholder for image input
     about_me: 'UI/UX designer with 5+ years of experience.',
+    favourite_quote: 'The value of life is not in its duration, but in its donation. You are not important because of how long you live, you are important because of how effective you live..',
     contact_preference: 'Email',
     interested_fruits: ['Apple', 'Mango'],
     preferred_framework: 'Vue.js'
@@ -100,6 +101,13 @@ export class InputBasicPage extends HTMLElement {
     textarea.init();
     textarea.element.classList.add('form-control');
     addField('About Me', textarea.element, allInputsGroup);
+
+    const popoutTextArea = new AcPopoutTextareaInput();
+    popoutTextArea.bindKey = 'favourite_quote';
+    popoutTextArea.bindToReactiveValueProxy = this.proxyInstance;
+    popoutTextArea.init();
+    popoutTextArea.element.classList.add('form-control');
+    addField('Fav Quote', popoutTextArea.element, allInputsGroup);
 
     // Radio group: Contact Preference
     const radioLabel = document.createElement('div');

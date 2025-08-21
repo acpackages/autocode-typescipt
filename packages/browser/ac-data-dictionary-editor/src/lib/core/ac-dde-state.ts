@@ -27,7 +27,6 @@ export class AcDDEState {
     return this._datagridEditorState;
   }
   set datagridEditorState(value:IAcDDEDatagridEditorState) {
-    console.log(value,this.datagridEditorState)
     if(value != this._datagridEditorState){
       this._datagridEditorState = value;
       this.notifyChange(AcDDEState.KeyDatagridEditorState);

@@ -26,7 +26,7 @@ export class AcDataDictionaryEditorHeader {
     this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.DataDictionarySet, callback: (args: IAcDDEHookArgs) => {
       this.setDataDictionaryDropdown();
     }});
-    console.log(this);
+    // console.log(this);
   }
 
   private addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }): void {

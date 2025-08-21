@@ -1,3 +1,5 @@
 export const AcEnumDDEExtension = {
-  ImportExport : 'importExport'
+  ImportExport : 'importExport',
+  RelationshipsDetector : 'relationshipsDetector',
+  TriggerNameGenerator : 'triggerNameGenerator'
 }

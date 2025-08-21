@@ -1,0 +1,9 @@
+{
+  "name": "ac-builder",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/ac-builder/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-builder --web",
+  "targets": {}
+}

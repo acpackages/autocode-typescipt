@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcSqlConnection, AcSqlDaoResult, AcSqlDatabase } from "@autocode-ts/ac-sql";
-import { AcSqliteDao, initSqliteBrowserDao } from "@autocode-ts/ac-sqlite-browser"; // adjust import if needed
+import { AcSqliteDao, initSqliteBrowserDao } from "@autocode-ts/ac-sqlite-dao-browser"; // adjust import if needed
 import { AcEnumSqlDatabaseType } from "@autocode-ts/autocode";
 
 export class SQLiteDaoTestPage extends HTMLElement {

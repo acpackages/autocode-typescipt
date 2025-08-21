@@ -30,7 +30,7 @@ import { SlidesBasicTestPage } from './pages/slides/slides-basic-test.page';
 import { VirtualTestScrollPage } from './pages/scrollable/virtual-test-scroll.page';
 import { VirtualScrollDirectDomTestPage } from './pages/scrollable/virtual-scroll-direct-dom-test.page';
 import { SQLiteDaoTestPage } from './pages/dao/sqlite-dao-test-page.page';
-import { AcSqliteDao } from '@autocode-ts/ac-sqlite-browser';
+import { AcSqliteDao } from '@autocode-ts/ac-sqlite-dao-browser';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;

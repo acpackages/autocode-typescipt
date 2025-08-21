@@ -1,0 +1,9 @@
+{
+  "name": "ac-report-designer",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/ac-report-designer/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-report-designer --web",
+  "targets": {}
+}

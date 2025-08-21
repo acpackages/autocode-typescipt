@@ -66,22 +66,33 @@ export class AcDDERelationshipsDatagrid {
           };
           selectColumnInput.setOptions();
         }
-        else if (args.datagridCell.columnKey == AcDDERelationshipRowKey.sourceTableId){
+        else if (args.datagridCell.columnKey == AcDDERelationshipRowKey.sourceTableId) {
           const selectTableInput: AcDDEDatagridSelectTableInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableInput;
-          args.datagridCell.on({eventName:AcEnumDatagridEvent.CellValueChange,callback:(args:any)=>{
-            console.log('Cell Value change',args);
-            const sourceColumnCell = datagridRow.datagridCells.find((cell)=>{
-              return cell.columnKey == AcDDERelationshipRowKey.sourceColumnId;
-            });
-            if(sourceColumnCell && sourceColumnCell.instance && sourceColumnCell.instance.cellEditor){
-              const selectColumnInput: AcDDEDatagridSelectTableColumnInput = sourceColumnCell.instance.cellEditor as any;
-             selectColumnInput.filter = (row: IAcDDETableColumnRow) => {
-                return row.table_id == args.datagridCell.cellValue;
-              };
-              selectColumnInput.setOptions();
-
+          args.datagridCell.on({
+            eventName: AcEnumDatagridEvent.CellValueChange, callback: (args: any) => {
+              const sourceColumnCell = datagridRow.datagridCells.find((cell) => {
+                return cell.columnKey == AcDDERelationshipRowKey.sourceColumnId;
+              });
+              if (sourceColumnCell && sourceColumnCell.instance && sourceColumnCell.instance.cellEditor) {
+                const selectColumnInput: AcDDEDatagridSelectTableColumnInput = sourceColumnCell.instance.cellEditor as any;
+                selectColumnInput.setOptions();
+              }
             }
-          }});
+          });
+        }
+        else if (args.datagridCell.columnKey == AcDDERelationshipRowKey.destinationTableId) {
+          const selectTableInput: AcDDEDatagridSelectTableInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableInput;
+          args.datagridCell.on({
+            eventName: AcEnumDatagridEvent.CellValueChange, callback: (args: any) => {
+              const destinationColumnCell = datagridRow.datagridCells.find((cell) => {
+                return cell.columnKey == AcDDERelationshipRowKey.destinationColumnId;
+              });
+              if (destinationColumnCell && destinationColumnCell.instance && destinationColumnCell.instance.cellEditor) {
+                const selectColumnInput: AcDDEDatagridSelectTableColumnInput = destinationColumnCell.instance.cellEditor as any;
+                selectColumnInput.setOptions();
+              }
+            }
+          });
         }
       }
     })
@@ -100,8 +111,7 @@ export class AcDDERelationshipsDatagrid {
       {
         'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Column',
         cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
-          editorApi: this.editorApi,
-          filter: this.foreignKeyColumnSelectFilter
+          editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {

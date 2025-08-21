@@ -1,9 +1,0 @@
-{
-  "name": "ac-data-dictionary-browser",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/browser/ac-data-dictionary-browser/src",
-  "projectType": "library",
-  "tags": [],
-  "// targets": "to see all targets run: nx show project ac-data-dictionary-browser --web",
-  "targets": {}
-}

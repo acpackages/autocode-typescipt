@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { AcTriggerNameGeneratorDDEExtension } from "../extensions/_extensions.export";
 import { AcImportExportDDEExtension } from "../extensions/import-export/core/ac-dde-import-export-extension";
+import { AcRelationshipsDetectorDDEExtension } from "../extensions/relationships-detector/_relationships-detector.export";
 import { IAcDDEExtension } from "../interfaces/ac-dde-extension.interface";
 import { AcDDEExtension } from "./ac-dde-extension";
 
@@ -29,6 +31,8 @@ export class AcDDEExtensionManager {
     if(!this.builtInExtensionsRegistered){
       this.builtInExtensionsRegistered = true;
       this.register(AcImportExportDDEExtension);
+      this.register(AcRelationshipsDetectorDDEExtension);
+      this.register(AcTriggerNameGeneratorDDEExtension);
     }
   }
 }

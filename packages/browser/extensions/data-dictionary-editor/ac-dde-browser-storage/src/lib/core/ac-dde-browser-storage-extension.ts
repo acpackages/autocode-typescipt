@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import { AcDDEDataStorage,AcDDEExtension, AcEnumDDEHook, IAcDDEExtension } from "@autocode-ts/ac-data-dictionary-editor";
-import { AcSqliteDao, initSqliteBrowserDao } from "@autocode-ts/ac-sqlite-browser";
+import { AcSqliteDao, initSqliteBrowserDao } from "@autocode-ts/ac-sqlite-dao-browser";
 import { DataDictionary, Tables, TblState } from "../ac-dde-browser-storage";
 import { AcDataDictionary } from "@autocode-ts/ac-data-dictionary";
 import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager, AcSqlDbTable } from "@autocode-ts/ac-sql";
@@ -117,7 +117,7 @@ export class AcDDEBrowserStorageExtension extends AcDDEExtension {
       this.sqliteDao = schemaManager.dao as AcSqliteDao;
       await this.handleDataDictionarySet();
       await this.loadExistingData();
-      this.sqliteDao.downloadDatabaseFile();
+      // this.sqliteDao.downloadDatabaseFile();
     }
     else {
       console.error(response);

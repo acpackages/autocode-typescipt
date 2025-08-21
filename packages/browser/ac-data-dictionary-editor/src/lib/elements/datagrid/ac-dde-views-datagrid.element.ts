@@ -51,6 +51,12 @@ export class AcDDEViewsDatagrid {
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcDDView.KeyViewQuery, 'title': 'View Query',
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
       }
     ];
 

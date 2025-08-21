@@ -24,7 +24,7 @@ export class AcAccordion {
       const collapse = new AcCollapse({ element: el as HTMLElement });
       this.collapses.push(collapse);
       collapse.on({
-        eventName: AcEnumCollapseEvent.open, callback: () => {
+        eventName: AcEnumCollapseEvent.Open, callback: () => {
           this.collapses.forEach((c) => {
             if (c !== collapse) c.close();
           });

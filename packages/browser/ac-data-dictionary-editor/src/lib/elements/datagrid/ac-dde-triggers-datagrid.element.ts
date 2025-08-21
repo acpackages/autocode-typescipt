@@ -1,7 +1,7 @@
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDETriggerRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDETriggerRow } from "../../_ac-data-dictionary-editor.export";
-import { AcDDTrigger } from "@autocode-ts/ac-data-dictionary";
+import { AcDDECssClassName, AcDDEDatagridPopoutTextareaInput, AcDDEDatagridSelectInput, AcDDEDatagridSelectTableInput, AcDDETriggerRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDETriggerRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDTrigger, AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
@@ -47,19 +47,27 @@ export class AcDDETriggersDatagrid {
       },
       {
         'field': AcDDTrigger.KeyTriggerExecution, 'title': 'Execution',
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
-          editorApi: this.editorApi
+        cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
+          editorApi: this.editorApi, selectOptions:[
+            {label:'After',value:'after'},
+            {label:'Before',value:'before'}
+          ]
         }, useCellEditorForRenderer: true
       },
       {
         'field': AcDDTrigger.KeyRowOperation, 'title': 'Operation',
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
-          editorApi: this.editorApi
+        cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
+          editorApi: this.editorApi,
+          selectOptions:[
+            {label:'Insert',value:AcEnumDDRowOperation.Insert},
+            {label:'Update',value:AcEnumDDRowOperation.Update},
+            {label:'Delete',value:AcEnumDDRowOperation.Delete}
+          ]
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcDDTrigger.KeyTableName, 'title': 'Table Name',
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+        'field': AcDDTrigger.KeyTableName, 'title': 'Table',
+        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
@@ -71,7 +79,7 @@ export class AcDDETriggersDatagrid {
       },
       {
         'field': AcDDTrigger.KeyTriggerCode, 'title': 'Trigger Code',
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+        cellEditorElement: AcDDEDatagridPopoutTextareaInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       }
