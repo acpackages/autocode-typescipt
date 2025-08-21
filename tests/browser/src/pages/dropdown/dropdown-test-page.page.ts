@@ -70,7 +70,7 @@ export class DropdownTestPage extends HTMLElement {
       hoverBottom: new AcDropdown({element:this.querySelector('[data-trigger="hover-bottom"]')?.parentElement as HTMLElement,options: {
         menu: this.querySelector('#menu-hover-bottom') as HTMLElement,
         position: 'bottom',
-        hover: true
+        triggerAction: 'hover'
       }}),
     };
 

@@ -31,6 +31,7 @@ import { VirtualTestScrollPage } from './pages/scrollable/virtual-test-scroll.pa
 import { VirtualScrollDirectDomTestPage } from './pages/scrollable/virtual-scroll-direct-dom-test.page';
 import { SQLiteDaoTestPage } from './pages/dao/sqlite-dao-test-page.page';
 import { AcSqliteDao } from '@autocode-ts/ac-sqlite-dao-browser';
+import { AccordionTestPage } from './pages/collapse/accordion-test-page.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -62,10 +63,10 @@ window.addEventListener('DOMContentLoaded', () => {
     ]
   });
   AcRouter.registerRouteGroup({
-    label:'Collapse',
+    label:'Collapse & Accordion',
     routes:[
-      {label:'All Directions', path: '/collapse/all-directions', componentTag: 'collapse-all-directions', component: CollapseTestPage },
-      // {label:'Local Data Tree', path: '/aggrid/local-data-tree', componentTag: 'aggrid-local-data-tree', component: AggridLocalDataTree },
+      {label:'Collapse', path: '/collapse/collapse', componentTag: 'collapse-test', component: CollapseTestPage },
+      {label:'Accordion', path: '/collapse/accordion', componentTag: 'accordion-test', component: AccordionTestPage },
     ]
   });
   AcRouter.registerRouteGroup({

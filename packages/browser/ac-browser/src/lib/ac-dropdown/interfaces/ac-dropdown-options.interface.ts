@@ -1,8 +1,7 @@
-import { AcEnumDropdownPosition } from "../enums/ac-enum-dropdown-position.enum";
-
 export interface IAcDropdownOptions {
   menu: HTMLElement;
-  position?: AcEnumDropdownPosition;
+  position?: 'auto'|'bottom'|'left'|'right'|'top';
   offset?: number;
-  hover?: boolean; // extra: allow hover trigger
+  autoClose?: "inside" | "outside" | "both" | "manual";
+  triggerAction?:'click'|'hover';
 }

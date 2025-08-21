@@ -1,0 +1,19 @@
+export enum AcEnumRemoteDaoOperation{
+  checkDatabaseExist = 'check_database_exist',
+  checkTableExist = 'check_table_exist',
+  createDatabase = 'create_database',
+  deleteRows = 'delete_rows',
+  executeMultipleSqlStatements = 'execute_multiple_sql_statements',
+  executeStatement = 'execute_statement',
+  formatRow = 'format_row',
+  getDatabaseTables = 'get_database_tables',
+  getDatabaseTriggers = 'get_database_triggers',
+  getDatabaseViews = 'get_database_views',
+  getRows = 'get_rows',
+  getTableColumns = 'get_table_columns',
+  getViewColumns = 'get_view_columns',
+  insertRow = 'insert_row',
+  insertRows = 'insert_rows',
+  updateRow = 'update_row',
+  updateRows = 'update_rows'
+}
