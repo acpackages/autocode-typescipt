@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { IAcDatagridCellElementArgs,IAcDatagridCellRendererElement } from "@autocode-ts/ac-browser";
+import { AcEvents } from "@autocode-ts/autocode";
 
 export class AcDDEDatagridRowAction implements IAcDatagridCellRendererElement{
   args!:IAcDatagridCellElementArgs;
   element = document.createElement('div');
-
+  events:AcEvents = new AcEvents();
 
   destroy?(): void {
     //

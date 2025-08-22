@@ -93,6 +93,9 @@
       "@autocode-ts/ac-sql": ["packages/common/ac-sql/src/index.ts"],
       "@autocode-ts/ac-sql-core": ["packages/common/ac-sql-core/src/index.ts"],
       "@autocode-ts/ac-sql-node": ["packages/node/ac-sql-node/index.ts"],
+      "@autocode-ts/ac-sql-parser": [
+        "packages/common/ac-sql-parser/src/index.ts"
+      ],
       "@autocode-ts/ac-sqlite-dao-browser": [
         "packages/browser/ac-sqlite-dao-browser/src/index.ts"
       ],

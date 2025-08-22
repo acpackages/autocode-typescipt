@@ -12,26 +12,28 @@ export class AcDatagridBodyElement {
   public element: HTMLElement = document.createElement('div');
   public rowsContainer: HTMLElement = document.createElement('div');
   private datagridApi: AcDatagridApi;
-  private timeoutScrollUpdate:any;
-  private floatingScrollbar!:AcFloatingScrollbar;
+  private timeoutScrollUpdate: any;
+  private floatingScrollbar!: AcFloatingScrollbar;
 
   constructor({ datagridApi }: { datagridApi: AcDatagridApi }) {
     this.datagridApi = datagridApi;
-    this.datagridApi.hooks.subscribe({hookName:AcEnumDatagridHook.DisplayedRowsChange,
-      callback:(event:IAcDatagridDisplayedRowsChangeEvent)=>{
-      this.setDisplayRows();
-    }});
-    const hookArgs:IAcDatagridBodyHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridBody:this
+    this.datagridApi.hooks.subscribe({
+      hookName: AcEnumDatagridHook.DisplayedRowsChange,
+      callback: (event: IAcDatagridDisplayedRowsChangeEvent) => {
+        this.setDisplayRows();
+      }
+    });
+    const hookArgs: IAcDatagridBodyHookArgs = {
+      datagridApi: this.datagridApi,
+      datagridBody: this
     };
-    this.datagridApi.hooks.execute({hookName:AcEnumDatagridHook.BodyCreated,args:hookArgs});
+    this.datagridApi.hooks.execute({ hookName: AcEnumDatagridHook.BodyCreated, args: hookArgs });
     this.initElement();
   }
 
-  handleElementScroll(event:any){
+  handleElementScroll(event: any) {
     event.preventDefault();
-    if(event.target && this.datagridApi && this.datagridApi.datagrid && this.datagridApi.datagrid.datagridHeader && this.datagridApi.datagrid.datagridHeader.element){
+    if (event.target && this.datagridApi && this.datagridApi.datagrid && this.datagridApi.datagrid.datagridHeader && this.datagridApi.datagrid.datagridHeader.element) {
       this.datagridApi.datagrid.datagridHeader.element.scrollLeft = event.target.scrollLeft;
     }
   }
@@ -46,8 +48,8 @@ export class AcDatagridBodyElement {
   }
 
 
-  registerListeners(){
-    this.element.addEventListener('scroll',(e:any)=>{
+  registerListeners() {
+    this.element.addEventListener('scroll', (e: any) => {
       this.handleElementScroll(e);
     })
   }

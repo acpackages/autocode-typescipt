@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
-import { AcBrowser } from "@autocode-ts/ac-browser";
 import { IAcDDEMenuGroup } from "../../../_ac-data-dictionary-editor.export";
 import { AcDDEExtension } from "../../../core/ac-dde-extension";
 import { AcEnumDDEExtension } from "../../../enums/ac-enum-dde-extension.enum";

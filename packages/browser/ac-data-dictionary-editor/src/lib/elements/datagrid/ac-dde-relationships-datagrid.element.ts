@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDERelationshipRowKey, AcDDETableColumnRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDERelationshipRow, IAcDDETableColumnRow } from "../../_ac-data-dictionary-editor.export";
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, AcEnumInputEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { AcDDECssClassName, AcDDERelationshipRowKey, AcDDETableColumnRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs, IAcDDERelationshipRow, IAcDDETableColumnRow } from "../../_ac-data-dictionary-editor.export";
+import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, AcEnumInputEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
 import { AcDDEDatagridSelectTableColumnInput } from "../inputs/ac-dde-datagrid-select-table-column-input.element";
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
@@ -10,6 +10,7 @@ import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
+import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 
 export class AcDDERelationshipsDatagrid {
   data: any[] = [];
@@ -36,6 +37,59 @@ export class AcDDERelationshipsDatagrid {
 
   initDatagrid() {
     this.datagridApi = this.ddeDatagrid.datagridApi;
+
+    const columnDefinitions: IAcDatagridColumnDefinition[] = [
+      {
+        'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
+          editorApi: this.editorApi
+        }, width: 50, maxWidth: 50, minWidth: 50
+      },
+      {
+        'field': AcDDERelationshipRowKey.destinationTableId, 'title': 'Foreign Key Table',
+        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Column',
+        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcDDERelationshipRowKey.sourceTableId, 'title': 'Primary Key Table',
+        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcDDERelationshipRowKey.sourceColumnId, 'title': 'Primary Key Column',
+        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcDDERelationshipRowKey.cascadeDeleteSource, 'title': 'Cascade Delete Source',
+        cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcDDERelationshipRowKey.cascadeDeleteDestination, 'title': 'Cascade Delete Destination',
+        cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      }
+    ];
+    const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
+      datagridApi: this.datagridApi,
+      editorApi: this.editorApi,
+      columnDefinitions: columnDefinitions,
+      instance: this
+    };
+    this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.RelationshipDatagridBeforeColumnsSet, args: colSetHookArgs });
+    this.ddeDatagrid.columnDefinitions = columnDefinitions;
+
     this.datagridApi.on({
       eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         const row = this.editorApi.dataStorage.addRelationship({ data_dictionary_id: this.editorApi.activeDataDictionary?.data_dictionary_id, ...args.datagridRow.data });
@@ -94,58 +148,33 @@ export class AcDDERelationshipsDatagrid {
             }
           });
         }
+        const hookArgs: IAcDDEDatagridCellInitHookArgs = {
+          datagridApi: this.datagridApi,
+          editorApi: this.editorApi,
+          datagridCell: args.datagridCell,
+          eventArgs: args,
+          instance: this
+        };
+        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.RelationshipDatagridCellEditorInit, args: hookArgs });
       }
-    })
-    this.ddeDatagrid.columnDefinitions = [
-      {
-        'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
-          editorApi: this.editorApi
-        }, width: 50, maxWidth: 50, minWidth: 50
-      },
-      {
-        'field': AcDDERelationshipRowKey.destinationTableId, 'title': 'Foreign Key Table',
-        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcDDERelationshipRowKey.destinationColumnId, 'title': 'Foreign Key Column',
-        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcDDERelationshipRowKey.sourceTableId, 'title': 'Primary Key Table',
-        cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcDDERelationshipRowKey.sourceColumnId, 'title': 'Primary Key Column',
-        cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcDDERelationshipRowKey.cascadeDeleteSource, 'title': 'Cascade Delete Source',
-        cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcDDERelationshipRowKey.cascadeDeleteDestination, 'title': 'Cascade Delete Destination',
-        cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      }
-    ];
+    });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+        const hookArgs: IAcDDEDatagridCellInitHookArgs = {
+          datagridApi: this.datagridApi,
+          editorApi: this.editorApi,
+          datagridCell: args.datagridCell,
+          eventArgs: args,
+          instance: this
+        };
+        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.RelationshipDatagridCellRendererInit, args: hookArgs });
+      }});
 
     this.editorApi.hooks.subscribe({
       hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setRelationshipsData();
       }
     });
-
     this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Relationship, (args: IAcReactiveValueProxyEvent) => {
       if (args.event == 'delete') {
         arrayRemoveByKey(this.data, AcDDERelationshipRowKey.relationshipId, args.oldValue[AcDDERelationshipRowKey.relationshipId]);

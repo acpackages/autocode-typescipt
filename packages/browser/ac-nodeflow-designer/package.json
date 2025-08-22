@@ -5,5 +5,15 @@
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "dependencies": {
+    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/ac-extensions": "^0.0.4",
+    "@autocode-ts/ac-template-engine": "^0.0.1",
+    "rete": "^2.0.3",
+    "rete-area-plugin": "^2.0.1",
+    "rete-auto-arrange-plugin": "2.0.0",
+    "rete-connection-plugin": "2.0.0",
+    "rete-context-menu-plugin": "^2.0.4",
+    "rete-render-utils": "2.0.1"
+  }
 }

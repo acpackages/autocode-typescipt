@@ -1,12 +1,13 @@
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDETableRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDETableRow } from "../../_ac-data-dictionary-editor.export";
+import { AcDDECssClassName, AcDDETableRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs, IAcDDETableRow } from "../../_ac-data-dictionary-editor.export";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemove, arrayRemoveByKey } from "@autocode-ts/ac-extensions";
+import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 
 export class AcDDETablesDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -26,21 +27,9 @@ export class AcDDETablesDatagrid {
 
   initDatagrid() {
     this.datagridApi = this.ddeDatagrid.datagridApi;
-    this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addTable({ data_dictionary_id: this.editorApi.activeDataDictionary?.data_dictionary_id, ...args.datagridRow.data });
-        args.datagridRow.data = row;
-        this.data.push(row);
-      }
-    });
-    this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
-        this.editorApi.dataStorage.deleteTable({ table_id: args.datagridRow.data[AcDDETableRowKey.tableId] });
-      }
-    });
-    this.ddeDatagrid.columnDefinitions = [
+    const columnDefinitions: IAcDatagridColumnDefinition[] = [
       {
-        'field': '', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
+        'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
         }, width: 50, maxWidth: 50, minWidth: 50
       },
@@ -93,7 +82,51 @@ export class AcDDETablesDatagrid {
         }, useCellEditorForRenderer: true
       }
     ];
+    const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
+      datagridApi: this.datagridApi,
+      editorApi: this.editorApi,
+      columnDefinitions: columnDefinitions,
+      instance: this
+    };
+    this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.TablesDatagridBeforeColumnsSet, args: colSetHookArgs });
+    this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+        const row = this.editorApi.dataStorage.addTable({ data_dictionary_id: this.editorApi.activeDataDictionary?.data_dictionary_id, ...args.datagridRow.data });
+        args.datagridRow.data = row;
+        this.data.push(row);
+      }
+    });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteTable({ table_id: args.datagridRow.data[AcDDETableRowKey.tableId] });
+      }
+    });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+        const hookArgs: IAcDDEDatagridCellInitHookArgs = {
+          datagridApi: this.datagridApi,
+          editorApi: this.editorApi,
+          datagridCell: args.datagridCell,
+          eventArgs: args,
+          instance: this
+        };
+        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.TablesDatagridCellEditorInit, args: hookArgs });
+      }
+    });
+    this.datagridApi.on({
+      eventName: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+        const hookArgs: IAcDDEDatagridCellInitHookArgs = {
+          datagridApi: this.datagridApi,
+          editorApi: this.editorApi,
+          datagridCell: args.datagridCell,
+          eventArgs: args,
+          instance: this
+        };
+        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.TablesDatagridCellRendererInit, args: hookArgs });
+      }
+    });
     this.datagridApi.on({
       eventName: AcEnumDatagridEvent.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
         setTimeout(() => {
@@ -102,13 +135,11 @@ export class AcDDETablesDatagrid {
       }
     });
 
-
     this.editorApi.hooks.subscribe({
       hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setTablesData();
       }
     });
-
     this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Table, (args: IAcReactiveValueProxyEvent) => {
       if (args.event == 'delete') {
         arrayRemoveByKey(this.data, AcDDETableRowKey.tableId, args.oldValue[AcDDETableRowKey.tableId]);
