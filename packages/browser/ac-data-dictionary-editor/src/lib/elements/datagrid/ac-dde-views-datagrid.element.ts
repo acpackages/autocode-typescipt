@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDEViewRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs, IAcDDEViewRow } from "../../_ac-data-dictionary-editor.export";
 import { AcDDView } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
@@ -10,6 +9,12 @@ import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.ele
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
+import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
+import { AcEnumDDEView } from "../../enums/ac-enum-dde-storage-keys.enum";
+import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
+import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
+import { IAcDDEView } from "../../interfaces/ac-dde-view.inteface";
+import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 
 export class AcDDEViewsDatagrid {
   ddeDatagrid: AcDDEDatagrid;
@@ -55,31 +60,31 @@ export class AcDDEViewsDatagrid {
       columnDefinitions: columnDefinitions,
       instance: this
     };
-    this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.ViewsDatagridBeforeColumnsSet, args: colSetHookArgs });
+    this.editorApi.hooks.execute({ hook: AcEnumDDEHook.ViewsDatagridBeforeColumnsSet, args: colSetHookArgs });
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
+      event: AcEnumDatagridEvent.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
         setTimeout(() => {
-          this.hooks.execute({ hookName: AcEnumDDEHook.DatagridActiveTableChange });
+          this.hooks.execute({ hook: AcEnumDDEHook.DatagridActiveTableChange });
         }, 100);
 
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addView({ data_dictionary_id: this.editorApi.activeDataDictionary?.data_dictionary_id, ...args.datagridRow.data });
+      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+        const row = this.editorApi.dataStorage.addView({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
         args.datagridRow.data = row;
         this.data.push(row);
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
-        this.editorApi.dataStorage.deleteView({ view_id: args.datagridRow.data[AcDDEViewRowKey.viewId] });
+      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteView({ viewId: args.datagridRow.data[AcEnumDDEView.ViewId] });
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -87,11 +92,11 @@ export class AcDDEViewsDatagrid {
           eventArgs: args,
           instance: this
         };
-        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.ViewsDatagridCellEditorInit, args: hookArgs });
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.ViewsDatagridCellEditorInit, args: hookArgs });
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -99,18 +104,18 @@ export class AcDDEViewsDatagrid {
           eventArgs: args,
           instance: this
         };
-        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.ViewsDatagridCellRendererInit, args: hookArgs });
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.ViewsDatagridCellRendererInit, args: hookArgs });
       }
     });
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
+      hook: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setViewsData();
       }
     });
     this.editorApi.dataStorage.on('change', AcEnumDDEEntity.View, (args: IAcReactiveValueProxyEvent) => {
       if (args.event == 'delete') {
-        arrayRemoveByKey(this.data, AcDDEViewRowKey.viewId, args.oldValue[AcDDEViewRowKey.viewId]);
+        arrayRemoveByKey(this.data, AcEnumDDEView.ViewId, args.oldValue[AcEnumDDEView.ViewId]);
       }
       else if (args.event == 'add') {
         this.data.push(args.value);
@@ -123,7 +128,7 @@ export class AcDDEViewsDatagrid {
   applyFilter() {
     let data = this.data;
     if (this.filterFunction) {
-      data = data.filter((item: IAcDDEViewRow) => this.filterFunction!(item));
+      data = data.filter((item: IAcDDEView) => this.filterFunction!(item));
     }
     this.datagridApi.data = data;
   }
@@ -134,7 +139,7 @@ export class AcDDEViewsDatagrid {
   }
 
   setViewsData() {
-    this.data = Object.values(this.editorApi.dataStorage.getViews({ dataDictionaryId: this.editorApi.activeDataDictionary?.data_dictionary_id }));
+    this.data = Object.values(this.editorApi.dataStorage.getViews({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId }));
     this.applyFilter();
   }
 

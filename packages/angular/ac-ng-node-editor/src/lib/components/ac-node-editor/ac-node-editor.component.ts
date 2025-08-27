@@ -581,7 +581,7 @@ export class AcNodeEditorComponent extends AcBase {
       this.logger.log("Found Container & Initializing Editor");
       await this.createEditor(this.container.nativeElement);
       this.onEditorInitialized.emit();
-      this.events.execute({eventName:'editorInitialized'})
+      this.events.execute({event:'editorInitialized'})
     }
     else {
       this.logger.log("Cannot find container so will try in 500ms");

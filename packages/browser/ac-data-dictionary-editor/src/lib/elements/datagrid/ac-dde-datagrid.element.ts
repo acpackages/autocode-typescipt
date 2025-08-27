@@ -51,7 +51,7 @@ export class AcDDEDatagrid {
     });
     this.afterRowsExtension.footerElement = this.footerElement;
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.StateChange, callback: (args: any) => {
+      event: AcEnumDatagridEvent.StateChange, callback: (args: any) => {
         console.log(args);
       }
     })

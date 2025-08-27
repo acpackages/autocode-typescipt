@@ -3,7 +3,7 @@ import { AcBindJsonProperty } from "../annotations/ac-bind-json-property.annotat
 import { AcResult } from "./ac-result.model";
 
 export class AcHookResult extends AcResult {
-  static readonly KeyContinueOperation = "continue_operation";
+  static readonly KeyContinueOperation = "continueOperation";
   static readonly KeyChanges = "changes";
 
   @AcBindJsonProperty({ key: AcHookResult.KeyContinueOperation })

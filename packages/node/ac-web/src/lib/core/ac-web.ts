@@ -11,7 +11,7 @@ export class AcWeb {
 
   constructor({ paths = [] }: { paths?: string[] } = {}) {
     this.acApiDoc = new AcApiDoc();
-    AcHooks.execute({ hookName: AcEnumWebHook.AC_WEB_CREATED, args: [this] });
+    AcHooks.execute({ hook: AcEnumWebHook.AC_WEB_CREATED, args: [this] });
 
     this.get({ url: '/swagger/swagger.json', handler: ({ req }) => {
       const acApiSwagger = new AcApiSwagger();

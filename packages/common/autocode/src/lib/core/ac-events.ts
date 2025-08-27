@@ -8,12 +8,12 @@ export class AcEvents {
   private events: Record<string, Record<string, Function>> = {};
   private allEventCallbacks: Record<string, Function> = {};
 
-  execute({ eventName, args }: { eventName: string; args?: any }): AcEventExecutionResult {
+  execute({ event, args }: { event: string; args?: any }): AcEventExecutionResult {
     const result = new AcEventExecutionResult();
     try {
       const functionResults: Record<string, AcEventExecutionResult> = {};
-      if (this.events[eventName]) {
-        const functionsToExecute = this.events[eventName];
+      if (this.events[event]) {
+        const functionsToExecute = this.events[event];
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
           try{
             const functionResult = fun(args);
@@ -31,7 +31,7 @@ export class AcEvents {
       }
       for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
         try{
-          const functionResult = fun(eventName, args);
+          const functionResult = fun(event, args);
           if (
             functionResult &&
             functionResult instanceof AcEventExecutionResult &&
@@ -56,12 +56,12 @@ export class AcEvents {
     return result;
   }
 
-  subscribe({ eventName, callback }: { eventName: string; callback: Function }): string {
-    if (!this.events[eventName]) {
-      this.events[eventName] = {};
+  subscribe({ event, callback }: { event: string; callback: Function }): string {
+    if (!this.events[event]) {
+      this.events[event] = {};
     }
     const subscriptionId = Autocode.uniqueId();
-    this.events[eventName][subscriptionId] = callback;
+    this.events[event][subscriptionId] = callback;
     return subscriptionId;
   }
 
@@ -72,8 +72,8 @@ export class AcEvents {
   }
 
   unsubscribe({ subscriptionId }: { subscriptionId: string }): void {
-    for (const eventName in this.events) {
-      const eventFunctions = this.events[eventName];
+    for (const event in this.events) {
+      const eventFunctions = this.events[event];
       if (eventFunctions[subscriptionId]) {
         delete eventFunctions[subscriptionId];
       }

@@ -6,8 +6,8 @@ import { AcDataDictionary } from "../..";
 // import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDFunction {
-  static readonly KeyFunctionName = "function_name";
-  static readonly KeyFunctionCode = "function_code";
+  static readonly KeyFunctionName = "functionName";
+  static readonly KeyFunctionCode = "functionCode";
 
   @AcBindJsonProperty({ key: AcDDFunction.KeyFunctionName })
   functionName: string = "";

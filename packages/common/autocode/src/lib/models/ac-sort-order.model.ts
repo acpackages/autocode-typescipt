@@ -3,7 +3,7 @@ import { AcJsonUtils } from "../utils/ac-json-utils";
 import { AcSort } from "./ac-sort.model";
 
 export class AcSortOrder {
-  static readonly KeySorts = "sort_orders";
+  static readonly KeySorts = "sortOrders";
 
   sortOrders: AcSort[] = [];
 

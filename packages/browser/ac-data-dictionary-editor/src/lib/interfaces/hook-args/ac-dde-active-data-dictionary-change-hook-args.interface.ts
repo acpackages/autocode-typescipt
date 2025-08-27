@@ -1,8 +1,8 @@
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { IAcDDEDataDictionaryRow } from "../ac-dde-data-dictionary-row.inteface";
+import { IAcDDEDataDictionary } from "../ac-dde-data-dictionary.inteface";
 
 export interface IAcDDEActiveDataDictionaryChangeHookArgs{
-  activeDataDictionary:IAcDDEDataDictionaryRow
+  activeDataDictionary:IAcDDEDataDictionary
   editorApi:AcDDEApi,
-  oldActiveDataDictionary?:IAcDDEDataDictionaryRow,
+  oldActiveDataDictionary?:IAcDDEDataDictionary,
 }

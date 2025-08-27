@@ -1,8 +1,8 @@
 export enum AcEnumSqlEntity {
-  Function = "function",
-  Relationship = "relationship",
-  StoredProcedure = "stored_procedure",
-  Table = "table",
-  Trigger = "trigger",
-  View = "view",
+  Function = "FUNCTION",
+  Relationship = "RELATIONSHIP",
+  StoredProcedure = "STORED_PROCEDURE",
+  Table = "TABLE",
+  Trigger = "TRIGGER",
+  View = "VIEW",
 }

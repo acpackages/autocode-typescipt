@@ -6,8 +6,8 @@ import { AcDataDictionary } from "../..";
 // import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDStoredProcedure {
-  static readonly KeyStoredProcedureName = "stored_procedure_name";
-  static readonly KeyStoredProcedureCode = "stored_procedure_code";
+  static readonly KeyStoredProcedureName = "storedProcedureName";
+  static readonly KeyStoredProcedureCode = "storedProcedureCode";
 
   @AcBindJsonProperty({ key: AcDDStoredProcedure.KeyStoredProcedureName })
   storedProcedureName: string = "";

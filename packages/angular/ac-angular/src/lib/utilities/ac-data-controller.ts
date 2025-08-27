@@ -22,7 +22,7 @@ export class AcDataController {
     else{
       this._data = [];
     }
-    this.events.execute({eventName:"dataChanged"});
+    this.events.execute({event:"dataChanged"});
     this.applyDataFilter();
   }
 
@@ -72,7 +72,7 @@ export class AcDataController {
         }
       }
       this.dataFiltered = filteredData;
-      this.events.execute({eventName:"dataFiltered"});
+      this.events.execute({event:"dataFiltered"});
     }
     else{
       this.dataFiltered = [...this.data];
@@ -91,7 +91,7 @@ export class AcDataController {
         }
         return 0;
       });
-      this.events.execute({eventName:"dataSorted"});
+      this.events.execute({event:"dataSorted"});
     }
     else{
       this.dataSorted = [...this.dataFiltered];
@@ -175,8 +175,8 @@ export class AcDataController {
     return result;
   }
 
-  on({eventName,callback}:{eventName:string,callback:Function}){
-    return this.events.subscribe({eventName:eventName,callback:callback});
+  on({event,callback}:{event:string,callback:Function}){
+    return this.events.subscribe({event:event,callback:callback});
   }
 
   setDisplayData() {
@@ -206,7 +206,7 @@ export class AcDataController {
       if(this.autoAddRecord){
         this.dataDisplay.push({});
       }
-      this.events.execute({eventName:"displayDataChange"});
+      this.events.execute({event:"displayDataChange"});
     }
   }
 

@@ -1,3 +1,3 @@
 export enum AcEnumWebHook {
-  AcWebCreated = "ac_web_created",
+  AcWebCreated = "AC_WEB_CREATED",
 }

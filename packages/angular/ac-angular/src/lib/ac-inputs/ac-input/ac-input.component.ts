@@ -37,6 +37,6 @@ export class AcInputComponent extends AcBaseInput implements AfterViewInit {
       instance: this
     };
     this.onDoneTyping.emit(eventDetails);
-    this.events.execute({eventName:"doneTyping", args:eventDetails});
+    this.events.execute({event:"doneTyping", args:eventDetails});
   }
 }

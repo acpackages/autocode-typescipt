@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcDDEApi, AcDDECssClassName, AcEnumDDETab, AcDDETableColumnsDatagrid, AcDDETablesDatagrid, AcDDETriggersDatagrid, AcEnumDDEHook, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroupAddHookArgs, AcDDEDatagridEditor } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridExtensionManager, acSetElementAttributes } from '@autocode-ts/ac-browser';
 import { AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataDictionaryEditorHeader } from "./ac-data-dictionary-editor-header.element";
@@ -8,17 +7,27 @@ import { AcDDEFunctionsDatagrid } from "../datagrid/ac-dde-functions-datagrid.el
 import { AcDDEStoredProceduresDatagrid } from "../datagrid/ac-dde-stored-procedures-datagrid.element";
 import { AcDDEViewsDatagrid } from "../datagrid/ac-dde-views-datagrid.element";
 import { AcDDEViewColumnsDatagrid } from "../datagrid/ac-dde-view-columns-datagrid.element";
+import { AcDDETableEditor } from '../editors/ac-dde-table-editor.element';
+import { AcEnumDDETab } from '../../enums/ac-enum-dde-tab.enum';
+import { AcDDETablesDatagrid } from '../datagrid/ac-dde-tables-datagrid.element';
+import { AcDDETableColumnsDatagrid } from '../datagrid/ac-dde-table-columns-datagrid.element';
+import { AcDDETriggersDatagrid } from '../datagrid/ac-dde-triggers-datagrid.element';
+import { AcDDEApi } from '../../core/ac-dde-api';
+import { IAcDDEHookArgs } from '../../interfaces/hook-args/ac-dde-hook-args.interface';
+import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
+import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
+import { IAcDDEDataDictionary } from '../../interfaces/ac-dde-data-dictionary.inteface';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDataDictionaryEditor {
-  activeDataDictionary?: IAcDDEDataDictionaryRow;
+  activeDataDictionary?: IAcDDEDataDictionary;
   editorApi!: AcDDEApi;
 
   bodyElement: HTMLElement = document.createElement('div');
   tabsContainer:HTMLElement = document.createElement('div');
   element: HTMLElement = document.createElement('div');
 
-  datagridEditor?: AcDDEDatagridEditor;
+  tableEditor?: AcDDETableEditor;
   header!: AcDataDictionaryEditorHeader;
   functionsDatagrid?: AcDDEFunctionsDatagrid;
   relationshipsDatagrid?: AcDDERelationshipsDatagrid;
@@ -42,8 +51,8 @@ export class AcDataDictionaryEditor {
 
     this.initElement();
 
-    this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.EditorInit, args: hookArgs });
-    this.editorApi.hooks.subscribe({hookName:AcEnumDDEHook.EditorTabChange,callback:(hookArgs:IAcDDEHookArgs)=>{
+    this.editorApi.hooks.execute({ hook: AcEnumDDEHook.EditorInit, args: hookArgs });
+    this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.EditorTabChange,callback:(hookArgs:IAcDDEHookArgs)=>{
       this.setActiveTab({tab:hookArgs.value});
     }});
 
@@ -91,10 +100,10 @@ export class AcDataDictionaryEditor {
       tabElement.appendChild(element);
       return element;
     }
-    if(tab == AcEnumDDETab.DataDictionaryEditor){
-      if(this.datagridEditor == undefined){
-        this.datagridEditor = new AcDDEDatagridEditor({editorApi:this.editorApi});
-        const tabContent = getElementTab(tab,this.datagridEditor.element);
+    if(tab == AcEnumDDETab.TableEditor){
+      if(this.tableEditor == undefined){
+        this.tableEditor = new AcDDETableEditor({editorApi:this.editorApi});
+        const tabContent = getElementTab(tab,this.tableEditor.element);
         this.bodyElement.appendChild(tabContent);
       }
     }

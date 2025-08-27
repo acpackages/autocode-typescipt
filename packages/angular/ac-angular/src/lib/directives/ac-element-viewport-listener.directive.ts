@@ -22,7 +22,7 @@ export class AcElementViewportListenerDirective extends AcBase {
           isVisible:entry.isIntersecting
         };
         this.onViewChange.emit(event);
-        this.events.execute({eventName:"viewChange",args:event});
+        this.events.execute({event:"viewChange",args:event});
       });
     });
     this.observer.observe(this.elementRef.nativeElement);

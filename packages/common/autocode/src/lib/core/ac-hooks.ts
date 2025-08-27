@@ -6,14 +6,14 @@ export class AcHooks {
   private hooks: Record<string, Record<string, Function>> = {};
   private allHookCallbacks: Record<string, Function> = {};
 
-  execute({ hookName, args = [] }: { hookName: string; args?: any; }): AcHookExecutionResult {
+  execute({ hook, args = [] }: { hook: string; args?: any; }): AcHookExecutionResult {
     const result = new AcHookExecutionResult();
     try {
       const functionResults: Record<string, any> = {};
       let continueOperation = true;
 
-      if (this.hooks[hookName]) {
-        const functionsToExecute = this.hooks[hookName];
+      if (this.hooks[hook]) {
+        const functionsToExecute = this.hooks[hook];
 
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
           if (!continueOperation) break;
@@ -40,7 +40,7 @@ export class AcHooks {
       for (const [functionId, fun] of Object.entries(this.allHookCallbacks)) {
           if (!continueOperation) break;
           try {
-            const functionResult = fun(hookName, args);
+            const functionResult = fun(hook, args);
 
             if (functionResult) {
               functionResults[functionId] = functionResult;
@@ -73,17 +73,17 @@ export class AcHooks {
   }
 
   subscribe({
-    hookName,
+    hook,
     callback,
   }: {
-    hookName: string;
+    hook: string;
     callback: Function;
   }): string {
-    if (!this.hooks[hookName]) {
-      this.hooks[hookName] = {};
+    if (!this.hooks[hook]) {
+      this.hooks[hook] = {};
     }
     const subscriptionId = Autocode.uniqueId();
-    this.hooks[hookName][subscriptionId] = callback;
+    this.hooks[hook][subscriptionId] = callback;
     return subscriptionId;
   }
 

@@ -1,6 +1,6 @@
-import { AcAccordion } from "../ac-accordion/elements/ac-accordion.element";
-import { AcCollapse } from "../ac-collapse/elements/ac-collapse.element";
-import { AcDraggable } from "../ac-draggable/elements/ac-draggable.element";
+import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
+import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
+import { AcDraggable } from "../components/ac-draggable/elements/ac-draggable.element";
 
 export function acInit({element}:{element?:HTMLElement|Document} = {}) {
   const instances:any[] = [];
@@ -17,7 +17,7 @@ export function acInit({element}:{element?:HTMLElement|Document} = {}) {
   });
 
   element.querySelectorAll('[ac-draggable]').forEach((el) => {
-    instances.push(new AcDraggable(el));
+    instances.push(new AcDraggable({element:el as HTMLElement}));
   });
 
   return instances;

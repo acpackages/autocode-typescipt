@@ -57,7 +57,7 @@ export class AcBaseRepeater extends AcBase {
     this.initFilters();
     this.dataController.autoAddRecord = this.autoAddNewRow;
     this.dataController.data = this.data;
-    this.dataController.on({eventName:'displayDataChange',callback:()=>{
+    this.dataController.on({event:'displayDataChange',callback:()=>{
     }});
   }
 
@@ -112,7 +112,7 @@ export class AcBaseRepeater extends AcBase {
       }
     }
     this.onRowDataChange.emit(event);
-    this.events.execute({eventName:'rowDataChange'});
+    this.events.execute({event:'rowDataChange'});
   }
 
   handleRowDestroy(event: any) {
@@ -129,7 +129,7 @@ export class AcBaseRepeater extends AcBase {
       if(event.index == this.dataController.dataDisplay.length - 1){
         event.instance.on('contentElementsLoaded',()=>{
           this.onContentElementsLoaded.emit();
-          this.events.execute({eventName:'contentElementsLoaded'});
+          this.events.execute({event:'contentElementsLoaded'});
         });
       }
     }

@@ -1,6 +1,6 @@
 export const AcEnumDDEExtension = {
-  ImportExport : 'importExport',
-  RelationshipsDetector : 'relationshipsDetector',
-  SqlAnalyzer: 'sqlAnalyzer',
-  TriggerNameGenerator : 'triggerNameGenerator'
+  ImportExport : 'IMPORT_EXPORT',
+  RelationshipsDetector : 'RELATIONSHIP_DETECTOR',
+  SqlAnalyzer: 'SQL_ANALYZER',
+  TriggerNameGenerator : 'TRIGGER_NAME_GENERATOR'
 }

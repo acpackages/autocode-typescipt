@@ -16,38 +16,38 @@ export class Tables {
 }
 
 export class TblDataDictionaries {
-	static readonly DataDictionaryId = "data_dictionary_id";
-	static readonly DataDictionaryName = "data_dictionary_name";
-	static readonly DataDictionaryVersion = "data_dictionary_version";
+	static readonly DataDictionaryId = "dataDictionaryId";
+	static readonly DataDictionaryName = "dataDictionaryName";
+	static readonly DataDictionaryVersion = "dataDictionaryVersion";
 	static readonly ExtensionsData = "extensions_data";
 }
 export class TblFunctions {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
-	static readonly FunctionId = "function_id";
-	static readonly FunctionName = "function_name";
-	static readonly FunctionCode = "function_code";
+	static readonly FunctionId = "functionId";
+	static readonly FunctionName = "functionName";
+	static readonly FunctionCode = "functionCode";
 }
 export class TblRelationships {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
-	static readonly CascadeDeleteDestination = "cascade_delete_destination";
-	static readonly CascadeDeleteSource = "cascade_delete_source";
-	static readonly DestinationColumnId = "destination_column_id";
-	static readonly DestinationTableId = "destination_table_id";
-	static readonly RelationshipId = "relationship_id";
-	static readonly SourceColumnId = "source_column_id";
-	static readonly SourceTableId = "source_table_id";
+	static readonly CascadeDeleteDestination = "cascadeDeleteDestination";
+	static readonly CascadeDeleteSource = "cascadeDeleteSource";
+	static readonly DestinationColumnId = "destinationColumnId";
+	static readonly DestinationTableId = "destinationTableId";
+	static readonly RelationshipId = "relationshipId";
+	static readonly SourceColumnId = "sourceColumnId";
+	static readonly SourceTableId = "sourceTableId";
 }
 export class TblStoredProcedures {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
-	static readonly StoredProcedureCode = "stored_procedure_code";
-	static readonly StoredProcedureId = "stored_procedure_id";
-	static readonly StoredProcedureName = "stored_procedure_name";
+	static readonly StoredProcedureCode = "storedProcedureCode";
+	static readonly StoredProcedureId = "storedProcedureId";
+	static readonly StoredProcedureName = "storedProcedureName";
 }
 export class TblTableColumns {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
 	static readonly AutoIncrement = "auto_increment";
 	static readonly AutoNumberLength = "auto_number_length";
@@ -55,11 +55,11 @@ export class TblTableColumns {
 	static readonly CheckInAutoNumber = "check_in_auto_number";
 	static readonly CheckInModify = "check_in_modify";
 	static readonly CheckInSave = "check_in_save";
-	static readonly ColumnId = "column_id";
-	static readonly ColumnName = "column_name";
-	static readonly ColumnProperties = "column_properties";
+	static readonly ColumnId = "columnId";
+	static readonly ColumnName = "columnName";
+	static readonly ColumnProperties = "columnProperties";
 	static readonly ColumnTitle = "column_title";
-	static readonly ColumnType = "column_type";
+	static readonly ColumnType = "columnType";
 	static readonly DefaultValue = "default_value";
 	static readonly ForeignKey = "foreign_key";
 	static readonly Format = "format";
@@ -72,12 +72,12 @@ export class TblTableColumns {
 	static readonly SelectOptions = "select_options";
 	static readonly SetNullBeforeDelete = "set_null_before_delete";
 	static readonly Size = "size";
-	static readonly TableId = "table_id";
+	static readonly TableId = "tableId";
 	static readonly UniqueKey = "unique_key";
 	static readonly ColumnIndex = "column_index";
 }
 export class TblTables {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
 	static readonly AdditionalFilterColumns = "additional_filter_columns";
 	static readonly TableIndex = "table_index";
@@ -87,39 +87,39 @@ export class TblTables {
 	static readonly SelectQueryColumns = "select_query_columns";
 	static readonly SelectRequestColumns = "select_request_columns";
 	static readonly SingularName = "singular_name";
-	static readonly ViewId = "view_id";
-	static readonly TableId = "table_id";
-	static readonly TableName = "table_name";
-	static readonly TableProperties = "table_properties";
+	static readonly ViewId = "viewId";
+	static readonly TableId = "tableId";
+	static readonly TableName = "tableName";
+	static readonly TableProperties = "tableProperties";
 }
 export class TblTriggers {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
-	static readonly RowOperation = "row_operation";
-	static readonly TableId = "table_id";
-	static readonly TriggerCode = "trigger_code";
-	static readonly TriggerExecution = "trigger_execution";
-	static readonly TriggerId = "trigger_id";
-	static readonly TriggerName = "trigger_name";
+	static readonly RowOperation = "rowOperation";
+	static readonly TableId = "tableId";
+	static readonly TriggerCode = "triggerCode";
+	static readonly TriggerExecution = "triggerExecution";
+	static readonly TriggerId = "triggerId";
+	static readonly TriggerName = "triggerName";
 }
 export class TblViewColumns {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
-	static readonly ColumnId = "column_id";
-	static readonly ColumnName = "column_name";
-	static readonly ColumnProperties = "column_properties";
-	static readonly ColumnSource = "column_source";
-	static readonly ColumnSourceName = "column_source_name";
-	static readonly ColumnType = "column_type";
-	static readonly ViewId = "view_id";
+	static readonly ColumnId = "columnId";
+	static readonly ColumnName = "columnName";
+	static readonly ColumnProperties = "columnProperties";
+	static readonly ColumnSource = "columnSource";
+	static readonly ColumnSourceName = "columnSourceName";
+	static readonly ColumnType = "columnType";
+	static readonly ViewId = "viewId";
 	static readonly ColumnIndex = "column_index";
 }
 export class TblViews {
-	static readonly DataDictionaryId = "data_dictionary_id";
+	static readonly DataDictionaryId = "dataDictionaryId";
 	static readonly ExtensionsData = "extensions_data";
-	static readonly ViewId = "view_id";
-	static readonly ViewName = "view_name";
-	static readonly ViewQuery = "view_query";
+	static readonly ViewId = "viewId";
+	static readonly ViewName = "viewName";
+	static readonly ViewQuery = "viewQuery";
 	static readonly ViewIndex = "view_index";
 }
 export class TblState {

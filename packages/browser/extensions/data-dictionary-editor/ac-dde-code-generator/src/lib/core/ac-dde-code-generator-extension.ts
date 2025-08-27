@@ -15,7 +15,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
-              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id!});
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId!});
               AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data_dictionary.dart'});
             }
           }
@@ -25,7 +25,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryTypescriptCodeGenerator = new AcDataDictionaryTypescriptCodeGenerator();
-              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id!});
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId!});
               AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data_dictionary.ts'});
             }
           }

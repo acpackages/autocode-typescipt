@@ -30,7 +30,7 @@ export class AcSortButtonComponent extends AcBase{
     this.sortHtml=this.sortOptions[this.value];
     const eventData = {"sort":this.value};
     this.onChange.emit(eventData);
-    this.events.execute({eventName:'change',args:eventData})
+    this.events.execute({event:'change',args:eventData})
   }
 
   toggleSort(){

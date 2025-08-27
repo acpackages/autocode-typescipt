@@ -29,7 +29,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
     if (args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']) {
       this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];
       this.editorApi.hooks.subscribe({
-        hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
+        hook: AcEnumDDEHook.DataDictionarySet, callback: () => {
           this.setOptions();
         }
       });
@@ -45,7 +45,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
   setOptions() {
     const options: any[] = [];
     for (const row of Object.values(this.editorApi.dataStorage.getTableColumns({filter:this.filter}))) {
-      options.push({ 'label': row.column_name, 'value': row.column_id });
+      options.push({ 'label': row.columnName, 'value': row.columnId });
     }
     this.selectInput.selectOptions = options;
     this.selectInput.value = this.datagridCell.cellValue;

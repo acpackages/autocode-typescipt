@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import './../../../../../packages/browser/ac-browser/src/lib/ac-datagrid/css/ac-datagrid.css';
-import './../../../../../packages/browser/ac-browser/src/lib/ac-pagination/css/ac-pagination.css';
+import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
+import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
 import { AcDatagrid, AcDatagridApi, AcEnumDatagridEvent, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
 
 export class DatagridLocalDataTree extends HTMLElement {

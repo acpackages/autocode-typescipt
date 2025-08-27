@@ -1,0 +1,23 @@
+export enum AcEnumInputType{
+  Checkbox = 'CYHECKBOX',
+  Color = 'COLOR',
+  Date = 'DATE',
+  DatetimeLocal = 'DATETIME-LOCAL',
+  Email = 'EMAIL',
+  File = 'FILE',
+  Hidden = 'HIDDEN',
+  Image = 'IMAGE',
+  Month = 'MONTH',
+  Number = 'NUMBER',
+  Password = 'PASSWORD',
+  Radio = 'RADIO',
+  Range = 'RANGE',
+  Search = 'SEARCH',
+  Select = 'SELECT',
+  Tel = 'TEL',
+  Text = 'TEXT',
+  Textarea = 'TEXTAREA',
+  Time = 'TIME',
+  Url = 'URL',
+  Week = 'WEEK'
+}

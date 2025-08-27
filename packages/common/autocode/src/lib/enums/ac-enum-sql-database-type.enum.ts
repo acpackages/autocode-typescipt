@@ -1,9 +1,9 @@
 export enum AcEnumSqlDatabaseType {
-  MariaDB = "mariadb",
-  MsSql = "mssql",
-  MySql = "mysql",
-  Oracle = "oracle",
-  PostgreSql = "postgresql",
-  Sqlite = "sqlite",
-  Unknown = "unknown",
+  MariaDB = "MARIADB",
+  MsSql = "MSSQL",
+  MySql = "MYSQL",
+  Oracle = "ORACLE",
+  PostgreSql = "POSTGRESQL",
+  Sqlite = "SQLITE",
+  Unknown = "UNKNOWN",
 }

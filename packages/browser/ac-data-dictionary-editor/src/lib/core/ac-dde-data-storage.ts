@@ -3,9 +3,20 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcHooks, AcJsonUtils, Autocode } from "@autocode-ts/autocode";
-import { AcDDEApi, AcEnumDDEEntity, boolColumnProperties, IAcDDEDataDictionaryRow, IAcDDEFunctionRow, IAcDDERelationshipRow, IAcDDEStoredProcedureRow, IAcDDETableColumnRow, IAcDDETableRow, IAcDDETriggerRow, IAcDDEViewColumnRow, IAcDDEViewRow } from "../_ac-data-dictionary-editor.export";
 import { AcDDTableColumnProperty, AcDDTableProperty, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcReactiveValueProxy } from "@autocode-ts/ac-template-engine";
+import { AcDDEApi } from "./ac-dde-api";
+import { IAcDDEDataDictionary } from "../interfaces/ac-dde-data-dictionary.inteface";
+import { IAcDDEFunction } from "../interfaces/ac-dde-function.inteface";
+import { IAcDDERelationship } from "../interfaces/ac-dde-relationship.inteface";
+import { IAcDDEStoredProcedure } from "../interfaces/ac-dde-stored-procedure.inteface";
+import { IAcDDETableColumn } from "../interfaces/ac-dde-table-column.inteface";
+import { IAcDDETable } from "../interfaces/ac-dde-table.inteface";
+import { IAcDDETrigger } from "../interfaces/ac-dde-trigger.inteface";
+import { IAcDDEViewColumn } from "../interfaces/ac-dde-view-column.inteface";
+import { IAcDDEView } from "../interfaces/ac-dde-view.inteface";
+import { AcEnumDDEEntity } from "../enums/ac-enum-dde-entity.enum";
+import { boolColumnProperties } from "../consts/ac-dde-column-property-groups.const";
 
 export class AcDDEDataStorage {
   static readonly KeyDataDictionaries = "data_dictionaries";
@@ -24,39 +35,39 @@ export class AcDDEDataStorage {
 
   private _dataDictionariesReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyDataDictionaries })
-  private dataDictionaries: Record<string, IAcDDEDataDictionaryRow> = this._dataDictionariesReactiveProxy.valueProxy as any;
+  private dataDictionaries: Record<string, IAcDDEDataDictionary> = this._dataDictionariesReactiveProxy.valueProxy as any;
 
   private _functionsReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyFunctions })
-  private functions: Record<string, IAcDDEFunctionRow> = this._functionsReactiveProxy.valueProxy as any;
+  private functions: Record<string, IAcDDEFunction> = this._functionsReactiveProxy.valueProxy as any;
 
   private _relationshipsReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyRelationships })
-  private relationships: Record<string, IAcDDERelationshipRow> = this._relationshipsReactiveProxy.valueProxy as any;
+  private relationships: Record<string, IAcDDERelationship> = this._relationshipsReactiveProxy.valueProxy as any;
 
   private _storedProceduresReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyStoredProcedures })
-  private storedProcedures: Record<string, IAcDDEStoredProcedureRow> = this._storedProceduresReactiveProxy.valueProxy as any;
+  private storedProcedures: Record<string, IAcDDEStoredProcedure> = this._storedProceduresReactiveProxy.valueProxy as any;
 
   private _tableColumnsReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyTableColumns })
-  private tableColumns: Record<string, IAcDDETableColumnRow> = this._tableColumnsReactiveProxy.valueProxy as any;
+  private tableColumns: Record<string, IAcDDETableColumn> = this._tableColumnsReactiveProxy.valueProxy as any;
 
   private _tablesReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyTables })
-  private tables: Record<string, IAcDDETableRow> = this._tablesReactiveProxy.valueProxy as any;
+  private tables: Record<string, IAcDDETable> = this._tablesReactiveProxy.valueProxy as any;
 
   private _triggersReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyTriggers })
-  private triggers: Record<string, IAcDDETriggerRow> = this._triggersReactiveProxy.valueProxy as any;
+  private triggers: Record<string, IAcDDETrigger> = this._triggersReactiveProxy.valueProxy as any;
 
   private _viewColumnsReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyViewColumns })
-  private viewColumns: Record<string, IAcDDEViewColumnRow> = this._viewColumnsReactiveProxy.valueProxy as any;
+  private viewColumns: Record<string, IAcDDEViewColumn> = this._viewColumnsReactiveProxy.valueProxy as any;
 
   private _viewsReactiveProxy = new AcReactiveValueProxy({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyViews })
-  private views: Record<string, IAcDDEViewRow> = this._viewsReactiveProxy.valueProxy as any;
+  private views: Record<string, IAcDDEView> = this._viewsReactiveProxy.valueProxy as any;
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
@@ -67,37 +78,37 @@ export class AcDDEDataStorage {
     return this;
   }
 
-  addDataDictionary(data: Omit<IAcDDEDataDictionaryRow, 'data_dictionary_id'>): IAcDDEDataDictionaryRow {
-    const row: IAcDDEDataDictionaryRow = { data_dictionary_id: Autocode.uuid(), ...data };
-    this.dataDictionaries[row.data_dictionary_id] = row;
+  addDataDictionary(data: Omit<IAcDDEDataDictionary, 'dataDictionaryId'>): IAcDDEDataDictionary {
+    const row: IAcDDEDataDictionary = { dataDictionaryId: Autocode.uuid(), ...data };
+    this.dataDictionaries[row.dataDictionaryId] = row;
     return row;
   }
 
-  addFunction(data: Omit<IAcDDEFunctionRow, 'function_id'>): IAcDDEFunctionRow {
-    const row: IAcDDEFunctionRow = { function_id: Autocode.uuid(), ...data };
-    this.functions[row.function_id] = row;
+  addFunction(data: Omit<IAcDDEFunction, 'functionId'>): IAcDDEFunction {
+    const row: IAcDDEFunction = { functionId: Autocode.uuid(), ...data };
+    this.functions[row.functionId] = row;
     return row;
   }
 
-  addRelationship(data: Omit<IAcDDERelationshipRow, 'relationship_id'>): IAcDDERelationshipRow {
-    const row: IAcDDERelationshipRow = { relationship_id: Autocode.uuid(), ...data };
-    this.relationships[row.relationship_id] = row;
+  addRelationship(data: Omit<IAcDDERelationship, 'relationshipId'>): IAcDDERelationship {
+    const row: IAcDDERelationship = { relationshipId: Autocode.uuid(), ...data };
+    this.relationships[row.relationshipId] = row;
     return row;
   }
 
-  addStoredProcedure(data: Omit<IAcDDEStoredProcedureRow, 'stored_procedure_id'>): IAcDDEStoredProcedureRow {
-    const row: IAcDDEStoredProcedureRow = { stored_procedure_id: Autocode.uuid(), ...data };
-    this.storedProcedures[row.stored_procedure_id] = row;
+  addStoredProcedure(data: Omit<IAcDDEStoredProcedure, 'storedProcedureId'>): IAcDDEStoredProcedure {
+    const row: IAcDDEStoredProcedure = { storedProcedureId: Autocode.uuid(), ...data };
+    this.storedProcedures[row.storedProcedureId] = row;
     return row;
   }
 
-  addTableColumn(data: Omit<IAcDDETableColumnRow, 'column_id'>): IAcDDETableColumnRow {
-    const rowData = data as IAcDDETableColumnRow;
-    rowData.column_id = Autocode.uuid();
-    const row: IAcDDETableColumnRow | any = rowData;
-    this.tableColumns[row.column_id] = row;
-    if (data.column_properties) {
-      const properties = data.column_properties;
+  addTableColumn(data: Omit<IAcDDETableColumn, 'columnId'>): IAcDDETableColumn {
+    const rowData = data as IAcDDETableColumn;
+    rowData.columnId = Autocode.uuid();
+    const row: IAcDDETableColumn | any = rowData;
+    this.tableColumns[row.columnId] = row;
+    if (data.columnProperties) {
+      const properties = data.columnProperties;
       for (const propertyKey of Object.keys(properties)) {
         row[propertyKey] = properties[propertyKey][AcDDTableColumnProperty.KeyPropertyValue];
       }
@@ -105,11 +116,11 @@ export class AcDDEDataStorage {
     return row;
   }
 
-  addTable(data: Omit<IAcDDETableRow, 'table_id'>): IAcDDETableRow {
-    const row: IAcDDETableRow|any = { table_id: Autocode.uuid(), ...data };
-    this.tables[row.table_id] = row;
-    if (data.table_properties) {
-      const properties = data.table_properties;
+  addTable(data: Omit<IAcDDETable, 'tableId'>): IAcDDETable {
+    const row: IAcDDETable|any = { tableId: Autocode.uuid(), ...data };
+    this.tables[row.tableId] = row;
+    if (data.tableProperties) {
+      const properties = data.tableProperties;
       for (const propertyKey of Object.keys(properties)) {
         row[propertyKey] = properties[propertyKey][AcDDTableProperty.KeyPropertyValue];
       }
@@ -117,93 +128,93 @@ export class AcDDEDataStorage {
     return row;
   }
 
-  addTrigger(data: Omit<IAcDDETriggerRow, 'trigger_id'>): IAcDDETriggerRow {
-    const row: IAcDDETriggerRow = { trigger_id: Autocode.uuid(), ...data };
-    this.triggers[row.trigger_id] = row;
+  addTrigger(data: Omit<IAcDDETrigger, 'triggerId'>): IAcDDETrigger {
+    const row: IAcDDETrigger = { triggerId: Autocode.uuid(), ...data };
+    this.triggers[row.triggerId] = row;
     return row;
   }
 
-  addViewColumn(data: Omit<IAcDDEViewColumnRow, 'column_id'>): IAcDDEViewColumnRow {
-    const row: IAcDDEViewColumnRow = { column_id: Autocode.uuid(), ...data };
-    this.viewColumns[row.column_id] = row;
+  addViewColumn(data: Omit<IAcDDEViewColumn, 'columnId'>): IAcDDEViewColumn {
+    const row: IAcDDEViewColumn = { columnId: Autocode.uuid(), ...data };
+    this.viewColumns[row.columnId] = row;
     return row;
   }
 
-  addView(data: Omit<IAcDDEViewRow, 'view_id'>): IAcDDEViewRow {
-    const row: IAcDDEViewRow = { view_id: Autocode.uuid(), ...data };
-    this.views[row.view_id] = row;
+  addView(data: Omit<IAcDDEView, 'viewId'>): IAcDDEView {
+    const row: IAcDDEView = { viewId: Autocode.uuid(), ...data };
+    this.views[row.viewId] = row;
     return row;
   }
 
-  deleteDataDictionary({ data_dictionary_id }: { data_dictionary_id: string }): IAcDDEDataDictionaryRow|undefined {
-    const row = this.dataDictionaries[data_dictionary_id];
-    delete this.dataDictionaries[data_dictionary_id];
+  deleteDataDictionary({ dataDictionaryId }: { dataDictionaryId: string }): IAcDDEDataDictionary|undefined {
+    const row = this.dataDictionaries[dataDictionaryId];
+    delete this.dataDictionaries[dataDictionaryId];
     return row;
   }
 
-  deleteFunction({ function_id }: { function_id: string }): IAcDDEFunctionRow|undefined {
-    const row = this.functions[function_id];
-    delete this.functions[function_id];
+  deleteFunction({ functionId }: { functionId: string }): IAcDDEFunction|undefined {
+    const row = this.functions[functionId];
+    delete this.functions[functionId];
     return row;
   }
 
-  deleteRelationship({ relationship_id }: { relationship_id: string }): IAcDDERelationshipRow|undefined {
-    const row = this.relationships[relationship_id];
-    delete this.relationships[relationship_id];
+  deleteRelationship({ relationshipId }: { relationshipId: string }): IAcDDERelationship|undefined {
+    const row = this.relationships[relationshipId];
+    delete this.relationships[relationshipId];
     return row;
   }
 
-  deleteStoredProcedure({ stored_procedure_id }: { stored_procedure_id: string }): IAcDDEStoredProcedureRow|undefined {
-    const row = this.storedProcedures[stored_procedure_id];
-    delete this.storedProcedures[stored_procedure_id];
+  deleteStoredProcedure({ storedProcedureId }: { storedProcedureId: string }): IAcDDEStoredProcedure|undefined {
+    const row = this.storedProcedures[storedProcedureId];
+    delete this.storedProcedures[storedProcedureId];
     return row;
   }
 
-  deleteTableColumn({ column_id }: { column_id: string }): IAcDDETableColumnRow|undefined {
-    if(this.tableColumns[column_id]){
-      const row = this.tableColumns[column_id];
-      delete this.tableColumns[column_id];
+  deleteTableColumn({ columnId }: { columnId: string }): IAcDDETableColumn|undefined {
+    if(this.tableColumns[columnId]){
+      const row = this.tableColumns[columnId];
+      delete this.tableColumns[columnId];
       return row;
     }
     return undefined;
   }
 
-  deleteTable({ table_id }: { table_id: string }): IAcDDETableRow|undefined {
-    if(this.tables[table_id]){
-      const row = this.tables[table_id];
-      delete this.tables[table_id];
+  deleteTable({ tableId }: { tableId: string }): IAcDDETable|undefined {
+    if(this.tables[tableId]){
+      const row = this.tables[tableId];
+      delete this.tables[tableId];
       return row;
     }
   }
 
-  deleteTrigger({ trigger_id }: { trigger_id: string }): IAcDDETriggerRow|undefined {
-    const row = this.triggers[trigger_id];
-    delete this.triggers[trigger_id];
+  deleteTrigger({ triggerId }: { triggerId: string }): IAcDDETrigger|undefined {
+    const row = this.triggers[triggerId];
+    delete this.triggers[triggerId];
     return row;
   }
 
-  deleteViewColumn({ view_column_id }: { view_column_id: string }): IAcDDEViewColumnRow|undefined {
-    const row = this.viewColumns[view_column_id];
-    delete this.viewColumns[view_column_id];
+  deleteViewColumn({ columnId }: { columnId: string }): IAcDDEViewColumn|undefined {
+    const row = this.viewColumns[columnId];
+    delete this.viewColumns[columnId];
     return row;
   }
 
-  deleteView({ view_id }: { view_id: string }): IAcDDEViewRow|undefined {
-    const row = this.views[view_id];
-    delete this.views[view_id];
+  deleteView({ viewId }: { viewId: string }): IAcDDEView|undefined {
+    const row = this.views[viewId];
+    delete this.views[viewId];
     return row;
   }
 
-  getDataDictionaries({ dataDictionaryId, dataDictionaryName,filter }: { dataDictionaryId?: string, dataDictionaryName?: string,filter?:Function } = {}): IAcDDEDataDictionaryRow[] {
-    let result: IAcDDEDataDictionaryRow[] = Object.values(this.dataDictionaries);
+  getDataDictionaries({ dataDictionaryId, dataDictionaryName,filter }: { dataDictionaryId?: string, dataDictionaryName?: string,filter?:Function } = {}): IAcDDEDataDictionary[] {
+    let result: IAcDDEDataDictionary[] = Object.values(this.dataDictionaries);
     if(dataDictionaryId || dataDictionaryName || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(dataDictionaryName && isValid){
-          isValid = isValid && item.data_dictionary_name == dataDictionaryName;
+          isValid = isValid && item.dataDictionaryName == dataDictionaryName;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -214,16 +225,16 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getFunctions({ dataDictionaryId,functionId,filter }: { dataDictionaryId?: string,functionId?: string,filter?:Function } = {}): IAcDDEFunctionRow[] {
-    let result: IAcDDEFunctionRow[] = Object.values(this.functions);
+  getFunctions({ dataDictionaryId,functionId,filter }: { dataDictionaryId?: string,functionId?: string,filter?:Function } = {}): IAcDDEFunction[] {
+    let result: IAcDDEFunction[] = Object.values(this.functions);
     if(dataDictionaryId || functionId || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(functionId && isValid){
-          isValid = isValid && item.function_id == functionId;
+          isValid = isValid && item.functionId == functionId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -234,16 +245,16 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getRelationships({ dataDictionaryId,relationshipId,filter }: { dataDictionaryId?: string ,relationshipId?: string,filter?:Function } = {}): IAcDDERelationshipRow[] {
-    let result: IAcDDERelationshipRow[] = Object.values(this.relationships);
+  getRelationships({ dataDictionaryId,relationshipId,filter }: { dataDictionaryId?: string ,relationshipId?: string,filter?:Function } = {}): IAcDDERelationship[] {
+    let result: IAcDDERelationship[] = Object.values(this.relationships);
     if(dataDictionaryId || relationshipId || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(relationshipId && isValid){
-          isValid = isValid && item.relationship_id == relationshipId;
+          isValid = isValid && item.relationshipId == relationshipId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -254,16 +265,16 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getStoredProcedures({ dataDictionaryId, storedProcedureId,filter }: { dataDictionaryId?: string ,storedProcedureId?: string,filter?:Function } = {}): IAcDDEStoredProcedureRow[] {
-    let result: IAcDDEStoredProcedureRow[] = Object.values(this.storedProcedures);
+  getStoredProcedures({ dataDictionaryId, storedProcedureId,filter }: { dataDictionaryId?: string ,storedProcedureId?: string,filter?:Function } = {}): IAcDDEStoredProcedure[] {
+    let result: IAcDDEStoredProcedure[] = Object.values(this.storedProcedures);
     if(dataDictionaryId || storedProcedureId || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(storedProcedureId && isValid){
-          isValid = isValid && item.stored_procedure_id == storedProcedureId;
+          isValid = isValid && item.storedProcedureId == storedProcedureId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -274,19 +285,19 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getTables({ tableId, tableName, dataDictionaryId,filter }: { tableId?:string, tableName?: string, dataDictionaryId?: string,filter?:Function } = {}): IAcDDETableRow[] {
-    let result: IAcDDETableRow[] = Object.values(this.tables);
+  getTables({ tableId, tableName, dataDictionaryId,filter }: { tableId?:string, tableName?: string, dataDictionaryId?: string,filter?:Function } = {}): IAcDDETable[] {
+    let result: IAcDDETable[] = Object.values(this.tables);
     if(tableName || dataDictionaryId || tableId || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(tableName && isValid){
-          isValid = isValid && item.table_name == tableName;
+          isValid = isValid && item.tableName == tableName;
         }
         if(tableId && isValid){
-          isValid = isValid && item.table_id == tableId;
+          isValid = isValid && item.tableId == tableId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -297,22 +308,22 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getTableColumns({ tableId, columnId ,columnName, dataDictionaryId,filter }: { tableId?: string, columnId?: string, columnName?: string, dataDictionaryId?: string,filter?:Function } = {}): IAcDDETableColumnRow[] {
-    let result: IAcDDETableColumnRow[] = Object.values(this.tableColumns);
+  getTableColumns({ tableId, columnId ,columnName, dataDictionaryId,filter }: { tableId?: string, columnId?: string, columnName?: string, dataDictionaryId?: string,filter?:Function } = {}): IAcDDETableColumn[] {
+    let result: IAcDDETableColumn[] = Object.values(this.tableColumns);
     if(tableId || columnName || dataDictionaryId || columnId || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(tableId && isValid){
-          isValid = isValid && item.table_id == tableId;
+          isValid = isValid && item.tableId == tableId;
         }
         if(columnName && isValid){
-          isValid = isValid && item.column_name == columnName;
+          isValid = isValid && item.columnName == columnName;
         }
         if(columnId && isValid){
-          isValid = isValid && item.column_id == columnId;
+          isValid = isValid && item.columnId == columnId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -323,16 +334,16 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getTriggers({ dataDictionaryId, triggerId,filter }: { dataDictionaryId?: string,triggerId?: string,filter?:Function } = {}): IAcDDETriggerRow[] {
-    let result: IAcDDETriggerRow[] = Object.values(this.triggers);
+  getTriggers({ dataDictionaryId, triggerId,filter }: { dataDictionaryId?: string,triggerId?: string,filter?:Function } = {}): IAcDDETrigger[] {
+    let result: IAcDDETrigger[] = Object.values(this.triggers);
     if(dataDictionaryId || triggerId || filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(triggerId && isValid){
-          isValid = isValid && item.trigger_id == triggerId;
+          isValid = isValid && item.triggerId == triggerId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -343,16 +354,19 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getViews({ dataDictionaryId,viewId,filter }: { dataDictionaryId?: string,viewId?:string,filter?:Function } = {}): IAcDDEViewRow[] {
-    let result: IAcDDEViewRow[] = Object.values(this.views);
-    if(dataDictionaryId || viewId || filter){
+  getViews({ dataDictionaryId,viewId,viewName,filter }: { dataDictionaryId?: string,viewId?:string,viewName?:string,filter?:Function } = {}): IAcDDEView[] {
+    let result: IAcDDEView[] = Object.values(this.views);
+    if(dataDictionaryId || viewId || viewName|| filter){
       result = result.filter((item) => {
         let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(viewId && isValid){
-          isValid = isValid && item.view_id == viewId;
+          isValid = isValid && item.viewId == viewId;
+        }
+        if(viewName && isValid){
+          isValid = isValid && item.viewName == viewName;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -363,19 +377,19 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getViewColumns({ columnId,dataDictionaryId,viewId,filter }: { columnId?: string,dataDictionaryId?: string,viewId?:string,filter?:Function  } = {}): IAcDDEViewColumnRow[] {
-    let result: IAcDDEViewColumnRow[] = Object.values(this.viewColumns);
+  getViewColumns({ columnId,dataDictionaryId,viewId,filter }: { columnId?: string,dataDictionaryId?: string,viewId?:string,filter?:Function  } = {}): IAcDDEViewColumn[] {
+    let result: IAcDDEViewColumn[] = Object.values(this.viewColumns);
     if(dataDictionaryId || viewId || filter){
       result = result.filter((item) => {
          let isValid = true;
         if(dataDictionaryId && isValid){
-          isValid = isValid && dataDictionaryId == item.data_dictionary_id;
+          isValid = isValid && dataDictionaryId == item.dataDictionaryId;
         }
         if(viewId && isValid){
-          isValid = isValid && item.view_id == viewId;
+          isValid = isValid && item.viewId == viewId;
         }
         if(columnId && isValid){
-          isValid = isValid && item.column_id == columnId;
+          isValid = isValid && item.columnId == columnId;
         }
         if(filter && isValid){
           isValid = filter(item);
@@ -456,101 +470,101 @@ export class AcDDEDataStorage {
     return proxy.on(event, callback);
   }
 
-  saveDataDictionary(data: Partial<IAcDDEDataDictionaryRow>): IAcDDEDataDictionaryRow {
-    if(data.data_dictionary_id == undefined){
-      data.data_dictionary_id = Autocode.uuid();
+  saveDataDictionary(data: Partial<IAcDDEDataDictionary>): IAcDDEDataDictionary {
+    if(data.dataDictionaryId == undefined){
+      data.dataDictionaryId = Autocode.uuid();
     }
     const row:any = data;
-    this.dataDictionaries[data.data_dictionary_id] = row;
+    this.dataDictionaries[data.dataDictionaryId] = row;
     return row;
   }
 
-  saveFunction(data: Partial<IAcDDEFunctionRow>): IAcDDEFunctionRow {
-    if(data.function_id == undefined){
-      data.function_id = Autocode.uuid();
+  saveFunction(data: Partial<IAcDDEFunction>): IAcDDEFunction {
+    if(data.functionId == undefined){
+      data.functionId = Autocode.uuid();
     }
     const row:any = data;
-    this.functions[data.function_id] = row;
+    this.functions[data.functionId] = row;
     return row;
   }
 
-  saveRelationship(data: Partial<IAcDDERelationshipRow>): IAcDDERelationshipRow {
-    if(data.relationship_id == undefined){
-      data.relationship_id = Autocode.uuid();
+  saveRelationship(data: Partial<IAcDDERelationship>): IAcDDERelationship {
+    if(data.relationshipId == undefined){
+      data.relationshipId = Autocode.uuid();
     }
     const row:any = data;
-    this.relationships[data.relationship_id] = row;
+    this.relationships[data.relationshipId] = row;
     return row;
   }
 
-  saveStoredProcedure(data: Partial<IAcDDEStoredProcedureRow>): IAcDDEStoredProcedureRow {
-    if(data.stored_procedure_id == undefined){
-      data.stored_procedure_id = Autocode.uuid();
+  saveStoredProcedure(data: Partial<IAcDDEStoredProcedure>): IAcDDEStoredProcedure {
+    if(data.storedProcedureId == undefined){
+      data.storedProcedureId = Autocode.uuid();
     }
     const row:any = data;
-    this.storedProcedures[data.stored_procedure_id] = row;
+    this.storedProcedures[data.storedProcedureId] = row;
     return row;
   }
 
-  saveTableColumn(data: Partial<IAcDDETableColumnRow>): IAcDDETableColumnRow {
-    if(data.column_id == undefined){
-      data.column_id = Autocode.uuid();
+  saveTableColumn(data: Partial<IAcDDETableColumn>): IAcDDETableColumn {
+    if(data.columnId == undefined){
+      data.columnId = Autocode.uuid();
     }
     const row:any = data;
-    if (data.column_properties) {
-      const properties = data.column_properties;
+    if (data.columnProperties) {
+      const properties = data.columnProperties;
       for (const propertyKey of Object.keys(properties)) {
         row[propertyKey] = properties[propertyKey][AcDDTableColumnProperty.KeyPropertyValue];
       }
     }
-    this.tableColumns[data.column_id] = row;
+    this.tableColumns[data.columnId] = row;
     return row;
   }
 
-  saveTable(data: Partial<IAcDDETableRow>): IAcDDETableRow {
-    if(data.table_id == undefined){
-      data.table_id = Autocode.uuid();
+  saveTable(data: Partial<IAcDDETable>): IAcDDETable {
+    if(data.tableId == undefined){
+      data.tableId = Autocode.uuid();
     }
     const row:any = data;
-    if (data.table_properties) {
-      const properties = data.table_properties;
+    if (data.tableProperties) {
+      const properties = data.tableProperties;
       for (const propertyKey of Object.keys(properties)) {
         row[propertyKey] = properties[propertyKey][AcDDTableProperty.KeyPropertyValue];
       }
     }
-    this.tables[data.table_id] = row;
+    this.tables[data.tableId] = row;
     return row;
   }
 
-  saveTrigger(data: Partial<IAcDDETriggerRow>): IAcDDETriggerRow {
-    if(data.trigger_id == undefined){
-      data.trigger_id = Autocode.uuid();
+  saveTrigger(data: Partial<IAcDDETrigger>): IAcDDETrigger {
+    if(data.triggerId == undefined){
+      data.triggerId = Autocode.uuid();
     }
     const row:any = data;
-    this.triggers[data.trigger_id] = row;
+    this.triggers[data.triggerId] = row;
     return row;
   }
 
-  saveViewColumn(data: Partial<IAcDDEViewColumnRow>): IAcDDEViewColumnRow {
-    if(data.column_id == undefined){
-      data.column_id = Autocode.uuid();
+  saveViewColumn(data: Partial<IAcDDEViewColumn>): IAcDDEViewColumn {
+    if(data.columnId == undefined){
+      data.columnId = Autocode.uuid();
     }
     const row:any = data;
-    this.viewColumns[data.column_id] = row;
+    this.viewColumns[data.columnId] = row;
     return row;
   }
 
-  saveView(data: Partial<IAcDDEViewRow>): IAcDDEViewRow {
-    if(data.view_id == undefined){
-      data.view_id = Autocode.uuid();
+  saveView(data: Partial<IAcDDEView>): IAcDDEView {
+    if(data.viewId == undefined){
+      data.viewId = Autocode.uuid();
     }
     const row:any = data;
-    this.views[data.view_id] = row;
+    this.views[data.viewId] = row;
     return row;
   }
 
 
-  setTableColumnProperties(column:IAcDDETableColumnRow){
+  setTableColumnProperties(column:IAcDDETableColumn){
     const properties:any = {};
     const columnRow:any =column;
     const setProperty:Function = (propertyName:any)=>{
@@ -571,6 +585,6 @@ export class AcDDEDataStorage {
     for(const propertyName of Object.values(AcEnumDDColumnProperty)){
       setProperty(propertyName);
     }
-    column.column_properties = properties;
+    column.columnProperties = properties;
   }
 }

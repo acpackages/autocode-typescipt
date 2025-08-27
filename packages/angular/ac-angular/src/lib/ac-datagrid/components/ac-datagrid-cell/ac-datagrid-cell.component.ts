@@ -70,19 +70,19 @@ export class AcDatagridCellComponent extends AcBase {
   override ngOnDestroy() {
     const event: IAcDataGridCellEvent = this.getEventData();
     this.onDestroy.emit(event);
-    this.events.execute({eventName:"destroy",args:event});
+    this.events.execute({event:"destroy",args:event});
   }
 
   override ngOnInit() {
     const event: IAcDataGridCellEvent = this.getEventData();
     this.onInit.emit(event);
-    this.events.execute({eventName:"init",args:event});
+    this.events.execute({event:"init",args:event});
   }
 
   override ngAfterViewInit() {
     const event: IAcDataGridCellEvent = this.getEventData();
     this.onViewInit.emit(event);
-    this.events.execute({eventName:"viewInit",args:event});
+    this.events.execute({event:"viewInit",args:event});
   }
 
   getActualWidth(): number {
@@ -121,20 +121,20 @@ export class AcDatagridCellComponent extends AcBase {
   handleBlur() {
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onBlur.emit(event);
-    this.events.execute({eventName:"blur",args:event});
+    this.events.execute({event:"blur",args:event});
   }
 
   handleChange(){
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onChange.emit(event);
-    this.events.execute({eventName:"change",args:event});
+    this.events.execute({event:"change",args:event});
   }
 
   handleClick() {
     this.selectCell();
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onClick.emit(event);
-    this.events.execute({eventName:"click",args:event});
+    this.events.execute({event:"click",args:event});
   }
 
   handleDblClick(){
@@ -146,7 +146,7 @@ export class AcDatagridCellComponent extends AcBase {
   handleFocus() {
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onFocus.emit(event);
-    this.events.execute({eventName:"focus",args:event});
+    this.events.execute({event:"focus",args:event});
   }
 
   selectCell(){
@@ -154,7 +154,7 @@ export class AcDatagridCellComponent extends AcBase {
     this.rowInstance.dataGridInstance.selectedRowIndex = this.rowInstance.index;
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onSelected.emit(event);
-    this.events.execute({eventName:"selected",args:event});
+    this.events.execute({event:"selected",args:event});
     this.rowInstance.dataGridInstance.handleCellSelectionChange();
   }
 
@@ -164,14 +164,14 @@ export class AcDatagridCellComponent extends AcBase {
     this.rowInstance.dataGridInstance.editingRowIndex = this.rowInstance.index;
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onEnterEditMode.emit(event);
-    this.events.execute({eventName:"enterEditMode",args:event});
+    this.events.execute({event:"enterEditMode",args:event});
   }
 
   stopEditing() {
     this.isEditing = false
     const event: IAcDataGridCellEvent = this.getEventData();;
     this.onExitEditMode.emit(event);
-    this.events.execute({eventName:"exitEditMode",args:event});
+    this.events.execute({event:"exitEditMode",args:event});
   }
 
   toggleEditMode() {

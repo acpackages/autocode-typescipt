@@ -18,12 +18,12 @@ export class AcEventBinding{
       // console.log("Checking if has acOn: on attribute "+attrName);
       if (!attrName.startsWith(AcEventBinding.eventKey)) continue;
 
-      const eventName = attrName.slice(AcEventBinding.eventKey.length);
+      const event = attrName.slice(AcEventBinding.eventKey.length);
       const expr = attr.value;
 
       this.element.removeAttribute(attrName); // avoid duplicate bindings
 
-      this.element.addEventListener(eventName, (event: Event) => {
+      this.element.addEventListener(event, (event: Event) => {
         try {
           const fnBody = expr.includes('(') && expr.includes(')') ? expr : `${expr}($event)`;
           // console.log(fnBody);

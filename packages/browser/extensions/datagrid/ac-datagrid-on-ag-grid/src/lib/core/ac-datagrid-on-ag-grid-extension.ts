@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridOnDemandRequestArgs, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension } from '@autocode-ts/ac-browser';
+import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridOnDemandRequestArgs, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs } from '@autocode-ts/ac-browser';
 import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, RowModelType, IServerSideDatasource } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AcDatagridRowSelectionExtensionOnAgGrid } from './ac-datagrid-row-selection-extension-on-ag-grid';
@@ -11,10 +11,8 @@ import { AcEnumDatagridOnAgGridHook } from '../enums/ac-enum-datagrid-on-ag-grid
 import { IAcDatagriOnAgGridDataChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-data-set-hook-args.interface';
 import { AcDatagridTreeTableExtensionOnAgGrid } from './ac-datagrid-tree-table-extension-on-ag-grid';
 import { AcDatagridRowDraggingExtensionOnAgGrid } from './ac-datagrid-row-dragging-extension-on-ag-grid';
-import { IAcDatagridRowAddHookArgs } from 'packages/browser/ac-browser/src/lib/ac-datagrid/interfaces/hook-args/ac-datagrid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowAddHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowUpdateHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface';
-import { IAcDatagridDataExportXlsxExportCallHookArgs } from 'packages/browser/ac-browser/src/lib/ac-datagrid/extensions/data-export-xlsx/interfaces/ac-datagrid-data-export-xlsx-export-call-hook-args.interface';
 import { AcEnumConditionOperator, AcEnumLogicalOperator, AcFilterGroup, AcSortOrder } from '@autocode-ts/autocode';
 import { AcDatagridOnAgGridEventHandler } from './ac-datagrid-on-ag-grid-event-handler';
 import { AcDatagridOnAgGridCell } from '../elements/ac-datagrid-on-ag-grid-cell.element';
@@ -58,16 +56,16 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   private getAgDataTypeFromAcDataType(dataType: any) {
     let result: any = 'text';
-    if (dataType == AcEnumDatagridColumnDataType.boolean) {
+    if (dataType == AcEnumDatagridColumnDataType.Boolean) {
       result = 'boolean';
     }
-    else if (dataType == AcEnumDatagridColumnDataType.date || dataType == AcEnumDatagridColumnDataType.datetime) {
+    else if (dataType == AcEnumDatagridColumnDataType.Date || dataType == AcEnumDatagridColumnDataType.Datetime) {
       result = 'dateString';
     }
-    else if (dataType == AcEnumDatagridColumnDataType.custom || dataType == AcEnumDatagridColumnDataType.object) {
+    else if (dataType == AcEnumDatagridColumnDataType.Custom || dataType == AcEnumDatagridColumnDataType.Object) {
       result = 'object';
     }
-    else if (dataType == AcEnumDatagridColumnDataType.number) {
+    else if (dataType == AcEnumDatagridColumnDataType.Number) {
       result = 'number';
     }
     return result;
@@ -259,7 +257,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     const hookArgs: IAcDatagriOnAgGridDataChangeHookArgs = {
       data: data
     }
-    this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.DataChange, args: hookArgs });
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.DataChange, args: hookArgs });
     this.data = data;
     if (this.isClientSideData) {
       this.gridOptions['rowData'] = this.data;
@@ -316,54 +314,54 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
   }
 
-  override handleHook({ hookName, hookArgs }: { hookName: string; hookArgs: any; }): void {
-    // console.log(`Hook ${hookName}`,hookArgs);
-    if (hookName == AcEnumDatagridHook.BeforeGetOnDemandData) {
+  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
+    // console.log(`Hook ${hook}`,hookArgs);
+    if (hook == AcEnumDatagridHook.BeforeGetOnDemandData) {
       this.handleBeforeGetOnDemandData(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.ColDefsChange) {
+    else if (hook == AcEnumDatagridHook.ColumnDefinitionsChange) {
       this.setColumnDefs();
     }
-    else if (hookName == AcEnumDatagridHook.DataChange) {
+    else if (hook == AcEnumDatagridHook.DataChange) {
       this.handleDataChange();
     }
-    else if (hookName == AcEnumDatagridHook.DataSourceTypeChange) {
+    else if (hook == AcEnumDatagridHook.DataSourceTypeChange) {
       this.handleDataSourceTypeChange(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.ExtensionEnabled) {
+    else if (hook == AcEnumDatagridHook.ExtensionEnable) {
       this.handleExtensionEnabled(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.GetOnDemandDataSuccessCallback) {
+    else if (hook == AcEnumDatagridHook.GetOnDemandDataSuccessCallback) {
       this.handleGetOnDemandDataSuccessCallback(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.RowAdd) {
+    else if (hook == AcEnumDatagridHook.RowAdd) {
       this.handleRowAdd(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.RowDelete) {
+    else if (hook == AcEnumDatagridHook.RowDelete) {
       this.handleRowDelete(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.RowFocus) {
+    else if (hook == AcEnumDatagridHook.RowFocus) {
       this.handleRowFocus(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.RowUpdate) {
+    else if (hook == AcEnumDatagridHook.RowUpdate) {
       this.handleRowUpdate(hookArgs);
     }
-    else if (hookName == AcEnumDatagridHook.UsePaginationChange) {
+    else if (hook == AcEnumDatagridHook.UsePaginationChange) {
       this.handleUsePaginationChange();
     }
-    else if (hookName == AcEnumDatagridRowNumbersHook.ShowRowNumbersChange) {
+    else if (hook == AcEnumDatagridRowNumbersHook.ShowRowNumbersChange) {
       this.setShowRowNumbers();
     }
-    else if (hookName == AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange) {
+    else if (hook == AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange) {
       this.setColumnsCustomizerExtension();
     }
-    else if (hookName == AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel) {
+    else if (hook == AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel) {
       this.handleColumnsCustomizerToggle(hookArgs);
     }
-    else if (hookName == AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange) {
+    else if (hook == AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange) {
       this.setColumnDragging();
     }
-    else if (hookName == AcEnumDatagridDataExportXlsxHook.ExportData) {
+    else if (hook == AcEnumDatagridDataExportXlsxHook.ExportData) {
       this.handleDataExportXlsx(hookArgs);
     }
   }
@@ -375,7 +373,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       const hookArgs: IAcDatagriOnAgGridRowAddHookArgs = {
         data: data
       };
-      this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.BeforeRowAdd, args: hookArgs });
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.BeforeRowAdd, args: hookArgs });
       if (args.append) {
         this.gridApi.applyTransaction({ add: [data] });
       }
@@ -431,7 +429,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     const hookArgs: IAcDatagriOnAgGridRowUpdateHookArgs = {
       data: data
     };
-    this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.BeforeRowUpdate, args: hookArgs });
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.BeforeRowUpdate, args: hookArgs });
     let rowNode: any;
     this.gridApi.forEachNode((node: IRowNode, index: number) => {
       if (node.data[this.rowKey] == args.datagridRow.acRowId) {
@@ -514,7 +512,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     const beforeHookArgs: IAcDatagriOnAgGridColDefsChangeHookArgs = {
       colDefs: colDefs
     }
-    this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.BeforeColDefsChange, args: beforeHookArgs });
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.BeforeColDefsChange, args: beforeHookArgs });
     for (const column of this.datagridApi.datagridColumns) {
       colDefs.push(this.getColDefFromAcDataGridColumn(column));
     }
@@ -522,7 +520,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     const hookArgs: IAcDatagriOnAgGridColDefsChangeHookArgs = {
       colDefs: colDefs
     }
-    this.datagridApi.hooks.execute({ hookName: AcEnumDatagridOnAgGridHook.ColDefsChange, args: hookArgs });
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.ColDefsChange, args: hookArgs });
     this.gridOptions['columnDefs'] = this.colDefs;
     this.gridApi.setGridOption('columnDefs', this.colDefs);
   }

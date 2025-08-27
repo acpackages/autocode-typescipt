@@ -1,37 +1,27 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDDEApi } from "../_ac-data-dictionary-editor.export";
 import { IAcDatagridState } from "@autocode-ts/ac-browser";
-import { IAcDDEDatagridEditorState } from "../interfaces/ac-dde-datagrid-editor-state.interface";
 import { IAcDDEState } from "../interfaces/ac-dde-state.interface";
+import { AcDDEApi } from "./ac-dde-api";
+import { IAcDDETableEditorState } from "../interfaces/ac-dde-table-editor-state.interface";
 
 export class AcDDEState {
-  static readonly KeyDatagridEditorState = "datagrid_editor_state";
-  static readonly KeyDataDictionariesDatagrid = "data_dictionaries_datagrid";
-  static readonly KeyExtensionStates = "extension_states";
-  static readonly KeyFunctionsDatagrid = "functions_datagrid";
-  static readonly KeyRelationshipsDatagrid = "relationships_datagrid";
-  static readonly KeyStoredProceduresDatagrid = "stored_procedures_datagrid";
-  static readonly KeyTablesDatagrid = "tables_datagrid";
-  static readonly KeyTablesColumnsDatagrid = "table_columns_datagrid";
-  static readonly KeyTriggersDatagrid = "triggers_datagrid";
-  static readonly KeyViewsDatagrid = "views_datagrid";
-  static readonly KeyViewColumnssDatagrid = "view_columns_datagrid";
+
+  static readonly KeyDataDictionariesDatagrid = "dataDictionariesDatagrid";
+  static readonly KeyExtensionStates = "extensionStates";
+  static readonly KeyFunctionsDatagrid = "functionsDatagrid";
+  static readonly KeyRelationshipsDatagrid = "relationshipsDatagrid";
+  static readonly KeyStoredProceduresDatagrid = "storedProceduresDatagrid";
+  static readonly KeyTableEditorState = "tableEditorState";
+  static readonly KeyTablesDatagrid = "tablesDatagrid";
+  static readonly KeyTableColumnsDatagrid = "tableColumnsDatagrid";
+  static readonly KeyTriggersDatagrid = "triggersDatagrid";
+  static readonly KeyViewsDatagrid = "viewsDatagrid";
+  static readonly KeyViewColumnssDatagrid = "viewColumnsDatagrid";
 
   editorApi!:AcDDEApi;
   notifyTimeout:any;
-
-  private _datagridEditorState:IAcDDEDatagridEditorState = {};
-  get datagridEditorState():IAcDDEDatagridEditorState {
-    return this._datagridEditorState;
-  }
-  set datagridEditorState(value:IAcDDEDatagridEditorState) {
-    if(value != this._datagridEditorState){
-      this._datagridEditorState = value;
-      this.notifyChange(AcDDEState.KeyDatagridEditorState);
-    }
-  }
 
   private _dataDictionariesDatagrid:IAcDatagridState  = {};
   get dataDictionariesDatagrid():IAcDatagridState {
@@ -88,6 +78,17 @@ export class AcDDEState {
     }
   }
 
+  private _tableEditorState:IAcDDETableEditorState = {};
+  get tableEditorState():IAcDDETableEditorState {
+    return this._tableEditorState;
+  }
+  set tableEditorState(value:IAcDDETableEditorState) {
+    if(value != this._tableEditorState){
+      this._tableEditorState = value;
+      this.notifyChange(AcDDEState.KeyTableEditorState);
+    }
+  }
+
   private _tablesDatagrid:IAcDatagridState  = {};
   get tablesDatagrid():IAcDatagridState {
     return this._tablesDatagrid;
@@ -106,7 +107,7 @@ export class AcDDEState {
   set tableColumnsDatagrid(value:IAcDatagridState) {
     if(value != this._tableColumnsDatagrid){
       this._tableColumnsDatagrid = value;
-      this.notifyChange(AcDDEState.KeyTablesColumnsDatagrid);
+      this.notifyChange(AcDDEState.KeyTableColumnsDatagrid);
     }
   }
 
@@ -147,10 +148,10 @@ export class AcDDEState {
     this.editorApi = editorApi;
   }
 
-  apply(state:IAcDDEState){
+  apply({state}:{state:IAcDDEState}){
     if(state){
-      if(state[AcDDEState.KeyDatagridEditorState]){
-        this.datagridEditorState = state[AcDDEState.KeyDatagridEditorState]!;
+      if(state[AcDDEState.KeyTableEditorState]){
+        this.tableEditorState = state[AcDDEState.KeyTableEditorState]!;
       }
       if(state[AcDDEState.KeyDataDictionariesDatagrid]){
         this.dataDictionariesDatagrid = state[AcDDEState.KeyDataDictionariesDatagrid]!;
@@ -167,8 +168,8 @@ export class AcDDEState {
       if(state[AcDDEState.KeyTablesDatagrid]){
         this.tablesDatagrid = state[AcDDEState.KeyTablesDatagrid]!;
       }
-      if(state[AcDDEState.KeyTablesColumnsDatagrid]){
-        this.tableColumnsDatagrid = state[AcDDEState.KeyTablesColumnsDatagrid]!;
+      if(state[AcDDEState.KeyTableColumnsDatagrid]){
+        this.tableColumnsDatagrid = state[AcDDEState.KeyTableColumnsDatagrid]!;
       }
       if(state[AcDDEState.KeyTriggersDatagrid]){
         this.triggersDatagrid = state[AcDDEState.KeyTriggersDatagrid]!;
@@ -209,17 +210,17 @@ export class AcDDEState {
 
   toJson(): IAcDDEState {
     return {
-      data_dictionaries_datagrid:this.dataDictionariesDatagrid,
-      datagrid_editor_state:this.datagridEditorState,
-      extension_states:this.extensionStates,
-      functions_datagrid:this.functionsDatagrid,
-      relationships_datagrid:this.relationshipsDatagrid,
-      stored_procedures_datagrid:this.storedProceduresDatagrid,
-      table_columns_datagrid:this.tableColumnsDatagrid,
-      tables_datagrid:this.tablesDatagrid,
-      triggers_datagrid:this.triggersDatagrid,
-      view_columns_datagrid:this.viewColumnsDatagrid,
-      views_datagrid:this.viewsDatagrid
+      dataDictionariesDatagrid:this.dataDictionariesDatagrid,
+      tableEditorState:this.tableEditorState,
+      extensionStates:this.extensionStates,
+      functionsDatagrid:this.functionsDatagrid,
+      relationshipsDatagrid:this.relationshipsDatagrid,
+      storedProceduresDatagrid:this.storedProceduresDatagrid,
+      tableColumnsDatagrid:this.tableColumnsDatagrid,
+      tablesDatagrid:this.tablesDatagrid,
+      triggersDatagrid:this.triggersDatagrid,
+      viewColumnsDatagrid:this.viewColumnsDatagrid,
+      viewsDatagrid:this.viewsDatagrid
     }
   }
 

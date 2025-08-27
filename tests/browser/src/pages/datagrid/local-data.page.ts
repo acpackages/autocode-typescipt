@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagridRowSelectionExtension } from 'packages/browser/ac-browser/src/lib/ac-datagrid/extensions/_extensions.export';
-import './../../../../../packages/browser/ac-browser/src/lib/ac-datagrid/css/ac-datagrid.css';
-import './../../../../../packages/browser/ac-browser/src/lib/ac-pagination/css/ac-pagination.css';
-import { AcDatagrid, AcDatagridApi, AcEnumDatagridExtension, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
+import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
+import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
+import { AcDatagrid, AcDatagridApi, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
 
 export class DatagridLocalData extends HTMLElement {
   public static observedAttributes = [];
@@ -18,7 +18,7 @@ export class DatagridLocalData extends HTMLElement {
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowNumbers});
-    const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection});
+    const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowDragging});
     this.datagridApi.usePagination = true
     // this.datagridApi.allowRowSelect = true;

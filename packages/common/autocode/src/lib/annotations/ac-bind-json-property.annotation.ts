@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import 'reflect-metadata';
 export interface AcBindJsonPropertyOptions {
   key?: string;

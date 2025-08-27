@@ -56,7 +56,7 @@ export class AcFilesComponent extends AcBaseInput {
         errorType:AcEnumFileErrorType.fileSize
       }
       this.onError.emit(eventDetails);
-      this.events.execute({eventName:'error',args:eventDetails});
+      this.events.execute({event:'error',args:eventDetails});
     }
     return valid;
   }

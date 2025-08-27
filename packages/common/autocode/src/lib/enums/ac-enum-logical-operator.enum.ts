@@ -1,5 +1,5 @@
 export enum AcEnumLogicalOperator {
-  And = "and",
-  Or = "or",
-  Unknown = "unknown"
+  And = "AND",
+  Or = "OR",
+  Unknown = "UNKNOWN"
 }

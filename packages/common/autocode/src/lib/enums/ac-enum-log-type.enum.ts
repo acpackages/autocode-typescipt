@@ -1,7 +1,7 @@
 export enum AcEnumLogType {
-  Console = 'console',
-  Print = 'print',
-  Html = 'html',
-  Sqlite = 'sqlite',
-  Text = 'text',
+  Console = 'CONSOLE',
+  Print = 'PRINT',
+  Html = 'HTML',
+  Sqlite = 'SQLITE',
+  Text = 'TEXT',
 }

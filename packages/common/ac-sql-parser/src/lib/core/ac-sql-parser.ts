@@ -33,7 +33,7 @@ export class AcSqlParser {
       });
       if (!tablesUsed.some(t => (t.alias === left) || (t.originalName === left))) {
         tablesUsed.push({ originalName: left, alias: left, isSubquery: false, raw: left });
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundTable, args: { originalName: left, alias: left, isSubquery: false, raw: left } })
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundTable, args: { originalName: left, alias: left, isSubquery: false, raw: left } })
       }
     }
 
@@ -321,7 +321,7 @@ export class AcSqlParser {
       for (const b of baseItems) {
         const tr = this.parseFromItem(b.trim(), ctes, columnsUsed, tablesUsed, subQueries);
         tablesUsed.push(tr);
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundTable, args: tr });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundTable, args: tr });
       }
 
       // parse joins
@@ -363,8 +363,8 @@ export class AcSqlParser {
 
         const ji: IAcJoinInfo = { type: kind, right: rightRef, on: onExpr, using: usingCols, raw: rightTerm };
         joins.push(ji);
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundJoin, args: ji });
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundTable, args: rightRef });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundJoin, args: ji });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundTable, args: rightRef });
         tablesUsed.push(rightRef);
         r = remainder.trim();
       }
@@ -397,7 +397,7 @@ export class AcSqlParser {
             };
             columns.push(placeholder);
             columnsUsed.push({ ...placeholder });
-            this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: placeholder });
+            this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: placeholder });
           } else {
             for (const cn of colsFor) {
               const oc: IAcOutputColumn = {
@@ -419,7 +419,7 @@ export class AcSqlParser {
                 queryFieldName: oc.queryFieldName,
                 raw: oc.raw
               });
-              this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: oc });
+              this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: oc });
             }
           }
         }
@@ -446,7 +446,7 @@ export class AcSqlParser {
           };
           columns.push(placeholder);
           columnsUsed.push({ ...placeholder });
-          this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: placeholder });
+          this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: placeholder });
         } else {
           for (const cn of colsFor) {
             const oc: IAcOutputColumn = {
@@ -468,7 +468,7 @@ export class AcSqlParser {
               queryFieldName: oc.queryFieldName,
               raw: oc.raw
             });
-            this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: oc });
+            this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: oc });
           }
         }
         continue;
@@ -479,7 +479,7 @@ export class AcSqlParser {
       if (fnTop && fnTop.raw.trim() === trimmedExpr) {
         const f: IAcFunctionInfo = { ...fnTop, location: 'SELECT' };
         functions.push(f);
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundFunction, args: f });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundFunction, args: f });
         // create IAcOutputColumn with functionUsed and also map any column params to columnsUsed
         const oc: IAcOutputColumn = {
           columnIndex: outIndex++,
@@ -494,7 +494,7 @@ export class AcSqlParser {
         columns.push(oc);
         // collect column params from function recursively
         this.collectFunctionColumnParams(f, columnsUsed);
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: oc });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: oc });
         continue;
       }
 
@@ -521,7 +521,7 @@ export class AcSqlParser {
           queryFieldName: oc.queryFieldName,
           raw: tableAlias ? `${tableAlias}.${colName}` : colName
         });
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: oc });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: oc });
         continue;
       }
 
@@ -542,12 +542,12 @@ export class AcSqlParser {
         const fi = nf;
         fi.location = 'SELECT';
         functions.push(fi);
-        this.events.execute({ eventName: AcEnumSqlParserEvent.FoundFunction, args: fi });
+        this.events.execute({ event: AcEnumSqlParserEvent.FoundFunction, args: fi });
         this.collectFunctionColumnParams(fi, columnsUsed);
       }
       // collect generic column refs in expression
       this.collectIAcColumnReferencesFromExpr(trimmedExpr, columnsUsed, ctes, tablesUsed);
-      this.events.execute({ eventName: AcEnumSqlParserEvent.FoundColumn, args: oc });
+      this.events.execute({ event: AcEnumSqlParserEvent.FoundColumn, args: oc });
     }
 
     // collect join ON expressions columns

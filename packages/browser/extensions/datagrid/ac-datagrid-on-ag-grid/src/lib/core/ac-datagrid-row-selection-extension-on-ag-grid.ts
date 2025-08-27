@@ -18,8 +18,8 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
       this.rowSelectionExtension = this.datagridApi.extensions[AcEnumDatagridExtension.RowSelection] as AcDatagridRowSelectionExtension;
     }
     this.datagridApi.hooks.subscribeAllHooks({
-      callback: (hookName: string, hookArgs: any) => {
-        this.handleHook({ hookName: hookName, hookArgs: hookArgs });
+      callback: (hook: string, hookArgs: any) => {
+        this.handleHook({ hook: hook, hookArgs: hookArgs });
       }
     });
     this.gridApi.addEventListener('rowSelected', (args: RowSelectedEvent) => {
@@ -43,20 +43,20 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
     this.rowSelectionExtension.setRowSelection({ isSelected: args.node.isSelected() == true, rowId: args.data[this.agGridExtension.rowKey] });
   }
 
-  handleHook({ hookName, hookArgs }: { hookName: string, hookArgs: any }): void {
-    if (hookName == AcEnumDatagridHook.ExtensionEnabled) {
+  handleHook({ hook, hookArgs }: { hook: string, hookArgs: any }): void {
+    if (hook == AcEnumDatagridHook.ExtensionEnable) {
       this.handleExtensionEnabled(hookArgs);
     }
-    else if (hookName == AcEnumDatagridRowSelectionHook.RowSelectionChange) {
+    else if (hook == AcEnumDatagridRowSelectionHook.RowSelectionChange) {
       this.handleRowSelectionChange(hookArgs);
     }
-    else if (hookName == AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange) {
+    else if (hook == AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange) {
       this.handleMultipleRowSelectionChange(hookArgs);
     }
     else if ([
       AcEnumDatagridRowSelectionHook.AllowMultipleSelectionChange,
       AcEnumDatagridRowSelectionHook.AllowSelectionChange
-    ].includes(hookName)) {
+    ].includes(hook)) {
       this.setRowSelection();
     }
   }

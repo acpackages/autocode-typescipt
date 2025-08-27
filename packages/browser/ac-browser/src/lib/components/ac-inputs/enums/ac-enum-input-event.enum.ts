@@ -1,0 +1,21 @@
+export enum AcEnumInputEvent{
+  Blur = 'BLUR',
+  Change = 'CHANGE',
+  Click = 'CLICK',
+  Destroy = 'DESTROY',
+  DoneTyping = 'DONE_TYPING',
+  DoubleClick = 'DOUBLE_CLICK',
+  Focus = 'FOCUS',
+  Init = 'INIT',
+  Input = 'INPUT',
+  KeyDown = 'KEY_DOWN',
+  KeyPress = 'KEY_PRESS',
+  KeyUp = 'KEY_UP',
+  MouseDown = 'MOUSE_DOWN',
+  MouseEnter = 'MOUSE_ENTER',
+  MouseLeave = 'MOUSE_LEAVE',
+  MouseOut = 'MOUSE_OUT',
+  MouseOver = 'MOUSE_OVER',
+  MouseUp = 'MOUSE_UP',
+  ValueChange = 'VALUE_CHANGE'
+}

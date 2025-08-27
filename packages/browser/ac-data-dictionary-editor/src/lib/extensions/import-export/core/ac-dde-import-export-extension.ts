@@ -13,7 +13,7 @@ export class AcDDEImportExportExtension extends AcDDEExtension {
       menuItems:[
         {label:'Download JSON',callback:()=>{
           if(this.editorApi.activeDataDictionary){
-            AcBrowser.downloadJsonObjectAsFile({data:this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.data_dictionary_id}),filename:'data_dictionary.json'});
+            AcBrowser.downloadJsonObjectAsFile({data:this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId}),filename:'data_dictionary.json'});
           }
         }},
         {label:'Import JSON',callback:async ()=>{

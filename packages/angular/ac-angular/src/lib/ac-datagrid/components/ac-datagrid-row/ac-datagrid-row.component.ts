@@ -71,7 +71,7 @@ export class AcDatagridRowComponent extends AcBase{
       this.notifiedChanged = true;
       const event:IAcDataGridRowDataChangeEvent = {changes:changes,index:this.index,newRowData:this.data,oldRowData:this.previousRowData};
       this.onRowDataChange.emit(event);
-      this.events.execute({eventName:'rowDataChange',args:event});
+      this.events.execute({event:'rowDataChange',args:event});
       this.previousRowData = { ...this.data };
     }
     // setTimeout(() => {

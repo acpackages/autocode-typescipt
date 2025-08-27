@@ -359,7 +359,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       data: data
     };
     this.onRowAdded.emit(event);
-    this.events.execute({ eventName: 'rowAdded', args: event });
+    this.events.execute({ event: 'rowAdded', args: event });
   }
 
   /* Done */
@@ -398,7 +398,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         data: data
       };
       this.onRowDeleted.emit(event);
-      this.events.execute({ eventName: 'rowDeleted', args: event });
+      this.events.execute({ event: 'rowDeleted', args: event });
     }
   }
 
@@ -479,32 +479,32 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     const handleEditorComponentBeforeInit: Function = (instance: AgGridCellEditorComponent) => {
       this.log("cellEditorComponentBeforeInit");
       this.onCellEditorComponentBeforeInit.emit(instance);
-      this.events.execute({ eventName: 'cellEditorComponentBeforeInit', args: instance });
+      this.events.execute({ event: 'cellEditorComponentBeforeInit', args: instance });
     };
     const handleEditorComponentDestroy: Function = (instance: AgGridCellEditorComponent) => {
       this.log("cellEditorComponentDestroy");
       this.onCellEditorComponentDestroy.emit(instance);
-      this.events.execute({ eventName: 'cellEditorComponentDestroy', args: instance });
+      this.events.execute({ event: 'cellEditorComponentDestroy', args: instance });
     };
     const handleEditorComponentInit: Function = (instance: AgGridCellEditorComponent) => {
       this.log("cellEditorComponentInit");
       this.onCellEditorComponentInit.emit(instance);
-      this.events.execute({ eventName: 'cellEditorComponentInit', args: instance });
+      this.events.execute({ event: 'cellEditorComponentInit', args: instance });
     };
     const handleRenderComponentBeforeInit: Function = (instance: AgGridCellRenderComponent) => {
       this.log("cellRenderComponentBeforeInit");
       this.onCellRenderComponentBeforeInit.emit(instance);
-      this.events.execute({ eventName: 'cellRenderComponentBeforeInit', args: instance });
+      this.events.execute({ event: 'cellRenderComponentBeforeInit', args: instance });
     };
     const handleRenderComponentDestroy: Function = (instance: AgGridCellRenderComponent) => {
       this.log("cellRenderComponentDestroy");
       this.onCellRenderComponentBeforeInit.emit(instance);
-      this.events.execute({ eventName: 'cellRenderComponentBeforeInit', args: instance });
+      this.events.execute({ event: 'cellRenderComponentBeforeInit', args: instance });
     };
     const handleRenderComponentInit: Function = (instance: AgGridCellRenderComponent) => {
       this.log("cellRenderComponentInit");
       this.onCellRenderComponentInit.emit(instance);
-      this.events.execute({ eventName: 'cellRenderComponentInit', args: instance });
+      this.events.execute({ event: 'cellRenderComponentInit', args: instance });
     };
     let useSameForEdit: boolean = false;
     if (column.useSameComponentForEditing != undefined) {
@@ -731,26 +731,26 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   /* Done */
   handleCellClicked(event: CellClickedEvent) {
     this.onCellClicked.emit(event);
-    this.events.execute({ eventName: 'cellClicked', args: event });
+    this.events.execute({ event: 'cellClicked', args: event });
   }
 
   /* Done */
   handleCellDoubleClicked(event: CellDoubleClickedEvent) {
     this.onCellDoubleClicked.emit(event);
-    this.events.execute({ eventName: 'cellDoubleClicked', args: event });
+    this.events.execute({ event: 'cellDoubleClicked', args: event });
   }
 
   /* Done */
   handleCellEditingStarted(event: CellEditingStartedEvent) {
     this.onCellEditingStarted.emit(event);
-    this.events.execute({ eventName: 'cellEditingStarted', args: event });
+    this.events.execute({ event: 'cellEditingStarted', args: event });
     this.log("Cell Editing Started");
   }
 
   /* Done */
   handleCellEditingStopped(event: CellEditingStoppedEvent) {
     this.onCellEditingStopped.emit(event);
-    this.events.execute({ eventName: 'cellEditingStopped', args: event });
+    this.events.execute({ event: 'cellEditingStopped', args: event });
     this.log("Cell Editing Stopped");
   }
 
@@ -764,36 +764,36 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         oldIndex: this.activeRowIndex
       };
       this.onActiveRowChange.emit(activeEventParams);
-      this.events.execute({ eventName: "activeRowChange", args: activeEventParams });
+      this.events.execute({ event: "activeRowChange", args: activeEventParams });
       this.activeRowIndex = rowIndex;
     }
     event.index = rowIndex;
     this.onCellFocused.emit(event);
-    this.events.execute({ eventName: 'cellFocused', args: event });
+    this.events.execute({ event: 'cellFocused', args: event });
   }
 
   /* Done */
   handleCellKeyDown(event: CellKeyDownEvent | FullWidthCellKeyDownEvent) {
     this.onCellKeyDown.emit(event);
-    this.events.execute({ eventName: 'cellKeyDown', args: event });
+    this.events.execute({ event: 'cellKeyDown', args: event });
   }
 
   /* Done */
   handleCellMouseDown(event: CellMouseDownEvent) {
     this.onCellMouseDown.emit(event);
-    this.events.execute({ eventName: 'cellMouseDown', args: event });
+    this.events.execute({ event: 'cellMouseDown', args: event });
   }
 
   /* Done */
   handleCellMouseOut(event: CellMouseOutEvent) {
     this.onCellMouseOut.emit(event);
-    this.events.execute({ eventName: 'cellMouseOut', args: event });
+    this.events.execute({ event: 'cellMouseOut', args: event });
   }
 
   /* Done */
   handleCellMouseOver(event: CellMouseOverEvent) {
     this.onCellMouseOver.emit(event);
-    this.events.execute({ eventName: 'cellMouseOver', args: event });
+    this.events.execute({ event: 'cellMouseOver', args: event });
   }
 
   /* Skipped */
@@ -815,37 +815,37 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     event.data = rowData;
     event.index = rowIndex;
     this.onCellValueChanged.emit(event);
-    this.events.execute({ eventName: 'cellValueChanged', args: event });
+    this.events.execute({ event: 'cellValueChanged', args: event });
   }
 
   /* Done */
   handleColumnHeaderClicked(event: ColumnHeaderClickedEvent) {
     this.onColumnHeaderClicked.emit(event);
-    this.events.execute({ eventName: 'columnHeaderClicked', args: event });
+    this.events.execute({ event: 'columnHeaderClicked', args: event });
   }
 
   /* Done */
   handleColumnMoved(event: ColumnMovedEvent) {
     this.onColumnMoved.emit(event);
-    this.events.execute({ eventName: 'columnMouved', args: event });
+    this.events.execute({ event: 'columnMouved', args: event });
   }
 
   /* Done */
   handleColumnResized(event: ColumnResizedEvent) {
     this.onColumnResized.emit(event);
-    this.events.execute({ eventName: 'columnResized', args: event });
+    this.events.execute({ event: 'columnResized', args: event });
   }
 
   /* Started */
   handleColumnValueChanged(event: ColumnValueChangedEvent) {
     this.onColumnValueChanged.emit(event);
-    this.events.execute({ eventName: 'columnValueChanged', args: event });
+    this.events.execute({ event: 'columnValueChanged', args: event });
   }
 
   /* Done */
   handleColumnVisible(event: ColumnVisibleEvent) {
     this.onColumnVisibilityChanged.emit(event);
-    this.events.execute({ eventName: 'columnVisibilityChanged', args: event });
+    this.events.execute({ event: 'columnVisibilityChanged', args: event });
   }
 
   /* Started */
@@ -856,19 +856,19 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   /* Started */
   handleFilterChanged(event: FilterChangedEvent) {
     this.onFilterChanged.emit(event);
-    this.events.execute({ eventName: 'filterChanged', args: event });
+    this.events.execute({ event: 'filterChanged', args: event });
   }
 
   /* Started */
   handleFilterModified(event: FilterModifiedEvent) {
     this.onFilterModified.emit(event);
-    this.events.execute({ eventName: 'filterModified', args: event });
+    this.events.execute({ event: 'filterModified', args: event });
   }
 
   /* Started */
   handleFilterOpened(event: FilterOpenedEvent) {
     this.onFilterOpened.emit(event);
-    this.events.execute({ eventName: 'filterOpened', args: event });
+    this.events.execute({ event: 'filterOpened', args: event });
   }
 
   handleGridReady(event: GridReadyEvent) {
@@ -880,31 +880,31 @@ export class AcDatagridOnAgGridComponent extends AcBase {
     }
     this.agGridApi = event.api;
     this.onGridReady.emit(event);
-    this.events.execute({ eventName: 'gridReady', args: event });
+    this.events.execute({ event: 'gridReady', args: event });
   }
 
   /* Done */
   handlePaginationChanged(event: PaginationChangedEvent) {
     this.onPaginationChanged.emit(event);
-    this.events.execute({ eventName: 'paginationChanged', args: event });
+    this.events.execute({ event: 'paginationChanged', args: event });
   }
 
   /* Done */
   handleRowClicked(event: RowClickedEvent) {
     this.onRowClicked.emit(event);
-    this.events.execute({ eventName: 'rowClicked', args: event });
+    this.events.execute({ event: 'rowClicked', args: event });
   }
 
   /* Started */
   handleRowDataUpdated(event: RowDataUpdatedEvent) {
     this.onRowDataUpdated.emit(event);
-    this.events.execute({ eventName: 'rowDataUpdated', args: event });
+    this.events.execute({ event: 'rowDataUpdated', args: event });
   }
 
   /* Done */
   handleRowDoubleClicked(event: RowDoubleClickedEvent) {
     this.onRowDoubleClicked.emit(event);
-    this.events.execute({ eventName: 'rowDoubleClicked', args: event });
+    this.events.execute({ event: 'rowDoubleClicked', args: event });
   }
 
   /* Done */
@@ -982,37 +982,37 @@ export class AcDatagridOnAgGridComponent extends AcBase {
   /* Started */
   handleRowEditingStarted(event: RowEditingStartedEvent) {
     this.onRowEditingStarted.emit(event);
-    this.events.execute({ eventName: 'rowEditingStarted', args: event });
+    this.events.execute({ event: 'rowEditingStarted', args: event });
   }
 
   /* Started */
   handleRowEditingStopped(event: RowEditingStoppedEvent) {
     this.onRowEditingStopped.emit(event);
-    this.events.execute({ eventName: 'rowEditingStopped', args: event });
+    this.events.execute({ event: 'rowEditingStopped', args: event });
   }
 
   /* Started */
   handleRowSelected(event: any) {
     this.onRowSelected.emit(event);
-    this.events.execute({ eventName: 'rowSelected', args: event });
+    this.events.execute({ event: 'rowSelected', args: event });
   }
 
   /* Started */
   handleRowValueChanged(event: RowValueChangedEvent) {
     this.onRowValueChanged.emit(event);
-    this.events.execute({ eventName: 'rowValueChanged', args: event });
+    this.events.execute({ event: 'rowValueChanged', args: event });
   }
 
   /* Started */
   handleSelectionChanged(event: SelectionChangedEvent) {
     this.onSelectionChanged.emit(event);
-    this.events.execute({ eventName: 'selectionChanged', args: event });
+    this.events.execute({ event: 'selectionChanged', args: event });
   }
 
   /* Done */
   handleSortChanged(event: SortChangedEvent) {
     this.onSortChanged.emit(event);
-    this.events.execute({ eventName: 'sortChanged', args: event });
+    this.events.execute({ event: 'sortChanged', args: event });
   }
 
   /* Started */
@@ -1025,7 +1025,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       this.notifyStateUpdatedTimeout = setTimeout(() => {
 
         this.onStateUpdated.emit(event);
-        this.events.execute({ eventName: 'stateUpdated', args: event });
+        this.events.execute({ event: 'stateUpdated', args: event });
       }, 500);
 
     }
@@ -1133,7 +1133,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
       const event: any = { ...this.lastFocusedCellEvent };
       event.type = "cellBlurred";
       this.onCellBlurred.emit(event);
-      this.events.execute({ eventName: 'cellBlurred', args: event });
+      this.events.execute({ event: 'cellBlurred', args: event });
       this.lastFocusedCellEvent = null;
     }
   }
@@ -1240,7 +1240,7 @@ export class AcDatagridOnAgGridComponent extends AcBase {
         data: data
       };
       this.onRowUpdated.emit(event);
-      this.events.execute({ eventName: 'rowUpdated', args: event });
+      this.events.execute({ event: 'rowUpdated', args: event });
     }
     else {
       this.addRow({ data: data, highlightCells: true });

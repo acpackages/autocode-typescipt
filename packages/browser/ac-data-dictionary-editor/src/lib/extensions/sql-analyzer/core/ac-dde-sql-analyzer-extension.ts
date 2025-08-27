@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import { acAddClassToElement, acSetElementAttributes } from "@autocode-ts/ac-browser";
-import { AcDDEViewRowKey, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs } from "../../../_ac-data-dictionary-editor.export";
+import { AcEnumDDEView, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs } from "../../../_ac-data-dictionary-editor.export";
 import { AcDDEExtension } from "../../../core/ac-dde-extension";
 import { AcDDEDatagridRowAction } from "../../../elements/shared/ac-dde-datagrid-row-action.element";
 import { AcEnumDDEExtension } from "../../../enums/ac-enum-dde-extension.enum";
@@ -12,17 +12,16 @@ import { AcSqlParser } from "@autocode-ts/ac-sql-parser";
 
 export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
   analyzer!: AcDDESqlAnalyzer;
-  // parser:AcSqlParser;
+
   override init(): void {
     this.analyzer = new AcDDESqlAnalyzer({ extension: this });
-    // this.parser = new AcSqlParser();
   }
 
-  override handleHook({ hookName, hookArgs }: { hookName: string; hookArgs: any; }): void {
-    if (hookName == AcEnumDDEHook.ViewsDatagridBeforeColumnsSet) {
+  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
+    if (hook == AcEnumDDEHook.ViewsDatagridBeforeColumnsSet) {
       this.handleBeforeColumnDefinitionSet(hookArgs);
     }
-    else if (hookName == AcEnumDDEHook.ViewsDatagridCellRendererInit) {
+    else if (hook == AcEnumDDEHook.ViewsDatagridCellRendererInit) {
       this.handleCellRendererInit(hookArgs);
     }
 
@@ -51,7 +50,7 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
         analyzeButton.innerHTML = 'Analyze';
         actionElement.element.appendChild(analyzeButton);
         analyzeButton.addEventListener('click',()=>{
-          const query = args.datagridCell.datagridRow.data[AcDDEViewRowKey.viewQuery];
+          const query = args.datagridCell.datagridRow.data[AcEnumDDEView.ViewQuery];
           // console.log(query);
           console.log(new AcSqlParser().parse({sql:query}));
         });

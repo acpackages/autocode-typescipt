@@ -5,11 +5,11 @@ import { AcDataDictionary } from "../..";
 // import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDTrigger {
-  static readonly KeyRowOperation = "row_operation";
-  static readonly KeyTableName = "table_name";
-  static readonly KeyTriggerCode = "trigger_code";
-  static readonly KeyTriggerExecution = "trigger_execution";
-  static readonly KeyTriggerName = "trigger_name";
+  static readonly KeyRowOperation = "rowOperation";
+  static readonly KeyTableName = "tableName";
+  static readonly KeyTriggerCode = "triggerCode";
+  static readonly KeyTriggerExecution = "triggerExecution";
+  static readonly KeyTriggerName = "triggerName";
 
   @AcBindJsonProperty({ key: AcDDTrigger.KeyRowOperation })
   rowOperation: string = "";

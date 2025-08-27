@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDEDatagridTextInput, AcDDEFunctionRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs, IAcDDEFunctionRow } from "../../_ac-data-dictionary-editor.export";
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDFunction } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
@@ -9,6 +8,13 @@ import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.ele
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
+import { IAcDDEFunction } from "../../interfaces/ac-dde-function.inteface";
+import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
+import { AcEnumDDEFunction } from "../../enums/ac-enum-dde-storage-keys.enum";
+import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
+import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
+import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 
 export class AcDDEFunctionsDatagrid {
   data: any[] = [];
@@ -28,7 +34,7 @@ export class AcDDEFunctionsDatagrid {
   applyFilter() {
     let data = this.data;
     if (this.filterFunction != undefined) {
-      data = data.filter((item: IAcDDEFunctionRow) => this.filterFunction!(item));
+      data = data.filter((item: IAcDDEFunction) => this.filterFunction!(item));
     }
     this.datagridApi.data = data;
   }
@@ -61,23 +67,23 @@ export class AcDDEFunctionsDatagrid {
       columnDefinitions: columnDefinitions,
       instance: this
     };
-    this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.FunctionsDatagridBeforeColumnsSet, args: colSetHookArgs });
+    this.editorApi.hooks.execute({ hook: AcEnumDDEHook.FunctionsDatagridBeforeColumnsSet, args: colSetHookArgs });
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addFunction({ data_dictionary_id: this.editorApi.activeDataDictionary?.data_dictionary_id, ...args.datagridRow.data });
+      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+        const row = this.editorApi.dataStorage.addFunction({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
         args.datagridRow.data = row;
         this.data.push(row);
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
-        this.editorApi.dataStorage.deleteFunction({ function_id: args.datagridRow.data[AcDDEFunctionRowKey.functionId] });
+      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteFunction({ functionId: args.datagridRow.data[AcEnumDDEFunction.FunctionId] });
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -85,11 +91,11 @@ export class AcDDEFunctionsDatagrid {
           eventArgs: args,
           instance: this
         };
-        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.FunctionsDatagridCellEditorInit, args: hookArgs });
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.FunctionsDatagridCellEditorInit, args: hookArgs });
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -97,18 +103,18 @@ export class AcDDEFunctionsDatagrid {
           eventArgs: args,
           instance: this
         };
-        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.FunctionsDatagridCellRendererInit, args: hookArgs });
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.FunctionsDatagridCellRendererInit, args: hookArgs });
       }
     });
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
+      hook: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setFunctionsData();
       }
     });
     this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Function, (args: IAcReactiveValueProxyEvent) => {
       if (args.event == 'delete') {
-        arrayRemoveByKey(this.data, AcDDEFunctionRowKey.functionId, args.oldValue[AcDDEFunctionRowKey.functionId]);
+        arrayRemoveByKey(this.data, AcEnumDDEFunction.FunctionId, args.oldValue[AcEnumDDEFunction.FunctionId]);
       }
     });
 
@@ -121,7 +127,7 @@ export class AcDDEFunctionsDatagrid {
   }
 
   setFunctionsData() {
-    this.data = Object.values(this.editorApi.dataStorage.getFunctions({ dataDictionaryId: this.editorApi.activeDataDictionary?.data_dictionary_id }));
+    this.data = Object.values(this.editorApi.dataStorage.getFunctions({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId }));
     this.applyFilter();
   }
 }

@@ -190,12 +190,12 @@ export class AcDatagridComponent extends AcBaseRepeater{
 
   handleSelectedCellChange(){
     this.onSelectedCellChange.emit();
-    this.events.execute({eventName:'selectedCellChange'});
+    this.events.execute({event:'selectedCellChange'});
   }
 
   handleSelectedRowChange(){
     this.onSelectedRowChange.emit();
-    this.events.execute({eventName:'selectedRowlChange'});
+    this.events.execute({event:'selectedRowlChange'});
   }
 
   handleThDimensionChange(event:any, column:IAcDataGridColumn){

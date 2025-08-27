@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
-import './../../../../../packages/browser/ac-browser/src/lib/ac-datagrid/css/ac-datagrid.css';
-import './../../../../../packages/browser/ac-browser/src/lib/ac-pagination/css/ac-pagination.css';
+import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
+import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
 import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridTreeTableExtension, AcEnumDatagridExtension, AcDatagridRowSelectionExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridColumnDraggingExtension, AcDatagridDataExportXlsxExtension, AcDatagridColumnsCustomizerExtension, AcEnumDatagridEvent } from '@autocode-ts/ac-browser';
 import { PageHeader } from '../../components/page-header/page-header.component';
 

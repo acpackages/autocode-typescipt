@@ -17,8 +17,8 @@ export class AcNodeflowApi{
     //
   }
 
-  on({eventName,callback}:{eventName:string,callback:Function}):string{
-    return this.events.subscribe({eventName,callback});
+  on({event,callback}:{event:string,callback:Function}):string{
+    return this.events.subscribe({event,callback});
   }
 
   setJson(){

@@ -1,9 +1,9 @@
 export enum AcEnumDDRowOperation {
-  Delete = "delete",
-  Format = "format",
-  Insert = "insert",
-  Save = "save",
-  Select = "select",
-  Update = "update",
-  Unknown = "unknown",
+  Delete = "DELETE",
+  Format = "FORMAT",
+  Insert = "INSERT",
+  Save = "SAVE",
+  Select = "SELECT",
+  Update = "UPDATE",
+  Unknown = "UNKNOWN",
 }

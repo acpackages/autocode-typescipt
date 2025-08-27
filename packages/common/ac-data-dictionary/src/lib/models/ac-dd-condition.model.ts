@@ -3,8 +3,8 @@
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 
 export class AcDDCondition {
-  static readonly KeyDatabaseType = "database_type";
-  static readonly KeyColumnName = "column_name";
+  static readonly KeyDatabaseType = "databaseType";
+  static readonly KeyColumnName = "columnName";
   static readonly KeyOperator = "operator";
   static readonly KeyValue = "value";
 

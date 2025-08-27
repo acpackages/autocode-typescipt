@@ -2,7 +2,7 @@ import { AcSqlConnection } from "@autocode-ts/ac-sql"
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-ts/autocode"
 
 export class AcRemoteSqlConnection extends AcSqlConnection {
-  static readonly KeyDatabaseType = 'database_type';
+  static readonly KeyDatabaseType = 'databaseType';
 
   @AcBindJsonProperty({ key: AcRemoteSqlConnection.KeyDatabaseType })
   databaseType: AcEnumSqlDatabaseType = AcEnumSqlDatabaseType.Unknown;

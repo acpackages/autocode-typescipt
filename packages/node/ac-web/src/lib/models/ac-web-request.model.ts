@@ -8,7 +8,7 @@ export class AcWebRequest {
   static readonly KEY_GET = 'get';
   static readonly KEY_HEADERS = 'headers';
   static readonly KEY_METHOD = 'method';
-  static readonly KEY_PATH_PAREMETERS = 'path_parameters';
+  static readonly KEY_PATH_PAREMETERS = 'pathParameters';
   static readonly KEY_POST = 'post';
   static readonly KEY_SESSION = 'session';
   static readonly KEY_URL = 'url';

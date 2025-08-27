@@ -1,3 +1,3 @@
 export const AcEnumDDEEvent = {
-  StateChange:'stateChange'
+  StateChange:'STATE_CHANGE'
 }

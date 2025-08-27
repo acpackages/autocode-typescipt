@@ -12,7 +12,7 @@ export default defineConfig(() => ({
     nxViteTsPaths(),
     nxCopyAssetsPlugin(['*.md',
       {
-      input: 'src/lib/ac-datagrid/css',
+      input: 'src/lib/components/ac-datagrid/css',
       glob: '**/*.css',
       output: 'css',
     }

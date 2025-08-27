@@ -95,11 +95,11 @@ export class AcDDEBrowserStorageExtension extends AcDDEExtension {
     }
   }
 
-  override handleHook({ hookName, hookArgs }: { hookName: string; hookArgs: any; }): void {
-    if (hookName == AcEnumDDEHook.DataDictionarySet && !this.ignoreSetDataHooks) {
+  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
+    if (hook == AcEnumDDEHook.DataDictionarySet && !this.ignoreSetDataHooks) {
       this.handleDataDictionarySet();
     }
-    else if (hookName == AcEnumDDEHook.StateChange && !this.ignoreSetDataHooks) {
+    else if (hook == AcEnumDDEHook.StateChange && !this.ignoreSetDataHooks) {
       this.handleStateChange();
     }
   }
@@ -185,7 +185,7 @@ export class AcDDEBrowserStorageExtension extends AcDDEExtension {
       console.error(stateRowsResponse);
     }
 
-    this.editorApi.hooks.execute({hookName:AcEnumDDEHook.DataDictionarySet});
+    this.editorApi.hooks.execute({hook:AcEnumDDEHook.DataDictionarySet});
 
     this.ignoreSetDataHooks = false;
 

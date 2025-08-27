@@ -6,7 +6,7 @@ export class AcCronJob {
   static readonly KeyDuration = "duration";
   static readonly KeyExecution = "execution";
   static readonly KeyId = "id";
-  static readonly KeyLastExecutionTime = "last_execution_time";
+  static readonly KeyLastExecutionTime = "lastExecutionTime";
 
   id!: string;
   execution!: string;

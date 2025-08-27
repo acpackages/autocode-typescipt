@@ -6,7 +6,7 @@ import { AcDDCondition } from "../..";
 // import { AcDDCondition } from "./ac-dd-condition.model";
 
 export class AcDDConditionGroup {
-  static readonly KeyDatabaseType = "database_type";
+  static readonly KeyDatabaseType = "databaseType";
   static readonly KeyConditions = "conditions";
   static readonly KeyOperator = "operator";
 

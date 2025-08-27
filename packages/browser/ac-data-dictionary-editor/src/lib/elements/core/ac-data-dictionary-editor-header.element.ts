@@ -1,11 +1,19 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { acAddClassToElement, AcSelectInput } from "@autocode-ts/ac-browser";
-import { AcDDEApi, AcEnumDDETab, AcEnumDDEHook, IAcDDEActiveDataDictionaryChangeHookArgs, IAcDDEDataDictionaryRow, IAcDDEHookArgs, IAcDDEMenuGroup, IAcDDEMenuGroupAddHookArgs, IAcDDEMenuItem } from "../../_ac-data-dictionary-editor.export";
 import { AcDDESelectDataDictionaryInput } from "../inputs/ac-dde-select-data-dictionary-input.element";
+import { AcEnumDDETab } from "../../enums/ac-enum-dde-tab.enum";
+import { AcDDEApi } from "../../core/ac-dde-api";
+import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { IAcDDEMenuGroupAddHookArgs } from "../../interfaces/hook-args/ac-dde-menu-group-add-hook-args.interface";
+import { IAcDDEHookArgs } from "../../interfaces/hook-args/ac-dde-hook-args.interface";
+import { IAcDDEMenuGroup } from "../../interfaces/ac-dde-menu-group.interface";
+import { IAcDDEMenuItem } from "../../interfaces/ac-dde-menu-item.interface";
+import { IAcDDEDataDictionary } from "../../interfaces/ac-dde-data-dictionary.inteface";
 
 export class AcDataDictionaryEditorHeader {
-  activeView: AcEnumDDETab = AcEnumDDETab.DataDictionaryEditor;
+  activeView: AcEnumDDETab = AcEnumDDETab.TableEditor;
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
   dropdown: HTMLElement = document.createElement('div');
@@ -17,13 +25,13 @@ export class AcDataDictionaryEditorHeader {
     this.selectDataDictionaryInput = (new AcDDESelectDataDictionaryInput({ editorApi: editorApi })).selectInput;
     this.initElement();
     this.setDataDictionaryDropdown();
-    this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
-      this.element.querySelector('[ac-dde-data=active_data_dictionary_name]')!.innerHTML = args.activeDataDictionary.data_dictionary_name!;
+    this.editorApi.hooks.subscribe({hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+      this.element.querySelector('[ac-dde-data=active_data_dictionary_name]')!.innerHTML = args.activeDataDictionary.dataDictionaryName!;
     }});
-    this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.MenuGroupAdd, callback: (args: IAcDDEMenuGroupAddHookArgs) => {
+    this.editorApi.hooks.subscribe({hook: AcEnumDDEHook.MenuGroupAdd, callback: (args: IAcDDEMenuGroupAddHookArgs) => {
       this.addMenuGroup({ menuGroup: args.menuGroup });
     }});
-    this.editorApi.hooks.subscribe({hookName: AcEnumDDEHook.DataDictionarySet, callback: (args: IAcDDEHookArgs) => {
+    this.editorApi.hooks.subscribe({hook: AcEnumDDEHook.DataDictionarySet, callback: (args: IAcDDEHookArgs) => {
       this.setDataDictionaryDropdown();
     }});
     // console.log(this);
@@ -97,9 +105,9 @@ export class AcDataDictionaryEditorHeader {
     this.element.querySelector('.data-dictionary-select-input-container')?.append(this.selectDataDictionaryInput.element);
     const tabs: any = [
       {
-        label: 'Editor',
+        label: 'Table Editor',
         callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.DataDictionaryEditor });
+          this.setActiveTab({ tab: AcEnumDDETab.TableEditor });
         }
       },
       {
@@ -165,11 +173,11 @@ export class AcDataDictionaryEditorHeader {
   }
 
   private setDataDictionaryDropdown(){
-    const createMenuItem:Function = (row:IAcDDEDataDictionaryRow)=>{
+    const createMenuItem:Function = (row:IAcDDEDataDictionary)=>{
       const menuItem:HTMLElement = document.createElement('li');
       menuItem.style.cursor = 'pointer';
       acAddClassToElement({ cssClass: 'dropdown-item', element: menuItem });
-      menuItem.innerHTML = row.data_dictionary_name!;
+      menuItem.innerHTML = row.dataDictionaryName!;
       menuItem.addEventListener('click', () => {
       // menuItem.callback();
       });
@@ -186,8 +194,8 @@ export class AcDataDictionaryEditorHeader {
   setActiveTab({ tab }: { tab: AcEnumDDETab }) {
     let label:string = '(No Tab)';
     switch(tab){
-      case AcEnumDDETab.DataDictionaryEditor:
-        label = 'Editor';
+      case AcEnumDDETab.TableEditor:
+        label = 'Table Editor';
         break;
       case AcEnumDDETab.Functions:
         label = 'Functions';

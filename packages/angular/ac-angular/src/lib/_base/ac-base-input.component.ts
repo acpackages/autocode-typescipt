@@ -54,7 +54,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
 
   constructor(public override elementRef: ElementRef, public override autocodeService: AutocodeService) {
     super(elementRef, autocodeService);
-    this.events.subscribe({eventName:'viewInit',callback:()=>{this.autoFocusElement();}});
+    this.events.subscribe({event:'viewInit',callback:()=>{this.autoFocusElement();}});
     this.setCssClassStyleFromComponentTag();
   }
 
@@ -87,12 +87,12 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
       instance: this
     };
     this.onBlur.emit(eventDetails);
-    this.events.execute({eventName:"blur",args:eventDetails});
+    this.events.execute({event:"blur",args:eventDetails});
   }
 
   handleChange(event: any) {
     this.onChange.emit(this.value);
-    this.events.execute({eventName:"change", args:this.value});
+    this.events.execute({event:"change", args:this.value});
   }
 
   handleClick(event: any) {
@@ -101,7 +101,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
       instance: this
     };
     this.onClick.emit(eventDetails);
-    this.events.execute({eventName:"click", args:eventDetails});
+    this.events.execute({event:"click", args:eventDetails});
   }
 
   handleFocus(event: any) {
@@ -110,7 +110,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
       instance: this
     };
     this.onFocus.emit(eventDetails);
-    this.events.execute({eventName:"focus", args:eventDetails});
+    this.events.execute({event:"focus", args:eventDetails});
   }
 
   handleKeyDown(event: any) {
@@ -119,7 +119,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
       instance: this
     };
     this.onKeyDown.emit(eventDetails);
-    this.events.execute({eventName:"keyDown", args:eventDetails});
+    this.events.execute({event:"keyDown", args:eventDetails});
   }
 
   handleKeyUp(event: any) {
@@ -128,7 +128,7 @@ export class AcBaseInput extends AcBase implements ControlValueAccessor, Validat
       instance: this
     };
     this.onKeyUp.emit(eventDetails);
-    this.events.execute({eventName:"keyUp", args:eventDetails});
+    this.events.execute({event:"keyUp", args:eventDetails});
   }
 
   setFormControlValue(value: any) {

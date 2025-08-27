@@ -1,4 +1,7 @@
-import { AcEnumDDEEvent, AcEnumDDEHook, IAcDDEStateChangeEvent, IAcDDEStateChangeHookArgs } from "../_ac-data-dictionary-editor.export";
+import { AcEnumDDEEvent } from "../enums/ac-enum-dde-event.enum";
+import { AcEnumDDEHook } from "../enums/ac-enum-dde-hooks.enum";
+import { IAcDDEStateChangeEvent } from "../interfaces/event-args/ac-dde-state-change-event.interface";
+import { IAcDDEStateChangeHookArgs } from "../interfaces/hook-args/ac-dde-state-change-hook-args.interface";
 import { AcDDEApi } from "./ac-dde-api";
 
 export class AcDDEEventHandler{
@@ -12,11 +15,11 @@ export class AcDDEEventHandler{
       state:this.editorApi.getState(),
       editorApi:this.editorApi
     }
-    this.editorApi.hooks.execute({hookName:AcEnumDDEHook.StateChange,args:hookArgs});
+    this.editorApi.hooks.execute({hook:AcEnumDDEHook.StateChange,args:hookArgs});
     const eventArgs:IAcDDEStateChangeEvent = {
       state:this.editorApi.getState(),
       editorApi:this.editorApi
     }
-    this.editorApi.events.execute({eventName:AcEnumDDEEvent.StateChange,args:eventArgs});
+    this.editorApi.events.execute({event:AcEnumDDEEvent.StateChange,args:eventArgs});
   }
 }

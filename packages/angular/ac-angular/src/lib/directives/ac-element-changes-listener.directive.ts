@@ -20,7 +20,7 @@ export class AcElementChangesListenerDirective extends AcBase {
       nativeElement:this.elementRef.nativeElement,
     }
     this.onViewInit.emit(event);
-    this.events.execute({eventName:"viewInit",args:event});
+    this.events.execute({event:"viewInit",args:event});
   }
 
 }

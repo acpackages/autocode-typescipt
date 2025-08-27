@@ -9,20 +9,22 @@ import { IAcDDEMenuGroupAddHookArgs } from "../interfaces/hook-args/ac-dde-menu-
 import { AcEnumDDEHook } from "../enums/ac-enum-dde-hooks.enum";
 import { AcDDEExtensionManager } from "./ac-dde-extension-manager";
 import { IAcDDEExtensionEnabledHookArgs } from "../interfaces/hook-args/ac-dde-extension-enabled-hook-args.interface";
-import { IAcDDEDataDictionaryRow } from "../interfaces/ac-dde-data-dictionary-row.inteface";
 import { AcDataDictionaryEditor } from "../elements/core/ac-data-dictionary-editor.element";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
-import { AcDDEEventHandler, AcEnumDDETab, IAcDDEHookArgs } from "../_ac-data-dictionary-editor.export";
 import { IAcDDEState } from "../interfaces/ac-dde-state.interface";
 import { AcDDEState } from "./ac-dde-state";
 import { AcDDEDataStorage } from "./ac-dde-data-storage";
+import { IAcDDEDataDictionary } from "../interfaces/ac-dde-data-dictionary.inteface";
+import { AcEnumDDETab } from "../enums/ac-enum-dde-tab.enum";
+import { IAcDDEHookArgs } from "../interfaces/hook-args/ac-dde-hook-args.interface";
+import { AcDDEEventHandler } from "./ac-dde-event-handler";
 
 export class AcDDEApi {
-  private _activeDataDictionary?: IAcDDEDataDictionaryRow;
-  get activeDataDictionary(): IAcDDEDataDictionaryRow | undefined {
+  private _activeDataDictionary?: IAcDDEDataDictionary;
+  get activeDataDictionary(): IAcDDEDataDictionary | undefined {
     return this._activeDataDictionary;
   }
-  set activeDataDictionary(value: IAcDDEDataDictionaryRow) {
+  set activeDataDictionary(value: IAcDDEDataDictionary) {
     const oldActiveDataDictionary = this._activeDataDictionary;
     this._activeDataDictionary = value;
     const hookArgs: IAcDDEActiveDataDictionaryChangeHookArgs = {
@@ -30,10 +32,10 @@ export class AcDDEApi {
       editorApi: this,
       oldActiveDataDictionary: oldActiveDataDictionary,
     };
-    this.hooks.execute({ hookName: AcEnumDDEHook.ActiveDataDictionaryChange, args: hookArgs });
+    this.hooks.execute({ hook: AcEnumDDEHook.ActiveDataDictionaryChange, args: hookArgs });
   }
 
-  private _activeEditorTab: AcEnumDDETab = AcEnumDDETab.DataDictionaryEditor;
+  private _activeEditorTab: AcEnumDDETab = AcEnumDDETab.TableEditor;
   get activeEditorTab(): AcEnumDDETab {
     return this._activeEditorTab;
   }
@@ -43,7 +45,7 @@ export class AcDDEApi {
       editorApi: this,
       value: value,
     };
-    this.hooks.execute({ hookName: AcEnumDDEHook.EditorTabChange, args: hookArgs });
+    this.hooks.execute({ hook: AcEnumDDEHook.EditorTabChange, args: hookArgs });
   }
 
   dataStorage: AcDDEDataStorage;
@@ -69,7 +71,7 @@ export class AcDDEApi {
       editorApi: this,
       menuGroup: menuGroup
     };
-    this.hooks.execute({ hookName: AcEnumDDEHook.MenuGroupAdd, args: hookArgs });
+    this.hooks.execute({ hook: AcEnumDDEHook.MenuGroupAdd, args: hookArgs });
   }
 
   enableExtension({ extensionName }: { extensionName: string }): AcDDEExtension | null {
@@ -78,8 +80,8 @@ export class AcDDEApi {
       if (extensionInstance) {
         extensionInstance.editorApi = this;
         const hookId: string = this.hooks.subscribeAllHooks({
-          callback: (hookName: string, args: any) => {
-            extensionInstance.handleHook({ hookName: hookName, hookArgs: args });
+          callback: (hook: string, args: any) => {
+            extensionInstance.handleHook({ hook: hook, hookArgs: args });
           }
         });
         extensionInstance.hookId = hookId;
@@ -89,7 +91,7 @@ export class AcDDEApi {
           extensionName: extensionName,
           editorApi: this,
         };
-        this.hooks.execute({ hookName: AcEnumDDEHook.ExtensionEnabled, args: hookArgs });
+        this.hooks.execute({ hook: AcEnumDDEHook.ExtensionEnabled, args: hookArgs });
         return extensionInstance;
       }
     }
@@ -108,96 +110,96 @@ export class AcDDEApi {
     };
     const dataDictionaryRows = this.dataStorage.getDataDictionaries({ dataDictionaryId: dataDictionaryId });
     if (dataDictionaryRows.length > 0) {
-      const dataDictionartRow: IAcDDEDataDictionaryRow = dataDictionaryRows[0];
-      dataDictionary[AcDataDictionary.KeyVersion] = dataDictionartRow.data_dictionary_version;
-      dataDictionary[AcDataDictionary.KeyName] = dataDictionartRow.data_dictionary_name;
+      const dataDictionartRow: IAcDDEDataDictionary = dataDictionaryRows[0];
+      dataDictionary[AcDataDictionary.KeyVersion] = dataDictionartRow.dataDictionaryVersion;
+      dataDictionary[AcDataDictionary.KeyName] = dataDictionartRow.dataDictionaryName;
 
       const tables: any = {};
-      for (const tableRow of this.dataStorage.getTables({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+      for (const tableRow of this.dataStorage.getTables({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
         const columns: any = {};
-        for (const columnRow of this.dataStorage.getTableColumns({ tableId: tableRow.table_id! })) {
-          columns[columnRow.column_name!] = {
-            [AcDDTableColumn.KeyColumnName]: columnRow.column_name,
-            [AcDDTableColumn.KeyColumnType]: columnRow.column_type,
-            [AcDDTableColumn.KeyColumnProperties]: columnRow.column_properties
+        for (const columnRow of this.dataStorage.getTableColumns({ tableId: tableRow.tableId! })) {
+          columns[columnRow.columnName!] = {
+            [AcDDTableColumn.KeyColumnName]: columnRow.columnName,
+            [AcDDTableColumn.KeyColumnType]: columnRow.columnType,
+            [AcDDTableColumn.KeyColumnProperties]: columnRow.columnProperties
           };
         }
-        tables[tableRow.table_name!] = {
-          [AcDDTable.KeyTableName]: tableRow.table_name,
+        tables[tableRow.tableName!] = {
+          [AcDDTable.KeyTableName]: tableRow.tableName,
           [AcDDTable.KeyTableColumns]: columns,
-          [AcDDTable.KeyTableProperties]: tableRow.table_properties
+          [AcDDTable.KeyTableProperties]: tableRow.tableProperties
         };
       }
       dataDictionary[AcDataDictionary.KeyTables] = tables;
 
       const views: any = {};
-      for (const viewRow of this.dataStorage.getViews({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+      for (const viewRow of this.dataStorage.getViews({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
         const columns: any = {};
-        for (const columnRow of this.dataStorage.getViewColumns({ viewId: viewRow.view_id })) {
-          columns[columnRow.column_name!] = {
-            [AcDDViewColumn.KeyColumnName]: columnRow.column_name,
-            [AcDDViewColumn.KeyColumnType]: columnRow.column_type,
-            [AcDDViewColumn.KeyColumnProperties]: columnRow.column_properties,
-            [AcDDViewColumn.KeyColumnSource]: columnRow.column_source,
-            [AcDDViewColumn.KeyColumnSourceName]: columnRow.column_source_name,
+        for (const columnRow of this.dataStorage.getViewColumns({ viewId: viewRow.viewId })) {
+          columns[columnRow.columnName!] = {
+            [AcDDViewColumn.KeyColumnName]: columnRow.columnName,
+            [AcDDViewColumn.KeyColumnType]: columnRow.columnType,
+            [AcDDViewColumn.KeyColumnProperties]: columnRow.columnProperties,
+            [AcDDViewColumn.KeyColumnSource]: columnRow.columnSource,
+            [AcDDViewColumn.KeyColumnSourceName]: columnRow.columnSourceName,
           };
         }
-        views[viewRow.view_name!] = {
-          [AcDDView.KeyViewName]: viewRow.view_name,
+        views[viewRow.viewName!] = {
+          [AcDDView.KeyViewName]: viewRow.viewName,
           [AcDDView.KeyViewColumns]: columns,
-          [AcDDView.KeyViewQuery]: viewRow.view_query,
+          [AcDDView.KeyViewQuery]: viewRow.viewQuery,
         };
       }
       dataDictionary[AcDataDictionary.KeyViews] = views;
 
       const relationships: any[] = [];
-      for (const relationshipRow of this.dataStorage.getRelationships({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
+      for (const relationshipRow of this.dataStorage.getRelationships({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
         if (
-          this.dataStorage.hasTableColumnWithId(relationshipRow.destination_column_id!) &&
-          this.dataStorage.hasTableColumnWithId(relationshipRow.source_column_id!) &&
-          this.dataStorage.hasTableWithId(relationshipRow.destination_table_id!) &&
-          this.dataStorage.hasTableWithId(relationshipRow.source_table_id!)
+          this.dataStorage.hasTableColumnWithId(relationshipRow.destinationColumnId!) &&
+          this.dataStorage.hasTableColumnWithId(relationshipRow.sourceColumnId!) &&
+          this.dataStorage.hasTableWithId(relationshipRow.destinationTableId!) &&
+          this.dataStorage.hasTableWithId(relationshipRow.sourceTableId!)
         ) {
           relationships.push({
-            [AcDDRelationship.KeyCascadeDeleteDestination]: relationshipRow.cascade_delete_destination,
-            [AcDDRelationship.KeyCascadeDeleteSource]: relationshipRow.cascade_delete_source,
-            [AcDDRelationship.KeyDestinationColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.destination_column_id })[0].column_name,
-            [AcDDRelationship.KeyDestinationTable]: this.dataStorage.getTables({ tableId: relationshipRow.destination_table_id })[0].table_name,
-            [AcDDRelationship.KeySourceColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.source_column_id })[0].column_name,
-            [AcDDRelationship.KeySourceTable]: this.dataStorage.getTables({ tableId: relationshipRow.source_table_id })[0].table_name
+            [AcDDRelationship.KeyCascadeDeleteDestination]: relationshipRow.cascadeDeleteDestination,
+            [AcDDRelationship.KeyCascadeDeleteSource]: relationshipRow.cascadeDeleteSource,
+            [AcDDRelationship.KeyDestinationColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.destinationColumnId })[0].columnName,
+            [AcDDRelationship.KeyDestinationTable]: this.dataStorage.getTables({ tableId: relationshipRow.destinationTableId })[0].tableName,
+            [AcDDRelationship.KeySourceColumn]: this.dataStorage.getTableColumns({ columnId: relationshipRow.sourceColumnId })[0].columnName,
+            [AcDDRelationship.KeySourceTable]: this.dataStorage.getTables({ tableId: relationshipRow.sourceTableId })[0].tableName
           });
         }
       }
       dataDictionary[AcDataDictionary.KeyRelationships] = relationships;
 
       const triggers: any = {};
-      for (const triggerRow of this.dataStorage.getTriggers({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        if (this.dataStorage.hasTableWithId(triggerRow.table_id!)) {
-          triggers[triggerRow.trigger_name!] = ({
-            [AcDDTrigger.KeyTriggerExecution]: triggerRow.trigger_execution,
-            [AcDDTrigger.KeyRowOperation]: triggerRow.row_operation,
-            [AcDDTrigger.KeyTableName]: this.dataStorage.getTables({ tableId: triggerRow.table_id })[0].table_name,
-            [AcDDTrigger.KeyTriggerName]: triggerRow.trigger_name,
-            [AcDDTrigger.KeyTriggerCode]: triggerRow.trigger_code,
+      for (const triggerRow of this.dataStorage.getTriggers({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
+        if (this.dataStorage.hasTableWithId(triggerRow.tableId!)) {
+          triggers[triggerRow.triggerName!] = ({
+            [AcDDTrigger.KeyTriggerExecution]: triggerRow.triggerExecution,
+            [AcDDTrigger.KeyRowOperation]: triggerRow.rowOperation,
+            [AcDDTrigger.KeyTableName]: this.dataStorage.getTables({ tableId: triggerRow.tableId })[0].tableName,
+            [AcDDTrigger.KeyTriggerName]: triggerRow.triggerName,
+            [AcDDTrigger.KeyTriggerCode]: triggerRow.triggerCode,
           });
         }
       }
       dataDictionary[AcDataDictionary.KeyTriggers] = triggers;
 
       const functions: any = {};
-      for (const functionRow of this.dataStorage.getFunctions({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        functions[functionRow.function_name!] = ({
-          [AcDDFunction.KeyFunctionName]: functionRow.function_name,
-          [AcDDFunction.KeyFunctionCode]: functionRow.function_code
+      for (const functionRow of this.dataStorage.getFunctions({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
+        functions[functionRow.functionName!] = ({
+          [AcDDFunction.KeyFunctionName]: functionRow.functionName,
+          [AcDDFunction.KeyFunctionCode]: functionRow.functionCode
         });
       }
       dataDictionary[AcDataDictionary.KeyFunctions] = functions;
 
       const storedProcedures: any = {};
-      for (const storedProcedureRow of this.dataStorage.getStoredProcedures({ dataDictionaryId: dataDictionartRow.data_dictionary_id })) {
-        functions[storedProcedureRow.stored_procedure_name!] = ({
-          [AcDDStoredProcedure.KeyStoredProcedureName]: storedProcedureRow.stored_procedure_name,
-          [AcDDStoredProcedure.KeyStoredProcedureCode]: storedProcedureRow.stored_procedure_code
+      for (const storedProcedureRow of this.dataStorage.getStoredProcedures({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
+        functions[storedProcedureRow.storedProcedureName!] = ({
+          [AcDDStoredProcedure.KeyStoredProcedureName]: storedProcedureRow.storedProcedureName,
+          [AcDDStoredProcedure.KeyStoredProcedureCode]: storedProcedureRow.storedProcedureCode
         });
       }
       dataDictionary[AcDataDictionary.KeyFunctions] = storedProcedures;
@@ -209,8 +211,8 @@ export class AcDDEApi {
     return this.editorState.toJson();
   }
 
-  on({eventName,callback}:{eventName:string,callback:Function}):string{
-    return this.events.subscribe({eventName,callback});
+  on({event,callback}:{event:string,callback:Function}):string{
+    return this.events.subscribe({event,callback});
   }
 
   setDataDictionaryJson({ dataDictionaryJson, dataDictionaryName }: { dataDictionaryName?: string, dataDictionaryJson: any }) {
@@ -222,14 +224,14 @@ export class AcDDEApi {
       dataDictionaryName = dataDictionaryJson[AcDataDictionary.KeyName];
     }
     const dataDictionaries = this.dataStorage.getDataDictionaries({dataDictionaryName:dataDictionaryName});
-    let dataDictionaryRow:IAcDDEDataDictionaryRow;
+    let dataDictionaryRow:IAcDDEDataDictionary;
     if(dataDictionaries.length > 0){
       dataDictionaryRow = dataDictionaries[0];
     }
     else{
-      dataDictionaryRow = this.dataStorage.addDataDictionary({ data_dictionary_name: dataDictionaryName, data_dictionary_version: version });
+      dataDictionaryRow = this.dataStorage.addDataDictionary({ dataDictionaryName: dataDictionaryName, dataDictionaryVersion: version });
     }
-    const dataDictionaryId = dataDictionaryRow.data_dictionary_id;
+    const dataDictionaryId = dataDictionaryRow.dataDictionaryId;
 
     if (dataDictionaryJson[AcDataDictionary.KeyTables]) {
       for (const tableDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyTables]) as any[]) {
@@ -237,16 +239,16 @@ export class AcDDEApi {
         const tableColumns = tableDetails[AcDDTable.KeyTableColumns];
         const tableProperties = tableDetails[AcDDTable.KeyTableProperties];
         const tableRow = this.dataStorage.addTable({
-          data_dictionary_id: dataDictionaryId,
-          table_name: tableName,
-          table_properties: tableProperties
+          dataDictionaryId: dataDictionaryId,
+          tableName: tableName,
+          tableProperties: tableProperties
         });
 
         for (const columnDetails of Object.values(tableColumns) as any[]) {
           const columnName = columnDetails[AcDDTableColumn.KeyColumnName];
           const columnProperties = columnDetails[AcDDTableColumn.KeyColumnProperties];
           const columnType = columnDetails[AcDDTableColumn.KeyColumnType];
-          this.dataStorage.addTableColumn({ data_dictionary_id: dataDictionaryId, table_id: tableRow.table_id, column_name: columnName, column_type: columnType, column_properties: columnProperties });
+          this.dataStorage.addTableColumn({ dataDictionaryId: dataDictionaryId, tableId: tableRow.tableId, columnName: columnName, columnType: columnType, columnProperties: columnProperties });
         }
       }
     }
@@ -256,13 +258,13 @@ export class AcDDEApi {
         const viewName = viewDetails[AcDDView.KeyViewName];
         const viewQuery = viewDetails[AcDDView.KeyViewQuery];
         const viewColumns = viewDetails[AcDDView.KeyViewColumns];
-        const viewRow = this.dataStorage.addView({ data_dictionary_id: dataDictionaryId, view_name: viewName, view_query: viewQuery });
+        const viewRow = this.dataStorage.addView({ dataDictionaryId: dataDictionaryId, viewName: viewName, viewQuery: viewQuery });
         if (viewColumns) {
           for (const columnDetails of Object.values(viewColumns) as any[]) {
             const columnName = columnDetails[AcDDViewColumn.KeyColumnName];
             const columnProperties = columnDetails[AcDDViewColumn.KeyColumnProperties];
             const columnType = columnDetails[AcDDViewColumn.KeyColumnType];
-            this.dataStorage.addViewColumn({ data_dictionary_id: dataDictionaryId, view_id: viewRow.view_id, column_name: columnName, column_type: columnType, column_properties: columnProperties, column_source: '', column_source_name: '' });
+            this.dataStorage.addViewColumn({ dataDictionaryId: dataDictionaryId, viewId: viewRow.viewId, columnName: columnName, columnType: columnType, columnProperties: columnProperties, columnSource: '', columnSourceName: '' });
           }
         }
 
@@ -274,12 +276,12 @@ export class AcDDEApi {
         const tableRows = this.dataStorage.getTables({ tableName: triggerDetails[AcDDTrigger.KeyTableName], dataDictionaryId: dataDictionaryId! });
         if (tableRows.length > 0) {
           const triggerId = this.dataStorage.addTrigger({
-            data_dictionary_id: dataDictionaryId,
-            trigger_name: triggerDetails[AcDDTrigger.KeyTriggerName],
-            row_operation: triggerDetails[AcDDTrigger.KeyRowOperation],
-            table_id: tableRows[0].table_id,
-            trigger_code: triggerDetails[AcDDTrigger.KeyTriggerCode],
-            trigger_execution: triggerDetails[AcDDTrigger.KeyTriggerExecution]
+            dataDictionaryId: dataDictionaryId,
+            triggerName: triggerDetails[AcDDTrigger.KeyTriggerName],
+            rowOperation: triggerDetails[AcDDTrigger.KeyRowOperation],
+            tableId: tableRows[0].tableId,
+            triggerCode: triggerDetails[AcDDTrigger.KeyTriggerCode],
+            triggerExecution: triggerDetails[AcDDTrigger.KeyTriggerExecution]
           });
         }
       }
@@ -295,21 +297,21 @@ export class AcDDEApi {
               const destinationTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeyDestinationTable], dataDictionaryId: dataDictionaryId! });
               const sourceTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeySourceTable], dataDictionaryId: dataDictionaryId! });
               if (sourceTableRows.length > 0 && destinationTableRows.length > 0) {
-                const sourceTableId = sourceTableRows[0].table_id;
-                const destinationTableId = destinationTableRows[0].table_id;
+                const sourceTableId = sourceTableRows[0].tableId;
+                const destinationTableId = destinationTableRows[0].tableId;
 
                 const sourceColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeySourceColumn], dataDictionaryId: dataDictionaryId!, tableId: sourceTableId! })
                 const destinationColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeyDestinationColumn], dataDictionaryId: dataDictionaryId!, tableId: destinationTableId! });
 
                 if (sourceColumnRows.length > 0 && destinationColumnRows.length > 0) {
                   const relationshipId = this.dataStorage.addRelationship({
-                    data_dictionary_id: dataDictionaryId,
-                    source_table_id: sourceTableId,
-                    source_column_id: sourceColumnRows[0].column_id,
-                    destination_column_id: destinationColumnRows[0].column_id,
-                    destination_table_id: destinationTableId,
-                    cascade_delete_destination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
-                    cascade_delete_source: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
+                    dataDictionaryId: dataDictionaryId,
+                    sourceTableId: sourceTableId,
+                    sourceColumnId: sourceColumnRows[0].columnId,
+                    destinationColumnId: destinationColumnRows[0].columnId,
+                    destinationTableId: destinationTableId,
+                    cascadeDeleteDestination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
+                    cascadeDeleteSource: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
                   });
                 }
               }
@@ -321,21 +323,21 @@ export class AcDDEApi {
       //   const destinationTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeyDestinationTable], dataDictionaryId: dataDictionaryId! });
       //   const sourceTableRows = this.dataStorage.getTables({ tableName: relationshipDetails[AcDDRelationship.KeySourceTable], dataDictionaryId: dataDictionaryId! });
       //   if (sourceTableRows.length > 0 && destinationTableRows.length > 0) {
-      //     const sourceTableId = sourceTableRows[0].table_id;
-      //     const destinationTableId = destinationTableRows[0].table_id;
+      //     const sourceTableId = sourceTableRows[0].tableId;
+      //     const destinationTableId = destinationTableRows[0].tableId;
 
       //     const sourceColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeySourceColumn], dataDictionaryId: dataDictionaryId!, tableId: sourceTableId! })
       //     const destinationColumnRows = this.dataStorage.getTableColumns({ columnName: relationshipDetails[AcDDRelationship.KeyDestinationColumn], dataDictionaryId: dataDictionaryId!, tableId: destinationTableId! });
 
       //     if (sourceColumnRows.length > 0 && destinationColumnRows.length > 0) {
       //       const relationshipId = this.dataStorage.addRelationship({
-      //         data_dictionary_id: dataDictionaryId,
-      //         source_table_id: sourceTableId,
-      //         source_column_id: sourceColumnRows[0].column_id,
-      //         destination_column_id: destinationColumnRows[0].column_id,
-      //         destination_table_id: destinationTableId,
-      //         cascade_delete_destination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
-      //         cascade_delete_source: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
+      //         dataDictionaryId: dataDictionaryId,
+      //         sourceTableId: sourceTableId,
+      //         sourceColumnId: sourceColumnRows[0].columnId,
+      //         destinationColumnId: destinationColumnRows[0].columnId,
+      //         destinationTableId: destinationTableId,
+      //         cascadeDeleteDestination: relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination],
+      //         cascadeDeleteSource: relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource]
       //       });
       //     }
 
@@ -346,9 +348,9 @@ export class AcDDEApi {
     if (dataDictionaryJson[AcDataDictionary.KeyFunctions]) {
       for (const functionDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyFunctions]) as any[]) {
         const functionId = this.dataStorage.addFunction({
-          data_dictionary_id: dataDictionaryId,
-          function_name: functionDetails[AcDDFunction.KeyFunctionName],
-          function_code: functionDetails[AcDDFunction.KeyFunctionCode]
+          dataDictionaryId: dataDictionaryId,
+          functionName: functionDetails[AcDDFunction.KeyFunctionName],
+          functionCode: functionDetails[AcDDFunction.KeyFunctionCode]
         });
       }
     }
@@ -356,18 +358,18 @@ export class AcDDEApi {
     if (dataDictionaryJson[AcDataDictionary.KeyStoredProcedures]) {
       for (const storedProcedureDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyStoredProcedures]) as any[]) {
         const storedProcedureId = this.dataStorage.addStoredProcedure({
-          data_dictionary_id: dataDictionaryId,
-          stored_procedure_name: storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureName],
-          stored_procedure_code: storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureCode]
+          dataDictionaryId: dataDictionaryId,
+          storedProcedureName: storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureName],
+          storedProcedureCode: storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureCode]
         });
       }
     }
 
-    this.hooks.execute({ hookName: AcEnumDDEHook.DataDictionarySet });
+    this.hooks.execute({ hook: AcEnumDDEHook.DataDictionarySet });
   }
 
   setState(state: IAcDDEState): void {
-    this.editorState.apply(state);
+    this.editorState.apply({state:state});
   }
 
 }

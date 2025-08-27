@@ -9,8 +9,7 @@
     "@autocode-ts/autocode": "^0.0.6",
     "@autocode-ts/ac-extensions": "^0.0.4",
     "@autocode-ts/ac-template-engine": "^0.0.1",
-    "@popperjs/core": "^2.11.8",
-    "overlayscrollbars": "^2.11.4"
+    "@popperjs/core": "^2.11.8"
   },
   "exports": {
     "./css/ac-datagrid.css": {

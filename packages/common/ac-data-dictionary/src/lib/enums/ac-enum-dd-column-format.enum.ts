@@ -1,9 +1,9 @@
 
 export enum AcEnumDDColumnFormat {
-  Date = "date",
-  Encrypt = "encrypt",
-  HideColumn = "hide_column",
-  Json = "json",
-  Lowercase = "lowercase",
-  Uppercase = "uppercase",
+  Date = "DATE",
+  Encrypt = "ENCRYPT",
+  HideColumn = "HIDE_COLUMN",
+  Json = "JSON",
+  Lowercase = "LOWERCASE",
+  Uppercase = "UPPERCASE",
 }

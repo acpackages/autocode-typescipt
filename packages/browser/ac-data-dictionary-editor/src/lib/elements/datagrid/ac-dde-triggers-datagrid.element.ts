@@ -1,6 +1,5 @@
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcDDECssClassName, AcDDEDatagridPopoutTextareaInput, AcDDEDatagridSelectInput, AcDDEDatagridSelectTableInput, AcDDETriggerRowKey, AcEnumDDEEntity, AcEnumDDEHook, IAcDDEDatagridCellInitHookArgs, IAcDDETriggerRow } from "../../_ac-data-dictionary-editor.export";
 import { AcDDTrigger, AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
@@ -9,6 +8,15 @@ import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.ele
 import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
+import { AcDDEDatagridSelectInput } from "../inputs/ac-dde-datagrid-select-input.element";
+import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
+import { AcDDEDatagridPopoutTextareaInput } from "../inputs/ac-dde-datagrid-popout-textarea-input.element";
+import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
+import { AcEnumDDETrigger } from "../../enums/ac-enum-dde-storage-keys.enum";
+import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
+import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
+import { IAcDDETrigger } from "../../interfaces/ac-dde-trigger.inteface";
+import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 
 export class AcDDETriggersDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -80,23 +88,23 @@ export class AcDDETriggersDatagrid {
       columnDefinitions: columnDefinitions,
       instance: this
     };
-    this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.TriggersDatagridBeforeColumnsSet, args: colSetHookArgs });
+    this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TriggersDatagridBeforeColumnsSet, args: colSetHookArgs });
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addTrigger({ data_dictionary_id: this.editorApi.activeDataDictionary?.data_dictionary_id, ...args.datagridRow.data });
+      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+        const row = this.editorApi.dataStorage.addTrigger({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
         args.datagridRow.data = row;
         this.data.push(row);
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
-        this.editorApi.dataStorage.deleteTrigger({ trigger_id: args.datagridRow.data[AcDDETriggerRowKey.triggerId] });
+      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+        this.editorApi.dataStorage.deleteTrigger({ triggerId: args.datagridRow.data[AcEnumDDETrigger.TriggerId] });
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -104,11 +112,11 @@ export class AcDDETriggersDatagrid {
           eventArgs: args,
           instance: this
         };
-        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.TriggersDatagridCellEditorInit, args: hookArgs });
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TriggersDatagridCellEditorInit, args: hookArgs });
       }
     });
     this.datagridApi.on({
-      eventName: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -116,18 +124,18 @@ export class AcDDETriggersDatagrid {
           eventArgs: args,
           instance: this
         };
-        this.editorApi.hooks.execute({ hookName: AcEnumDDEHook.TriggersDatagridCellRendererInit, args: hookArgs });
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TriggersDatagridCellRendererInit, args: hookArgs });
       }
     });
 
     this.editorApi.hooks.subscribe({
-      hookName: AcEnumDDEHook.DataDictionarySet, callback: () => {
+      hook: AcEnumDDEHook.DataDictionarySet, callback: () => {
         this.setTriggersData();
       }
     });
     this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Trigger, (args: IAcReactiveValueProxyEvent) => {
       if (args.event == 'delete') {
-        arrayRemoveByKey(this.data, AcDDETriggerRowKey.triggerId, args.oldValue[AcDDETriggerRowKey.triggerId]);
+        arrayRemoveByKey(this.data, AcEnumDDETrigger.TriggerId, args.oldValue[AcEnumDDETrigger.TriggerId]);
       }
     });
 
@@ -137,7 +145,7 @@ export class AcDDETriggersDatagrid {
   applyFilter() {
     let data = this.data;
     if (this.filterFunction != undefined) {
-      data = data.filter((item: IAcDDETriggerRow) => this.filterFunction!(item));
+      data = data.filter((item: IAcDDETrigger) => this.filterFunction!(item));
     }
     this.datagridApi.data = data;
   }
@@ -148,7 +156,7 @@ export class AcDDETriggersDatagrid {
   }
 
   setTriggersData() {
-    this.data = Object.values(this.editorApi.dataStorage.getTriggers({ dataDictionaryId: this.editorApi.activeDataDictionary?.data_dictionary_id }));
+    this.data = Object.values(this.editorApi.dataStorage.getTriggers({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId }));
     this.applyFilter();
   }
 

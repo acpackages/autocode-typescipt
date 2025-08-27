@@ -12,18 +12,18 @@ import { AcDataDictionary, AcDDCondition, AcDDConditionGroup, AcDDTableColumn, A
 
 export class AcDDSelectStatement {
   static readonly KeyCondition = "condition";
-  static readonly KeyConditionGroup = "condition_group";
-  static readonly KeyDatabaseType = "database_type";
-  static readonly KeyDataDictionaryName = "data_dictionary_name";
-  static readonly KeyExcludeColumns = "exclude_columns";
-  static readonly KeyIncludeColumns = "include_columns";
-  static readonly KeyOrderBy = "order_by";
-  static readonly KeyPageNumber = "page_number";
-  static readonly KeyPageSize = "page_size";
+  static readonly KeyConditionGroup = "conditionGroup";
+  static readonly KeyDatabaseType = "databaseType";
+  static readonly KeyDataDictionaryName = "dataDictionaryName";
+  static readonly KeyExcludeColumns = "excludeColumns";
+  static readonly KeyIncludeColumns = "includeColumns";
+  static readonly KeyOrderBy = "orderBy";
+  static readonly KeyPageNumber = "pageNumber";
+  static readonly KeyPageSize = "pageSize";
   static readonly KeyParameters = "parameters";
-  static readonly KeySelectStatement = "select_statement";
-  static readonly KeySqlStatement = "sql_statement";
-  static readonly KeyTableName = "table_name";
+  static readonly KeySelectStatement = "selectStatement";
+  static readonly KeySqlStatement = "sqlStatement";
+  static readonly KeyTableName = "tableName";
 
   condition: string = "";
 

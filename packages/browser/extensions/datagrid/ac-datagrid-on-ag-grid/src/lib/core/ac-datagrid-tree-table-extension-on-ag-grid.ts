@@ -27,8 +27,8 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
       this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
     }
     this.datagridApi.hooks.subscribeAllHooks({
-      callback: (hookName: string, hookArgs: any) => {
-        this.handleHook({ hookName: hookName, hookArgs: hookArgs });
+      callback: (hook: string, hookArgs: any) => {
+        this.handleHook({ hook: hook, hookArgs: hookArgs });
       }
     });
   }
@@ -81,27 +81,27 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     }
   }
 
-  handleHook({ hookName, hookArgs }: { hookName: string, hookArgs: any }): void {
-    if (hookName == AcEnumDatagridHook.ExtensionEnabled) {
+  handleHook({ hook, hookArgs }: { hook: string, hookArgs: any }): void {
+    if (hook == AcEnumDatagridHook.ExtensionEnable) {
       this.handleExtensionEnabled(hookArgs);
     }
-    else if (hookName == AcEnumDatagridOnAgGridHook.ColDefsChange) {
+    else if (hook == AcEnumDatagridOnAgGridHook.ColDefsChange) {
       this.handleColDefsChange(hookArgs);
     }
-    else if (hookName == AcEnumDatagridOnAgGridHook.DataChange) {
+    else if (hook == AcEnumDatagridOnAgGridHook.DataChange) {
       this.handleDataChange(hookArgs);
     }
-    else if (hookName == AcEnumDatagridOnAgGridHook.BeforeRowAdd) {
+    else if (hook == AcEnumDatagridOnAgGridHook.BeforeRowAdd) {
       this.handleRowAdd(hookArgs);
     }
-    else if (hookName == AcEnumDatagridOnAgGridHook.BeforeRowUpdate) {
+    else if (hook == AcEnumDatagridOnAgGridHook.BeforeRowUpdate) {
       this.handleRowUpdate(hookArgs);
     }
     else if ([
       AcEnumDatagridTreeTableHook.TreeDataChildKeyChange,
       AcEnumDatagridTreeTableHook.TreeDataDisplayKeyChange,
       AcEnumDatagridTreeTableHook.TreeDataParentKeyChange
-    ].includes(hookName as any)) {
+    ].includes(hook as any)) {
       this.handleTreeDataKeyChangeChange();
     }
   }

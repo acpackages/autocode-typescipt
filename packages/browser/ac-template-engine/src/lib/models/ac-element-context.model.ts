@@ -8,7 +8,7 @@ export class AcElementContext {
   addValueObjectToContext(value:{value: any}) {
     const valueProxy = new AcReactiveValueProxy(value);
     valueProxy.on('change', (params: any) => {
-      this.events.execute({ eventName: "change", args: params })
+      this.events.execute({ event: "change", args: params })
     });
     this.valueProxies.push(valueProxy);
   }
@@ -16,7 +16,7 @@ export class AcElementContext {
   copyFrom({elementContext}:{elementContext:AcElementContext}){
     for(const valueProxy of elementContext.valueProxies){
       valueProxy.on('change', (params: any) => {
-        this.events.execute({ eventName: "change", args: params })
+        this.events.execute({ event: "change", args: params })
       });
       this.valueProxies.push(valueProxy);
     }
@@ -31,7 +31,7 @@ export class AcElementContext {
   }
 
   on(event:string,callback:Function){
-    return this.events.subscribe({eventName:event,callback:callback});
+    return this.events.subscribe({event:event,callback:callback});
   }
 
   setContextValue({key,value}:{key:string,value:any}):any{

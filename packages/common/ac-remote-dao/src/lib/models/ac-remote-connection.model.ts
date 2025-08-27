@@ -2,8 +2,8 @@
 import { AcBindJsonProperty, AcEnumHttpMethod, AcJsonUtils } from "@autocode-ts/autocode";
 
 export class AcRemoteConnection {
-  static readonly KeyApiUrl = 'api_url';
-  static readonly KeyApiMethod = 'api_method';
+  static readonly KeyApiUrl = 'apiUrl';
+  static readonly KeyApiMethod = 'apiMethod';
 
   @AcBindJsonProperty({ key: AcRemoteConnection.KeyApiUrl })
   apiUrl: string = "";

@@ -10,7 +10,7 @@ export class AcDDESelectDataDictionaryInput{
     this.editorApi = editorApi;
     this.selectInput.init();
     this.setOptions();
-    this.editorApi.hooks.subscribe({hookName:AcEnumDDEHook.DataDictionarySet,callback:()=>{
+    this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.DataDictionarySet,callback:()=>{
       this.setOptions();
     }})
   }
@@ -18,7 +18,7 @@ export class AcDDESelectDataDictionaryInput{
   setOptions({filter}:{filter?:Function}={}){
     const options:any[] = [];
     for(const row of Object.values(this.editorApi.dataStorage.getDataDictionaries({filter:filter}))){
-      options.push({'label':row.data_dictionary_name,'value':row.data_dictionary_id});
+      options.push({'label':row.dataDictionaryName,'value':row.dataDictionaryId});
     }
     this.selectInput.selectOptions = options;
   }

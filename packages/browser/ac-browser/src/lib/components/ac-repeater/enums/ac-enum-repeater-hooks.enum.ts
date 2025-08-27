@@ -1,0 +1,20 @@
+export const AcEnumRepeaterHook = {
+  BeforeDataChange: 'BEFORE_DATA_CHANGE',
+  BeforeGetOnDemandData: 'BEFORE_GET_ON_DEMAND_DATA',
+  BodyCreate: 'BODY_CREATE',
+  DataChange: 'DATA_CHANGE',
+  RepeaterColumnCreate: 'REPEATER_COLUMN_CREATE',
+  RepeaterRowCreate: 'REPEATER_ROW_CREATE',
+  DataSourceTypeChange: 'DATA_SOURCE_TYPE_CHANGE',
+  DisplayedRowsChange: 'DISPLAYED_ROWS_CHANGE',
+  ExtensionEnable: 'EXTENSION_ENABLE',
+  FooterCreate: 'FOOTER_CREATE',
+  GetOnDemandDataSuccessCallback: 'GET_ON_DEMAND_DATA_SUCCESS_CALLBACK',
+  HeaderCreate: 'HEADER_CREATE',
+  RowAdd: 'ROW_ADD',
+  RowFocus: 'ROW_FOCUS',
+  RowDelete: 'ROW_DELETE',
+  RowUpdate: 'ROW_UPDATE',
+  TotalRowsChange: 'TOTAL_ROWS_CHANGE',
+  UsePaginationChange: 'USE_PAGINATION_CHANGE'
+}

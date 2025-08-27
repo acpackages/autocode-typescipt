@@ -10,9 +10,9 @@ import { AcDataDictionary, AcDDTableColumn, AcDDTableProperty, AcEnumDDTableProp
 
 
 export class AcDDTable {
-  static readonly KeyTableColumns = "table_columns";
-  static readonly KeyTableName = "table_name";
-  static readonly KeyTableProperties = "table_properties";
+  static readonly KeyTableColumns = "tableColumns";
+  static readonly KeyTableName = "tableName";
+  static readonly KeyTableProperties = "tableProperties";
 
   @AcBindJsonProperty({ key: AcDDTable.KeyTableColumns })
   tableColumns: AcDDTableColumn[] = [];
@@ -72,14 +72,6 @@ export class AcDDTable {
   getPrimaryKeyColumns(): AcDDTableColumn[] {
     const columns = this.tableColumns.filter((column) => column.isPrimaryKey());
     return columns;
-  }
-
-  getSearchQueryColumnNames(): string[] {
-    return this.getSearchQueryColumns().map((column) => column.columnName);
-  }
-
-  getSearchQueryColumns(): AcDDTableColumn[] {
-    return this.tableColumns.filter((column) => column.isInSearchQuery());
   }
 
   getForeignKeyColumns(): AcDDTableColumn[] {

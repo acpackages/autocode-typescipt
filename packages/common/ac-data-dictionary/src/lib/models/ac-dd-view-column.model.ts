@@ -5,12 +5,12 @@ import { AcDDTableColumnProperty } from "../..";
 // import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
 
 export class AcDDViewColumn {
-  static readonly KeyColumnName = "column_name";
-  static readonly KeyColumnProperties = "column_properties";
-  static readonly KeyColumnType = "column_type";
-  static readonly KeyColumnValue = "column_value";
-  static readonly KeyColumnSource = "column_source";
-  static readonly KeyColumnSourceName = "column_source_name";
+  static readonly KeyColumnName = "columnName";
+  static readonly KeyColumnProperties = "columnProperties";
+  static readonly KeyColumnType = "columnType";
+  static readonly KeyColumnValue = "columnValue";
+  static readonly KeyColumnSource = "columnSource";
+  static readonly KeyColumnSourceName = "columnSourceName";
 
   @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnName })
   columnName: string = "";

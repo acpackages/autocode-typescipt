@@ -4,7 +4,6 @@ export * from './ac-encryption';
 export * from './ac-environment';
 export * from './ac-events';
 export * from './ac-hooks';
-export * from './ac-http';
 export * from './ac-logger';
 export * from './ac-promise-manager';
 export * from './autocode';

@@ -239,7 +239,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
     }
     const event: any = {};
     this.onDropdownHide.emit(event);
-    this.events.execute({ eventName: 'dropdownHide', args: event });
+    this.events.execute({ event: 'dropdownHide', args: event });
   }
 
   getDropdownSize() {
@@ -255,7 +255,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
   notifyDropdownResize() {
     const event = this.getDropdownSize();
     this.onDropdownResize.emit(event)
-    this.events.execute({ eventName: 'dropdownResize', args: event });
+    this.events.execute({ event: 'dropdownResize', args: event });
   }
 
   setDropdownSize({ width, height }: { width: number, height: number }) {
@@ -378,7 +378,7 @@ export class AcDatagridDropdownOnAgGrid extends AcBaseInput {
       this.renderer.setStyle(dropdownElement, 'display', 'block');
       this.setupIntersectionObserver();
     this.onDropdownShow.emit(event);
-    this.events.execute({ eventName: 'dropdownShow', args: event });
+    this.events.execute({ event: 'dropdownShow', args: event });
   }
 
 }

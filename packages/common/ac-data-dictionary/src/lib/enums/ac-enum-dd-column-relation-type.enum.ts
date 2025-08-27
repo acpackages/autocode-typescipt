@@ -1,5 +1,5 @@
 export enum AcEnumDDColumnRelationType {
-  Any = "any",
-  Source = "source",
-  Destination = "destination",
+  Any = "ANY",
+  Source = "SOURCE",
+  Destination = "DESTINATION",
 }

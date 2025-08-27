@@ -1,7 +1,7 @@
 export enum AcEnumDDSelectMode {
-  All = "all",
-  Count = "count",
-  First = "first",
-  List = "list",
-  ListWithCount = "list_with_count",
+  All = "ALL",
+  Count = "COUNT",
+  First = "FIRST",
+  List = "LIST",
+  ListWithCount = "LIST_WITH_COUNT",
 }

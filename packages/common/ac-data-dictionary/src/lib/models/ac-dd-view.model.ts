@@ -7,9 +7,9 @@ import { AcDataDictionary, AcDDViewColumn } from "../..";
 // import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDView {
-  static readonly KeyViewName = "view_name";
-  static readonly KeyViewColumns = "view_columns";
-  static readonly KeyViewQuery = "view_query";
+  static readonly KeyViewName = "viewName";
+  static readonly KeyViewColumns = "viewColumns";
+  static readonly KeyViewQuery = "viewQuery";
 
   @AcBindJsonProperty({ key: AcDDView.KeyViewName })
   viewName: string = "";

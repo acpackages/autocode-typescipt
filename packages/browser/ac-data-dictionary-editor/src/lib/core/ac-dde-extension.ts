@@ -12,7 +12,7 @@ export abstract class AcDDEExtension{
     // Get state implementation
   }
 
-  handleHook({hookName,hookArgs}:{hookName:string,hookArgs:any}){
+  handleHook({hook,hookArgs}:{hook:string,hookArgs:any}){
     // Hooks implementation
   }
 

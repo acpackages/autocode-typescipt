@@ -30,7 +30,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
       instance:this
     };
     this.onViewInit.emit(event);
-    this.events.execute({eventName:"viewInit",args:event});
+    this.events.execute({event:"viewInit",args:event});
     this.instanceViewInitialized = true;
   }
 
@@ -42,7 +42,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
       instance:this
     };
     this.onDestroy.emit(event);
-    this.events.execute({eventName:"destroy",args:event});
+    this.events.execute({event:"destroy",args:event});
   }
 
   ngOnInit(){
@@ -50,7 +50,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
       instance:this
     };
     this.onInit.emit(event);
-    this.events.execute({eventName:"init",args:event});
+    this.events.execute({event:"init",args:event});
     this.instanceInitialized = true;
   }
 
@@ -60,7 +60,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
         this.elementChildren.push(element);
       }
       this.autocodeService.commentElementTag(this.elementRef);
-      this.events.execute({eventName:"elementTagCommented"});
+      this.events.execute({event:"elementTagCommented"});
     }
     else{
       setTimeout(() => {
@@ -70,7 +70,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
   }
 
   on(event:string,callback:Function){
-    return this.events.subscribe({eventName:event,callback:callback});
+    return this.events.subscribe({event:event,callback:callback});
   }
 
 

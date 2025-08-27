@@ -4,12 +4,12 @@ import { AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
 
 export class AcSqlDaoResult extends AcResult {
   static readonly KeyRows: string = 'rows';
-  static readonly KeyAffectedRowsCount: string = 'affected_rows_count';
-  static readonly KeyLastInsertedId: string = 'last_inserted_id';
+  static readonly KeyAffectedRowsCount: string = 'affectedRowsCount';
+  static readonly KeyLastInsertedId: string = 'lastInsertedId';
   static readonly KeyOperation: string = 'operation';
-  static readonly KeyPrimaryKeyColumn: string = 'primary_key_column';
-  static readonly KeyPrimaryKeyValue: string = 'primary_key_value';
-  static readonly KeyTotalRows: string = 'total_rows';
+  static readonly KeyPrimaryKeyColumn: string = 'primaryKeyColumn';
+  static readonly KeyPrimaryKeyValue: string = 'primaryKeyValue';
+  static readonly KeyTotalRows: string = 'totalRows';
 
   rows: Array<Record<string, any>> = [];
 

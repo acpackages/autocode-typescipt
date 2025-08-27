@@ -1,6 +1,6 @@
 export enum AcEnumSqlParserEvent  {
-  FoundColumn = 'foundColumn',
-  FoundFunction = 'foundFunction',
-  FoundJoin = 'foundJoin',
-  FoundTable = 'foundTable',
+  FoundColumn = 'FOUND_COLUMN',
+  FoundFunction = 'FOUND_FUNCTION',
+  FoundJoin = 'FOUND_JOIN',
+  FoundTable = 'FOUND_TABLE',
 }

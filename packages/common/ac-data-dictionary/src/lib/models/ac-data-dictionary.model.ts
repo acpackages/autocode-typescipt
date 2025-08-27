@@ -12,11 +12,11 @@ import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTab
 // import { AcDDView } from "./ac-dd-view.model";
 
 export class AcDataDictionary {
-  static readonly KeyDataDictionaries = "data_dictionaries";
+  static readonly KeyDataDictionaries = "dataDictionaries";
   static readonly KeyFunctions = "functions";
   static readonly KeyName = "name";
   static readonly KeyRelationships = "relationships";
-  static readonly KeyStoredProcedures = "stored_procedures";
+  static readonly KeyStoredProcedures = "storedProcedures";
   static readonly KeyTables = "tables";
   static readonly KeyTriggers = "triggers";
   static readonly KeyVersion = "version";

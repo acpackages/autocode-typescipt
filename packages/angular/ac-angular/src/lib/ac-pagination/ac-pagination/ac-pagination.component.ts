@@ -20,7 +20,7 @@ export class AcPaginationComponent extends AcBase implements OnChanges {
   get dataController(): AcDataController { return this._dataController; }
   @Input() set dataController(value: AcDataController) {
     this._dataController = value;
-    this._dataController.on({eventName:'dataFiltered',callback:()=>{
+    this._dataController.on({event:'dataFiltered',callback:()=>{
       this.totalResults = this.dataController.dataFiltered.length;
       this.setActivePage(1);
     }});
@@ -88,7 +88,7 @@ export class AcPaginationComponent extends AcBase implements OnChanges {
       startRecordNumber:this.resultStartNumber,
       endRecordNumber:this.resultEndNumber
     };
-    this.events.execute({eventName:"pageChange",args:eventData});
+    this.events.execute({event:"pageChange",args:eventData});
     this.onPageChange.emit(eventData);
     const startIndex: number = this.resultStartNumber - 1;
     const endIndex: number = this.resultEndNumber - 1;

@@ -37,6 +37,6 @@ export class AcDatagridColumnHeadComponent extends AcBase {
 
   handleSort(event:any){
     this.onSortChange.emit(event);
-    this.events.execute({eventName:'sortChange',args:event});
+    this.events.execute({event:'sortChange',args:event});
   }
 }

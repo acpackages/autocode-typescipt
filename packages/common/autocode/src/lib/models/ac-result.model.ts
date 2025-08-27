@@ -13,9 +13,9 @@ export class AcResult {
   static readonly KeyException = 'exception';
   static readonly KeyLog = 'log';
   static readonly KeyMesssage = 'message';
-  static readonly KeyOtherDetails = 'other_details';
-  static readonly KeyPreviousResult = 'previous_result';
-  static readonly KeyStackTrace = 'stack_trace';
+  static readonly KeyOtherDetails = 'otherDetails';
+  static readonly KeyPreviousResult = 'previousResult';
+  static readonly KeyStackTrace = 'stackTrace';
   static readonly KeyStatus = 'status';
   static readonly KeyValue = 'value';
 

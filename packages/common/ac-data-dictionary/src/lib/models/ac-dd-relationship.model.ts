@@ -6,12 +6,12 @@ import { AcDataDictionary } from "../..";
 // import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDRelationship {
-  static readonly KeyCascadeDeleteDestination = "cascade_delete_destination";
-  static readonly KeyCascadeDeleteSource = "cascade_delete_source";
-  static readonly KeyDestinationColumn = "destination_column";
-  static readonly KeyDestinationTable = "destination_table";
-  static readonly KeySourceColumn = "source_column";
-  static readonly KeySourceTable = "source_table";
+  static readonly KeyCascadeDeleteDestination = "cascadeDeleteDestination";
+  static readonly KeyCascadeDeleteSource = "cascadeDeleteSource";
+  static readonly KeyDestinationColumn = "destinationColumn";
+  static readonly KeyDestinationTable = "destinationTable";
+  static readonly KeySourceColumn = "sourceColumn";
+  static readonly KeySourceTable = "sourceTable";
 
   @AcBindJsonProperty({ key: AcDDRelationship.KeyCascadeDeleteDestination })
   cascadeDeleteDestination: boolean = false;

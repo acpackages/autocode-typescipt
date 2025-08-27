@@ -11,10 +11,10 @@ import { AcDataDictionary, AcDDRelationship, AcDDTable, AcDDTableColumnProperty,
 // import { AcDDRelationship } from "./ac-dd-relationship.model";
 
 export class AcDDTableColumn {
-  static readonly KeyColumnName = "column_name";
-  static readonly KeyColumnProperties = "column_properties";
-  static readonly KeyColumnType = "column_type";
-  static readonly KeyColumnValue = "column_value";
+  static readonly KeyColumnName = "columnName";
+  static readonly KeyColumnProperties = "columnProperties";
+  static readonly KeyColumnType = "columnType";
+  static readonly KeyColumnValue = "columnValue";
 
   @AcBindJsonProperty({ key: AcDDTableColumn.KeyColumnName })
   columnName: string = "";
@@ -281,13 +281,6 @@ export class AcDDTableColumn {
 
   isForeignKey(): boolean {
     return this.getForeignKeyRelationships().length > 0;
-  }
-
-  isInSearchQuery(): boolean {
-    if (this.columnProperties[AcEnumDDColumnProperty.InSearchQuery]) {
-      return this.columnProperties[AcEnumDDColumnProperty.InSearchQuery].propertyValue === true;
-    }
-    return false;
   }
 
   isNullable(): boolean {

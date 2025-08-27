@@ -18,8 +18,8 @@ export class AcReactiveValueProxy {
             oldValue: target[prop]
           }
           delete target[prop];
-          this.events.execute({ eventName: AcEnumReactiveValueProxyEvent.Change, args: eventArgs });
-          this.events.execute({ eventName: AcEnumReactiveValueProxyEvent.Delete, args: eventArgs });
+          this.events.execute({ event: AcEnumReactiveValueProxyEvent.Change, args: eventArgs });
+          this.events.execute({ event: AcEnumReactiveValueProxyEvent.Delete, args: eventArgs });
           return true;
         }
         return false;
@@ -35,22 +35,22 @@ export class AcReactiveValueProxy {
           value: value,
           oldValue: oldValue
         }
-        this.events.execute({ eventName: AcEnumReactiveValueProxyEvent.Set, args: eventArgs });
+        this.events.execute({ event: AcEnumReactiveValueProxyEvent.Set, args: eventArgs });
         if(oldValue != undefined){
           eventArgs.event = 'update';
-          this.events.execute({ eventName: AcEnumReactiveValueProxyEvent.Update, args: eventArgs });
+          this.events.execute({ event: AcEnumReactiveValueProxyEvent.Update, args: eventArgs });
         }
         else{
           eventArgs.event = 'add';
-          this.events.execute({ eventName: AcEnumReactiveValueProxyEvent.Add, args: eventArgs });
+          this.events.execute({ event: AcEnumReactiveValueProxyEvent.Add, args: eventArgs });
         }
-        this.events.execute({ eventName: AcEnumReactiveValueProxyEvent.Change, args: eventArgs });
+        this.events.execute({ event: AcEnumReactiveValueProxyEvent.Change, args: eventArgs });
         return true;
       }
     });
   }
 
   on(event: string, callback: Function) {
-    return this.events.subscribe({ eventName: event, callback: callback });
+    return this.events.subscribe({ event: event, callback: callback });
   }
 }

@@ -1,4 +1,4 @@
-import { AcDraggable } from "@autocode-ts/ac-browser";
+import { AcDraggable, } from "@autocode-ts/ac-browser";
 import { AcDraggableApi } from "packages/browser/ac-browser/src/lib/ac-draggable/core/ac-draggable-api";
 
 export class DraggableAxisLockPage extends HTMLElement {
