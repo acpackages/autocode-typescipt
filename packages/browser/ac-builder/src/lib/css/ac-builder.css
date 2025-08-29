@@ -53,6 +53,8 @@ body {
 .ac-builder-body {
   display: flex;
   flex: 1;
+  height: 100%;
+  width: 100%;
 }
 .ac-builder-center-container{
   display: block;
@@ -67,7 +69,6 @@ body {
   display: flex;
   flex-direction: column;
   height: -webkit-fill-available;
-  overflow: auto;
 }
 .ac-sidebar-tabs{
   height: 35px;
@@ -86,6 +87,10 @@ body {
   color: white!important;
   border:none
 }
+.ac-builder-sidebar .tab-content{
+  height: -webkit-fill-available;
+  overflow-y: auto;
+}
 .ac-builder-canvas {
   flex: 1;
   background: #f0f0f0;
@@ -102,6 +107,87 @@ body {
   width: 35px;
   padding: 0px;
   padding-top: 2px;
+}
+.ac-builder-elements-tab{
+  height: 100%;
+}
+.ac-builder-elements-tab-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ac-builder-elements-panel, .ac-builder-styles-tab{
+  height: -webkit-fill-available;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.ac-builder-script-container{
+  height:100%;
+  width:100%;
+}
+
+.ac-builder-script-editor{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ac-builder-script-editor-header{
+  flex-grow: 1;
+}
+
+.ac-builder-script-editor-header{
+  background-color: #1e1e1e;
+  border-bottom: #6b6b6b solid 1px;
+  display: flex;
+  flex-direction: row;
+  height:35px;
+}
+
+.ac-builder-script-editor-header-title{
+  flex-grow: 1;
+}
+
+.ac-builder-script-editor-header-actions{
+  flex-grow: 1;
+}
+
+.ac-builder-script-editor-header-actions-container{
+  float: right;
+}
+
+.ac-builder-script-editor-body{
+  flex-grow: 1;
+}
+
+/* Target the whole scrollbar */
+.ac-builder-scrollable-element::-webkit-scrollbar {
+  width: 5px;   /* vertical scrollbar width */
+  height: 5px;  /* horizontal scrollbar height */
+}
+
+/* Track (background) */
+.ac-builder-scrollable-element::-webkit-scrollbar-track {
+  background: #292929;
+}
+
+/* Thumb (the draggable part) */
+.ac-builder-scrollable-element::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Thumb hover */
+.ac-builder-scrollable-element::-webkit-scrollbar-thumb:hover {
+  background: #a5a5a5;
+}
+
+.btn-sidebar-action {
+  font-size: 12px;
+  width: calc(100% - 10px);
+  padding: 7px;
+  border:#555 solid 1px;
+  margin: 5px;
 }
 
 .gjs-one-bg{
@@ -130,6 +216,10 @@ body {
 }
 .gjs-three-color-h:hover{
   color: inherit!important;
+}
+
+.btn-block {
+  width: 100%;
 }
 
 /* Grapesjs */
@@ -1665,6 +1755,7 @@ span.CodeMirror-selectedtext {
   box-sizing: border-box;
   padding: 0;
   position: relative;
+  width: 100%;
 }
 
 .gjs-field textarea {
@@ -2556,10 +2647,10 @@ span.CodeMirror-selectedtext {
   -o-user-select: none;
   user-select: none;
   width: 45%;
-  min-width: 45px;
+  min-width: 35;
   padding: 7px;
   box-sizing: border-box;
-  min-height: 90px;
+  min-height: 40px;
   cursor: all-scroll;
   font-size: 11px;
   font-weight: lighter;
@@ -2569,7 +2660,7 @@ span.CodeMirror-selectedtext {
   justify-content: space-between;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 3px;
-  margin: 10px 2.5% 5px;
+  margin: 5px 2.5% 5px;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.15);
   transition: all 0.2s ease 0s;
   transition-property: box-shadow, color;
@@ -2582,11 +2673,12 @@ span.CodeMirror-selectedtext {
 .gjs-block svg {
   fill: currentColor;
   height: 100%;
+  width: 100%;
 }
 
 .gjs-block__media {
-  margin-bottom: 5px;
-  height:50px;
+  margin-bottom: 7px;
+  height:30px;
   pointer-events: none;
 }
 

@@ -54,7 +54,6 @@ export class AcTabs {
     const oldTab = this.tabs[oldIndex] || null;
     const newPane = this.getPaneForTab({ tab: newTab });
     const oldPane = oldTab ? this.getPaneForTab({ tab: oldTab }) : null;
-    console.log(newPane);
     this.events.execute({ event: AcTabsEvent.TabBeforeShow, args: { from: oldIndex, to: index, oldTab, newTab, oldPane, newPane } });
     if (oldTab) {
       acRemoveClassFromElement({ element: oldTab, cssClass: AcTabsCssClassName.acTabActive });

@@ -1,13 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEvents } from "@autocode-ts/autocode";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { AcCollapseAttributeName } from "../consts/ac-collapse-attribute-name.const";
 import { AcCollapseCssClassName } from "../consts/ac-collapse-css-class-name.const";
-import { AcEnumCollapseDirection, AcEnumCollapseEvent, IAcCollapseEvent } from "../_ac-collapse.export";
+import { AcEnumCollapseDirection } from "../enums/ac-enum-collapse-direction.enum";
+import { AcEnumCollapseEvent } from "../enums/ac-enum-collapse-event.enum";
+import { IAcCollapseEvent } from "../interfaces/ac-collapse-event.interface";
 
 export class AcCollapse {
+  useAnimation: boolean = true;
   contentElement: HTMLElement | undefined;
   toggleElement: HTMLElement | undefined;
   element: HTMLElement;
@@ -15,7 +16,6 @@ export class AcCollapse {
   isAnimating: boolean = false;
   events: AcEvents = new AcEvents();
   direction: AcEnumCollapseDirection = AcEnumCollapseDirection.TopToBottom;
-  initRect!: DOMRect;
 
   constructor({ element }: { element: HTMLElement }) {
     this.element = element;
@@ -32,17 +32,18 @@ export class AcCollapse {
     this.initElement();
   }
 
-  close({skipAnimation = false}:{skipAnimation?:boolean} = {}) {
+  close({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
     if (skipAnimation) {
       this.isAnimating = false;
       this.isOpen = false;
       this.element.classList.remove(AcCollapseCssClassName.acCollapseOpen);
       this.element.removeAttribute(AcCollapseAttributeName.acCollapseOpen);
       if (this.contentElement) {
-        this.contentElement.style.display = 'none';
+        this.contentElement.style.display = "none";
+        this.contentElement.style.height = "";
+        this.contentElement.style.width = "";
       }
-    }
-    else {
+    } else {
       if (!this.isOpen || this.isAnimating) return;
       this.isOpen = false;
       this.isAnimating = true;
@@ -51,30 +52,29 @@ export class AcCollapse {
       this.element.removeAttribute(AcCollapseAttributeName.acCollapseOpen);
 
       if (this.contentElement) {
-        const fullWidth = this.contentElement.scrollWidth + 'px';
-        const fullHeight = this.contentElement.scrollHeight + 'px';
+        const fullWidth = this.contentElement.scrollWidth + "px";
+        const fullHeight = this.contentElement.scrollHeight + "px";
 
-        const keyframes = this.getKeyFrames({open:false, fullWidth:fullWidth, fullHeight:fullHeight});
+        const keyframes = this.getKeyFrames({ open: false, fullWidth, fullHeight });
 
         const animation = this.contentElement.animate(keyframes, {
           duration: 300,
-          easing: 'ease-in-out'
+          easing: "ease-in-out",
         });
 
         animation.onfinish = () => {
           if (this.contentElement) {
-            this.contentElement.style.display = 'none';
+            this.contentElement.style.display = "none";
+            this.contentElement.style.height = "";
+            this.contentElement.style.width = "";
           }
           this.isAnimating = false;
         };
 
-        const eventParams: IAcCollapseEvent = {
-          collapse: this
-        };
+        const eventParams: IAcCollapseEvent = { collapse: this };
         this.events.execute({ event: AcEnumCollapseEvent.Close, args: eventParams });
       }
     }
-
   }
 
   private initElement() {
@@ -84,10 +84,10 @@ export class AcCollapse {
     }
     if (this.element.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
       this.setContentElement({ element: this.element.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
-    }
-    else {
+    } else {
       this.setContentElement({ element: this.element });
     }
+
     const observer = new MutationObserver((mutations) => {
       for (const m of mutations) {
         if (m.attributeName === AcCollapseAttributeName.acCollapseOpen) {
@@ -101,121 +101,131 @@ export class AcCollapse {
     observer.observe(this.element, { attributes: true });
   }
 
-  on({event,callback}:{event: string, callback: Function}): string {
-    return this.events.subscribe({ event: event, callback: callback });
+  on({ event, callback }: { event: string; callback: Function }): string {
+    return this.events.subscribe({ event, callback });
   }
 
-  open({skipAnimation = false}:{skipAnimation?:boolean} = {}) {
+  open({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
     if (this.isOpen || this.isAnimating) return;
     this.isOpen = true;
     this.isAnimating = true;
 
     this.element.classList.add(AcCollapseCssClassName.acCollapseOpen);
-    this.element.setAttribute(AcCollapseAttributeName.acCollapseOpen, '');
+    this.element.setAttribute(AcCollapseAttributeName.acCollapseOpen, "");
 
     if (this.contentElement) {
-      this.contentElement.style.display = 'block';
-      const fullWidth = this.initRect.width + 'px';
-      const fullHeight = this.initRect.height + 'px';
+      this.contentElement.style.display = "block";
+
+      const fullWidth = this.contentElement.scrollWidth + "px";
+      const fullHeight = this.contentElement.scrollHeight + "px";
 
       if (skipAnimation) {
-        this.contentElement!.style.width = fullWidth;
-        this.contentElement!.style.height = fullHeight;
+        this.contentElement.style.width = "";
+        this.contentElement.style.height = "";
         this.isAnimating = false;
       } else {
-        const keyframes = this.getKeyFrames({open:true, fullWidth:fullWidth, fullHeight:fullHeight});
+        const keyframes = this.getKeyFrames({ open: true, fullWidth, fullHeight });
         const animation = this.contentElement.animate(keyframes, {
           duration: 300,
-          easing: 'ease-in-out'
+          easing: "ease-in-out",
         });
         animation.onfinish = () => {
+          if (this.contentElement) {
+            this.contentElement.style.width = "";
+            this.contentElement.style.height = "";
+          }
           this.isAnimating = false;
         };
       }
-      const eventParams: IAcCollapseEvent = {
-        collapse: this
-      };
+
+      const eventParams: IAcCollapseEvent = { collapse: this };
       this.events.execute({ event: AcEnumCollapseEvent.Open, args: eventParams });
     }
   }
 
-  private getKeyFrames({open,fullHeight,fullWidth}:{open: boolean, fullWidth: string, fullHeight: string}): Keyframe[] {
+  private getKeyFrames({
+    open,
+    fullHeight,
+    fullWidth,
+  }: {
+    open: boolean;
+    fullWidth: string;
+    fullHeight: string;
+  }): Keyframe[] {
     const isVertical = [
       AcEnumCollapseDirection.TopToBottom,
-      AcEnumCollapseDirection.BottomToTop
+      AcEnumCollapseDirection.BottomToTop,
     ].includes(this.direction);
     const isHorizontal = [
       AcEnumCollapseDirection.LeftToRight,
-      AcEnumCollapseDirection.RightToLeft
+      AcEnumCollapseDirection.RightToLeft,
     ].includes(this.direction);
     const isDiagonal = !isVertical && !isHorizontal;
 
     if (isDiagonal) {
-      // Diagonal collapse animates both width & height
-      const from: Keyframe = open
-        ? { width: "0px", height: "0px", opacity: 0 }
-        : { width: fullWidth, height: fullHeight, opacity: 1 };
-
-      const to: Keyframe = open
-        ? { width: fullWidth, height: fullHeight, opacity: 1 }
-        : { width: "0px", height: "0px", opacity: 0 };
-
-      return [from, to];
+      return open
+        ? [
+            { width: "0px", height: "0px", opacity: 0 },
+            { width: fullWidth, height: fullHeight, opacity: 1 },
+          ]
+        : [
+            { width: fullWidth, height: fullHeight, opacity: 1 },
+            { width: "0px", height: "0px", opacity: 0 },
+          ];
     }
 
     if (isHorizontal) {
-      const from: Keyframe = open
-        ? { width: "0px", opacity: 0 }
-        : { width: fullWidth, opacity: 1 };
+      return open
+        ? [{ width: "0px", opacity: 0 }, { width: fullWidth, opacity: 1 }]
+        : [{ width: fullWidth, opacity: 1 }, { width: "0px", opacity: 0 }];
+    }
 
-      const to: Keyframe = open
-        ? { width: fullWidth, opacity: 1 }
-        : { width: "0px", opacity: 0 };
-      return [from, to];
-    }
     if (isVertical) {
-      const from: Keyframe = open ? { height: "0px", opacity: 0 } : { height: fullHeight, opacity: 1 };
-      const to: Keyframe = open ? { height: fullHeight, opacity: 1 } : { height: "0px", opacity: 0 };
-      return [from, to];
+      return open
+        ? [{ height: "0px", opacity: 0 }, { height: fullHeight, opacity: 1 }]
+        : [{ height: fullHeight, opacity: 1 }, { height: "0px", opacity: 0 }];
     }
+
     return [];
   }
 
   setContentElement({ element }: { element: HTMLElement }) {
     this.contentElement = element;
-    acAddClassToElement({ cssClass: AcCollapseCssClassName.acCollapseContent, element: element });
-    this.contentElement.style.overflow = 'hidden';
-    this.contentElement.style.opacity = '0';
-    this.initRect = this.contentElement.getBoundingClientRect();
+    acAddClassToElement({
+      cssClass: AcCollapseCssClassName.acCollapseContent,
+      element,
+    });
+    this.contentElement.style.overflow = "hidden";
+    this.contentElement.style.opacity = "0";
+
     setTimeout(() => {
       if (this.contentElement) {
-        this.contentElement.style.opacity = '1';
+        this.contentElement.style.opacity = "1";
       }
-      if (this.element.hasAttribute(AcCollapseAttributeName.acCollapseOpen)) {
-        this.open({skipAnimation:true});
-      }
-      else {
-        this.close({skipAnimation:true});
+      if (element.hasAttribute(AcCollapseAttributeName.acCollapseOpen)) {
+        this.open({ skipAnimation: true });
+      } else {
+        this.close({ skipAnimation: true });
       }
     }, 100);
   }
 
   setToggleElement({ element }: { element: HTMLElement }) {
     this.toggleElement = element;
-    acAddClassToElement({ cssClass: AcCollapseCssClassName.acCollapseToggle, element: element });
-    this.toggleElement.addEventListener('click', () => this.toggle());
+    acAddClassToElement({
+      cssClass: AcCollapseCssClassName.acCollapseToggle,
+      element,
+    });
+    this.toggleElement.addEventListener("click", () => this.toggle());
   }
 
   toggle() {
     if (this.isOpen) {
-      this.close();
+      this.close({ skipAnimation: !this.useAnimation });
+    } else {
+      this.open({ skipAnimation: !this.useAnimation });
     }
-    else {
-      this.open();
-    }
-    const eventParams: IAcCollapseEvent = {
-      collapse: this
-    };
+    const eventParams: IAcCollapseEvent = { collapse: this };
     this.events.execute({ event: AcEnumCollapseEvent.Toggle, args: eventParams });
   }
 }

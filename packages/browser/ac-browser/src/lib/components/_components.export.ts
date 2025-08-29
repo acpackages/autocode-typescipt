@@ -4,6 +4,7 @@ export * from './ac-datagrid/_ac-datagrid.export';
 export * from './ac-draggable/_ac-draggable.export';
 export * from './ac-drawer/_ac-drawer.export';
 export * from './ac-dropdown/_ac-dropdown.export';
+export * from './ac-filterable-elements/_ac-filterable-elements.export';
 export * from './ac-inputs/_ac-inputs.export';
 export * from './ac-message/_ac-message.export';
 export * from './ac-modal/_ac-modal.export';

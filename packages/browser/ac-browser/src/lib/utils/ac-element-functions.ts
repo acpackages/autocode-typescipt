@@ -1,9 +1,40 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export function acAddClassToElement({cssClass,element}:{cssClass:string,element:Element}){
   const classList:string[] = cssClass.trim().split(" ")
   for(const className of classList){
     element.classList.add(className);
   }
+}
+
+export function acAnimateElement(
+  element: HTMLElement,
+  property: string,
+  from: string | number,
+  to: string | number,
+  duration: number = 300,
+  callback?: () => void
+) {
+  const start = performance.now();
+  const fromValue = typeof from === "number" ? from : parseFloat(from);
+  const toValue = typeof to === "number" ? to : parseFloat(to);
+  const unit = typeof from === "string" && /[a-z%]+$/i.test(from) ? from.replace(/[0-9.\-]+/g, "") : "";
+
+  function step(now: number) {
+    const progress = Math.min((now - start) / duration, 1);
+    const currentValue = fromValue + (toValue - fromValue) * progress;
+    element.style.setProperty(property, currentValue + unit);
+
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      if (callback) callback();
+    }
+  }
+
+  requestAnimationFrame(step);
 }
 
 export function acCopyElementStyles({fromElement,toElement}:{fromElement: HTMLElement, toElement: HTMLElement}) {
@@ -118,3 +149,96 @@ export function acSwapElementsWithAnimation({
     onComplete?.();
   }, duration);
 }
+
+export function acShowElement({
+  element,
+  duration = 300,
+}: {
+  element: HTMLElement;
+  duration?: number;
+}) {
+  const stored = element.getAttribute("ac-show-original-style-values");
+  if (!stored) return;
+  element.removeAttribute("ac-show-original-style-values");
+
+  const originalStyles = JSON.parse(stored);
+  element.style.display = originalStyles.display;
+
+  // Animate opacity back
+  acAnimateElement(element, "opacity", 0, originalStyles.opacity, duration);
+
+  // Handle height
+  if (originalStyles.height) {
+    if (originalStyles.height === "auto") {
+      const targetHeight = element.scrollHeight + "px";
+      acAnimateElement(element, "height", "0px", targetHeight, duration, () => {
+        element.style.height = ""; // reset back to auto
+      });
+    } else {
+      acAnimateElement(element, "height", "0px", originalStyles.height, duration);
+    }
+  }
+
+  // Handle width
+  if (originalStyles.width) {
+    if (originalStyles.width === "auto") {
+      const targetWidth = element.scrollWidth + "px";
+      acAnimateElement(element, "width", "0px", targetWidth, duration, () => {
+        element.style.width = ""; // reset back to auto
+      });
+    } else {
+      acAnimateElement(element, "width", "0px", originalStyles.width, duration);
+    }
+  }
+}
+
+export function acHideElement({
+  element,
+  animateHeight = false,
+  animateWidth = false,
+  duration = 300,
+}: {
+  element: HTMLElement;
+  animateHeight?: boolean;
+  animateWidth?: boolean;
+  duration?: number;
+}) {
+  const computed = getComputedStyle(element);
+
+  const originalStyles: any = {
+    opacity: element.style.opacity || computed.opacity,
+    display: element.style.display || computed.display,
+  };
+
+  // Handle height
+  if (animateHeight) {
+    originalStyles.height = element.style.height ? element.style.height : "auto";
+    const currentHeight = computed.height;
+    acAnimateElement(element, "height", currentHeight, 0, duration);
+  }
+
+  // Handle width
+  if (animateWidth) {
+    originalStyles.width = element.style.width ? element.style.width : "auto";
+    const currentWidth = computed.width;
+    acAnimateElement(element, "width", currentWidth, 0, duration);
+  }
+
+  element.setAttribute(
+    "ac-show-original-style-values",
+    JSON.stringify(originalStyles)
+  );
+
+  // Animate opacity
+  acAnimateElement(
+    element,
+    "opacity",
+    originalStyles.opacity,
+    0,
+    duration,
+    () => {
+      element.style.display = "none";
+    }
+  );
+}
+
