@@ -48,7 +48,9 @@ export class BasicBuilderPage extends HTMLElement {
                 "properties": []
               }
             },
-            "html": "<body id=\"i0zi\"><div ac-builder-element-id=\"f2fcdf28-7eb6-42e3-87d3-7ed51f65c209\">Container Element</div></body>"
+            "html": "<body id=\"i0zi\"><div ac-builder-element-id=\"f2fcdf28-7eb6-42e3-87d3-7ed51f65c209\">Container Element</div></body>",
+            "script":'class DefaultPageScript { \n}',
+            "scriptClassName":"DefaultPageScript"
           }
         ]
       };

@@ -4,7 +4,7 @@ import { AcBuilderCssClassName } from "../consts/ac-builder-css-class-name.const
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
-import { AcElementPropertyInput } from "./ac-component-property-input.element";
+import { AcElementPropertyInput } from "./ac-element-property-input.element";
 
 export class AcBuilderPropertiesPanel {
   builderApi: AcBuilderApi;

@@ -6,6 +6,6 @@ export interface IAcPageElement{
   id:string,
   element?:HTMLElement,
   name:string,
-  events:IAcPageElementEventFunction[],
-  properties:IAcPageElementPropertyValue[]
+  events:Record<string,IAcPageElementEventFunction>,
+  properties:Record<string,IAcPageElementPropertyValue>
 }

@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AcFilterableElementsAttributeName } from "@autocode-ts/ac-browser";
+import { stringToCamelCase } from "@autocode-ts/ac-extensions";
 import { AcEvents, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { Editor } from "grapesjs";
 import { AcBuilder } from "../elements/ac-builder.element";
@@ -13,9 +16,7 @@ import { IAcPageElement } from "../interfaces/ac-page-element.interface";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
 import { AcBuilderState } from "../models/ac-builder-state.model";
 import { IAcBuilderState } from "../interfaces/ac-builder-state.interface";
-import { AcFilterableElementsAttributeName } from "@autocode-ts/ac-browser";
 import { AcBuilderScriptEditor } from "../elements/ac-builder-script-editor.element";
-
 
 export class AcBuilderApi {
   builder: AcBuilder;
@@ -43,6 +44,15 @@ export class AcBuilderApi {
   }
 
   addElement({ element }: { element: IAcBuilderElement }) {
+    if(element.properties == undefined){
+      element.properties = [];
+    }
+    element.properties = [{
+      category:'General',
+      name:'instanceName',
+      title:'Instance Name',
+      type:'text'
+    },...element.properties];
     this.elements[element.name] = element;
     const domc = this.grapesJSApi.DomComponents;
     const instance = this;
@@ -54,12 +64,20 @@ export class AcBuilderApi {
       },
       view: {
         init(args: any) {
-          const elementId: string = Autocode.uuid();
+          let currentCount:number = 0;
+          if(instance.page && instance.page.elements){
+            currentCount = Object.values(instance.page.elements).filter((el)=>{return el.name == element.name}).length;
+          }
+          currentCount++;
+          const elementId: string = stringToCamelCase(`${element.name.replaceAll(" ","_")}_${currentCount}`);
           const pageElement: IAcPageElement = {
             id: elementId,
             name: element.name,
-            events: [],
-            properties: []
+            events: {},
+            element:this.el,
+            properties: {
+              instanceName:{name:'instanceName',value:elementId}
+            }
           }
           instance.page.elements![elementId] = pageElement;
           if (element.initCallback) {
@@ -67,7 +85,6 @@ export class AcBuilderApi {
               element: this.el as HTMLElement
             }
             setTimeout(() => {
-
               this.el.setAttribute(AcBuilderAttributeName.acBuilderElementId, elementId);
               element.initCallback!(callbackArgs);
               instance.hooks.execute({ hook: AcEnumBuilderHook.ElementInit, args: args });
@@ -96,6 +113,9 @@ export class AcBuilderApi {
   toggleScriptEditor() {
     if (this.scriptEditor == undefined) {
       this.scriptEditor = new AcBuilderScriptEditor({ builderApi: this });
+      if(this.page.script){
+        this.scriptEditor.setCode({code:this.page.script});
+      }
       (this.builder.element.querySelector('.ac-builder-script-container') as HTMLElement).append(this.scriptEditor.element);
       this.scriptEditor.on({
         event: 'close', callback: () => {

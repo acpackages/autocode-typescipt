@@ -44,10 +44,8 @@ export class AcBuilderEventsHandler {
             this.builderApi.events.execute({ event: AcEnumBuilderEvent.ElementSelect, args: eventArgs });
           }
         }
-
       }
     }
   }
-
 
 }

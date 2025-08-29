@@ -3,7 +3,7 @@ import { AcBuilderCssClassName } from "../consts/ac-builder-css-class-name.const
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderElementEvent } from "../interfaces/ac-builder-element-event.interface";
-import { AcElementEventInput } from "./ac-component-event-input.element";
+import { AcElementEventInput } from "./ac-element-event-input.element";
 
 export class AcBuilderEventsPanel {
   builderApi: AcBuilderApi;
@@ -55,9 +55,9 @@ export class AcBuilderEventsPanel {
   }
 
   renderInputs() {
-    for (const property of this.elementEvents) {
-      const propertyInput = new AcElementEventInput({ builderApi: this.builderApi, property: property, pageElement: this.builderApi.selectedElement! });
-      const categoryElement = this.getCategoryElement({ categoryName: property.category });
+    for (const event of this.elementEvents) {
+      const propertyInput = new AcElementEventInput({ builderApi: this.builderApi, event: event, pageElement: this.builderApi.selectedElement! });
+      const categoryElement = this.getCategoryElement({ categoryName: event.category });
       (categoryElement.querySelector('.category-inputs-container') as HTMLElement).append(propertyInput.element);
     }
   }
