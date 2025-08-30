@@ -18,6 +18,7 @@ export class AcBuilderEventsHandler {
         const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementId)!;
         const pageElement = this.builderApi.page.elements![elementId];
         if (pageElement) {
+          this.builderApi.page.elements![elementId].element = element;
           const eventArgs: IAcBuilderElementEventArgs = {
             pageElement: pageElement
           };

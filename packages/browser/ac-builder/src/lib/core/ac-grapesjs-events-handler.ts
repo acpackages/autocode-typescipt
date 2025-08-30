@@ -49,7 +49,7 @@ export class AcGrapesJSEventsHandler {
       //
     });
     editor.on('block', (args) => {
-      console.log(args);
+      // console.log(args);
     });
   }
 

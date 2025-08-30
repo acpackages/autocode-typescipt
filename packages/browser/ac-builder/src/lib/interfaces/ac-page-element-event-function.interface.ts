@@ -1,6 +1,5 @@
 
 export interface IAcPageElementEventFunction{
-  functionName:string,
-  startLineNo:number,
-  endLineNo:number
+  name:string,
+  functionName?:string,
 }

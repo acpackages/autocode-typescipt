@@ -56,7 +56,6 @@ export class AcElementPropertyInput {
         }
       }
     }});
-    console.log(this);
   }
 
 }

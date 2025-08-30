@@ -41,15 +41,19 @@ export class BasicBuilderPage extends HTMLElement {
           {
             "name": "default",
             "elements": {
-              "f2fcdf28-7eb6-42e3-87d3-7ed51f65c209": {
-                "id": "f2fcdf28-7eb6-42e3-87d3-7ed51f65c209",
+              "div1": {
+                "id": "div1",
                 "name": "div",
-                "events": [],
-                "properties": []
+                "events": {
+                  "onclick":{"name":"onclick","functionName":"handleDiv1Onclick"}
+                },
+                "properties": {
+                  "instanceName":{"name":"instanceName","value":"div1"}
+                }
               }
             },
-            "html": "<body id=\"i0zi\"><div ac-builder-element-id=\"f2fcdf28-7eb6-42e3-87d3-7ed51f65c209\">Container Element</div></body>",
-            "script":'class DefaultPageScript { \n}',
+            "html": "<body><div ac-builder-element-id=\"div1\">Container Element</div></body>",
+            "script":'class DefaultPageScript {\n\n\thandleDiv1Onclick() {\n\t}\n\n}',
             "scriptClassName":"DefaultPageScript"
           }
         ]

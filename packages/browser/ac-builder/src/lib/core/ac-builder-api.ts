@@ -29,7 +29,7 @@ export class AcBuilderApi {
   hooks: AcHooks = new AcHooks();
   pages: IAcPage[] = [];
   page: IAcPage = { name: 'default', elements: {} };
-  scriptEditor?: AcBuilderScriptEditor;
+  scriptEditor!: AcBuilderScriptEditor;
   selectedElement?: IAcPageElement;
 
   constructor({ builder }: { builder: AcBuilder }) {
@@ -41,18 +41,19 @@ export class AcBuilderApi {
     for (const component of htmlComponents) {
       this.addElement({ element: component });
     }
+    this.initScriptEditor();
   }
 
   addElement({ element }: { element: IAcBuilderElement }) {
-    if(element.properties == undefined){
+    if (element.properties == undefined) {
       element.properties = [];
     }
     element.properties = [{
-      category:'General',
-      name:'instanceName',
-      title:'Instance Name',
-      type:'text'
-    },...element.properties];
+      category: 'General',
+      name: 'instanceName',
+      title: 'Instance Name',
+      type: 'text'
+    }, ...element.properties];
     this.elements[element.name] = element;
     const domc = this.grapesJSApi.DomComponents;
     const instance = this;
@@ -64,19 +65,18 @@ export class AcBuilderApi {
       },
       view: {
         init(args: any) {
-          let currentCount:number = 0;
-          if(instance.page && instance.page.elements){
-            currentCount = Object.values(instance.page.elements).filter((el)=>{return el.name == element.name}).length;
+          let currentCount: number = 0;
+          if (instance.page && instance.page.elements) {
+            currentCount = Object.values(instance.page.elements).filter((el) => { return el.name == element.name }).length;
           }
           currentCount++;
-          const elementId: string = stringToCamelCase(`${element.name.replaceAll(" ","_")}_${currentCount}`);
+          const elementId: string = stringToCamelCase(`${element.name.replaceAll(" ", "_")}_${currentCount}`);
           const pageElement: IAcPageElement = {
             id: elementId,
             name: element.name,
             events: {},
-            element:this.el,
             properties: {
-              instanceName:{name:'instanceName',value:elementId}
+              instanceName: { name: 'instanceName', value: elementId }
             }
           }
           instance.page.elements![elementId] = pageElement;
@@ -106,15 +106,11 @@ export class AcBuilderApi {
     this.builderState.fromJson(json);
   }
 
-  on({ event, callback }: { event: string, callback: Function }): string {
-    return this.events.subscribe({ event, callback });
-  }
-
-  toggleScriptEditor() {
+  initScriptEditor() {
     if (this.scriptEditor == undefined) {
       this.scriptEditor = new AcBuilderScriptEditor({ builderApi: this });
-      if(this.page.script){
-        this.scriptEditor.setCode({code:this.page.script});
+      if (this.page.script) {
+        this.scriptEditor.setCode({ code: this.page.script });
       }
       (this.builder.element.querySelector('.ac-builder-script-container') as HTMLElement).append(this.scriptEditor.element);
       this.scriptEditor.on({
@@ -123,6 +119,24 @@ export class AcBuilderApi {
         }
       });
     }
+  }
+
+  on({ event, callback }: { event: string, callback: Function }): string {
+    return this.events.subscribe({ event, callback });
+  }
+
+  setActivePage({ page }: { page: IAcPage }) {
+    this.page = page;
+    if (this.page.html) {
+      this.grapesJSApi.setComponents(this.page.html);
+    }
+    if (this.page.script) {
+      this.scriptEditor.setCode({ code: this.page.script });
+    }
+  }
+
+  toggleScriptEditor() {
+    this.initScriptEditor();
     this.builder.scriptEditorDrawer.toggle();
   }
 

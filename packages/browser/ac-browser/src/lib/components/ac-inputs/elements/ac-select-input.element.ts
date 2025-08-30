@@ -19,6 +19,7 @@ export class AcSelectInput extends AcInputBase {
     this._selectOptions = value;
     this._filteredOptions = [...value];
     if (this.isDropdownOpen) this.renderVirtualList();
+    this.value = this._value;
   }
 
   override get value() { return super.value; }
@@ -220,7 +221,7 @@ export class AcSelectInput extends AcInputBase {
     const viewportHeight = window.innerHeight;
     const spaceBelow = viewportHeight - rect.bottom;
     const spaceAbove = rect.top;
-    const desiredHeight = Math.min(this.maxDropdownHeight, Math.max(spaceBelow, 180));
+    const desiredHeight = 100;
     const showAbove = spaceBelow < 180 && spaceAbove > spaceBelow;
     this.dropdownContainer.style.width = rect.width + "px";
     this.dropdownContainer.style.left = rect.left + "px";

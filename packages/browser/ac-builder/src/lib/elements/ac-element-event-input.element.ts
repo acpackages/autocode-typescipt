@@ -1,22 +1,24 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcFilterableElementsAttributeName } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName, AcInput } from "@autocode-ts/ac-browser";
 import { stringToCamelCase } from "@autocode-ts/ac-extensions";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { IAcBuilderElementEvent } from "../interfaces/ac-builder-element-event.interface";
 import { IAcPageElement } from "../interfaces/ac-page-element.interface";
+import { AcEventSelectInput } from "./inputs/ac-event-select-input.element";
 
-export class AcElementEventInput{
+export class AcElementEventInput {
   builderApi: AcBuilderApi;
-    element: HTMLElement = document.createElement('div');
-    event: IAcBuilderElementEvent;
-    pageElement: IAcPageElement;
-    constructor({ builderApi, event, pageElement }: { builderApi: AcBuilderApi, pageElement: IAcPageElement, event: IAcBuilderElementEvent }) {
-      this.builderApi = builderApi;
-      this.event = event;
-      this.pageElement = pageElement;
-      this.element.setAttribute(AcFilterableElementsAttributeName.acFilterValue,this.event.title);
-      acAddClassToElement({ element: this.element, cssClass: 'gjs-sm-property gjs-sm-color gjs-sm-property__color gjs-sm-property--full' })
-      this.element.innerHTML = `
+  element: HTMLElement = document.createElement('div');
+  event: IAcBuilderElementEvent;
+  pageElement: IAcPageElement;
+  input!: AcEventSelectInput;
+  constructor({ builderApi, event, pageElement }: { builderApi: AcBuilderApi, pageElement: IAcPageElement, event: IAcBuilderElementEvent }) {
+    this.builderApi = builderApi;
+    this.event = event;
+    this.pageElement = pageElement;
+    this.element.setAttribute(AcFilterableElementsAttributeName.acFilterValue, this.event.title);
+    acAddClassToElement({ element: this.element, cssClass: 'gjs-sm-property gjs-sm-color gjs-sm-property__color gjs-sm-property--full' })
+    this.element.innerHTML = `
         <div class="gjs-sm-label">
         <span class="gjs-sm-icon ">
           ${event.title}
@@ -24,15 +26,37 @@ export class AcElementEventInput{
       </div>
         <div class="gjs-fields" data-sm-fields="">
           <div class="gjs-field">
-            <div class="gjs-input-holder">
-              <input type="text" placeholder="">
-            </div>
+            <span class="gjs-input-holder">
+            </span>
+            <span class="gjs-field-arrows px-0" style="min-width:max-content;padding-top:0px">
+            <button type="button" class="btn py-0 px-1 btn-add-event" style="height:100%;margin-top:-3px"><i class="fa fa-plus text-secondary"></i></button>
+            </span>
           </div>
       </div>`;
-      this.element.addEventListener('click',()=>{
-        this.builderApi.toggleScriptEditor();
-        const functionName = stringToCamelCase(`handle_${this.pageElement.id}_${event.name}`);
-        this.builderApi.scriptEditor?.addCodeInsideClass({className:this.builderApi.page.scriptClassName!,code:`${functionName}{\n\t}`});
-      });
+    this.setInput();
+  }
+
+  private setInput() {
+    this.input = new AcEventSelectInput({ builderApi: this.builderApi });
+    this.input.init();
+    (this.element.querySelector('.gjs-input-holder') as HTMLInputElement).append(this.input.element);
+    if (this.pageElement && this.pageElement.events) {
+      if (this.pageElement.events[this.event.name]) {
+        this.input.value = this.pageElement.events[this.event.name].functionName;
+      }
     }
+    this.input.on({event: AcEnumInputEvent.ValueChange, callback: () => {
+        this.pageElement.events[this.event.name] = {
+          name: this.event.name,
+          functionName:this.input.value
+        };
+      }
+    });
+    (this.element.querySelector('.btn-add-event') as HTMLInputElement).addEventListener('click', async () => {
+      this.builderApi.toggleScriptEditor();
+      const functionName = stringToCamelCase(`handle_${this.pageElement.id}_${this.event.name}`);
+      await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.page.scriptClassName!, code: `${functionName}() {\n\t}\n` });
+      this.input.value = functionName;
+    });
+  }
 }

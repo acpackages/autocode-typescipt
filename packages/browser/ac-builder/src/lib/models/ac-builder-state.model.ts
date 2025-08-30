@@ -32,9 +32,8 @@ export class AcBuilderState {
     if (state) {
       if(state.pages){
         this.builderApi.pages = state.pages;
-        this.builderApi.page = state.pages[0];
-        if(this.builderApi.page.html){
-          this.builderApi.grapesJSApi.setComponents(this.builderApi.page.html);
+        if(this.builderApi.pages.length > 0){
+          this.builderApi.setActivePage({page:state.pages[0]})
         }
       }
       if(state.extensionStates){
