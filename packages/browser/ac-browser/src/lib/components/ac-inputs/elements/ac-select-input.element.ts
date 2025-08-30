@@ -185,7 +185,7 @@ export class AcSelectInput extends AcInputBase {
     return el;
   }
 
-  private closeDropdown() {
+  closeDropdown() {
     this.isDropdownOpen = false;
     this.dropdownContainer.style.display = "none";
   }
@@ -208,7 +208,7 @@ export class AcSelectInput extends AcInputBase {
     });
   }
 
-  private openDropdown() {
+  openDropdown() {
     if (!this.isDropdownOpen) {
       this.isDropdownOpen = true;
       this.dropdownContainer.style.display = "block";
@@ -217,23 +217,29 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private positionDropdown() {
-    const rect = this.inputElement.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const spaceBelow = viewportHeight - rect.bottom;
-    const spaceAbove = rect.top;
-    const desiredHeight = 100;
-    const showAbove = spaceBelow < 180 && spaceAbove > spaceBelow;
-    this.dropdownContainer.style.width = rect.width + "px";
-    this.dropdownContainer.style.left = rect.left + "px";
-    if (showAbove) {
-      this.dropdownContainer.style.top = (rect.top - desiredHeight) + "px";
-      this.dropdownContainer.style.maxHeight = spaceAbove + "px";
-    } else {
-      this.dropdownContainer.style.top = rect.bottom + "px";
-      this.dropdownContainer.style.maxHeight = spaceBelow + "px";
-    }
-    this.listEl.style.height = Math.min(desiredHeight, showAbove ? spaceAbove : spaceBelow) + "px";
+  const rect = this.inputElement.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const spaceBelow = viewportHeight - rect.bottom;
+  const spaceAbove = rect.top;
+  const showAbove = spaceBelow < this.maxDropdownHeight && spaceAbove > spaceBelow;
+
+  this.dropdownContainer.style.width = rect.width + "px";
+  this.dropdownContainer.style.left = rect.left + "px";
+
+  if (showAbove) {
+    this.dropdownContainer.style.top = (rect.top - this.maxDropdownHeight) + "px";
+    this.dropdownContainer.style.maxHeight = spaceAbove + "px";
+  } else {
+    this.dropdownContainer.style.top = rect.bottom + "px";
+    this.dropdownContainer.style.maxHeight = spaceBelow + "px";
   }
+
+  // let list auto-size, but scroll when exceeding maxDropdownHeight
+  this.listEl.style.height = "auto";
+  this.listEl.style.maxHeight = this.maxDropdownHeight + "px";
+  this.listEl.style.overflowY = "auto";
+}
+
 
   private renderVirtualList() {
     this.listEl.innerHTML = "";
@@ -262,5 +268,14 @@ export class AcSelectInput extends AcInputBase {
 
     this.closeDropdown();
     this.inputElement.dispatchEvent(new Event("change"));
+  }
+
+  toggleDropdown(){
+    if(this.isDropdownOpen){
+      this.closeDropdown();
+    }
+    else {
+      this.openDropdown();
+    }
   }
 }

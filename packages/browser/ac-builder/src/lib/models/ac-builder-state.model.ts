@@ -62,6 +62,7 @@ export class AcBuilderState {
       }
       return attr;
     },});
+    activePage.script = this.builderApi.scriptEditor.getCode();
     const result:IAcBuilderState = {
       extensionStates:{...this.extensionStates},
       pages:[activePage]

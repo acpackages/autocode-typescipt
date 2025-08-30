@@ -53,10 +53,18 @@ export class AcElementEventInput {
       }
     });
     (this.element.querySelector('.btn-add-event') as HTMLInputElement).addEventListener('click', async () => {
-      this.builderApi.toggleScriptEditor();
       const functionName = stringToCamelCase(`handle_${this.pageElement.id}_${this.event.name}`);
       await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.page.scriptClassName!, code: `${functionName}() {\n\t}\n` });
+      await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.page.scriptClassName!,functionName:functionName});
       this.input.value = functionName;
+      this.builderApi.toggleScriptEditor();
     });
+    this.input.on({event:AcEnumInputEvent.DoubleClick,callback:async ()=>{
+      this.input.selectInput.closeDropdown();
+      this.builderApi.toggleScriptEditor();
+      if (this.pageElement && this.pageElement.events && this.pageElement.events[this.event.name] && this.pageElement.events[this.event.name].functionName){
+        await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.page.scriptClassName!,functionName:this.pageElement.events[this.event.name].functionName!});
+      }
+    }});
   }
 }

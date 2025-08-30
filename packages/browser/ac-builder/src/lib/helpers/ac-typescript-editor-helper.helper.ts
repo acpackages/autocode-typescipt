@@ -146,6 +146,7 @@ export class AcTypescriptEditorHelper {
   }
 
   async gotoFunction({ functionName, className }: { functionName: string, className?: string }): Promise<void> {
+    this.editor.focus();
     const model = this.editor.getModel();
     if (!model) return;
 

@@ -5,7 +5,7 @@ import { AcEnumBuilderHook } from "../../enums/ac-enum-builder-hook.enum";
 export class AcEventSelectInput extends AcInputBase{
   builderApi:AcBuilderApi;
   override element:HTMLElement;
-  private selectInput:AcSelectInput;
+  selectInput:AcSelectInput;
 
   override get value(): any {
     return this.selectInput.value;
