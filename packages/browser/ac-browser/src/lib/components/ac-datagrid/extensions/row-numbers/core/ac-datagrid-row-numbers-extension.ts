@@ -30,12 +30,12 @@ export class AcDatagridRowNumbersExtension extends AcDatagridExtension {
     width:35,
   });
 
-  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
+  override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if (hook == AcEnumDatagridHook.BeforeRowCellsCreate) {
-      this.handleBeforeRowCellsCreated(hookArgs);
+      this.handleBeforeRowCellsCreated(args);
     }
     else if (hook == AcEnumDatagridHook.BeforeHeaderColumnCellsCreate) {
-      this.handleBeforeHeaderColumnCellsCreated(hookArgs);
+      this.handleBeforeHeaderColumnCellsCreated(args);
     }
   }
 

@@ -108,15 +108,15 @@ body {
   padding: 0px;
   padding-top: 2px;
 }
-.ac-builder-elements-tab{
+.ac-builder-elements-tab, .ac-builder-events-tab, .ac-builder-properties-tab{
   height: 100%;
 }
-.ac-builder-elements-tab-container{
+.ac-builder-elements-tab-container, .ac-builder-events-tab-container, .ac-builder-properties-tab-container{
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.ac-builder-elements-panel, .ac-builder-styles-tab{
+.ac-builder-elements-panel, .ac-builder-styles-tab, .ac-builder-events-panel, .ac-builder-properties-panel{
   height: -webkit-fill-available;
   overflow-y: auto;
   overflow-x: hidden;

@@ -27,8 +27,8 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
       this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
     }
     this.datagridApi.hooks.subscribeAllHooks({
-      callback: (hook: string, hookArgs: any) => {
-        this.handleHook({ hook: hook, hookArgs: hookArgs });
+      callback: (hook: string, args: any) => {
+        this.handleHook({ hook: hook, args: args });
       }
     });
   }
@@ -81,21 +81,21 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     }
   }
 
-  handleHook({ hook, hookArgs }: { hook: string, hookArgs: any }): void {
+  handleHook({ hook, args }: { hook: string, args: any }): void {
     if (hook == AcEnumDatagridHook.ExtensionEnable) {
-      this.handleExtensionEnabled(hookArgs);
+      this.handleExtensionEnabled(args);
     }
     else if (hook == AcEnumDatagridOnAgGridHook.ColDefsChange) {
-      this.handleColDefsChange(hookArgs);
+      this.handleColDefsChange(args);
     }
     else if (hook == AcEnumDatagridOnAgGridHook.DataChange) {
-      this.handleDataChange(hookArgs);
+      this.handleDataChange(args);
     }
     else if (hook == AcEnumDatagridOnAgGridHook.BeforeRowAdd) {
-      this.handleRowAdd(hookArgs);
+      this.handleRowAdd(args);
     }
     else if (hook == AcEnumDatagridOnAgGridHook.BeforeRowUpdate) {
-      this.handleRowUpdate(hookArgs);
+      this.handleRowUpdate(args);
     }
     else if ([
       AcEnumDatagridTreeTableHook.TreeDataChildKeyChange,

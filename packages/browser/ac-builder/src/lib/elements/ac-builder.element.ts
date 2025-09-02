@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { grapesjs, Editor } from 'grapesjs';
-import { acAddClassToElement, AcBrowser, AcDrawer, AcFilterableElements, AcFilterableElementsAttributeName, acRemoveClassFromElement, AcTabs, AcTabsAttributeName } from '@autocode-ts/ac-browser';
+import { acAddClassToElement, AcBrowser, AcDrawer, AcEnumDrawerEvent, AcFilterableElements, AcFilterableElementsAttributeName, acRemoveClassFromElement, AcTabs, AcTabsAttributeName } from '@autocode-ts/ac-browser';
 import { AcBuilderApi } from '../core/ac-builder-api';
 import { AcGrapesJSEventsHandler } from '../core/ac-grapesjs-events-handler';
 import { AcBuilderPropertiesPanel } from './ac-builder-properties-panel.element';
 import { AcBuilderCssClassName } from '../consts/ac-builder-css-class-name.const';
 import { AcBuilderEventsPanel } from './ac-builder-events-panel.element';
+import { AcEnumBuilderHook } from '../enums/ac-enum-builder-hook.enum';
+import { AcEnumBuilderEvent } from '../enums/ac-enum-builder-event.enum';
 export class AcBuilder {
   element: HTMLElement = document.createElement('div');
   grapesJSElement!: HTMLElement;
@@ -85,41 +87,6 @@ export class AcBuilder {
     const btnRedo = this.element.querySelector('.btn-redo') as HTMLElement;
     btnRedo.addEventListener('click', () => {
       this.grapesJSApi.runCommand('core:redo');
-    });
-  }
-
-  registerCustomElement({ elementName, elementTag, elementCategory, elementProperties, elementEvents }: { elementName: string, elementTag: string, elementCategory: string, elementProperties?: any, elementEvents?: any }) {
-    const domc = this.grapesJSApi.DomComponents;
-    domc.addType(elementTag, {
-      model: {
-        defaults: {
-          tagName: elementTag,
-        },
-      },
-      view: {
-      },
-    });
-    this.grapesJSApi.BlockManager.add(elementTag, {
-      label: elementName,
-      content: { type: elementTag },
-      category: elementCategory,
-    });
-  }
-
-  registerCustomTrait() {
-    const trm = this.grapesJSApi.TraitManager;
-
-    trm.addType('color-picker', {
-      createInput({ trait }: any) {
-        const el = document.createElement('input');
-        el.setAttribute('type', 'color');
-        el.value = trait.getValue() || '#ff0000';
-        el.addEventListener('input', (event: any) => {
-          trait.setValue(event.target.value);
-        });
-
-        return el;
-      },
     });
   }
 
@@ -258,6 +225,14 @@ export class AcBuilder {
 
   private setDrawers() {
     this.scriptEditorDrawer = new AcDrawer(this.element.querySelector('.ac-builder-script-container') as HTMLElement, { placement: 'right' });
+    this.scriptEditorDrawer.on({event:AcEnumDrawerEvent.Close,callback:()=>{
+      this.builderApi.hooks.execute({hook:AcEnumBuilderHook.EditorClose});
+      this.builderApi.events.execute({event:AcEnumBuilderEvent.EditorClose});
+    }});
+    this.scriptEditorDrawer.on({event:AcEnumDrawerEvent.Open,callback:()=>{
+      this.builderApi.hooks.execute({hook:AcEnumBuilderHook.EditorOpen});
+      this.builderApi.events.execute({event:AcEnumBuilderEvent.EditorOpen});
+    }});
     const btnCode = this.element.querySelector('.btn-script-code') as HTMLElement;
     btnCode.addEventListener('click', () => {
       this.builderApi.toggleScriptEditor();

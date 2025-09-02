@@ -26,8 +26,8 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
       this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
     }
     this.datagridApi.hooks.subscribeAllHooks({
-      callback: (hook: string, hookArgs: any) => {
-        this.handleHook({ hook: hook, hookArgs: hookArgs });
+      callback: (hook: string, args: any) => {
+        this.handleHook({ hook: hook, args: args });
       }
     });
     this.gridApi.addEventListener('rowDragEnter', (args: RowDragEnterEvent) => {
@@ -140,15 +140,15 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
     }
   }
 
-  handleHook({ hook, hookArgs }: { hook: string, hookArgs: any }): void {
+  handleHook({ hook, args }: { hook: string, args: any }): void {
     if (hook == AcEnumDatagridHook.ExtensionEnable) {
-      this.handleExtensionEnabled(hookArgs);
+      this.handleExtensionEnabled(args);
     }
     else if (hook == AcEnumDatagridRowDraggingHook.AllowRowDraggingChange) {
       this.setAllowRowDragging();
     }
     else if (hook == AcEnumDatagridOnAgGridHook.BeforeColDefsChange) {
-      this.handleBeforeColDefsChange(hookArgs);
+      this.handleBeforeColDefsChange(args);
     }
   }
 

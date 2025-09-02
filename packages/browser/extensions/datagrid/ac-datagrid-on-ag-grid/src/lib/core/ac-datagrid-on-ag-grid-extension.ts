@@ -314,10 +314,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
   }
 
-  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
-    // console.log(`Hook ${hook}`,hookArgs);
+  override handleHook({ hook, args }: { hook: string; args: any; }): void {
+    console.log(`Hook ${hook}`,args);
     if (hook == AcEnumDatagridHook.BeforeGetOnDemandData) {
-      this.handleBeforeGetOnDemandData(hookArgs);
+      this.handleBeforeGetOnDemandData(args);
     }
     else if (hook == AcEnumDatagridHook.ColumnDefinitionsChange) {
       this.setColumnDefs();
@@ -326,25 +326,25 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.handleDataChange();
     }
     else if (hook == AcEnumDatagridHook.DataSourceTypeChange) {
-      this.handleDataSourceTypeChange(hookArgs);
+      this.handleDataSourceTypeChange(args);
     }
     else if (hook == AcEnumDatagridHook.ExtensionEnable) {
-      this.handleExtensionEnabled(hookArgs);
+      this.handleExtensionEnabled(args);
     }
     else if (hook == AcEnumDatagridHook.GetOnDemandDataSuccessCallback) {
-      this.handleGetOnDemandDataSuccessCallback(hookArgs);
+      this.handleGetOnDemandDataSuccessCallback(args);
     }
     else if (hook == AcEnumDatagridHook.RowAdd) {
-      this.handleRowAdd(hookArgs);
+      this.handleRowAdd(args);
     }
     else if (hook == AcEnumDatagridHook.RowDelete) {
-      this.handleRowDelete(hookArgs);
+      this.handleRowDelete(args);
     }
     else if (hook == AcEnumDatagridHook.RowFocus) {
-      this.handleRowFocus(hookArgs);
+      this.handleRowFocus(args);
     }
     else if (hook == AcEnumDatagridHook.RowUpdate) {
-      this.handleRowUpdate(hookArgs);
+      this.handleRowUpdate(args);
     }
     else if (hook == AcEnumDatagridHook.UsePaginationChange) {
       this.handleUsePaginationChange();
@@ -356,13 +356,13 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.setColumnsCustomizerExtension();
     }
     else if (hook == AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel) {
-      this.handleColumnsCustomizerToggle(hookArgs);
+      this.handleColumnsCustomizerToggle(args);
     }
     else if (hook == AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange) {
       this.setColumnDragging();
     }
     else if (hook == AcEnumDatagridDataExportXlsxHook.ExportData) {
-      this.handleDataExportXlsx(hookArgs);
+      this.handleDataExportXlsx(args);
     }
   }
 

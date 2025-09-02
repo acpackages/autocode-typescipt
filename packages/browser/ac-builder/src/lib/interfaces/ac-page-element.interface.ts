@@ -4,7 +4,7 @@ import { IAcPageElementPropertyValue } from "./ac-page-element-property-value.in
 
 export interface IAcPageElement{
   id:string,
-  element?:HTMLElement,
+  instance?:any,
   name:string,
   events:Record<string,IAcPageElementEventFunction>,
   properties:Record<string,IAcPageElementPropertyValue>

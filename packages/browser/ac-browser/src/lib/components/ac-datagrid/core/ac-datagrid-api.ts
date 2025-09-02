@@ -257,7 +257,7 @@ export class AcDatagridApi {
         extensionInstance.datagridApi = this;
         const hookId: string = this.hooks.subscribeAllHooks({
           callback: (hook: string, args: any) => {
-            extensionInstance.handleHook({ hook: hook, hookArgs: args });
+            extensionInstance.handleHook({ hook: hook, args: args });
           }
         });
         extensionInstance.hookId = hookId;

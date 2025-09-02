@@ -95,7 +95,7 @@ export class AcDDEBrowserStorageExtension extends AcDDEExtension {
     }
   }
 
-  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
+  override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if (hook == AcEnumDDEHook.DataDictionarySet && !this.ignoreSetDataHooks) {
       this.handleDataDictionarySet();
     }

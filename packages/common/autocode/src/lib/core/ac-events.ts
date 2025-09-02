@@ -8,12 +8,18 @@ export class AcEvents {
   private events: Record<string, Record<string, Function>> = {};
   private allEventCallbacks: Record<string, Function> = {};
 
+  clearSubscriptions(){
+    this.events = {};
+    this.allEventCallbacks = {};
+  }
+
   execute({ event, args }: { event: string; args?: any }): AcEventExecutionResult {
     const result = new AcEventExecutionResult();
     try {
+      const name = event.toLowerCase();
       const functionResults: Record<string, AcEventExecutionResult> = {};
-      if (this.events[event]) {
-        const functionsToExecute = this.events[event];
+      if (this.events[name]) {
+        const functionsToExecute = this.events[name];
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
           try{
             const functionResult = fun(args);
@@ -31,7 +37,7 @@ export class AcEvents {
       }
       for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
         try{
-          const functionResult = fun(event, args);
+          const functionResult = fun(name, args);
           if (
             functionResult &&
             functionResult instanceof AcEventExecutionResult &&
@@ -57,11 +63,12 @@ export class AcEvents {
   }
 
   subscribe({ event, callback }: { event: string; callback: Function }): string {
-    if (!this.events[event]) {
-      this.events[event] = {};
+    const name = event.toLowerCase();
+    if (!this.events[name]) {
+      this.events[name] = {};
     }
     const subscriptionId = Autocode.uniqueId();
-    this.events[event][subscriptionId] = callback;
+    this.events[name][subscriptionId] = callback;
     return subscriptionId;
   }
 

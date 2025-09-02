@@ -17,12 +17,12 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
     this.analyzer = new AcDDESqlAnalyzer({ extension: this });
   }
 
-  override handleHook({ hook, hookArgs }: { hook: string; hookArgs: any; }): void {
+  override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if (hook == AcEnumDDEHook.ViewsDatagridBeforeColumnsSet) {
-      this.handleBeforeColumnDefinitionSet(hookArgs);
+      this.handleBeforeColumnDefinitionSet(args);
     }
     else if (hook == AcEnumDDEHook.ViewsDatagridCellRendererInit) {
-      this.handleCellRendererInit(hookArgs);
+      this.handleCellRendererInit(args);
     }
 
   }

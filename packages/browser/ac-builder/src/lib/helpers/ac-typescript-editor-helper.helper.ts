@@ -6,10 +6,11 @@ import { AcEnumBuilderEvent } from "../enums/ac-enum-builder-event.enum";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcScriptFunctionChangeEventArgs } from "../interfaces/event-args/ac-script-function-change-event-args.interface";
 import { IAcScriptPropertyChangeEventArgs } from "../interfaces/event-args/ac-script-property-change-event-args.interface";
+import { AcRuntimeDeclaration } from "@autocode-ts/ac-browser";
 
 export class AcTypescriptEditorHelper {
   private editor: monaco.editor.IStandaloneCodeEditor;
-  private builderApi:AcBuilderApi;
+  private builderApi: AcBuilderApi;
 
   constructor({ scriptEditor }: { scriptEditor: AcBuilderScriptEditor }) {
     this.editor = scriptEditor.editor;
@@ -201,7 +202,7 @@ export class AcTypescriptEditorHelper {
     });
   }
 
-  private listenForFunctionChanges(callback: ({ change, oldName, newName, className }: { change: string, oldName?: string, newName?: string,className: string }) => void) {
+  private listenForFunctionChanges(callback: ({ change, oldName, newName, className }: { change: string, oldName?: string, newName?: string, className: string }) => void) {
     this.trackChanges(async () => {
       const structure = await this.getClassStructure();
       const functions: Record<string, string[]> = {};
@@ -215,18 +216,18 @@ export class AcTypescriptEditorHelper {
         const currSet = new Set(currFuncs);
         for (const f of currFuncs) {
           if (!oldSet.has(f)) {
-            callback({change:"add",  className:cls, newName:f});
+            callback({ change: "add", className: cls, newName: f });
           }
         }
         for (const f of oldFuncs) {
           if (!currSet.has(f)) {
-            callback({change:"remove",  className:cls, oldName:f});
+            callback({ change: "remove", className: cls, oldName: f });
           }
         }
         if (oldFuncs.length === currFuncs.length) {
           for (let i = 0; i < currFuncs.length; i++) {
             if (oldFuncs[i] !== currFuncs[i]) {
-              callback({change:"rename",  className:cls,oldName: oldFuncs[i], newName:currFuncs[i]});
+              callback({ change: "rename", className: cls, oldName: oldFuncs[i], newName: currFuncs[i] });
             }
           }
         }
@@ -234,7 +235,7 @@ export class AcTypescriptEditorHelper {
     });
   }
 
-  private listenForPropertyChanges(callback: ({ change, oldName, newName, className }: { change: string, oldName?: string, newName?: string,className: string }) => void) {
+  private listenForPropertyChanges(callback: ({ change, oldName, newName, className }: { change: string, oldName?: string, newName?: string, className: string }) => void) {
     this.trackChanges(async () => {
       const structure = await this.getClassStructure();
       const vars: Record<string, string[]> = {};
@@ -248,18 +249,18 @@ export class AcTypescriptEditorHelper {
         const currSet = new Set(currVars);
         for (const v of currVars) {
           if (!oldSet.has(v)) {
-            callback({change:"add", className:cls, newName:v});
+            callback({ change: "add", className: cls, newName: v });
           }
         }
         for (const v of oldVars) {
           if (!currSet.has(v)) {
-            callback({change:"remove", className:cls, oldName:v});
+            callback({ change: "remove", className: cls, oldName: v });
           }
         }
         if (oldVars.length === currVars.length) {
           for (let i = 0; i < currVars.length; i++) {
             if (oldVars[i] !== currVars[i]) {
-              callback({change:"rename",  className:cls, oldName:oldVars[i], newName:currVars[i]});
+              callback({ change: "rename", className: cls, oldName: oldVars[i], newName: currVars[i] });
             }
           }
         }
@@ -267,37 +268,184 @@ export class AcTypescriptEditorHelper {
     });
   }
 
+  registerTypeToEditor({ type }: { type: any }): void {
+    const decl = AcRuntimeDeclaration.getTypeDeclaration({ type });
+    if (decl) {
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(decl);
+    }
+    else {
+      console.error('Error registering type to editor...', type);
+    }
+  }
 
   registerListeners() {
-    this.listenForClassChanges(({change,oldName,newName}:{change:any, oldName?: string, newName?: string}) => {
-      const args:IAcScriptClassChangeEventArgs = {
-        change:change,
-        oldName:oldName,
-        newName:newName
+    this.listenForClassChanges(({ change, oldName, newName }: { change: any, oldName?: string, newName?: string }) => {
+      const args: IAcScriptClassChangeEventArgs = {
+        change: change,
+        oldName: oldName,
+        newName: newName
       };
-      this.builderApi.hooks.execute({hook:AcEnumBuilderHook.ScriptClassChange,args:args});
-      this.builderApi.events.execute({event:AcEnumBuilderEvent.ScriptClassChange,args:args});
+      this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ScriptClassChange, args: args });
+      this.builderApi.events.execute({ event: AcEnumBuilderEvent.ScriptClassChange, args: args });
     });
-    this.listenForFunctionChanges(({change,oldName,newName,className}:{change:any,oldName?: string, newName?: string, className: string}) => {
-      const args:IAcScriptFunctionChangeEventArgs = {
-        change:change,
-        oldName:oldName,
-        newName:newName,
-        className:className
+    this.listenForFunctionChanges(({ change, oldName, newName, className }: { change: any, oldName?: string, newName?: string, className: string }) => {
+      const args: IAcScriptFunctionChangeEventArgs = {
+        change: change,
+        oldName: oldName,
+        newName: newName,
+        className: className
       };
-      this.builderApi.hooks.execute({hook:AcEnumBuilderHook.ScriptFunctionChange,args:args});
-      this.builderApi.events.execute({event:AcEnumBuilderEvent.ScriptFunctionChange,args:args});
+      this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ScriptFunctionChange, args: args });
+      this.builderApi.events.execute({ event: AcEnumBuilderEvent.ScriptFunctionChange, args: args });
     });
-    this.listenForPropertyChanges(({change,oldName,newName,className}:{change:any,oldName?: string, newName?: string, className: string}) => {
-      const args:IAcScriptPropertyChangeEventArgs = {
-        change:change,
-        oldName:oldName,
-        newName:newName,
-        className:className
+    this.listenForPropertyChanges(({ change, oldName, newName, className }: { change: any, oldName?: string, newName?: string, className: string }) => {
+      const args: IAcScriptPropertyChangeEventArgs = {
+        change: change,
+        oldName: oldName,
+        newName: newName,
+        className: className
       };
-      this.builderApi.hooks.execute({hook:AcEnumBuilderHook.ScriptPropertyChange,args:args});
-      this.builderApi.events.execute({event:AcEnumBuilderEvent.ScriptPropertyChange,args:args});
+      this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ScriptPropertyChange, args: args });
+      this.builderApi.events.execute({ event: AcEnumBuilderEvent.ScriptPropertyChange, args: args });
     });
+  }
+
+  async removePropertyInClass({
+    className,
+    propertyName,
+    autoFormat = true
+  }: { className: string; propertyName: string; autoFormat?: boolean }): Promise<void> {
+    const clsNode = await this.getClassNode(className);
+    if (!clsNode) return;
+    const model = this.editor.getModel();
+    if (!model) return;
+
+    let targetNode: any | null = null;
+    for (const child of clsNode.childItems || []) {
+      if (child.kind === "property" && child.text === propertyName) {
+        targetNode = child;
+        break;
+      }
+    }
+
+    if (!targetNode || !targetNode.spans?.length) return;
+
+    const span = targetNode.spans[0];
+    const start = model.getPositionAt(span.start);
+    const end = model.getPositionAt(span.start + span.length);
+
+    this.editor.executeEdits("removeProperty", [{
+      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
+      text: "" // remove the text
+    }]);
+
+    if (autoFormat) {
+      await this.formatCode();
+    }
+  }
+
+  async removeFunctionInClass({
+    className,
+    functionName,
+    autoFormat = true
+  }: { className: string; functionName: string; autoFormat?: boolean }): Promise<void> {
+    const clsNode = await this.getClassNode(className);
+    if (!clsNode) return;
+    const model = this.editor.getModel();
+    if (!model) return;
+
+    let targetNode: any | null = null;
+    for (const child of clsNode.childItems || []) {
+      if (child.kind === "method" && child.text === functionName) {
+        targetNode = child;
+        break;
+      }
+    }
+
+    if (!targetNode || !targetNode.spans?.length) return;
+
+    const span = targetNode.spans[0];
+    const start = model.getPositionAt(span.start);
+    const end = model.getPositionAt(span.start + span.length);
+
+    this.editor.executeEdits("removeFunction", [{
+      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
+      text: "" // remove the text
+    }]);
+
+    if (autoFormat) {
+      await this.formatCode();
+    }
+  }
+
+  async renamePropertyInClass({
+    className,
+    oldName,
+    newName,
+    autoFormat = true
+  }: { className: string; oldName: string; newName: string; autoFormat?: boolean }): Promise<void> {
+    const clsNode = await this.getClassNode(className);
+    if (!clsNode) return;
+    const model = this.editor.getModel();
+    if (!model) return;
+
+    let targetNode: any | null = null;
+    for (const child of clsNode.childItems || []) {
+      if (child.kind === "property" && child.text === oldName) {
+        targetNode = child;
+        break;
+      }
+    }
+
+    if (!targetNode || !targetNode.spans?.length) return;
+
+    const span = targetNode.spans[0];
+    const start = model.getPositionAt(span.start);
+    const end = model.getPositionAt(span.start + span.length);
+
+    this.editor.executeEdits("renameProperty", [{
+      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
+      text: newName
+    }]);
+
+    if (autoFormat) {
+      await this.formatCode();
+    }
+  }
+
+  async renameFunctionInClass({
+    className,
+    oldName,
+    newName,
+    autoFormat = true
+  }: { className: string; oldName: string; newName: string; autoFormat?: boolean }): Promise<void> {
+    const clsNode = await this.getClassNode(className);
+    if (!clsNode) return;
+    const model = this.editor.getModel();
+    if (!model) return;
+
+    let targetNode: any | null = null;
+    for (const child of clsNode.childItems || []) {
+      if (child.kind === "method" && child.text === oldName) {
+        targetNode = child;
+        break;
+      }
+    }
+
+    if (!targetNode || !targetNode.spans?.length) return;
+
+    const span = targetNode.spans[0];
+    const start = model.getPositionAt(span.start);
+    const end = model.getPositionAt(span.start + span.length);
+
+    this.editor.executeEdits("renameFunction", [{
+      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
+      text: newName
+    }]);
+
+    if (autoFormat) {
+      await this.formatCode();
+    }
   }
 
   async setCode({ code, autoFormat = true }: { code: string, autoFormat?: boolean }): Promise<void> {

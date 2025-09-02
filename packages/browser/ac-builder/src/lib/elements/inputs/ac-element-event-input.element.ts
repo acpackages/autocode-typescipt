@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName, AcInput } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName } from "@autocode-ts/ac-browser";
 import { stringToCamelCase } from "@autocode-ts/ac-extensions";
-import { AcBuilderApi } from "../core/ac-builder-api";
-import { IAcBuilderElementEvent } from "../interfaces/ac-builder-element-event.interface";
-import { IAcPageElement } from "../interfaces/ac-page-element.interface";
-import { AcEventSelectInput } from "./inputs/ac-event-select-input.element";
+import { AcBuilderApi } from "../../core/ac-builder-api";
+import { IAcBuilderElementEvent } from "../../interfaces/ac-builder-element-event.interface";
+import { IAcPageElement } from "../../interfaces/ac-page-element.interface";
+import { AcEventSelectInput } from "./ac-event-select-input.element";
 
 export class AcElementEventInput {
   builderApi: AcBuilderApi;
@@ -54,8 +54,8 @@ export class AcElementEventInput {
     });
     (this.element.querySelector('.btn-add-event') as HTMLInputElement).addEventListener('click', async () => {
       const functionName = stringToCamelCase(`handle_${this.pageElement.id}_${this.event.name}`);
-      await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.page.scriptClassName!, code: `${functionName}() {\n\t}\n` });
-      await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.page.scriptClassName!,functionName:functionName});
+      await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.page.className!, code: `${functionName}() {\n\t}\n` });
+      await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.page.className!,functionName:functionName});
       this.input.value = functionName;
       this.builderApi.toggleScriptEditor();
     });
@@ -63,7 +63,7 @@ export class AcElementEventInput {
       this.input.selectInput.closeDropdown();
       this.builderApi.toggleScriptEditor();
       if (this.pageElement && this.pageElement.events && this.pageElement.events[this.event.name] && this.pageElement.events[this.event.name].functionName){
-        await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.page.scriptClassName!,functionName:this.pageElement.events[this.event.name].functionName!});
+        await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.page.className!,functionName:this.pageElement.events[this.event.name].functionName!});
       }
     }});
   }

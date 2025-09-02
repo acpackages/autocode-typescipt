@@ -5,6 +5,7 @@ import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
 import { AcEnumBuilderEvent } from "../enums/ac-enum-builder-event.enum";
 import { IAcBuilderElementEventArgs } from "../interfaces/event-args/ac-builder-element-event-args.interface";
+import { AcBuilderElementsManager } from "./ac-builder-elements-manager";
 
 export class AcBuilderEventsHandler {
   builderApi: AcBuilderApi;
@@ -17,13 +18,23 @@ export class AcBuilderEventsHandler {
       if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementId)) {
         const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementId)!;
         const pageElement = this.builderApi.page.elements![elementId];
-        if (pageElement) {
-          this.builderApi.page.elements![elementId].element = element;
-          const eventArgs: IAcBuilderElementEventArgs = {
-            pageElement: pageElement
-          };
-          this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ElementAdd, args: eventArgs });
-          this.builderApi.events.execute({ event: AcEnumBuilderEvent.ElementAdd, args: eventArgs });
+        const builderElement = AcBuilderElementsManager.getElement({name:pageElement.name});
+        if(builderElement){
+          const instance = new builderElement.instanceClass();
+          pageElement.instance = instance;
+          instance.element = element;
+          this.builderApi.scriptEditor.addCodeInsideClass({className:this.builderApi.page.className!,code:`${pageElement.id}!:${builderElement.instanceClass.name};`});
+          if (pageElement) {
+            const eventArgs: IAcBuilderElementEventArgs = {
+              pageElement: pageElement
+            };
+            this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ElementAdd, args: eventArgs });
+            this.builderApi.events.execute({ event: AcEnumBuilderEvent.ElementAdd, args: eventArgs });
+          }
+          instance.init({args:{element:element}});
+          if(this.builderApi.runtimePage){
+            this.builderApi.runtimePage.setElementInstance({element:pageElement});
+          }
         }
       }
     }

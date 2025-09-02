@@ -3,7 +3,8 @@ import { AcBuilderCssClassName } from "../consts/ac-builder-css-class-name.const
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderElementEvent } from "../interfaces/ac-builder-element-event.interface";
-import { AcElementEventInput } from "./ac-element-event-input.element";
+import { AcElementEventInput } from "./inputs/ac-element-event-input.element";
+import { AcBuilderElementsManager } from "../core/ac-builder-elements-manager";
 
 export class AcBuilderEventsPanel {
   builderApi: AcBuilderApi;
@@ -12,13 +13,13 @@ export class AcBuilderEventsPanel {
   inputsContainer: HTMLElement;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    this.element.innerHTML = `<div class="ac-builder-events-tab-container ">
+    acAddClassToElement({element:this.element,cssClass:"ac-builder-events-tab-container"});
+    this.element.innerHTML = `
         <div class="p-2">
           <input type="text" class="${AcBuilderCssClassName.acBuilderSidebarInput} ac-events-filter-input" placeholder="Search..." ac-filter-input>
         </div>
-        <div class="ac-builder-events-panel ac-builder-scrollable-element" >
-        </div>
-      </div>`;
+        <div class="ac-builder-events-panel ac-builder-scrollable-element ac-builder-scrollable-element" >
+        </div>`;
     this.inputsContainer = this.element.querySelector('.ac-builder-events-panel') as HTMLElement;
     this.builderApi.hooks.subscribe({
       hook: AcEnumBuilderHook.ElementSelect, callback: (args: any) => {
@@ -29,13 +30,14 @@ export class AcBuilderEventsPanel {
   }
 
   private getCategoryElement({ categoryName }: { categoryName: string }) {
-    let categoryContainer = this.inputsContainer.querySelector(`[ac-data-category=${categoryName}]`);
+    const categoryAttributeValue = categoryName.replaceAll(' ',"_").replaceAll('-',"_").replaceAll('&',"_").toLowerCase();
+    let categoryContainer = this.inputsContainer.querySelector(`[ac-data-category=${categoryAttributeValue}]`);
     if (categoryContainer == undefined) {
       categoryContainer = document.createElement('div');
       categoryContainer.setAttribute(AcFilterableElementsAttributeName.acFilterElementGroup, 'true');
-      categoryContainer.setAttribute('ac-data-category', categoryName);
+      categoryContainer.setAttribute('ac-data-category', categoryAttributeValue);
       acAddClassToElement({ element: categoryContainer, cssClass: 'gjs-block-category gjs-open' });
-      categoryContainer.innerHTML = `<div class="gjs-title" data-title="" ${AcCollapseAttributeName.acCollapseToggle}>
+      categoryContainer.innerHTML = `<div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
           <i class="gjs-caret-icon fa fa-caret-down"></i> ${categoryName}
         </div>
         <div class="gjs-blocks-c category-inputs-container gjs-sm-properties p-1" ${AcCollapseAttributeName.acCollapseContent} ${AcCollapseAttributeName.acCollapseOpen}></div>
@@ -67,7 +69,7 @@ export class AcBuilderEventsPanel {
     this.elementEvents = [];
     if (this.builderApi.selectedElement) {
       const elementName = this.builderApi.selectedElement.name;
-      const element = this.builderApi.elements[elementName];
+      const element = AcBuilderElementsManager.getElement({name:elementName});
       if (element && element.events) {
         this.elementEvents = element.events;
       }

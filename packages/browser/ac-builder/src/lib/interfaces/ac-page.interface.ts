@@ -4,6 +4,6 @@ export interface IAcPage{
   name:string,
   html?:string,
   script?:string,
-  scriptClassName?:string,
+  className?:string,
   elements?:Record<string,IAcPageElement>
 }

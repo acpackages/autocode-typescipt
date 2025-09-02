@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
-import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension, AcRelationshipsDetectorDDEExtension, AcSqlAnalyzerDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
+import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension, AcEnumDDEHook, AcRelationshipsDetectorDDEExtension, AcSqlAnalyzerDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
 import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator'
 import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';
 import { PageHeader } from '../../components/page-header/page-header.component';
@@ -40,127 +40,10 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       this.editorApi.enableExtension({extensionName:AcRelationshipsDetectorDDEExtension.extensionName});
       this.editorApi.enableExtension({extensionName:AcSqlAnalyzerDDEExtension.extensionName});
       this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson});
+      console.log(this.editorApi);
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'accountea'});
       gridDiv.append(this.dataDictionaryEditor.element);
-      // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
 
-      // this.pageHeader.addMenuItem({
-      //   label: 'Row Numbers',
-      //   children: [
-      //     {
-      //       label: 'Show Row Numbers',
-      //       callback: () => {
-      //         this.rowNumbersExtension.showRowNumbers = true;
-      //       }
-      //     },
-      //     {
-      //       label: 'Hide Row Numbers',
-      //       callback: () => {
-      //         this.rowNumbersExtension.showRowNumbers = false;
-      //         console.log(this.datagridApi);
-      //       }
-      //     },
-      //   ]
-      // });
-      // this.pageHeader.addMenuItem({
-      //   label: 'Customize & Export',
-      //   children: [
-      //     {
-      //       label: 'Toggle Columns Customizer',
-      //       callback: () => {
-      //         this.columnsCustomizerExtension.toggleColumnsCustomizer();
-      //       }
-      //     },
-      //     {
-      //       label: 'Export XLSX',
-      //       callback: () => {
-      //         this.dataExportXlsxExtension.exportData({fileName:'Customer Data.xlsx'});
-      //       }
-      //     },
-      //   ]
-      // });
-      // this.pageHeader.addMenuItem({
-      //   label: 'Data & Selection',
-      //   children: [
-      //     {
-      //       label: 'Goto First Row',
-      //       callback: () => {
-      //         this.datagridApi.focusFirstRow({highlightCells:true});
-      //       }
-      //     },
-      //     {
-      //       label: 'Goto Last Row',
-      //       callback: () => {
-      //         this.datagridApi.focusLastRow({highlightCells:true});
-      //       }
-      //     },
-      //     {
-      //       label: 'Clear Selection',
-      //       callback: () => {
-      //         this.rowSelectionExtension.clearSelection();
-      //       }
-      //     },
-      //     {
-      //       label: 'Select All Rows',
-      //       callback: () => {
-      //         this.rowSelectionExtension.setAllRowsSelection({ isSelected: true });
-      //       }
-      //     },
-      //     {
-      //       label: 'Get Selected Rows',
-      //       callback: () => {
-      //         console.log(this.rowSelectionExtension.getSelectedRows());
-      //       }
-      //     },
-      //     {
-      //       label: 'Get Selected Rows Data',
-      //       callback: () => {
-      //         console.log(this.rowSelectionExtension.getSelectedRowsData());
-      //       }
-      //     },
-
-      //   ]
-      // });
-
-      // this.datagridApi.on({eventName:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
-      //   const instance = args.cellRendererElementInstance;
-      //   if(instance instanceof ActionsDatagridColumn){
-      //     instance.editButton.addEventListener('click',(event:any)=>{
-      //       const updatedData:any = {...instance.datagridCell.datagridRow.data};
-      //       updatedData['first_name'] = `Modified - ${updatedData['first_name']}`;
-      //       this.datagridApi.updateRow({data:updatedData,rowId:instance.datagridCell.acRowId});
-      //       // this.datagridApi.addRow({data:updatedData});
-      //     });
-      //   }
-      // }});
-      // this.datagridApi.events.subscribeAllEvents({callback:(eventName:string,args:any)=>{
-      //   // console.log(`Detected event : ${eventName}`,args);
-      //   const identifiedEvents:any[] = [
-      //     AcEnumDatagridEvent.CellClick,
-      //     AcEnumDatagridEvent.CellDoubleClick,
-      //     AcEnumDatagridEvent.CellEditingStart,
-      //     AcEnumDatagridEvent.CellEditingStop,
-      //     AcEnumDatagridEvent.CellFocus,
-      //     AcEnumDatagridEvent.CellKeyDown,
-      //     AcEnumDatagridEvent.CellMouseDown,
-      //     AcEnumDatagridEvent.CellMouseLeave,
-      //     AcEnumDatagridEvent.CellMouseOver,
-      //     AcEnumDatagridEvent.CellRendererElementInit,
-      //     AcEnumDatagridEvent.CellValueChange,
-
-      //     AcEnumDatagridEvent.ColumnHeaderClick,
-
-      //     AcEnumDatagridEvent.PaginationChange,
-
-      //     AcEnumDatagridEvent.RowClick,
-      //     AcEnumDatagridEvent.RowDoubleClick,
-
-      //     AcEnumDatagridEvent.SortOrderChange
-      //   ];
-      //   if(!identifiedEvents.includes(eventName)){
-      //     console.log(`Found event : ${eventName}`,args);
-      //   }
-      // }});
 
     }
   }

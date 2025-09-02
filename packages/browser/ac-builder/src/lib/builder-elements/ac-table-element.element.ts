@@ -1,0 +1,40 @@
+import { AcBuilderIconSvgs } from "../consts/ac-builder-icon-svgs.consts";
+import { AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TABLE_PROPERTIES, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
+import { AcBuilderElement } from "../core/ac-builder-element";
+import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
+import { IAcBuilderElement } from "../interfaces/ac-builder-element.interface";
+import { IAcBuilderElementInitArgs } from "../interfaces/callback-args/ac-builder-element-init-args.interface";
+
+export class AcTableElement extends AcBuilderElement{
+  override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
+    this.element.innerHTML = "<tr><td>A1</td><td>B1</td><td>C1</td></tr><tr><td>A2</td><td>B2</td><td>C2</td></tr><tr><td>A2</td><td>B2</td><td>C2</td></tr>";
+    this.registerListeners();
+  }
+
+  private registerListeners(){
+    this.element.addEventListener('click',(event:MouseEvent)=>{
+      this.events.execute({event:'click',args:event});
+    });
+    this.element.addEventListener('dblclick',(event:MouseEvent)=>{
+      this.events.execute({event:'doubleClick',args:event});
+    });
+  }
+}
+
+export const AC_BUILDER_TABLE_ELEMENT:IAcBuilderElement = {
+  category:'Table',
+  name:'table',
+  tag:'table',
+  title:'Table',
+  events:[
+    ...Object.values(AC_MOUSE_EVENTS),
+    ...Object.values(AC_POINTER_EVENTS),
+    ...Object.values(AC_TOUCH_EVENTS)
+  ],
+  properties:[
+    AC_TABLE_PROPERTIES.border as IAcBuilderElementProperty,
+    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
+  ],
+  mediaSvg:AcBuilderIconSvgs.table,
+  instanceClass:AcTableElement
+}

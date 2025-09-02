@@ -169,7 +169,7 @@ export class AcDataDictionaryEditorHeader {
       });
       this.element.querySelector('.tab-menu-items')?.append(menuItem);
     }
-    this.setActiveTab({tab:AcEnumDDETab.Views});
+    this.setActiveTab({tab:AcEnumDDETab.TableEditor});
   }
 
   private setDataDictionaryDropdown(){

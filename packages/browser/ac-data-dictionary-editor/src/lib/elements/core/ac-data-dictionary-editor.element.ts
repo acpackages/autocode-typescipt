@@ -52,8 +52,8 @@ export class AcDataDictionaryEditor {
     this.initElement();
 
     this.editorApi.hooks.execute({ hook: AcEnumDDEHook.EditorInit, args: hookArgs });
-    this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.EditorTabChange,callback:(hookArgs:IAcDDEHookArgs)=>{
-      this.setActiveTab({tab:hookArgs.value});
+    this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.EditorTabChange,callback:(args:IAcDDEHookArgs)=>{
+      this.setActiveTab({tab:args.value});
     }});
 
     this.setActiveTab({tab:this.editorApi.activeEditorTab});

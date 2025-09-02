@@ -1,7 +1,8 @@
+import { AcBuilderElement } from "../core/ac-builder-element";
 import { IAcBuilderElementEvent } from "./ac-builder-element-event.interface";
 import { IAcBuilderElementProperty } from "./ac-builder-element-property.interface";
 
-export interface IAcBuilderElement{
+export interface IAcBuilderElement<T extends AcBuilderElement = AcBuilderElement>{
   tag:string;
   name:string;
   title:string;
@@ -10,5 +11,5 @@ export interface IAcBuilderElement{
   mediaSvg?:string;
   properties?:IAcBuilderElementProperty[];
   events?:IAcBuilderElementEvent[];
-  initCallback?:Function;
+  instanceClass: new (...args: any[]) => T;
 }

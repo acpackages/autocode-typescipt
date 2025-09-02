@@ -7,6 +7,7 @@ import { IAcPage } from "../interfaces/ac-page.interface";
 import { IAcPageElement } from "../interfaces/ac-page-element.interface";
 import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
 import { stat } from "fs";
+import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 
 export class AcBuilderState {
   static readonly KeyColumns = "columns";
@@ -24,19 +25,35 @@ export class AcBuilderState {
     }
   }
 
-  constructor({builderApi}:{builderApi:AcBuilderApi}){
+  constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
+    this.builderApi.hooks.subscribe({
+      hook: AcEnumBuilderHook.EditorClose, callback: () => {
+        console.log("Editor close");
+        this.refresh();
+      }
+    });
+    this.builderApi.hooks.subscribe({
+      hook: AcEnumBuilderHook.ElementAdd, callback: () => {
+        this.refresh();
+      }
+    });
+    this.builderApi.hooks.subscribe({
+      hook: AcEnumBuilderHook.ElementDelete, callback: () => {
+        this.refresh();
+      }
+    });
   }
 
   fromJson(state: IAcBuilderState) {
     if (state) {
-      if(state.pages){
+      if (state.pages) {
         this.builderApi.pages = state.pages;
-        if(this.builderApi.pages.length > 0){
-          this.builderApi.setActivePage({page:state.pages[0]})
+        if (this.builderApi.pages.length > 0) {
+          this.builderApi.setActivePage({ page: state.pages[0] })
         }
       }
-      if(state.extensionStates){
+      if (state.extensionStates) {
         // this.setExtensionsState()
       }
       //
@@ -45,27 +62,33 @@ export class AcBuilderState {
 
   refresh() {
     this.setExtensionsState();
+    if (this.builderApi.page) {
+      const activePage = this.builderApi.page;
+      activePage.html = this.builderApi.grapesJSApi.getHtml({
+        attributes(component, attr) {
+          if (component && component.view && component.view.el && component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId)) {
+            attr[AcBuilderAttributeName.acBuilderElementId] = component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId);
+          }
+          return attr;
+        },
+      });
+      activePage.script = this.builderApi.scriptEditor.getCode();
+    }
   }
 
-  toJson():IAcBuilderState  {
-    const activePage:IAcPage = {...this.builderApi.page};
-    if(activePage.elements){
-      for(const element of Object.values(activePage.elements) as IAcPageElement[]){
-        if(element.element){
-          delete element.element;
+  toJson(): IAcBuilderState {
+    this.refresh();
+    const activePage: IAcPage = { ...this.builderApi.page };
+    if (activePage.elements) {
+      for (const element of Object.values(activePage.elements) as IAcPageElement[]) {
+        if (element.instance) {
+          delete element.instance;
         }
       }
     }
-    activePage.html = this.builderApi.grapesJSApi.getHtml({attributes(component, attr) {
-      if(component && component.view && component.view.el && component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId)){
-        attr[AcBuilderAttributeName.acBuilderElementId] = component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId);
-      }
-      return attr;
-    },});
-    activePage.script = this.builderApi.scriptEditor.getCode();
-    const result:IAcBuilderState = {
-      extensionStates:{...this.extensionStates},
-      pages:[activePage]
+    const result: IAcBuilderState = {
+      extensionStates: { ...this.extensionStates },
+      pages: [activePage]
     };
     return result;
   }
@@ -73,7 +96,6 @@ export class AcBuilderState {
   toString(): string {
     return AcJsonUtils.prettyEncode(this.toJson());
   }
-
 
   private setExtensionsState() {
     const extensions: any = {};

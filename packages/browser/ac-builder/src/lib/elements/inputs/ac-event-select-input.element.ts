@@ -11,7 +11,6 @@ export class AcEventSelectInput extends AcInputBase{
     return this.selectInput.value;
   }
   override set value(value: any) {
-    console.log(value);
     this.selectInput.value = value;
     this.setValue(value);
   }
@@ -26,12 +25,11 @@ export class AcEventSelectInput extends AcInputBase{
     this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ScriptFunctionChange,callback:()=>{
       this.setOptions();
     }});
-    console.log(this);
   }
 
   async setOptions(){
-    if(this.builderApi.scriptEditor && this.builderApi.page.scriptClassName){
-      const functions = await this.builderApi.scriptEditor.helper.getFunctionsInClass({className:this.builderApi.page.scriptClassName});
+    if(this.builderApi.scriptEditor && this.builderApi.page.className){
+      const functions = await this.builderApi.scriptEditor.helper.getFunctionsInClass({className:this.builderApi.page.className});
       this.selectInput.selectOptions = functions;
     }
   }

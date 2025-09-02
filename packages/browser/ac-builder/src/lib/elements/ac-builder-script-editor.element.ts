@@ -13,7 +13,7 @@ export class AcBuilderScriptEditor {
   editor!: monaco.editor.IStandaloneCodeEditor;
   element: HTMLElement = document.createElement('div');
   events: AcEvents = new AcEvents();
-  helper:AcTypescriptEditorHelper;
+  helper: AcTypescriptEditorHelper;
   private _title: string = 'Script Editor';
   get title(): string {
     return this._title;
@@ -59,7 +59,7 @@ export class AcBuilderScriptEditor {
       theme: 'vs-dark',
       automaticLayout: true, // auto-resize with window
     });
-    this.helper = new AcTypescriptEditorHelper({scriptEditor:this});
+    this.helper = new AcTypescriptEditorHelper({ scriptEditor: this });
     const closeButton = this.element.querySelector(".btn-close-action") as HTMLElement;
     closeButton.addEventListener('click', () => {
       this.events.execute({ 'event': 'close' });
@@ -67,14 +67,14 @@ export class AcBuilderScriptEditor {
   }
 
   async addCodeInsideClass({ className, code }: { className: string, code: string }) {
-    await this.helper.addCodeInsideClass({className,code});
+    await this.helper.addCodeInsideClass({ className, code });
   }
 
-  async gotoFunction({className,functionName}:{className: string, functionName: string}) {
-    await this.helper.gotoFunction({className,functionName});
+  async gotoFunction({ className, functionName }: { className: string, functionName: string }) {
+    await this.helper.gotoFunction({ className, functionName });
   }
 
-  async formatCode(){
+  async formatCode() {
     await this.helper.formatCode();
   }
 
@@ -86,7 +86,29 @@ export class AcBuilderScriptEditor {
     return this.events.subscribe({ event, callback });
   }
 
+  registerType({ type }: { type: any }) {
+    this.helper.registerTypeToEditor({ type });
+  }
+
+  async renamePropertyInClass({
+    className,
+    oldName,
+    newName,
+    autoFormat = true
+  }: { className: string; oldName: string; newName: string; autoFormat?: boolean }): Promise<void> {
+    await this.helper.renameFunctionInClass({ className, oldName, newName, autoFormat });
+  }
+
+  async renameFunctionInClass({
+    className,
+    oldName,
+    newName,
+    autoFormat = true
+  }: { className: string; oldName: string; newName: string; autoFormat?: boolean }): Promise<void> {
+    await this.helper.renameFunctionInClass({ className, oldName, newName, autoFormat });
+  }
+
   async setCode({ code }: { code: string }) {
-    await this.helper.setCode({code});
+    await this.helper.setCode({ code });
   }
 }

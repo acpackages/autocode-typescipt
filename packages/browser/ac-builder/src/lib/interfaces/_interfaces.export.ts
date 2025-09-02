@@ -1,51 +1,11 @@
-// import { ElementPropertyType, ElementType } from "./enums";
-
-// export interface SimpleBuilderElementBlueprint {
-//   component?:any;
-//   componentProperties?:any;
-//   renderComponent?:any;
-//   renderComponentProperties?:any;
-//   elementName: string;
-//   elementLabel: string;
-//   elementProperties?: SimpleBuilderElementPropertyBlueprint[];
-//   elementEvents?:SimpleEventPropertyBlueprint[];
-//   elementType:ElementType;
-//   elementIconCssClass?:string;
-//   elementIconSvg?:any;
-// }
-
-// export interface SimpleBuilderElementPropertyBlueprint{
-//   propertyName:string;
-//   propertyLabel:string;
-//   propertyInputComponent?:any;
-//   propertyInputComponentProperties?:any;
-//   propertyType:ElementPropertyType;
-//   propertyIconCssClass?:string;
-//   propertyIconSvg?:string
-// }
-
-// export class SimpleBuilderContext{
-//   builder:any;
-//   elementBlueprints:SimpleBuilderElementBlueprint[] = [];
-//   elements:SimpleBuilderElement[];
-// }
-
-// export interface SimpleBuilderElement{
-//   elementName: string;
-//   elementId: string;
-//   elementLabel:string;
-//   elementProperties:SimpleBuilderElementProperty[];
-// }
-
-// export interface SimpleBuilderElementProperty{
-//   properyId:string;
-//   properyName:string;
-//   propertyValue?:any;
-//   propertyBlueprint?:SimpleBuilderElementPropertyBlueprint;
-// }
-
-// export interface SimpleEventPropertyBlueprint{
-//   event:string;
-//   callback:string;
-//   eventInputComponent?:any;
-// }
+export * from './callback-args/_callback-args.export';
+export * from './event-args/_event-args.export';
+export * from './hook-args/_hook-args.export';
+export * from './ac-builder-element-event.interface';
+export * from './ac-builder-element-property.interface';
+export * from './ac-builder-element.interface';
+export * from './ac-builder-state.interface';
+export * from './ac-page-element-event-function.interface';
+export * from './ac-page-element-property-value.interface';
+export * from './ac-page-element.interface';
+export * from './ac-page.interface';

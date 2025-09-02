@@ -1,3 +1,6 @@
+import { AcEvents } from "@autocode-ts/autocode";
+import { AcEnumDrawerEvent } from "../enums/ac-enum-drawer-event.enum";
+
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 type AcDrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
 
@@ -13,6 +16,7 @@ export class AcDrawer {
   private options: Required<AcDrawerOptions>;
   private backdropEl?: HTMLDivElement;
   private isOpen = false;
+  events:AcEvents = new AcEvents();
 
   constructor(element: HTMLElement, options?: AcDrawerOptions) {
     this.element = element;
@@ -81,6 +85,10 @@ export class AcDrawer {
     }
   }
 
+  on({event,callback}:{event:string,callback:Function}):string{
+    return this.events.subscribe({event,callback});
+  }
+
   open() {
     if (this.isOpen) return;
     this.isOpen = true;
@@ -95,6 +103,8 @@ export class AcDrawer {
     requestAnimationFrame(() => {
       this.element.style.transform = 'translate(0,0)';
     });
+    this.events.execute({event:AcEnumDrawerEvent.Open});
+    this.events.execute({event:AcEnumDrawerEvent.Toggle});
   }
 
   close() {
@@ -118,6 +128,8 @@ export class AcDrawer {
         }
       }, this.options.animationDuration);
     }
+    this.events.execute({event:AcEnumDrawerEvent.Close});
+    this.events.execute({event:AcEnumDrawerEvent.Toggle});
   }
 
   toggle() {

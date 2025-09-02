@@ -4,7 +4,8 @@ import { AcBuilderCssClassName } from "../consts/ac-builder-css-class-name.const
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
-import { AcElementPropertyInput } from "./ac-element-property-input.element";
+import { AcElementPropertyInput } from "./inputs/ac-element-property-input.element";
+import { AcBuilderElementsManager } from "../core/ac-builder-elements-manager";
 
 export class AcBuilderPropertiesPanel {
   builderApi: AcBuilderApi;
@@ -13,13 +14,14 @@ export class AcBuilderPropertiesPanel {
   inputsContainer: HTMLElement;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    this.element.innerHTML = `<div class="ac-builder-properties-tab-container ">
+    acAddClassToElement({element:this.element,cssClass:"ac-builder-properties-tab-container"});
+    this.element.innerHTML = `
       <div class="p-2">
         <input type="text" class="${AcBuilderCssClassName.acBuilderSidebarInput} ac-properties-filter-input" placeholder="Search..." ac-filter-input>
       </div>
       <div class="ac-builder-properties-panel ac-builder-scrollable-element" >
       </div>
-    </div>`;
+    `;
     this.inputsContainer = this.element.querySelector('.ac-builder-properties-panel') as HTMLElement;
     this.builderApi.hooks.subscribe({
       hook: AcEnumBuilderHook.ElementSelect, callback: (args: any) => {
@@ -72,7 +74,7 @@ export class AcBuilderPropertiesPanel {
     this.elementProperties = [];
     if (this.builderApi.selectedElement) {
       const elementName = this.builderApi.selectedElement.name;
-      const element = this.builderApi.elements[elementName];
+      const element = AcBuilderElementsManager.getElement({name:elementName});
       if (element && element.properties) {
         this.elementProperties = element.properties;
       }
