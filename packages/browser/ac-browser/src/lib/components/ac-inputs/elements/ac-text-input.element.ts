@@ -68,6 +68,6 @@ export class AcTextInput extends AcInput{
       this.type = AcEnumInputType.Text;
     }
     super.init();
-    acAddClassToElement({cssClass:AcInputCssClassName.acTextInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acTextInput,element:this.element});
   }
 }

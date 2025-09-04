@@ -56,20 +56,20 @@ export class AcTabs {
     const oldPane = oldTab ? this.getPaneForTab({ tab: oldTab }) : null;
     this.events.execute({ event: AcTabsEvent.TabBeforeShow, args: { from: oldIndex, to: index, oldTab, newTab, oldPane, newPane } });
     if (oldTab) {
-      acRemoveClassFromElement({ element: oldTab, cssClass: AcTabsCssClassName.acTabActive });
+      acRemoveClassFromElement({ element: oldTab, class_: AcTabsCssClassName.acTabActive });
       oldTab.setAttribute('aria-selected', 'false');
       oldTab.setAttribute('tabindex', '-1');
     }
     if (oldPane) {
-      acRemoveClassFromElement({ element: oldTab, cssClass: AcTabsCssClassName.acTabPaneActive });
+      acRemoveClassFromElement({ element: oldTab, class_: AcTabsCssClassName.acTabPaneActive });
       this.hidePane({ pane: oldPane });
     }
-    acAddClassToElement({ element: newTab, cssClass: AcTabsCssClassName.acTabActive });
+    acAddClassToElement({ element: newTab, class_: AcTabsCssClassName.acTabActive });
     newTab.setAttribute('aria-selected', 'true');
     newTab.setAttribute('tabindex', '0');
     if (!options.skipFocus) newTab.focus();
     if (newPane){
-      acAddClassToElement({ element: newPane, cssClass: AcTabsCssClassName.acTabPaneActive });
+      acAddClassToElement({ element: newPane, class_: AcTabsCssClassName.acTabPaneActive });
       this.showPane({ pane: newPane });
     }
     this.currentIndex = index;

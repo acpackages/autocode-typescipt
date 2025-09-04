@@ -23,7 +23,7 @@ export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
 
   initElement(){
     this.editButton.setAttribute('type','button');
-    acAddClassToElement({'cssClass':'btn btn-primary btn-sm',element:this.editButton});
+    acAddClassToElement({'class_':'btn btn-primary btn-sm',element:this.editButton});
     this.element.append(this.editButton);
     this.editButton.innerHTML = `<i class="fa fa-pencil"></i>`;
     this.editButton.addEventListener('click',()=>{
@@ -31,7 +31,7 @@ export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
     })
 
     this.deleteButton.setAttribute('type','button');
-    acAddClassToElement({'cssClass':'btn btn-danger btn-sm',element:this.deleteButton});
+    acAddClassToElement({'class_':'btn btn-danger btn-sm',element:this.deleteButton});
     this.element.append(this.deleteButton);
     this.deleteButton.innerHTML = `<i class="fa fa-trash"></i>`;
     this.deleteButton.addEventListener('click',()=>{

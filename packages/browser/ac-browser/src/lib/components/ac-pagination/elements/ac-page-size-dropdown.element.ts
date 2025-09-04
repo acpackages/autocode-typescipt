@@ -15,10 +15,10 @@ export class AcPageSizeDropdown {
 
   initElement() {
     this.element.innerHTML = '';
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPaginationPageSizeSelect,element:this.selectInput});
-    acAddClassToElement({ cssClass: AcPaginationCssClassName.acPaginationSizeDropdown, element: this.element });
+    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageSizeSelect,element:this.selectInput});
+    acAddClassToElement({ class_: AcPaginationCssClassName.acPaginationSizeDropdown, element: this.element });
     const pageSizeContainer: HTMLElement = document.createElement('div');
-    acAddClassToElement({ cssClass: AcPaginationCssClassName.acPaginationSizeContainer, element: pageSizeContainer });
+    acAddClassToElement({ class_: AcPaginationCssClassName.acPaginationSizeContainer, element: pageSizeContainer });
     this.setSelectDropdownValues();
     pageSizeContainer.append('Page Size:');
     pageSizeContainer.append(this.selectInput);

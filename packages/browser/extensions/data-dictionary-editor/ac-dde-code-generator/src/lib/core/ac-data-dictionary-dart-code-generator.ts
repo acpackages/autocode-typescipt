@@ -47,12 +47,12 @@ export class AcDataDictionaryDartCodeGenerator {
   }
 
   getDataDictionaryString() {
-    let result: string = ``;
+    let result: string = `import 'package:ac_data_dictionary/ac_data_dictionary.dart';\n`;
     result += `${this.getDDKeysString()}\n\n`;
-    result += `static final Map<String,Map<String,dynamic>> ${AcDDECodeGeneratorDefaultConfig.dataDictionaryConstName} = {\n`;
+    result += `const Map<String,dynamic> ${AcDDECodeGeneratorDefaultConfig.dataDictionaryConstName} = {\n`;
     this.tabsCount++;
 
-    result += `${this.tabs}AcDataDictionary.keyName : ${this.dataDictionaryJson[AcDataDictionary.KeyName]},\n`;
+    result += `${this.tabs}AcDataDictionary.keyName : "${this.dataDictionaryJson[AcDataDictionary.KeyName]}",\n`;
     result += `${this.tabs}AcDataDictionary.keyVersion : ${this.dataDictionaryJson[AcDataDictionary.KeyVersion]},\n`;
     result += `${this.tabs}AcDataDictionary.keyTables : {\n`;
     const tableStrings: string[] = [];
@@ -61,7 +61,7 @@ export class AcDataDictionaryDartCodeGenerator {
         tableStrings.push(this.getDDTableString({ tableDetails: tableDetails }));
       }
     }
-    result += tableStrings.join(`\n`) + `\n`;
+    result += tableStrings.join(`,\n`) + `\n`;
     result += this.tabs + `},\n`;
 
     result += `${this.tabs}AcDataDictionary.keyViews : {\n`;
@@ -112,8 +112,9 @@ export class AcDataDictionaryDartCodeGenerator {
       }
     }
     result += functionStrings.join(`\n`) + `\n`;
+    result += this.tabs + `}\n`;
+    this.tabsCount--;
     result += this.tabs + `};\n`;
-    result += `}`;
     return result;
   }
 
@@ -125,7 +126,8 @@ export class AcDataDictionaryDartCodeGenerator {
       const properties = columnDetails[AcDDTableColumn.KeyColumnProperties];
       for (const key of Object.keys(properties)) {
         const value = properties[key][AcDDTableColumnProperty.KeyPropertyValue];
-        let propertyKey = stringToCamelCase(key.replaceAll('_',' '));
+        let propertyKey = stringToCamelCase(key);
+        console.log(`${key} => ${propertyKey}`);
         let propertyValue = `${value}`;
         let validProperty:boolean = false;
         if(boolColumnProperties.includes(key) && value == true){
@@ -182,7 +184,7 @@ export class AcDataDictionaryDartCodeGenerator {
         result = `AcEnumDDColumnType.datetime`;
         break;
       case AcEnumDDColumnType.Double:
-        result = `AcEnumDDColumnType.double`;
+        result = `AcEnumDDColumnType.double_`;
         break;
       case AcEnumDDColumnType.Encrypted:
         result = `AcEnumDDColumnType.encrypted`;
@@ -208,9 +210,6 @@ export class AcDataDictionaryDartCodeGenerator {
       case AcEnumDDColumnType.Timestamp:
         result = `AcEnumDDColumnType.timestamp`;
         break;
-      case AcEnumDDColumnType.UserDefinedFunction:
-        result = `AcEnumDDColumnType.userDefinedFunction`;
-        break;
       case AcEnumDDColumnType.Uuid:
         result = `AcEnumDDColumnType.uuid`;
         break;
@@ -231,13 +230,13 @@ export class AcDataDictionaryDartCodeGenerator {
         for (const tableDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyTables] as any[])) {
           const tableName = tableDetails[AcDDTable.KeyTableName];
           this.tabsCount++;
-          tableKeys.push(`${this.tabs}static const ${stringToCamelCase(tableName)} = "${tableName}";`);
+          tableKeys.push(`${this.tabs}static const String ${stringToCamelCase(tableName)} = "${tableName}";`);
           this.tabsCount--;
 
           const columnKeys:string[] = [];
           this.tabsCount++;
           for (const columnName of Object.keys(tableDetails[AcDDTable.KeyTableColumns])) {
-            columnKeys.push(`${this.tabs}static const ${stringToCamelCase(columnName)} = "${columnName}";`);
+            columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(columnName)} = "${columnName}";`);
           }
           this.tabsCount--;
 

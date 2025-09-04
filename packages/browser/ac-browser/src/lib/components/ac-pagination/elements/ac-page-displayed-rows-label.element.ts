@@ -12,7 +12,7 @@ export class AcPageDisplayedRowsLabel {
   }
 
   initElement(){
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPageDisplayedRowsLabel,element:this.element});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPageDisplayedRowsLabel,element:this.element});
     this.render();
   }
 

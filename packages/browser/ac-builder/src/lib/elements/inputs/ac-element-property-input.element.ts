@@ -17,7 +17,7 @@ export class AcElementPropertyInput {
     this.property = property;
     this.pageElement = pageElement;
     this.element.setAttribute(AcFilterableElementsAttributeName.acFilterValue, this.property.title);
-    acAddClassToElement({ element: this.element, cssClass: 'gjs-sm-property gjs-sm-color gjs-sm-property__color gjs-sm-property--full' })
+    acAddClassToElement({ element: this.element, class_: 'gjs-sm-property gjs-sm-color gjs-sm-property__color gjs-sm-property--full' })
     this.element.innerHTML = `
       <div class="gjs-sm-label">
       <span class="gjs-sm-icon ">

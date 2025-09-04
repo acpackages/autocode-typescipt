@@ -238,7 +238,7 @@ export class AcResizablePanels {
 
   private updatePanelSizes() {
     if (this.updateAllowed) {
-      const isHorizontal = this.direction === 'horizontal';
+      const isHorizontal = this.direction === AcEnumResizePanelDirection.Horizontal;
       const totalSize = this.panels.reduce((acc, panel) => {
         const rect = panel.element.getBoundingClientRect();
         return acc + (isHorizontal ? rect.width : rect.height);

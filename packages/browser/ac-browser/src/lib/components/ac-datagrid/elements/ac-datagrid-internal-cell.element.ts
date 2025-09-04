@@ -61,7 +61,7 @@ export class AcDatagridInternalCellElement {
   //   this.element.setAttribute(AcDatagridAttributeName.acDatagridInternalCellId, this.datagridInternalCell.acCellId);
   //   this.element.setAttribute(AcDatagridAttributeName.acDatagridInternalColumnId, this.datagridInternalColumn.acColumnId);
   //   this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCell, element: this.element });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCell, element: this.element });
   //   this.element.setAttribute('tabindex', "0");
   //   this.element.append(this.cellContainer);
   //   this.cellContainer.style.height = "100%";

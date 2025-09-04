@@ -147,39 +147,39 @@ export class AcDDETableEditor {
   }
 
   private initElement() {
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
     this.element.append(this.tablesWrapper);
     this.tablesWrapper.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETablesWrapper, element: this.tablesWrapper });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETablesWrapper, element: this.tablesWrapper });
 
     this.element.append(this.tableDetailsWrapper);
     this.tableDetailsWrapper.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETableDetailsWrapper, element: this.tableDetailsWrapper });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETableDetailsWrapper, element: this.tableDetailsWrapper });
 
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETableDetailsContainer, element: this.tableDetailsContainer });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETableDetailsContainer, element: this.tableDetailsContainer });
     this.tableDetailsContainer.setAttribute(AcResizableAttributeName.acResizablePanels, '');
 
 
     this.tablesWrapper.append(this.tablesContainer);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETablesContainer, element: this.tablesContainer });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETablesContainer, element: this.tablesContainer });
     this.tablesContainer.append(this.tablesDatagrid.element);
 
     this.tableDetailsWrapper.append(this.tableDetailsContainer);
     this.tableDetailsContainer.append(this.columnsContainer);
     this.columnsContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETableColumnsContainer, element: this.columnsContainer });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETableColumnsContainer, element: this.columnsContainer });
     this.columnsContainer.append(this.tableColumnsDatagrid.element);
 
     this.tableDetailsContainer.append(this.tableRelationshipsContainer);
     this.tableRelationshipsContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETableRelationshipsContainer, element: this.tableRelationshipsContainer });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETableRelationshipsContainer, element: this.tableRelationshipsContainer });
     this.tableRelationshipsContainer.append(this.tableRelationshipsDatagrid.element);
 
     this.tableDetailsContainer.append(this.tableTriggersContainer);
     this.tableTriggersContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDETableTriggersContainer, element: this.tableTriggersContainer });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDETableTriggersContainer, element: this.tableTriggersContainer });
     this.tableTriggersContainer.append(this.tableTriggersDatagrid.element);
 
     this.detailPanels = new AcResizablePanels({ element: this.tableDetailsContainer, direction: AcEnumResizePanelDirection.Vertical });

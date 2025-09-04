@@ -31,8 +31,8 @@ export class AcDatagridRowSelectionCell {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcDatagridRowSelectionCssClassName.acDatagridRowSelect, element: this.input });
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCell, element: this.element });
+    acAddClassToElement({ class_: AcDatagridRowSelectionCssClassName.acDatagridRowSelect, element: this.input });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCell, element: this.element });
     this.input.setAttribute('type','checkbox');
     this.element.append(this.input);
     this.registerListeners();

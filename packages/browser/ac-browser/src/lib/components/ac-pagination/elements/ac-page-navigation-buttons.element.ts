@@ -21,11 +21,11 @@ export class AcPageNavigationButtons {
   }
 
   initElement(){
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPaginationNavigationButtons,element:this.element});
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPaginationPageButton,element:this.firstButton});
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPaginationPageButton,element:this.lastButton});
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPaginationPageButton,element:this.previousButton});
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPaginationPageButton,element:this.nextButton});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationNavigationButtons,element:this.element});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.firstButton});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.lastButton});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.previousButton});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.nextButton});
     this.firstButton.innerHTML = AcPaginationHtmlPlaceholder.first;
     this.element.append(this.firstButton);
     this.previousButton.innerHTML = AcPaginationHtmlPlaceholder.previous;

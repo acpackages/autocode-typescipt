@@ -48,7 +48,7 @@ export class AcSelectInput extends AcInputBase {
 
   constructor() {
     super();
-    acAddClassToElement({ cssClass: AcInputCssClassName.acSelectInput, element: this.element });
+    acAddClassToElement({ class_: AcInputCssClassName.acSelectInput, element: this.element });
     this.element.style.position = "relative";
 
     // Input

@@ -36,8 +36,8 @@ export class AcRepeater{
   }
 
   private initElement(){
-    acAddClassToElement({cssClass:AcRepeaterCssClassName.acRepeater,element:this.element});
-    acAddClassToElement({cssClass:AcRepeaterCssClassName.acRepeaterContainer,element:this.containerElement});
+    acAddClassToElement({class_:AcRepeaterCssClassName.acRepeater,element:this.element});
+    acAddClassToElement({class_:AcRepeaterCssClassName.acRepeaterContainer,element:this.containerElement});
     this.element.append(this.containerElement);
     this.containerElement.append(this.repeaterHeader.element);
     this.containerElement.append(this.repeaterBody.element);

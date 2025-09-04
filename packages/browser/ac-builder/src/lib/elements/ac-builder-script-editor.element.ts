@@ -26,7 +26,7 @@ export class AcBuilderScriptEditor {
 
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    acAddClassToElement({ element: this.element, cssClass: 'ac-builder-script-editor' });
+    acAddClassToElement({ element: this.element, class_: 'ac-builder-script-editor' });
     this.element.innerHTML = `<div class="ac-builder-script-editor-header">
       <div class="ac-builder-script-editor-header-title">
         <div class="ac-script-editor-title"></div>

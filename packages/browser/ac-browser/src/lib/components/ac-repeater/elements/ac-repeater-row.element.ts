@@ -34,14 +34,14 @@ export class AcRepeaterRowElement {
 
   initElement() {
     this.element.setAttribute(AcRepeaterAttributeName.acRepeaterRowId, this.repeaterRow.acRowId);
-    acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterRowWrapper, element: this.rowWrapper });
+    acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRowWrapper, element: this.rowWrapper });
     this.rowWrapper.appendChild(this.element);
-    acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterRow, element: this.element });
+    acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRow, element: this.element });
     if (this.repeaterRow.index == 0 || this.repeaterRow.index % 2 == 0) {
-      acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterRowEven, element: this.element });
+      acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRowEven, element: this.element });
     }
     else {
-      acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterRowOdd, element: this.element });
+      acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRowOdd, element: this.element });
     }
     this.registerListeners();
     this.render();

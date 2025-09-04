@@ -32,13 +32,13 @@ export class AcInputBase {
   }
 
   protected _cssClass: string = '';
-  get cssClass(): string {
+  get class_(): string {
     return this._cssClass;
   }
-  set cssClass(value: string) {
-    acRemoveClassFromElement({ cssClass: this._cssClass, element: this.element });
+  set class_(value: string) {
+    acRemoveClassFromElement({ class_: this._cssClass, element: this.element });
     this._cssClass = value;
-    acAddClassToElement({ cssClass: value, element: this.element });
+    acAddClassToElement({ class_: value, element: this.element });
   }
 
   protected _disabled: boolean = false;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcSelectInput } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcSelectInput, AcTooltip } from "@autocode-ts/ac-browser";
 import { AcDDESelectDataDictionaryInput } from "../inputs/ac-dde-select-data-dictionary-input.element";
 import { AcEnumDDETab } from "../../enums/ac-enum-dde-tab.enum";
 import { AcDDEApi } from "../../core/ac-dde-api";
@@ -38,34 +38,35 @@ export class AcDataDictionaryEditorHeader {
   }
 
   private addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }): void {
-
-    const menuGroupElement: HTMLElement = document.createElement('li');
-    acAddClassToElement({ cssClass: 'nav-item dropdown', element: menuGroupElement });
+    const menuGroupElement: HTMLElement = document.createElement('span');
+    acAddClassToElement({ class_: 'dropdown', element: menuGroupElement });
 
     const menuButton: HTMLElement = document.createElement('button');
     menuGroupElement.append(menuButton);
-    acAddClassToElement({ cssClass: 'btn btn-default dropdown-toggle me-1', element: menuButton });
+    acAddClassToElement({ class_: 'btn btn-action btn-undodropdown-toggle me-1', element: menuButton });
     menuButton.setAttribute('type', 'button');
     menuButton.setAttribute('role', 'button');
     menuButton.setAttribute('data-bs-toggle', 'dropdown');
     menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.innerHTML = menuGroup.label;
+    menuButton.innerHTML = `<i class="${menuGroup.iconClass} text-secondary"></i>`;
+    menuButton.setAttribute('ac-tooltip',menuGroup.label);
+    new AcTooltip({element:menuButton});
 
     const dropdownItems: HTMLElement = document.createElement('ul');
     menuGroupElement.append(dropdownItems);
-    acAddClassToElement({ cssClass: 'dropdown-menu', element: dropdownItems });
+    acAddClassToElement({ class_: 'dropdown-menu', element: dropdownItems });
 
     for(const menuItem of menuGroup.menuItems){
       dropdownItems.append(this.getMenuItemElement({menuItem:menuItem}));
     }
-    this.element.querySelector('.menu-groups')?.append(menuGroupElement);
+    this.element.querySelector('.ac-dde-menus')?.append(menuGroupElement);
   }
 
   private getMenuItemElement({ menuItem }: { menuItem: IAcDDEMenuItem }): HTMLElement {
     const menuItemElement: HTMLElement = document.createElement('li');
     menuItemElement.style.cursor = 'pointer';
-    acAddClassToElement({ cssClass: 'dropdown-item', element: menuItemElement });
-    menuItemElement.innerHTML = menuItem.label;
+    acAddClassToElement({ class_: 'dropdown-item px-2', element: menuItemElement });
+    menuItemElement.innerHTML = `<i class="${menuItem.iconClass}"></i> ${menuItem.label}`;
     menuItemElement.addEventListener('click', () => {
       menuItem.callback();
     });
@@ -76,109 +77,97 @@ export class AcDataDictionaryEditorHeader {
     this.element.appendChild(this.selectDataDictionaryInput.element);
     this.selectDataDictionaryInput.element.style.minWidth = '150px';
     this.selectDataDictionaryInput.element.style.background = 'transparent';
-    acAddClassToElement({ cssClass: 'form-select', element: this.selectDataDictionaryInput.element });
+    acAddClassToElement({ class_: 'form-select', element: this.selectDataDictionaryInput.element });
     this.element.append(this.dropdown);
-    this.element.innerHTML = `<nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav menu-groups">
-            <li class="nav-item dropdown">
-              <button type="button" class="btn btn-primary dropdown-toggle me-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    this.element.innerHTML = `
+    <div class="ac-dde-topbar">
+          <div class="ac-dde-topbar-left ac-dde-menus">
+          <span class="dropdown">
+              <button type="button" class="btn dropdown-toggle me-1 text-black" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span ac-dde-data="active_data_dictionary_name">(No Data Dictionary Selected)</span>
               </button>
               <ul class="dropdown-menu data-dictionary-select-items">
               </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <button type="button" class="btn btn-secondary dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span ac-dde-data="active_tab_name"></span>
-              </button>
-              <ul class="dropdown-menu tab-menu-items">
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <ul class="navbar-nav">
-        </ul>
-      </div>
-    </nav>`;
+            </span>
+          </div>
+          <div class=""></div>
+          <div class="ac-dde-topbar-center">
+            <div class="btn-group btn-action-grp btn-tabs-group" role="group"></div>
+          </div>
+          <div class="ac-dde-topbar-right">
+            <div class="ac-dde-topbar-right-container me-2">
+            </div>
+          </div>
+        </div>`;
     this.element.querySelector('.data-dictionary-select-input-container')?.append(this.selectDataDictionaryInput.element);
     const tabs: any = [
       {
-        label: 'Table Editor',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.TableEditor });
-        }
-      },
-      {
         label: 'Tables',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.Tables });
-        }
+        icon:'aci-table',
+        tab: AcEnumDDETab.TableEditor
       },
       {
         label: 'Table Columns',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.TableColumns });
-        }
+        icon:'aci-table-column',
+        tab: AcEnumDDETab.TableColumns
       },
       {
         label: 'Views',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.Views });
-        }
+        icon:'aci-union',
+        tab: AcEnumDDETab.Views
       },
       {
         label: 'View Columns',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.ViewColumns });
-        }
+        icon:'aci-table-union',
+        tab: AcEnumDDETab.ViewColumns
       },
       {
         label: 'Triggers',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.Triggers });
-        }
+        icon:'aci-table-action',
+        tab: AcEnumDDETab.Triggers
       },
       {
         label: 'Relationships',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.Relationships });
-        }
+        icon:'aci-connected-boxes',
+        tab: AcEnumDDETab.Relationships
       },
       {
         label: 'Stored Procedures',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.StoredProcedures });
-        }
+        icon:'aci-code',
+        tab: AcEnumDDETab.StoredProcedures
       },
       {
         label: 'Functions',
-        callback: () => {
-          this.setActiveTab({ tab: AcEnumDDETab.Functions });
-        }
+        icon:'aci-function',
+        tab: AcEnumDDETab.Functions
       },
     ];
     for (const tabMenu of tabs) {
-      const menuItem: HTMLElement = document.createElement('li');
-      menuItem.style.cursor = 'pointer';
-      acAddClassToElement({ cssClass: 'dropdown-item', element: menuItem });
-      menuItem.innerHTML = tabMenu.label;
-      menuItem.addEventListener('click', () => {
-        tabMenu.callback();
+      const btn: HTMLElement = document.createElement('button');
+      btn.setAttribute('type','button');
+      btn.style.width = 'max-content';
+      btn.setAttribute('ac-tooltip',tabMenu.label);
+      btn.setAttribute('ac-data-tab',tabMenu.tab);
+      acAddClassToElement({ class_: 'btn btn-action btn-device btn-table px-2', element: btn });
+      btn.innerHTML = `<i class="${tabMenu.icon} text-secondary"></i><span class="text-black tab-label d-none">${tabMenu.label.replaceAll(" ","&nbsp;")}</span>`;
+      btn.addEventListener('click', () => {
+        this.setActiveTab({tab:tabMenu.tab});
       });
-      this.element.querySelector('.tab-menu-items')?.append(menuItem);
+      this.element.querySelector('.btn-tabs-group')?.append(btn);
+      new AcTooltip({element:btn});
     }
     this.setActiveTab({tab:AcEnumDDETab.TableEditor});
   }
 
   private setDataDictionaryDropdown(){
+    this.element.querySelector('.data-dictionary-select-items')!.innerHTML = "";
     const createMenuItem:Function = (row:IAcDDEDataDictionary)=>{
       const menuItem:HTMLElement = document.createElement('li');
       menuItem.style.cursor = 'pointer';
-      acAddClassToElement({ cssClass: 'dropdown-item', element: menuItem });
+      acAddClassToElement({ class_: 'dropdown-item', element: menuItem });
       menuItem.innerHTML = row.dataDictionaryName!;
       menuItem.addEventListener('click', () => {
+        this.editorApi.activeDataDictionary = row;
       // menuItem.callback();
       });
       return menuItem;
@@ -192,37 +181,22 @@ export class AcDataDictionaryEditorHeader {
   }
 
   setActiveTab({ tab }: { tab: AcEnumDDETab }) {
-    let label:string = '(No Tab)';
-    switch(tab){
-      case AcEnumDDETab.TableEditor:
-        label = 'Table Editor';
-        break;
-      case AcEnumDDETab.Functions:
-        label = 'Functions';
-        break;
-      case AcEnumDDETab.Relationships:
-        label = 'Relationships';
-        break;
-      case AcEnumDDETab.StoredProcedures:
-        label = 'Stored Procedures';
-        break;
-      case AcEnumDDETab.TableColumns:
-        label = 'Table Columns';
-        break;
-      case AcEnumDDETab.Tables:
-        label = 'Tables';
-        break;
-      case AcEnumDDETab.Triggers:
-        label = 'Triggers';
-        break;
-      case AcEnumDDETab.ViewColumns:
-        label = 'View Columns';
-        break;
-      case AcEnumDDETab.Views:
-        label = 'Views';
-        break;
+    const btns = this.element.querySelectorAll(`[ac-data-tab]`)
+    for(const btn of Array.from(btns)){
+      const icon = btn.querySelector('i') as HTMLElement;
+      const label = btn.querySelector('span') as HTMLElement;
+      icon.classList.remove('text-white');
+      icon.classList.add('text-secondary');
+      label.classList.add('d-none');
+      btn.classList.remove('btn-dark');
     }
-    this.element.querySelector('[ac-dde-data=active_tab_name]')!.innerHTML = label;
+    const activeBtn = this.element.querySelector(`[ac-data-tab=${tab}]`) as HTMLElement;
+    activeBtn.classList.add('btn-dark');
+    const icon = activeBtn.querySelector('i') as HTMLElement;
+    const label = activeBtn.querySelector('span') as HTMLElement;
+    icon.classList.remove('text-secondary');
+    // label.classList.remove('d-none');
+    icon.classList.add('text-white');
     this.editorApi.activeEditorTab = tab;
   }
 }

@@ -13,7 +13,7 @@ export class AcBuilderEventsPanel {
   inputsContainer: HTMLElement;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    acAddClassToElement({element:this.element,cssClass:"ac-builder-events-tab-container"});
+    acAddClassToElement({element:this.element,class_:"ac-builder-events-tab-container"});
     this.element.innerHTML = `
         <div class="p-2">
           <input type="text" class="${AcBuilderCssClassName.acBuilderSidebarInput} ac-events-filter-input" placeholder="Search..." ac-filter-input>
@@ -36,7 +36,7 @@ export class AcBuilderEventsPanel {
       categoryContainer = document.createElement('div');
       categoryContainer.setAttribute(AcFilterableElementsAttributeName.acFilterElementGroup, 'true');
       categoryContainer.setAttribute('ac-data-category', categoryAttributeValue);
-      acAddClassToElement({ element: categoryContainer, cssClass: 'gjs-block-category gjs-open' });
+      acAddClassToElement({ element: categoryContainer, class_: 'gjs-block-category gjs-open' });
       categoryContainer.innerHTML = `<div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
           <i class="gjs-caret-icon fa fa-caret-down"></i> ${categoryName}
         </div>

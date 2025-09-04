@@ -34,6 +34,7 @@ export class AcDDEDatagrid {
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     this.element = this.datagrid.element;
+    this.element.classList.add("ac-dde-datagrid")
 
     this.afterRowsExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.AfterRowsFooter }) as AcDatagridAfterRowsFooterExtension;
     this.autoAddNewRowExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.AutoAddNewRow }) as AcDatagridAutoAddNewRowExtension;

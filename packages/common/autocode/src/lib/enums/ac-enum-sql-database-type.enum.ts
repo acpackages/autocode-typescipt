@@ -3,7 +3,7 @@ export enum AcEnumSqlDatabaseType {
   MsSql = "MSSQL",
   MySql = "MYSQL",
   Oracle = "ORACLE",
-  PostgreSql = "POSTGRESQL",
+  PostgreSql = "POSTGRE_SQL",
   Sqlite = "SQLITE",
   Unknown = "UNKNOWN",
 }

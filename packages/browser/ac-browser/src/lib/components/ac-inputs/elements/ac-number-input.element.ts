@@ -55,7 +55,7 @@ export class AcNumberInput extends AcInput{
     if(this.type == ''){
       this.type = AcEnumInputType.Number;
     }
-    acAddClassToElement({cssClass:AcInputCssClassName.acNumberInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acNumberInput,element:this.element});
   }
 
 }

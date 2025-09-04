@@ -198,12 +198,12 @@ export class AcBuilder {
         const btnElement = el as HTMLElement;
         const iElement = btnElement.querySelector('i') as HTMLElement;
         console.log(btnElement, device);
-        acAddClassToElement({ cssClass: 'text-secondary', element: iElement });
-        acRemoveClassFromElement({ cssClass: 'text-white', element: iElement });
+        acAddClassToElement({ class_: 'text-secondary', element: iElement });
+        acRemoveClassFromElement({ class_: 'text-white', element: iElement });
       }
       const iElement = (this.element.querySelector(`.btn-${device}`) as HTMLElement).querySelector('i') as HTMLElement;
-      acAddClassToElement({ cssClass: 'text-white', element: iElement });
-      acRemoveClassFromElement({ cssClass: 'text-secondary', element: iElement });
+      acAddClassToElement({ class_: 'text-white', element: iElement });
+      acRemoveClassFromElement({ class_: 'text-secondary', element: iElement });
       this.grapesJSApi.setDevice(device);
 
     };

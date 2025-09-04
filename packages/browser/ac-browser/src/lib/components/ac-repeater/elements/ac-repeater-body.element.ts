@@ -40,8 +40,8 @@ export class AcRepeaterBodyElement {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterBody, element: this.element });
-    acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterRowsContainer, element: this.rowsContainer });
+    acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterBody, element: this.element });
+    acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRowsContainer, element: this.rowsContainer });
     this.element.append(this.rowsContainer);
     // this.floatingScrollbar = new AcFloatingScrollbar({element:this.element,parentElement:this.repeaterApi.repeater.containerElement});
     this.registerListeners();

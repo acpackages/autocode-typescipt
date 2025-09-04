@@ -9,9 +9,11 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
   override init(): void {
     const menuGroup:IAcDDEMenuGroup = {
       label:'Code Generator',
+      iconClass:'aci-code-tag',
       menuItems:[
         {
           label:'Dart Data Dictionary',
+          iconClass:'aci-dart-lang',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
@@ -22,6 +24,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
         },
         {
           label:'Typescript Data Dictionary',
+          iconClass:'aci-typescript',
           callback:()=>{
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryTypescriptCodeGenerator = new AcDataDictionaryTypescriptCodeGenerator();

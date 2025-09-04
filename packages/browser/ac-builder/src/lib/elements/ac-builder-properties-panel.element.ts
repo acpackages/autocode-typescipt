@@ -14,7 +14,7 @@ export class AcBuilderPropertiesPanel {
   inputsContainer: HTMLElement;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    acAddClassToElement({element:this.element,cssClass:"ac-builder-properties-tab-container"});
+    acAddClassToElement({element:this.element,class_:"ac-builder-properties-tab-container"});
     this.element.innerHTML = `
       <div class="p-2">
         <input type="text" class="${AcBuilderCssClassName.acBuilderSidebarInput} ac-properties-filter-input" placeholder="Search..." ac-filter-input>
@@ -37,7 +37,7 @@ export class AcBuilderPropertiesPanel {
       categoryContainer = document.createElement('div');
       categoryContainer.setAttribute(AcFilterableElementsAttributeName.acFilterElementGroup, 'true');
       categoryContainer.setAttribute('ac-data-category', categoryName);
-      acAddClassToElement({ element: categoryContainer, cssClass: 'gjs-block-category gjs-open' });
+      acAddClassToElement({ element: categoryContainer, class_: 'gjs-block-category gjs-open' });
       categoryContainer.innerHTML = `<div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
         <i class="gjs-caret-icon fa fa-caret-down"></i> ${categoryName}
       </div>

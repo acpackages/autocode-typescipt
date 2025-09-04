@@ -29,7 +29,7 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRendererEle
     this.element.setAttribute(AcDatagridAttributeName.acDatagridCellId,this.datagridCell.acCellId);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId,this.datagridCell.datagridColumn.acColumnId);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId,this.datagridCell.datagridRow.acRowId);
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellRenderer, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellRenderer, element: this.element });
     this.element.style.height = "100%";
     this.element.style.width = "max-content";
     this.render();

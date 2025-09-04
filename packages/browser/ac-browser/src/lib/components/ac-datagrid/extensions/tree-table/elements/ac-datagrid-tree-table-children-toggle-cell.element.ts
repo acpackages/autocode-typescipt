@@ -36,7 +36,7 @@ export class AcDatagridTreeTableChildrenToggleCell {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTreeToggle, element: this.element });
+    acAddClassToElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTreeToggle, element: this.element });
     this.setCellWidth();
     this.render();
     this.setToggleVisibility();
@@ -49,13 +49,13 @@ export class AcDatagridTreeTableChildrenToggleCell {
   render() {
     if (this.datagridTree.isOpen) {
       this.element.innerHTML = AcDatagridTreeTableHtmlPlaceholder.treeOpen;
-      acAddClassToElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTreeToggleOpen, element: this.element });
-      acRemoveClassFromElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTreeToggleClose, element: this.element });
+      acAddClassToElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTreeToggleOpen, element: this.element });
+      acRemoveClassFromElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTreeToggleClose, element: this.element });
     }
     else {
       this.element.innerHTML = AcDatagridTreeTableHtmlPlaceholder.treeClosed;
-      acAddClassToElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTreeToggleClose, element: this.element });
-      acRemoveClassFromElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTreeToggleOpen, element: this.element });
+      acAddClassToElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTreeToggleClose, element: this.element });
+      acRemoveClassFromElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTreeToggleOpen, element: this.element });
     }
   }
 

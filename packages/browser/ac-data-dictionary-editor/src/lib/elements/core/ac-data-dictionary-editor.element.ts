@@ -60,16 +60,16 @@ export class AcDataDictionaryEditor {
   }
 
   private initElement() {
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
     this.element.append(this.header.element);
-    // acAddClassToElement({cssClass:AcDDECssClassName.acDDEHeader,element:this.header});
+    // acAddClassToElement({class_:AcDDECssClassName.acDDEHeader,element:this.header});
 
     this.element.append(this.bodyElement);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEBody, element: this.bodyElement });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEBody, element: this.bodyElement });
 
-    // acAddClassToElement({ cssClass: `tab-content`, element: this.tabsContainer });
+    // acAddClassToElement({ class_: `tab-content`, element: this.tabsContainer });
     // this.bodyElement.append(this.tabsContainer);
   }
 
@@ -96,7 +96,7 @@ export class AcDataDictionaryEditor {
         'aria-labelledby':`${tab}-tab`
       },element:tabElement});
 
-      acAddClassToElement({cssClass:`.ac-dde-tab-${tab} ac-dde-tab`,element:element});
+      acAddClassToElement({class_:`.ac-dde-tab-${tab} ac-dde-tab`,element:element});
       tabElement.appendChild(element);
       return element;
     }

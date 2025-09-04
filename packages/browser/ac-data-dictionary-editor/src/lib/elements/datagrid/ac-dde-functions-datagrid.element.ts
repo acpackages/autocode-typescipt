@@ -15,6 +15,7 @@ import { AcEnumDDEFunction } from "../../enums/ac-enum-dde-storage-keys.enum";
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDEFunctionsDatagrid {
   data: any[] = [];
@@ -29,6 +30,11 @@ export class AcDDEFunctionsDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.initDatagrid();
     this.initElement();
+    this.editorApi.hooks.subscribe({
+      hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+        this.setFunctionsData();
+      }
+    });
   }
 
   applyFilter() {
@@ -52,13 +58,13 @@ export class AcDDEFunctionsDatagrid {
         'field': AcDDFunction.KeyFunctionName, 'title': 'Function Name',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcDDFunction.KeyFunctionCode, 'title': 'Function Code',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
@@ -123,7 +129,7 @@ export class AcDDEFunctionsDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setFunctionsData() {

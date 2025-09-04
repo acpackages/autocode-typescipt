@@ -17,6 +17,7 @@ import { IAcDDETableColumn } from "../../interfaces/ac-dde-table-column.inteface
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDERelationshipsDatagrid {
   data: any[] = [];
@@ -31,6 +32,11 @@ export class AcDDERelationshipsDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.initDatagrid();
     this.initElement();
+    this.editorApi.hooks.subscribe({
+      hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+        this.setRelationshipsData();
+      }
+    });
   }
 
   applyFilter() {
@@ -54,37 +60,37 @@ export class AcDDERelationshipsDatagrid {
         'field': AcEnumDDERelationship.DestinationTableId, 'title': 'Foreign Key Table',
         cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcEnumDDERelationship.DestinationColumnId, 'title': 'Foreign Key Column',
         cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcEnumDDERelationship.SourceTableId, 'title': 'Primary Key Table',
         cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcEnumDDERelationship.SourceColumnId, 'title': 'Primary Key Column',
         cellEditorElement: AcDDEDatagridSelectTableColumnInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcEnumDDERelationship.CascadeDeleteSource, 'title': 'Cascade Delete Source',
         cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcEnumDDERelationship.CascadeDeleteDestination, 'title': 'Cascade Delete Destination',
         cellEditorElement: AcDDEDatagridYesNoInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
@@ -174,7 +180,8 @@ export class AcDDERelationshipsDatagrid {
           instance: this
         };
         this.editorApi.hooks.execute({ hook: AcEnumDDEHook.RelationshipDatagridCellRendererInit, args: hookArgs });
-      }});
+      }
+    });
 
     this.editorApi.hooks.subscribe({
       hook: AcEnumDDEHook.DataDictionarySet, callback: () => {
@@ -192,7 +199,7 @@ export class AcDDERelationshipsDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setRelationshipsData() {

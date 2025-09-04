@@ -10,13 +10,9 @@ export class AcDDEImportExportExtension extends AcDDEExtension {
   override init(): void {
     const menuGroup:IAcDDEMenuGroup = {
       label:'Import/Export',
+      iconClass:'aci-cloud-upload-download',
       menuItems:[
-        {label:'Download JSON',callback:()=>{
-          if(this.editorApi.activeDataDictionary){
-            AcBrowser.downloadJsonObjectAsFile({data:this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId}),filename:'data_dictionary.json'});
-          }
-        }},
-        {label:'Import JSON',callback:async ()=>{
+        {label:'Import JSON',iconClass:'aci-upload',callback:async ()=>{
           const files = await AcBrowser.pickFiles({accept:'.json'});
           if(files.length > 0){
             const jsonString = await files[0].text();
@@ -28,9 +24,15 @@ export class AcDDEImportExportExtension extends AcDDEExtension {
               alert("Error parsing json");
             }
           }
-        }}
+        }},
+        {label:'Download JSON',iconClass:'aci-download',callback:()=>{
+          if(this.editorApi.activeDataDictionary){
+            AcBrowser.downloadJsonObjectAsFile({data:this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId}),filename:'data_dictionary.json'});
+          }
+        }},
+
       ]
-    }
+    };
     this.editorApi.addMenuGroup({menuGroup:menuGroup});
   }
 }

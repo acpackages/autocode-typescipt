@@ -29,8 +29,8 @@ export class AcDatagridTree {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTree, element: this.element });
-    acAddClassToElement({ cssClass: AcDatagridTreeTableCssClassName.acDatagridTreeChildrenContainer, element: this.treeDatagridContainer });
+    acAddClassToElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTree, element: this.element });
+    acAddClassToElement({ class_: AcDatagridTreeTableCssClassName.acDatagridTreeChildrenContainer, element: this.treeDatagridContainer });
     this.treeDatagridContainer.style.paddingLeft = `${AcDatagridTreeTableDefaultConfig.treeChildPadding}px`;
     this.element.append(this.treeDatagridContainer);
     this.setTreeChildrenRows();

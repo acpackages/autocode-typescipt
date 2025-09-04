@@ -15,6 +15,7 @@ import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dd
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETableColumn } from "../../interfaces/ac-dde-table-column.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDEViewColumnsDatagrid {
   data: any[] = [];
@@ -29,6 +30,11 @@ export class AcDDEViewColumnsDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.initDatagrid();
     this.initElement();
+    this.editorApi.hooks.subscribe({
+      hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+        this.setColumnsData();
+      }
+    });
   }
 
   initDatagrid() {
@@ -40,8 +46,8 @@ export class AcDDEViewColumnsDatagrid {
           editorApi: this.editorApi
         }, width: 50, maxWidth: 50, minWidth: 50
       },
-      { 'field': AcDDViewColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true },
-      { 'field': AcDDViewColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true },
+      { 'field': AcDDViewColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
+      { 'field': AcDDViewColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true,allowFilter:true },
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
       datagridApi: this.datagridApi,
@@ -114,7 +120,7 @@ export class AcDDEViewColumnsDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setColumnsData() {

@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export function acAddClassToElement({cssClass,element}:{cssClass:string,element:Element}){
-  const classList:string[] = cssClass.trim().split(" ")
+export function acAddClassToElement({class_,element}:{class_:string,element:Element}){
+  const classList:string[] = class_.trim().split(" ")
   for(const className of classList){
     element.classList.add(className);
   }
@@ -48,8 +48,8 @@ export function acCopyElementStyles({fromElement,toElement}:{fromElement: HTMLEl
   }
 }
 
-export function acRemoveClassFromElement({cssClass,element}:{cssClass:string,element:Element}){
-  const classList:string[] = cssClass.trim().split(" ")
+export function acRemoveClassFromElement({class_,element}:{class_:string,element:Element}){
+  const classList:string[] = class_.trim().split(" ")
   for(const className of classList){
     element.classList.remove(className);
   }

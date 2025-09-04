@@ -1,5 +1,5 @@
 export enum AcEnumInputType{
-  Checkbox = 'CYHECKBOX',
+  Checkbox = 'CHECKBOX',
   Color = 'COLOR',
   Date = 'DATE',
   DatetimeLocal = 'DATETIME-LOCAL',

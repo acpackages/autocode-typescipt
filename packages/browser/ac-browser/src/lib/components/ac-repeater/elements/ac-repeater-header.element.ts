@@ -15,7 +15,7 @@ export class AcRepeaterHeaderElement {
   }
 
   initElement(){
-    acAddClassToElement({cssClass:AcRepeaterCssClassName.acRepeaterHeader,element:this.element});
+    acAddClassToElement({class_:AcRepeaterCssClassName.acRepeaterHeader,element:this.element});
     this.element.append(this.headerRowElement);
   }
 

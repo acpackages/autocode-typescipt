@@ -15,6 +15,7 @@ import { AcEnumDDEStoredProcedure } from "../../enums/ac-enum-dde-storage-keys.e
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDEStoredProceduresDatagrid {
   data: any[] = [];
@@ -29,6 +30,11 @@ export class AcDDEStoredProceduresDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.initDatagrid();
     this.initElement();
+    this.editorApi.hooks.subscribe({
+      hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+        this.setStoredProcedureData();
+      }
+    });
   }
 
   applyFilter() {
@@ -52,13 +58,13 @@ export class AcDDEStoredProceduresDatagrid {
         'field': AcDDStoredProcedure.KeyStoredProcedureName, 'title': 'Procedure Name',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcDDStoredProcedure.KeyStoredProcedureCode, 'title': 'Procedure Code',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
@@ -94,7 +100,7 @@ export class AcDDEStoredProceduresDatagrid {
         this.editorApi.hooks.execute({ hook: AcEnumDDEHook.StoredProceduresDatagridCellEditorInit, args: hookArgs });
       }
     });
-     this.datagridApi.on({
+    this.datagridApi.on({
       event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
@@ -124,7 +130,7 @@ export class AcDDEStoredProceduresDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setStoredProcedureData() {

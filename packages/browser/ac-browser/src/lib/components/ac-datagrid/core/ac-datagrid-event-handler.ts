@@ -76,6 +76,7 @@ export class AcDatagridEventHandler {
         datagridCell: datagridCell,
         event: event
       };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.CellFocus, args: eventArgs });
       this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellFocus, args: eventArgs });
       const datagridRow = datagridCell.datagridRow;
       if (this.datagridApi.activeDatagridRow == undefined || this.datagridApi.activeDatagridRow.acRowId != datagridRow.acRowId) {
@@ -97,6 +98,7 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.CellKeyDown, args: eventArgs });
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellKeyDown, args: eventArgs });
   }
 
@@ -106,6 +108,7 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.CellKeyPress, args: eventArgs });
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellKeyPress, args: eventArgs });
   }
 

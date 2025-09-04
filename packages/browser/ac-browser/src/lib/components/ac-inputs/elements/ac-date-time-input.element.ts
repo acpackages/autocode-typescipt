@@ -6,11 +6,11 @@ import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 
 export class AcDateTimeInput extends AcInput{
-  protected override _type: AcEnumInputType.DateTimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week = AcEnumInputType.DateTimeLocal;
-  override get type():AcEnumInputType.DateTimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week{
+  protected override _type: AcEnumInputType.DatetimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week = AcEnumInputType.DatetimeLocal;
+  override get type():AcEnumInputType.DatetimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week{
     return this._type;
   }
-  override set type(value:AcEnumInputType.DateTimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week){
+  override set type(value:AcEnumInputType.DatetimeLocal | AcEnumInputType.Date | AcEnumInputType.Time | AcEnumInputType.Month | AcEnumInputType.Week){
     this._type = value;
     this.element.setAttribute('type',value);
   }
@@ -48,6 +48,6 @@ export class AcDateTimeInput extends AcInput{
   override init(): void {
     this.type = this._type;
     super.init();
-    acAddClassToElement({cssClass:AcInputCssClassName.acDateTimeInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acDatetimeInput,element:this.element});
   }
 }

@@ -30,8 +30,8 @@ export class AcDatagridRowDraggingCell {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcDatagridRowDraggingCssClassName.AcDatagridRowDrag, element: this.dragHandle });
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCell, element: this.element });
+    acAddClassToElement({ class_: AcDatagridRowDraggingCssClassName.AcDatagridRowDrag, element: this.dragHandle });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCell, element: this.element });
     this.element.append(this.dragHandle);
     this.dragHandle.innerHTML = AcDatagridRowDraggingHtmlPlaceholder.drag;
     this.element.setAttribute(AcDraggableAttributeName.acDraggableHandle,"");

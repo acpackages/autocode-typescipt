@@ -22,7 +22,7 @@ export class AcDDEDatagridYesNoInput implements IAcDatagridCellEditorElement{
 
   init(args: IAcDatagridCellElementArgs): void {
     this.element.append(this.optionInput.element);
-    acAddClassToElement({cssClass:'ac-option-input-wrap',element:this.element});
+    acAddClassToElement({class_:'ac-option-input-wrap',element:this.element});
     this.optionInput.init();
     this.optionInput.checked = args.datagridCell.cellValue;
   }

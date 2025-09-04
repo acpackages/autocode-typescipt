@@ -52,14 +52,14 @@ export class AcDatagridHeaderInternalCellElement {
 
   // initElement() {
   //   this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellLeftContainer, element: this.leftContainer });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellRightContainer, element: this.rightContainer });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCell, element: this.element });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellContainer, element: this.cellContainer });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellTitle, element: this.titleElement });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellFilter, element: this.filterElement });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellSort, element: this.sortElement });
-  //   acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridHeaderCellResize, element: this.resizeElement });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellLeftContainer, element: this.leftContainer });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellRightContainer, element: this.rightContainer });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCell, element: this.element });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellContainer, element: this.cellContainer });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellTitle, element: this.titleElement });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellFilter, element: this.filterElement });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellSort, element: this.sortElement });
+  //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellResize, element: this.resizeElement });
   //   this.element.append(this.cellContainer);
   //   this.cellContainer.setAttribute('draggable', 'true');
   //   this.cellContainer.append(this.leftContainer);
@@ -134,7 +134,7 @@ export class AcDatagridHeaderInternalCellElement {
   // //     if (this.draggablePlaceholder == undefined) {
   // //       this.draggablePlaceholder = document.createElement('div');
   // //       acAddClassToElement({
-  // //         cssClass: AcDatagridCssClassName.acDatagridColumnDraggingPlaceholder,
+  // //         class_: AcDatagridCssClassName.acDatagridColumnDraggingPlaceholder,
   // //         element: this.draggablePlaceholder
   // //       });
   // //       const creatorArgs:IAcDatagridColumnDragPlaceholderCreatorArgs = {

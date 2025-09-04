@@ -2,10 +2,10 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcEnumSqlDatabaseType, AcResult } from "@autocode-ts/autocode";
+import { AcEnumSqlDatabaseType,AcEnumSqlEntity, AcResult } from "@autocode-ts/autocode";
 import { AcSqlDbBase } from "./ac-sql-db-base";
 import { AcSchemaManagerTables, AcSMDataDictionary, SchemaDetails, TblSchemaDetails, TblSchemaLogs } from "./ac-schema-data-dictionary";
-import { AcDataDictionary, AcDDFunction, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDRowOperation, AcEnumDDSelectMode, AcEnumSqlEntity } from "@autocode-ts/ac-data-dictionary";
+import { AcDataDictionary, AcDDFunction, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDRowOperation, AcEnumDDSelectMode } from "@autocode-ts/ac-data-dictionary";
 import { AcSqlDbTable } from "./ac-sql-db-table";
 import { AcSqlDaoResult } from "../models/ac-sql-dao-result.model";
 

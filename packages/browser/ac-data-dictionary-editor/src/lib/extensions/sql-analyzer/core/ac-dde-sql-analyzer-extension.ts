@@ -44,7 +44,7 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
         const instance = args.datagridCell.instance;
         const actionElement: AcDDEDatagridRowAction = instance!.cellRenderer as AcDDEDatagridRowAction;
         const analyzeButton = document.createElement('button');
-        acAddClassToElement({ cssClass: 'btn btn-info btn-sm ms-1', element: analyzeButton });
+        acAddClassToElement({ class_: 'btn btn-info btn-sm ms-1', element: analyzeButton });
         acSetElementAttributes({ attributes: { 'type': 'button' }, element: analyzeButton });
         analyzeButton.style.marginTop = '-5px';
         analyzeButton.innerHTML = 'Analyze';

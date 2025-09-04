@@ -5,5 +5,4 @@ export * from './ac-enum-dd-column-type.enum';
 export * from './ac-enum-dd-row-event.enum';
 export * from './ac-enum-dd-row-operation.enum';
 export * from './ac-enum-dd-select-mode.enum';
-export * from './ac-enum-dd-sql-entity.enum';
 export * from './ac-enum-dd-table-property.enum';

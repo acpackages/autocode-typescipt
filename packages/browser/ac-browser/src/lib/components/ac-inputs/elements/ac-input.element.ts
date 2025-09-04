@@ -22,6 +22,6 @@ export class AcInput extends AcInputBase{
 
   constructor() {
     super();
-    acAddClassToElement({cssClass:AcInputCssClassName.acInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acInput,element:this.element});
   }
 }

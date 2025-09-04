@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDTrigger, AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
@@ -17,6 +18,7 @@ import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dd
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETrigger } from "../../interfaces/ac-dde-trigger.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDETriggersDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -32,6 +34,11 @@ export class AcDDETriggersDatagrid {
     this.editorApi = editorApi;
     this.initDatagrid();
     this.initElement();
+    this.editorApi.hooks.subscribe({
+      hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+        this.setTriggersData();
+      }
+    });
   }
 
   initDatagrid() {
@@ -47,10 +54,10 @@ export class AcDDETriggersDatagrid {
         'field': AcDDTrigger.KeyTriggerExecution, 'title': 'Execution',
         cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
           editorApi: this.editorApi, selectOptions: [
-            { label: 'After', value: 'after' },
-            { label: 'Before', value: 'before' }
+            { label: 'After', value: 'AFTER' },
+            { label: 'Before', value: 'BEFORE' }
           ]
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcDDTrigger.KeyRowOperation, 'title': 'Operation',
@@ -61,25 +68,25 @@ export class AcDDETriggersDatagrid {
             { label: 'Update', value: AcEnumDDRowOperation.Update },
             { label: 'Delete', value: AcEnumDDRowOperation.Delete }
           ]
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
-        'field': AcDDTrigger.KeyTableName, 'title': 'Table',
+        'field': 'tableId', 'title': 'Table',
         cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcDDTrigger.KeyTriggerName, 'title': 'Trigger Name',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcDDTrigger.KeyTriggerCode, 'title': 'Trigger Code',
         cellEditorElement: AcDDEDatagridPopoutTextareaInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
@@ -152,7 +159,7 @@ export class AcDDETriggersDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setTriggersData() {

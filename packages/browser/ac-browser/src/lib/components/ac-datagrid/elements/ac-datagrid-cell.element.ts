@@ -106,14 +106,14 @@ export class AcDatagridCellElement {
       this.cellContainer.innerHTML = "";
       this.cellContainer.append(this.cellEditor!.getElement());
     }
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
     this.element.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
     this.isEditing = true;
   }
 
   exitEditMode() {
     this.isEditing = false;
-    acRemoveClassFromElement({ cssClass: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
+    acRemoveClassFromElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this.element });
     if (this.cellEditor) {
       this.cellContainer.innerHTML = "";
       this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
@@ -148,14 +148,13 @@ export class AcDatagridCellElement {
     }
   }
 
-
   initElement() {
     this.element.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.acCellId);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCell, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCell, element: this.element });
     this.element.setAttribute('tabindex', "-1");
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellContainer, element: this.cellContainer });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.cellContainer });
     this.element.append(this.cellContainer);
     this.cellContainer.style.height = "100%";
     this.cellContainer.style.width = "max-content";

@@ -74,7 +74,7 @@ export class AcOptionInput extends AcInputBase {
 
   constructor() {
     super();
-    acAddClassToElement({cssClass:AcInputCssClassName.acOptionInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acOptionInput,element:this.element});
     if (this.isArray == undefined || this.isArray == null) {
       if (this.type == AcEnumInputType.Checkbox) {
         this.isArray = true;

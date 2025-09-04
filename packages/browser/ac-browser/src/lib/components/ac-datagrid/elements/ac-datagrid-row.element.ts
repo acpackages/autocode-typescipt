@@ -36,14 +36,14 @@ export class AcDatagridRowElement {
 
   initElement() {
     this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridRowWrapper, element: this.rowWrapper });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowWrapper, element: this.rowWrapper });
     this.rowWrapper.appendChild(this.element);
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridRow, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRow, element: this.element });
     if (this.datagridRow.index == 0 || this.datagridRow.index % 2 == 0) {
-      acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridRowEven, element: this.element });
+      acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowEven, element: this.element });
     }
     else {
-      acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridRowOdd, element: this.element });
+      acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowOdd, element: this.element });
     }
     this.registerListeners();
     this.render();

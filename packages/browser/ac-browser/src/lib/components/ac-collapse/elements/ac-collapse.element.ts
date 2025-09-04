@@ -78,7 +78,7 @@ export class AcCollapse {
   }
 
   private initElement() {
-    acAddClassToElement({ element: this.element, cssClass: AcCollapseCssClassName.acCollapse });
+    acAddClassToElement({ element: this.element, class_: AcCollapseCssClassName.acCollapse });
     if (this.element.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
       this.setToggleElement({ element: this.element.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
     }
@@ -192,7 +192,7 @@ export class AcCollapse {
   setContentElement({ element }: { element: HTMLElement }) {
     this.contentElement = element;
     acAddClassToElement({
-      cssClass: AcCollapseCssClassName.acCollapseContent,
+      class_: AcCollapseCssClassName.acCollapseContent,
       element,
     });
     this.contentElement.style.overflow = "hidden";
@@ -213,7 +213,7 @@ export class AcCollapse {
   setToggleElement({ element }: { element: HTMLElement }) {
     this.toggleElement = element;
     acAddClassToElement({
-      cssClass: AcCollapseCssClassName.acCollapseToggle,
+      class_: AcCollapseCssClassName.acCollapseToggle,
       element,
     });
     this.toggleElement.addEventListener("click", () => this.toggle());

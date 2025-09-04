@@ -235,9 +235,15 @@ export function stringWords(str: string): string[] {
     if (typeof str !== 'string') return [];
     const matches = str
         .trim()
-        .replace(/[_\-\\.\s]+/g, ' ')
-        .match(/[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?=[A-Z]|$)/g);
-    return matches || [];
+        .replaceAll(/[_\-\\.\s]+/g, ' ')
+        .split(' ');
+      const result= [];
+    for(const match of matches){
+      if(match != ' ' && match.trim() != ''){
+        result.push(match);
+      }
+    }
+    return result;
 }
 
 /**

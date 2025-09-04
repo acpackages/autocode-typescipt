@@ -13,12 +13,12 @@ export class AcRepeaterFooterElement {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterFooter, element: this.element });
+    acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterFooter, element: this.element });
   }
 
   setPagination() {
     if(this.repeaterApi.usePagination && this.repeaterApi.pagination){
-      acAddClassToElement({ cssClass: AcRepeaterCssClassName.acRepeaterFooterPaginationContainer, element: this.paginationContainer });
+      acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterFooterPaginationContainer, element: this.paginationContainer });
       this.element.append(this.paginationContainer);
       this.paginationContainer.append(this.repeaterApi.pagination.element);
     }

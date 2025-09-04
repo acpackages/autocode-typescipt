@@ -1,5 +1,5 @@
 export const AcDDECodeGeneratorDefaultConfig = {
-  dataDictionaryConstName:'DataDictionary',
+  dataDictionaryConstName:'DATA_DICTIONARY',
   functionKeysClassName:'Functions',
   storeProcedureKeysClassName:'StoredProcedures',
   tableKeysClassName:'Tables',

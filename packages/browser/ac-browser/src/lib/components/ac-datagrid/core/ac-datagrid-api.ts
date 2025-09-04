@@ -421,14 +421,14 @@ export class AcDatagridApi {
 
   setFocusedCell({ datagridCell }: { datagridCell: AcDatagridCell }) {
     if (this.focusedCell && this.focusedCell.instance) {
-      acRemoveClassFromElement({ cssClass: AcDatagridCssClassName.acDatagridCellFocused, element: this.focusedCell.instance.element });
+      acRemoveClassFromElement({ class_: AcDatagridCssClassName.acDatagridCellFocused, element: this.focusedCell.instance.element });
       if (this.focusedCell.instance.isEditing) {
         this.focusedCell.instance.exitEditMode();
       }
     }
     this.focusedCell = datagridCell;
     if (this.focusedCell && this.focusedCell.instance && this.focusedCell.instance.element) {
-      acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCellFocused, element: this.focusedCell.instance.element });
+      acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellFocused, element: this.focusedCell.instance.element });
     }
   }
 

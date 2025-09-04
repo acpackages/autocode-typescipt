@@ -42,6 +42,7 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditorElement{
       this.selectOptions = this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.selectOptions;
     }
     this.selectInput.init();
+    this.selectInput.value = this.datagridCell.cellValue;
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {

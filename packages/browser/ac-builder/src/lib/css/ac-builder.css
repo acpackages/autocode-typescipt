@@ -26,15 +26,6 @@ body {
 .ac-builder-topbar .btn-action-grp{
   border: solid 1px #424242;
 }
-.ac-builder-sidebar-input{
-  background-color: transparent;
-  border:#3a3a3a solid 1px;
-  color:white;
-  font-size: 12px;
-}
-.ac-builder-sidebar-input::placeholder{
-  color:rgb(122, 122, 122);
-}
 .ac-builder-topbar .btn-action {
   font-size: 12px;
   /* width: 20px; */
@@ -49,6 +40,12 @@ body {
 }
 .ac-builder-topbar .ac-builder-topbar-right .ac-builder-topbar-right-container {
   float: inline-end;
+}
+.ac-builder-topbar .btn-device{
+  height: 25px;
+  width: 35px;
+  padding: 0px;
+  padding-top: 2px;
 }
 .ac-builder-body {
   display: flex;
@@ -69,6 +66,15 @@ body {
   display: flex;
   flex-direction: column;
   height: -webkit-fill-available;
+}
+.ac-builder-sidebar-input{
+  background-color: transparent;
+  border:#3a3a3a solid 1px;
+  color:white;
+  font-size: 12px;
+}
+.ac-builder-sidebar-input::placeholder{
+  color:rgb(122, 122, 122);
 }
 .ac-sidebar-tabs{
   height: 35px;
@@ -102,12 +108,7 @@ body {
 .ac-panel-header {
   padding: 5px 10px;
 }
-.ac-builder-topbar .btn-device{
-  height: 25px;
-  width: 35px;
-  padding: 0px;
-  padding-top: 2px;
-}
+
 .ac-builder-elements-tab, .ac-builder-events-tab, .ac-builder-properties-tab{
   height: 100%;
 }

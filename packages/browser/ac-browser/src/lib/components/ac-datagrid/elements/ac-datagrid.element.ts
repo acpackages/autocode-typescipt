@@ -38,8 +38,8 @@ export class AcDatagrid {
   }
 
   private initElement(){
-    acAddClassToElement({cssClass:AcDatagridCssClassName.acDatagrid,element:this.element});
-    acAddClassToElement({cssClass:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
+    acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this.element});
+    acAddClassToElement({class_:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
     this.element.append(this.containerElement);
     this.containerElement.append(this.datagridHeader.element);
     this.containerElement.append(this.datagridBody.element);

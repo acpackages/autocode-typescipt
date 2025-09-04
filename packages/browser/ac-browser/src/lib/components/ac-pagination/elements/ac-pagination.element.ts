@@ -56,7 +56,7 @@ export class AcPagination {
   }
 
   initElement() {
-    acAddClassToElement({cssClass:AcPaginationCssClassName.acPagination,element:this.element});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPagination,element:this.element});
     this.element.append(this.pageSizeDropdown.element);
     this.element.append(this.pageDisplayedRowsLabel.element);
     this.element.append(this.pageNavigationButtons.element);

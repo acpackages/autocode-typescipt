@@ -13,6 +13,7 @@ import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dd
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETable } from "../../interfaces/ac-dde-table.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDETablesDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -28,6 +29,11 @@ export class AcDDETablesDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.initElement();
     this.initDatagrid();
+    this.editorApi.hooks.subscribe({
+          hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+            this.setTablesData();
+          }
+        });
   }
 
   initDatagrid() {
@@ -39,49 +45,49 @@ export class AcDDETablesDatagrid {
         }, width: 50, maxWidth: 50, minWidth: 50
       },
       {
-        'field': AcEnumDDETable.TableName, 'title': 'Table Name',
+        'field': AcEnumDDETable.TableName, 'title': 'Table Name',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SingularName, 'title': 'Singular Name',
+        'field': AcEnumDDETable.SingularName, 'title': 'Singular Name',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.PluralName, 'title': 'Plural Name',
+        'field': AcEnumDDETable.PluralName, 'title': 'Plural Name',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SelectQuery, 'title': 'Select Query',
+        'field': AcEnumDDETable.SelectQuery, 'title': 'Select Query',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SelectQueryColumns, 'title': 'Query Columns',
+        'field': AcEnumDDETable.SelectQueryColumns, 'title': 'Query Columns',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SelectRequestColumns, 'title': 'Request Columns',
+        'field': AcEnumDDETable.SelectRequestColumns, 'title': 'Request Columns',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.OrderBy, 'title': 'Order By',
+        'field': AcEnumDDETable.OrderBy, 'title': 'Order By',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.ViewId, 'title': 'View',
+        'field': AcEnumDDETable.ViewId, 'title': 'View',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
@@ -158,7 +164,7 @@ export class AcDDETablesDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setTablesData() {

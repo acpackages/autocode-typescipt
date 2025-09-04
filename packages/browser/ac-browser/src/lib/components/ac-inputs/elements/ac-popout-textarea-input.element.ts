@@ -75,7 +75,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
     ta.style.padding = `${this.opts.paddingPx}px`;
     ta.style.border = `1px solid ${cs.borderColor || "#ccc"}`;
     ta.style.borderRadius = `${this.opts.borderRadiusPx}px`;
-    ta.style.background = cs.backgroundColor || "#fff";
+    ta.style.background = "#fff";
     ta.style.color = cs.color || "#000";
     ta.style.font = cs.font || "inherit";
     ta.style.lineHeight = cs.lineHeight || "1.4";
@@ -258,7 +258,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
 
   override init(): void {
       super.init();
-      acAddClassToElement({cssClass:AcInputCssClassName.acTextInput,element:this.element});
+      acAddClassToElement({class_:AcInputCssClassName.acTextInput,element:this.element});
     }
 
   open() {

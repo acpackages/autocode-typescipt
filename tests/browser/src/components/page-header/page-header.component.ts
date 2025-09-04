@@ -38,19 +38,19 @@ export class PageHeader {
 
 
   constructor() {
-    acAddClassToElement({ cssClass: 'navbar navbar-expand-lg navbar-light bg-light', element: this.element });
+    acAddClassToElement({ class_: 'navbar navbar-expand-lg navbar-light bg-light', element: this.element });
 
-    acAddClassToElement({ cssClass: 'navbar-brand ps-1', element: this.pageTitleElement });
+    acAddClassToElement({ class_: 'navbar-brand ps-1', element: this.pageTitleElement });
     this.element.append(this.pageTitleElement);
 
-    acAddClassToElement({ cssClass: 'navbar-toggler', element: this.navBarMenuToggleElement });
+    acAddClassToElement({ class_: 'navbar-toggler', element: this.navBarMenuToggleElement });
     this.navBarMenuToggleElement.setAttribute('type', 'button');
     this.navBarMenuToggleElement.setAttribute('data-toggle', 'collapse');
     this.navBarMenuToggleElement.setAttribute('data-target', '#navbarSupportedContent');
     this.navBarMenuToggleElement.innerHTML = '<span class="navbar-toggler-icon"></span>';
     this.element.append(this.navBarMenuToggleElement);
 
-    acAddClassToElement({ cssClass: 'collapse navbar-collapse', element: this.navBarMenuElement });
+    acAddClassToElement({ class_: 'collapse navbar-collapse', element: this.navBarMenuElement });
     this.navBarMenuElement.setAttribute('id', 'navbarSupportedContent');
     this.element.append(this.navBarMenuElement);
   }
@@ -63,18 +63,18 @@ export class PageHeader {
   getMenuElement(menuItem: IMenuItem): HTMLElement {
     const menuItemId: string = Autocode.uuid();
     const menuItemElement: HTMLElement = document.createElement('li');
-    acAddClassToElement({ cssClass: 'nav-item', element: menuItemElement });
+    acAddClassToElement({ class_: 'nav-item', element: menuItemElement });
 
     const menuButtonElement: HTMLButtonElement = document.createElement('button');
     menuButtonElement.setAttribute('type','button');
     if(menuItem.class){
-      acAddClassToElement({ cssClass:menuItem.class, element: menuButtonElement });
+      acAddClassToElement({ class_:menuItem.class, element: menuButtonElement });
     }
     else{
-      acAddClassToElement({ cssClass:'btn btn-default btn-block w-100', element: menuButtonElement });
+      acAddClassToElement({ class_:'btn btn-default btn-block w-100', element: menuButtonElement });
     }
     menuButtonElement.innerHTML = menuItem.label;
-    acAddClassToElement({ cssClass: 'nav-link', element: menuButtonElement });
+    acAddClassToElement({ class_: 'nav-link', element: menuButtonElement });
 
 
     menuButtonElement.addEventListener('click', () => {
@@ -98,7 +98,7 @@ export class PageHeader {
       const dropdownMenuItemsElement: HTMLElement = document.createElement('div');
       menuWrapperElement.append(dropdownMenuItemsElement);
       dropdownMenuItemsElement.setAttribute('aria-labelledby', `dropdown-${menuItemId}`);
-      acAddClassToElement({ cssClass: 'dropdown-menu', element: dropdownMenuItemsElement });
+      acAddClassToElement({ class_: 'dropdown-menu', element: dropdownMenuItemsElement });
       for (const subMenuItem of menuItem.children) {
         dropdownMenuItemsElement.append(this.getMenuElement(subMenuItem));
       }
@@ -115,7 +115,7 @@ export class PageHeader {
     this.navBarMenuElement.innerHTML = '';
     const menuListElement: HTMLElement = document.createElement('ul');
     this.navBarMenuElement.append(menuListElement);
-    acAddClassToElement({ cssClass: 'navbar-nav mr-auto', element: menuListElement });
+    acAddClassToElement({ class_: 'navbar-nav mr-auto', element: menuListElement });
     for (const menuItem of this.menuItems) {
       menuListElement.append(this.getMenuElement(menuItem));
     }

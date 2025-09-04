@@ -5,9 +5,9 @@ import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExten
 import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator'
 import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';
 import { PageHeader } from '../../components/page-header/page-header.component';
-// import { dataDictionaryJson } from './../../../../data/act-data-dictionary-v1';
-import { dataDictionaryJson } from './../../../../data/unifi-data-data-dictionary';
-// import { dataDictionaryJson } from './../../../../data/dde-data-dictionary';
+import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-data-dictionary';
+import { dataDictionaryJson as ddeDataDictionary } from './../../../../data/dde-data-dictionary';
 
 export class DDEEditorDatagridPage  extends HTMLElement {
   dataDictionaryEditor!: AcDataDictionaryEditor;
@@ -39,10 +39,14 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       this.editorApi.enableExtension({extensionName:AcCodeGeneratorDDEExtension.extensionName});
       this.editorApi.enableExtension({extensionName:AcRelationshipsDetectorDDEExtension.extensionName});
       this.editorApi.enableExtension({extensionName:AcSqlAnalyzerDDEExtension.extensionName});
-      this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson});
+
+      this.editorApi.setDataDictionaryJson({dataDictionaryJson:actDataDictionary});
+      this.editorApi.setDataDictionaryJson({dataDictionaryJson:unifiDataDictionary});
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:ddeDataDictionary});
       console.log(this.editorApi);
-      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'accountea'});
       gridDiv.append(this.dataDictionaryEditor.element);
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'accountea'});
+
 
 
     }

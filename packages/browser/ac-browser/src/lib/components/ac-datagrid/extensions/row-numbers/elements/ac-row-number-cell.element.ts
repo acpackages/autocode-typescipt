@@ -21,8 +21,8 @@ export class AcDatagridRowNumberCell {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcDatagridRowNumberCssClassName.acDatagridRowNumberCell, element: this.element });
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridCell, element: this.element });
+    acAddClassToElement({ class_: AcDatagridRowNumberCssClassName.acDatagridRowNumberCell, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCell, element: this.element });
     this.render();
     this.setCellWidth();
     // this.element.setAttribute(AcDraggableAttributeName.acDraggableHandle,"");

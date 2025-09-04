@@ -15,6 +15,7 @@ import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dd
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDEView } from "../../interfaces/ac-dde-view.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
+import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 
 export class AcDDEViewsDatagrid {
   ddeDatagrid: AcDDEDatagrid;
@@ -30,6 +31,11 @@ export class AcDDEViewsDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.initDatagrid();
     this.initElement();
+    this.editorApi.hooks.subscribe({
+          hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+            this.setViewsData();
+          }
+        });
   }
 
   initDatagrid() {
@@ -45,13 +51,13 @@ export class AcDDEViewsDatagrid {
         'field': AcDDView.KeyViewName, 'title': 'View Name',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       },
       {
         'field': AcDDView.KeyViewQuery, 'title': 'View Query',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, useCellEditorForRenderer: true,allowFilter:true
       }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
@@ -66,7 +72,7 @@ export class AcDDEViewsDatagrid {
     this.datagridApi.on({
       event: AcEnumDatagridEvent.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
         setTimeout(() => {
-          this.hooks.execute({ hook: AcEnumDDEHook.DatagridActiveTableChange });
+          // this.hooks.execute({ hook: AcEnumDDEHook.DatagridActiveTableChange });
         }, 100);
 
       }
@@ -135,7 +141,7 @@ export class AcDDEViewsDatagrid {
 
   initElement() {
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ cssClass: AcDDECssClassName.acDDEContainer, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
   }
 
   setViewsData() {

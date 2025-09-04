@@ -13,9 +13,10 @@ export class AcDDERelationshipsDetectorExtension extends AcDDEExtension {
     this.detector = new AcDDERelationshipsDetector({extension:this});
     const menuGroup: IAcDDEMenuGroup = {
       label: 'Relationships',
+      iconClass:'aci-spread',
       menuItems: [
         {
-          label: 'Detect Relationships', callback: () => {
+          label: 'Detect Relationships',iconClass:'aci-locate', callback: () => {
             const result = this.detector.identifyRelationships();
             this.detector.createRelationshipFromResult({result:result});
             console.log(this);

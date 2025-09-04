@@ -14,7 +14,6 @@ export enum AcEnumDDColumnType {
   Text = "TEXT",
   Time = "TIME",
   Timestamp = "TIMESTAMP",
-  UserDefinedFunction = "USER_DEFINED_FUNCTION",
   Unknown = "UNKNOWN",
   Uuid = "UUID",
   YesNo = "YES_NO",

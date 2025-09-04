@@ -13,12 +13,12 @@ export class AcDatagridFooterElement {
   }
 
   initElement() {
-    acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridFooter, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridFooter, element: this.element });
   }
 
   setPagination() {
     if(this.datagridApi.usePagination && this.datagridApi.pagination){
-      acAddClassToElement({ cssClass: AcDatagridCssClassName.acDatagridFooterPaginationContainer, element: this.paginationContainer });
+      acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridFooterPaginationContainer, element: this.paginationContainer });
       this.element.append(this.paginationContainer);
       this.paginationContainer.append(this.datagridApi.pagination.element);
     }

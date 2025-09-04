@@ -25,8 +25,8 @@ export class AcDatagridHeaderElement {
   }
 
   initElement(){
-    acAddClassToElement({cssClass:AcDatagridCssClassName.acDatagridHeader,element:this.element});
-    acAddClassToElement({cssClass:AcDatagridCssClassName.acDatagridHeaderRow,element:this.headerRowElement});
+    acAddClassToElement({class_:AcDatagridCssClassName.acDatagridHeader,element:this.element});
+    acAddClassToElement({class_:AcDatagridCssClassName.acDatagridHeaderRow,element:this.headerRowElement});
     this.element.append(this.headerRowElement);
   }
 

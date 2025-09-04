@@ -67,6 +67,6 @@ export class AcTextAreaInput extends AcInputBase{
 
   override init(): void {
     super.init();
-    acAddClassToElement({cssClass:AcInputCssClassName.acTextAreaInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acTextAreaInput,element:this.element});
   }
 }

@@ -34,6 +34,7 @@ import { AcSqliteDao } from '@autocode-ts/ac-sqlite-dao-browser';
 import { AccordionTestPage } from './pages/collapse/accordion-test-page.page';
 import { BasicBuilderPage } from './pages/builder/basic-builder.page';
 import { TabsTestPage } from './pages/tabs/tabs-test-page.pages';
+import { TooltipTestPage } from './pages/popover/tooltip-test-page.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -145,7 +146,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Popover',
     routes: [
-      { label: 'Basic', path: '/popover/basic', componentTag: 'popover-basic', component: PopoverTestPage }
+      { label: 'Popover', path: '/popover/popover', componentTag: 'popover-test', component: PopoverTestPage },
+      { label: 'Tooltip', path: '/popover/tooltip', componentTag: 'tooltip-test', component: TooltipTestPage }
     ]
   });
   AcRouter.registerRouteGroup({
