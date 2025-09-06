@@ -37,11 +37,11 @@ export class AcBuilderElementsManager {
     return this.elements[name] != undefined;
   }
 
-  static register<T extends AcBuilderElement>(el: IAcBuilderElement<T>): void {
-    if (this.elements[el.name]) {
-      console.warn(`Element ${el.name} is already registered. Overwriting.`);
+  static register<T extends AcBuilderElement>({element}:{element: IAcBuilderElement<T>}): void {
+    if (this.elements[element.name]) {
+      console.warn(`Element ${element.name} is already registered. Overwriting.`);
     }
-    this.elements[el.name] = el;
+    this.elements[element.name] = element;
   }
 
   static createInstance<T extends AcBuilderExtension = AcBuilderExtension>({extensionName}:{extensionName:string}): T | null {
@@ -52,24 +52,24 @@ export class AcBuilderElementsManager {
 
   static registerBuiltInExtensions(){
     if(!this.builtInElementsRegistered){
-      this.register(AC_BUILDER_AUDIO_ELEMENT);
-      this.register(AC_BUILDER_BUTTON_ELEMENT);
-      this.register(AC_BUILDER_CANVAS_ELEMENT);
-      this.register(AC_BUILDER_CHECKBOX_ELEMENT);
-      this.register(AC_BUILDER_CONTAINER_ELEMENT);
-      this.register(AC_BUILDER_FORM_ELEMENT);
-      this.register(AC_BUILDER_IMAGE_ELEMENT);
-      this.register(AC_BUILDER_INPUT_ELEMENT);
-      this.register(AC_BUILDER_LABEL_ELEMENT);
-      this.register(AC_BUILDER_LINK_ELEMENT);
-      this.register(AC_BUILDER_ORDERED_LIST_ELEMENT);
-      this.register(AC_BUILDER_PARAGRAPH_ELEMENT);
-      this.register(AC_BUILDER_RADIO_ELEMENT);
-      this.register(AC_BUILDER_SELECT_ELEMENT);
-      this.register(AC_BUILDER_TABLE_ELEMENT);
-      this.register(AC_BUILDER_TEXTAREA_ELEMENT);
-      this.register(AC_BUILDER_UNORDERED_LIST_ELEMENT);
-      this.register(AC_BUILDER_VIDEO_ELEMENT);
+      this.register({element:AC_BUILDER_AUDIO_ELEMENT});
+      this.register({element:AC_BUILDER_BUTTON_ELEMENT});
+      this.register({element:AC_BUILDER_CANVAS_ELEMENT});
+      this.register({element:AC_BUILDER_CHECKBOX_ELEMENT});
+      this.register({element:AC_BUILDER_CONTAINER_ELEMENT});
+      this.register({element:AC_BUILDER_FORM_ELEMENT});
+      this.register({element:AC_BUILDER_IMAGE_ELEMENT});
+      this.register({element:AC_BUILDER_INPUT_ELEMENT});
+      this.register({element:AC_BUILDER_LABEL_ELEMENT});
+      this.register({element:AC_BUILDER_LINK_ELEMENT});
+      this.register({element:AC_BUILDER_ORDERED_LIST_ELEMENT});
+      this.register({element:AC_BUILDER_PARAGRAPH_ELEMENT});
+      this.register({element:AC_BUILDER_RADIO_ELEMENT});
+      this.register({element:AC_BUILDER_SELECT_ELEMENT});
+      this.register({element:AC_BUILDER_TABLE_ELEMENT});
+      this.register({element:AC_BUILDER_TEXTAREA_ELEMENT});
+      this.register({element:AC_BUILDER_UNORDERED_LIST_ELEMENT});
+      this.register({element:AC_BUILDER_VIDEO_ELEMENT});
       this.builtInElementsRegistered = true;
     }
   }

@@ -18,6 +18,9 @@
     "baseUrl": ".",
     "paths": {
       "@autocode-ts/ac-angular": ["packages/angular/ac-angular/src/index,ts"],
+      "@autocode-ts/ac-bootstrap-elements": [
+        "packages/browser/extensions/builder/ac-bootstrap-elements/src/index.ts"
+      ],
       "@autocode-ts/ac-browser": ["packages/browser/ac-browser/src/index.ts"],
       "@autocode-ts/ac-builder": ["packages/browser/ac-builder/src/index.ts"],
       "@autocode-ts/ac-data-dictionary": [
@@ -26,11 +29,11 @@
       "@autocode-ts/ac-data-dictionary-browser": [
         "packages/browser/ac-data-dictionary-browser/src/index.ts"
       ],
-      "@autocode-ts/ac-data-dictionary-editor": [
-        "packages/browser/ac-data-dictionary-editor/src/index.ts"
-      ],
       "@autocode-ts/ac-data-dictionary-components": [
         "packages/browser/ac-data-dictionary-components/src/index.ts"
+      ],
+      "@autocode-ts/ac-data-dictionary-editor": [
+        "packages/browser/ac-data-dictionary-editor/src/index.ts"
       ],
       "@autocode-ts/ac-datagrid": ["packages/browser/ac-datagrid/src/index.ts"],
       "@autocode-ts/ac-datagrid-on-ag-grid": [

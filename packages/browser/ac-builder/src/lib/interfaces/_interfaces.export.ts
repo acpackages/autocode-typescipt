@@ -4,6 +4,7 @@ export * from './hook-args/_hook-args.export';
 export * from './ac-builder-element-event.interface';
 export * from './ac-builder-element-property.interface';
 export * from './ac-builder-element.interface';
+export * from './ac-builder-extension.interface';
 export * from './ac-builder-state.interface';
 export * from './ac-page-element-event-function.interface';
 export * from './ac-page-element-property-value.interface';

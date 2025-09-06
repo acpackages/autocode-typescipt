@@ -66,7 +66,7 @@ export class AcBuilderApi {
     }, ...element.properties];
     const domc = this.grapesJSApi.DomComponents;
     const instance = this;
-    domc.addType(element.tag, {
+    domc.addType(element.name, {
       model: {
         defaults: {
           tagName: element.tag,
@@ -104,7 +104,7 @@ export class AcBuilderApi {
     this.grapesJSApi.BlockManager.add(element.name, {
       label: element.title,
       attributes: { [AcFilterableElementsAttributeName.acFilterValue]: element.title.toLowerCase() },
-      content: { type: element.tag },
+      content: { type: element.name },
       category: element.category,
       media: element.mediaSvg
     });

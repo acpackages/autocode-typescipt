@@ -109,6 +109,28 @@ export class AcGrapesJSEventsHandler {
     this.registerStorageListeners();
     this.registerStyleListeners();
     this.registerTraitListeners();
+    this.grapesJSApi.on('load', () => {
+      const iframe = this.grapesJSApi.Canvas.getFrameEl(); // Get the iframe
+      const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
+
+      if (iframeDocument) {
+        // Inject all parent stylesheets into the iframe
+        document.querySelectorAll('link[rel="stylesheet"]').forEach((link: any) => {
+          const newLink = iframeDocument.createElement('link');
+          newLink.rel = 'stylesheet';
+          newLink.href = link.href;
+          iframeDocument.head.appendChild(newLink);
+        });
+
+        // Inject all parent scripts into the iframe
+        document.querySelectorAll('script[src]').forEach((script: any) => {
+          const newScript = iframeDocument.createElement('script');
+          newScript.src = script.src;
+          newScript.async = false; // Ensure scripts execute in order
+          iframeDocument.body.appendChild(newScript);
+        });
+      }
+    });
   }
 
   registerLayerListeners() {

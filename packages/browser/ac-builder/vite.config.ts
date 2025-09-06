@@ -10,7 +10,14 @@ export default defineConfig(() => ({
   cacheDir: '../../../node_modules/.vite/packages/browser/ac-builder',
   plugins: [
     nxViteTsPaths(),
-    nxCopyAssetsPlugin(['*.md']),
+    nxCopyAssetsPlugin([
+      '*.md',
+      {
+        input: 'src/lib/css',
+        glob: '**/*.css',
+        output: 'css',
+      }
+    ]),
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),

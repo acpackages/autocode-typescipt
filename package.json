@@ -5,7 +5,9 @@
   "scripts": {
     "build:ac-angular": "nx run ac-angular:build",
     "build:ac-browser": "nx run ac-browser:build",
+    "build:ac-builder": "nx run ac-builder:build",
     "build:ac-data-dictionary": "nx run ac-data-dictionary:build",
+    "build:ac-data-dictionary-editor": "nx run ac-data-dictionary-editor:build",
     "build:ac-datagrid-on-ag-grid": "nx run ac-datagrid-on-ag-grid:build",
     "build:ac-extensions": "nx run ac-extensions:build",
     "build:ac-ng-datagrid-on-aggrid": "nx run ac-ng-datagrid-on-aggrid:build",

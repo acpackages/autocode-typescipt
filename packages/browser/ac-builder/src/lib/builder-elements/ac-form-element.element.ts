@@ -1,4 +1,4 @@
-import { AcBuilderIconSvgs } from "../consts/ac-builder-icon-svgs.consts";
+import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
 import { AC_BASIC_PROPERTIES, AC_FORM_EVENTS, AC_FORM_PROPERTIES, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_SCROLL_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
 import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
@@ -38,6 +38,6 @@ export const AC_BUILDER_FORM_ELEMENT:IAcBuilderElement = {
     AC_FORM_PROPERTIES.action as IAcBuilderElementProperty,
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
   ],
-  mediaSvg:AcBuilderIconSvgs.form,
+  mediaSvg:AC_BUILDER_ICON_SVGS.form,
   instanceClass:AcFormElement
 }
