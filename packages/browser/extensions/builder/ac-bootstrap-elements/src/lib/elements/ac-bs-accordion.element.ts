@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { acAddClassToElement } from "@autocode-ts/ac-browser";
 
 // Bootstrap-specific events for this component
 const BS_EVENTS: IAcBuilderElementEvent[] = [
@@ -18,7 +19,8 @@ export class AcBsAccordion extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Accordion
     console.log(this);
-    this.element.innerHTML = `<div class="accordion accordion-flush" id="accordionFlushExample">
+    acAddClassToElement({class_:"accordion accordion-flush",element:this.element});
+    this.element.innerHTML = `
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -49,7 +51,7 @@ export class AcBsAccordion extends AcBuilderElement {
       <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
     </div>
   </div>
-</div>`;
+`;
     this.registerDomEvents();
     this.registerBsEvents();
   }
@@ -78,7 +80,7 @@ export class AcBsAccordion extends AcBuilderElement {
 
 export const AC_BUILDER_BS_ACCORDION_ELEMENT: IAcBuilderElement = {
   category: "Bootstrap",
-  name: "bs-accordion",
+  name: "bsAccordion",
   tag: "div",
   title: "Accordion",
   events: [...BS_EVENTS],

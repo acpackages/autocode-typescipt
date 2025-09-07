@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AC_TEMPLATE_ENGINE_ATTRIBUTE } from "../consts/ac-template-engine-attributes.const";
 import { AcElementContext } from "../models/ac-element-context.model";
 import { AcExpression } from "./ac-expression";
 
@@ -12,9 +13,9 @@ export class AcDataBinding {
   }
 
   apply(){
-    // this.applyAcBindAttributes();
-    // this.applyClassBindings();
-    // this.applyStyleBindings();
+    this.applyAcBindAttributes();
+    this.applyClassBindings();
+    this.applyStyleBindings();
     this.applyOneWayBindings();
     this.applyTwoWayBindings();
   }
@@ -24,8 +25,8 @@ export class AcDataBinding {
     const context = this.elementContext.getContextValueObject();
     for (const attr of attributes) {
       // Matches acBind:attrName="expression"
-      if (attr.name.startsWith('acBind:')) {
-        const attrName = attr.name.split(':')[1];
+      if (attr.name.toLowerCase().startsWith(AC_TEMPLATE_ENGINE_ATTRIBUTE.Bind)) {
+        const attrName = attr.name.slice(AC_TEMPLATE_ENGINE_ATTRIBUTE.Bind.length+1);
         const expr = attr.value;
 
         try {
@@ -45,7 +46,7 @@ export class AcDataBinding {
   }
 
   applyClassBindings() {
-    const acClass = this.element.getAttribute('acClass');
+    const acClass = this.element.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Class);
     if (!acClass) return;
 
     try {
@@ -60,7 +61,7 @@ export class AcDataBinding {
         }
       }
     } catch (err) {
-      console.warn(`acClass error in`, this.element, err);
+      console.warn(`${AC_TEMPLATE_ENGINE_ATTRIBUTE.Class} error in`, this.element, err);
     }
   }
 
@@ -75,7 +76,7 @@ export class AcDataBinding {
   }
 
   applyStyleBindings() {
-    const acStyle = this.element.getAttribute('acStyle');
+    const acStyle = this.element.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Style);
     if (!acStyle) return;
 
     try {
@@ -86,18 +87,17 @@ export class AcDataBinding {
         }
       }
     } catch (err) {
-      console.warn(`acStyle error in`, this.element, err);
+      console.warn(`${AC_TEMPLATE_ENGINE_ATTRIBUTE.Style} error in`, this.element, err);
     }
   }
 
   applyTwoWayBindings() {
-    const modelAttr = this.element.getAttribute('[(acModel)]');
+    const modelAttr = this.element.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Model);
     if (modelAttr) {
       const inputElement:any = this.element;
       const context = this.elementContext.getContextValueObject();
       inputElement.value = context[modelAttr];
       inputElement.addEventListener('input', () => {
-        // console.log("Input changed");
         this.elementContext.setContextValue({key:modelAttr,value:inputElement.value});
         context[modelAttr] = inputElement.value;
       });

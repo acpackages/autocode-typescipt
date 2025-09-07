@@ -21,11 +21,10 @@ export class AcReactiveNode {
     this.element = element;
     this.elementContext = elementContext;
     this.elementContext.on('change', () => {
-      this.update(); });
-    // this.originalHtml = this.element.innerText;
+      this.update();
+    });
     this.bindValueExpression(0);
     this.update();
-    // console.log(this);
   }
 
   bindValueExpression(startPosition:number) {
@@ -52,23 +51,16 @@ export class AcReactiveNode {
       }
       expressionResult = expressionResult.toString();
       let newNodeValue:string = this.element.nodeValue!;
-      // console.log("Current node value : "+newNodeValue);
-      // console.log("Expression : "+expressionDetails.expression);
-      // console.log("Expression result : "+expressionResult);
-      // console.log("Old position : "+expressionDetails.startPosition+" to "+expressionDetails.endPosition);
       const newExpressionValueLength:number = expressionResult.length;
       const newStartPosition = expressionDetails.startPosition + lengthChange;
       const newEndPosition = expressionDetails.endPosition + lengthChange+1;
-      // console.log(newStartPosition,newEndPosition,=>);
       const beforeHtml = newNodeValue.substring(0,expressionDetails.startPosition+lengthChange);
       const afterHtml = newNodeValue.substring(expressionDetails.endPosition + 1 +lengthChange);
       newNodeValue = beforeHtml+expressionResult+afterHtml;
       this.element.nodeValue = newNodeValue;
-      // console.log("New Node Value : "+newNodeValue);
       lengthChange = lengthChange + (previousExpressionValueLength - newExpressionValueLength);
       expressionDetails.startPosition = newStartPosition;
       expressionDetails.endPosition = newEndPosition;
-      // console.log("New position : "+expressionDetails.startPosition+" to "+expressionDetails.endPosition);
     }
   }
 
@@ -92,7 +84,6 @@ export class AcReactiveNode {
   }
 
   update() {
-    // console.log("Setting node value");
     this.setValueFromExpression();
     this.setAttributesFromExpressions();
   }
