@@ -51,6 +51,6 @@ export const AC_BUILDER_BS_TYPOGRAPHY_ELEMENT: IAcBuilderElement = {
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
     ...BS_PROPS
   ],
-  mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.container,
+  mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.typography,
   instanceClass: AcBsTypography
 };
