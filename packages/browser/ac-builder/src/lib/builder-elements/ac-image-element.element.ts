@@ -28,7 +28,6 @@ export const AC_BUILDER_IMAGE_ELEMENT:IAcBuilderElement = {
   tag:'img',
   title:'Image',
   events:[
-    ...Object.values(AC_KEYBOARD_EVENTS),
     ...Object.values(AC_MOUSE_EVENTS),
     ...Object.values(AC_TOUCH_EVENTS)
   ],

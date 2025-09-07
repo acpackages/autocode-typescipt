@@ -27,11 +27,8 @@ export const AC_BUILDER_RADIO_ELEMENT:IAcBuilderElement = {
   tag:'input',
   title:'Radio',
   events:[
-    ...Object.values(AC_INPUT_EVENTS),
-    ...Object.values(AC_KEYBOARD_EVENTS),
     ...Object.values(AC_MOUSE_EVENTS),
     ...Object.values(AC_POINTER_EVENTS),
-    ...Object.values(AC_SCROLL_EVENTS),
     ...Object.values(AC_TOUCH_EVENTS)
   ],
   properties:[

@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 const BS_EVENTS: IAcBuilderElementEvent[]  = [];
@@ -48,7 +48,7 @@ export const AC_BUILDER_BS_PAGINATION_ELEMENT: IAcBuilderElement = {
   name: "bs-pagination",
   tag: "nav",
   title: "Pagination",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, AC_MOUSE_EVENTS.click ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

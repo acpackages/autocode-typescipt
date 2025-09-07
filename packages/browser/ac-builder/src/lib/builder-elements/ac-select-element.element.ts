@@ -7,6 +7,7 @@ import { IAcBuilderElementInitArgs } from "../interfaces/callback-args/ac-builde
 
 export class AcSelectElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
+    this.element.innerHTML = `<option value="" selected>Select an option</option>`;
     this.registerListeners();
   }
 
@@ -29,8 +30,6 @@ export const AC_BUILDER_SELECT_ELEMENT:IAcBuilderElement = {
     ...Object.values(AC_INPUT_EVENTS),
     ...Object.values(AC_KEYBOARD_EVENTS),
     ...Object.values(AC_MOUSE_EVENTS),
-    ...Object.values(AC_POINTER_EVENTS),
-    ...Object.values(AC_SCROLL_EVENTS),
     ...Object.values(AC_TOUCH_EVENTS)
   ],
   properties:[

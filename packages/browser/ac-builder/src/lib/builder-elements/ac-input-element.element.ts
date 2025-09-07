@@ -1,5 +1,5 @@
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
-import { AC_BASIC_PROPERTIES, AC_FORM_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_SCROLL_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
+import { AC_BASIC_PROPERTIES, AC_CLIPBOARD_EVENTS, AC_FORM_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_SCROLL_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
 import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
 import { IAcBuilderElement } from "../interfaces/ac-builder-element.interface";
@@ -31,7 +31,8 @@ export const AC_BUILDER_INPUT_ELEMENT:IAcBuilderElement = {
     ...Object.values(AC_MOUSE_EVENTS),
     ...Object.values(AC_POINTER_EVENTS),
     ...Object.values(AC_SCROLL_EVENTS),
-    ...Object.values(AC_TOUCH_EVENTS)
+    ...Object.values(AC_TOUCH_EVENTS),
+    ...Object.values(AC_CLIPBOARD_EVENTS),
   ],
   properties:[
     AC_FORM_PROPERTIES.autocomplete as IAcBuilderElementProperty,

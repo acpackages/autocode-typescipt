@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 // Bootstrap-specific events for this component
@@ -9,7 +9,8 @@ const BS_PROPS: IAcBuilderElementProperty[] = [];
 export class AcBsRange extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Range
-    this.element.innerHTML = `<input>Range`;
+    this.element.setAttribute('type', 'range');
+    this.element.classList.add('form-range');
     this.registerDomEvents();
     this.registerBsEvents();
   }
@@ -41,7 +42,7 @@ export const AC_BUILDER_BS_RANGE_ELEMENT: IAcBuilderElement = {
   name: "bs-range",
   tag: "input",
   title: "Range",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS), ...Object.values(AC_MOUSE_EVENTS)],  
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

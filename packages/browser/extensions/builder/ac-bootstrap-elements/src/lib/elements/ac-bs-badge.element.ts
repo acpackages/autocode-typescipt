@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -14,9 +14,6 @@ export class AcBsBadge extends AcBuilderElement {
 
   private registerDomEvents(): void {
     // Wire common DOM events to builder events where applicable
-    this.element.addEventListener('click', (event: MouseEvent) => {
-      this.events.execute({ event: 'click', args: event });
-    });
   }
 
   private registerBsEvents(): void {
@@ -39,7 +36,7 @@ export const AC_BUILDER_BS_BADGE_ELEMENT: IAcBuilderElement = {
   name: "bs-badge",
   tag: "span",
   title: "Badge",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS)],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

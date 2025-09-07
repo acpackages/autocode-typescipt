@@ -27,7 +27,6 @@ export const AC_BUILDER_CONTAINER_ELEMENT:IAcBuilderElement = {
   tag:'div',
   title:'Container',
   events:[
-    ...Object.values(AC_KEYBOARD_EVENTS),
     ...Object.values(AC_MOUSE_EVENTS),
     ...Object.values(AC_CLIPBOARD_EVENTS),
     ...Object.values(AC_POINTER_EVENTS),

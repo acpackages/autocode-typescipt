@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
@@ -40,7 +40,7 @@ export const AC_BUILDER_BS_CONTAINER_ELEMENT: IAcBuilderElement = {
   name: "bs-container",
   tag: "div",
   title: "Container",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS), ...Object.values(AC_POINTER_EVENTS), ...Object.values(AC_TOUCH_EVENTS) ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

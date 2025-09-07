@@ -8,7 +8,29 @@ const BS_PROPS: IAcBuilderElementProperty[] = [];
 export class AcBsTable extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Table
-    this.element.innerHTML = `<table>Table</table>`;
+    this.element.innerHTML = `<thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+  </tbody>`;
+    this.element.classList.add('table');
     this.registerDomEvents();
     this.registerBsEvents();
   }

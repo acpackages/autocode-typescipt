@@ -27,7 +27,6 @@ export const AC_BUILDER_PARAGRAPH_ELEMENT:IAcBuilderElement = {
   tag:'p',
   title:'Paragraph',
   events:[
-    ...Object.values(AC_KEYBOARD_EVENTS),
     ...Object.values(AC_MOUSE_EVENTS),
     ...Object.values(AC_SCROLL_EVENTS),
     ...Object.values(AC_TOUCH_EVENTS)

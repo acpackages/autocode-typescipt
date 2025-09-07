@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_INPUT_EVENTS, AC_MOUSE_EVENTS, AC_TOUCH_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 // Bootstrap-specific events for this component
@@ -9,7 +9,7 @@ const BS_PROPS: IAcBuilderElementProperty[] = [];
 export class AcBsSelect extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Select
-    this.element.innerHTML = `<select>Select</select>`;
+    this.element.innerHTML = `<option>Select</option>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }
@@ -41,7 +41,7 @@ export const AC_BUILDER_BS_SELECT_ELEMENT: IAcBuilderElement = {
   name: "bs-select",
   tag: "select",
   title: "Select",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS), ...Object.values(AC_TOUCH_EVENTS) ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

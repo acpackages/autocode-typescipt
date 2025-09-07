@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
@@ -9,7 +9,7 @@ export class AcBsFigure extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Figure
     this.element.innerHTML = `<figure class="figure">
-  <img src="..." class="figure-img img-fluid rounded" alt="...">
+  <img src="https://www.matemart.in/Assets/images/products/d457c0235036396f11714cb337bc0445.png" class="figure-img img-fluid rounded" alt="...">
   <figcaption class="figure-caption">A caption for the above image.</figcaption>
 </figure>`;
     this.registerDomEvents();
@@ -43,7 +43,7 @@ export const AC_BUILDER_BS_FIGURE_ELEMENT: IAcBuilderElement = {
   name: "bs-figure",
   tag: "figure",
   title: "Figure",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, AC_MOUSE_EVENTS.click ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

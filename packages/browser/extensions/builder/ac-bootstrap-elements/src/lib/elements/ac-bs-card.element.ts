@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
@@ -21,9 +21,6 @@ export class AcBsCard extends AcBuilderElement {
 
   private registerDomEvents(): void {
     // Wire common DOM events to builder events where applicable
-    this.element.addEventListener('click', (event: MouseEvent) => {
-      this.events.execute({ event: 'click', args: event });
-    });
   }
 
   private registerBsEvents(): void {
@@ -46,7 +43,7 @@ export const AC_BUILDER_BS_CARD_ELEMENT: IAcBuilderElement = {
   name: "bs-card",
   tag: "div",
   title: "Card",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, AC_MOUSE_EVENTS.click ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

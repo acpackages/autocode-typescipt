@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_FORM_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
@@ -16,7 +16,7 @@ export class AcBsForm extends AcBuilderElement {
   <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 </div>
-<button type="submit" class="btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary">Submit</button>
 </form>`;
     this.registerDomEvents();
     this.registerBsEvents();
@@ -49,7 +49,7 @@ export const AC_BUILDER_BS_FORM_ELEMENT: IAcBuilderElement = {
   name: "bs-form",
   tag: "form",
   title: "Form",
-  events: [ ...BS_EVENTS ],
+  events: [ ...BS_EVENTS, ...Object.values(AC_FORM_EVENTS) ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

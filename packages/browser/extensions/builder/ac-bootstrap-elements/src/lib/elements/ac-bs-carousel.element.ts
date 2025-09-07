@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 // Bootstrap-specific events for this component
 const BS_EVENTS: IAcBuilderElementEvent[] = [
@@ -22,13 +22,13 @@ export class AcBsCarousel extends AcBuilderElement {
     this.element.innerHTML = `<div id="carouselExample" class="carousel slide">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="..." class="d-block w-100" alt="...">
+      <img src="https://www.matemart.in/Assets/images/products/d457c0235036396f11714cb337bc0445.png" height="400" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
+      <img src="https://res.cloudinary.com/hni-corporation/image/upload/d_HON:Brand:Icons:HON_Icon_Outlines_HON-Icon-Gallery-001.png/f_auto,q_auto/d_HON:Brand:Icons:HON_Icon_Outlines_HON-Icon-Gallery-001.png/f_auto,q_auto/v1693919362/Surface%20Materials/Finishes/Paint/hni-paint-cove.jpg" height="400" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
+      <img src="https://preview.colorkit.co/color/A9A9A9.png?type=article-preview-logo&size=social&colorname=Dark%20Gray" height="400" class="d-block w-100" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -71,7 +71,7 @@ export const AC_BUILDER_BS_CAROUSEL_ELEMENT: IAcBuilderElement = {
   name: "bs-carousel",
   tag: "div",
   title: "Carousel",
-  events: [...BS_EVENTS],
+  events: [...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS) ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],

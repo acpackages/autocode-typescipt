@@ -1,25 +1,22 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 // Bootstrap-specific events for this component
-const BS_EVENTS: IAcBuilderElementEvent[] = [
-  ];
+const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
 const BS_PROPS: IAcBuilderElementProperty[] = [];
 
 export class AcBsButton extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Button
-    this.element.innerHTML = `<button>Button</button>`;
+    this.element.innerText = `Click Me`;
+    this.element.classList.add('btn', 'btn-primary');
     this.registerDomEvents();
     this.registerBsEvents();
   }
 
   private registerDomEvents(): void {
     // Wire common DOM events to builder events where applicable
-    this.element.addEventListener('click', (event: MouseEvent) => {
-      this.events.execute({ event: 'click', args: event });
-    });
   }
 
   private registerBsEvents(): void {
@@ -42,7 +39,7 @@ export const AC_BUILDER_BS_BUTTON_ELEMENT: IAcBuilderElement = {
   name: "bs-button",
   tag: "button",
   title: "Button",
-  events: [ ...Object.values(AC_MOUSE_EVENTS) ],
+  events: [ ...Object.values(AC_MOUSE_EVENTS), ...Object.values(AC_POINTER_EVENTS), ...Object.values(AC_TOUCH_EVENTS) ],
   properties: [
     ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
     ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
