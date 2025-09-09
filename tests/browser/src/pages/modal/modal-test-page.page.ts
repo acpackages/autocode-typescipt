@@ -33,7 +33,7 @@ export class ModalTestPage extends HTMLElement {
 
     // Grab modal element and init AcModal
     this.modalElement = this.querySelector("#ac-modal-demo") as HTMLElement;
-    this.modalInstance = new AcModal(this.modalElement);
+    this.modalInstance = new AcModal({element:this.modalElement});
 
     // Hide footer initially
     this.getFooter().style.display = "none";

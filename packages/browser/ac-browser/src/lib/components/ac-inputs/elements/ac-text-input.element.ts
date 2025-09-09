@@ -1,73 +1,84 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcInput } from "./ac-input.element";
+import { AcInputElement } from "./ac-input-element.element";
 
-export class AcTextInput extends AcInput{
-  protected override _type: string = AcEnumInputType.Text;
-  override get type():string{
-    return this._type;
-  }
-  override set type(value:string){
-    this._type = value;
-    if(value!=''){
-      this.element.setAttribute('type',value);
-    }
-    else{
-      this.element.removeAttribute(value);
-    }
+export class AcTextInputElement extends AcInputElement{
+  static override get observedAttributes() {
+    return [... super.observedAttributes, 'minlength', 'maxlength','pattern'];
   }
 
-  protected _minLength: number = 0;
-  get minLength():number{
-    return this._minLength;
+  get minLength():number|null{
+    let result:number = 0;
+    if(this.hasAttribute('minlength')){
+      result = parseInt(this.getAttribute('minlength')!);
+    }
+    return result;
   }
   set minLength(value:number){
-    this._minLength = value;
     if(value > 0){
-      this.element.setAttribute('minlength',`${value}`);
+      this.setAttribute('minlength',`${value}`);
+      this.inputElement.setAttribute('minlength',`${value}`);
     }
     else{
-      this.element.removeAttribute('minlength');
+      this.removeAttribute('minlength');
+      this.inputElement.removeAttribute('minlength');
     }
   }
 
-  protected _maxLength: number = 0;
   get maxLength():number{
-    return this._maxLength;
+    let result:number = 0;
+    if(this.hasAttribute('maxlength')){
+      result = parseInt(this.getAttribute('maxlength')!);
+    }
+    return result;
   }
   set maxLength(value:number){
-    this._maxLength = value;
     if(value > 0){
-      this.element.setAttribute('maxlength',`${value}`);
+      this.setAttribute('maxlength',`${value}`);
+      this.inputElement.setAttribute('maxlength',`${value}`);
     }
     else{
-      this.element.removeAttribute('maxlength');
+      this.removeAttribute('maxlength');
+      this.inputElement.removeAttribute('maxlength');
     }
   }
 
-  protected _pattern: string = '';
-  get pattern():string{
-    return this._pattern;
+  get pattern():string|null{
+    return this.getAttribute('pattern');
   }
   set pattern(value:string){
-    this._pattern = value;
     if(value != ''){
-      this.element.setAttribute('pattern',`${value}`);
+      this.setAttribute('pattern',`${value}`);
+      this.inputElement.setAttribute('pattern',`${value}`);
     }
     else{
-      this.element.removeAttribute('pattern');
+      this.removeAttribute('pattern');
+      this.inputElement.removeAttribute('pattern');
     }
   }
 
-  override element: HTMLInputElement = document.createElement('input');
-
-  override init(): void {
-    if(this.type == ''){
-      this.type = AcEnumInputType.Text;
-    }
-    super.init();
-    acAddClassToElement({class_:AcInputCssClassName.acTextInput,element:this.element});
+  constructor(){
+    super();
+    this.type = AcEnumInputType.Text;
   }
+
+  override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    if (name == 'minlength') {
+      this.minLength = newValue;
+    }
+    else if (name == 'maxlength') {
+      this.maxLength = newValue;
+    }
+    else if (name == 'pattern') {
+      this.pattern = newValue;
+    }
+    else {
+      super.attributeChangedCallback(name, oldValue, newValue);
+    }
+  }
+
 }
+
+customElements.define('ac-text-input', AcTextInputElement);

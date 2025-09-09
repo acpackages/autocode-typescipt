@@ -1,17 +1,26 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcScrollable } from "../../ac-scrollable/_ac-scrollable.export";
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcInputBase } from "../core/ac-input-base";
 
-export class AcSelectInput extends AcInputBase {
-  private _labelKey: string = 'label';
-  get labelKey(): string { return this._labelKey; }
-  set labelKey(value: string) { this._labelKey = value; }
+export class AcSelectInputElement extends AcInputBase {
+  static override get observedAttributes() {
+    return [... super.observedAttributes, 'label-key','value-key','select-options'];
+  }
 
-  private _valueKey: string = 'value';
-  get valueKey(): string { return this._valueKey; }
-  set valueKey(value: string) { this._valueKey = value; }
+  get labelKey(): string {
+    return this.getAttribute('label-key')!;
+  }
+  set labelKey(value: string) {
+    this.setAttribute('label-key',value);
+  }
+
+  get valueKey(): string {
+    return this.getAttribute('value-key')!;
+  }
+  set valueKey(value: string) {
+    this.setAttribute('value-key',value);
+  }
 
   private _selectOptions: any[] = [];
   get selectOptions(): any[] { return this._selectOptions; }
@@ -30,16 +39,16 @@ export class AcSelectInput extends AcInputBase {
       return optVal == val;
     });
     if (match) {
-      this.inputElement.value = typeof match === "object" ? match[this.labelKey] : match;
+      this.textInputElement.value = typeof match === "object" ? match[this.labelKey] : match;
     }
   }
 
   private _filteredOptions: any[] = [];
 
   private dropdownContainer!: HTMLDivElement;
-  override element: HTMLDivElement = document.createElement('div');
+  override inputElement: HTMLDivElement = document.createElement('div');
   private highlightingIndex = -1;
-  private inputElement!: HTMLInputElement;
+  private textInputElement!: HTMLInputElement;
   private isDropdownOpen = false;
   private listEl!: HTMLDivElement;
   private maxDropdownHeight = 300;
@@ -48,22 +57,23 @@ export class AcSelectInput extends AcInputBase {
 
   constructor() {
     super();
-    acAddClassToElement({ class_: AcInputCssClassName.acSelectInput, element: this.element });
-    this.element.style.position = "relative";
+    this.labelKey = 'label';
+    this.valueKey = 'value';
+    this.inputElement.style.position = "relative";
 
     // Input
-    this.inputElement = document.createElement("input");
-    this.inputElement.type = "text";
-    this.inputElement.autocomplete = "off";
-    Object.assign(this.inputElement.style, {
+    this.textInputElement = document.createElement("input");
+    this.textInputElement.type = "text";
+    this.textInputElement.autocomplete = "off";
+    Object.assign(this.textInputElement.style, {
       width: "100%",
       height: "100%",
       border: "none",
       outline: "none",
       boxSizing: "border-box",
-      background:'transparent'
+      background: 'transparent'
     });
-    this.element.appendChild(this.inputElement);
+    this.inputElement.appendChild(this.textInputElement);
 
     // Floating dropdown container
     this.dropdownContainer = document.createElement("div");
@@ -77,7 +87,7 @@ export class AcSelectInput extends AcInputBase {
       boxSizing: "border-box",
     });
 
-    // Inner list element (virtualized)
+    // Inner list inputElement (virtualized)
     this.listEl = document.createElement("div");
     // AcScrollable will set overflow + handle virtualization
     this.dropdownContainer.appendChild(this.listEl);
@@ -100,8 +110,8 @@ export class AcSelectInput extends AcInputBase {
 
   private attachEvents() {
     // Filter on input
-    this.inputElement.addEventListener("input", () => {
-      const term = this.inputElement.value.toLowerCase();
+    this.textInputElement.addEventListener("input", () => {
+      const term = this.textInputElement.value.toLowerCase();
       this._filteredOptions = this._selectOptions.filter(option => {
         const label = String(typeof option === "object" ? option[this.labelKey] : option);
         return label.toLowerCase().includes(term);
@@ -113,7 +123,7 @@ export class AcSelectInput extends AcInputBase {
       this.ensureHighlightInView();
     });
 
-    this.inputElement.addEventListener("focus", () => {
+    this.textInputElement.addEventListener("focus", () => {
       this._filteredOptions = [...this._selectOptions];
       this.openDropdown();
       // default to selected value
@@ -125,12 +135,12 @@ export class AcSelectInput extends AcInputBase {
     });
 
     // Delay closing to allow mousedown on options
-    this.inputElement.addEventListener("blur", () => {
+    this.textInputElement.addEventListener("blur", () => {
       setTimeout(() => this.closeDropdown(), 150);
     });
 
     // Keyboard navigation
-    this.inputElement.addEventListener("keydown", (e) => {
+    this.textInputElement.addEventListener("keydown", (e) => {
       if (!this.isDropdownOpen) return;
 
       if (e.key === "ArrowDown") {
@@ -166,6 +176,22 @@ export class AcSelectInput extends AcInputBase {
     window.addEventListener("resize", () => { if (this.isDropdownOpen) this.positionDropdown(); });
   }
 
+  override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    if (name == 'label-key') {
+      this.labelKey = newValue;
+    }
+    else if (name == 'value-key') {
+      this.valueKey = newValue;
+    }
+    else if (name == 'select-options') {
+      this.selectOptions = newValue;
+    }
+    else {
+      super.attributeChangedCallback(name, oldValue, newValue);
+    }
+  }
+
   private buildOptionElement(option: any, index: number): HTMLElement {
     const el = document.createElement("div");
     el.dataset["optionIndex"] = String(index);
@@ -197,7 +223,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   override focus(): void {
-    this.inputElement.focus();
+    this.textInputElement.focus();
   }
 
   private indexOfValueInFiltered(val: any): number {
@@ -217,35 +243,35 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private positionDropdown() {
-  const rect = this.inputElement.getBoundingClientRect();
-  const viewportHeight = window.innerHeight;
-  const spaceBelow = viewportHeight - rect.bottom;
-  const spaceAbove = rect.top;
-  const showAbove = spaceBelow < this.maxDropdownHeight && spaceAbove > spaceBelow;
+    const rect = this.textInputElement.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const spaceBelow = viewportHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const showAbove = spaceBelow < this.maxDropdownHeight && spaceAbove > spaceBelow;
 
-  this.dropdownContainer.style.width = rect.width + "px";
-  this.dropdownContainer.style.left = rect.left + "px";
+    this.dropdownContainer.style.width = rect.width + "px";
+    this.dropdownContainer.style.left = rect.left + "px";
 
-  if (showAbove) {
-    this.dropdownContainer.style.top = (rect.top - this.maxDropdownHeight) + "px";
-    this.dropdownContainer.style.maxHeight = spaceAbove + "px";
-  } else {
-    this.dropdownContainer.style.top = rect.bottom + "px";
-    this.dropdownContainer.style.maxHeight = spaceBelow + "px";
+    if (showAbove) {
+      this.dropdownContainer.style.top = (rect.top - this.maxDropdownHeight) + "px";
+      this.dropdownContainer.style.maxHeight = spaceAbove + "px";
+    } else {
+      this.dropdownContainer.style.top = rect.bottom + "px";
+      this.dropdownContainer.style.maxHeight = spaceBelow + "px";
+    }
+
+    // let list auto-size, but scroll when exceeding maxDropdownHeight
+    this.listEl.style.height = "auto";
+    this.listEl.style.maxHeight = this.maxDropdownHeight + "px";
+    this.listEl.style.overflowY = "auto";
   }
-
-  // let list auto-size, but scroll when exceeding maxDropdownHeight
-  this.listEl.style.height = "auto";
-  this.listEl.style.maxHeight = this.maxDropdownHeight + "px";
-  this.listEl.style.overflowY = "auto";
-}
 
 
   private renderVirtualList() {
     this.listEl.innerHTML = "";
     for (let i = 0; i < this._filteredOptions.length; i++) {
       const row = this.buildOptionElement(this._filteredOptions[i], i);
-      if(this.name == 'sourceColumnId'){
+      if (this.name == 'sourceColumnId') {
         console.log(row);
       }
       this.listEl.appendChild(row);
@@ -263,15 +289,15 @@ export class AcSelectInput extends AcInputBase {
     const label = typeof option === "object" ? option[this.labelKey] : option;
     const value = typeof option === "object" ? option[this.valueKey] : option;
 
-    this.inputElement.value = String(label);
+    this.textInputElement.value = String(label);
     this.value = value;
 
     this.closeDropdown();
-    this.inputElement.dispatchEvent(new Event("change"));
+    this.textInputElement.dispatchEvent(new Event("change"));
   }
 
-  toggleDropdown(){
-    if(this.isDropdownOpen){
+  toggleDropdown() {
+    if (this.isDropdownOpen) {
       this.closeDropdown();
     }
     else {
@@ -279,3 +305,5 @@ export class AcSelectInput extends AcInputBase {
     }
   }
 }
+
+customElements.define('ac-select-input', AcSelectInputElement);

@@ -4,7 +4,7 @@ import { AcEnumReactiveValueProxyEvent } from "../enums/ac-enum-reactive-value-p
 export class AcReactiveValueProxy {
   value: any;
   valueProxy: any;
-  private events: AcEvents = new AcEvents();
+  events: AcEvents = new AcEvents();
   constructor(value: any) {
     this.value = value;
     this.valueProxy = new Proxy(value, {
@@ -52,5 +52,9 @@ export class AcReactiveValueProxy {
 
   on(event: string, callback: Function) {
     return this.events.subscribe({ event: event, callback: callback });
+  }
+
+  toString(){
+    return this.valueProxy;
   }
 }

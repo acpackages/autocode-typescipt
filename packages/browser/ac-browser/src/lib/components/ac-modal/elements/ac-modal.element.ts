@@ -1,5 +1,9 @@
+import { AcEvents } from "@autocode-ts/autocode";
+import { AcEnumModalEvent } from "../enums/ac-enum-modal-event.enum";
+
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 export class AcModal {
+  events:AcEvents = new AcEvents();
   private modal: HTMLElement;
   private backdrop: HTMLElement | null = null;
   private isOpen: boolean = false;
@@ -7,10 +11,8 @@ export class AcModal {
   private lastTrigger?: HTMLElement;
   private cloneEl?: HTMLElement;
 
-  constructor(element: HTMLElement) {
+  constructor({element}:{element: HTMLElement}) {
     this.modal = element;
-
-    // Base styles (can be overridden by CSS)
     Object.assign(this.modal.style, {
       display: "none",
       position: "fixed",
@@ -25,10 +27,125 @@ export class AcModal {
     } as Partial<CSSStyleDeclaration>);
   }
 
+
+  private fadeOutModal() {
+    this.modal.style.transition = `opacity ${this.animationDuration}ms ease`;
+    this.modal.style.opacity = "0";
+    if (this.backdrop) this.backdrop.style.opacity = "0";
+
+    setTimeout(() => {
+      this.modal.style.display = "none";
+      if (this.backdrop && this.backdrop.parentElement) {
+        this.backdrop.parentElement.removeChild(this.backdrop);
+        this.backdrop = null;
+      }
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", this.handleEscape);
+      this.modal.style.transition = "";
+      this.modal.style.opacity = "";
+    }, this.animationDuration);
+  }
+
+  private handleEscape = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      this.hide();
+    }
+  };
+
+  /**
+   * Hide modal and morph back to trigger element using clone.
+   */
+  hide() {
+    if (!this.isOpen) return;
+    this.isOpen = false;
+
+    // If no trigger or clone, just fade out modal + backdrop
+    if (!this.lastTrigger) {
+      this.fadeOutModal();
+      return;
+    }
+
+    // Create clone from modal content for morph-back animation
+    this.cloneEl = this.modal.cloneNode(true) as HTMLElement;
+
+    // Get modal position & size
+    const modalRect = this.modal.getBoundingClientRect();
+
+    // Style clone to exactly overlay the modal
+    Object.assign(this.cloneEl.style, {
+      position: "fixed",
+      left: `${modalRect.left}px`,
+      top: `${modalRect.top}px`,
+      width: `${modalRect.width}px`,
+      height: `${modalRect.height}px`,
+      margin: "0",
+      zIndex: "1060",
+      borderRadius: this.modal.style.borderRadius,
+      boxShadow: this.modal.style.boxShadow,
+      background: this.modal.style.background,
+      overflow: "hidden",
+      pointerEvents: "none",
+      transition: `all ${this.animationDuration}ms ease`,
+      opacity: "1",
+    });
+
+    document.body.appendChild(this.cloneEl);
+
+    // Hide actual modal immediately
+    this.modal.style.display = "none";
+
+    // Animate backdrop fade out
+    if (this.backdrop) {
+      this.backdrop.style.opacity = "0";
+    }
+
+    // Animate clone back to trigger
+    const triggerRect = this.lastTrigger.getBoundingClientRect();
+
+    // Force reflow for clone before animating
+    this.cloneEl.getBoundingClientRect();
+
+    requestAnimationFrame(() => {
+      Object.assign(this.cloneEl!.style, {
+        left: `${triggerRect.left}px`,
+        top: `${triggerRect.top}px`,
+        width: `${triggerRect.width}px`,
+        height: `${triggerRect.height}px`,
+        borderRadius: getComputedStyle(this.lastTrigger!).borderRadius || "0",
+        boxShadow: getComputedStyle(this.lastTrigger!).boxShadow || "none",
+        background: getComputedStyle(this.lastTrigger!).backgroundColor || "#fff",
+        opacity: "0",
+      });
+    });
+
+    // Cleanup after animation ends
+    const onTransitionEnd = () => {
+      this.cloneEl?.removeEventListener("transitionend", onTransitionEnd);
+      if (this.cloneEl && this.cloneEl.parentElement) {
+        this.cloneEl.parentElement.removeChild(this.cloneEl);
+        this.cloneEl = undefined;
+      }
+      if (this.backdrop && this.backdrop.parentElement) {
+        this.backdrop.parentElement.removeChild(this.backdrop);
+        this.backdrop = null;
+      }
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", this.handleEscape);
+      this.lastTrigger = undefined;
+      this.events.execute({event:AcEnumModalEvent.Hide});
+    };
+
+    this.cloneEl.addEventListener("transitionend", onTransitionEnd);
+  }
+
+  on({event,callback}:{event:string,callback:Function}):string{
+    return this.events.subscribe({event,callback});
+  }
+
   /**
    * Show modal with clone morph animation from trigger element.
    */
-  show(triggerElement?: HTMLElement) {
+  show({triggerElement}:{triggerElement?: HTMLElement} = {}) {
     if (this.isOpen) return;
     this.isOpen = true;
     this.lastTrigger = triggerElement;
@@ -141,6 +258,7 @@ export class AcModal {
       this.modal.style.visibility = "visible";
       this.modal.style.opacity = "1";
       this.modal.style.pointerEvents = "";
+      this.events.execute({event:AcEnumModalEvent.Show});
     };
 
     this.cloneEl.addEventListener("transitionend", onTransitionEnd);
@@ -152,112 +270,4 @@ export class AcModal {
     document.addEventListener("keydown", this.handleEscape);
   }
 
-  /**
-   * Hide modal and morph back to trigger element using clone.
-   */
-  hide() {
-    if (!this.isOpen) return;
-    this.isOpen = false;
-
-    // If no trigger or clone, just fade out modal + backdrop
-    if (!this.lastTrigger) {
-      this.fadeOutModal();
-      return;
-    }
-
-    // Create clone from modal content for morph-back animation
-    this.cloneEl = this.modal.cloneNode(true) as HTMLElement;
-
-    // Get modal position & size
-    const modalRect = this.modal.getBoundingClientRect();
-
-    // Style clone to exactly overlay the modal
-    Object.assign(this.cloneEl.style, {
-      position: "fixed",
-      left: `${modalRect.left}px`,
-      top: `${modalRect.top}px`,
-      width: `${modalRect.width}px`,
-      height: `${modalRect.height}px`,
-      margin: "0",
-      zIndex: "1060",
-      borderRadius: this.modal.style.borderRadius,
-      boxShadow: this.modal.style.boxShadow,
-      background: this.modal.style.background,
-      overflow: "hidden",
-      pointerEvents: "none",
-      transition: `all ${this.animationDuration}ms ease`,
-      opacity: "1",
-    });
-
-    document.body.appendChild(this.cloneEl);
-
-    // Hide actual modal immediately
-    this.modal.style.display = "none";
-
-    // Animate backdrop fade out
-    if (this.backdrop) {
-      this.backdrop.style.opacity = "0";
-    }
-
-    // Animate clone back to trigger
-    const triggerRect = this.lastTrigger.getBoundingClientRect();
-
-    // Force reflow for clone before animating
-    this.cloneEl.getBoundingClientRect();
-
-    requestAnimationFrame(() => {
-      Object.assign(this.cloneEl!.style, {
-        left: `${triggerRect.left}px`,
-        top: `${triggerRect.top}px`,
-        width: `${triggerRect.width}px`,
-        height: `${triggerRect.height}px`,
-        borderRadius: getComputedStyle(this.lastTrigger!).borderRadius || "0",
-        boxShadow: getComputedStyle(this.lastTrigger!).boxShadow || "none",
-        background: getComputedStyle(this.lastTrigger!).backgroundColor || "#fff",
-        opacity: "0",
-      });
-    });
-
-    // Cleanup after animation ends
-    const onTransitionEnd = () => {
-      this.cloneEl?.removeEventListener("transitionend", onTransitionEnd);
-      if (this.cloneEl && this.cloneEl.parentElement) {
-        this.cloneEl.parentElement.removeChild(this.cloneEl);
-        this.cloneEl = undefined;
-      }
-      if (this.backdrop && this.backdrop.parentElement) {
-        this.backdrop.parentElement.removeChild(this.backdrop);
-        this.backdrop = null;
-      }
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", this.handleEscape);
-      this.lastTrigger = undefined;
-    };
-
-    this.cloneEl.addEventListener("transitionend", onTransitionEnd);
-  }
-
-  private fadeOutModal() {
-    this.modal.style.transition = `opacity ${this.animationDuration}ms ease`;
-    this.modal.style.opacity = "0";
-    if (this.backdrop) this.backdrop.style.opacity = "0";
-
-    setTimeout(() => {
-      this.modal.style.display = "none";
-      if (this.backdrop && this.backdrop.parentElement) {
-        this.backdrop.parentElement.removeChild(this.backdrop);
-        this.backdrop = null;
-      }
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", this.handleEscape);
-      this.modal.style.transition = "";
-      this.modal.style.opacity = "";
-    }, this.animationDuration);
-  }
-
-  private handleEscape = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      this.hide();
-    }
-  };
 }

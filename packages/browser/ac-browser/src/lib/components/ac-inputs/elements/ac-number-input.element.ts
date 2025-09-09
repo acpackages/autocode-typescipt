@@ -1,61 +1,90 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
-import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcInput } from "./ac-input.element";
+import { AcInputElement } from "./ac-input-element.element";
 
-export class AcNumberInput extends AcInput{
+export class AcNumberInputElement extends AcInputElement{
 
-  protected _minValue: number = 0;
-  get minValue():number{
-    return this._minValue;
+  static override get observedAttributes() {
+    return [... super.observedAttributes, 'min','max','step'];
   }
-  set minValue(value:number){
-    this._minValue = value;
+
+  get min():number{
+    let result:number = 0;
+    if(this.hasAttribute("min")){
+      result = parseInt(this.getAttribute('min')!);
+    }
+    return result;
+  }
+  set min(value:number){
     if(value > 0){
-      this.element.setAttribute('min',`${value}`);
+      this.setAttribute('min',`${value}`);
+      this.inputElement.setAttribute('min',`${value}`);
     }
     else{
-      this.element.removeAttribute('min');
+      this.removeAttribute('min');
+      this.inputElement.removeAttribute('min');
     }
   }
 
-  protected _maxValue: number = 0;
-  get maxValue():number{
-    return this._maxValue;
+
+  get max():number{
+    let result:number = 0;
+    if(this.hasAttribute("max")){
+      result = parseInt(this.getAttribute('max')!);
+    }
+    return result;
   }
-  set maxValue(value:number){
-    this._maxValue = value;
+  set max(value:number){
     if(value > 0){
-      this.element.setAttribute('max',`${value}`);
+      this.setAttribute('max',`${value}`);
+      this.inputElement.setAttribute('max',`${value}`);
     }
     else{
-      this.element.removeAttribute('max');
+      this.removeAttribute('max');
+      this.inputElement.removeAttribute('max');
     }
   }
 
-  protected _step: number = 0;
   get step():number{
-    return this._step;
-  }
-  set step(value:number){
-    this._step = value;
-    if(value > 0){
-      this.element.setAttribute('step',`${value}`);
+    let result:number = 0;
+    if(this.hasAttribute("step")){
+      result = parseInt(this.getAttribute('step')!);
     }
-    else{
-      this.element.removeAttribute('step');
-    }
+    return result;
   }
 
-  override element: HTMLInputElement = document.createElement('input');
+  set step(value:number){
+    if(value > 0){
+      this.setAttribute('step',`${value}`);
+      this.inputElement.setAttribute('step',`${value}`);
+    }
+    else{
+      this.removeAttribute('step');
+      this.inputElement.removeAttribute('step');
+    }
+  }
 
   constructor() {
     super();
-    if(this.type == ''){
-      this.type = AcEnumInputType.Number;
+    this.type = 'number';
+  }
+
+  override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    if (name == 'min') {
+      this.min = newValue;
     }
-    acAddClassToElement({class_:AcInputCssClassName.acNumberInput,element:this.element});
+    else if (name == 'max') {
+      this.max = newValue;
+    }
+    else if (name == 'step') {
+      this.step = newValue;
+    }
+    else {
+      super.attributeChangedCallback(name, oldValue, newValue);
+    }
   }
 
 }
+
+customElements.define('ac-number-input', AcNumberInputElement);

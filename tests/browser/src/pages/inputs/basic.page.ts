@@ -1,4 +1,4 @@
-import { AcEnumInputType, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTextAreaInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValues, AcEnumInputType, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTextAreaInput, AcTextInput, AcInputElement } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcReactiveValueProxy } from "@autocode-ts/ac-template-engine";
 
@@ -80,6 +80,31 @@ export class InputBasicPage extends HTMLElement {
     addInput(AcEnumInputType.Email, 'Personal Email', 'personal_email');
     addInput(AcEnumInputType.Password, 'Password', 'user_password');
     addInput(AcEnumInputType.Number, 'Age', 'age');
+
+    const arrayValuesElement = document.createElement('div');
+    arrayValuesElement.innerHTML = `
+    Array Values :
+    <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+      </tr>
+      <tbody>
+      <tr ${AC_INPUT_ATTRIBUTE_NAME.acArrayValuesRow}>
+        <td>
+        {{item.id}}
+        </td>
+      </tr>
+      </tbody>
+    </thead>
+    </table>
+    `;
+    allInputsGroup.appendChild(arrayValuesElement);
+    const arrayValuesInstance = new AcArrayValues()
+    arrayValuesInstance.initArrayValues({element:arrayValuesElement});
+
+    allInputsGroup.append('<ac-input></ac-input>')
+
     addInput(AcEnumInputType.Color, 'Favorite Color', 'favorite_color');
     addInput(AcEnumInputType.Date, 'Birth Date', 'birth_date');
     addInput(AcEnumInputType.Time, 'Preferred Time', 'preferred_time');
@@ -184,6 +209,32 @@ export class InputBasicPage extends HTMLElement {
         }
       ]
     });
+
+    // let value:any = {'hello':'world'};
+    // value['hello']='new world';
+    // value['new-property']='hello world';
+    // value = new Proxy(value, {
+    //       deleteProperty: (target, prop)=>{
+    //         console.log('Proxy value property deleted',target,prop);
+    //         return false;
+    //       },
+    //       set: (target, prop, value) => {
+    //         console.log('Proxy value property changes',target,prop,value);
+    //         return true;
+    //       }
+    //     });
+    //     value['hello'] = 'hello-modern-world';
+    //     value['new-property'] = 'another-property';
+    //     value['another-property'] = 'another-property';
+    //     delete value['hello'];
+    //     value['hello'] = {'hello':'modified',nested:{level1:{level2:'hello'}}};
+    //     value.hello.nestes.level1['level2_alternative'] = {};
+
+    // const reactiveProxy = new AcReactiveValueProxy(window);
+    // reactiveProxy.events.subscribeAllEvents({callback:(event:string,params:any)=>{
+    //   console.log(event,params);
+    // }})
+    // console.log(value);
   }
 
   setExampleValues() {

@@ -265,6 +265,17 @@ export class AcDDTableColumn {
     return 0;
   }
 
+  getValueOptions():any[]{
+    let result:any[] = [];
+    if(this.columnProperties[AcEnumDDColumnProperty.ValueOptions]){
+      const valueOptions = this.columnProperties[AcEnumDDColumnProperty.ValueOptions].propertyValue;
+      if(valueOptions && valueOptions.length > 0){
+        result = valueOptions;
+      }
+    }
+    return result;
+  }
+
   isAutoIncrement(): boolean {
     if (this.columnProperties[AcEnumDDColumnProperty.AutoIncrement]) {
       return this.columnProperties[AcEnumDDColumnProperty.AutoIncrement].propertyValue === true;

@@ -16,7 +16,6 @@ import { TemplateEnginePage } from './pages/template-engine/template-engine.page
 import { AggridLocalDataTree } from './pages/ag-grid/local-data-tree.page';
 import { CollapseTestPage } from './pages/collapse/collapse-all-tests.page';
 import { AggridOnDemandData } from './pages/ag-grid/on-demand-data.page';
-import { DDEEditorDatagridPage } from './pages/data-dictionary-editor/datagrid.page';
 import { ResizableTestPage } from './pages/resizable/resizable-test-page.page';
 import { ResizablePanelsTestPage } from './pages/resizable/resizable-panels-test-page.page';
 import { DrawerTestPage } from './pages/drawer/drawer-test-page.page';
@@ -35,6 +34,9 @@ import { AccordionTestPage } from './pages/collapse/accordion-test-page.page';
 import { BasicBuilderPage } from './pages/builder/basic-builder.page';
 import { TabsTestPage } from './pages/tabs/tabs-test-page.pages';
 import { TooltipTestPage } from './pages/popover/tooltip-test-page.page';
+import { DDEEditorDatagridPage } from './pages/data-dictionary/data-dictionary-editor.page';
+import { DataDictionaryComponentsPage } from './pages/data-dictionary/data-dictionary-components.page';
+import { InputElementsPage } from './pages/inputs/elements.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -91,7 +93,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Data Dictionary',
     routes: [
-      { label: 'Editor', path: '/data-dictionary/datagrid', componentTag: 'data-dictionary-editor', component: DDEEditorDatagridPage }
+      { label: 'Components', path: '/data-dictionary/components', componentTag: 'data-dictionary-components', component: DataDictionaryComponentsPage },
+      { label: 'Editor', path: '/data-dictionary/editor', componentTag: 'data-dictionary-editor', component: DDEEditorDatagridPage }
     ]
   });
   AcRouter.registerRouteGroup({
@@ -127,7 +130,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Inputs',
     routes: [
-      { label: 'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage }
+      { label: 'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage },
+      { label: 'Elements', path: '/inputs/elements', componentTag: 'input-elements', component: InputElementsPage }
     ]
   });
   AcRouter.registerRouteGroup({

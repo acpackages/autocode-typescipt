@@ -1,80 +1,95 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { arrayRemove } from "@autocode-ts/ac-extensions";
-import { Autocode } from "@autocode-ts/autocode";
-import { AcInputBase } from "../core/ac-input-base";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcEnumReactiveValueProxyEvent, IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
+import { AcInputElement } from "./ac-input-element.element";
 
-export class AcOptionInput extends AcInputBase {
-  private _isArray: boolean = false;
+export class AcOptionInputElement extends AcInputElement {
+  static override get observedAttributes() {
+    return [... super.observedAttributes, 'is-array','checked','label-element','value-checked','value-unchecked'];
+  }
+
   get isArray(): boolean {
-    return this._isArray;
+    return this.getAttribute('is-array') == 'true';
   }
   set isArray(value: boolean) {
-    this._isArray = value;
+    this.setAttribute('is-array',`${value}`)
   }
 
-  private _checked: boolean = false;
+
   get checked(): boolean {
-    return this._checked;
+    return this.getAttribute('checked') == 'true';
   }
   set checked(value: boolean) {
-    if (this._checked != value) {
-      this._checked = value;
-      this.element.checked = value;
+    const currentChecked = this.checked;
+    if (currentChecked != value) {
+      this.inputElement.checked = value;
       if (value) {
-        this.value = this.valueWhenChecked;
+        this.value = this.valueChecked;
+        this.setAttribute('checked','true');
+        this.inputElement.setAttribute('checked','true');
       }
       else if (!value) {
-        this.value = this.valueWhenUnchecked;
+        this.value = this.valueUnchecked;
+        this.removeAttribute('checked');
+        this.inputElement.removeAttribute('checked');
       }
     }
   }
 
-  private _labelElement: HTMLElement | undefined;
-  get labelElement(): HTMLElement | undefined {
-    return this._labelElement;
+  private _labelElements:HTMLElement[] = [];
+  get labelElement(): string | null {
+    return this.getAttribute('label-element');
   }
-  set labelElement(value: HTMLElement) {
-    this._labelElement = value;
-    this._labelElement.addEventListener('click', (event: MouseEvent) => {
-      this.checked = !this._checked;
-    })
-  }
-
-  protected _type: AcEnumInputType.Checkbox | AcEnumInputType.Radio = AcEnumInputType.Checkbox;
-  get type(): AcEnumInputType.Checkbox | AcEnumInputType.Radio {
-    return this._type;
-  }
-  set type(value: AcEnumInputType.Checkbox | AcEnumInputType.Radio) {
-    this._type = value;
-    this.element.setAttribute('type', value);
-  }
-
-  private _valueWhenChecked: any;
-  get valueWhenChecked(): any {
-    return this._valueWhenChecked;
-  }
-  set valueWhenChecked(value: any) {
-    this._valueWhenChecked = value;
+  set labelElement(value: HTMLElement|string) {
+    if(this._labelElements.length > 0){
+      for(const labelElement of this._labelElements){
+        labelElement.removeEventListener('click',this.handleLabelClick);
+      }
+    }
+    const elements:HTMLElement[] = [];
+    if(typeof value =='string' ){
+      for(const element of Array.from(document.querySelectorAll(value))){
+        elements.push(element as HTMLElement);
+      }
+    }
+    else{
+      elements.push(value);
+    }
+    for(const label of elements){
+      label.addEventListener('click',this.handleLabelClick);
+      this._labelElements.push(label);
+    }
   }
 
-  private _valueWhenUnchecked: any;
-  get valueWhenUnchecked(): any {
-    return this._valueWhenUnchecked;
+  get valueChecked(): any {
+    let result;
+    if(this.hasAttribute('value-checked')){
+      result = JSON.parse(this.getAttribute('value-checked')!);
+    }
+    return result;
   }
-  set valueWhenUnchecked(value: any) {
-    this._valueWhenUnchecked = value;
+  set valueChecked(value: any) {
+    this.setAttribute('value-checked',JSON.stringify(value));
   }
 
-  override element: HTMLInputElement = document.createElement('input');
+  get valueUnchecked(): any {
+    let result;
+    if(this.hasAttribute('value-unchecked')){
+      result = JSON.parse(this.getAttribute('value-unchecked')!);
+    }
+    return result;
+  }
+  set valueUnchecked(value: any) {
+    this.setAttribute('value-unchecked',JSON.stringify(value));
+  }
 
   constructor() {
     super();
-    acAddClassToElement({class_:AcInputCssClassName.acOptionInput,element:this.element});
+    acAddClassToElement({class_:AcInputCssClassName.acOptionInput,element:this});
+    this.type = AcEnumInputType.Checkbox;
     if (this.isArray == undefined || this.isArray == null) {
       if (this.type == AcEnumInputType.Checkbox) {
         this.isArray = true;
@@ -86,10 +101,35 @@ export class AcOptionInput extends AcInputBase {
     if (this.isArray == undefined) {
       this.isArray = false;
     }
-    this.element.setAttribute('type', this.type);
-    this.element.addEventListener('change', () => {
-      this.checked = this.element.checked;
+    this.inputElement.addEventListener('change', () => {
+      this.checked = this.inputElement.checked;
     });
+  }
+
+  handleLabelClick(event:any){
+    this.checked = !this.checked;
+  }
+
+  override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    if (name == 'is-array') {
+      this.isArray = newValue;
+    }
+    else if (name == 'label-element') {
+      this.labelElement = newValue;
+    }
+    else if (name == 'checked') {
+      this.checked = newValue;
+    }
+    else if (name == 'value-checked') {
+      this.valueChecked = newValue;
+    }
+    else if (name == 'value-unchecked') {
+      this.valueUnchecked = newValue;
+    }
+    else {
+      super.attributeChangedCallback(name, oldValue, newValue);
+    }
   }
 
   setIsChecked(): void {
@@ -112,90 +152,92 @@ export class AcOptionInput extends AcInputBase {
     }
   }
 
-  protected override setValueFromReactiveValueProxy() {
-    if (this.bindKey && this.bindToReactiveValueProxy) {
-      const currentValues = this.bindToReactiveValueProxy.valueProxy[this.bindKey];
-      if (currentValues.includes(this.valueWhenChecked)) {
-        this.checked = true;
-      }
-      else if (currentValues.includes(this.valueWhenUnchecked)) {
-        this.checked = false;
-      }
-      this.bindToReactiveValueProxy.on(AcEnumReactiveValueProxyEvent.Change, (args: IAcReactiveValueProxyEvent) => {
-        if (args.property == this.bindKey) {
-          if ((this.valueWhenChecked && !this.checked && args.value.includes(this.valueWhenChecked))||(this.valueWhenUnchecked && !this.checked && !args.value.includes(this.valueWhenUnchecked))) {
-            this.checked = true;
-          }
-          else if ((this.checked && this.valueWhenUnchecked && args.value.includes(this.valueWhenUnchecked))||(this.checked && this.valueWhenChecked && !args.value.includes(this.valueWhenChecked))) {
-            this.checked = false;
-          }
-        }
-      });
-    }
-  }
+  // protected override setValueFromReactiveValueProxy() {
+  //   if (this.bindKey && this.bindToReactiveValueProxy) {
+  //     const currentValues = this.bindToReactiveValueProxy.valueProxy[this.bindKey];
+  //     if (currentValues.includes(this.valueWhenChecked)) {
+  //       this.checked = true;
+  //     }
+  //     else if (currentValues.includes(this.valueWhenUnchecked)) {
+  //       this.checked = false;
+  //     }
+  //     this.bindToReactiveValueProxy.on(AcEnumReactiveValueProxyEvent.Change, (args: IAcReactiveValueProxyEvent) => {
+  //       if (args.property == this.bindKey) {
+  //         if ((this.valueWhenChecked && !this.checked && args.value.includes(this.valueWhenChecked))||(this.valueWhenUnchecked && !this.checked && !args.value.includes(this.valueWhenUnchecked))) {
+  //           this.checked = true;
+  //         }
+  //         else if ((this.checked && this.valueWhenUnchecked && args.value.includes(this.valueWhenUnchecked))||(this.checked && this.valueWhenChecked && !args.value.includes(this.valueWhenChecked))) {
+  //           this.checked = false;
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
 
   override setValue(value: any): void {
     const object = this;
     if (this.checked) {
-      this._value = this.valueWhenChecked;
+      this._value = this.valueChecked;
     }
     else {
-      this._value = this.valueWhenUnchecked;
+      this._value = this.valueUnchecked;
     }
-    if (this.bindKey && this.bindToReactiveValueProxy) {
-      this.updateReactiveProxyValue(this.checked);
-    }
+    // if (this.bindKey && this.bindToReactiveValueProxy) {
+    //   this.updateReactiveProxyValue(this.checked);
+    // }
   }
 
-  updateReactiveProxyValue(isChecked: boolean, triggerEvent: boolean = true) {
-    const object = this;
-    if (this.bindToReactiveValueProxy) {
-      if(object.isArray){
-        let valueArray = this.bindToReactiveValueProxy.valueProxy[this.bindKey];
-        let valueModified: boolean = false;
-        if (!Array.isArray(valueArray)) {
-          valueArray = [];
-          valueModified = true;
-        }
-        if (isChecked) {
-          if (this.valueWhenUnchecked && valueArray.includes(object.valueWhenUnchecked)) {
-            arrayRemove(valueArray, object.valueWhenUnchecked);
-            valueModified = true;
-          }
-          if (this.valueWhenChecked && !valueArray.includes(object.valueWhenChecked)) {
-            valueArray.push(object.valueWhenChecked);
-            valueModified = true;
-          }
-        }
-        else {
-          if (this.valueWhenChecked && valueArray.includes(object.valueWhenChecked)) {
-            arrayRemove(valueArray, object.valueWhenChecked);
-            valueModified = true;
-          }
-          if (this.valueWhenUnchecked && Autocode.validValue(object.valueWhenUnchecked)) {
-            if (this.valueWhenUnchecked && !valueArray.includes(object.valueWhenUnchecked)) {
-              valueArray.push(object.valueWhenUnchecked);
-              valueModified = true;
-            }
-          }
-        }
-        if (valueModified) {
-          this.bindToReactiveValueProxy.valueProxy[this.bindKey] = valueArray;
-        }
-      }
-      else{
-        if(isChecked){
-          if(this.valueWhenChecked && this.bindToReactiveValueProxy.value[this.bindKey] != this.valueWhenChecked){
-            this.bindToReactiveValueProxy.value[this.bindKey] = this.valueWhenChecked;
-          }
-        }
-        else{
-          if(this.valueWhenUnchecked && this.bindToReactiveValueProxy.value[this.bindKey] != this.valueWhenUnchecked){
-            this.bindToReactiveValueProxy.value[this.bindKey] = this.valueWhenUnchecked;
-          }
-        }
-      }
+  // updateReactiveProxyValue(isChecked: boolean, triggerEvent: boolean = true) {
+  //   const object = this;
+  //   if (this.bindToReactiveValueProxy) {
+  //     if(object.isArray){
+  //       let valueArray = this.bindToReactiveValueProxy.valueProxy[this.bindKey];
+  //       let valueModified: boolean = false;
+  //       if (!Array.isArray(valueArray)) {
+  //         valueArray = [];
+  //         valueModified = true;
+  //       }
+  //       if (isChecked) {
+  //         if (this.valueWhenUnchecked && valueArray.includes(object.valueWhenUnchecked)) {
+  //           arrayRemove(valueArray, object.valueWhenUnchecked);
+  //           valueModified = true;
+  //         }
+  //         if (this.valueWhenChecked && !valueArray.includes(object.valueWhenChecked)) {
+  //           valueArray.push(object.valueWhenChecked);
+  //           valueModified = true;
+  //         }
+  //       }
+  //       else {
+  //         if (this.valueWhenChecked && valueArray.includes(object.valueWhenChecked)) {
+  //           arrayRemove(valueArray, object.valueWhenChecked);
+  //           valueModified = true;
+  //         }
+  //         if (this.valueWhenUnchecked && Autocode.validValue(object.valueWhenUnchecked)) {
+  //           if (this.valueWhenUnchecked && !valueArray.includes(object.valueWhenUnchecked)) {
+  //             valueArray.push(object.valueWhenUnchecked);
+  //             valueModified = true;
+  //           }
+  //         }
+  //       }
+  //       if (valueModified) {
+  //         this.bindToReactiveValueProxy.valueProxy[this.bindKey] = valueArray;
+  //       }
+  //     }
+  //     else{
+  //       if(isChecked){
+  //         if(this.valueWhenChecked && this.bindToReactiveValueProxy.value[this.bindKey] != this.valueWhenChecked){
+  //           this.bindToReactiveValueProxy.value[this.bindKey] = this.valueWhenChecked;
+  //         }
+  //       }
+  //       else{
+  //         if(this.valueWhenUnchecked && this.bindToReactiveValueProxy.value[this.bindKey] != this.valueWhenUnchecked){
+  //           this.bindToReactiveValueProxy.value[this.bindKey] = this.valueWhenUnchecked;
+  //         }
+  //       }
+  //     }
 
-    }
-  }
+  //   }
+  // }
 }
+
+customElements.define('ac-option-input', AcOptionInputElement);

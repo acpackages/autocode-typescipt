@@ -1,107 +1,75 @@
-import { AcEvents } from "@autocode-ts/autocode";
-import { AcEnumReactiveValueProxyEvent, AcReactiveValueProxy, IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
-import { acAddClassToElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
-import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
-import { IAcInputFocusEvent } from "../interfaces/ac-input-focus-event.interface";
-import { IAcInputChangeEvent } from "../interfaces/ac-input-change-event.interface";
-import { IAcInputMouseEvent } from "../interfaces/ac-input-mouse-event.interface";
-import { IAcInputKeyboardEvent } from "../interfaces/ac-input-keyboard-event.interface";
-import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
-import { IAcInputEvent } from "../interfaces/ac-input-event.interface";
-import { IAcInputInputEvent } from "../interfaces/ac-input-input-event.interface";
-
+/* eslint-disable @typescript-eslint/no-this-alias */
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-export class AcInputBase {
+import { AcEvents } from "@autocode-ts/autocode";
+import { acAddClassToElement } from "../../../utils/ac-element-functions";
+import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
+import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
 
-  protected _bindKey: string = '';
-  get bindKey(): string {
-    return this._bindKey;
-  }
-  set bindKey(value: string) {
-    this._bindKey = value;
-    this.setValueFromReactiveValueProxy();
-  }
-
-  protected _bindToReactiveValueProxy: AcReactiveValueProxy|undefined;
-  get bindToReactiveValueProxy():AcReactiveValueProxy|undefined {
-    return this._bindToReactiveValueProxy;
-  }
-  set bindToReactiveValueProxy(value: AcReactiveValueProxy) {
-    this._bindToReactiveValueProxy = value;
-    this.setValueFromReactiveValueProxy();
+export class AcInputBase extends HTMLElement {
+  static get observedAttributes() {
+    return ['class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
   }
 
-  protected _cssClass: string = '';
-  get class_(): string {
-    return this._cssClass;
+  get class_(): string | null {
+    return this.getAttribute('class');
   }
   set class_(value: string) {
-    acRemoveClassFromElement({ class_: this._cssClass, element: this.element });
-    this._cssClass = value;
-    acAddClassToElement({ class_: value, element: this.element });
+    acAddClassToElement({ class_: value, element: this });
   }
 
-  protected _disabled: boolean = false;
   get disabled(): boolean {
-    return this._disabled;
+    return this.getAttribute('disabled') == 'true';
   }
   set disabled(value: boolean) {
-    this._disabled = value;
     if (value) {
-      this.element.setAttribute('disabled', "true");
+      this.setAttribute('disabled', "true");
+      this.inputElement.setAttribute('disabled', "true");
     }
     else {
-      this.element.removeAttribute('disabled');
+      this.removeAttribute('disabled');
+      this.inputElement.removeAttribute('disabled');
     }
   }
 
-  protected _name: string = '';
-  get name(): string {
-    return this._name;
+  get name(): string | null {
+    return this.getAttribute('name');
   }
   set name(value: string) {
-    this._name = value;
     if (value != '') {
-      this.element.setAttribute('name', value);
+      this.setAttribute('name', value);
     }
     else {
-      this.element.removeAttribute(value);
+      this.removeAttribute(value);
     }
   }
 
-  protected _placeholder: string = '';
-  get placeholder(): string {
-    return this._placeholder;
+  get placeholder(): string | null {
+    return this.getAttribute('placeholder');
   }
   set placeholder(value: string) {
-    this._placeholder = value;
     if (value != '') {
-      this.element.setAttribute('placeholder', value);
+      this.setAttribute('placeholder', value);
+      this.inputElement.setAttribute('placeholder', value);
     }
     else {
-      this.element.removeAttribute(value);
+      this.removeAttribute(value);
+      this.inputElement.removeAttribute(value);
     }
   }
 
-  protected _readonly: boolean = false;
   get readonly(): boolean {
-    return this._readonly;
+    return this.getAttribute('readonly') == 'true';
   }
   set readonly(value: boolean) {
-    this._readonly = value;
-  }
-
-  protected _style: string = '';
-  get style(): string {
-    return this._style;
-  }
-  set style(value: string) {
-    this._style = value;
-    if (value != '') {
-      this.element.setAttribute('style', value);
+    if (value) {
+      this.setAttribute('readonly', "true");
+      this.inputElement.setAttribute('readonly', "true");
     }
     else {
-      this.element.removeAttribute(value);
+      this.removeAttribute('readonly');
+      this.inputElement.removeAttribute('readonly');
     }
   }
 
@@ -113,279 +81,112 @@ export class AcInputBase {
     this.setValue(value);
   }
 
-  defaultValue: any;
-  doneTypingTimeoutDuration: number = 300;
-  protected doneTypingTimeout: any;
-  element: any = document.createElement('input');
   events: AcEvents = new AcEvents();
+  inputElement: HTMLElement = document.createElement('input');
 
-  constructor(){
-    //
+  constructor() {
+    super();
+    this.style.display = 'contents';
+    this.append(this.inputElement);
   }
 
-  destroy() {
-    const eventArgs: IAcInputEvent = {
-      instance: this
-    };
-    this.events.execute({ event: AcEnumInputEvent.Destroy, args: eventArgs });
-  }
-
-  focus(){
-    this.element.focus();
-  }
-
-  init() {
-    if (this.value == undefined || this.value == null) {
-      this.value = this.defaultValue;
-    }
-    this.registerBaseEvents();
-    const eventArgs: IAcInputEvent = {
-      instance: this
-    };
-    this.events.execute({ event: AcEnumInputEvent.Init, args: eventArgs });
-  }
-
-  on({ event, callback }: { event: string, callback: Function }): string {
-    return this.events.subscribe({ event: event, callback: callback });
-  }
-
-  protected registerBaseEvents({excludeEventNames,includeEventNames}:{excludeEventNames?:AcEnumInputEvent[],includeEventNames?:AcEnumInputEvent[]} = {}){
-    const eventRegisterFunctions:Record<any,Function> = {
-      [AcEnumInputEvent.Blur]:()=>{this.registerBlurEvent()},
-      [AcEnumInputEvent.Change]:()=>{this.registerChangeEvent()},
-      [AcEnumInputEvent.Click]:()=>{this.registerClickEvent()},
-      [AcEnumInputEvent.DoneTyping]:()=>{this.registerDoneTypingEvent()},
-      [AcEnumInputEvent.DoubleClick]:()=>{this.registerDoubleClickEvent()},
-      [AcEnumInputEvent.Focus]:()=>{this.registerFocusEvent()},
-      [AcEnumInputEvent.Input]:()=>{this.registerInputEvent()},
-      [AcEnumInputEvent.KeyDown]:()=>{this.registerKeyDownEvent()},
-      [AcEnumInputEvent.KeyPress]:()=>{this.registerKeyPressEvent()},
-      [AcEnumInputEvent.KeyUp]:()=>{this.registerKeyUpEvent()},
-      [AcEnumInputEvent.MouseDown]:()=>{this.registerMouseDownEvent()},
-      [AcEnumInputEvent.MouseEnter]:()=>{this.registerMouseEnterEvent()},
-      [AcEnumInputEvent.MouseLeave]:()=>{this.registerMouseLeaveEvent()},
-      [AcEnumInputEvent.MouseOut]:()=>{this.registerMouseOutEvent()},
-      [AcEnumInputEvent.MouseOver]:()=>{this.registerMouseOverEvent()},
-      [AcEnumInputEvent.MouseUp]:()=>{this.registerMouseUpEvent()}
-    };
-    for(const event of Object.keys(eventRegisterFunctions)){
-      let registerEvent:boolean = true;
-      if(includeEventNames && includeEventNames.length > 0){
-        if(!includeEventNames.includes(event as any)){
-          registerEvent = false;
-        }
-      }
-      else if(excludeEventNames && excludeEventNames.length > 0){
-        if(excludeEventNames.includes(event as any)){
-          registerEvent = false;
-        }
-      }
-      if(registerEvent){
-        eventRegisterFunctions[event]();
-      }
+  attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    switch (name) {
+      case 'value':
+        this.value = newValue;
+        break;
+      case 'placeholder':
+        this.placeholder = newValue;
+        break;
+      case 'disabled':
+        this.disabled = newValue == 'true';
+        break;
+      case 'class':
+        this.class_ = newValue;
+        break;
+      case 'readonly':
+        this.readonly = newValue == 'true';
+        break;
+      case 'name':
+        this.name = newValue;
+        break;
     }
   }
 
-  protected registerBlurEvent() {
-    this.element.addEventListener('blur', (event: FocusEvent) => {
-      const eventArgs: IAcInputFocusEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.Blur, args: eventArgs });
-    });
+  connectedCallback() {
+    this.upgradeProperty('value');
+    this.upgradeProperty('placeholder');
+    this.upgradeProperty('disabled');
+    this.upgradeProperty('name');
+
+    this.inputElement.addEventListener('input', this.handleInput);
+    this.inputElement.addEventListener('change', this.handleChange);
+
+    const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
+
+    if (this.hasAttribute('value')) inputElement.value = this.value;
+    if (this.hasAttribute('placeholder')) inputElement.placeholder = this.placeholder!;
+    if (this.hasAttribute('disabled')) inputElement.disabled = true;
+    if (this.hasAttribute('name')) inputElement.name = this.name!;
   }
 
-  protected registerChangeEvent() {
-    this.element.addEventListener('change', (event: Event) => {
-      const eventArgs: IAcInputChangeEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.Change, args: eventArgs });
-    });
+  disconnectedCallback() {
+    this.inputElement.removeEventListener('input', this.handleInput);
+    this.inputElement.removeEventListener('change', this.handleChange);
   }
 
-  protected registerClickEvent() {
-    this.element.addEventListener('click', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.Click, args: eventArgs });
-    });
+  handleChange(e:any) {
+    const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
+    const newValue = inputElement.value;
+    this.setAttribute('value', newValue);
+    this.dispatchEvent(new CustomEvent('value-changed', {
+      detail: { value: newValue },
+      bubbles: true,
+      composed: true
+    }));
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
-  protected registerDoneTypingEvent() {
-    this.element.addEventListener('keyup', (event: KeyboardEvent) => {
-      if (this.doneTypingTimeout) {
-        clearTimeout(this.doneTypingTimeout);
-      }
-      setTimeout(() => {
-        const eventArgs: IAcInputKeyboardEvent = {
-          event: event,
-          instance: this
-        };
-        this.events.execute({ event: AcEnumInputEvent.DoneTyping, args: eventArgs });
-      }, this.doneTypingTimeoutDuration);
-    });
-  }
-
-  protected registerDoubleClickEvent() {
-    this.element.addEventListener('dblclick', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.DoubleClick, args: eventArgs });
-    });
-  }
-
-  protected registerFocusEvent() {
-    this.element.addEventListener('focus', (event: FocusEvent) => {
-      const eventArgs: IAcInputFocusEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.Focus, args: eventArgs });
-    });
-  }
-
-  protected registerInputEvent() {
-    this.element.addEventListener('input', (event: InputEvent) => {
-      const eventArgs: IAcInputInputEvent = {
-        event: event,
-        instance: this
-      };
-      this.value = this.element.value;
-      this.events.execute({ event: AcEnumInputEvent.Input, args: eventArgs });
-    });
-  }
-
-  protected registerKeyDownEvent() {
-    this.element.addEventListener('keydown', (event: KeyboardEvent) => {
-      const eventArgs: IAcInputKeyboardEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.KeyDown, args: eventArgs });
-    });
-  }
-
-  protected registerKeyPressEvent() {
-    this.element.addEventListener('keyPress', (event: KeyboardEvent) => {
-      const eventArgs: IAcInputKeyboardEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.KeyPress, args: eventArgs });
-    });
-  }
-
-  protected registerKeyUpEvent() {
-    this.element.addEventListener('keyup', (event: KeyboardEvent) => {
-      const eventArgs: IAcInputKeyboardEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.KeyUp, args: eventArgs });
-    });
-  }
-
-  protected registerMouseDownEvent() {
-    this.element.addEventListener('mousedown', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.MouseDown, args: eventArgs });
-    });
-  }
-
-  protected registerMouseEnterEvent() {
-    this.element.addEventListener('mouseenter', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.MouseEnter, args: eventArgs });
-    });
-  }
-
-  protected registerMouseLeaveEvent() {
-    this.element.addEventListener('mouseleave', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.MouseLeave, args: eventArgs });
-    });
-  }
-
-  protected registerMouseOutEvent() {
-    this.element.addEventListener('mouseout', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.MouseOut, args: eventArgs });
-    });
-  }
-
-  protected registerMouseOverEvent() {
-    this.element.addEventListener('mouseover', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.MouseOver, args: eventArgs });
-    });
-  }
-
-  protected registerMouseUpEvent() {
-    this.element.addEventListener('mouseup', (event: MouseEvent) => {
-      const eventArgs: IAcInputMouseEvent = {
-        event: event,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.MouseUp, args: eventArgs });
-    });
+  handleInput(e: any) {
+    const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
+    const newValue = inputElement.value;
+    this.setAttribute('value', newValue);
   }
 
   setValue(value: any) {
     const oldValue: any = this._value;
-    if(oldValue!=value){
+    if (oldValue != value) {
       this._value = value;
-      this.element.value = value;
+      const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
+      inputElement.value = value;
+      this.dispatchEvent(new CustomEvent('valuechange', {
+        detail: { value: value },
+        bubbles: true,
+        composed: true
+      }));
+      this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
       const eventArgs: IAcInputValueChangeEvent = {
         oldValue: oldValue,
         value: this.value,
         instance: this
       };
       this.events.execute({ event: AcEnumInputEvent.ValueChange, args: eventArgs });
-      this.setValueToReactiveValueProxy();
-    }
-
-  }
-
-  protected setValueFromReactiveValueProxy(){
-    if(this.bindKey && this.bindToReactiveValueProxy){
-      this.value = this.bindToReactiveValueProxy.valueProxy[this.bindKey];
-      this.bindToReactiveValueProxy.on(AcEnumReactiveValueProxyEvent.Change,(args:IAcReactiveValueProxyEvent)=>{
-        if(args.property == this.bindKey){
-          this.setValue(args.value);
-        }
-      });
+      this.events.execute({ event: AcEnumInputEvent.Input, args: eventArgs });
+      // this.setValueToReactiveValueProxy();
     }
   }
 
-  protected setValueToReactiveValueProxy(){
-    if(this.bindKey && this.bindToReactiveValueProxy){
-      this.bindToReactiveValueProxy.valueProxy[this.bindKey] = this.value;
+  upgradeProperty(prop: string) {
+    if (this.hasOwnProperty(prop)) {
+      const instance:any = this;
+      const val = instance[prop];
+      delete instance[prop];
+      instance[prop] = val;
     }
   }
 
-  unsubscribeEventListener({ subscriptionId }: { subscriptionId: string }) {
-    this.events.unsubscribe({ subscriptionId: subscriptionId });
-  }
+
+
+
 }
