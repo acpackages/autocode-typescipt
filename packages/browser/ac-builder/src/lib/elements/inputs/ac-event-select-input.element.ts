@@ -1,11 +1,11 @@
-import { AcInputBase, AcSelectInput } from "@autocode-ts/ac-browser";
+import { AcInputBase, AcSelectInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../../enums/ac-enum-builder-hook.enum";
 
 export class AcEventSelectInput extends AcInputBase{
   builderApi:AcBuilderApi;
-  override element:HTMLElement;
-  selectInput:AcSelectInput;
+  override inputElement:AcSelectInputElement = new AcSelectInputElement();
+  selectInput:AcSelectInputElement;
 
   override get value(): any {
     return this.selectInput.value;
@@ -18,9 +18,7 @@ export class AcEventSelectInput extends AcInputBase{
   constructor({builderApi}:{builderApi:AcBuilderApi}){
     super();
     this.builderApi = builderApi;
-    this.selectInput = new AcSelectInput();
-    this.element = this.selectInput.element;
-    this.selectInput.init();
+    this.selectInput = new AcSelectInputElement();
     this.setOptions();
     this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ScriptFunctionChange,callback:()=>{
       this.setOptions();

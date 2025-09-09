@@ -5,7 +5,7 @@ import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCel
 import { AcDDStoredProcedure } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { IAcDDEStoredProcedure } from "../../interfaces/ac-dde-stored-procedure.inteface";
@@ -119,7 +119,7 @@ export class AcDDEStoredProceduresDatagrid {
       }
     });
 
-    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.StoredProcedure, (args: IAcReactiveValueProxyEvent) => {
+    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.StoredProcedure, (args: IAcContextEvent) => {
       if (args.event == 'delete') {
         arrayRemoveByKey(this.data, AcEnumDDEStoredProcedure.StoredProcedureId, args.oldValue[AcEnumDDEStoredProcedure.StoredProcedureId]);
       }

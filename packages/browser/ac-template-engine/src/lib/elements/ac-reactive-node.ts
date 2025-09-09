@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcExpression } from "../core/ac-expression";
 import { AcElementContext } from "../models/ac-element-context.model";
-import { AcReactiveValueProxy } from "../models/ac-reactive-value-proxy.model";
 
 interface IAcValueExpressionDetail {
   expression:string,

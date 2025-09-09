@@ -1,13 +1,13 @@
-import { AcDatagridCell, AcEnumModalEvent, AcModal, AcTextInput, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridCell, AcEnumModalEvent, AcModal, AcTextInputElement, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class AcDDEDatagridValueOptionsInput implements IAcDatagridCellEditorElement {
   datagridCell!: AcDatagridCell;
   private modalInstance?: AcModal;
   private modalElement?: HTMLElement;
-  textInput: AcTextInput = new AcTextInput();
+  textInput: AcTextInputElement = new AcTextInputElement();
 
   destroy(): void {
-    this.textInput.destroy();
+    // this.textInput.destroy();
   }
 
   focus(): void {
@@ -25,7 +25,7 @@ export class AcDDEDatagridValueOptionsInput implements IAcDatagridCellEditorElem
   }
 
   getElement(): HTMLElement {
-    return this.textInput.element;
+    return this.textInput;
   }
 
   getValue() {
@@ -34,7 +34,6 @@ export class AcDDEDatagridValueOptionsInput implements IAcDatagridCellEditorElem
 
   init(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;
-    this.textInput.init();
     this.textInput.on({
       event: 'click', callback: () => {
         this.openModal();

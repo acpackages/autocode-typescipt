@@ -6,7 +6,7 @@ import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
@@ -119,7 +119,7 @@ export class AcDDEViewsDatagrid {
         this.setViewsData();
       }
     });
-    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.View, (args: IAcReactiveValueProxyEvent) => {
+    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.View, (args: IAcContextEvent) => {
       if (args.event == 'delete') {
         arrayRemoveByKey(this.data, AcEnumDDEView.ViewId, args.oldValue[AcEnumDDEView.ViewId]);
       }

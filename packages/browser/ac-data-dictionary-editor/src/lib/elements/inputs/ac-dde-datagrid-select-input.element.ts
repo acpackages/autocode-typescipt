@@ -1,8 +1,8 @@
-import { AcDatagridCell, AcSelectInput, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridCell, AcSelectInputElement, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class AcDDEDatagridSelectInput implements IAcDatagridCellEditorElement{
   datagridCell!:AcDatagridCell;
-  selectInput:AcSelectInput = new AcSelectInput();
+  selectInput:AcSelectInputElement = new AcSelectInputElement();
   get selectOptions():any[]{
     return this.selectInput.selectOptions;
   }
@@ -11,7 +11,7 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditorElement{
   }
 
   destroy(): void {
-    this.selectInput.destroy();
+    // this.selectInput.destroy();
   }
 
   focus(): void {
@@ -29,7 +29,7 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditorElement{
   }
 
   getElement(): HTMLElement {
-    return this.selectInput.element;
+    return this.selectInput;
   }
 
   getValue() {
@@ -41,7 +41,6 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditorElement{
     if(this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.selectOptions){
       this.selectOptions = this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.selectOptions;
     }
-    this.selectInput.init();
     this.selectInput.value = this.datagridCell.cellValue;
   }
 

@@ -3,20 +3,35 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEvents } from "@autocode-ts/autocode";
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
 import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
+import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
 
 export class AcInputBase extends HTMLElement {
   static get observedAttributes() {
-    return ['class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
+    return ['ac-context','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
   }
 
-  get class_(): string | null {
-    return this.getAttribute('class');
+  get inputReflectedAttributes(){
+    return ['class', 'value', 'placeholder', 'disabled', 'readonly'];
   }
-  set class_(value: string) {
-    acAddClassToElement({ class_: value, element: this });
+
+  _acContext?:any;
+  get acContext():any{
+    return this._acContext;
+  }
+  set acContext(value:AcContext){
+    this._acContext = value;
+    this.setAttribute('ac-context',value.__acContextName__);
+    this.setValueFromAcContext();
+  }
+
+  get acContextKey():string|null{
+    return this.getAttribute('ac-context-key');
+  }
+  set acContextKey(value:string){
+    this.setAttribute('ac-context-key',value);
+    this.setValueFromAcContext();
   }
 
   get disabled(): boolean {
@@ -25,11 +40,9 @@ export class AcInputBase extends HTMLElement {
   set disabled(value: boolean) {
     if (value) {
       this.setAttribute('disabled', "true");
-      this.inputElement.setAttribute('disabled', "true");
     }
     else {
       this.removeAttribute('disabled');
-      this.inputElement.removeAttribute('disabled');
     }
   }
 
@@ -51,11 +64,9 @@ export class AcInputBase extends HTMLElement {
   set placeholder(value: string) {
     if (value != '') {
       this.setAttribute('placeholder', value);
-      this.inputElement.setAttribute('placeholder', value);
     }
     else {
       this.removeAttribute(value);
-      this.inputElement.removeAttribute(value);
     }
   }
 
@@ -65,11 +76,9 @@ export class AcInputBase extends HTMLElement {
   set readonly(value: boolean) {
     if (value) {
       this.setAttribute('readonly', "true");
-      this.inputElement.setAttribute('readonly', "true");
     }
     else {
       this.removeAttribute('readonly');
-      this.inputElement.removeAttribute('readonly');
     }
   }
 
@@ -78,21 +87,27 @@ export class AcInputBase extends HTMLElement {
     return this._value;
   }
   set value(value: any) {
-    this.setValue(value);
+    if(value != this._value){
+      this.setValue(value);
+    }
   }
 
   events: AcEvents = new AcEvents();
-  inputElement: HTMLElement = document.createElement('input');
+  inputElement: HTMLElement|any = document.createElement('input');
 
   constructor() {
     super();
     this.style.display = 'contents';
-    this.append(this.inputElement);
   }
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     switch (name) {
+      case 'ac-context':
+        if(AcContextRegistry.exists({name:newValue})){
+          this.acContext = AcContextRegistry.get({name:newValue})!;
+        }
+        break;
       case 'value':
         this.value = newValue;
         break;
@@ -103,7 +118,8 @@ export class AcInputBase extends HTMLElement {
         this.disabled = newValue == 'true';
         break;
       case 'class':
-        this.class_ = newValue;
+        this.className = newValue;
+        this.inputElement.className = newValue;
         break;
       case 'readonly':
         this.readonly = newValue == 'true';
@@ -111,24 +127,24 @@ export class AcInputBase extends HTMLElement {
       case 'name':
         this.name = newValue;
         break;
+      case 'type':
+        this.inputElement.setAttribute('type',newValue);
+        break;
+    }
+    if(this.inputReflectedAttributes.includes(name)){
+      this.refreshReflectedAttributes({attribute:name});
     }
   }
 
   connectedCallback() {
-    this.upgradeProperty('value');
-    this.upgradeProperty('placeholder');
-    this.upgradeProperty('disabled');
-    this.upgradeProperty('name');
-
-    this.inputElement.addEventListener('input', this.handleInput);
-    this.inputElement.addEventListener('change', this.handleChange);
-
-    const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
-
-    if (this.hasAttribute('value')) inputElement.value = this.value;
-    if (this.hasAttribute('placeholder')) inputElement.placeholder = this.placeholder!;
-    if (this.hasAttribute('disabled')) inputElement.disabled = true;
-    if (this.hasAttribute('name')) inputElement.name = this.name!;
+    this.append(this.inputElement);
+    this.refreshReflectedAttributes();
+    this.inputElement.addEventListener('input', ()=>{
+      this.value = this.inputElement.value;
+    });
+    this.inputElement.addEventListener('change', ()=>{
+      this.value = this.inputElement.value;
+    });
   }
 
   disconnectedCallback() {
@@ -137,9 +153,8 @@ export class AcInputBase extends HTMLElement {
   }
 
   handleChange(e:any) {
-    const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
-    const newValue = inputElement.value;
-    this.setAttribute('value', newValue);
+    const newValue = this.inputElement.value;
+    this.value = newValue;
     this.dispatchEvent(new CustomEvent('value-changed', {
       detail: { value: newValue },
       bubbles: true,
@@ -149,9 +164,12 @@ export class AcInputBase extends HTMLElement {
   }
 
   handleInput(e: any) {
-    const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
-    const newValue = inputElement.value;
-    this.setAttribute('value', newValue);
+    const newValue = this.inputElement.value;
+    this.value('value', newValue);
+  }
+
+  on({event,callback}:{event:string,callback:Function}):string{
+    return this.events.subscribe({event,callback});
   }
 
   setValue(value: any) {
@@ -160,6 +178,7 @@ export class AcInputBase extends HTMLElement {
       this._value = value;
       const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
       inputElement.value = value;
+      this.setAttribute('value',value)
       this.dispatchEvent(new CustomEvent('valuechange', {
         detail: { value: value },
         bubbles: true,
@@ -173,12 +192,30 @@ export class AcInputBase extends HTMLElement {
       };
       this.events.execute({ event: AcEnumInputEvent.ValueChange, args: eventArgs });
       this.events.execute({ event: AcEnumInputEvent.Input, args: eventArgs });
-      // this.setValueToReactiveValueProxy();
+      this.setValueToAcContext();
+    }
+  }
+
+  protected setValueFromAcContext(){
+    if(this.acContextKey && this.acContext){
+      this.value = this.acContext[this.acContextKey];
+      this.acContext.on(AcEnumContextEvent.Change,(args:any)=>{
+        if(args.property == this.acContextKey){
+          this.setValue(args.value);
+        }
+      });
+    }
+  }
+
+  protected setValueToAcContext(){
+    if(this.acContextKey && this.acContext){
+      this.acContext[this.acContextKey] = this.value;
     }
   }
 
   upgradeProperty(prop: string) {
     if (this.hasOwnProperty(prop)) {
+      console.log('upgrade property',prop);
       const instance:any = this;
       const val = instance[prop];
       delete instance[prop];
@@ -186,7 +223,25 @@ export class AcInputBase extends HTMLElement {
     }
   }
 
-
-
+  refreshReflectedAttributes({attribute}:{attribute?:string} = {}){
+    const setAttributeFromThis = (attributeName:string)=>{
+      if(this.hasAttribute(attributeName)){
+        this.inputElement.setAttribute(attributeName,this.getAttribute(attributeName)!);
+      }
+      else{
+        this.inputElement.removeAttribute(attributeName);
+      }
+    };
+    if(attribute){
+      for(const attributeName of this.inputReflectedAttributes){
+      setAttributeFromThis(attribute);
+    }
+    }
+    else{
+      for(const attributeName of this.inputReflectedAttributes){
+        setAttributeFromThis(attributeName);
+      }
+    }
+  }
 
 }

@@ -1,1 +1,1 @@
-export * from './ac-reactive-value-proxy-event.interface';
+export * from './ac-context-event.interface';

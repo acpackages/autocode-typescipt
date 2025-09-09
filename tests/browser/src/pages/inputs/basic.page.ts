@@ -1,39 +1,37 @@
-import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValues, AcEnumInputType, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTextAreaInput, AcTextInput, AcInputElement } from "@autocode-ts/ac-browser";
+import { AC_INPUT_ATTRIBUTE_NAME, AcEnumInputType, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
-import { AcReactiveValueProxy } from "@autocode-ts/ac-template-engine";
+import { AcContext } from "@autocode-ts/ac-template-engine";
 
 export class InputBasicPage extends HTMLElement {
   pageHeader: PageHeader = new PageHeader();
-  proxyInstance!: AcReactiveValueProxy;
-  recordProxy: any;
-  record: any = {
-    full_name: 'Alice Johnson',
-    personal_email: 'alice.j@example.com',
-    user_password: 'Secret123!',
-    age: 29,
-    favorite_color: '#007bff',
-    birth_date: '1996-05-12',
-    preferred_time: '09:30',
-    meeting_datetime: '2025-08-15T14:30',
-    preferred_month: '2025-08',
-    preferred_week: '2025-W33',
-    contact_number: '+91-9876543210',
-    portfolio_url: 'https://alicejohnson.dev',
-    search_query: 'frontend developer',
-    auth_token: 'abc123xyz',
-    profile_strength: 85,
-    resume_file: '',       // placeholder for file input
-    profile_picture: '',   // placeholder for image input
-    about_me: 'UI/UX designer with 5+ years of experience.',
-    favourite_quote: 'The value of life is not in its duration, but in its donation. You are not important because of how long you live, you are important because of how effective you live..',
-    contact_preference: 'Email',
-    interested_fruits: ['Apple', 'Mango'],
-    preferred_framework: 'Vue.js'
-  };
+  context: AcContext = new AcContext({
+    value: {
+      full_name: 'Alice Johnson',
+      personal_email: 'alice.j@example.com',
+      user_password: 'Secret123!',
+      age: 29,
+      favorite_color: '#007bff',
+      birth_date: '1996-05-12',
+      preferred_time: '09:30',
+      meeting_datetime: '2025-08-15T14:30',
+      preferred_month: '2025-08',
+      preferred_week: '2025-W33',
+      contact_number: '+91-9876543210',
+      portfolio_url: 'https://alicejohnson.dev',
+      search_query: 'frontend developer',
+      auth_token: 'abc123xyz',
+      profile_strength: 85,
+      resume_file: '',       // placeholder for file input
+      profile_picture: '',   // placeholder for image input
+      about_me: 'UI/UX designer with 5+ years of experience.',
+      favourite_quote: 'The value of life is not in its duration, but in its donation. You are not important because of how long you live, you are important because of how effective you live..',
+      contact_preference: 'Email',
+      interested_fruits: ['Apple', 'Mango'],
+      preferred_framework: 'Vue.js'
+    }, name: 'record'
+  });
 
   async connectedCallback() {
-    this.proxyInstance = new AcReactiveValueProxy(this.record);
-    this.recordProxy = this.proxyInstance.valueProxy;
 
     this.innerHTML = `<div class="container py-4"><div class="accordion" id="formAccordion"></div></div>`;
     this.prepend(this.pageHeader.element);
@@ -66,13 +64,13 @@ export class InputBasicPage extends HTMLElement {
     const allInputsGroup = createCard('Real-Life Inputs', 'real-inputs');
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {
-      const input = new AcTextInput();
+      const input = new AcTextInputElement();
       input.type = type;
-      input.bindKey = key;
-      input.bindToReactiveValueProxy = this.proxyInstance;
-      input.init();
-      input.element.classList.add('form-control');
-      addField(label, input.element, allInputsGroup);
+      input.acContextKey = key;
+      // input.acContext = this.context;
+      input.setAttribute('ac-context',this.context.__acContextName__);
+      input.className = 'form-control';
+      addField(label, input, allInputsGroup);
     };
 
     // Realistic mapped inputs
@@ -99,16 +97,16 @@ export class InputBasicPage extends HTMLElement {
     </thead>
     </table>
     `;
-    allInputsGroup.appendChild(arrayValuesElement);
-    const arrayValuesInstance = new AcArrayValues()
-    arrayValuesInstance.initArrayValues({element:arrayValuesElement});
+    // allInputsGroup.appendChild(arrayValuesElement);
+    // const arrayValuesInstance = new AcArrayValues()
+    // arrayValuesInstance.initArrayValues({element:arrayValuesElement});
 
-    allInputsGroup.append('<ac-input></ac-input>')
+    // allInputsGroup.append('<ac-input></ac-input>')
 
     addInput(AcEnumInputType.Color, 'Favorite Color', 'favorite_color');
     addInput(AcEnumInputType.Date, 'Birth Date', 'birth_date');
     addInput(AcEnumInputType.Time, 'Preferred Time', 'preferred_time');
-    addInput(AcEnumInputType.DateTimeLocal, 'Meeting Date & Time', 'meeting_datetime');
+    addInput(AcEnumInputType.DatetimeLocal, 'Meeting Date & Time', 'meeting_datetime');
     addInput(AcEnumInputType.Month, 'Preferred Month', 'preferred_month');
     addInput(AcEnumInputType.Week, 'Preferred Week', 'preferred_week');
     addInput(AcEnumInputType.Tel, 'Contact Number', 'contact_number');
@@ -120,35 +118,32 @@ export class InputBasicPage extends HTMLElement {
     addInput(AcEnumInputType.Image, 'Profile Picture', 'profile_picture');
 
     // Textarea: About Me
-    const textarea = new AcTextAreaInput();
-    textarea.bindKey = 'about_me';
-    textarea.bindToReactiveValueProxy = this.proxyInstance;
-    textarea.init();
-    textarea.element.classList.add('form-control');
-    addField('About Me', textarea.element, allInputsGroup);
+    const textarea = new AcTextareaInputElement();
+    textarea.acContextKey = 'about_me';
+    textarea.acContext = this.context;
+    textarea.className = 'form-control';
+    addField('About Me', textarea, allInputsGroup);
 
-    const popoutTextArea = new AcPopoutTextareaInput();
-    popoutTextArea.bindKey = 'favourite_quote';
-    popoutTextArea.bindToReactiveValueProxy = this.proxyInstance;
-    popoutTextArea.init();
-    popoutTextArea.element.classList.add('form-control');
-    addField('Fav Quote', popoutTextArea.element, allInputsGroup);
+    const popoutTextArea = new AcPopoutTextareaInputElement();
+    popoutTextArea.acContextKey = 'favourite_quote';
+    popoutTextArea.acContext = this.context;
+    popoutTextArea.className = 'form-control';
+    addField('Fav Quote', popoutTextArea, allInputsGroup);
 
-    // Radio group: Contact Preference
+    // // Radio group: Contact Preference
     const radioLabel = document.createElement('div');
     radioLabel.className = 'fw-bold mt-3';
     radioLabel.textContent = 'Preferred Contact Method';
     allInputsGroup.appendChild(radioLabel);
 
     ['Email', 'Phone', 'In-app'].forEach((method) => {
-      const radio = new AcOptionInput();
+      const radio = new AcOptionInputElement();
       radio.type = AcEnumInputType.Radio;
       radio.name = 'contact_preference';
-      radio.valueWhenChecked = method;
-      radio.bindKey = 'contact_preference';
-      radio.bindToReactiveValueProxy = this.proxyInstance;
-      radio.init();
-      radio.element.classList.add('form-check-input');
+      radio.valueChecked = method;
+      radio.acContextKey = 'contact_preference';
+    radio.acContext = this.context;
+      radio.className = 'form-check-input';
 
       const div = document.createElement('div');
       div.className = 'form-check';
@@ -156,25 +151,24 @@ export class InputBasicPage extends HTMLElement {
       label.className = 'form-check-label';
       label.textContent = method;
 
-      div.appendChild(radio.element);
+      div.appendChild(radio);
       div.appendChild(label);
       allInputsGroup.appendChild(div);
     });
 
-    // Checkbox group: Favorite Fruits
+    // // Checkbox group: Favorite Fruits
     const checkboxLabel = document.createElement('div');
     checkboxLabel.className = 'fw-bold mt-3';
     checkboxLabel.textContent = 'Fruits You Like';
     allInputsGroup.appendChild(checkboxLabel);
 
     ['Apple', 'Banana', 'Mango'].forEach((fruit) => {
-      const checkbox = new AcOptionInput();
+      const checkbox = new AcOptionInputElement();
       checkbox.type = AcEnumInputType.Checkbox;
-      checkbox.valueWhenChecked = fruit;
-      checkbox.bindKey = 'interested_fruits';
-      checkbox.bindToReactiveValueProxy = this.proxyInstance;
-      checkbox.init();
-      checkbox.element.classList.add('form-check-input');
+      checkbox.valueChecked = fruit;
+      checkbox.acContextKey = 'interested_fruits';
+      checkbox.acContext = this.context;
+      checkbox.className = 'form-check-input';
 
       const div = document.createElement('div');
       div.className = 'form-check';
@@ -182,26 +176,25 @@ export class InputBasicPage extends HTMLElement {
       label.className = 'form-check-label';
       label.textContent = fruit;
 
-      div.appendChild(checkbox.element);
+      div.appendChild(checkbox);
       div.appendChild(label);
       allInputsGroup.appendChild(div);
     });
 
     // Select: Preferred Framework
-    const select = new AcSelectInput();
-    select.bindKey = 'preferred_framework';
-    select.bindToReactiveValueProxy = this.proxyInstance;
+    const select = new AcSelectInputElement();
+    select.acContextKey = 'preferred_framework';
+    select.acContext = this.context;
     select.selectOptions = ['Angular', 'React', 'Vue.js', 'Svelte'];
-    select.init();
-    select.element.classList.add('form-select');
-    addField('Preferred Framework', select.element, allInputsGroup);
+    select.className = 'form-select';
+    addField('Preferred Framework', select, allInputsGroup);
 
     this.pageHeader.addMenuItem({
       label: 'Record',
       children: [
         {
           label: 'Log',
-          callback: () => console.log(this.record)
+          callback: () => console.log(this.context)
         },
         {
           label: 'Set Value',
@@ -231,14 +224,14 @@ export class InputBasicPage extends HTMLElement {
     //     value.hello.nestes.level1['level2_alternative'] = {};
 
     // const reactiveProxy = new AcReactiveValueProxy(window);
-    // reactiveProxy.events.subscribeAllEvents({callback:(event:string,params:any)=>{
+    // this.context.__events__.subscribeAllEvents({callback:(event:string,params:any)=>{
     //   console.log(event,params);
     // }})
     // console.log(value);
   }
 
   setExampleValues() {
-    Object.assign(this.recordProxy, {
+    Object.assign(this.context, {
       full_name: 'Bob Martin',
       personal_email: 'bob.m@example.com',
       user_password: 'TopSecret456',

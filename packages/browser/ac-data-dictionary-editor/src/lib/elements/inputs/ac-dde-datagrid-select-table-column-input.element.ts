@@ -1,14 +1,14 @@
-import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement, AcDatagridCell } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcSelectInputElement, IAcDatagridCellEditorElement, AcDatagridCell } from '@autocode-ts/ac-browser';
 import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
 import { AcDDEApi } from '../../core/ac-dde-api';
 export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEditorElement {
   editorApi!: AcDDEApi;
-  selectInput: AcSelectInput = new AcSelectInput();
+  selectInput: AcSelectInputElement = new AcSelectInputElement();
   datagridCell!: AcDatagridCell;
   filter:Function|undefined;
 
   destroy(): void {
-    this.selectInput.destroy();
+    // this.selectInput.destroy();
   }
 
   focus(): void {
@@ -16,7 +16,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
   }
 
   getElement(): HTMLElement {
-    return this.selectInput.element;
+    return this.selectInput;
   }
 
   getValue() {
@@ -24,7 +24,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.init();
+    // this.selectInput.init();
     this.datagridCell = args.datagridCell;
     if (args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']) {
       this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];

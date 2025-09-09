@@ -1,11 +1,11 @@
-import { AcSelectInput, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcSelectInputElement, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 import { AcEnumDDColumnFormat } from "@autocode-ts/ac-data-dictionary";
 
 export class AcDDEDatagridSelectFormatInput implements IAcDatagridCellEditorElement {
-  selectInput: AcSelectInput = new AcSelectInput();
+  selectInput: AcSelectInputElement = new AcSelectInputElement();
 
   destroy(): void {
-    this.selectInput.destroy();
+    // this.selectInput.destroy();/
   }
 
   focus(): void {
@@ -13,7 +13,7 @@ export class AcDDEDatagridSelectFormatInput implements IAcDatagridCellEditorElem
   }
 
   getElement(): HTMLElement {
-    return this.selectInput.element;
+    return this.selectInput;
   }
 
   getValue() {
@@ -21,7 +21,6 @@ export class AcDDEDatagridSelectFormatInput implements IAcDatagridCellEditorElem
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.init();
     this.selectInput.selectOptions = [
       { label: 'Lowercase', value: AcEnumDDColumnFormat.Lowercase },
       { label: 'Uppercase', value: AcEnumDDColumnFormat.Uppercase },

@@ -132,7 +132,7 @@ export class AcTemplateEngine {
     children.forEach(child => parent.insertBefore(child, el));
     let remove: boolean = true;
     if (templateName) {
-      const context = this.elementContext.valueProxies[0];
+      const context = this.elementContext.contexts[0];
       console.log(context);
       const templateElement = this.renderTemplate(templateName,context.value);
       console.log(this);

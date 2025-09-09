@@ -1,12 +1,11 @@
 // ac-popout-textarea-input.ts
 // One class, all features. No frameworks, no wrapper <div>, only input + textarea.
 
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcInputBase } from "../core/ac-input-base";
 import { IAcPopoutTextareaOptions } from "../interfaces/input-options/ac-popout-textarea-input-options.interface";
 
-export class AcPopoutTextareaInput extends AcInputBase {
+export class AcPopoutTextareaInputElement extends AcInputBase {
   private textarea: HTMLTextAreaElement | null = null;
 
   private opts: Required<IAcPopoutTextareaOptions>;
@@ -21,6 +20,8 @@ export class AcPopoutTextareaInput extends AcInputBase {
   private boundResize: () => void;
   private boundDocMouseDown: (e: MouseEvent) => void;
   private boundKeydown: (e: KeyboardEvent) => void;
+
+  override inputElement: HTMLInputElement = document.createElement('input');
 
   constructor(options: IAcPopoutTextareaOptions = {}) {
     super();
@@ -52,10 +53,10 @@ export class AcPopoutTextareaInput extends AcInputBase {
     this.boundDocMouseDown = (e) => this.handleDocMouseDown(e);
     this.boundKeydown = (e) => this.handleKeyDown(e);
     if (this.opts.triggerOnFocus) {
-      this.element.addEventListener("focus", () => this.open());
+      this.inputElement.addEventListener("focus", () => this.open());
     }
     if (this.opts.triggerOnDblClick) {
-      this.element.addEventListener("dblclick", () => this.open());
+      this.inputElement.addEventListener("dblclick", () => this.open());
     }
     this.setupIntersectionObserver();
   }
@@ -63,8 +64,8 @@ export class AcPopoutTextareaInput extends AcInputBase {
   private applyBaseStyles() {
     if (!this.textarea) return;
     const ta = this.textarea;
-    const cs = getComputedStyle(this.element);
-    const inputRect = this.element.getBoundingClientRect();
+    const cs = getComputedStyle(this.inputElement);
+    const inputRect = this.inputElement.getBoundingClientRect();
     const minWidth = this.opts.minWidthPx || inputRect.width;
     const minHeight = this.opts.minHeightPx || inputRect.height;
     ta.style.position = "fixed";
@@ -88,20 +89,20 @@ export class AcPopoutTextareaInput extends AcInputBase {
     ta.style.transform = "scale(0.98)";
     ta.style.pointerEvents = "none";
     ta.style.transition = `transform ${this.opts.animationDurationMs}ms ${this.opts.animationEasing}, opacity ${this.opts.animationDurationMs}ms ${this.opts.animationEasing}`;
-    if (this.opts.copyInputPlaceholder) ta.placeholder = this.element.placeholder || "";
-    if (this.opts.respectMaxLength && this.element.maxLength > 0) {
-      ta.maxLength = this.element.maxLength;
+    if (this.opts.copyInputPlaceholder) ta.placeholder = this.inputElement.placeholder || "";
+    if (this.opts.respectMaxLength && this.inputElement.maxLength > 0) {
+      ta.maxLength = this.inputElement.maxLength;
     }
     if (this.opts.copyDisabledReadonly) {
-      ta.readOnly = this.element.readOnly;
-      ta.disabled = this.element.disabled;
+      ta.readOnly = this.inputElement.readOnly;
+      ta.disabled = this.inputElement.disabled;
     }
     Object.assign(ta.style, this.opts.styleOverrides);
   }
 
   private applyPosition() {
     if (!this.textarea) return;
-    const rect = this.element.getBoundingClientRect();
+    const rect = this.inputElement.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const matchWidth = this.opts.matchInputWidth;
@@ -159,11 +160,11 @@ export class AcPopoutTextareaInput extends AcInputBase {
       ? this.textarea.value.replace(/[ \t]+$/gm, "").replace(/\s+$/g, "")
       : this.textarea.value;
     if (reason === "cancel") {
-      this.element.value = this.preEditValue;
+      this.inputElement.value = this.preEditValue;
     } else {
-      this.element.value = finalValue;
+      this.inputElement.value = finalValue;
     }
-    const rect = this.element.getBoundingClientRect();
+    const rect = this.inputElement.getBoundingClientRect();
     this.textarea.style.transition = "all 0.25s ease";
     this.textarea.style.width = rect.width + "px";
     this.textarea.style.height = rect.height + "px";
@@ -182,15 +183,15 @@ export class AcPopoutTextareaInput extends AcInputBase {
     }, duration);
   }
 
-  override destroy() {
+  destroy() {
     this.close("api");
     this.io?.disconnect();
-    this.element.replaceWith(this.element);
+    this.inputElement.replaceWith(this.inputElement);
     if (this.opts.triggerOnFocus) {
-      this.element.removeEventListener("focus", () => this.open());
+      this.inputElement.removeEventListener("focus", () => this.open());
     }
     if (this.opts.triggerOnDblClick) {
-      this.element.removeEventListener("dblclick", () => this.open());
+      this.inputElement.removeEventListener("dblclick", () => this.open());
     }
   }
 
@@ -201,13 +202,13 @@ export class AcPopoutTextareaInput extends AcInputBase {
     document.body.appendChild(ta);
     ta.addEventListener("input", () => {
       if (!this.textarea) return;
-      if (this.opts.respectMaxLength && this.element.maxLength > 0) {
-        if (this.textarea.value.length > this.element.maxLength) {
-          this.textarea.value = this.textarea.value.slice(0, this.element.maxLength);
+      if (this.opts.respectMaxLength && this.inputElement.maxLength > 0) {
+        if (this.textarea.value.length > this.inputElement.maxLength) {
+          this.textarea.value = this.textarea.value.slice(0, this.inputElement.maxLength);
         }
       }
       if (this.opts.liveSync) {
-        this.element.value = this.textarea.value;
+        this.inputElement.value = this.textarea.value;
         this.value = this.textarea.value;
       }
       if (this.opts.autoGrow) this.autoGrow();
@@ -219,14 +220,14 @@ export class AcPopoutTextareaInput extends AcInputBase {
   }
 
   override focus() {
-    this.element.focus();
+    this.inputElement.focus();
     this.open();
   }
 
   private handleDocMouseDown(e: MouseEvent) {
     if (!this.isOpen || !this.textarea) return;
     const target = e.target as Node;
-    if (target === this.textarea || target === this.element || this.textarea.contains(target)) return;
+    if (target === this.textarea || target === this.inputElement || this.textarea.contains(target)) return;
     if (this.opts.persistent) {
       return;
     }
@@ -239,27 +240,22 @@ export class AcPopoutTextareaInput extends AcInputBase {
       e.stopPropagation();
       e.preventDefault();
       this.close("cancel");
-      this.element.focus();
+      this.inputElement.focus();
       return;
     }
     if ((e.key === "Enter" && (e.ctrlKey || e.metaKey))) {
       e.stopPropagation();
       e.preventDefault();
       this.close("confirm");
-      this.element.focus();
+      this.inputElement.focus();
       return;
     }
   }
 
   private isDisabledReadonly(): boolean {
     if (!this.opts.copyDisabledReadonly) return false;
-    return this.element.disabled || this.element.readOnly;
+    return this.inputElement.disabled || this.inputElement.readOnly;
   }
-
-  override init(): void {
-      super.init();
-      acAddClassToElement({class_:AcInputCssClassName.acTextInput,element:this.element});
-    }
 
   open() {
     if (this.isOpen || this.isDisabledReadonly()) return;
@@ -275,7 +271,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
     document.addEventListener("keydown", this.boundKeydown, true);
     requestAnimationFrame(() => {
       if (!this.textarea) return;
-      const rect = this.element.getBoundingClientRect();
+      const rect = this.inputElement.getBoundingClientRect();
       this.textarea.style.width = rect.width + "px";
       this.textarea.style.height = rect.height + "px";
       this.textarea.style.left = rect.left + "px";
@@ -300,7 +296,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
   private rafUpdate() {
     this.rafPending = false;
     if (!this.isOpen || !this.textarea) return;
-    const rect = this.element.getBoundingClientRect();
+    const rect = this.inputElement.getBoundingClientRect();
     const inViewport =
       rect.bottom > 0 &&
       rect.right > 0 &&
@@ -345,7 +341,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
         }
       }
     }, { root: null, threshold: 0 });
-    this.io.observe(this.element);
+    this.io.observe(this.inputElement);
   }
 
   private syncFromInputToTextarea(moveCaretToEnd = false) {
@@ -360,7 +356,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
 
   private teardownTextarea(): void {
     if (!this.textarea) return;
-    this.element.value = this.textarea.value;
+    this.inputElement.value = this.textarea.value;
     if (this.textarea.parentElement) {
       this.textarea.parentElement.removeChild(this.textarea);
     }
@@ -369,3 +365,4 @@ export class AcPopoutTextareaInput extends AcInputBase {
 
 }
 
+customElements.define('ac-popout-textarea-input', AcPopoutTextareaInputElement);

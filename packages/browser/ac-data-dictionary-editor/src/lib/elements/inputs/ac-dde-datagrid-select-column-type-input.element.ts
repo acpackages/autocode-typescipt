@@ -1,10 +1,10 @@
-import {  IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
+import {  IAcDatagridCellElementArgs, AcSelectInputElement, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
 import { AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
 export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditorElement{
-  selectInput:AcSelectInput = new AcSelectInput();
+  selectInput:AcSelectInputElement = new AcSelectInputElement();
 
   destroy(): void {
-    this.selectInput.destroy();
+    // this.selectInput.destroy();
   }
 
   focus(): void {
@@ -12,7 +12,7 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditor
   }
 
   getElement(): HTMLElement {
-    return this.selectInput.element;
+    return this.selectInput;
   }
 
   getValue() {
@@ -20,7 +20,6 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditor
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.init();
     this.selectInput.selectOptions = [
       {label:'Auto Increment',value:AcEnumDDColumnType.AutoIncrement},
       {label:'Auto Index',value:AcEnumDDColumnType.AutoIndex},
@@ -37,7 +36,6 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditor
       {label:'Text',value:AcEnumDDColumnType.Text},
       {label:'Time',value:AcEnumDDColumnType.Time},
       {label:'Timestamp',value:AcEnumDDColumnType.Timestamp},
-      {label:'User Defined Function',value:AcEnumDDColumnType.UserDefinedFunction},
       {label:'UUID',value:AcEnumDDColumnType.Uuid},
       {label:'Yes/No',value:AcEnumDDColumnType.YesNo}
     ];

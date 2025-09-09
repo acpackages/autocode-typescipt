@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { stringIsJson } from "@autocode-ts/ac-extensions";
 import { AcScrollable } from "../../ac-scrollable/_ac-scrollable.export";
 import { AcInputBase } from "../core/ac-input-base";
 
@@ -185,7 +186,12 @@ export class AcSelectInputElement extends AcInputBase {
       this.valueKey = newValue;
     }
     else if (name == 'select-options') {
-      this.selectOptions = newValue;
+      if(stringIsJson(newValue)){
+        this.selectOptions = newValue;
+      }
+      else{
+        this.selectOptions = newValue.split(",");
+      }
     }
     else {
       super.attributeChangedCallback(name, oldValue, newValue);
