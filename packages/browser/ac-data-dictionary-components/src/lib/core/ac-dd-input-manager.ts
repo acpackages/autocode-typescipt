@@ -1,27 +1,31 @@
 import { AcDataDictionary, AcDDTableColumn, AcEnumDDColumnType } from "@autocode-ts/ac-data-dictionary";
-import { AcDateTimeInput, AcInput, AcInputBase, AcNumberInput, AcSelectInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { AcDatetimeInputElement, AcInputElement, AcNumberInputElement, AcSelectInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { IAcDDInputDefinition } from "../interfaces/ac-dd-input-definition.interface";
+import { AcDDInputFieldBaseElement } from "../elements/ac-dd-input-field-base-element.element";
 
 export class AcDDInputManager{
   private static columnTypeInputs:Record<string,IAcDDInputDefinition> = {
-    [AcEnumDDColumnType.AutoNumber]:{ inputClass:AcTextInput },
-    [AcEnumDDColumnType.Blob]:{ inputClass:AcInput },
-    [AcEnumDDColumnType.Date]:{ inputClass:AcDateTimeInput},
-    [AcEnumDDColumnType.Datetime]:{ inputClass:AcDateTimeInput},
-    [AcEnumDDColumnType.Double]:{ inputClass:AcNumberInput},
-    [AcEnumDDColumnType.Integer]:{ inputClass:AcNumberInput},
-    [AcEnumDDColumnType.Json]:{ inputClass:AcTextInput, },
-    [AcEnumDDColumnType.Password]:{ inputClass:AcInput, defaultProperties:{type:'password'} },
-    [AcEnumDDColumnType.String]:{ inputClass:AcTextInput },
-    [AcEnumDDColumnType.Text]:{ inputClass:AcTextInput },
-    [AcEnumDDColumnType.Time]:{ inputClass:AcTextInput },
-    [AcEnumDDColumnType.YesNo]:{ inputClass:AcTextInput },
+    [AcEnumDDColumnType.AutoNumber]:{ inputClass:AcTextInputElement },
+    [AcEnumDDColumnType.Blob]:{ inputClass:AcInputElement },
+    [AcEnumDDColumnType.Date]:{ inputClass:AcDatetimeInputElement},
+    [AcEnumDDColumnType.Datetime]:{ inputClass:AcDatetimeInputElement},
+    [AcEnumDDColumnType.Double]:{ inputClass:AcNumberInputElement},
+    [AcEnumDDColumnType.Integer]:{ inputClass:AcNumberInputElement},
+    [AcEnumDDColumnType.Json]:{ inputClass:AcTextInputElement, },
+    [AcEnumDDColumnType.Password]:{ inputClass:AcInputElement, defaultProperties:{type:'password'} },
+    [AcEnumDDColumnType.String]:{ inputClass:AcTextInputElement },
+    [AcEnumDDColumnType.Text]:{ inputClass:AcTextInputElement },
+    [AcEnumDDColumnType.Time]:{ inputClass:AcTextInputElement },
+    [AcEnumDDColumnType.YesNo]:{ inputClass:AcTextInputElement },
+  };
+  private static inputElementProperties:Record<string,any> = {
   };
   private static foreignKeyInputs:Record<string,IAcDDInputDefinition> = {};
+  static inputFieldElementClass:any = AcDDInputFieldBaseElement;
   static inputResolver?:Function;
 
   static getColumnInputDefinition({columnName,tableName}:{columnName:string,tableName:string}):IAcDDInputDefinition{
-    let result:IAcDDInputDefinition = {inputClass:AcInput,defaultProperties:{}};
+    let result:IAcDDInputDefinition = {inputClass:AcInputElement,defaultProperties:{}};
     const ddTableColumn:AcDDTableColumn|null = AcDataDictionary.getTableColumn({tableName,columnName});
     let resolvedDefinition;
     if(this.inputResolver){
@@ -52,7 +56,7 @@ export class AcDDInputManager{
         }
         const selectOptions:any[] = ddTableColumn.getValueOptions();
         if(selectOptions.length > 0){
-          result.inputClass = AcSelectInput;
+          result.inputClass = AcSelectInputElement;
           result.defaultProperties['selectOptions'] = selectOptions;
         }
       }

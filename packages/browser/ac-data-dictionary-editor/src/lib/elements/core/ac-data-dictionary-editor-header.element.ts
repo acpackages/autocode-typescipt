@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcSelectInput, AcTooltip } from "@autocode-ts/ac-browser";
-import { AcDDESelectDataDictionaryInput } from "../inputs/ac-dde-select-data-dictionary-input.element";
+import { acAddClassToElement, AcTooltip } from "@autocode-ts/ac-browser";
 import { AcEnumDDETab } from "../../enums/ac-enum-dde-tab.enum";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
@@ -18,11 +17,10 @@ export class AcDataDictionaryEditorHeader {
   element: HTMLElement = document.createElement('div');
   dropdown: HTMLElement = document.createElement('div');
 
-  selectDataDictionaryInput: AcSelectInput;
+  // selectDataDictionaryInput: AcSelectInput;
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
-    this.selectDataDictionaryInput = (new AcDDESelectDataDictionaryInput({ editorApi: editorApi })).selectInput;
     this.initElement();
     this.setDataDictionaryDropdown();
     this.editorApi.hooks.subscribe({hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
@@ -34,7 +32,6 @@ export class AcDataDictionaryEditorHeader {
     this.editorApi.hooks.subscribe({hook: AcEnumDDEHook.DataDictionarySet, callback: (args: IAcDDEHookArgs) => {
       this.setDataDictionaryDropdown();
     }});
-    // console.log(this);
   }
 
   private addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }): void {
@@ -74,10 +71,10 @@ export class AcDataDictionaryEditorHeader {
   }
 
   private initElement() {
-    this.element.appendChild(this.selectDataDictionaryInput.element);
-    this.selectDataDictionaryInput.element.style.minWidth = '150px';
-    this.selectDataDictionaryInput.element.style.background = 'transparent';
-    acAddClassToElement({ class_: 'form-select', element: this.selectDataDictionaryInput.element });
+    // this.element.appendChild(this.selectDataDictionaryInput.element);
+    // this.selectDataDictionaryInput.element.style.minWidth = '150px';
+    // this.selectDataDictionaryInput.element.style.background = 'transparent';
+    // acAddClassToElement({ class_: 'form-select', element: this.selectDataDictionaryInput.element });
     this.element.append(this.dropdown);
     this.element.innerHTML = `
     <div class="ac-dde-topbar">
@@ -99,7 +96,6 @@ export class AcDataDictionaryEditorHeader {
             </div>
           </div>
         </div>`;
-    this.element.querySelector('.data-dictionary-select-input-container')?.append(this.selectDataDictionaryInput.element);
     const tabs: any = [
       {
         label: 'Tables',

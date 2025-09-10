@@ -6,21 +6,21 @@ import { AcInputBase } from "../core/ac-input-base";
 
 export class AcSelectInputElement extends AcInputBase {
   static override get observedAttributes() {
-    return [... super.observedAttributes, 'label-key','value-key','select-options'];
+    return [... super.observedAttributes, 'label-key', 'value-key', 'select-options'];
   }
 
   get labelKey(): string {
     return this.getAttribute('label-key')!;
   }
   set labelKey(value: string) {
-    this.setAttribute('label-key',value);
+    this.setAttribute('label-key', value);
   }
 
   get valueKey(): string {
     return this.getAttribute('value-key')!;
   }
   set valueKey(value: string) {
-    this.setAttribute('value-key',value);
+    this.setAttribute('value-key', value);
   }
 
   private _selectOptions: any[] = [];
@@ -39,9 +39,10 @@ export class AcSelectInputElement extends AcInputBase {
       const optVal = typeof option === "object" ? option[this.valueKey] : option;
       return optVal == val;
     });
-    if (match) {
+    if (match && !this.isDropdownOpen) {
       this.textInputElement.value = typeof match === "object" ? match[this.labelKey] : match;
     }
+
   }
 
   private _filteredOptions: any[] = [];
@@ -83,6 +84,7 @@ export class AcSelectInputElement extends AcInputBase {
       display: "none",
       zIndex: "9999",
       minWidth: "max-content",
+      maxHeight: `${this.maxDropdownHeight}px`,
       border: "1px solid #ccc",
       background: "#fff",
       boxSizing: "border-box",
@@ -92,7 +94,6 @@ export class AcSelectInputElement extends AcInputBase {
     this.listEl = document.createElement("div");
     // AcScrollable will set overflow + handle virtualization
     this.dropdownContainer.appendChild(this.listEl);
-    document.body.appendChild(this.dropdownContainer);
     this.scrollable = new AcScrollable({
       element: this.listEl,
       options: { bufferCount: 3, elementHeight: this.optionHeight }
@@ -186,10 +187,10 @@ export class AcSelectInputElement extends AcInputBase {
       this.valueKey = newValue;
     }
     else if (name == 'select-options') {
-      if(stringIsJson(newValue)){
+      if (stringIsJson(newValue)) {
         this.selectOptions = newValue;
       }
-      else{
+      else {
         this.selectOptions = newValue.split(",");
       }
     }
@@ -218,8 +219,8 @@ export class AcSelectInputElement extends AcInputBase {
   }
 
   closeDropdown() {
+    this.dropdownContainer.remove();
     this.isDropdownOpen = false;
-    this.dropdownContainer.style.display = "none";
   }
 
   private ensureHighlightInView() {
@@ -242,6 +243,7 @@ export class AcSelectInputElement extends AcInputBase {
 
   openDropdown() {
     if (!this.isDropdownOpen) {
+      document.body.appendChild(this.dropdownContainer);
       this.isDropdownOpen = true;
       this.dropdownContainer.style.display = "block";
     }
@@ -249,29 +251,26 @@ export class AcSelectInputElement extends AcInputBase {
   }
 
   private positionDropdown() {
-    const rect = this.textInputElement.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const spaceBelow = viewportHeight - rect.bottom;
-    const spaceAbove = rect.top;
-    const showAbove = spaceBelow < this.maxDropdownHeight && spaceAbove > spaceBelow;
+    setTimeout(() => {
+      const rect = this.inputElement.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const dropdownHeight = this.dropdownContainer.getBoundingClientRect().height;
+      const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
+      this.dropdownContainer.style.width = rect.width + "px";
+      this.dropdownContainer.style.left = rect.left + "px";
+      if (showAbove) {
+        this.dropdownContainer.style.top = (rect.top - dropdownHeight) + "px";
+      } else {
+        this.dropdownContainer.style.top = rect.bottom + "px";
+      }
+      this.dropdownContainer.style.overflowY = "auto";
+      this.dropdownContainer.style.border = "1px solid #ccc";
+      this.dropdownContainer.style.background = "#fff";
+    }, 10);
 
-    this.dropdownContainer.style.width = rect.width + "px";
-    this.dropdownContainer.style.left = rect.left + "px";
-
-    if (showAbove) {
-      this.dropdownContainer.style.top = (rect.top - this.maxDropdownHeight) + "px";
-      this.dropdownContainer.style.maxHeight = spaceAbove + "px";
-    } else {
-      this.dropdownContainer.style.top = rect.bottom + "px";
-      this.dropdownContainer.style.maxHeight = spaceBelow + "px";
-    }
-
-    // let list auto-size, but scroll when exceeding maxDropdownHeight
-    this.listEl.style.height = "auto";
-    this.listEl.style.maxHeight = this.maxDropdownHeight + "px";
-    this.listEl.style.overflowY = "auto";
   }
-
 
   private renderVirtualList() {
     this.listEl.innerHTML = "";

@@ -1,0 +1,65 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+import { AcElementBase } from "@autocode-ts/ac-browser";
+import { AcDDInputElement } from "./ac-dd-input-element.element";
+import { AcDDInputFieldElement } from "./ac-dd-input-field-element.element";
+
+export class AcDDInputFieldBaseElement extends AcElementBase {
+  inputElement = document.createElement('div');
+  private _ddInput?: AcDDInputElement;
+  get ddInput():AcDDInputElement|undefined{
+    return this._ddInput;
+  }
+  set ddInput(value:AcDDInputElement){
+    this._ddInput = value;
+    const container = this.querySelector('[ac-dd-input-container]');
+    if (container) {
+      container.innerHTML = '';
+      container.append(value);
+    }
+  }
+
+  private _ddInputLabel:string = '';
+  get ddInputLabel():string{
+    return this._ddInputLabel;
+  }
+  set ddInputLabel(value:string){
+    this._ddInputLabel = value;
+    const container = this.querySelector('[ac-dd-input-label-conatiner]');
+    if (container) {
+      container.innerHTML = value;
+    }
+  }
+
+  private _ddInputErrorMessage?:string = '';
+  get ddInputErrorMessage():string|undefined{
+    return this._ddInputErrorMessage;
+  }
+  set ddInputErrorMessage(value:string){
+    this._ddInputErrorMessage = value;
+    const container = this.querySelector('[ac-dd-input-error-conatiner]') as HTMLElement|null;
+    if (container) {
+      container.innerHTML = value;
+      if(value == ''){
+        container.style.display = 'none';
+      }
+      else{
+        container.style.display = '';
+      }
+    }
+  }
+
+  ddInputFieldElement!:AcDDInputFieldElement;
+
+  constructor() {
+    super();
+    this.style.display = 'contents';
+    this.innerHTML = `<label ac-dd-input-label-conatiner></label><div ac-dd-input-container></div>`;
+    console.dir(this);
+  }
+
+  connectedCallback(){
+    //
+  }
+}
+
+customElements.define('ac-dd-input-field-base', AcDDInputFieldBaseElement);

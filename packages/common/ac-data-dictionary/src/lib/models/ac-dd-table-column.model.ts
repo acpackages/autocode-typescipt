@@ -243,7 +243,7 @@ export class AcDDTableColumn {
 
     if (AcDDTableColumn.KeyColumnProperties in json && typeof json[AcDDTableColumn.KeyColumnProperties] === "object" && !Array.isArray(json[AcDDTableColumn.KeyColumnProperties])) {
       for (const propertyData of Object.values(json[AcDDTableColumn.KeyColumnProperties]) as any) {
-        this.columnProperties[propertyData.property_name] = AcDDTableColumnProperty.instanceFromJson({ jsonData: propertyData });
+        this.columnProperties[propertyData[AcDDTableColumnProperty.KeyPropertyName]] = AcDDTableColumnProperty.instanceFromJson({ jsonData: propertyData });
       }
       delete json[AcDDTableColumn.KeyColumnProperties];
     }
