@@ -1,4 +1,4 @@
-import { AC_INPUT_ATTRIBUTE_NAME, AcEnumInputType, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInputElement, AcEnumInputType, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcContext } from "@autocode-ts/ac-template-engine";
 
@@ -27,7 +27,8 @@ export class InputBasicPage extends HTMLElement {
       favourite_quote: 'The value of life is not in its duration, but in its donation. You are not important because of how long you live, you are important because of how effective you live..',
       contact_preference: 'Email',
       interested_fruits: ['Apple', 'Mango'],
-      preferred_framework: 'Vue.js'
+      preferred_framework: 'Vue.js',
+      phone_numbers:[{"label":"Home","value":"0123456789"},{"label":"Mobile","value":"9876543210"}]
     }, name: 'record'
   });
 
@@ -67,8 +68,7 @@ export class InputBasicPage extends HTMLElement {
       const input = new AcTextInputElement();
       input.type = type;
       input.acContextKey = key;
-      // input.acContext = this.context;
-      input.setAttribute('ac-context',this.context.__acContextName__);
+      input.acContext = this.context;
       input.className = 'form-control';
       addField(label, input, allInputsGroup);
     };
@@ -79,29 +79,45 @@ export class InputBasicPage extends HTMLElement {
     addInput(AcEnumInputType.Password, 'Password', 'user_password');
     addInput(AcEnumInputType.Number, 'Age', 'age');
 
-    const arrayValuesElement = document.createElement('div');
+    const arrayValuesLabel = document.createElement('div');
+    arrayValuesLabel.className = 'fw-bold mt-3';
+    arrayValuesLabel.textContent = 'Phone Numbers';
+    allInputsGroup.appendChild(arrayValuesLabel);
+    const arrayValuesElement = new AcArrayValuesInputElement();
     arrayValuesElement.innerHTML = `
-    Array Values :
     <table>
     <thead>
       <tr>
-        <th>Id</th>
+        <th>Label</th>
+        <th>Value</th>
+        <th></th>
       </tr>
-      <tbody>
-      <tr ${AC_INPUT_ATTRIBUTE_NAME.acArrayValuesRow}>
-        <td>
-        {{item.id}}
-        </td>
-      </tr>
+      <tbody ac-array-values-items>
+        <tr >
+          <td>
+            <input class="form-control" ac-array-values-item-input ac-array-value-item-key="label"/>
+          </td>
+          <td>
+              <input class="form-control" ac-array-values-item-input ac-array-value-item-key="value"/>
+          </td>
+          <td>
+              <button type="button" class="btn btn-danger" ac-array-values-item-remove><i class="fa fa-trash"></i></button>
+          </td>
+        </tr>
       </tbody>
+      <tfoot>
+      <tr>
+      <td colspan="3">
+          <button type="button" class="btn btn-danger" ac-array-values-item-add><i class="fa fa-plus"></i> Add New</button>
+      </td>
+      </tr>
+      </tfoot>
     </thead>
     </table>
     `;
-    // allInputsGroup.appendChild(arrayValuesElement);
-    // const arrayValuesInstance = new AcArrayValues()
-    // arrayValuesInstance.initArrayValues({element:arrayValuesElement});
-
-    // allInputsGroup.append('<ac-input></ac-input>')
+    arrayValuesElement.acContext = this.context;
+    arrayValuesElement.acContextKey = 'phone_numbers';
+    allInputsGroup.appendChild(arrayValuesElement);
 
     addInput(AcEnumInputType.Color, 'Favorite Color', 'favorite_color');
     addInput(AcEnumInputType.Date, 'Birth Date', 'birth_date');
@@ -140,9 +156,9 @@ export class InputBasicPage extends HTMLElement {
       const radio = new AcOptionInputElement();
       radio.type = AcEnumInputType.Radio;
       radio.name = 'contact_preference';
-      radio.valueChecked = method;
+      radio.value = method;
       radio.acContextKey = 'contact_preference';
-    radio.acContext = this.context;
+      radio.acContext = this.context;
       radio.className = 'form-check-input';
 
       const div = document.createElement('div');
@@ -150,6 +166,7 @@ export class InputBasicPage extends HTMLElement {
       const label = document.createElement('label');
       label.className = 'form-check-label';
       label.textContent = method;
+      radio.labelElement = label;
 
       div.appendChild(radio);
       div.appendChild(label);
@@ -162,10 +179,10 @@ export class InputBasicPage extends HTMLElement {
     checkboxLabel.textContent = 'Fruits You Like';
     allInputsGroup.appendChild(checkboxLabel);
 
-    ['Apple', 'Banana', 'Mango'].forEach((fruit) => {
+    ['Apple', 'Banana', 'Mango','Orange'].forEach((fruit) => {
       const checkbox = new AcOptionInputElement();
       checkbox.type = AcEnumInputType.Checkbox;
-      checkbox.valueChecked = fruit;
+      checkbox.value = fruit;
       checkbox.acContextKey = 'interested_fruits';
       checkbox.acContext = this.context;
       checkbox.className = 'form-check-input';
@@ -175,6 +192,7 @@ export class InputBasicPage extends HTMLElement {
       const label = document.createElement('label');
       label.className = 'form-check-label';
       label.textContent = fruit;
+      checkbox.labelElement = div;
 
       div.appendChild(checkbox);
       div.appendChild(label);
@@ -194,7 +212,11 @@ export class InputBasicPage extends HTMLElement {
       children: [
         {
           label: 'Log',
-          callback: () => console.log(this.context)
+          callback: () => {
+            console.log(this.context);
+            console.log(JSON.stringify(this.context));
+
+          }
         },
         {
           label: 'Set Value',
@@ -251,7 +273,7 @@ export class InputBasicPage extends HTMLElement {
       profile_picture: '',
       about_me: 'Product designer focused on user-centered design.',
       contact_preference: 'Phone',
-      interested_fruits: ['Banana'],
+      interested_fruits: ['Banana','Orange'],
       preferred_framework: 'React'
     });
   }

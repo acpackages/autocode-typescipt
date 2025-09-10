@@ -11,14 +11,7 @@ import { Autocode } from "@autocode-ts/autocode";
 
 export class AcOptionInputElement extends AcInputElement {
   static override get observedAttributes() {
-    return [... super.observedAttributes, 'is-array', 'checked', 'label-element', 'value-checked', 'value-unchecked'];
-  }
-
-  get isArray(): boolean {
-    return this.getAttribute('is-array') == 'true';
-  }
-  set isArray(value: boolean) {
-    this.setAttribute('is-array', `${value}`)
+    return [... super.observedAttributes, 'is-array', 'label-element', 'value-checked', 'value-unchecked'];
   }
 
   get checked(): boolean {
@@ -29,16 +22,22 @@ export class AcOptionInputElement extends AcInputElement {
     if (currentChecked != value) {
       this.inputElement.checked = value;
       if (value) {
-        this.value = this.valueChecked;
         this.setAttribute('checked', 'true');
         this.inputElement.setAttribute('checked', 'true');
       }
       else if (!value) {
-        this.value = this.valueUnchecked;
         this.removeAttribute('checked');
         this.inputElement.removeAttribute('checked');
       }
+      this.setValueToAcContext();
     }
+  }
+
+  get isArray(): boolean {
+    return this.getAttribute('is-array') == 'true';
+  }
+  set isArray(value: boolean) {
+    this.setAttribute('is-array', `${value}`)
   }
 
   private _labelElements: HTMLElement[] = [];
@@ -48,7 +47,7 @@ export class AcOptionInputElement extends AcInputElement {
   set labelElement(value: HTMLElement | string) {
     if (this._labelElements.length > 0) {
       for (const labelElement of this._labelElements) {
-        labelElement.removeEventListener('click', this.handleLabelClick);
+        // labelElement.removeEventListener('click');
       }
     }
     const elements: HTMLElement[] = [];
@@ -61,23 +60,13 @@ export class AcOptionInputElement extends AcInputElement {
       elements.push(value);
     }
     for (const label of elements) {
-      label.addEventListener('click', this.handleLabelClick);
+      label.addEventListener('click', ()=>{
+         this.checked = !this.checked;
+      });
       this._labelElements.push(label);
     }
   }
 
-  get valueChecked(): any {
-    let result;
-    if (this.hasAttribute('value-checked')) {
-      result = this.getAttribute('value-checked')!;
-    }
-    return result;
-  }
-  set valueChecked(value: any) {
-    this.setAttribute('value-checked', value);
-  }
-
-  private _settingValueUnchecked: boolean = false;
   get valueUnchecked(): any {
     let result;
     if (this.hasAttribute('value-unchecked')) {
@@ -89,10 +78,23 @@ export class AcOptionInputElement extends AcInputElement {
     this.setAttribute('value-unchecked', value);
   }
 
+  override set type(value: string) {
+    if (value == '') {
+      value = 'checkbox';
+    }
+    this.setAttribute('type', value);
+    this.inputElement.setAttribute('type', value);
+    if (value.toLowerCase() == AcEnumInputType.Checkbox.toLowerCase()) {
+      if (this.isArray == false) {
+        this.isArray = true;
+      }
+    }
+  }
+
   constructor() {
     super();
+    this.type = AcEnumInputType.Radio;
     acAddClassToElement({ class_: AcInputCssClassName.acOptionInput, element: this });
-    this.type = AcEnumInputType.Checkbox;
     if (this.isArray == undefined || this.isArray == null) {
       if (this.type == AcEnumInputType.Checkbox) {
         this.isArray = true;
@@ -109,10 +111,6 @@ export class AcOptionInputElement extends AcInputElement {
     });
   }
 
-  handleLabelClick(event: any) {
-    this.checked = !this.checked;
-  }
-
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     if (name == 'is-array') {
@@ -124,14 +122,38 @@ export class AcOptionInputElement extends AcInputElement {
     else if (name == 'checked') {
       this.checked = newValue;
     }
-    else if (name == 'value-checked') {
-      this.valueChecked = newValue;
+    else if (name == 'value') {
+      this.value = newValue;
     }
     else if (name == 'value-unchecked') {
       this.valueUnchecked = newValue;
     }
     else {
       super.attributeChangedCallback(name, oldValue, newValue);
+    }
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.refreshChecked();
+  }
+
+  refreshChecked() {
+    if (this.acContext && this.acContextKey) {
+      const contextValue: any = this.acContext[this.acContextKey];
+      let valueCheckedFound: boolean = false;
+      if (this.isArray) {
+        valueCheckedFound = contextValue.includes(this.value);
+      }
+      else {
+        valueCheckedFound = contextValue == this.value;
+      }
+      if (valueCheckedFound) {
+        this.checked = true;
+      }
+      else {
+        this.checked = false;
+      }
     }
   }
 
@@ -157,62 +179,38 @@ export class AcOptionInputElement extends AcInputElement {
 
   protected override setValueFromAcContext() {
     if (this.acContextKey && this.acContext) {
-      const currentValues = this.acContext[this.acContextKey];
-      if (currentValues.includes(this.valueChecked)) {
-        this.checked = true;
-      }
-      else if (currentValues.includes(this.valueUnchecked)) {
-        this.checked = false;
-      }
+      this.refreshChecked();
       this.acContext.on(AcEnumContextEvent.Change, (args: IAcContextEvent) => {
         if (args.property == this.acContextKey) {
-          if ((this.valueChecked && !this.checked && args.value.includes(this.valueChecked))||(this.valueUnchecked && !this.checked && !args.value.includes(this.valueUnchecked))) {
-            this.checked = true;
-          }
-          else if ((this.checked && this.valueUnchecked && args.value.includes(this.valueUnchecked))||(this.checked && this.valueChecked && !args.value.includes(this.valueChecked))) {
-            this.checked = false;
-          }
+          this.refreshChecked();
         }
       });
     }
   }
 
-  override setValue(value: any): void {
-    const object = this;
-    if (this.checked) {
-      this._value = this.valueChecked;
-    }
-    else {
-      this._value = this.valueUnchecked;
-    }
-    if (this.acContextKey && this.acContext) {
-      this.updatContextValue(this.checked);
-    }
-  }
-
-  updatContextValue(isChecked: boolean, triggerEvent: boolean = true) {
+  override setValueToAcContext() {
     const object = this;
     if (this.acContext && this.acContextKey) {
-      if(object.isArray){
+      if (object.isArray) {
         let valueArray = this.acContext[this.acContextKey];
         let valueModified: boolean = false;
-        if (!Array.isArray(valueArray)) {
+        if (typeof valueArray != "object") {
           valueArray = [];
           valueModified = true;
         }
-        if (isChecked) {
+        if (this.checked) {
           if (this.valueUnchecked && valueArray.includes(object.valueUnchecked)) {
             arrayRemove(valueArray, object.valueUnchecked);
             valueModified = true;
           }
-          if (this.valueChecked && !valueArray.includes(object.valueChecked)) {
-            valueArray.push(object.valueChecked);
+          if (this.value && !valueArray.includes(object.value)) {
+            valueArray.push(object.value);
             valueModified = true;
           }
         }
         else {
-          if (this.valueChecked && valueArray.includes(object.valueChecked)) {
-            arrayRemove(valueArray, object.valueChecked);
+          if (this.value && valueArray.includes(object.value)) {
+            arrayRemove(valueArray, object.value);
             valueModified = true;
           }
           if (this.valueUnchecked && Autocode.validValue(object.valueUnchecked)) {
@@ -226,14 +224,14 @@ export class AcOptionInputElement extends AcInputElement {
           this.acContext[this.acContextKey] = valueArray;
         }
       }
-      else{
-        if(isChecked){
-          if(this.valueChecked && this.acContext[this.acContextKey] != this.valueChecked){
-            this.acContext[this.acContextKey] = this.valueChecked;
+      else {
+        if (this.checked) {
+          if (this.value && this.acContext[this.acContextKey] != this.value) {
+            this.acContext[this.acContextKey] = this.value;
           }
         }
-        else{
-          if(this.valueUnchecked && this.acContext[this.acContextKey] != this.valueUnchecked){
+        else {
+          if (this.valueUnchecked && this.acContext[this.acContextKey] != this.valueUnchecked) {
             this.acContext[this.acContextKey] = this.valueUnchecked;
           }
         }

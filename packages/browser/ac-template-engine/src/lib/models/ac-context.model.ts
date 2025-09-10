@@ -22,10 +22,14 @@ export class AcContextRegistry {
   }
 
   static exists({name}:{name:string}):boolean{
-    return this.get({name}) != undefined;
+    return this.getInstance({name}) != undefined;
   }
 
   static get({ name }: { name: string }): AcContext | undefined {
+    return this.contexts.get(name).proxy;
+  }
+
+  static getInstance({ name }: { name: string }): AcContext | undefined {
     return this.contexts.get(name);
   }
 
@@ -41,32 +45,30 @@ export class AcContextRegistry {
 export class AcContext {
   __acContextName__!: string;
   __events__: AcEvents = new AcEvents();
+  proxy:any;
+  value:any = {};
 
-  constructor({ value = {}, name }: { value?: any, name?: string }) {
+  constructor({ value = {}, name }: { value?: any, name?: string } = {}) {
     const instance: any = this;
+    this.value = value;
     instance.__acContextName__ = name || Autocode.uuid();
-    for (const key of Object.keys(value)) {
-      instance[key] = value[key];
-    }
-    const proxy = this.makeReactive(value);
-    Object.defineProperties(proxy, {
+    this.proxy = this.makeReactive(value);
+    Object.defineProperties(this.proxy, {
       __acContextName__: { value: this.__acContextName__, enumerable: false },
-      on: { value: (event: string, callback: Function) => this.on(event, callback), enumerable: false }
+      on: { value: (event: string, callback: Function) => this.on(event, callback), enumerable: false },
+      toJSON:{ value: ()=>{ return this.value }}
     });
-    proxy['__events__'] = this.__events__;
 
     if (instance.__acContextName__) {
       AcContextRegistry.register({ name: instance.__acContextName__, context: this });
     }
 
-    return proxy;
+    return this.proxy;
   }
 
   on(event: string, callback: Function) {
     return this.__events__.subscribe({ event: event, callback: callback });
   }
-
-
 
   private makeReactive(obj: any, path: string[] = [], root: any = null): any {
     const self = this;
@@ -89,6 +91,7 @@ export class AcContext {
             oldValue: target[prop]
           }
           delete target[prop];
+          delete this.value[prop];
           this.__events__.execute({ event: AcEnumContextEvent.Change, args: eventArgs });
           this.__events__.execute({ event: AcEnumContextEvent.Delete, args: eventArgs });
           return true;

@@ -9,12 +9,14 @@ import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/a
 
 export class AcInputBase extends HTMLElement {
   static get observedAttributes() {
-    return ['ac-context','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
+    return ['ac-context','ac-context-key','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
   }
 
   get inputReflectedAttributes(){
-    return ['class', 'value', 'placeholder', 'disabled', 'readonly'];
+    return ['class', 'value', 'placeholder', 'disabled', 'readonly','name'];
   }
+
+  reflectValueAttribute:boolean = true;
 
   _acContext?:any;
   get acContext():any{
@@ -108,6 +110,9 @@ export class AcInputBase extends HTMLElement {
           this.acContext = AcContextRegistry.get({name:newValue})!;
         }
         break;
+      case 'ac-context-key':
+        this.acContextKey = newValue;
+        break;
       case 'value':
         this.value = newValue;
         break;
@@ -178,7 +183,6 @@ export class AcInputBase extends HTMLElement {
       this._value = value;
       const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
       inputElement.value = value;
-      this.setAttribute('value',value)
       this.dispatchEvent(new CustomEvent('valuechange', {
         detail: { value: value },
         bubbles: true,
@@ -192,7 +196,12 @@ export class AcInputBase extends HTMLElement {
       };
       this.events.execute({ event: AcEnumInputEvent.ValueChange, args: eventArgs });
       this.events.execute({ event: AcEnumInputEvent.Input, args: eventArgs });
-      this.setValueToAcContext();
+      if(this.reflectValueAttribute){
+        this.setAttribute('value',value);
+      }
+      if(this.isConnected){
+        this.setValueToAcContext();
+      }
     }
   }
 
@@ -215,7 +224,6 @@ export class AcInputBase extends HTMLElement {
 
   upgradeProperty(prop: string) {
     if (this.hasOwnProperty(prop)) {
-      console.log('upgrade property',prop);
       const instance:any = this;
       const val = instance[prop];
       delete instance[prop];
