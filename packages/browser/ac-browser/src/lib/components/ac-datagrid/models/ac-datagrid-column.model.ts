@@ -13,7 +13,7 @@ export class AcDatagridColumn {
   acColumnId: string = Autocode.uuid();
   columnDefinition!: IAcDatagridColumnDefinition;
   datagridApi!: AcDatagridApi;
-  dataType: AcEnumDatagridColumnDataType = AcEnumDatagridColumnDataType.string;
+  dataType: AcEnumDatagridColumnDataType = AcEnumDatagridColumnDataType.String;
   events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   filterGroup: AcFilterGroup = new AcFilterGroup();

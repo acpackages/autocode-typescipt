@@ -32,8 +32,8 @@ export class AcBuilderEventsHandler {
             this.builderApi.events.execute({ event: AcEnumBuilderEvent.ElementAdd, args: eventArgs });
           }
           instance.init({args:{element:element}});
-          if(this.builderApi.runtimePage){
-            this.builderApi.runtimePage.setElementInstance({element:pageElement});
+          if(this.builderApi.runtime){
+            // this.builderApi.runtime.builderApi({element:pageElement});
           }
         }
       }

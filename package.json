@@ -14,6 +14,7 @@
     "build:ac-ng-datagrid-on-aggrid": "nx run ac-ng-datagrid-on-aggrid:build",
     "build:ac-ng-node-editor": "nx run ac-ng-node-editor:build",
     "build:ac-sql-node": "nx run ac-sql-node:build",
+    "build:ac-template-engine": "nx run ac-template-engine:build",
     "build:autocode": "nx run autocode:build",
     "dev:angular": "npx nx serve test-angular",
     "dev:browser": "npx nx serve test-browser",
@@ -188,5 +189,16 @@
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
     "zone.js": "~0.15.0"
-  }
+  },
+  "workspaces": [
+    "packages/angular/*",
+    "packages/browser/*",
+    "packages/browser/extensions/builder/*",
+    "packages/browser/extensions/datagrid/*",
+    "packages/browser/extensions/data-dictionary/*",
+    "packages/common/*",
+    "packages/node/*",
+    "packages/react/*",
+    "packages/vue/*"
+  ]
 }
