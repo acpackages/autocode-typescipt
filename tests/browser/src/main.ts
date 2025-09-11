@@ -37,6 +37,7 @@ import { TooltipTestPage } from './pages/popover/tooltip-test-page.page';
 import { DDEEditorDatagridPage } from './pages/data-dictionary/data-dictionary-editor.page';
 import { DataDictionaryComponentsPage } from './pages/data-dictionary/data-dictionary-components.page';
 import { InputElementsPage } from './pages/inputs/elements.page';
+import { WindowTabsPage } from './pages/tabs/window-tabs.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -183,7 +184,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Tabs',
     routes: [
-      { label: 'Basic', path: '/tabs/basic', componentTag: 'tabs-basic', component: TabsTestPage }
+      { label: 'Basic', path: '/tabs/basic', componentTag: 'tabs-basic', component: TabsTestPage },
+      { label: 'Windows', path: '/tabs/windows', componentTag: 'tabs-windows', component: WindowTabsPage }
     ]
   });
   AcRouter.registerRouteGroup({
