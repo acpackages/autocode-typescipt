@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcHooks, AcJsonUtils, Autocode } from "@autocode-ts/autocode";
 import { AcDDTableColumnProperty, AcDDTableProperty, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
-import { AcReactiveValueProxy } from "@autocode-ts/ac-template-engine";
 import { AcDDEApi } from "./ac-dde-api";
 import { IAcDDEDataDictionary } from "../interfaces/ac-dde-data-dictionary.inteface";
 import { IAcDDEFunction } from "../interfaces/ac-dde-function.inteface";
@@ -17,6 +16,7 @@ import { IAcDDEViewColumn } from "../interfaces/ac-dde-view-column.inteface";
 import { IAcDDEView } from "../interfaces/ac-dde-view.inteface";
 import { AcEnumDDEEntity } from "../enums/ac-enum-dde-entity.enum";
 import { boolColumnProperties } from "../consts/ac-dde-column-property-groups.const";
+import { AcContext } from "@autocode-ts/ac-template-engine";
 
 export class AcDDEDataStorage {
   static readonly KeyDataDictionaries = "data_dictionaries";
@@ -33,41 +33,41 @@ export class AcDDEDataStorage {
   @AcBindJsonProperty({ skipInFromJson:true,skipInToJson:true })
   hooks:AcHooks = new AcHooks();
 
-  private _dataDictionariesReactiveProxy = new AcReactiveValueProxy({});
+  private _dataDictionariesReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyDataDictionaries })
-  private dataDictionaries: Record<string, IAcDDEDataDictionary> = this._dataDictionariesReactiveProxy.valueProxy as any;
+  private dataDictionaries: Record<string, IAcDDEDataDictionary> = this._dataDictionariesReactiveProxy as any;
 
-  private _functionsReactiveProxy = new AcReactiveValueProxy({});
+  private _functionsReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyFunctions })
-  private functions: Record<string, IAcDDEFunction> = this._functionsReactiveProxy.valueProxy as any;
+  private functions: Record<string, IAcDDEFunction> = this._functionsReactiveProxy as any;
 
-  private _relationshipsReactiveProxy = new AcReactiveValueProxy({});
+  private _relationshipsReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyRelationships })
-  private relationships: Record<string, IAcDDERelationship> = this._relationshipsReactiveProxy.valueProxy as any;
+  private relationships: Record<string, IAcDDERelationship> = this._relationshipsReactiveProxy as any;
 
-  private _storedProceduresReactiveProxy = new AcReactiveValueProxy({});
+  private _storedProceduresReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyStoredProcedures })
-  private storedProcedures: Record<string, IAcDDEStoredProcedure> = this._storedProceduresReactiveProxy.valueProxy as any;
+  private storedProcedures: Record<string, IAcDDEStoredProcedure> = this._storedProceduresReactiveProxy as any;
 
-  private _tableColumnsReactiveProxy = new AcReactiveValueProxy({});
+  private _tableColumnsReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyTableColumns })
-  private tableColumns: Record<string, IAcDDETableColumn> = this._tableColumnsReactiveProxy.valueProxy as any;
+  private tableColumns: Record<string, IAcDDETableColumn> = this._tableColumnsReactiveProxy as any;
 
-  private _tablesReactiveProxy = new AcReactiveValueProxy({});
+  private _tablesReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyTables })
-  private tables: Record<string, IAcDDETable> = this._tablesReactiveProxy.valueProxy as any;
+  private tables: Record<string, IAcDDETable> = this._tablesReactiveProxy as any;
 
-  private _triggersReactiveProxy = new AcReactiveValueProxy({});
+  private _triggersReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyTriggers })
-  private triggers: Record<string, IAcDDETrigger> = this._triggersReactiveProxy.valueProxy as any;
+  private triggers: Record<string, IAcDDETrigger> = this._triggersReactiveProxy as any;
 
-  private _viewColumnsReactiveProxy = new AcReactiveValueProxy({});
+  private _viewColumnsReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyViewColumns })
-  private viewColumns: Record<string, IAcDDEViewColumn> = this._viewColumnsReactiveProxy.valueProxy as any;
+  private viewColumns: Record<string, IAcDDEViewColumn> = this._viewColumnsReactiveProxy as any;
 
-  private _viewsReactiveProxy = new AcReactiveValueProxy({});
+  private _viewsReactiveProxy = new AcContext({});
   @AcBindJsonProperty({ key: AcDDEDataStorage.KeyViews })
-  private views: Record<string, IAcDDEView> = this._viewsReactiveProxy.valueProxy as any;
+  private views: Record<string, IAcDDEView> = this._viewsReactiveProxy as any;
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
@@ -437,7 +437,7 @@ export class AcDDEDataStorage {
   }
 
   on(event: 'add' | 'delete' | 'update' | 'change', entity: AcEnumDDEEntity, callback: Function): string {
-    let proxy: AcReactiveValueProxy | undefined;
+    let proxy: any;
     switch (entity) {
       case AcEnumDDEEntity.DataDictionary:
         proxy = this._dataDictionariesReactiveProxy;

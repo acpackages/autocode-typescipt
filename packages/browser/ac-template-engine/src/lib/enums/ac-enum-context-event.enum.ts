@@ -1,4 +1,4 @@
-export enum AcEnumReactiveValueProxyEvent{
+export enum AcEnumContextEvent{
   Add = 'ADD',
   Change = 'CHANGE',
   Delete = 'DELETE',

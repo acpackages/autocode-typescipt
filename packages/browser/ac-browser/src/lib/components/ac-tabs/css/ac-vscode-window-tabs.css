@@ -1,0 +1,57 @@
+.ac-window-tabs-container {
+  display: flex;
+  background-color: #1e1e1e;
+  border-bottom: 1px solid #3c3c3c;
+  user-select: none;
+  overflow-x: auto;
+  overflow-y: none;
+  padding: 0;
+  height: 30px;
+}
+.ac-window-tab-item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 2px 2px 2px 6px;
+  padding-top:2px;
+  height: 28px;
+  background-color: #2d2d2d;
+  color: #d4d4d4;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+  border-right: 1px solid #3c3c3c;
+  transition: background-color 0.2s;
+  position: relative;
+}
+.ac-window-tab-item:hover {
+  background-color: #3c3c3c;
+}
+.ac-window-tab-item.active {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-top: 2px solid #007acc;
+  padding-top: 0px;
+}
+.ac-window-tab-close {
+  margin-left: 3px;
+  color: #858585;
+  font-size: 21px;
+  padding-left:-3px;
+  cursor: pointer;
+  height:19px;
+  width: 19px;
+  text-align: center;
+  border-radius: 3px;
+  line-height:14px;
+}
+.ac-window-tab-close:hover {
+  display: inline;
+  background: #930000;
+}
+.ac-window-tab-close:hover {
+  color: #ffffff;
+}
+.ac-window-tab-icon {
+  margin-right: 6px;
+}

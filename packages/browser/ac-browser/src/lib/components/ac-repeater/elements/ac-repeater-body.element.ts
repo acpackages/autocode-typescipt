@@ -28,7 +28,7 @@ export class AcRepeaterBodyElement {
       repeaterApi: this.repeaterApi,
       datagridBody: this
     };
-    this.repeaterApi.hooks.execute({ hook: AcEnumRepeaterHook.BodyCreated, args: hookArgs });
+    this.repeaterApi.hooks.execute({ hook: AcEnumRepeaterHook.BodyCreate, args: hookArgs });
     this.initElement();
   }
 

@@ -1,0 +1,63 @@
+.ac-window-tabs-container {
+  display: flex;
+  background-color: #f1f1f1;
+  user-select: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.ac-window-tab-item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 12px;
+  height: 25px;
+  background-color: #e0e0e0;
+  color: #333;
+  font-family: 'Roboto', 'Segoe UI', -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: move;
+  transition: background-color 0.2s;
+  position: relative;
+  border-radius: 5px;
+  margin: 1px;
+  z-index: 1;
+}
+.ac-window-tab-item:hover {
+  background-color: #d5d5d5;
+}
+.ac-window-tab-item.active {
+  background-color: #ffffff;
+  color: #333;
+  z-index: 2;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+}
+.ac-window-tab-item.dragging {
+  opacity: 0.7;
+  background-color: #d5d5d5;
+}
+.ac-window-tab-close {
+  margin-left: 8px;
+  color: #666;
+  font-size: 19px;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  text-align: center;
+  border-radius: 50%;
+  line-height: 9px;
+  padding:3px
+}
+.ac-window-tab-item:hover .ac-window-tab-close {
+  display: inline;
+}
+.ac-window-tab-close:hover {
+  background: #b50000;
+  color: #ffffff;
+}
+.ac-window-tab-icon {
+  margin-right: 6px;
+}

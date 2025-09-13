@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AC_TEMPLATE_ENGINE_ATTRIBUTE } from "../consts/ac-template-engine-attributes.const";
 import { AcElementContext } from "../models/ac-element-context.model";
 import { AcExpression } from "./ac-expression";
 import { AcTemplateEngine } from "./ac-template-engine";
@@ -22,7 +23,7 @@ export class AcStructuralBinding{
   }
 
   processConditionalChain(): boolean {
-    if (!this.element.hasAttribute('*acIf') && !this.element.hasAttribute('*acElseIf') && !this.element.hasAttribute('*acElse')) return false;
+    if (!this.element.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.If) && !this.element.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.ElseIf) && !this.element.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Else)) return false;
 
     const siblings = Array.from(this.element.parentElement?.children ?? []);
     const chain: HTMLElement[] = [];
@@ -32,13 +33,13 @@ export class AcStructuralBinding{
     for (const sibling of siblings) {
       const s = sibling as HTMLElement;
 
-      if (!started && s.hasAttribute('*acIf')) {
+      if (!started && s.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.If)) {
         started = true;
         chain.push(s);
         continue;
       }
 
-      if (started && (s.hasAttribute('*acElseIf') || s.hasAttribute('*acElse'))) {
+      if (started && (s.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.ElseIf) || s.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Else))) {
         chain.push(s);
       } else if (started) {
         break; // End of chain
@@ -52,25 +53,25 @@ export class AcStructuralBinding{
         continue;
       }
 
-      if (node.hasAttribute('*acIf')) {
-        const expr = node.getAttribute('*acIf')!;
+      if (node.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.If)) {
+        const expr = node.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.If)!;
         if (AcExpression.evaluate({expression:expr, context:context})) {
           matched = true;
-          node.removeAttribute('*acIf');
+          node.removeAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.If);
         } else {
           node.remove();
         }
-      } else if (node.hasAttribute('*acElseIf')) {
-        const expr = node.getAttribute('*acElseIf')!;
+      } else if (node.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.ElseIf)) {
+        const expr = node.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.ElseIf)!;
         if (AcExpression.evaluate({expression:expr, context:context})) {
           matched = true;
-          node.removeAttribute('*acElseIf');
+          node.removeAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.ElseIf);
         } else {
           node.remove();
         }
-      } else if (node.hasAttribute('*acElse')) {
+      } else if (node.hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Else)) {
         matched = true;
-        node.removeAttribute('*acElse');
+        node.removeAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Else);
       }
     }
 
@@ -78,7 +79,7 @@ export class AcStructuralBinding{
   }
 
   processAcFor(): boolean {
-    const expr = this.element.getAttribute('*acfor');
+    const expr = this.element.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.For);
     if (expr !== null) {
       const context = this.elementContext.getContextValueObject();
       const exprParts = expr.trim().split(' ');
@@ -93,47 +94,36 @@ export class AcStructuralBinding{
       else{
         console.error('*Invalid acFor expression : '+expr);
       }
-
-
-      console.log("Found acfor",expr);
-      const functionCode = 'for('+expr+'){console.log(item);}'
-      const loopFunction = new Function(...Object.keys(context), `${functionCode}`)(...Object.values(context));
-      // loopFunction();
       const match = expr.match(/let\s+(\w+)\s+of\s+(.+)/);
-      console.log(match);
       if (!match) return false;
-      // const context = this.elementContext.getContextValueObject();
       const [, item, listExpr] = match;
-      console.log(listExpr);
-      const list = AcExpression.evaluate({expression:listExpr, context:context});
+      const list = AcExpression.evaluate({expression:listExpr, context:{item,...context}});
       if (!Array.isArray(list)) return false;
-
       const parent = this.element.parentElement!;
+      this.element.remove();
       list.forEach(val => {
         const clone = this.element.cloneNode(true) as HTMLElement;
-        clone.removeAttribute('*acfor');
-        // new AcTemplateEngine({ ...this.context, [item]: val }).render(clone);
-        parent.insertBefore(clone, this.element);
+        clone.removeAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.For);
+        new AcTemplateEngine({ context:{...context,[item]:val},element:clone,elementContext:this.elementContext}).render();
+        parent.append(clone);
       });
-
-      this.element.remove();
       return true;
     }
     return false;
   }
 
   processAcSwitch(): boolean {
-    const switchExpr = this.element.getAttribute('*acSwitch');
+    const switchExpr = this.element.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Switch);
     if (!switchExpr) return false;
     const context = this.elementContext.getContextValueObject();
     const switchValue =  AcExpression.evaluate({expression:switchExpr, context:context});
     const parent = this.element.parentElement!;
     let matched = false;
 
-    const siblings = Array.from(parent.children);
+    const siblings = Array.from(this.element.children);
     for (const child of siblings) {
-      if ((child as HTMLElement).hasAttribute('*acSwitchCase')) {
-        const caseVal = AcExpression.evaluate({expression:(child as HTMLElement).getAttribute('*acSwitchCase')!, context:context});
+      if ((child as HTMLElement).hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.SwitchCase)) {
+        const caseVal = AcExpression.evaluate({expression:(child as HTMLElement).getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.SwitchCase)!, context:context});
         if (!matched && caseVal === switchValue) {
           matched = true;
         } else {
@@ -141,19 +131,19 @@ export class AcStructuralBinding{
         }
       }
 
-      if ((child as HTMLElement).hasAttribute('*acSwitchDefault') && !matched) {
+      if ((child as HTMLElement).hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.SwitchDefault) && !matched) {
         matched = true;
-      } else if ((child as HTMLElement).hasAttribute('*acSwitchDefault')) {
+      } else if ((child as HTMLElement).hasAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.SwitchDefault)) {
         child.remove();
       }
     }
 
-    this.element.removeAttribute('*acSwitch');
+    this.element.removeAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.Switch);
     return true;
   }
 
   processAcInclude(): boolean {
-    const tplId = this.element.getAttribute('*acInclude');
+    const tplId = this.element.getAttribute(AC_TEMPLATE_ENGINE_ATTRIBUTE.SwitchDefault);
     if (!tplId) return false;
 
     const tpl = document.getElementById(tplId);

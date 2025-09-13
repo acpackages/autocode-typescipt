@@ -13,49 +13,50 @@ export class TemplateEnginePage extends HTMLElement {
   <p>{{ title }}</p>
 
   <!-- acModel / two-way binding -->
-  <input type="text" [(acModel)]="title" />
+  <input type="text" ac:Model="title" />
   <span>You typed: {{ title }}</span>
 
   <!-- acIf -->
-  <div *acIf="show">Visible only if show=true</div>
-
+  <div>
+  <button type="button" ac:on:click="handleShow()">Show : {{show}}</button>
+  <div ac:if="show">Visible only if show=true</div>
+  </div>
   <!-- acFor -->
   <ul>
-    <li *acFor="let item in items">{{ item }}</li>
+    <li ac:for="let item of items">{{ item }}</li>
   </ul>
 
   <!-- acClass and acStyle -->
-  <p acClass="{ 'highlight': isHighlighted }" acStyle="{ fontSize: fontSize + 'px' }">Styled Text</p>
+  <p ac:class="{ 'highlight': isHighlighted }" ac:style="{ font-size: fontSize + 'px' }">Styled Text</p>
 
   <!-- acBind -->
-  <a acBind:href="link" target="_blank">Go to link</a>
+  <a ac:bind:href="link" target="_blank">Go to link</a>
 
   <!-- acRef and acOn -->
-  <input acRef="myInput" />
-  <button type="button" acOn:click="focusInput()">Focus input</button>
+  <input ac:ref="myInput" ac:model="href"/>
+  <button type="button" ac:on:click="focusInput()">Focus input</button>
 
   <!-- acSwitch -->
-  <div *acSwitch="status">
-    <div *acSwitchCase="'active'">Active</div>
-    <div *acSwitchCase="'inactive'">Inactive</div>
-    <div *acSwitchDefault>Unknown</div>
+  <div ac:switch="status">
+    <div ac:switch:case="'active'">Active</div>
+    <div ac:switch:case="'inactive'">Inactive</div>
+    <div ac:switch:default>Unknown</div>
   </div>
 
   <!-- ac-template usage -->
-  <ac-template name="userTemplate">
+  <ac-template name="userTemplate" ac:let="user">
     <div>{{ user.name }} - {{ user.role }}</div>
   </ac-template>
 
-  <div *acFor="user in users" acLet="user">
-    <ac-container acLet="user">
-      <ac-slot template="userTemplate"></ac-slot>
-    </ac-container>
+  <div ac:for="let user of users" >
+    <ac-container ac:template="userTemplate" ac:context="{user:user}"></ac-container>
   </div>
 </div>
 
 `;
     // console.log(html);
     this.innerHTML = html;
+    const btnShow = this.querySelector('#btnShow');
     const ctx = {
       title: 'test-browser',
       show: true,
@@ -69,8 +70,10 @@ export class TemplateEnginePage extends HTMLElement {
         { name: 'Bob', role: 'User' },
       ],
       focusInput:()=>{
-        console.log("Focus Input called");
-        // this.$refs.myInput?.focus();
+        console.log("Focus Input called",this);
+      },
+      handleShow:()=>{
+        ctx.show = !ctx.show;
       },
       onInit() {
         console.log('AppElement initialized');
@@ -79,6 +82,9 @@ export class TemplateEnginePage extends HTMLElement {
         console.log('AppElement destroyed');
       },
     };
-    new AcTemplateEngine({context:ctx,element:this}).render();
+    const engine = new AcTemplateEngine({context:ctx,element:this});
+    engine.render();
+    console.log(engine);
+    btnShow?.addEventListener('click',()=>{engine.elementContext.setContextValue({key:'show',value:false})})
   }
 }

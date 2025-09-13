@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName, AcInput, AcNumberInput, AcSelectInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName, AcNumberInputElement, AcSelectInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { IAcPageElement } from "../../interfaces/ac-page-element.interface";
 import { IAcBuilderElementProperty } from "../../interfaces/ac-builder-element-property.interface";
@@ -35,13 +35,13 @@ export class AcElementPropertyInput {
 
   private setInput() {
     if (this.property.type == 'string') {
-      this.input = new AcTextInput();
+      this.input = new AcTextInputElement();
     }
     else if (this.property.type == 'number') {
-      this.input = new AcNumberInput();
+      this.input = new AcNumberInputElement();
     }
     else if (this.property.type == 'select') {
-      this.input = new AcSelectInput();
+      this.input = new AcSelectInputElement();
       if(this.property.inputProperties){
         if(this.property.inputProperties['selectOptions']){
           this.input.selectOptions = this.property.inputProperties['selectOptions'];
@@ -49,7 +49,7 @@ export class AcElementPropertyInput {
       }
     }
     else if (this.property.type == 'boolean') {
-      this.input = new AcSelectInput();
+      this.input = new AcSelectInputElement();
       this.input.selectOptions = [{'label':'True','value':true},{'label':'False','value':false}];
     }
     if (this.input) {

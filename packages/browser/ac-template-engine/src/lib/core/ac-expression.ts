@@ -5,6 +5,9 @@ export class AcExpression {
     }
     catch(ex){
       console.error(ex);
+      // console.error(expression);
+      // console.error(context);
+      // console.trace();
     }
     return null;
   }

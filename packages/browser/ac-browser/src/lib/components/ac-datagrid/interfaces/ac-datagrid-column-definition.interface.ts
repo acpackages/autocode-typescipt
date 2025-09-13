@@ -50,6 +50,8 @@ export interface IAcDatagridColumnDefinition {
 
   extensionData?:Record<string,any>;
 
+  format?:string;
+
   /* AcDoc({
     "description": "The field of the row object to get the cell's data from."
   }) */
@@ -87,6 +89,7 @@ export interface IAcDatagridColumnDefinition {
     "description": Function or expression. Gets the value from your data for display."
   }) */
   valueGetter?: string | Function;
+  visible?:boolean;
 
   /* AcDoc({
     "description": Initial width in pixels for the column.",

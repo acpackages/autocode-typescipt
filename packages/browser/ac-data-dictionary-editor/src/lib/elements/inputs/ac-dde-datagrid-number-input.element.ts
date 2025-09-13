@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellElementArgs, AcNumberInput, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, IAcDatagridCellEditorElement, AcNumberInputElement } from '@autocode-ts/ac-browser';
 export class AcDDEDatagridNumberInput implements IAcDatagridCellEditorElement{
 
-  numberInput:AcNumberInput = new AcNumberInput();
+  numberInput:AcNumberInputElement = new AcNumberInputElement();
 
   destroy(): void {
-    this.numberInput.destroy();
+    // this.numberInput;
   }
 
   focus(): void {
@@ -13,7 +13,7 @@ export class AcDDEDatagridNumberInput implements IAcDatagridCellEditorElement{
   }
 
   getElement(): HTMLElement {
-    return this.numberInput.element;
+    return this.numberInput;
   }
 
   getValue() {
@@ -21,7 +21,6 @@ export class AcDDEDatagridNumberInput implements IAcDatagridCellEditorElement{
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.numberInput.init();
     this.numberInput.value = args.datagridCell.cellValue;
   }
 

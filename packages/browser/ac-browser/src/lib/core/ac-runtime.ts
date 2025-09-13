@@ -39,7 +39,7 @@ export class AcRuntime {
 
       return clazz;
     }
-
+    return undefined;
 
   }
   /**

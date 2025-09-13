@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellElementArgs, IAcDatagridCellEditorElement, AcPopoutTextareaInput } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, IAcDatagridCellEditorElement, AcPopoutTextareaInputElement } from '@autocode-ts/ac-browser';
 export class AcDDEDatagridPopoutTextareaInput implements IAcDatagridCellEditorElement{
-  textareaInput:AcPopoutTextareaInput = new AcPopoutTextareaInput();
+  textareaInput:AcPopoutTextareaInputElement = new AcPopoutTextareaInputElement();
 
   destroy(): void {
-    this.textareaInput.destroy();
+    // this.textareaInput.destroy();
   }
 
   focus(): void {
@@ -12,7 +12,7 @@ export class AcDDEDatagridPopoutTextareaInput implements IAcDatagridCellEditorEl
   }
 
   getElement(): HTMLElement {
-    return this.textareaInput.element;
+    return this.textareaInput;
   }
 
   getValue() {
@@ -20,7 +20,6 @@ export class AcDDEDatagridPopoutTextareaInput implements IAcDatagridCellEditorEl
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.textareaInput.init();
     this.textareaInput.value = args.datagridCell.cellValue;
   }
 

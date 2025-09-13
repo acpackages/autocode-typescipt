@@ -103,7 +103,7 @@ export class AcRepeaterDataSource {
         repeaterApi: this.repeaterApi,
         repeaterRow: repeaterRow,
       };
-      this.repeaterApi.hooks.execute({ hook: AcEnumRepeaterHook.RepeaterRowCreated, args: hookArgs });
+      this.repeaterApi.hooks.execute({ hook: AcEnumRepeaterHook.RepeaterRowCreate, args: hookArgs });
       index++;
     }
     this.repeaterApi.hooks.execute({ hook: AcEnumRepeaterHook.DataChange, args: hookArgs });

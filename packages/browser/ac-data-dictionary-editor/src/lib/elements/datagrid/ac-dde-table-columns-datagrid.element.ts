@@ -7,10 +7,9 @@ import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.ele
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
 import { AcDDEDatagridNumberInput } from "../inputs/ac-dde-datagrid-number-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
-import { AcDDEDatagridSelectOptionsInput } from "../inputs/ac-dde-datagrid-select-options-input.element";
 import { AcDDEDatagridSelectFormatInput } from "../inputs/ac-dde-datagrid-select-format-input.elemen";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
@@ -20,6 +19,7 @@ import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETableColumn } from "../../interfaces/ac-dde-table-column.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { AcDDEDatagridValueOptionsInput } from "../inputs/ac-dde-datagrid-values-options-input.element";
 
 export class AcDDETableColumnsDatagrid {
   data: any[] = [];
@@ -55,13 +55,13 @@ export class AcDDETableColumnsDatagrid {
       { 'field': AcEnumDDColumnProperty.PrimaryKey, 'title': 'Primary Key', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.ColumnTitle, 'title': 'Column Title', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.Required, 'title': 'Required', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
-      { 'field': AcEnumDDColumnProperty.UniqueKey, 'title': 'Unique Key', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
-      { 'field': AcEnumDDColumnProperty.NotNull, 'title': 'Not Null', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
+      { 'field': AcEnumDDColumnProperty.ValueOptions, 'title': 'Values', useCellEditorForRenderer: true, cellEditorElement: AcDDEDatagridValueOptionsInput,allowFilter:true },
+      { 'field': AcEnumDDColumnProperty.UniqueKey, 'title': 'Unique Key', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },      { 'field': AcEnumDDColumnProperty.NotNull, 'title': 'Not Null', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.Format, 'title': 'Format', useCellEditorForRenderer: true, cellEditorElement: AcDDEDatagridSelectFormatInput,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.DefaultValue, 'title': 'Default Value', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.SetNullBeforeDelete, 'title': 'Set Null Before Delete?', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.IsSelectDistinct, 'title': 'Is Select Distinct?', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
-      { 'field': AcEnumDDColumnProperty.ValueOptions, 'title': 'Values', useCellEditorForRenderer: true, cellEditorElement: AcDDEDatagridSelectOptionsInput,allowFilter:true },
+
       { 'field': AcEnumDDColumnProperty.Tags, 'title': 'Tags', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.AutoNumberLength, 'title': 'AutoNumber Length', cellEditorElement: AcDDEDatagridNumberInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.AutoNumberPrefix, 'title': 'AutoNumber Prefix', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
@@ -131,7 +131,7 @@ export class AcDDETableColumnsDatagrid {
         this.setColumnsData();
       }
     });
-    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.TableColumn, (args: IAcReactiveValueProxyEvent) => {
+    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.TableColumn, (args: IAcContextEvent) => {
       if (args.event == 'delete') {
         arrayRemoveByKey(this.data, AcEnumDDETableColumn.ColumnId, args.oldValue[AcEnumDDETableColumn.ColumnId]);
       }

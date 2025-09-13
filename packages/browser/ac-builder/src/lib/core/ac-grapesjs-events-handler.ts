@@ -1,6 +1,5 @@
 import { Editor } from "grapesjs";
 import { AcBuilderApi } from "./ac-builder-api";
-import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
 
 export class AcGrapesJSEventsHandler {

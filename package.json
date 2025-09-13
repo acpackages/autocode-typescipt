@@ -7,12 +7,14 @@
     "build:ac-browser": "nx run ac-browser:build",
     "build:ac-builder": "nx run ac-builder:build",
     "build:ac-data-dictionary": "nx run ac-data-dictionary:build",
+    "build:ac-data-dictionary-components": "nx run ac-data-dictionary-components:build",
     "build:ac-data-dictionary-editor": "nx run ac-data-dictionary-editor:build",
     "build:ac-datagrid-on-ag-grid": "nx run ac-datagrid-on-ag-grid:build",
     "build:ac-extensions": "nx run ac-extensions:build",
     "build:ac-ng-datagrid-on-aggrid": "nx run ac-ng-datagrid-on-aggrid:build",
     "build:ac-ng-node-editor": "nx run ac-ng-node-editor:build",
     "build:ac-sql-node": "nx run ac-sql-node:build",
+    "build:ac-template-engine": "nx run ac-template-engine:build",
     "build:autocode": "nx run autocode:build",
     "dev:angular": "npx nx serve test-angular",
     "dev:browser": "npx nx serve test-browser",
@@ -130,6 +132,7 @@
     "@autocode-ts/ac-angular": "file:./dist/packages/angular/ac-angular",
     "@autocode-ts/ac-browser": "file:./dist/packages/browser/ac-browser",
     "@autocode-ts/ac-data-dictionary": "file:./dist/packages/common/ac-data-dictionary",
+    "@autocode-ts/ac-data-dictionary-components": "file:./dist/packages/browser/ac-data-dictionary-components",
     "@autocode-ts/ac-data-dictionary-editor": "file:./dist/packages/browser/ac-data-dictionary-editor",
     "@autocode-ts/ac-datagrid-on-ag-grid": "file:./dist/packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid",
     "@autocode-ts/ac-extensions": "file:./dist/packages/common/ac-extensions",
@@ -186,5 +189,16 @@
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
     "zone.js": "~0.15.0"
-  }
+  },
+  "workspaces": [
+    "packages/angular/*",
+    "packages/browser/*",
+    "packages/browser/extensions/builder/*",
+    "packages/browser/extensions/datagrid/*",
+    "packages/browser/extensions/data-dictionary/*",
+    "packages/common/*",
+    "packages/node/*",
+    "packages/react/*",
+    "packages/vue/*"
+  ]
 }

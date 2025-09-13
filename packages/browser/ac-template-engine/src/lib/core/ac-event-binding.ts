@@ -1,8 +1,8 @@
+import { AC_TEMPLATE_ENGINE_ATTRIBUTE } from "../consts/ac-template-engine-attributes.const";
 import { AcElementContext } from "../models/ac-element-context.model";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class AcEventBinding{
-  static eventKey = 'acon:';
   element!: HTMLElement;
   elementContext!:AcElementContext;
 
@@ -16,9 +16,9 @@ export class AcEventBinding{
     for (const attr of Array.from(this.element.attributes)) {
       const attrName:string = attr.name.toLowerCase();
       // console.log("Checking if has acOn: on attribute "+attrName);
-      if (!attrName.startsWith(AcEventBinding.eventKey)) continue;
+      if (!attrName.startsWith(AC_TEMPLATE_ENGINE_ATTRIBUTE.On)) continue;
 
-      const event = attrName.slice(AcEventBinding.eventKey.length);
+      const event = attrName.slice(AC_TEMPLATE_ENGINE_ATTRIBUTE.On.length+1);
       const expr = attr.value;
 
       this.element.removeAttribute(attrName); // avoid duplicate bindings

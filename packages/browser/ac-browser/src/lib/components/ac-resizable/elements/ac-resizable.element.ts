@@ -34,7 +34,7 @@ export class AcResizable {
     handle.style.zIndex = '10';
 
     switch (dir) {
-      case 'top':
+      case AcEnumResizeDirection.Top:
         Object.assign(handle.style, {
           top: '0',
           left: '0',
@@ -43,7 +43,7 @@ export class AcResizable {
           cursor: 'ns-resize'
         });
         break;
-      case 'bottom':
+      case AcEnumResizeDirection.Bottom:
         Object.assign(handle.style, {
           bottom: '0',
           left: '0',
@@ -52,7 +52,7 @@ export class AcResizable {
           cursor: 'ns-resize'
         });
         break;
-      case 'left':
+      case AcEnumResizeDirection.Left:
         Object.assign(handle.style, {
           top: '0',
           bottom: '0',
@@ -61,7 +61,7 @@ export class AcResizable {
           cursor: 'ew-resize'
         });
         break;
-      case 'right':
+      case AcEnumResizeDirection.Right:
         Object.assign(handle.style, {
           top: '0',
           bottom: '0',
@@ -70,7 +70,7 @@ export class AcResizable {
           cursor: 'ew-resize'
         });
         break;
-      case 'top-left':
+      case AcEnumResizeDirection.TopLeft:
         Object.assign(handle.style, {
           top: '0',
           left: '0',
@@ -79,7 +79,7 @@ export class AcResizable {
           cursor: 'nwse-resize'
         });
         break;
-      case 'top-right':
+      case AcEnumResizeDirection.TopRight:
         Object.assign(handle.style, {
           top: '0',
           right: '0',
@@ -88,7 +88,7 @@ export class AcResizable {
           cursor: 'nesw-resize'
         });
         break;
-      case 'bottom-left':
+      case AcEnumResizeDirection.BottomLeft:
         Object.assign(handle.style, {
           bottom: '0',
           left: '0',
@@ -97,7 +97,7 @@ export class AcResizable {
           cursor: 'nesw-resize'
         });
         break;
-      case 'bottom-right':
+      case AcEnumResizeDirection.BottomRight:
         Object.assign(handle.style, {
           bottom: '0',
           right: '0',

@@ -1,13 +1,13 @@
-import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcSelectInputElement, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
 import { AcDDEApi, AcEnumDDEHook } from '../../_ac-data-dictionary-editor.export';
 export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditorElement{
-  selectInput:AcSelectInput = new AcSelectInput();
+  selectInput:AcSelectInputElement = new AcSelectInputElement();
   editorApi!:AcDDEApi;
   value:any;
   filter:Function|undefined;
 
   destroy(): void {
-    this.selectInput.destroy();
+    // this.selectInput.destroy();
   }
 
   focus(): void {
@@ -15,7 +15,7 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditorEleme
   }
 
   getElement(): HTMLElement {
-    return this.selectInput.element;
+    return this.selectInput;
   }
 
   getValue() {
@@ -23,7 +23,6 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditorEleme
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.init();
     if(args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']){
       this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];
       this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.DataDictionarySet,callback:()=>{

@@ -38,8 +38,7 @@ export class AcElementEventInput {
 
   private setInput() {
     this.input = new AcEventSelectInput({ builderApi: this.builderApi });
-    this.input.init();
-    (this.element.querySelector('.gjs-input-holder') as HTMLInputElement).append(this.input.element);
+    (this.element.querySelector('.gjs-input-holder') as HTMLInputElement).append(this.input);
     if (this.pageElement && this.pageElement.events) {
       if (this.pageElement.events[this.event.name]) {
         this.input.value = this.pageElement.events[this.event.name].functionName;

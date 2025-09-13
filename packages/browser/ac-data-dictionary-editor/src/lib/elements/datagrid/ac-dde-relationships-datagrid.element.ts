@@ -7,7 +7,7 @@ import { AcDDEDatagridSelectTableColumnInput } from "../inputs/ac-dde-datagrid-s
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcReactiveValueProxyEvent } from "@autocode-ts/ac-template-engine";
+import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { IAcDDERelationship } from "../../interfaces/ac-dde-relationship.inteface";
@@ -188,7 +188,7 @@ export class AcDDERelationshipsDatagrid {
         this.setRelationshipsData();
       }
     });
-    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Relationship, (args: IAcReactiveValueProxyEvent) => {
+    this.editorApi.dataStorage.on('change', AcEnumDDEEntity.Relationship, (args: IAcContextEvent) => {
       if (args.event == 'delete') {
         arrayRemoveByKey(this.data, AcEnumDDERelationship.RelationshipId, args.oldValue[AcEnumDDERelationship.RelationshipId]);
       }
