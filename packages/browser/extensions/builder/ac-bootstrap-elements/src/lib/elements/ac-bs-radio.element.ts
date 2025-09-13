@@ -1,6 +1,5 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
-import { AcInput } from "@autocode-ts/ac-browser";
 
 // Bootstrap-specific events for this component
 const BS_EVENTS: IAcBuilderElementEvent[]  = [
@@ -9,6 +8,28 @@ const BS_EVENTS: IAcBuilderElementEvent[]  = [
 ];
 
 const BS_PROPS: IAcBuilderElementProperty[] = [];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-checked"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-disabled"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+];
 
 export class AcBsRadio extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
@@ -51,8 +72,8 @@ export const AC_BUILDER_BS_RADIO_ELEMENT: IAcBuilderElement = {
   title: "Radio",
   events: [ ...BS_EVENTS, AC_INPUT_EVENTS.change, AC_INPUT_EVENTS.invalid],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.radio,

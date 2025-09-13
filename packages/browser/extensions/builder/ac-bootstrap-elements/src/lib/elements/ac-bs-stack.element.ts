@@ -5,6 +5,24 @@ const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
 const BS_PROPS: IAcBuilderElementProperty[] = [];
 
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+];
+
 export class AcBsStack extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Stack
@@ -45,8 +63,8 @@ export const AC_BUILDER_BS_STACK_ELEMENT: IAcBuilderElement = {
   title: "Stack",
   events: [ ...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS), ...Object.values(AC_TOUCH_EVENTS) ],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.stack,

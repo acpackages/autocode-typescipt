@@ -9,7 +9,34 @@ const BS_EVENTS: IAcBuilderElementEvent[]  = [
     { title: 'Hidden', category: 'Bootstrap', name: "hidden", htmlEventName: "hidden.bs.tab" }
   ];
 
-const BS_PROPS: IAcBuilderElementProperty[] = [];
+const BS_PROPS: IAcBuilderElementProperty[] = [
+  { title: 'Toggle', category: 'Bootstrap', type: 'string', name: "toggle", htmlAttributeName: "data-bs-toggle" },
+  { title: 'Target', category: 'Bootstrap', type: 'string', name: "target", htmlAttributeName: "data-bs-target" },
+];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-controls"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-selected"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-selected"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-disabled"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-hidden"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+];
 
 export class AcBsTabs extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
@@ -60,8 +87,8 @@ export const AC_BUILDER_BS_TABS_ELEMENT: IAcBuilderElement = {
   title: "Tabs",
   events: [ ...BS_EVENTS ],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.tabs,

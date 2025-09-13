@@ -5,6 +5,36 @@ const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
 const BS_PROPS: IAcBuilderElementProperty[] = [];
 
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.autofocus as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.contenteditable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.spellcheck as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-hidden"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-current"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-pressed"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-expanded"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-controls"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-details"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-busy"] as IAcBuilderElementProperty,
+];
+
 export class AcBsCard extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Card
@@ -45,8 +75,8 @@ export const AC_BUILDER_BS_CARD_ELEMENT: IAcBuilderElement = {
   title: "Card",
   events: [ ...BS_EVENTS, AC_MOUSE_EVENTS.click ],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.card,

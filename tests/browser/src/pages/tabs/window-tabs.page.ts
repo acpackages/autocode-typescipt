@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { AcWindowTabs } from '@autocode-ts/ac-browser';
-import './../../../../../packages/browser/ac-browser/src/lib/components/ac-tabs/css/ac-vs-code-window-tabs.css';
+// import './../../../../../packages/browser/ac-browser/src/lib/components/ac-tabs/css/ac-vs-code-window-tabs.css';
 // import './../../../../../packages/browser/ac-browser/src/lib/components/ac-tabs/css/ac-chrome-window-tabs.css';
 
 export class WindowTabsPage extends HTMLElement {

@@ -5,6 +5,27 @@ const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
 const BS_PROPS: IAcBuilderElementProperty[] = [];
 
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-sort"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-colindex"] as IAcBuilderElementProperty,
+];
+
 export class AcBsTable extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Table
@@ -64,8 +85,8 @@ export const AC_BUILDER_BS_TABLE_ELEMENT: IAcBuilderElement = {
   title: "Table",
   events: [ ...BS_EVENTS ],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.table,

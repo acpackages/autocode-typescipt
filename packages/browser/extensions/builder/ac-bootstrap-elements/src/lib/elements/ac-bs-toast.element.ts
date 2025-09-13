@@ -13,7 +13,30 @@ const BS_EVENTS: IAcBuilderElementEvent[] = [
 const BS_PROPS: IAcBuilderElementProperty[] = [
   { title: 'Animation', category: 'Bootstrap', type: 'string', name: "animation", htmlAttributeName: "data-bs-animation" },
   { title: 'Autohide', category: 'Bootstrap', type: 'string', name: "autohide", htmlAttributeName: "data-bs-autohide" },
-  { title: 'Delay', category: 'Bootstrap', type: 'string', name: "delay", htmlAttributeName: "data-bs-delay" }
+  { title: 'Delay', category: 'Bootstrap', type: 'string', name: "delay", htmlAttributeName: "data-bs-delay" },
+  { title: 'Dismiss', category: 'Bootstrap', type: 'string', name: "dismiss", htmlAttributeName: "data-bs-dismiss" },
+];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-live"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-atomic"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
 ];
 
 export class AcBsToast extends AcBuilderElement {
@@ -66,8 +89,8 @@ export const AC_BUILDER_BS_TOAST_ELEMENT: IAcBuilderElement = {
   title: "Toast",
   events: [...BS_EVENTS],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.toast,

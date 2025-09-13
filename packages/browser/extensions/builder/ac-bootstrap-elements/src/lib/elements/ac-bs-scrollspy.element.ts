@@ -9,8 +9,30 @@ const BS_EVENTS: IAcBuilderElementEvent[]  = [
 // Bootstrap-specific properties for this component
 const BS_PROPS: IAcBuilderElementProperty[]  = [
     {title: 'Offset', category: 'Bootstrap', type:'string', name: "offset", htmlAttributeName: "data-bs-offset" },
-    {title: 'Target', category: 'Bootstrap', type:'string', name: "target", htmlAttributeName: "data-bs-target" }
+    {title: 'Target', category: 'Bootstrap', type:'string', name: "target", htmlAttributeName: "data-bs-target" },
+    { title: 'Spy', category: 'Bootstrap', type: 'string', name: "spy", htmlAttributeName: "data-bs-spy" },
+    { title: 'Smooth Scroll', category: 'Bootstrap', type: 'string', name: "smoothScroll", htmlAttributeName: "data-bs-smooth-scroll" },
   ];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.spellcheck as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-current"] as IAcBuilderElementProperty
+];
 
 export class AcBsScrollspy extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
@@ -80,8 +102,8 @@ export const AC_BUILDER_BS_SCROLLSPY_ELEMENT: IAcBuilderElement = {
   title: "Scrollspy",
   events: [ ...BS_EVENTS ],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.scrollspy,
