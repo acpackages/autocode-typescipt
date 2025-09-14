@@ -21,6 +21,10 @@ export abstract class AcBuilderElement{
 
   // private registerEvents
 
+  handleCommand({command,args}:{command:string,args:any}){
+    // con
+  }
+
   on({event,callback}:{event:string,callback:Function}):string{
     return this.events.subscribe({event,callback});
   }

@@ -9,6 +9,7 @@ import { AcBuilderCssClassName } from '../consts/ac-builder-css-class-name.const
 import { AcBuilderEventsPanel } from './ac-builder-events-panel.element';
 import { AcEnumBuilderHook } from '../enums/ac-enum-builder-hook.enum';
 import { AcEnumBuilderEvent } from '../enums/ac-enum-builder-event.enum';
+import { AC_BUILDER_SVGS } from '../consts/ac-builder-svgs.consts';
 export class AcBuilder {
   element: HTMLElement = document.createElement('div');
   grapesJSElement!: HTMLElement;
@@ -100,7 +101,7 @@ export class AcBuilder {
       <div class="ac-builder-sidebar ac-builder-left-sidebar ">
         <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-elements-tab">
-            <i class="fa fa-puzzle-piece"></i>
+            <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.puzzlePiece}</span>
           </button>
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-layers-panel">
             <i class="fa fa-layer-group"></i>

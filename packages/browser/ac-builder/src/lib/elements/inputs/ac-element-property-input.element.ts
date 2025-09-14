@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName, AcNumberInputElement, AcSelectInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName,AC_INPUT_TAG, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { IAcComponentElement } from "../../interfaces/ac-component-element.interface";
 import { IAcBuilderElementProperty } from "../../interfaces/ac-builder-element-property.interface";
@@ -35,13 +35,13 @@ export class AcElementPropertyInput {
 
   private setInput() {
     if (this.property.type == 'string') {
-      this.input = new AcTextInputElement();
+      this.input = document.createElement(AC_INPUT_TAG.textInput);
     }
     else if (this.property.type == 'number') {
-      this.input = new AcNumberInputElement();
+      this.input = document.createElement(AC_INPUT_TAG.numberInput);
     }
     else if (this.property.type == 'select') {
-      this.input = new AcSelectInputElement();
+      this.input = document.createElement(AC_INPUT_TAG.selectInput);
       if(this.property.inputProperties){
         if(this.property.inputProperties['selectOptions']){
           this.input.selectOptions = this.property.inputProperties['selectOptions'];
@@ -49,11 +49,11 @@ export class AcElementPropertyInput {
       }
     }
     else if (this.property.type == 'boolean') {
-      this.input = new AcSelectInputElement();
+      this.input = document.createElement(AC_INPUT_TAG.selectInput);
       this.input.selectOptions = [{'label':'True','value':true},{'label':'False','value':false}];
     }
     if (this.input) {
-      this.input.init();
+      // this.input.init();
       (this.element.querySelector('.gjs-input-holder') as HTMLInputElement).append(this.input.element);
       if (this.componentElement && this.componentElement.properties) {
         if (this.componentElement.properties[this.property.name]) {
@@ -67,9 +67,9 @@ export class AcElementPropertyInput {
             value: this.input.value
           };
           if (this.property.name == 'instanceName') {
-            delete this.builderApi.component.elements![this.componentElement.id];
+            delete this.builderApi.component.elements![this.componentElement.instanceName];
             this.builderApi.component.elements![this.input.value] = this.componentElement;
-            this.componentElement.id = this.input.value;
+            this.componentElement.instanceName = this.input.value;
             if (this.componentElement) {
               this.componentElement.instance.element!.setAttribute(AcBuilderAttributeName.acBuilderElementInstanceName, this.input.value);
             }
