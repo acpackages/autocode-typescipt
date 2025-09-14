@@ -23,7 +23,7 @@ export class DataDictionaryComponentsPage  extends HTMLElement {
     AcDataDictionary.registerDataDictionary({jsonData:actDataDictionary});
     console.log(AcDataDictionary.dataDictionaries);
     console.log(AcDDInputFieldElement);
-    this.innerHTML = `Reflecting Statement<br><ac-dd-input-field table-name="act_ledger_accounts" column-name="reflecting_statement"></ac-dd-input-field>`
+    this.innerHTML = `<ac-dd-input-field table-name="act_ledger_accounts" column-name="reflecting_statement"></ac-dd-input-field>`
     // new Ac
   }
 

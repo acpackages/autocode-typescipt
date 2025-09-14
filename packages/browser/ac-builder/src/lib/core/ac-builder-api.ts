@@ -17,14 +17,15 @@ import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderComponent } from "../interfaces/ac-component.interface";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { AcBuilderComponent } from "./ac-builder-component";
+import { title } from "process";
 
 export class AcBuilderApi {
   private _component!: IAcBuilderComponent;
-  set component(value:IAcBuilderComponent){
+  set component(value: IAcBuilderComponent) {
     this._component = value;
-    this.hooks.execute({hook:AcEnumBuilderHook.ActiveComponentChange,args:{component:value}});
+    this.hooks.execute({ hook: AcEnumBuilderHook.ActiveComponentChange, args: { component: value } });
   }
-  get component():IAcBuilderComponent{
+  get component(): IAcBuilderComponent {
     return this._component;
   }
 
@@ -38,11 +39,11 @@ export class AcBuilderApi {
   components: IAcBuilderComponent[] = [];
   scriptEditor!: AcBuilderScriptEditor;
   selectedElement?: IAcComponentElement;
-  runtime?:AcBuilderDevelopmentRuntime;
+  runtime?: AcBuilderDevelopmentRuntime;
 
   constructor({ builder }: { builder: AcBuilder }) {
     this.builder = builder;
-    this.runtime = new AcBuilderDevelopmentRuntime({builderApi:this});
+    this.runtime = new AcBuilderDevelopmentRuntime({ builderApi: this });
     this.builderState = new AcBuilderState({ builderApi: this });
     this.eventHandler = new AcBuilderEventsHandler({ builderApi: this });
     this.grapesJSApi = builder.grapesJSApi;
@@ -54,61 +55,114 @@ export class AcBuilderApi {
   }
 
   private addElementsFromRegister() {
-    for(const element of AcBuilderElementsManager.getElements()){
+    for (const element of AcBuilderElementsManager.getElements()) {
       if (element.properties == undefined) {
-      element.properties = [];
-    }
-    element.properties = [{
-      category: 'General',
-      name: 'instanceName',
-      title: 'Instance Name',
-      type: 'string'
-    }, ...element.properties];
-    const domc = this.grapesJSApi.DomComponents;
-    const instance = this;
-    domc.addType(element.name, {
-      model: {
-        defaults: {
-          tagName: element.tag,
+        element.properties = [];
+      }
+      element.properties = [{
+        category: 'General',
+        name: 'instanceName',
+        title: 'Instance Name',
+        type: 'string'
+      }, ...element.properties];
+      const domc = this.grapesJSApi.DomComponents;
+      const instance = this;
+      domc.addType(element.name, {
+        model: {
+          defaults: {
+            tagName: element.tag,
+          },
+          initToolbar() {
+             const isRoot = !this.parent(); // root = no parent
+
+      if (isRoot) {
+        this.set('toolbar', [
+          {
+            attributes: { class: 'fa fa-trash' },
+            command: (editor, sender, opts) => opts.target.remove(),
+            label: 'Delete Root'
+          },
+          {
+            attributes: { class: 'fa fa-clone' },
+            command: (editor, sender, opts) => {
+              const cloned = opts.target.clone();
+              opts.target.parent()?.append(cloned);
+            },
+            label: 'Duplicate Root'
+          }
+        ]);
+      } else {
+        this.set('toolbar', [
+          {
+            attributes: { class: 'fa fa-pencil' },
+            command: 'tlb-edit',
+            label: 'Edit Child'
+          },
+          {
+            attributes: { class: 'fa fa-trash' },
+            command: (editor, sender, opts) => opts.target.remove(),
+            label: 'Delete Child'
+          }
+        ]);
+      }
+          },
         },
-      },
-      view: {
-        init(args: any) {
-          let currentCount: number = 0;
-          if (instance.component && instance.component.elements) {
-            currentCount = Object.values(instance.component.elements).filter((el) => { return el.name == element.name }).length;
-          }
-          currentCount++;
-          const elementId: string = stringToCamelCase(`${element.name.replaceAll(" ", "_")}_${currentCount}`);
-          const componentElement: IAcComponentElement = {
-            id: elementId,
-            name: element.name,
-            events: {},
-            properties: {
-              instanceName: { name: 'instanceName', value: elementId }
+        view: {
+          init(args: any) {
+            let currentCount: number = 0;
+            if (instance.component && instance.component.elements) {
+              currentCount = Object.values(instance.component.elements).filter((el) => { return el.name == element.name }).length;
             }
-          }
-          instance.component.elements![elementId] = componentElement;
-          //   const callbackArgs: IAcBuilderElementInitArgs = {
-          //     element: this.el as HTMLElement
-          //   }
+            currentCount++;
+            const instanceName: string = stringToCamelCase(`${element.name.replaceAll(" ", "_")}_${currentCount}`);
+            const componentElement: IAcComponentElement = {
+              instanceName: instanceName,
+              name: element.name,
+              events: {},
+              properties: {
+                instanceName: { name: 'instanceName', value: instanceName }
+              }
+            }
+            instance.component.elements![instanceName] = componentElement;
+            //   const callbackArgs: IAcBuilderElementInitArgs = {
+            //     element: this.el as HTMLElement
+            //   }
             setTimeout(() => {
-              this.el.setAttribute(AcBuilderAttributeName.acBuilderElementId, elementId);
+              this.el.setAttribute(AcBuilderAttributeName.acBuilderElementInstanceName, instanceName);
               // elInstance.init({args:callbackArgs});
               // instance.hooks.execute({ hook: AcEnumBuilderHook.ElementInit, args: args });
             }, 1);
-          // }
-        }
-      },
-    });
-    this.grapesJSApi.BlockManager.add(element.name, {
-      label: element.title,
-      attributes: { [AcFilterableElementsAttributeName.acFilterValue]: element.title.toLowerCase() },
-      content: { type: element.name },
-      category: element.category,
-      media: element.mediaSvg
-    });
-    this.scriptEditor.registerType({type:element.instanceClass});
+            // }
+          },
+
+        },
+      });
+      this.grapesJSApi.BlockManager.add(element.name, {
+        label: element.title,
+        attributes: { [AcFilterableElementsAttributeName.acFilterValue]: element.title.toLowerCase() },
+        content: {
+          type: element.name,
+      //     toolbar: [
+      //       {
+      //         attributes: { class: 'fa fa-clone', title: 'Clone' },
+      //         command: (editor: any, sender: any, opts: any) => {
+      //           const cloned = opts.target.clone();
+      //           opts.target.parent().append(cloned); // duplicate root
+      //         },
+      //       },
+      //       {
+      //   attributes: { class: 'fa fa-trash',title:"Remove" },
+      //   command: (editor: any, sender: any, opts: any) => {
+      //     opts.target.remove(); // delete root
+      //   },
+      // },
+      //     ]
+        },
+        category: element.category,
+        media: element.mediaSvg,
+
+      });
+      this.scriptEditor.registerType({ type: element.instanceClass });
     }
 
   }
@@ -120,7 +174,7 @@ export class AcBuilderApi {
   initScriptEditor() {
     if (this.scriptEditor == undefined) {
       this.scriptEditor = new AcBuilderScriptEditor({ builderApi: this });
-      this.scriptEditor.registerType({type:AcBuilderComponent});
+      this.scriptEditor.registerType({ type: AcBuilderComponent });
       if (this.component && this.component.script) {
         this.scriptEditor.setCode({ code: this.component.script });
       }

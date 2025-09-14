@@ -71,7 +71,7 @@ export class AcElementPropertyInput {
             this.builderApi.component.elements![this.input.value] = this.componentElement;
             this.componentElement.id = this.input.value;
             if (this.componentElement) {
-              this.componentElement.instance.element!.setAttribute(AcBuilderAttributeName.acBuilderElementId, this.input.value);
+              this.componentElement.instance.element!.setAttribute(AcBuilderAttributeName.acBuilderElementInstanceName, this.input.value);
             }
           }
         }

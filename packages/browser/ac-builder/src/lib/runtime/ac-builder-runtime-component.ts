@@ -44,15 +44,17 @@ export class AcBuilderRuntimeComponent {
 
   render() {
     this.createInstanceFromScript();
-    this.componentInstance.element.innerHTML = this.component.html;
-    this.componentInstance.init();
-    this.componentElement = this.componentInstance.element;
-    if(this.component.elementAttributes){
-      for(const key of Object.keys(this.component.elementAttributes)){
-        this.componentElement!.setAttribute(key,this.component.elementAttributes[key]);
+    if(this.componentInstance && this.componentInstance.element){
+      this.componentInstance.element.innerHTML = this.component.html;
+      this.componentInstance.init();
+      this.componentElement = this.componentInstance.element;
+      if(this.component.elementAttributes){
+        for(const key of Object.keys(this.component.elementAttributes)){
+          this.componentElement!.setAttribute(key,this.component.elementAttributes[key]);
+        }
       }
+      this.createElementInstances();
     }
-    this.createElementInstances();
   }
 
   setElementInstance({ element }: { element: IAcComponentElement }): any | undefined {

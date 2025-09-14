@@ -220,9 +220,27 @@ body {
 .gjs-three-color-h:hover{
   color: inherit!important;
 }
+.gjs-rte-actionbar{
+  background-color: white;
+}
 
 .btn-block {
   width: 100%;
+}
+
+.gjs-frame-wrapper{
+  max-height: calc(100% - 50px)!important;
+  max-width: calc(100% - 50px)!important;
+  top: 25px!important;
+  padding: 5px !important;
+  background: white;
+  border-radius: 5px!important;
+}
+
+.gjs-frame-wrapper iframe{
+  width: calc(100% - 5px)!important;
+  height: calc(100% - 5px)!important;
+  /* border-radius: 10px!important; */
 }
 
 /* Grapesjs */

@@ -15,8 +15,8 @@ export class AcBuilderEventsHandler {
 
   handleElementAdd({ element }: { element: HTMLElement }) {
     if (element.nodeType === Node.ELEMENT_NODE) {
-      if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementId)) {
-        const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementId)!;
+      if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)) {
+        const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)!;
         const componentElement = this.builderApi.component.elements![elementId];
         const builderElement = AcBuilderElementsManager.getElement({name:componentElement.name});
         if(builderElement){
@@ -43,8 +43,8 @@ export class AcBuilderEventsHandler {
 
   handleElementSelect({ element }: { element: HTMLElement }) {
     if (element.nodeType === Node.ELEMENT_NODE) {
-      if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementId)) {
-        const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementId)!;
+      if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)) {
+        const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)!;
         if (this.builderApi.component.elements && this.builderApi.component.elements[elementId]) {
           const componentElement = this.builderApi.component.elements[elementId];
           this.builderApi.selectedElement = componentElement;

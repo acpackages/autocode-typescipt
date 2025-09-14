@@ -53,7 +53,7 @@ export class AcDDInputFieldBaseElement extends AcElementBase {
   constructor() {
     super();
     this.style.display = 'contents';
-    this.innerHTML = `<label ac-dd-input-label-conatiner></label><div ac-dd-input-container></div>`;
+    this.innerHTML = `Label : <label ac-dd-input-label-conatiner></label><div ac-dd-input-container></div>`;
     console.dir(this);
   }
 

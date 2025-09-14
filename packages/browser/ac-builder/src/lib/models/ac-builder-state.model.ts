@@ -66,8 +66,8 @@ export class AcBuilderState {
       const activeComponent = this.builderApi.component;
       activeComponent.html = this.builderApi.grapesJSApi.getHtml({
         attributes(component, attr) {
-          if (component && component.view && component.view.el && component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId)) {
-            attr[AcBuilderAttributeName.acBuilderElementId] = component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId);
+          if (component && component.view && component.view.el && component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)) {
+            attr[AcBuilderAttributeName.acBuilderElementInstanceName] = component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName);
           }
           return attr;
         },

@@ -1,3 +1,4 @@
 export const AcBuilderAttributeName = {
-  acBuilderElementId: 'ac-builder-element-id'
+  acBuilderElementInstanceName: 'ac-builder-element-instance-name',
+  acBuilderElementInteractive: 'ac-builder-element-interactive'
 }

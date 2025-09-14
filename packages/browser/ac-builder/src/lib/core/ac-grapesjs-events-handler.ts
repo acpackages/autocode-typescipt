@@ -2,18 +2,15 @@
 import { Editor } from "grapesjs";
 import { AcBuilderApi } from "./ac-builder-api";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
+import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
+import { AcTooltip } from "@autocode-ts/ac-browser";
 
 export class AcGrapesJSEventsHandler {
   builderApi: AcBuilderApi;
   eventsHandler: AcBuilderEventsHandler;
   grapesJSApi: Editor;
-  attrToProp: any = {
-    'ac-builder-element-editable': 'editable',
-    'ac-builder-element-removable': 'removable',
-    'ac-builder-element-draggable': 'draggable',
-    'ac-builder-element-droppable': 'droppable',
-    'ac-builder-element-copyable': 'copyable'
-  };
+  builderIframe?: HTMLIFrameElement;
+  builderRoot?: HTMLElement;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
     this.eventsHandler = builderApi.eventHandler;
@@ -21,73 +18,63 @@ export class AcGrapesJSEventsHandler {
     this.registerEventListeners();
   }
 
-  findComponentByEl(el: HTMLElement) {
-    return this.grapesJSApi.getWrapper()!.find('*').filter((c: any) => c.getEl() === el)[0];
+  makeElementInteractive({ element }: { element: HTMLElement }) {
+    if (!element) return;
+    const wrapper = this.grapesJSApi.getWrapper()!;
+    let cmp: any = wrapper.find('*').filter(c => c.getEl() === element)[0];
+    if (!cmp) {
+      cmp = wrapper.append(element.outerHTML)
+      element.replaceWith(cmp[0].view.el);
+      cmp = wrapper.components().last();
+    }
+    const setInteractive = (component: any) => {
+      component.set({
+        editable: true,
+        draggable: true,
+        removable: true,
+        copyable: true,
+        droppable: true
+      });
+      component.components().each((child: any) => setInteractive(child));
+    };
+    setInteractive(cmp);
   }
-
-  makeElementInteractive(el:HTMLElement) {
-  if (!el) return;
-
-  const wrapper = this.grapesJSApi.getWrapper()!;
-
-  // 1️⃣ Check if this element is already a component
-  let cmp:any = wrapper.find('*').filter(c => c.getEl() === el)[0];
-
-  // 2️⃣ If not, create a component from the element
-  if (!cmp) {
-    // Use append to convert raw DOM element to GrapesJS component
-    cmp = wrapper.append(el.outerHTML);
-
-    // Remove original DOM node to avoid duplication
-    console.log(cmp[0].view.el);
-    el.replaceWith(cmp[0].view.el);
-
-    // Get the newly created component (last child of wrapper)
-    cmp = wrapper.components().last();
-  }
-
-  // 3️⃣ Make component editable, draggable, removable, etc.
-  const setInteractive = (component:any) => {
-    component.set({
-      editable: true,
-      draggable: true,
-      removable: true,
-      copyable: true,
-      droppable: true
-    });
-
-    // recursively for children
-    component.components().each((child:any) => setInteractive(child));
-  };
-
-  setInteractive(cmp);
-
-  return cmp; // return the GrapesJS component
-}
 
   registerAttributesChangeListener() {
-    const iframe = this.grapesJSApi.Canvas.getFrameEl();
     const observer = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
-        if (mutation.type === 'attributes') {
-          const el = mutation.target as HTMLElement;
-
-          // console.log(mutation);
+        if (mutation.type == 'attributes') {
+          const element = mutation.target as HTMLElement;
           const attrName: string = mutation.attributeName!;
-          if (attrName in this.attrToProp) {
-              console.log(attrName);
-              this.makeElementInteractive(el);
-              // cmp.set((this.attrToProp[attrName]) as string, value === 'true');
+          if (attrName == AcBuilderAttributeName.acBuilderElementInteractive) {
+            this.makeElementInteractive({ element });
+          }
+        }
+        else if (mutation.type == "childList" && mutation.addedNodes.length > 0) {
+          mutation.addedNodes.forEach((element) => {
+            if (element instanceof HTMLElement) {
+              if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementInteractive)) {
+                this.makeElementInteractive({ element });
+              }
             }
+          });
+        }
+        else {
+          // console.log(mutation);
         }
       });
     });
-
-    // watch all elements inside the canvas
-    observer.observe(iframe.contentDocument!.body, {
+    observer.observe(this.builderRoot!, {
       attributes: true,
+      childList: true,
       subtree: true
     });
+    const interactiveElements = this.builderRoot?.querySelectorAll(`[${AcBuilderAttributeName.acBuilderElementInteractive}]`);
+    if (interactiveElements) {
+      for (const element of Array.from(interactiveElements) as HTMLElement[]) {
+        this.makeElementInteractive({ element });
+      }
+    }
   }
 
   registerBlockListeners() {
@@ -159,6 +146,7 @@ export class AcGrapesJSEventsHandler {
       // this.builderApi.hooks.execute({hook:AcEnumBuilderHook.ElementDelete,args:{}});
     });
     editor.on('component:selected', (args) => {
+      this.renderElementToolbar(args);
       const handleFunction = () => {
         if (args && args.view && args.view.el) {
           this.eventsHandler.handleElementSelect({ element: args.view.el });
@@ -186,28 +174,26 @@ export class AcGrapesJSEventsHandler {
     this.registerStyleListeners();
     this.registerTraitListeners();
     this.grapesJSApi.on('load', () => {
-      const iframe = this.grapesJSApi.Canvas.getFrameEl(); // Get the iframe
-      const iframeDocument = iframe.contentDocument || iframe.contentWindow?.document;
-
+      this.builderIframe = this.grapesJSApi.Canvas.getFrameEl();
+      const iframeDocument = this.builderIframe.contentDocument || this.builderIframe.contentWindow?.document;
       if (iframeDocument) {
-        // Inject all parent stylesheets into the iframe
         document.querySelectorAll('link[rel="stylesheet"]').forEach((link: any) => {
           const newLink = iframeDocument.createElement('link');
           newLink.rel = 'stylesheet';
           newLink.href = link.href;
           iframeDocument.head.appendChild(newLink);
         });
-
-        // Inject all parent scripts into the iframe
         document.querySelectorAll('script[src]').forEach((script: any) => {
           const newScript = iframeDocument.createElement('script');
           newScript.src = script.src;
-          newScript.async = false; // Ensure scripts execute in order
+          newScript.async = false;
           iframeDocument.body.appendChild(newScript);
         });
+        this.builderRoot = iframeDocument.querySelector('body') as HTMLElement;
       }
       this.registerAttributesChangeListener();
     });
+    this.grapesJSApi.on('run:tlb-edit', () => false);
   }
 
   registerLayerListeners() {
@@ -353,6 +339,46 @@ export class AcGrapesJSEventsHandler {
     editor.on('trait', (args) => {
       //
     });
+  }
+
+  renderElementToolbar(comp: any) {
+    const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
+
+    if (!toolbarEl) return;
+    const getMenuElement = ({icon,title,callback}:{icon:string,title:string,callback:Function})=>{
+      const menuElement = document.createElement('button');
+      menuElement.style.background = "trasparent";
+      menuElement.style.border = "none";
+      menuElement.innerHTML = icon;
+      menuElement.title = title;
+      menuElement.addEventListener('click',()=>{callback()});
+      const tooltip = new AcTooltip({element:menuElement});
+      return menuElement;
+    };
+    toolbarEl.innerHTML = '';
+    toolbarEl.style.background = '#222';
+    toolbarEl.style.color = '#fff';
+    toolbarEl.style.borderRadius = '4px';
+    toolbarEl.style.padding = '5px';
+    // toolbarEl.append(getMenuElement({title:''}))
+    const editBtn = document.createElement('button');
+    editBtn.textContent = '✏ Edit';
+    editBtn.onclick = () => this.grapesJSApi.runCommand('tlb-edit', { target: comp });
+
+    const cloneBtn = document.createElement('button');
+    cloneBtn.textContent = '📑 Duplicate';
+    cloneBtn.onclick = () => {
+      const cloned = comp.clone();
+      comp.parent()?.append(cloned);
+    };
+
+    const delBtn = document.createElement('button');
+    delBtn.textContent = '🗑 Delete';
+    delBtn.onclick = () => comp.remove();
+
+    toolbarEl.appendChild(editBtn);
+    toolbarEl.appendChild(cloneBtn);
+    toolbarEl.appendChild(delBtn);
   }
 
 }
