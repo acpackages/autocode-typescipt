@@ -104,7 +104,7 @@ export class AcBuilder {
             <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.puzzlePiece}</span>
           </button>
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-layers-panel">
-            <i class="fa fa-layer-group"></i>
+          <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.layerGroup}</span>
           </button>
         </div>
         <div class="tab-content">

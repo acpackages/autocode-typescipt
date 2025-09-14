@@ -1,4 +1,5 @@
 import { AcBuilderElement } from "../core/ac-builder-element";
+import { IAcBuilderElementCommand } from "./ac-builder-element-command.interface";
 import { IAcBuilderElementEvent } from "./ac-builder-element-event.interface";
 import { IAcBuilderElementProperty } from "./ac-builder-element-property.interface";
 
@@ -12,4 +13,5 @@ export interface IAcBuilderElement<T extends AcBuilderElement = AcBuilderElement
   properties?:IAcBuilderElementProperty[];
   events?:IAcBuilderElementEvent[];
   instanceClass: new (...args: any[]) => T;
+  commands?:IAcBuilderElementCommand[];
 }

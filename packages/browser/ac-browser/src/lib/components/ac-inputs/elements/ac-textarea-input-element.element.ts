@@ -3,7 +3,6 @@
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
-import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 
 export class AcTextareaInputElement extends AcInputBase {
   static override get observedAttributes() {

@@ -11,8 +11,13 @@ export class AcTableElement extends AcBuilderElement{
     this.registerListeners();
   }
 
-  override handleCommand(){
-    //
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addRow'){
+      const body = this.element.querySelector('body');
+      const row = document.createElement('tr');
+      body?.append(row);
+    }
+
   }
 
   private registerListeners(){
@@ -41,7 +46,7 @@ export const AC_BUILDER_TABLE_ELEMENT:IAcBuilderElement = {
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.table,
   instanceClass:AcTableElement,
-  // commands:[
-  //   {'name':'add-row',}
-  // ]
+  commands:[
+    {name:'addRow',title:'Add Row',iconSvg:AC_BUILDER_ICON_SVGS.alert}
+  ]
 }
