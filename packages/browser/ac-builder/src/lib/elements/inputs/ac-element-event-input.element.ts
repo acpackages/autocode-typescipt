@@ -5,6 +5,7 @@ import { AcBuilderApi } from "../../core/ac-builder-api";
 import { IAcBuilderElementEvent } from "../../interfaces/ac-builder-element-event.interface";
 import { IAcComponentElement } from "../../interfaces/ac-component-element.interface";
 import { AcEventSelectInput } from "./ac-event-select-input.element";
+import { AC_BUILDER_SVGS } from "../../consts/ac-builder-svgs.consts";
 
 export class AcElementEventInput {
   builderApi: AcBuilderApi;
@@ -29,7 +30,10 @@ export class AcElementEventInput {
             <span class="gjs-input-holder">
             </span>
             <span class="gjs-field-arrows px-0" style="min-width:max-content;padding-top:0px">
-            <button type="button" class="btn py-0 px-1 btn-add-event" style="height:100%;margin-top:-3px"><i class="fa fa-plus text-secondary"></i></button>
+            <button type="button" class="btn py-0 px-1 btn-add-event" style="height:100%;margin-top:-3px">
+            <i class="fa fa-plus text-secondary"></i>
+            <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.plus}</span>
+            </button>
             </span>
           </div>
       </div>`;

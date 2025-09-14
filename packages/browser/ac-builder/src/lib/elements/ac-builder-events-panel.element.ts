@@ -5,6 +5,7 @@ import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderElementEvent } from "../interfaces/ac-builder-element-event.interface";
 import { AcElementEventInput } from "./inputs/ac-element-event-input.element";
 import { AcBuilderElementsManager } from "../core/ac-builder-elements-manager";
+import { AC_BUILDER_SVGS } from "../consts/ac-builder-svgs.consts";
 
 export class AcBuilderEventsPanel {
   builderApi: AcBuilderApi;
@@ -38,19 +39,23 @@ export class AcBuilderEventsPanel {
       categoryContainer.setAttribute('ac-data-category', categoryAttributeValue);
       acAddClassToElement({ element: categoryContainer, class_: 'gjs-block-category gjs-open' });
       categoryContainer.innerHTML = `<div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
-          <i class="gjs-caret-icon fa fa-caret-down"></i> ${categoryName}
+          <span class="gjs-caret-icon ac-builder-icon-svg">${AC_BUILDER_SVGS.caretDown}</span> ${categoryName}
         </div>
         <div class="gjs-blocks-c category-inputs-container gjs-sm-properties p-1" ${AcCollapseAttributeName.acCollapseContent} ${AcCollapseAttributeName.acCollapseOpen}></div>
         `;
       this.inputsContainer.append(categoryContainer);
       const collapse = new AcCollapse({ element: categoryContainer as HTMLElement });
       collapse.on({event:AcEnumCollapseEvent.Open,callback:()=>{
-        categoryContainer?.querySelector('.gjs-caret-icon')?.classList.add('fa-caret-down');
-        categoryContainer?.querySelector('.gjs-caret-icon')?.classList.remove('fa-caret-right');
+        var iconElement = categoryContainer?.querySelector('.gjs-caret-icon');
+        if(iconElement) iconElement.innerHTML = AC_BUILDER_SVGS.caretDown;
+        // categoryContainer?.querySelector('.gjs-caret-icon')?.classList.add('fa-caret-down');
+        // categoryContainer?.querySelector('.gjs-caret-icon')?.classList.remove('fa-caret-right');
       }});
       collapse.on({event:AcEnumCollapseEvent.Close,callback:()=>{
-        categoryContainer?.querySelector('.gjs-caret-icon')?.classList.remove('fa-caret-down');
-        categoryContainer?.querySelector('.gjs-caret-icon')?.classList.add('fa-caret-right');
+        var iconElement = categoryContainer?.querySelector('.gjs-caret-icon');
+        if(iconElement) iconElement.innerHTML = AC_BUILDER_SVGS.caretRight;
+        // categoryContainer?.querySelector('.gjs-caret-icon')?.classList.remove('fa-caret-down');
+        // categoryContainer?.querySelector('.gjs-caret-icon')?.classList.add('fa-caret-right');
       }});
     }
     return categoryContainer;

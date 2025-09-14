@@ -7,6 +7,7 @@ import * as monaco from "monaco-editor";
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import { AcTypescriptEditorHelper } from "../helpers/ac-typescript-editor-helper.helper";
+import { AC_BUILDER_SVGS } from "../consts/ac-builder-svgs.consts";
 
 export class AcBuilderScriptEditor {
   builderApi: AcBuilderApi;
@@ -35,6 +36,7 @@ export class AcBuilderScriptEditor {
         <div class="ac-builder-script-editor-header-actions-container">
           <button type="button" class="btn btn-action btn-close-action" data-bs-toggle="tooltip" data-bs-title="Redo">
                 <i class="fa fa-times text-secondary"></i>
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.xMark}</span>
               </button>
         </div>
       </div>

@@ -127,54 +127,68 @@ export class AcBuilder {
           <div class="ac-builder-topbar-center">
             <div class="btn-group btn-action-grp" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-action btn-device btn-desktop"><i class="fa fa-display text-white"></i></button>
+              <button type="button" class="btn btn-action btn-device btn-desktop"><span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.display}</span></button>
               <button type="button" class="btn btn-action btn-device btn-tablet"><i class="fa fa-tablet-screen-button text-secondary"></i></button>
+              <button type="button" class="btn btn-action btn-device btn-tablet"><span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.tabletScreen}</span></button>
               <button type="button" class="btn btn-action btn-device btn-mobilePortrait"><i class="fa fa-mobile-screen text-secondary"></i></button>
+              <button type="button" class="btn btn-action btn-device btn-mobilePortrait"><span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.mobileScreen}</span></i></button>
             </div>
           </div>
           <div class="ac-builder-topbar-right">
             <div class="ac-builder-topbar-right-container me-2">
               <button type="button" class="btn btn-action btn-preview d-none" data-bs-toggle="tooltip" data-bs-title="Preview">
                 <i class="fa fa-eye text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-outline" data-bs-toggle="tooltip" data-bs-title="Component Outline">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.eye}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-outline" data-bs-toggle="tooltip" data-bs-title="Component Outline">
                 <i class="fa fa-expand text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-fullscreen" data-bs-toggle="tooltip" data-bs-title="Fullscreen">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.expand}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-fullscreen" data-bs-toggle="tooltip" data-bs-title="Fullscreen">
                 <i class="fa fa-maximize text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-html-code" data-bs-toggle="tooltip" data-bs-title="HTML Code">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.maximize}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-html-code" data-bs-toggle="tooltip" data-bs-title="HTML Code">
                 <i class="fa fa-brands fa-html5 text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-script-code" data-bs-toggle="tooltip" data-bs-title="Script">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.html5}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-script-code" data-bs-toggle="tooltip" data-bs-title="Script">
                 <i class="fa fa-brands fa-js text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-clear-canvas" data-bs-toggle="tooltip" data-bs-title="Clear Content">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.js}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-clear-canvas" data-bs-toggle="tooltip" data-bs-title="Clear Content">
                 <i class="fa fa-eraser text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-download" data-bs-toggle="tooltip" data-bs-title="Download">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.eraser}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-download" data-bs-toggle="tooltip" data-bs-title="Download">
                 <i class="fa fa-download text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-undo" data-bs-toggle="tooltip" data-bs-title="Undo">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.download}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-undo" data-bs-toggle="tooltip" data-bs-title="Undo">
                 <i class="fa fa-undo text-secondary"></i>
-              </button>
-              <button type="button" class="btn btn-action btn-redo" data-bs-toggle="tooltip" data-bs-title="Redo">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.undo}</span>
+                </button>
+                <button type="button" class="btn btn-action btn-redo" data-bs-toggle="tooltip" data-bs-title="Redo">
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.redo}</span>
                 <i class="fa fa-redo text-secondary"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="ac-builder-canvas">
-        </div>
-      </div>
-      <div class="ac-builder-sidebar ac-builder-right-sidebar">
-        <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
-          <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-styles-tab">
-            <i class="fa fa-brands fa-css3"></i>
+                </button>
+                </div>
+                </div>
+                </div>
+                <div class="ac-builder-canvas">
+                </div>
+                </div>
+                <div class="ac-builder-sidebar ac-builder-right-sidebar">
+                <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
+                <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-styles-tab">
+                <i class="fa fa-brands fa-css3"></i>
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.css3}</span>
+                </button>
+                <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-properties-tab">
+                <i class="fa fa-pen-to-square"></i>
+                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.penToSquare}</span>
           </button>
-          <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-properties-tab">
-            <i class="fa fa-pen-to-square"></i>
-          </button>
-          <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-events-tab">            <i class="fa fa-bolt"></i>
+          <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-events-tab">            <i class="fa fa-bolt"></i>    <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.bolt}</span>
           </button>
         </div>
         <div class="tab-content">
