@@ -17,6 +17,10 @@
     "monaco-editor": "^0.52.2"
   },
   "exports": {
+    ".":{
+      "import": "./index.js",
+      "require": "./index.js"
+    },
     "./css/ac-builder.css": {
       "default": "./css/ac-builder.css"
     }

@@ -17,23 +17,23 @@ export class AcBuilderEventsHandler {
     if (element.nodeType === Node.ELEMENT_NODE) {
       if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementId)) {
         const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementId)!;
-        const pageElement = this.builderApi.page.elements![elementId];
-        const builderElement = AcBuilderElementsManager.getElement({name:pageElement.name});
+        const componentElement = this.builderApi.component.elements![elementId];
+        const builderElement = AcBuilderElementsManager.getElement({name:componentElement.name});
         if(builderElement){
           const instance = new builderElement.instanceClass();
-          pageElement.instance = instance;
+          componentElement.instance = instance;
           instance.element = element;
-          this.builderApi.scriptEditor.addCodeInsideClass({className:this.builderApi.page.className!,code:`${pageElement.id}!:${builderElement.instanceClass.name};`});
-          if (pageElement) {
+          this.builderApi.scriptEditor.addCodeInsideClass({className:this.builderApi.component.className!,code:`${componentElement.id}!:${builderElement.instanceClass.name};`});
+          if (componentElement) {
             const eventArgs: IAcBuilderElementEventArgs = {
-              pageElement: pageElement
+              componentElement: componentElement
             };
             this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ElementAdd, args: eventArgs });
             this.builderApi.events.execute({ event: AcEnumBuilderEvent.ElementAdd, args: eventArgs });
           }
           instance.init({args:{element:element}});
           if(this.builderApi.runtime){
-            // this.builderApi.runtime.builderApi({element:pageElement});
+            // this.builderApi.runtime.builderApi({element:componentElement});
           }
         }
       }
@@ -45,12 +45,12 @@ export class AcBuilderEventsHandler {
     if (element.nodeType === Node.ELEMENT_NODE) {
       if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementId)) {
         const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementId)!;
-        if (this.builderApi.page.elements && this.builderApi.page.elements[elementId]) {
-          const pageElement = this.builderApi.page.elements[elementId];
-          this.builderApi.selectedElement = pageElement;
-          if (pageElement) {
+        if (this.builderApi.component.elements && this.builderApi.component.elements[elementId]) {
+          const componentElement = this.builderApi.component.elements[elementId];
+          this.builderApi.selectedElement = componentElement;
+          if (componentElement) {
             const eventArgs: IAcBuilderElementEventArgs = {
-              pageElement: pageElement
+              componentElement: componentElement
             };
             this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.ElementSelect, args: eventArgs });
             this.builderApi.events.execute({ event: AcEnumBuilderEvent.ElementSelect, args: eventArgs });

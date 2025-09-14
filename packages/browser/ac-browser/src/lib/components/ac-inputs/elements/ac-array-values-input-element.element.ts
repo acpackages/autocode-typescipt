@@ -4,7 +4,8 @@
 import { Autocode } from "@autocode-ts/autocode";
 import { arrayRemoveByIndex } from "@autocode-ts/ac-extensions";
 import { AcInputBase } from "../core/ac-input-base";
-import { AcArrayValuesItemsElement } from "./ac-array-values-item-element.element";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 
 interface IAcArrayValueItem {
   id: string,
@@ -40,7 +41,7 @@ export class AcArrayValuesInputElement extends AcInputBase {
   override connectedCallback(): void {
     const itemsElement = this.querySelector('[ac-array-values-items]');
     if (itemsElement) {
-      this.itemsElement = itemsElement as AcArrayValuesItemsElement;
+      this.itemsElement = itemsElement as HTMLElement;
       if (itemsElement.childElementCount > 0) {
         this.itemClone = itemsElement.children[0].cloneNode(true) as HTMLElement;
       }
@@ -163,4 +164,4 @@ export class AcArrayValuesInputElement extends AcInputBase {
   }
 }
 
-customElements.define('ac-array-values-input', AcArrayValuesInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.arrayValuesInput,type:AcArrayValuesInputElement});

@@ -76,7 +76,7 @@ export * from "./lib/ac-repeater/components/ac-repeater/ac-repeater.component";
 export * from "./lib/ac-repeater/components/ac-repeating-item/ac-repeating-item.component";
 
 export * from "./lib/ac-runtime/ac-runtime.module";
-export * from "./lib/ac-runtime/ac-runtime-component/ac-runtime-component.component";
+export * from "./lib/ac-runtime/ac-builder-runtime-component/ac-builder-runtime-component.component";
 
 export * from "./lib/ac-sorting/ac-sorting.module";
 export * from "./lib/ac-sorting/components/ac-sort-button/ac-sort-button.component";

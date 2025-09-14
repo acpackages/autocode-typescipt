@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcInputElement } from "./ac-input-element.element";
 
@@ -81,4 +83,4 @@ export class AcTextInputElement extends AcInputElement{
 
 }
 
-customElements.define('ac-text-input', AcTextInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.textInput,type:AcTextInputElement});

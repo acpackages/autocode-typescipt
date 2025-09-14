@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcElementBase } from "@autocode-ts/ac-browser";
+import { AcElementBase, acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import { AcDDInputElement } from "./ac-dd-input-element.element";
 import { AcDDInputFieldElement } from "./ac-dd-input-field-element.element";
 
@@ -62,4 +62,4 @@ export class AcDDInputFieldBaseElement extends AcElementBase {
   }
 }
 
-customElements.define('ac-dd-input-field-base', AcDDInputFieldBaseElement);
+acRegisterCustomElement({tag:'ac-dd-input-field-base',type:AcDDInputFieldBaseElement});

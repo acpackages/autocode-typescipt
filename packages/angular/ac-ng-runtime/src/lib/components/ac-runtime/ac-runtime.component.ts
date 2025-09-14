@@ -12,7 +12,7 @@ import { AcRuntimeService } from '../../services/ac-runtime.service';
     styleUrl: './ac-runtime.component.css',
     standalone: false
 })
-export class AcRuntimeComponent extends AcBase{
+export class AcBuilderRuntimeComponent extends AcBase{
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
   @Input() component:any;

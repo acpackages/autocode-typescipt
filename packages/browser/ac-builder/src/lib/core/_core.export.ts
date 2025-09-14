@@ -4,5 +4,5 @@ export * from './ac-builder-elements-manager';
 export * from './ac-builder-events-handler';
 export * from './ac-builder-extension-manager';
 export * from './ac-builder-extension';
-export * from './ac-builder-page';
+export * from './ac-builder-component';
 export * from './ac-grapesjs-events-handler';

@@ -63,7 +63,7 @@ export class AcBuilderPropertiesPanel {
 
   renderInputs() {
     for (const property of this.elementProperties) {
-      const propertyInput = new AcElementPropertyInput({ builderApi: this.builderApi, property: property, pageElement: this.builderApi.selectedElement! });
+      const propertyInput = new AcElementPropertyInput({ builderApi: this.builderApi, property: property, componentElement: this.builderApi.selectedElement! });
       const categoryElement = this.getCategoryElement({ categoryName: property.category });
       (categoryElement.querySelector('.category-inputs-container') as HTMLElement).append(propertyInput.element);
     }

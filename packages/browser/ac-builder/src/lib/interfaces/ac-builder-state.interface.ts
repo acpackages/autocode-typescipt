@@ -1,6 +1,6 @@
-import { IAcPage } from "./ac-page.interface";
+import { IAcBuilderComponent } from "./ac-component.interface";
 
 export interface IAcBuilderState{
   extensionStates:any,
-  pages:IAcPage[]
+  components:IAcBuilderComponent[]
 }

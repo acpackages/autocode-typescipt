@@ -3,6 +3,8 @@
 import { stringIsJson } from "@autocode-ts/ac-extensions";
 import { AcScrollable } from "../../ac-scrollable/_ac-scrollable.export";
 import { AcInputBase } from "../core/ac-input-base";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 
 export class AcSelectInputElement extends AcInputBase {
   static override get observedAttributes() {
@@ -311,4 +313,4 @@ export class AcSelectInputElement extends AcInputBase {
   }
 }
 
-customElements.define('ac-select-input', AcSelectInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.selectInput,type:AcSelectInputElement});

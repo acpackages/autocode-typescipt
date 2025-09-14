@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcInputElement } from "./ac-input-element.element";
 import { AcEnumContextEvent, IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemove } from "@autocode-ts/ac-extensions";
 import { Autocode } from "@autocode-ts/autocode";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 
 export class AcOptionInputElement extends AcInputElement {
   static override get observedAttributes() {
@@ -241,4 +242,4 @@ export class AcOptionInputElement extends AcInputElement {
   }
 }
 
-customElements.define('ac-option-input', AcOptionInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.optionInput,type:AcOptionInputElement});

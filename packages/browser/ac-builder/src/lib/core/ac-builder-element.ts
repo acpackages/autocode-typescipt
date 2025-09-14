@@ -11,7 +11,11 @@ export abstract class AcBuilderElement{
     //
   }
 
-  init({args}:{args:IAcBuilderElementInitArgs}):void{
+  init({args}:{args?:IAcBuilderElementInitArgs} = {}):void{
+    //
+  }
+
+  initBuilder({args}:{args?:IAcBuilderElementInitArgs} = {}):void{
     // Init implementation in child
   }
 

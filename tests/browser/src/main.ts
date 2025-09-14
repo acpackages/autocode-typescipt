@@ -38,6 +38,7 @@ import { DDEEditorDatagridPage } from './pages/data-dictionary/data-dictionary-e
 import { DataDictionaryComponentsPage } from './pages/data-dictionary/data-dictionary-components.page';
 import { InputElementsPage } from './pages/inputs/elements.page';
 import { WindowTabsPage } from './pages/tabs/window-tabs.page';
+import { RuntimeComponentPage } from './pages/builder/runtime-component-page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -75,7 +76,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Builder',
     routes: [
-      { label: 'Basic', path: '/builder-basic', componentTag: 'builder-basic', component: BasicBuilderPage }
+      { label: 'Basic', path: '/builder-basic', componentTag: 'builder-basic', component: BasicBuilderPage },
+      { label: 'Runtime Component', path: '/runtime-component', componentTag: 'runtime-component', component: RuntimeComponentPage }
     ]
   });
   AcRouter.registerRouteGroup({

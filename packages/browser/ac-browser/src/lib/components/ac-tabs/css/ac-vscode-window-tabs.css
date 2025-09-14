@@ -55,3 +55,6 @@
 .ac-window-tab-icon {
   margin-right: 6px;
 }
+.ac-window-tab-title{
+  flex-grow:1;
+}

@@ -48,6 +48,12 @@ export function acCopyElementStyles({fromElement,toElement}:{fromElement: HTMLEl
   }
 }
 
+export function acRegisterCustomElement({tag,type}:{tag:string,type:any}){
+  if (customElements.get(tag) == undefined) {
+    customElements.define(tag, type);
+  }
+}
+
 export function acRemoveClassFromElement({class_,element}:{class_:string,element:Element}){
   const classList:string[] = class_.trim().split(" ")
   for(const className of classList){

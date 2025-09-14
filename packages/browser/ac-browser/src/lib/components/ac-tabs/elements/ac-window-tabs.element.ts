@@ -1,4 +1,4 @@
-import { acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
+import { acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDraggableApi } from "../../ac-draggable/core/ac-draggable-api";
 import { AcDraggableSort } from "../../ac-draggable/elements/ac-draggable-sort.element";
 import { AcEnumDraggableEvent } from "../../ac-draggable/enums/ac-enum-draggable-event.enum";
@@ -58,7 +58,7 @@ export class AcWindowTabs extends HTMLElement {
       tabElement.setAttribute('ac-draggable-element', '');
       tabElement.setAttribute('ac-draggable-target', '');
       tabElement.setAttribute('data-id', tab.id);
-      tabElement.innerHTML = `${tab.icon ? `<div class="ac-window-tab-icon">${tab.icon}</div>` : ''}${tab.title}${tab.closeable ? '<div class="ac-window-tab-close">×</div>' : ''}`;
+      tabElement.innerHTML = `${tab.icon ? `<div class="ac-window-tab-icon">${tab.icon}</div>` : ''}<div class="ac-window-tab-title">${tab.title}</div>${tab.closeable ? '<div class="ac-window-tab-close">×</div>' : ''}`;
       tabContainer.appendChild(tabElement);
 
       // Add click handler for the new tab
@@ -131,5 +131,4 @@ export class AcWindowTabs extends HTMLElement {
   }
 }
 
-// Define the custom element
-customElements.define('ac-window-tabs', AcWindowTabs);
+acRegisterCustomElement({tag:'ac-window-tabs',type:AcWindowTabs});

@@ -3,11 +3,11 @@
 import { AcJsonUtils } from "@autocode-ts/autocode";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { IAcBuilderState } from "../interfaces/ac-builder-state.interface";
-import { IAcPage } from "../interfaces/ac-page.interface";
-import { IAcPageElement } from "../interfaces/ac-page-element.interface";
 import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
 import { stat } from "fs";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
+import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
+import { IAcBuilderComponent } from "../interfaces/ac-component.interface";
 
 export class AcBuilderState {
   static readonly KeyColumns = "columns";
@@ -47,10 +47,10 @@ export class AcBuilderState {
 
   fromJson(state: IAcBuilderState) {
     if (state) {
-      if (state.pages) {
-        this.builderApi.pages = state.pages;
-        if (this.builderApi.pages.length > 0) {
-          this.builderApi.setActivePage({ page: state.pages[0] })
+      if (state.components) {
+        this.builderApi.components = state.components;
+        if (this.builderApi.components.length > 0) {
+          this.builderApi.setActiveComponent({ component: state.components[0] })
         }
       }
       if (state.extensionStates) {
@@ -62,9 +62,9 @@ export class AcBuilderState {
 
   refresh() {
     this.setExtensionsState();
-    if (this.builderApi.page) {
-      const activePage = this.builderApi.page;
-      activePage.html = this.builderApi.grapesJSApi.getHtml({
+    if (this.builderApi.component) {
+      const activeComponent = this.builderApi.component;
+      activeComponent.html = this.builderApi.grapesJSApi.getHtml({
         attributes(component, attr) {
           if (component && component.view && component.view.el && component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId)) {
             attr[AcBuilderAttributeName.acBuilderElementId] = component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementId);
@@ -72,15 +72,15 @@ export class AcBuilderState {
           return attr;
         },
       });
-      activePage.script = this.builderApi.scriptEditor.getCode();
+      activeComponent.script = this.builderApi.scriptEditor.getCode();
     }
   }
 
   toJson(): IAcBuilderState {
     this.refresh();
-    const activePage: IAcPage = { ...this.builderApi.page };
+    const activePage: IAcBuilderComponent = { ...this.builderApi.component };
     if (activePage.elements) {
-      for (const element of Object.values(activePage.elements) as IAcPageElement[]) {
+      for (const element of Object.values(activePage.elements) as IAcComponentElement[]) {
         if (element.instance) {
           delete element.instance;
         }
@@ -88,7 +88,7 @@ export class AcBuilderState {
     }
     const result: IAcBuilderState = {
       extensionStates: { ...this.extensionStates },
-      pages: [activePage]
+      components: [activePage]
     };
     return result;
   }

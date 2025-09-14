@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AcRuntimeComponent } from './ac-runtime-component.component';
+import { AcBuilderRuntimeComponent } from './ac-builder-runtime-component.component';
 
-describe('AcRuntimeComponent', () => {
-  let component: AcRuntimeComponent;
-  let fixture: ComponentFixture<AcRuntimeComponent>;
+describe('AcBuilderRuntimeComponent', () => {
+  let component: AcBuilderRuntimeComponent;
+  let fixture: ComponentFixture<AcBuilderRuntimeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AcRuntimeComponent]
+      imports: [AcBuilderRuntimeComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AcRuntimeComponent);
+    fixture = TestBed.createComponent(AcBuilderRuntimeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

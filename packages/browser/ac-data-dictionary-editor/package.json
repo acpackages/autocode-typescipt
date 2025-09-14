@@ -17,6 +17,10 @@
   "exports": {
     "./css/ac-data-dictionary-editor.css": {
       "default": "./css/ac-data-dictionary-editor.css"
+    },
+    ".":{
+      "import": "./index.js",
+      "require": "./index.js"
     }
   },
   "files": [

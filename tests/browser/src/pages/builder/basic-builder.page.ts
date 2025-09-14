@@ -41,7 +41,7 @@ export class BasicBuilderPage extends HTMLElement {
       // })
       const state = {
         "extensionStates": {},
-        "pages": [
+        "components": [
           {
             "name": "default",
             "elements": {
@@ -66,7 +66,7 @@ export class BasicBuilderPage extends HTMLElement {
                 }
               }
             },
-            "html": "<body><div id=\"idoa\" ac-builder-element-id=\"container1\">Container Element</div></body>",
+            "html": "<body><div id=\"idoa\" ac-builder-element-instance-name=\"container1\">Container Element</div></body>",
             "script": "class DefaultPageScript {\n\n    handleContainer1Click() {\n        console.log(\"Container 1 Click\");\n    }\n\n    handleContainer1DoubleClick() {\n        alert(\"Container 1 Double Click\");\n    }\n\n}",
             "className": "DefaultPageScript"
           }

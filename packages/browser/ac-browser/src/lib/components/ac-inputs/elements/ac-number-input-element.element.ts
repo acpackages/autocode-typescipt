@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputElement } from "./ac-input-element.element";
 
 export class AcNumberInputElement extends AcInputElement{
@@ -87,4 +89,4 @@ export class AcNumberInputElement extends AcInputElement{
 
 }
 
-customElements.define('ac-number-input', AcNumberInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.numberInput,type:AcNumberInputElement});

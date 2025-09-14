@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcInputBase } from "@autocode-ts/ac-browser";
+import { AcInputBase, acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import { AcDDInputElement } from "./ac-dd-input-element.element";
 import { AcDDInputFieldBaseElement } from "./ac-dd-input-field-base-element.element";
 import { AcDDInputManager } from "../core/ac-dd-input-manager";
@@ -54,4 +54,4 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
 }
 
-customElements.define('ac-dd-input-field', AcDDInputFieldElement);
+acRegisterCustomElement({tag:'ac-dd-input-field',type:AcDDInputFieldElement});

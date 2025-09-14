@@ -13,10 +13,12 @@ export class AcRuntime {
   /**
    * Create a class dynamically
    */
-  static createClass({ name, script, properties = {}, methods = {}, global = false }: { name: string; script?: string; properties?: Record<string, any>; methods?: Record<string, Function>; global?: boolean; }): Constructor | undefined {
+  static createClass({ name, script, properties = {}, methods = {}, global = false, scope = {} }: { name: string; script?: string; properties?: Record<string, any>; methods?: Record<string, Function>; global?: boolean;scope?:Record<string, any> }): Constructor | undefined {
     let clazz: any;
+    const scopeKeys = Object.keys(scope);
+    const scopeValues = Object.values(scope);
     if (script == undefined) {
-      clazz = new Function(`
+      clazz = new Function(...scopeKeys,`
       return class ${name} {
         constructor(data = {}) {
           Object.assign(this, ${JSON.stringify(properties)}, data);
@@ -25,10 +27,10 @@ export class AcRuntime {
           .map(([key, fn]) => `${key} = ${fn.toString()}`)
           .join(";")}
       }
-    `)();
+    `)(...scopeValues);
     }
     else {
-      clazz = new Function(`return ${script}`)();
+      clazz = new Function(...scopeKeys,`return ${script}`)(...scopeValues);
     }
     if (clazz) {
       this.registry[name] = clazz;

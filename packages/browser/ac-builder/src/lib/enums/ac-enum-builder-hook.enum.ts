@@ -1,5 +1,5 @@
 export enum AcEnumBuilderHook{
-  ActivePageChange = 'ACIVE_PAGE_CHANGE',
+  ActiveComponentChange = 'ACIVE_COMPONENT_CHANGE',
   EditorClose = 'EDITOR_CLOSE',
   EditorOpen = 'EDITOR_OPEN',
   ElementAdd = 'ELEMENT_ADD',

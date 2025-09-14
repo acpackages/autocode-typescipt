@@ -1,7 +1,4 @@
 export * from './ac-array-values-input-element.element';
-export * from './ac-array-values-item-add-element.element';
-export * from './ac-array-values-item-element.element';
-export * from './ac-array-values-item-remove-element.element';
 export * from './ac-datetime-input-element.element';
 export * from './ac-input-element.element';
 export * from './ac-number-input-element.element';

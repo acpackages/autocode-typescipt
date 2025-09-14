@@ -12,6 +12,13 @@
     "@popperjs/core": "^2.11.8"
   },
   "exports": {
+    ".":{
+      "import": "./index.js",
+      "require": "./index.js"
+    },
+    "./css/ac-vscode-window-tabs.css": {
+      "default": "./css/ac-vscode-window-tabs.css"
+    },
     "./css/ac-datagrid.css": {
       "default": "./css/ac-datagrid.css"
     }

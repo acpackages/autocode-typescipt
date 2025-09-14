@@ -37,6 +37,10 @@ export class AcBuilderElementsManager {
     return this.elements[name] != undefined;
   }
 
+  static init(){
+    this.registerBuiltInExtensions();
+  }
+
   static register<T extends AcBuilderElement>({element}:{element: IAcBuilderElement<T>}): void {
     if (this.elements[element.name]) {
       console.warn(`Element ${element.name} is already registered. Overwriting.`);

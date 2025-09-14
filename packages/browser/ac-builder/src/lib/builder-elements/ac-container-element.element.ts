@@ -22,8 +22,11 @@ export class AcContainerElement extends AcBuilderElement{
   }
 
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    this.element.innerHTML = "Container Element";
     this.registerListeners();
+  }
+
+  override initBuilder({ args }: { args: IAcBuilderElementInitArgs; }): void {
+    this.element.innerHTML = "Container Element";
   }
 
   private registerListeners(){

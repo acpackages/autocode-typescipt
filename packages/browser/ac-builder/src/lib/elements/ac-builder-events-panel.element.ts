@@ -58,7 +58,7 @@ export class AcBuilderEventsPanel {
 
   renderInputs() {
     for (const event of this.elementEvents) {
-      const propertyInput = new AcElementEventInput({ builderApi: this.builderApi, event: event, pageElement: this.builderApi.selectedElement! });
+      const propertyInput = new AcElementEventInput({ builderApi: this.builderApi, event: event, componentElement: this.builderApi.selectedElement! });
       const categoryElement = this.getCategoryElement({ categoryName: event.category });
       (categoryElement.querySelector('.category-inputs-container') as HTMLElement).append(propertyInput.element);
     }

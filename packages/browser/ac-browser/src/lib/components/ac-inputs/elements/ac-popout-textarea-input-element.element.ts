@@ -1,7 +1,9 @@
 // ac-popout-textarea-input.ts
 // One class, all features. No frameworks, no wrapper <div>, only input + textarea.
 
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 import { IAcPopoutTextareaOptions } from "../interfaces/input-options/ac-popout-textarea-input-options.interface";
 
@@ -365,4 +367,4 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
 
 }
 
-customElements.define('ac-popout-textarea-input', AcPopoutTextareaInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.popoutTextareaInput,type:AcPopoutTextareaInputElement});

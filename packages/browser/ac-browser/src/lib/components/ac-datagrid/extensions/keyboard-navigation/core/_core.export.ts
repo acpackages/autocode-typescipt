@@ -1,1 +1,1 @@
-export * from './ac-datagrid-row-selection-extension';
+export * from './ac-datagrid-keyboard-navigation-extension';

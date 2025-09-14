@@ -2,9 +2,9 @@
 import { AcEvents } from "@autocode-ts/autocode";
 import { IAcBuilderElementInitArgs } from "../interfaces/callback-args/ac-builder-element-init-args.interface";
 
-export abstract class AcBuilderPage{
-  pageName:string = '';
-  element!:HTMLElement;
+export abstract class AcBuilderComponent{
+  componentName:string = '';
+  element:HTMLElement = document.createElement('div');
   events:AcEvents = new AcEvents();
 
   destroy(){

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AcRuntimeComponent } from './ac-runtime-component/ac-runtime-component.component';
+import { AcBuilderRuntimeComponent } from './ac-builder-runtime-component/ac-builder-runtime-component.component';
 
 @NgModule({
   declarations: [
-    AcRuntimeComponent
+    AcBuilderRuntimeComponent
   ],
   exports: [
-    AcRuntimeComponent
+    AcBuilderRuntimeComponent
   ],
   imports: [
     CommonModule

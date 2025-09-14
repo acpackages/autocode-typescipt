@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 
 export class AcInputElement extends AcInputBase {
@@ -36,4 +38,4 @@ export class AcInputElement extends AcInputBase {
   }
 }
 
-customElements.define('ac-input', AcInputElement);
+acRegisterCustomElement({tag:AC_INPUT_TAG.input,type:AcInputElement});

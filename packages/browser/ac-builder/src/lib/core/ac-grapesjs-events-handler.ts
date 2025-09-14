@@ -1,16 +1,93 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Editor } from "grapesjs";
 import { AcBuilderApi } from "./ac-builder-api";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
 
 export class AcGrapesJSEventsHandler {
   builderApi: AcBuilderApi;
-  eventsHandler:AcBuilderEventsHandler;
+  eventsHandler: AcBuilderEventsHandler;
   grapesJSApi: Editor;
+  attrToProp: any = {
+    'ac-builder-element-editable': 'editable',
+    'ac-builder-element-removable': 'removable',
+    'ac-builder-element-draggable': 'draggable',
+    'ac-builder-element-droppable': 'droppable',
+    'ac-builder-element-copyable': 'copyable'
+  };
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
     this.eventsHandler = builderApi.eventHandler;
     this.grapesJSApi = this.builderApi.builder.grapesJSApi;
     this.registerEventListeners();
+  }
+
+  findComponentByEl(el: HTMLElement) {
+    return this.grapesJSApi.getWrapper()!.find('*').filter((c: any) => c.getEl() === el)[0];
+  }
+
+  makeElementInteractive(el:HTMLElement) {
+  if (!el) return;
+
+  const wrapper = this.grapesJSApi.getWrapper()!;
+
+  // 1️⃣ Check if this element is already a component
+  let cmp:any = wrapper.find('*').filter(c => c.getEl() === el)[0];
+
+  // 2️⃣ If not, create a component from the element
+  if (!cmp) {
+    // Use append to convert raw DOM element to GrapesJS component
+    cmp = wrapper.append(el.outerHTML);
+
+    // Remove original DOM node to avoid duplication
+    console.log(cmp[0].view.el);
+    el.replaceWith(cmp[0].view.el);
+
+    // Get the newly created component (last child of wrapper)
+    cmp = wrapper.components().last();
+  }
+
+  // 3️⃣ Make component editable, draggable, removable, etc.
+  const setInteractive = (component:any) => {
+    component.set({
+      editable: true,
+      draggable: true,
+      removable: true,
+      copyable: true,
+      droppable: true
+    });
+
+    // recursively for children
+    component.components().each((child:any) => setInteractive(child));
+  };
+
+  setInteractive(cmp);
+
+  return cmp; // return the GrapesJS component
+}
+
+  registerAttributesChangeListener() {
+    const iframe = this.grapesJSApi.Canvas.getFrameEl();
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'attributes') {
+          const el = mutation.target as HTMLElement;
+
+          // console.log(mutation);
+          const attrName: string = mutation.attributeName!;
+          if (attrName in this.attrToProp) {
+              console.log(attrName);
+              this.makeElementInteractive(el);
+              // cmp.set((this.attrToProp[attrName]) as string, value === 'true');
+            }
+        }
+      });
+    });
+
+    // watch all elements inside the canvas
+    observer.observe(iframe.contentDocument!.body, {
+      attributes: true,
+      subtree: true
+    });
   }
 
   registerBlockListeners() {
@@ -65,11 +142,11 @@ export class AcGrapesJSEventsHandler {
   registerElementListeners() {
     const editor = this.grapesJSApi;
     editor.on('component:add', (args) => {
-      const handleFunction = ()=>{
-        if(args && args.view && args.view.el){
-          this.eventsHandler.handleElementAdd({element:args.view.el});
+      const handleFunction = () => {
+        if (args && args.view && args.view.el) {
+          this.eventsHandler.handleElementAdd({ element: args.view.el });
         }
-        else{
+        else {
           setTimeout(() => {
             handleFunction();
           }, 10);
@@ -82,9 +159,9 @@ export class AcGrapesJSEventsHandler {
       // this.builderApi.hooks.execute({hook:AcEnumBuilderHook.ElementDelete,args:{}});
     });
     editor.on('component:selected', (args) => {
-       const handleFunction = ()=>{
-        if(args && args.view && args.view.el){
-          this.eventsHandler.handleElementSelect({element:args.view.el});
+      const handleFunction = () => {
+        if (args && args.view && args.view.el) {
+          this.eventsHandler.handleElementSelect({ element: args.view.el });
         }
       }
       handleFunction();
@@ -93,7 +170,7 @@ export class AcGrapesJSEventsHandler {
       //
     });
     editor.on('component:update:attributes', (args) => {
-      //
+      // console.log(args);
     });
   }
 
@@ -129,6 +206,7 @@ export class AcGrapesJSEventsHandler {
           iframeDocument.body.appendChild(newScript);
         });
       }
+      this.registerAttributesChangeListener();
     });
   }
 

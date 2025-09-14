@@ -5,6 +5,12 @@
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
+  "exports":{
+    ".":{
+      "import": "./index.js",
+      "require": "./index.js"
+    }
+  },
   "dependencies": {
     "@autocode-ts/autocode": "^0.0.6",
     "@autocode-ts/ac-browser": "^0.0.1",

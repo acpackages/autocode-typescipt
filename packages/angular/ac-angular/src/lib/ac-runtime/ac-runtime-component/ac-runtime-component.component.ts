@@ -5,12 +5,12 @@ import { Component, EventEmitter, Input, Output, Type, ViewChild, ViewContainerR
 import { AcBase } from '../../_base/ac-base.component';
 
 @Component({
-    selector: 'ac-runtime-component',
-    templateUrl: './ac-runtime-component.component.html',
-    styleUrl: './ac-runtime-component.component.css',
+    selector: 'ac-builder-runtime-component',
+    templateUrl: './ac-builder-runtime-component.component.html',
+    styleUrl: './ac-builder-runtime-component.component.css',
     standalone: false
 })
-export class AcRuntimeComponent extends AcBase{
+export class AcBuilderRuntimeComponent extends AcBase{
   @ViewChild('runtimeComponentContainer', { read: ViewContainerRef, static: true })
   runtimeComponentContainer!: ViewContainerRef;
   @Input() component?:Type<any>;

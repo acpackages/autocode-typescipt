@@ -26,8 +26,8 @@ export class AcEventSelectInput extends AcInputBase{
   }
 
   async setOptions(){
-    if(this.builderApi.scriptEditor && this.builderApi.page.className){
-      const functions = await this.builderApi.scriptEditor.helper.getFunctionsInClass({className:this.builderApi.page.className});
+    if(this.builderApi.scriptEditor && this.builderApi.component.className){
+      const functions = await this.builderApi.scriptEditor.helper.getFunctionsInClass({className:this.builderApi.component.className});
       this.selectInput.selectOptions = functions;
     }
   }

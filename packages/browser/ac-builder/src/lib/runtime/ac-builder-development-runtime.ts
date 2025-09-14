@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
-import { AcBuilderRuntimePage } from "./ac-builder-runtime-page";
+import { AcBuilderRuntimeComponent } from "./ac-builder-runtime-component";
 
 export class AcBuilderDevelopmentRuntime {
   builderApi: AcBuilderApi;
-  runtimePage?: AcBuilderRuntimePage;
+  runtimeComponent?: AcBuilderRuntimeComponent;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ActivePageChange,callback:()=>{
+    this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ActiveComponentChange,callback:()=>{
       this.handlePageChange();
     }});
     this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.EditorClose,callback:()=>{
@@ -20,14 +20,14 @@ export class AcBuilderDevelopmentRuntime {
   }
 
   private handlePageChange() {
-    this.runtimePage = new AcBuilderRuntimePage({ page: this.builderApi.page });
-    this.runtimePage.render();
+    this.runtimeComponent = new AcBuilderRuntimeComponent({ component: this.builderApi.component });
+    this.runtimeComponent.render();
   }
 
   private refreshPage() {
-    if(this.runtimePage){
+    if(this.runtimeComponent){
       setTimeout(() => {
-        this.runtimePage!.render();
+        this.runtimeComponent!.render();
       }, 10);
     }
   }

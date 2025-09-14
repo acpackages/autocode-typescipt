@@ -1,4 +1,4 @@
-import { AcInputBase } from "@autocode-ts/ac-browser";
+import { AcInputBase, acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import { AcDDInputManager } from "../core/ac-dd-input-manager";
 import { AcDataDictionary, AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
 
@@ -50,4 +50,4 @@ export class AcDDInputElement extends AcInputBase {
   }
 }
 
-customElements.define('ac-dd-input', AcDDInputElement);
+acRegisterCustomElement({tag:'ac-dd-input',type:AcDDInputElement});

@@ -1,3 +1,3 @@
 export interface IAcBuilderElementInitArgs {
-  element:HTMLElement;
+  element?:HTMLElement;
 }

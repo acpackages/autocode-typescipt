@@ -1,5 +1,5 @@
-import { IAcPageElement } from "../ac-page-element.interface";
+import { IAcComponentElement } from "../ac-component-element.interface";
 
 export interface IAcBuilderElementEventArgs{
-  pageElement:IAcPageElement;
+  componentElement:IAcComponentElement;
 }

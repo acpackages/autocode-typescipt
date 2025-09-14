@@ -197,7 +197,6 @@ export class AcBuilder {
       for (const el of Array.from(this.element.querySelectorAll('.btn-device'))) {
         const btnElement = el as HTMLElement;
         const iElement = btnElement.querySelector('i') as HTMLElement;
-        console.log(btnElement, device);
         acAddClassToElement({ class_: 'text-secondary', element: iElement });
         acRemoveClassFromElement({ class_: 'text-white', element: iElement });
       }
