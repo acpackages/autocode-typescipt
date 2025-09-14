@@ -36,13 +36,13 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsBreadcrumb extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Breadcrumb
-    this.element.innerHTML = `<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>`;
+    this.element.innerHTML = `<nav aria-label="breadcrumb" ac-builder-element-interactive>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Library</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data</li>
+      </ol>
+    </nav>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

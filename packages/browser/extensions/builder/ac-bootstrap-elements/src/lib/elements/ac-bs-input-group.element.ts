@@ -35,8 +35,8 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcBsInputGroup extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
-    // Basic placeholder HTML for InputGroup
-    this.element.innerHTML = `
+    // Basic placeholder HTML for InputGroup=
+    this.element.innerHTML = `<div ac-builder-element-interactive>
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">@</span>
         <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
@@ -71,7 +71,7 @@ export class AcBsInputGroup extends AcBuilderElement {
       <div class="input-group">
         <span class="input-group-text">With textarea</span>
         <textarea class="form-control" aria-label="With textarea"></textarea>
-      </div>
+      </div></div>
     `;
     this.registerDomEvents();
     this.registerBsEvents();

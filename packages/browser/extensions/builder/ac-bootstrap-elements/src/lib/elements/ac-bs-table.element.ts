@@ -29,7 +29,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsTable extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Table
-    this.element.innerHTML = `<thead>
+    this.element.innerHTML = `<thead ac-builder-element-interactive>
     <tr>
       <th scope="col">#</th>
       <th scope="col">First</th>
@@ -37,7 +37,7 @@ export class AcBsTable extends AcBuilderElement {
       <th scope="col">Handle</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody ac-builder-element-interactive>
     <tr>
       <th scope="row">1</th>
       <td>Mark</td>

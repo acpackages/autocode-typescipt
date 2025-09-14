@@ -35,7 +35,7 @@ export class AcBsRadio extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Radio
     this.element.innerHTML = `<input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1" checked>
-      <label class="form-check-label" for="radioDefault1">
+      <label class="form-check-label" for="radioDefault1" contenteditable>
         Default radio
       </label>`;
     this.element.classList.add('form-check');

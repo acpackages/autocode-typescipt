@@ -40,7 +40,7 @@ export class AcBsCheckbox extends AcBuilderElement {
     // Basic placeholder HTML for Checkbox
     this.element.innerHTML = `<div class="form-check">
       <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-      <label class="form-check-label" for="checkDefault">
+      <label class="form-check-label" for="checkDefault" contenteditable>
         Checkbox
       </label>
     </div>`;

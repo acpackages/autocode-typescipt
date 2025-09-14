@@ -28,7 +28,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcOrderedListElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    this.element.innerHTML = "<li>List item 1</li><li>List item 2</li><li>List item 3</li>";
+    this.element.innerHTML = "<li ac-builder-element-interactive>List item 1</li><li ac-builder-element-interactive>List item 2</li><li ac-builder-element-interactive>List item 3</li>";
     this.registerListeners();
   }
 

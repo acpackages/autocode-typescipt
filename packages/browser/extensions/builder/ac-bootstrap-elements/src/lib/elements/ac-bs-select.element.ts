@@ -33,7 +33,8 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsSelect extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Select
-    this.element.innerHTML = `<option>Select</option>`;
+    this.element.innerHTML = `<option>Select</option><option>Option 1</option><option>Option 2</option>`;
+    this.element.classList.add('form-select');
     this.registerDomEvents();
     this.registerBsEvents();
   }

@@ -31,6 +31,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcLinkElement extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
     this.element.innerHTML = "Link";
+    this.element.setAttribute('contenteditable','');
     this.registerListeners();
   }
 

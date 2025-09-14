@@ -29,7 +29,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsCol extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Col
-    this.element.innerHTML = `<div class="col">
+    this.element.innerHTML = `<div class="col" ac-builder-element-interactive>
       Column
     </div>`;
     this.registerDomEvents();

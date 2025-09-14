@@ -37,7 +37,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsListGroup extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for ListGroup
-    this.element.innerHTML = `<ul class="list-group">
+    this.element.innerHTML = `<ul class="list-group" ac-builder-element-interactive>
   <li class="list-group-item">An item</li>
   <li class="list-group-item">A second item</li>
   <li class="list-group-item">A third item</li>

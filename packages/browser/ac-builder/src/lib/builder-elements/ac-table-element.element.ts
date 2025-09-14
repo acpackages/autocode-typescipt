@@ -7,7 +7,33 @@ import { IAcBuilderElementInitArgs } from "../interfaces/callback-args/ac-builde
 
 export class AcTableElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    this.element.innerHTML = "<tr><td>A1</td><td>B1</td><td>C1</td></tr><tr><td>A2</td><td>B2</td><td>C2</td></tr><tr><td>A2</td><td>B2</td><td>C2</td></tr>";
+    this.element.innerHTML = `
+      <thead contenteditable>
+        <tr>
+          <th>Header 1</th>
+          <th>Header 2</th>
+          <th>Header 3</th>
+        </tr>
+      </thead>
+      <tbody contenteditable>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+        </tr>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+        </tr>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+        </tr>
+      </tbody>
+    `;
+    this.element.classList.add('contenteditable');
     this.registerListeners();
   }
 

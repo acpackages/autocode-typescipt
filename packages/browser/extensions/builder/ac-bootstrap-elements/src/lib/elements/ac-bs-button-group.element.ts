@@ -33,7 +33,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsButtonGroup extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for ButtonGroup
-    this.element.innerHTML = `<div class="btn-group" role="group" aria-label="Basic example">
+    this.element.innerHTML = `<div class="btn-group" role="group" aria-label="Basic example" ac-builder-element-interactive>
         <button type="button" class="btn btn-primary">Left</button>
         <button type="button" class="btn btn-primary">Middle</button>
         <button type="button" class="btn btn-primary">Right</button>

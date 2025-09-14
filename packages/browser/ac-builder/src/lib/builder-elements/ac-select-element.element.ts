@@ -33,7 +33,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcSelectElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    this.element.innerHTML = `<option value="" selected>Select an option</option>`;
+    this.element.innerHTML = `<option value="" selected>Select an option</option><option value="option1">Option 1</option><option value="option2">Option 2</option>`;
     this.registerListeners();
   }
 

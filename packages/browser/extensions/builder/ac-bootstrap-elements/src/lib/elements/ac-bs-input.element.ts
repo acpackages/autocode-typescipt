@@ -52,7 +52,7 @@ export class AcBsInput extends AcBuilderElement {
 
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Input
-    this.element.innerHTML = `<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">`;
+    this.element.classList.add('form-control');
     this.registerDomEvents();
     this.registerBsEvents();
   }

@@ -30,6 +30,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcLabelElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
     this.element.innerHTML = "Label";
+    this.element.setAttribute('contenteditable','');
     this.registerListeners();
   }
 

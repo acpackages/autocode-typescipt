@@ -53,7 +53,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsPopover extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Popover
-    this.element.innerHTML = `<button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="And here’s some amazing content. It’s very engaging. Right?">Click to toggle popover</button>`;
+    this.element.innerHTML = `<button type="button" contenteditable class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="And here’s some amazing content. It’s very engaging. Right?">Click to toggle popover</button>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

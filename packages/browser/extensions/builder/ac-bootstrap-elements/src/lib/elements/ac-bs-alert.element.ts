@@ -45,7 +45,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsAlert extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Alert
-    this.element.innerHTML = `<div class="alert alert-success alert-dismissible" role="alert">   <div>Nice, you triggered this alert message!</div>   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+    this.element.innerHTML = `<div class="alert alert-success alert-dismissible" role="alert" contenteditable>   <div>Nice, you triggered this alert message!</div>   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

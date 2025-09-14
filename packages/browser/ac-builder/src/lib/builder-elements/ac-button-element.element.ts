@@ -47,6 +47,7 @@ const formProperties : IAcBuilderElementProperty[] = [
 export class AcButtonElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
     this.element.innerHTML = "Button";
+    this.element.setAttribute('contenteditable','');
     this.registerListeners();
   }
 

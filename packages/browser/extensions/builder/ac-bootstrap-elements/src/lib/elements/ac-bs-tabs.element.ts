@@ -54,6 +54,7 @@ export class AcBsTabs extends AcBuilderElement {
         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
       </li>`;
     this.element.classList.add('nav', 'nav-tabs');
+    this.element.setAttribute('contenteditable','');
     this.registerDomEvents();
     this.registerBsEvents();
   }
