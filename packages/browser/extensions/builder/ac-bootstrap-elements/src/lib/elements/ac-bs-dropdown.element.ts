@@ -1,4 +1,4 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
 
 // Bootstrap-specific events for this component
@@ -13,7 +13,41 @@ const BS_EVENTS: IAcBuilderElementEvent[] = [
 const BS_PROPS: IAcBuilderElementProperty[] = [
   { title: 'Auto CLose', category: 'Bootstrap', type: 'boolean', name: "autoClose", htmlAttributeName: "data-bs-auto-close" },
   { title: 'Offset', category: 'Bootstrap', type: 'string', name: "offset", htmlAttributeName: "data-bs-offset" },
-  { title: 'Refernece', category: 'Bootstrap', type: 'string', name: "reference", htmlAttributeName: "data-bs-reference" }
+  { title: 'Reference', category: 'Bootstrap', type: 'string', name: "reference", htmlAttributeName: "data-bs-reference" },
+  { title: 'Toggle', category: 'Bootstrap', type: 'string', name: "toggle", htmlAttributeName: "data-bs-toggle" },
+  { title: 'Display', category: 'Bootstrap', type: 'string', name: "display", htmlAttributeName: "data-bs-display" },
+];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.autofocus as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.contenteditable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.spellcheck as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-haspopup"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-expanded"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-controls"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-live"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-busy"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-orientation"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-atomic"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-current"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-disabled"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-checked"] as IAcBuilderElementProperty,
 ];
 
 export class AcBsDropdown extends AcBuilderElement {
@@ -60,10 +94,10 @@ export const AC_BUILDER_BS_DROPDOWN_ELEMENT: IAcBuilderElement = {
   name: "bs-dropdown",
   tag: "div",
   title: "Dropdown",
-  events: [...BS_EVENTS],
+  events: [...BS_EVENTS, ...Object.values(AC_MOUSE_EVENTS), ...Object.values(AC_POINTER_EVENTS), ...Object.values(AC_TOUCH_EVENTS)],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.dropdown,

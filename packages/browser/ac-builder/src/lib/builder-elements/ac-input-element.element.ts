@@ -1,9 +1,35 @@
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
-import { AC_BASIC_PROPERTIES, AC_FORM_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_SCROLL_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_CLIPBOARD_EVENTS, AC_FORM_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_SCROLL_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
 import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
 import { IAcBuilderElement } from "../interfaces/ac-builder-element.interface";
 import { IAcBuilderElementInitArgs } from "../interfaces/callback-args/ac-builder-element-init-args.interface";
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-required"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-invalid"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-checked"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-valuemin"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-valuemax"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-valuenow"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-valuetext"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-disabled"] as IAcBuilderElementProperty,
+];
 
 export class AcInputElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
@@ -31,7 +57,8 @@ export const AC_BUILDER_INPUT_ELEMENT:IAcBuilderElement = {
     ...Object.values(AC_MOUSE_EVENTS),
     ...Object.values(AC_POINTER_EVENTS),
     ...Object.values(AC_SCROLL_EVENTS),
-    ...Object.values(AC_TOUCH_EVENTS)
+    ...Object.values(AC_TOUCH_EVENTS),
+    ...Object.values(AC_CLIPBOARD_EVENTS),
   ],
   properties:[
     AC_FORM_PROPERTIES.autocomplete as IAcBuilderElementProperty,
@@ -48,7 +75,16 @@ export const AC_BUILDER_INPUT_ELEMENT:IAcBuilderElement = {
     AC_FORM_PROPERTIES.step as IAcBuilderElementProperty,
     AC_FORM_PROPERTIES.type as IAcBuilderElementProperty,
     AC_FORM_PROPERTIES.value as IAcBuilderElementProperty,
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
+    AC_FORM_PROPERTIES.form as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.formAction as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.formEnctype as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.formMethod as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.formNoValidate as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.formTarget as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.list as IAcBuilderElementProperty,
+    AC_FORM_PROPERTIES.dirname as IAcBuilderElementProperty,
+    ...basicProperty, 
+    ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.input,
   instanceClass:AcInputElement

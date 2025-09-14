@@ -21,7 +21,33 @@ const BS_PROPS: IAcBuilderElementProperty[] = [
   { title: 'Selector', category: 'Bootstrap', type: 'string', name: "selector", htmlAttributeName: "data-bs-selector" },
   { title: 'Title', category: 'Bootstrap', type: 'string', name: "title", htmlAttributeName: "data-bs-title" },
   { title: 'Trigger', category: 'Bootstrap', type: 'string', name: "trigger", htmlAttributeName: "data-bs-trigger" },
-  { title: 'Custom Class', category: 'Bootstrap', type: 'string', name: "customClass", htmlAttributeName: "data-bs-custom-class" }
+  { title: 'Custom Class', category: 'Bootstrap', type: 'string', name: "customClass", htmlAttributeName: "data-bs-custom-class" },
+  { title: 'Toggle', category: 'Bootstrap', type: 'string', name: "toggle", htmlAttributeName: "data-bs-toggle" },
+  { title: 'Html', category: 'Bootstrap', type: 'string', name: "html", htmlAttributeName: "data-bs-html" },
+  { title: 'Offset', category: 'Bootstrap', type: 'string', name: "offset", htmlAttributeName: "data-bs-offset" }
+];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.autofocus as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.contenteditable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.spellcheck as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-expanded"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-hidden"] as IAcBuilderElementProperty,
 ];
 
 export class AcBsPopover extends AcBuilderElement {
@@ -61,8 +87,8 @@ export const AC_BUILDER_BS_POPOVER_ELEMENT: IAcBuilderElement = {
   title: "Popover",
   events: [...BS_EVENTS],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.popover,

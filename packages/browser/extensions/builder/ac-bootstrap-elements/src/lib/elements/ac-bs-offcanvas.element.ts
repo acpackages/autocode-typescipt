@@ -12,7 +12,37 @@ const BS_EVENTS: IAcBuilderElementEvent[]  = [
 // Bootstrap-specific properties for this component
 const BS_PROPS: IAcBuilderElementProperty[]  = [
   { title: 'Backdrop', category: 'Bootstrap',type:'string', name: "backdrop", htmlAttributeName: "data-bs-backdrop" },
-  { title: 'Scroll', category: 'Bootstrap',type:'string', name: "scroll", htmlAttributeName: "data-bs-scroll" }
+  { title: 'Scroll', category: 'Bootstrap',type:'string', name: "scroll", htmlAttributeName: "data-bs-scroll" },
+  { title: 'Toggle', category: 'Bootstrap',type:'string', name: "toggle", htmlAttributeName: "data-bs-toggle" },
+  { title: 'Target', category: 'Bootstrap',type:'string', name: "target", htmlAttributeName: "data-bs-target" },
+  { title: 'Keyboard', category: 'Bootstrap',type:'string', name: "keyboard", htmlAttributeName: "data-bs-keyboard" },
+  { title: 'Focus', category: 'Bootstrap',type:'string', name: "focus", htmlAttributeName: "data-bs-focus" },
+];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.autofocus as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.contenteditable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.spellcheck as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-modal"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-hidden"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-controls"] as IAcBuilderElementProperty,
 ];
 
 export class AcBsOffcanvas extends AcBuilderElement {
@@ -79,8 +109,8 @@ export const AC_BUILDER_BS_OFFCANVAS_ELEMENT: IAcBuilderElement = {
   title: "Offcanvas",
   events: [...BS_EVENTS],
   properties: [
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
-    ...Object.values(AC_ARIA_PROPERTIES) as IAcBuilderElementProperty[],
+    ...basicProperty, 
+    ...ariaProperties,
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.offcanvas,

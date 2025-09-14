@@ -1,9 +1,30 @@
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
-import { AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_LIST_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
 import { IAcBuilderElementProperty } from "../interfaces/ac-builder-element-property.interface";
 import { IAcBuilderElement } from "../interfaces/ac-builder-element.interface";
 import { IAcBuilderElementInitArgs } from "../interfaces/callback-args/ac-builder-element-init-args.interface";
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-labelledby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-describedby"] as IAcBuilderElementProperty,
+  AC_ARIA_PROPERTIES["aria-hidden"] as IAcBuilderElementProperty,
+];
 
 export class AcOrderedListElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
@@ -32,7 +53,11 @@ export const AC_BUILDER_ORDERED_LIST_ELEMENT:IAcBuilderElement = {
     ...Object.values(AC_TOUCH_EVENTS)
   ],
   properties:[
-    ...Object.values(AC_BASIC_PROPERTIES) as IAcBuilderElementProperty[],
+    AC_LIST_PROPERTIES.reversed as IAcBuilderElementProperty,
+    AC_LIST_PROPERTIES.start as IAcBuilderElementProperty,
+    AC_LIST_PROPERTIES.type as IAcBuilderElementProperty,
+    ...basicProperty,
+    ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.orderedList,
   instanceClass:AcOrderedListElement
