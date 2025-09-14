@@ -15,6 +15,9 @@ export class AcTypescriptEditorHelper {
   constructor({ scriptEditor }: { scriptEditor: AcBuilderScriptEditor }) {
     this.editor = scriptEditor.editor;
     this.builderApi = scriptEditor.builderApi;
+    this.editor.handleInitialized = ()=>{
+      //
+    };
     this.registerListeners();
   }
 
@@ -279,6 +282,7 @@ export class AcTypescriptEditorHelper {
   }
 
   registerListeners() {
+    console.log("Registering Listeners");
     this.listenForClassChanges(({ change, oldName, newName }: { change: any, oldName?: string, newName?: string }) => {
       const args: IAcScriptClassChangeEventArgs = {
         change: change,

@@ -46,7 +46,7 @@ export class AcBuilder {
         appendTo: this.element.querySelector('.ac-builder-layers-panel') as HTMLElement
       },
       styleManager: {
-        appendTo: this.element.querySelector('.ac-builder-styles-panel') as HTMLElement
+        appendTo: this.element.querySelector('.ac-builder-styles-panel') as HTMLElement,
       }
     });
     this.setGrapesJSElementStyles();

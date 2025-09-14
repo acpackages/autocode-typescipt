@@ -72,40 +72,6 @@ export class AcBuilderApi {
           defaults: {
             tagName: element.tag,
           },
-          initToolbar() {
-             const isRoot = !this.parent(); // root = no parent
-
-      if (isRoot) {
-        this.set('toolbar', [
-          {
-            attributes: { class: 'fa fa-trash' },
-            command: (editor, sender, opts) => opts.target.remove(),
-            label: 'Delete Root'
-          },
-          {
-            attributes: { class: 'fa fa-clone' },
-            command: (editor, sender, opts) => {
-              const cloned = opts.target.clone();
-              opts.target.parent()?.append(cloned);
-            },
-            label: 'Duplicate Root'
-          }
-        ]);
-      } else {
-        this.set('toolbar', [
-          {
-            attributes: { class: 'fa fa-pencil' },
-            command: 'tlb-edit',
-            label: 'Edit Child'
-          },
-          {
-            attributes: { class: 'fa fa-trash' },
-            command: (editor, sender, opts) => opts.target.remove(),
-            label: 'Delete Child'
-          }
-        ]);
-      }
-          },
         },
         view: {
           init(args: any) {
@@ -124,15 +90,9 @@ export class AcBuilderApi {
               }
             }
             instance.component.elements![instanceName] = componentElement;
-            //   const callbackArgs: IAcBuilderElementInitArgs = {
-            //     element: this.el as HTMLElement
-            //   }
             setTimeout(() => {
               this.el.setAttribute(AcBuilderAttributeName.acBuilderElementInstanceName, instanceName);
-              // elInstance.init({args:callbackArgs});
-              // instance.hooks.execute({ hook: AcEnumBuilderHook.ElementInit, args: args });
             }, 1);
-            // }
           },
 
         },
@@ -142,21 +102,6 @@ export class AcBuilderApi {
         attributes: { [AcFilterableElementsAttributeName.acFilterValue]: element.title.toLowerCase() },
         content: {
           type: element.name,
-      //     toolbar: [
-      //       {
-      //         attributes: { class: 'fa fa-clone', title: 'Clone' },
-      //         command: (editor: any, sender: any, opts: any) => {
-      //           const cloned = opts.target.clone();
-      //           opts.target.parent().append(cloned); // duplicate root
-      //         },
-      //       },
-      //       {
-      //   attributes: { class: 'fa fa-trash',title:"Remove" },
-      //   command: (editor: any, sender: any, opts: any) => {
-      //     opts.target.remove(); // delete root
-      //   },
-      // },
-      //     ]
         },
         category: element.category,
         media: element.mediaSvg,

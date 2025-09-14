@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName,AC_INPUT_TAG, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcEnumInputEvent, AcFilterableElementsAttributeName,AC_INPUT_TAG, AcTextInputElement, AcNumberInputElement, AcSelectInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { IAcComponentElement } from "../../interfaces/ac-component-element.interface";
 import { IAcBuilderElementProperty } from "../../interfaces/ac-builder-element-property.interface";
@@ -35,13 +35,13 @@ export class AcElementPropertyInput {
 
   private setInput() {
     if (this.property.type == 'string') {
-      this.input = document.createElement(AC_INPUT_TAG.textInput);
+      this.input = new AcTextInputElement();
     }
     else if (this.property.type == 'number') {
-      this.input = document.createElement(AC_INPUT_TAG.numberInput);
+      this.input = new AcNumberInputElement();
     }
     else if (this.property.type == 'select') {
-      this.input = document.createElement(AC_INPUT_TAG.selectInput);
+      this.input = new AcSelectInputElement();
       if(this.property.inputProperties){
         if(this.property.inputProperties['selectOptions']){
           this.input.selectOptions = this.property.inputProperties['selectOptions'];
@@ -49,12 +49,12 @@ export class AcElementPropertyInput {
       }
     }
     else if (this.property.type == 'boolean') {
-      this.input = document.createElement(AC_INPUT_TAG.selectInput);
+      this.input = new AcSelectInputElement();
       this.input.selectOptions = [{'label':'True','value':true},{'label':'False','value':false}];
     }
     if (this.input) {
       // this.input.init();
-      (this.element.querySelector('.gjs-input-holder') as HTMLInputElement).append(this.input.element);
+      (this.element.querySelector('.gjs-input-holder') as HTMLInputElement).append(this.input);
       if (this.componentElement && this.componentElement.properties) {
         if (this.componentElement.properties[this.property.name]) {
           this.input.value = this.componentElement.properties[this.property.name].value;

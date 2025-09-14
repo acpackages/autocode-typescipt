@@ -163,6 +163,7 @@ export class AcGrapesJSEventsHandler {
   }
 
   registerEventListeners() {
+    this.grapesJSApi.on('run:tlb-edit', () => false);
     this.registerBlockListeners();
     this.registerCommandListers();
     this.registerElementListeners();
@@ -193,7 +194,6 @@ export class AcGrapesJSEventsHandler {
       }
       this.registerAttributesChangeListener();
     });
-    this.grapesJSApi.on('run:tlb-edit', () => false);
   }
 
   registerLayerListeners() {
@@ -345,40 +345,37 @@ export class AcGrapesJSEventsHandler {
     const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
 
     if (!toolbarEl) return;
-    const getMenuElement = ({icon,title,callback}:{icon:string,title:string,callback:Function})=>{
+    const getMenuElement = ({ icon, title, callback }: { icon: string, title: string, callback: Function }) => {
       const menuElement = document.createElement('button');
-      menuElement.style.background = "trasparent";
+      menuElement.style.background = "transparent";
       menuElement.style.border = "none";
+      menuElement.style.color = "white";
       menuElement.innerHTML = icon;
-      menuElement.title = title;
-      menuElement.addEventListener('click',()=>{callback()});
-      const tooltip = new AcTooltip({element:menuElement});
+      menuElement.setAttribute('ac-tooltip', title);
+      menuElement.addEventListener('click', () => { callback() });
+      new AcTooltip({ element: menuElement });
       return menuElement;
     };
-    toolbarEl.innerHTML = '';
-    toolbarEl.style.background = '#222';
-    toolbarEl.style.color = '#fff';
-    toolbarEl.style.borderRadius = '4px';
-    toolbarEl.style.padding = '5px';
-    // toolbarEl.append(getMenuElement({title:''}))
-    const editBtn = document.createElement('button');
-    editBtn.textContent = '✏ Edit';
-    editBtn.onclick = () => this.grapesJSApi.runCommand('tlb-edit', { target: comp });
-
-    const cloneBtn = document.createElement('button');
-    cloneBtn.textContent = '📑 Duplicate';
-    cloneBtn.onclick = () => {
-      const cloned = comp.clone();
-      comp.parent()?.append(cloned);
-    };
-
-    const delBtn = document.createElement('button');
-    delBtn.textContent = '🗑 Delete';
-    delBtn.onclick = () => comp.remove();
-
-    toolbarEl.appendChild(editBtn);
-    toolbarEl.appendChild(cloneBtn);
-    toolbarEl.appendChild(delBtn);
+    setTimeout(() => {
+      toolbarEl.innerHTML = '';
+      toolbarEl.style.background = '#303030ff';
+      toolbarEl.style.color = '#fff';
+      toolbarEl.style.borderRadius = '4px';
+      toolbarEl.style.padding = '5px';
+      setTimeout(() => {
+        toolbarEl.append(getMenuElement({
+          title: 'Remove', icon: `<i class="fa fa-trash"></i>`, callback: () => {
+            comp.remove();
+          }
+        }));
+        toolbarEl.append(getMenuElement({
+          title: 'Clone', icon: `<i class="fa fa-pencil"></i>`, callback: () => {
+            const cloned = comp.clone();
+            comp.parent()?.append(cloned);
+          }
+        }));
+      }, 1);
+    }, 1);
   }
 
 }

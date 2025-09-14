@@ -1,4 +1,4 @@
-import { AcInputBase, AcSelectInputElement } from "@autocode-ts/ac-browser";
+import { AC_INPUT_TAG, AcInputBase, acRegisterCustomElement, AcSelectInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../../enums/ac-enum-builder-hook.enum";
 
@@ -29,7 +29,10 @@ export class AcEventSelectInput extends AcInputBase{
     if(this.builderApi.scriptEditor && this.builderApi.component.className){
       const functions = await this.builderApi.scriptEditor.helper.getFunctionsInClass({className:this.builderApi.component.className});
       this.selectInput.selectOptions = functions;
+      console.log(functions);
     }
   }
 
 }
+
+acRegisterCustomElement({tag:'ac-builder-event-select-input',type:AcEventSelectInput});
