@@ -353,7 +353,6 @@ export class AcGrapesJSEventsHandler {
       menuElement.innerHTML = icon;
       menuElement.setAttribute('ac-tooltip', title);
       menuElement.addEventListener('click', () => { callback() });
-      new AcTooltip({ element: menuElement });
       return menuElement;
     };
     setTimeout(() => {

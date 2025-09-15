@@ -30,8 +30,7 @@ export class AcElementEventInput {
             <span class="gjs-input-holder">
             </span>
             <span class="gjs-field-arrows px-0" style="min-width:max-content;padding-top:0px">
-            <button type="button" class="btn py-0 px-1 btn-add-event" style="height:100%;margin-top:-3px">
-            <i class="fa fa-plus text-secondary"></i>
+            <button type="button" class="btn p-0 text-secondary btn-add-event" style="height:30px;width:30px;margin-top:-3px">
             <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.plus}</span>
             </button>
             </span>

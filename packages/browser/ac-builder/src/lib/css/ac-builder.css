@@ -27,9 +27,9 @@ body {
   border: solid 1px #424242;
 }
 .ac-builder-topbar .btn-action {
-  font-size: 12px;
-  /* width: 20px; */
-  padding: 7px;
+  width: 27.5px;
+  height: 27.5px;
+  padding: 0px;
 }
 .ac-builder-topbar .ac-builder-topbar-center {
   flex: 1;
@@ -179,6 +179,9 @@ body {
   background: #a5a5a5;
 }
 
+.ac-builder-icon-svg {
+  color: inherit;
+}
 .ac-builder-icon-svg svg{
   max-height: 100%;
   max-width: 100%;
@@ -2664,7 +2667,10 @@ span.CodeMirror-selectedtext {
 }
 
 .gjs-block-category .gjs-caret-icon {
-  margin-right: 5px;
+    display: inline-block;
+    width: 20px !important;
+    height: 20px !important;
+    padding:0px;
 }
 
 .gjs-block {

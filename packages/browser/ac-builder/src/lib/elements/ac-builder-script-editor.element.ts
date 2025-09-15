@@ -34,8 +34,7 @@ export class AcBuilderScriptEditor {
       </div>
       <div class="ac-builder-script-editor-header-actions">
         <div class="ac-builder-script-editor-header-actions-container">
-          <button type="button" class="btn btn-action btn-close-action" data-bs-toggle="tooltip" data-bs-title="Redo">
-                <i class="fa fa-times text-secondary"></i>
+          <button type="button" class="btn btn-action btn-close-action p-0 text-secondary me-1" style="width:28px;height:100%;padding-top:5px;" ac-tooltip="Close Editor">
                 <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.xMark}</span>
               </button>
         </div>
