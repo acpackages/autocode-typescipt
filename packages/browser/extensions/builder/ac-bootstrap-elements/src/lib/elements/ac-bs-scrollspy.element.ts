@@ -37,7 +37,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsScrollspy extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Scrollspy
-    this.element.innerHTML = `<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+    this.element.innerHTML = `<nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3" ac-builder-element-interactive>
       <a class="navbar-brand" href="#">Navbar</a>
       <ul class="nav nav-pills">
         <li class="nav-item">
@@ -57,7 +57,7 @@ export class AcBsScrollspy extends AcBuilderElement {
         </li>
       </ul>
     </nav>
-    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0" ac-builder-element-interactive>
       <h4 id="scrollspyHeading1">First heading</h4>
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
       <h4 id="scrollspyHeading2">Second heading</h4>

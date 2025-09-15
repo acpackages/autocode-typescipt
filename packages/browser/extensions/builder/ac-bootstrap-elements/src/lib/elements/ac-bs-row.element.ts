@@ -26,7 +26,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsRow extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Row
-    this.element.innerHTML = `<div class="row">Row1</div><div class="row">Row2</div>`;
+    this.element.innerHTML = `<div class="row" contenteditable>Row1</div><div class="row" contenteditable>Row2</div>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

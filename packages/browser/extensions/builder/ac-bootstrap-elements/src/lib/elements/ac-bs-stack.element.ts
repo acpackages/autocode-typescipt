@@ -27,9 +27,9 @@ export class AcBsStack extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Stack
     this.element.classList.add('vstack', 'gap-3');
-    this.element.innerHTML = `<div class="p-2">First item</div>
-  <div class="p-2">Second item</div>
-  <div class="p-2">Third item</div>`;
+    this.element.innerHTML = `<div class="p-2" contenteditable>First item</div>
+  <div class="p-2 contenteditable">Second item</div>
+  <div class="p-2 contenteditable">Third item</div>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

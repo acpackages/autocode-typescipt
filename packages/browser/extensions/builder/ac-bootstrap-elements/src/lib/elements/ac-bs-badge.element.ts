@@ -38,7 +38,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsBadge extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Badge
-    this.element.innerHTML = `<span class="badge text-bg-secondary">Badge</span>`;
+    this.element.innerHTML = `<span class="badge text-bg-secondary" contenteditable>Badge</span>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

@@ -37,9 +37,9 @@ export class AcBsFloatingLabel extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for FloatingLabel
     this.element.innerHTML = `<div class="form-floating">
-  <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com" value="test@example.com">
-  <label for="floatingInputValue">Input with value</label>
-</div>`;
+      <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com" value="test@example.com">
+      <label for="floatingInputValue">Input with value</label>
+    </div>`;
     this.registerDomEvents();
     this.registerBsEvents();
   }

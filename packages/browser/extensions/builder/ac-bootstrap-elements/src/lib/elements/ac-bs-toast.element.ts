@@ -42,8 +42,8 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsToast extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Toast
-    this.element.innerHTML = `<button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
-      <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    this.element.innerHTML = `<button type="button" class="btn btn-primary" id="liveToastBtn" contenteditable>Show live toast</button>
+      <div class="toast-container position-fixed bottom-0 end-0 p-3" contenteditable>
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
             <img src="..." class="rounded me-2" alt="...">

@@ -47,6 +47,7 @@ export class AcBsButton extends AcBuilderElement {
     // Basic placeholder HTML for Button
     this.element.innerText = `Click Me`;
     this.element.classList.add('btn', 'btn-primary');
+    this.element.setAttribute('contenteditable', '');
     this.registerDomEvents();
     this.registerBsEvents();
   }

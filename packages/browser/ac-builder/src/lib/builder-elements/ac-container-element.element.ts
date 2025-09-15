@@ -45,6 +45,9 @@ export class AcContainerElement extends AcBuilderElement{
   }
 
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
+    this.element.style.minHeight = "50px";
+    this.element.style.minWidth = "50px";
+    this.element.style.backgroundColor = "#ffc8c8";
     this.registerListeners();
   }
 

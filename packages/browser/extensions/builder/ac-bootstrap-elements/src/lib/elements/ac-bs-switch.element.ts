@@ -33,7 +33,7 @@ export class AcBsSwitch extends AcBuilderElement {
     // Basic placeholder HTML for Switch
     this.element.innerHTML = `
       <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+      <label class="form-check-label" contenteditable for="flexSwitchCheckDefault">Default switch checkbox input</label>
     `;
     this.element.classList.add('form-check', 'form-switch');
     this.registerDomEvents();

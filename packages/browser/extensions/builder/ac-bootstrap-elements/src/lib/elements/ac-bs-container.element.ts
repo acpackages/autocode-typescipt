@@ -35,7 +35,8 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsContainer extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Container
-    this.element.innerHTML = `<div>Container</div>`;
+    this.element.innerHTML = `<div contenteditable>Container</div>`;
+    this.element.style.backgroundColor = "#ffc8c8";
     this.registerDomEvents();
     this.registerBsEvents();
   }

@@ -37,7 +37,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsNavbar extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Navbar
-    this.element.innerHTML = `<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    this.element.innerHTML = `<nav class="navbar navbar-expand-lg bg-body-tertiary" ac-builder-element-interactive>
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

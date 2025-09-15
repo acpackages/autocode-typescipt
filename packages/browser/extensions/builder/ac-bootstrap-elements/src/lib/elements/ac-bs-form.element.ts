@@ -35,7 +35,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsForm extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Form
-    this.element.innerHTML = `<form><div class="mb-3">
+    this.element.innerHTML = `<form><div class="mb-3" ac-builder-element-interactive>
   <label for="exampleFormControlInput1" class="form-label">Email address</label>
   <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
 </div>

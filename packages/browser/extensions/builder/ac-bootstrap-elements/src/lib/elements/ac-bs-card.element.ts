@@ -38,7 +38,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsCard extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Card
-    this.element.innerHTML = `<div class="card mb-3">
+    this.element.innerHTML = `<div class="card mb-3" ac-builder-element-interactive>
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>

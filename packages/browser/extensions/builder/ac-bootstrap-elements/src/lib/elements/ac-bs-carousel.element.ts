@@ -45,7 +45,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsCarousel extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Carousel
-    this.element.innerHTML = `<div id="carouselExample" class="carousel slide">
+    this.element.innerHTML = `<div id="carouselExample" class="carousel slide" ac-builder-element-interactive>
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="https://www.matemart.in/Assets/images/products/d457c0235036396f11714cb337bc0445.png" height="400" class="d-block w-100" alt="...">

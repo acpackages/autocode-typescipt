@@ -28,8 +28,9 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcAudioElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    args.element.style.height = "50px";
-    args.element.style.width = "50px";
+    // args.element.style.height = "50px";
+    // args.element.style.width = "50px";
+    this.element.setAttribute('controls','');
     this.registerListeners();
   }
 
