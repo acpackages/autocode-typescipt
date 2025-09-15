@@ -1,7 +1,9 @@
-import { AcTooltip, AcTooltipAttributeName } from "../components/_components.export";
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
 import { AcDraggable } from "../components/ac-draggable/elements/ac-draggable.element";
+import { AcSvgIconElement } from "../components/ac-svg-icon/_ac-svg-icon.element";
 
 const ATTRIBUTES_TO_LISTEN: string[] = [
   'ac-tooltip'
@@ -63,5 +65,5 @@ export function acInit({ element,observe = true }: { element?: HTMLElement, obse
   return instances;
 }
 
-
+AcSvgIconElement;
 

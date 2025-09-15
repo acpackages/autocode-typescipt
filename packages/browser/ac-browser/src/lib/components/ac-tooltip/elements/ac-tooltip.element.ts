@@ -27,9 +27,9 @@ export class AcTooltip {
     };
     this.tooltipEl = document.createElement('div');
     this.tooltipEl.className = `ac-tooltip ${this.options.className || ''}`;
-    this.tooltipEl.setAttribute('style', `background: rgba(0, 0, 0, 1);
+    this.tooltipEl.setAttribute('style', `background: rgba(23, 23, 23, 1);
           color: #fff;
-          padding: 6px 10px;
+          padding: 2px 6px;
           border-radius: 4px;
           font-size: 13px;
           line-height: 1.4;

@@ -55,6 +55,7 @@ export class AcElementEventInput {
       }
     });
     (this.element.querySelector('.btn-add-event') as HTMLInputElement).addEventListener('click', async () => {
+      console.log(this);
       const functionName = stringToCamelCase(`handle_${this.componentElement.instanceName}_${this.event.name}`);
       await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.component.className!, code: `${functionName}() {\n\t}\n` });
       await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.component.className!,functionName:functionName});

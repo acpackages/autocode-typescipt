@@ -35,7 +35,7 @@ export class AcBuilderScriptEditor {
       <div class="ac-builder-script-editor-header-actions">
         <div class="ac-builder-script-editor-header-actions-container">
           <button type="button" class="btn btn-action btn-close-action p-0 text-secondary me-1" style="width:28px;height:100%;padding-top:5px;" ac-tooltip="Close Editor">
-                <span class="ac-builder-icon-svg">${AC_BUILDER_SVGS.xMark}</span>
+                <ac-svg-icon class="p-1">${AC_BUILDER_SVGS.xMark}</ac-svg-icon>
               </button>
         </div>
       </div>

@@ -23,7 +23,7 @@ export class AcBuilderEventsHandler {
           const instance = new builderElement.instanceClass();
           componentElement.instance = instance;
           instance.element = element;
-          this.builderApi.scriptEditor.addCodeInsideClass({className:this.builderApi.component.className!,code:`${componentElement.id}!:${builderElement.instanceClass.name};`});
+          this.builderApi.scriptEditor.addCodeInsideClass({className:this.builderApi.component.className!,code:`${componentElement.instanceName}!:${builderElement.instanceClass.name};`});
           if (componentElement) {
             const eventArgs: IAcBuilderElementEventArgs = {
               componentElement: componentElement

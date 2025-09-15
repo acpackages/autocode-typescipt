@@ -11,6 +11,7 @@
     "build:ac-data-dictionary-editor": "nx run ac-data-dictionary-editor:build",
     "build:ac-datagrid-on-ag-grid": "nx run ac-datagrid-on-ag-grid:build",
     "build:ac-extensions": "nx run ac-extensions:build",
+    "build:ac-icons": "nx run ac-icons:build",
     "build:ac-ng-datagrid-on-aggrid": "nx run ac-ng-datagrid-on-aggrid:build",
     "build:ac-ng-node-editor": "nx run ac-ng-node-editor:build",
     "build:ac-sql-node": "nx run ac-sql-node:build",
