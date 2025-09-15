@@ -20,6 +20,7 @@ import { AC_BUILDER_VIDEO_ELEMENT } from "../builder-elements/ac-video-element.e
 import { IAcBuilderElement } from "../interfaces/ac-builder-element.interface";
 import { AcBuilderElement } from "./ac-builder-element";
 import { AcBuilderExtension } from "./ac-builder-extension";
+import { AcBuilderInputsManager } from "./ac-builder-inputs-manager";
 
 export class AcBuilderElementsManager {
   private static builtInElementsRegistered:boolean = false;
@@ -56,6 +57,7 @@ export class AcBuilderElementsManager {
 
   static registerBuiltInExtensions(){
     if(!this.builtInElementsRegistered){
+      AcBuilderInputsManager.init();
       this.register({element:AC_BUILDER_AUDIO_ELEMENT});
       this.register({element:AC_BUILDER_BUTTON_ELEMENT});
       this.register({element:AC_BUILDER_CANVAS_ELEMENT});

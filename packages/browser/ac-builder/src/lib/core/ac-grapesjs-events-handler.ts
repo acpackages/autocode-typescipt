@@ -3,7 +3,10 @@ import { Editor } from "grapesjs";
 import { AcBuilderApi } from "./ac-builder-api";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
 import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
-import { AcTooltip } from "@autocode-ts/ac-browser";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
+import { AcBuilderElement } from "./ac-builder-element";
+import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
+import { AcBuilderElementsManager } from "./ac-builder-elements-manager";
 
 export class AcGrapesJSEventsHandler {
   builderApi: AcBuilderApi;
@@ -16,6 +19,18 @@ export class AcGrapesJSEventsHandler {
     this.eventsHandler = builderApi.eventHandler;
     this.grapesJSApi = this.builderApi.builder.grapesJSApi;
     this.registerEventListeners();
+  }
+
+  getComponentElement({component}:{component:any}):IAcComponentElement|undefined{
+    let result;
+    if(component && component.view && component.view.el && this.builderApi && this.builderApi.component && this.builderApi.component.elements){
+      const element:HTMLElement = component.view.el;
+      if(element.hasAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)){
+        const instanceName:string = element.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)!;
+        result = this.builderApi.component.elements[instanceName];
+      }
+    }
+    return result;
   }
 
   makeElementInteractive({ element }: { element: HTMLElement }) {
@@ -345,12 +360,17 @@ export class AcGrapesJSEventsHandler {
     const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
 
     if (!toolbarEl) return;
+    console.log(comp);
+    const componentElement = this.getComponentElement({component:comp});
+
     const getMenuElement = ({ icon, title, callback }: { icon: string, title: string, callback: Function }) => {
       const menuElement = document.createElement('button');
       menuElement.style.background = "transparent";
       menuElement.style.border = "none";
       menuElement.style.color = "white";
-      menuElement.innerHTML = icon;
+      menuElement.style.height = '20px';
+      menuElement.style.width = '30px';
+      menuElement.innerHTML = `<ac-svg-icon class="ac-builder-toolbar-btn pb-1">${icon}</ac-svg-icon>`;
       menuElement.setAttribute('ac-tooltip', title);
       menuElement.addEventListener('click', () => { callback() });
       return menuElement;
@@ -360,17 +380,31 @@ export class AcGrapesJSEventsHandler {
       toolbarEl.style.background = '#303030ff';
       toolbarEl.style.color = '#fff';
       toolbarEl.style.borderRadius = '4px';
-      toolbarEl.style.padding = '5px';
+      toolbarEl.style.padding = '2px';
+      toolbarEl.style.border = 'solid 1px #555'
       setTimeout(() => {
+
+        if(componentElement && componentElement.instance){
+          const builderElement = AcBuilderElementsManager.getElement({name:componentElement.name});
+          if(builderElement?.commands){
+            for(const command of builderElement.commands){
+              toolbarEl.append(getMenuElement({
+                title: command.title, icon: command.iconSvg ?? ACI_SVG_SOLID.command, callback: () => {
+                  componentElement.instance.handleCommand({command:command.name,args:{}});
+                }
+              }));
+            }
+          }
+        }
         toolbarEl.append(getMenuElement({
-          title: 'Remove', icon: `<i class="fa fa-trash"></i>`, callback: () => {
-            comp.remove();
+          title: 'Clone', icon: ACI_SVG_SOLID.clone, callback: () => {
+            const cloned = comp.clone();
+            comp.parent()?.append(cloned);
           }
         }));
         toolbarEl.append(getMenuElement({
-          title: 'Clone', icon: `<i class="fa fa-pencil"></i>`, callback: () => {
-            const cloned = comp.clone();
-            comp.parent()?.append(cloned);
+          title: 'Remove', icon: ACI_SVG_SOLID.trash, callback: () => {
+            comp.remove();
           }
         }));
       }, 1);

@@ -1,3 +1,4 @@
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
 import { AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TABLE_PROPERTIES, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
@@ -38,9 +39,13 @@ export class AcTableElement extends AcBuilderElement{
   }
 
   override handleCommand({command,args}:{command:string,args:any}){
+    console.log(command);
     if(command == 'addRow'){
-      const body = this.element.querySelector('body');
+      const body = this.element.querySelector('tbody');
       const row = document.createElement('tr');
+      row.innerHTML = `<td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>`;
       body?.append(row);
     }
 
@@ -73,6 +78,6 @@ export const AC_BUILDER_TABLE_ELEMENT:IAcBuilderElement = {
   mediaSvg:AC_BUILDER_ICON_SVGS.table,
   instanceClass:AcTableElement,
   commands:[
-    {name:'addRow',title:'Add Row',iconSvg:AC_BUILDER_ICON_SVGS.alert}
+    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.plus}
   ]
 }

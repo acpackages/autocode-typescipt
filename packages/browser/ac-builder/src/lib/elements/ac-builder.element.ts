@@ -35,9 +35,13 @@ export class AcBuilder {
   initGrapesJS() {
     this.grapesJSApi = grapesjs.init({
       height: '100%',
+      avoidInlineStyle:false,
       showOffsets: true,
       noticeOnUnload: false,
       storageManager: false,
+      selectorManager:{
+        appendTo: this.element.querySelector('.ac-builder-class-panel') as HTMLElement,
+      },
       container: this.element.querySelector('.ac-builder-canvas') as HTMLElement,
       fromElement: true,
       blockManager: {
@@ -48,11 +52,12 @@ export class AcBuilder {
       },
       styleManager: {
         appendTo: this.element.querySelector('.ac-builder-styles-panel') as HTMLElement,
-      }
+      },
     });
     this.setGrapesJSElementStyles();
     this.setDeviceButtons();
     this.initGrapesJSCommands();
+    // console.log(plugin);
   }
 
   private initGrapesJSCommands(): void {
@@ -186,7 +191,10 @@ export class AcBuilder {
           </button>
         </div>
         <div class="tab-content">
-          <div class="ac-builder-styles-tab ac-builder-styles-panel ac-builder-scrollable-element" ${AcTabsAttributeName.acTabPane}></div>
+          <div class="ac-builder-styles-tab ac-builder-scrollable-element" ${AcTabsAttributeName.acTabPane}>
+          <div class="ac-builder-class-panel"></div>
+          <div class="ac-builder-styles-panel"></div>
+          </div>
           <div class="ac-builder-properties-tab" ${AcTabsAttributeName.acTabPane}></div>
           <div class="ac-builder-events-tab" ${AcTabsAttributeName.acTabPane}></div>
         </div>
@@ -276,6 +284,6 @@ export class AcBuilder {
     const leftSidebarTabs = new AcTabs({ element: this.element.querySelector('.ac-builder-left-sidebar') as HTMLElement });
     leftSidebarTabs.show({ tabIndex: 0 });
     const rightSidebarTabs = new AcTabs({ element: this.element.querySelector('.ac-builder-right-sidebar') as HTMLElement });
-    rightSidebarTabs.show({ tabIndex: 1 });
+    rightSidebarTabs.show({ tabIndex: 0 });
   }
 }

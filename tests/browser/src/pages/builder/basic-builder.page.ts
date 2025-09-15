@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-builder/src/lib/css/ac-builder.css';
 import { AcBuilder, AcBuilderApi } from '@autocode-ts/ac-builder';
-import { acRegisterBootstrapBuilderElements } from '@autocode-ts/ac-bootstrap-elements';
+import { acRegisterDataDictionaryBuilderElements } from '@autocode-ts/ac-dd-builder-elements';
 import { PageHeader } from '../../components/page-header/page-header.component';
 
 export class BasicBuilderPage extends HTMLElement {
@@ -21,7 +21,8 @@ export class BasicBuilderPage extends HTMLElement {
   async initBuilder() {
     const container = document.querySelector<HTMLElement>('#builderContainer');
     if (container) {
-      acRegisterBootstrapBuilderElements();
+      // acRegisterBootstrapBuilderElements();
+      acRegisterDataDictionaryBuilderElements();
       this.builder = new AcBuilder();
       this.builderApi = this.builder.builderApi;
       container.append(this.builder.element);
@@ -73,7 +74,7 @@ export class BasicBuilderPage extends HTMLElement {
         ]
       };
       setTimeout(() => {
-        this.builderApi.fromJson(state);
+        // this.builderApi.fromJson(state);
       }, 500);
     }
   }

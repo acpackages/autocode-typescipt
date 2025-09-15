@@ -5,6 +5,7 @@ export * from './ac-builder-element-event.interface';
 export * from './ac-builder-element-property.interface';
 export * from './ac-builder-element.interface';
 export * from './ac-builder-extension.interface';
+export * from './ac-builder-input.interface';
 export * from './ac-builder-state.interface';
 export * from './ac-component-element-event-function.interface';
 export * from './ac-component-element-property-value.interface';
