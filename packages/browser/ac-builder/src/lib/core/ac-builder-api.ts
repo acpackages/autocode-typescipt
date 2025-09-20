@@ -121,7 +121,7 @@ export class AcBuilderApi {
       this.scriptEditor = new AcBuilderScriptEditor({ builderApi: this });
       this.scriptEditor.registerType({ type: AcBuilderComponent });
       if (this.component && this.component.script) {
-        this.scriptEditor.setCode({ code: this.component.script });
+        this.scriptEditor.setTsCode({ code: this.component.script });
       }
       (this.builder.element.querySelector('.ac-builder-script-container') as HTMLElement).append(this.scriptEditor.element);
       this.scriptEditor.on({
@@ -143,7 +143,7 @@ export class AcBuilderApi {
       this.grapesJSApi.setComponents(this.component.html);
     }
     if (this.component.script) {
-      this.scriptEditor.setCode({ code: this.component.script });
+      this.scriptEditor.setTsCode({ code: this.component.script });
     }
   }
 

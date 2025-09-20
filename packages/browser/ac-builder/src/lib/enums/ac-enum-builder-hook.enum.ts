@@ -5,6 +5,7 @@ export enum AcEnumBuilderHook{
   ElementAdd = 'ELEMENT_ADD',
   ElementDelete = 'ELEMENT_DELETE',
   ElementInit = 'ELEMENT_INIT',
+  ElementPropertyChange = 'ELEMENT_PROPERTY_CHANGE',
   ElementSelect = 'ELEMENT_SELECT',
   ScriptClassChange = 'SCRIPT_CLASS_CHANGE',
   ScriptFunctionChange = 'SCRIPT_FUNCTION_CHANGE',

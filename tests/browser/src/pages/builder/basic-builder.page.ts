@@ -3,6 +3,8 @@ import './../../../../../packages/browser/ac-builder/src/lib/css/ac-builder.css'
 import { AcBuilder, AcBuilderApi } from '@autocode-ts/ac-builder';
 import { acRegisterDataDictionaryBuilderElements } from '@autocode-ts/ac-dd-builder-elements';
 import { PageHeader } from '../../components/page-header/page-header.component';
+import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 
 export class BasicBuilderPage extends HTMLElement {
   builder!: AcBuilder;
@@ -22,6 +24,7 @@ export class BasicBuilderPage extends HTMLElement {
     const container = document.querySelector<HTMLElement>('#builderContainer');
     if (container) {
       // acRegisterBootstrapBuilderElements();
+      AcDataDictionary.registerDataDictionary({jsonData:actDataDictionary});
       acRegisterDataDictionaryBuilderElements();
       this.builder = new AcBuilder();
       this.builderApi = this.builder.builderApi;
@@ -47,7 +50,7 @@ export class BasicBuilderPage extends HTMLElement {
             "name": "default",
             "elements": {
               "container1": {
-                "id": "container1",
+                "instanceName": "container1",
                 "name": "container",
                 "events": {
                   "click": {
@@ -74,7 +77,7 @@ export class BasicBuilderPage extends HTMLElement {
         ]
       };
       setTimeout(() => {
-        // this.builderApi.fromJson(state);
+        this.builderApi.fromJson(state);
       }, 500);
     }
   }

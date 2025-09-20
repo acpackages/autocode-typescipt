@@ -154,11 +154,8 @@ export class AcBuilder {
                 <button type="button" class="btn btn-action btn-fullscreen text-secondary" ac-tooltip="Fullscreen">
                 <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.maximize}</ac-svg-icon>
                 </button>
-                <button type="button" class="btn btn-action btn-html-code text-secondary" ac-tooltip="HTML Code">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_BRANDS.html5}</ac-svg-icon>
-                </button>
                 <button type="button" class="btn btn-action btn-script-code text-secondary" ac-tooltip="Script">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_BRANDS.js}</ac-svg-icon>
+                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.code}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-clear-canvas text-secondary" ac-tooltip="Clear Content">
                 <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.eraser}</ac-svg-icon>
@@ -256,6 +253,7 @@ export class AcBuilder {
     const btnCode = this.element.querySelector('.btn-script-code') as HTMLElement;
     btnCode.addEventListener('click', () => {
       this.builderApi.toggleScriptEditor();
+      this.builderApi.scriptEditor.refreshHtmlCode();
     });
   }
 

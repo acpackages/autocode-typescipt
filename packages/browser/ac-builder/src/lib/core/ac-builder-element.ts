@@ -19,8 +19,6 @@ export abstract class AcBuilderElement{
     // Init implementation in child
   }
 
-  // private registerEvents
-
   handleCommand({command,args}:{command:string,args:any}){
     // con
   }

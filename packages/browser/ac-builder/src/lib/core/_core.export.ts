@@ -5,5 +5,6 @@ export * from './ac-builder-elements-manager';
 export * from './ac-builder-events-handler';
 export * from './ac-builder-extension-manager';
 export * from './ac-builder-extension';
-export * from './ac-builder-inputs-manager';
+export * from './ac-builder-property-inputs-manager';
+export * from './ac-builder-property-input';
 export * from './ac-grapesjs-events-handler';

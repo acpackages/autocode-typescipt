@@ -159,7 +159,8 @@ body {
 }
 
 .ac-builder-script-editor-body{
-  flex-grow: 1;
+  height: -webkit-fill-available;
+  display: flex;
 }
 
 .ac-builder-scrollable-element::-webkit-scrollbar {
@@ -183,6 +184,11 @@ body {
   padding-top:7px;
   padding-left: 5px;
   color:white;
+}
+
+.ac-script-editor-container{
+  height: 100%;
+  width: 50%;
 }
 
 .btn-sidebar-action {

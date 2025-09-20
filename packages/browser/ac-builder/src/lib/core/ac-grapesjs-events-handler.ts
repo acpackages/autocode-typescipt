@@ -4,7 +4,6 @@ import { AcBuilderApi } from "./ac-builder-api";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
 import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
-import { AcBuilderElement } from "./ac-builder-element";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { AcBuilderElementsManager } from "./ac-builder-elements-manager";
 
@@ -118,10 +117,10 @@ export class AcGrapesJSEventsHandler {
       //
     });
     editor.on('block:category:update', (args) => {
-      console.log(args);
+      // console.log(args);
     });
     editor.on('block:category:add', (args) => {
-      console.log(args);
+      // console.log(args);
     });
     editor.on('block:custom', (args) => {
       //
@@ -156,9 +155,14 @@ export class AcGrapesJSEventsHandler {
       }
       handleFunction();
     });
-    editor.on('component:remove', (args) => {
-      // this.eventsHandler.handleElementAdd({element:args.view.el});
-      // this.builderApi.hooks.execute({hook:AcEnumBuilderHook.ElementDelete,args:{}});
+    editor.on('component:remove', (component) => {
+      if (component && component.view && component.view.el) {
+        this.eventsHandler.handleElementRemove({element:component.view.el});
+        const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
+        if (toolbarEl){
+          toolbarEl.style.display = 'none';
+        }
+      }
     });
     editor.on('component:selected', (args) => {
       this.renderElementToolbar(args);
@@ -360,7 +364,6 @@ export class AcGrapesJSEventsHandler {
     const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
 
     if (!toolbarEl) return;
-    console.log(comp);
     const componentElement = this.getComponentElement({component:comp});
 
     const getMenuElement = ({ icon, title, callback }: { icon: string, title: string, callback: Function }) => {

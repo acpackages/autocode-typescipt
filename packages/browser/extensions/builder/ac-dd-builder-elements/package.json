@@ -5,5 +5,8 @@
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "dependencies": {
+    "@autocode-ts/ac-data-dictionary":"^0.0.2",
+    "@autocode-ts/ac-data-dictionary-components":"^0.0.1"
+  }
 }

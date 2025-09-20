@@ -2,7 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents } from "@autocode-ts/autocode";
+import { AcEvents, AcHooks } from "@autocode-ts/autocode";
 import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
 import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
 import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
@@ -94,6 +94,7 @@ export class AcInputBase extends HTMLElement {
     }
   }
 
+  hooks:AcHooks = new AcHooks();
   events: AcEvents = new AcEvents();
   inputElement: HTMLElement|any = document.createElement('input');
 

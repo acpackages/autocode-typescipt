@@ -1,23 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcDatagridBodyElement } from "./ac-datagrid-body.element";
 import { AcDatagridFooterElement } from "./ac-datagrid-footer.element";
 import { AcDatagridHeaderElement } from "./ac-datagrid-header.element";
 
-export class AcDatagrid {
+export class AcDatagrid extends HTMLElement{
   containerElement:HTMLElement = document.createElement('div');
   datagridApi:AcDatagridApi = new AcDatagridApi({datagrid:this});
   datagridBody:AcDatagridBodyElement =  new AcDatagridBodyElement({datagridApi:this.datagridApi});
   datagridFooter:AcDatagridFooterElement =  new AcDatagridFooterElement({datagridApi:this.datagridApi});
   datagridHeader:AcDatagridHeaderElement =  new AcDatagridHeaderElement({datagridApi:this.datagridApi});
   element:HTMLElement = document.createElement('div');
-
-  constructor(){
-    this.initElement();
-  }
 
   private handleClick(event:any){
     console.log(this.datagridApi);
@@ -37,7 +33,7 @@ export class AcDatagrid {
     this.datagridApi.dataSource.getData();
   }
 
-  private initElement(){
+  connectedCallback(){
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this.element});
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
     this.element.append(this.containerElement);
@@ -59,3 +55,5 @@ export class AcDatagrid {
     });
   }
 }
+
+acRegisterCustomElement({tag:'ac-datagrid',type:AcDatagrid});

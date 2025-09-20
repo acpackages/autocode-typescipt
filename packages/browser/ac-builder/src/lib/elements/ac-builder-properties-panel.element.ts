@@ -33,11 +33,12 @@ export class AcBuilderPropertiesPanel {
   }
 
   private getCategoryElement({ categoryName }: { categoryName: string }) {
-    let categoryContainer = this.inputsContainer.querySelector(`[ac-data-category=${categoryName}]`);
+    const categoryAttributeValue = categoryName.replaceAll(' ',"_").replaceAll('-',"_").replaceAll('&',"_").toLowerCase();
+    let categoryContainer = this.inputsContainer.querySelector(`[ac-data-category=${categoryAttributeValue}]`);
     if (categoryContainer == undefined) {
       categoryContainer = document.createElement('div');
       categoryContainer.setAttribute(AcFilterableElementsAttributeName.acFilterElementGroup, 'true');
-      categoryContainer.setAttribute('ac-data-category', categoryName);
+      categoryContainer.setAttribute('ac-data-category', categoryAttributeValue);
       acAddClassToElement({ element: categoryContainer, class_: 'gjs-block-category gjs-open' });
       categoryContainer.innerHTML = `<div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
         <span class="gjs-caret-icon"><ac-svg-icon class="p-1">${AC_BUILDER_SVGS.caretDown}</ac-svg-icon></span> ${categoryName}

@@ -1,5 +1,4 @@
 import * as monaco from "monaco-editor";
-import { AcBuilderScriptEditor } from "../elements/ac-builder-script-editor.element";
 import { IAcScriptClassChangeEventArgs } from "../interfaces/event-args/ac-script-class-change-event-args.interface";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderEvent } from "../enums/ac-enum-builder-event.enum";
@@ -12,10 +11,10 @@ export class AcTypescriptEditorHelper {
   private editor: monaco.editor.IStandaloneCodeEditor;
   private builderApi: AcBuilderApi;
 
-  constructor({ scriptEditor }: { scriptEditor: AcBuilderScriptEditor }) {
-    this.editor = scriptEditor.editor;
-    this.builderApi = scriptEditor.builderApi;
-    this.editor.handleInitialized = ()=>{
+  constructor({ editor,builderApi }: { editor: monaco.editor.IStandaloneCodeEditor,builderApi:AcBuilderApi }) {
+    this.editor = editor;
+    this.builderApi = builderApi;
+    this.editor.handleInitialized = () => {
       //
     };
     this.registerListeners();
@@ -27,32 +26,110 @@ export class AcTypescriptEditorHelper {
     await this.setCode({ code: code + newClass, autoFormat });
   }
 
-  async addCodeInsideClass({ className, code, autoFormat = true }: { className: string; code: string, autoFormat?: boolean }): Promise<void> {
+  async addCodeInsideClass({
+    className,
+    code,
+    autoFormat = true,
+  }: {
+    className: string;
+    code: string;
+    autoFormat?: boolean;
+  }): Promise<void> {
     const node = await this.getClassNode(className);
     if (!node) return;
     const model = this.editor.getModel();
     if (!model) return;
 
-    const pos = model.getPositionAt(node.spans[0].start + node.spans[0].length - 1);
-    this.editor.executeEdits("insertCode", [{
-      range: new monaco.Range(pos.lineNumber, pos.column, pos.lineNumber, pos.column),
-      text: ` ${code}\n`
-    }]);
+    // By default: insert before closing brace
+    let insertOffset = node.spans[0].start + node.spans[0].length - 1;
+  console.log("Code : "+code);
+    console.log("Checking if is property");
+    const propertyRegex = /^[A-Za-z_$][\w$]*!?(\?)?\s*(?:[:=])/;
+    if (propertyRegex.test(code.trim())) {
+      // Find last property node
+      console.log("Finding last property node");
+      const lastProp = [...(node.childItems || [])].reverse().find(
+        child => child.kind === "property"
+      );
+
+      if (lastProp) {
+        // Insert after the last property
+        console.log(lastProp);
+        insertOffset = lastProp.spans[0].start + lastProp.spans[0].length;
+      } else {
+        // No properties: insert at the start of the class body
+        console.log("Not found last prop");
+        const classStart = model.getPositionAt(node.spans[0].start);
+        insertOffset = model.getOffsetAt({
+          lineNumber: classStart.lineNumber + 1,
+          column: 1,
+        });
+      }
+    }
+    else{
+      console.log("Code is not property");
+    }
+
+    const pos = model.getPositionAt(insertOffset);
+
+    this.editor.executeEdits("insertCode", [
+      {
+        range: new monaco.Range(
+          pos.lineNumber,
+          pos.column,
+          pos.lineNumber,
+          pos.column
+        ),
+        text: `\n${code}\n`,
+      },
+    ]);
+
     if (autoFormat) {
       await this.formatCode();
     }
   }
 
-  async addFunctionInClass({ className, functionCode, autoFormat = true }: { className: string, functionCode: string, autoFormat?: boolean }): Promise<void> {
+  async addFunctionInClass({
+    className,
+    functionCode,
+    autoFormat = true,
+  }: {
+    className: string;
+    functionCode: string;
+    autoFormat?: boolean;
+  }): Promise<void> {
     await this.addCodeInsideClass({ className, code: functionCode, autoFormat });
   }
 
-  async addPropertyInClass({ className, propertyCode, autoFormat = true }: { className: string, propertyCode: string, autoFormat?: boolean }): Promise<void> {
+  async addPropertyInClass({
+    className,
+    propertyCode,
+    autoFormat = true,
+  }: {
+    className: string;
+    propertyCode: string;
+    autoFormat?: boolean;
+  }): Promise<void> {
     await this.addCodeInsideClass({ className, code: propertyCode, autoFormat });
   }
 
+
+  private cleanupBlankLines(): void {
+    const model = this.editor.getModel()!;
+    const text = model.getValue();
+
+    // Replace 2+ newlines with a single newline
+    const cleaned = text.replace(/\n{2,}/g, "\n\n");
+
+    if (cleaned !== text) {
+      model.setValue(cleaned);
+    }
+  }
+
+
   async formatCode(): Promise<void> {
     await this.editor.getAction("editor.action.formatDocument")?.run();
+    await this.cleanupBlankLines();
   }
 
   private async getNavigationTree() {
@@ -238,38 +315,90 @@ export class AcTypescriptEditorHelper {
     });
   }
 
-  private listenForPropertyChanges(callback: ({ change, oldName, newName, className }: { change: string, oldName?: string, newName?: string, className: string }) => void) {
-    this.trackChanges(async () => {
+  private listenForPropertyChanges(
+    callback: ({
+      change,
+      oldName,
+      newName,
+      className,
+    }: {
+      change: string;
+      oldName?: string;
+      newName?: string;
+      className: string;
+    }) => void,
+    debounceMs = 500
+  ) {
+    let timeoutId: any = null;
+    let lastSnapshot: any = null;
+
+    const runCheck = async () => {
       const structure = await this.getClassStructure();
       const vars: Record<string, string[]> = {};
-      structure.forEach(cls => vars[cls.name] = cls.variables);
-      return { vars };
-    }, (prev, curr) => {
+      structure.forEach(cls => (vars[cls.name] = cls.variables));
+
+      const curr = { vars };
+      const prev = lastSnapshot;
+      lastSnapshot = curr;
+
+      if (!prev) return; // skip first run
+
+      let lastChange:
+        | { change: string; oldName?: string; newName?: string; className: string }
+        | null = null;
+
       for (const cls of Object.keys(curr.vars)) {
         const oldVars = prev.vars[cls] || [];
         const currVars = curr.vars[cls] || [];
         const oldSet = new Set(oldVars);
         const currSet = new Set(currVars);
+
         for (const v of currVars) {
           if (!oldSet.has(v)) {
-            callback({ change: "add", className: cls, newName: v });
+            lastChange = { change: "add", className: cls, newName: v };
           }
         }
+
         for (const v of oldVars) {
           if (!currSet.has(v)) {
-            callback({ change: "remove", className: cls, oldName: v });
+            lastChange = { change: "remove", className: cls, oldName: v };
           }
         }
+
         if (oldVars.length === currVars.length) {
           for (let i = 0; i < currVars.length; i++) {
             if (oldVars[i] !== currVars[i]) {
-              callback({ change: "rename", className: cls, oldName: oldVars[i], newName: currVars[i] });
+              lastChange = {
+                change: "rename",
+                className: cls,
+                oldName: oldVars[i],
+                newName: currVars[i],
+              };
             }
           }
         }
       }
+
+      if (lastChange) {
+        callback(lastChange); // 🔥 only the last detected change
+      }
+    };
+
+    // Debounced trigger
+    this.editor.onDidChangeModelContent(() => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(runCheck, debounceMs);
+    });
+
+    // Initial snapshot
+    this.getClassStructure().then(structure => {
+      const vars: Record<string, string[]> = {};
+      structure.forEach(cls => (vars[cls.name] = cls.variables));
+      lastSnapshot = { vars };
     });
   }
+
+
 
   registerTypeToEditor({ type }: { type: any }): void {
     const decl = AcRuntimeDeclaration.getTypeDeclaration({ type });
@@ -282,7 +411,6 @@ export class AcTypescriptEditorHelper {
   }
 
   registerListeners() {
-    console.log("Registering Listeners");
     this.listenForClassChanges(({ change, oldName, newName }: { change: any, oldName?: string, newName?: string }) => {
       const args: IAcScriptClassChangeEventArgs = {
         change: change,
@@ -332,16 +460,24 @@ export class AcTypescriptEditorHelper {
       }
     }
 
-    if (!targetNode || !targetNode.spans?.length) return;
+    if (!targetNode?.spans?.length) return;
 
     const span = targetNode.spans[0];
-    const start = model.getPositionAt(span.start);
-    const end = model.getPositionAt(span.start + span.length);
+    const startPos = model.getPositionAt(span.start);
+    const endPos = model.getPositionAt(span.start + span.length);
 
-    this.editor.executeEdits("removeProperty", [{
-      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
-      text: "" // remove the text
-    }]);
+    // Expand to full lines
+    const range = new monaco.Range(
+      startPos.lineNumber,
+      1,
+      endPos.lineNumber,
+      model.getLineMaxColumn(endPos.lineNumber)
+    );
+
+    this.editor.executeEdits("removeProperty", [{ range, text: "" }]);
+
+    // Remove consecutive blank lines
+    this.cleanupBlankLines();
 
     if (autoFormat) {
       await this.formatCode();
@@ -366,16 +502,24 @@ export class AcTypescriptEditorHelper {
       }
     }
 
-    if (!targetNode || !targetNode.spans?.length) return;
+    if (!targetNode?.spans?.length) return;
 
     const span = targetNode.spans[0];
-    const start = model.getPositionAt(span.start);
-    const end = model.getPositionAt(span.start + span.length);
+    const startPos = model.getPositionAt(span.start);
+    const endPos = model.getPositionAt(span.start + span.length);
 
-    this.editor.executeEdits("removeFunction", [{
-      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
-      text: "" // remove the text
-    }]);
+    // Expand to full lines
+    const range = new monaco.Range(
+      startPos.lineNumber,
+      1,
+      endPos.lineNumber,
+      model.getLineMaxColumn(endPos.lineNumber)
+    );
+
+    this.editor.executeEdits("removeFunction", [{ range, text: "" }]);
+
+    // Remove consecutive blank lines
+    this.cleanupBlankLines();
 
     if (autoFormat) {
       await this.formatCode();
@@ -387,7 +531,12 @@ export class AcTypescriptEditorHelper {
     oldName,
     newName,
     autoFormat = true
-  }: { className: string; oldName: string; newName: string; autoFormat?: boolean }): Promise<void> {
+  }: {
+    className: string;
+    oldName: string;
+    newName: string;
+    autoFormat?: boolean;
+  }): Promise<void> {
     const clsNode = await this.getClassNode(className);
     if (!clsNode) return;
     const model = this.editor.getModel();
@@ -401,21 +550,45 @@ export class AcTypescriptEditorHelper {
       }
     }
 
-    if (!targetNode || !targetNode.spans?.length) return;
+    if (!targetNode?.spans?.length) return;
 
     const span = targetNode.spans[0];
-    const start = model.getPositionAt(span.start);
-    const end = model.getPositionAt(span.start + span.length);
+    const fullStart = model.getPositionAt(span.start);
+    const fullEnd = model.getPositionAt(span.start + span.length);
 
-    this.editor.executeEdits("renameProperty", [{
-      range: new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column),
-      text: newName
-    }]);
+    // Extract the actual code text for the property span
+    const spanText = model.getValueInRange(
+      new monaco.Range(fullStart.lineNumber, fullStart.column, fullEnd.lineNumber, fullEnd.column)
+    );
+
+    // Find just the identifier (property name) inside that text
+    const nameIndex = spanText.indexOf(oldName);
+    if (nameIndex === -1) return;
+
+    const nameStartOffset = span.start + nameIndex;
+    const nameEndOffset = nameStartOffset + oldName.length;
+
+    const nameStartPos = model.getPositionAt(nameStartOffset);
+    const nameEndPos = model.getPositionAt(nameEndOffset);
+
+    // Replace only the property name
+    this.editor.executeEdits("renameProperty", [
+      {
+        range: new monaco.Range(
+          nameStartPos.lineNumber,
+          nameStartPos.column,
+          nameEndPos.lineNumber,
+          nameEndPos.column
+        ),
+        text: newName,
+      },
+    ]);
 
     if (autoFormat) {
       await this.formatCode();
     }
   }
+
 
   async renameFunctionInClass({
     className,

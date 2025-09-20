@@ -28,9 +28,22 @@ export class AcSelectInputElement extends AcInputBase {
   private _selectOptions: any[] = [];
   get selectOptions(): any[] { return this._selectOptions; }
   set selectOptions(value: any[]) {
-    this._selectOptions = value;
-    this._filteredOptions = [...value];
-    if (this.isDropdownOpen) this.renderVirtualList();
+    let valueOptions:any[] = [];
+    if(value.length>0){
+      if(typeof value[0] != "object"){
+        for(const val of value){
+          valueOptions.push({[this.labelKey]:val,[this.valueKey]:val});
+        }
+      }
+      else{
+        valueOptions = [...value];
+      }
+    }
+    this._selectOptions = valueOptions;
+    this._filteredOptions = [...valueOptions];
+    if (this.isDropdownOpen){
+      this.renderVirtualList()
+    };
     this.value = this._value;
   }
 
@@ -276,13 +289,22 @@ export class AcSelectInputElement extends AcInputBase {
 
   private renderVirtualList() {
     this.listEl.innerHTML = "";
-    for (let i = 0; i < this._filteredOptions.length; i++) {
+    if(this._filteredOptions.length > 0){
+      for (let i = 0; i < this._filteredOptions.length; i++) {
       const row = this.buildOptionElement(this._filteredOptions[i], i);
       if (this.name == 'sourceColumnId') {
         console.log(row);
       }
       this.listEl.appendChild(row);
     }
+    }
+    else{
+      console.log(this._filteredOptions);
+      console.log(this._selectOptions);
+      console.dir(this);
+      this.listEl.innerHTML = `<div style="text-align:center;">No matching records!</div>`;
+    }
+
     this.scrollable.registerExistingElements();
     setTimeout(() => this.applyHighlightStyles(), 0);
   }

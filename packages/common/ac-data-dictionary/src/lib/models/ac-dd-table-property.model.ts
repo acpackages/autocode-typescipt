@@ -19,7 +19,6 @@ export class AcDDTableProperty {
   }
 
   fromJson({ jsonData }: { jsonData: any }): AcDDTableProperty {
-    console.log(jsonData);
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });
     return this;
   }

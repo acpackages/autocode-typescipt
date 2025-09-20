@@ -55,7 +55,6 @@ export class AcElementEventInput {
       }
     });
     (this.element.querySelector('.btn-add-event') as HTMLInputElement).addEventListener('click', async () => {
-      console.log(this);
       const functionName = stringToCamelCase(`handle_${this.componentElement.instanceName}_${this.event.name}`);
       await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.component.className!, code: `${functionName}() {\n\t}\n` });
       await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.component.className!,functionName:functionName});
@@ -63,7 +62,7 @@ export class AcElementEventInput {
       this.builderApi.toggleScriptEditor();
     });
     this.input.on({event:AcEnumInputEvent.DoubleClick,callback:async ()=>{
-      this.input.selectInput.closeDropdown();
+      this.input.inputElement.closeDropdown();
       this.builderApi.toggleScriptEditor();
       if (this.componentElement && this.componentElement.events && this.componentElement.events[this.event.name] && this.componentElement.events[this.event.name].functionName){
         await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.component.className!,functionName:this.componentElement.events[this.event.name].functionName!});

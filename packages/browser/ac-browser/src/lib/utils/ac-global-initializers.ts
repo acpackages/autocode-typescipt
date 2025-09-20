@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { AcTooltip } from "../components/_components.export";
+import { AcArrayValuesInputElement, AcDatagrid, AcDatetimeInputElement, AcInputElement, AcNumberInputElement, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
 import { AcDraggable } from "../components/ac-draggable/elements/ac-draggable.element";
@@ -65,5 +65,18 @@ export function acInit({ element,observe = true }: { element?: HTMLElement, obse
   return instances;
 }
 
-AcSvgIconElement;
+AcDatagrid;
 
+// Start Input Elements
+AcArrayValuesInputElement;
+AcDatetimeInputElement;
+AcInputElement;
+AcNumberInputElement;
+AcOptionInputElement;
+AcPopoutTextareaInputElement;
+AcSelectInputElement;
+AcTextInputElement;
+AcTextareaInputElement;
+// End Input Elements
+
+AcSvgIconElement;

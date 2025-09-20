@@ -11,6 +11,21 @@ export class AcBuilderEventsHandler {
   builderApi: AcBuilderApi;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
+    console.log(this);
+  }
+
+  getFunctionUseCount({functionName}:{functionName:string}):number{
+    let count:number = 0;
+    if(this.builderApi.component.elements){
+      for(const builderElement of Object.values(this.builderApi.component.elements)){
+        for(const fun of Object.values(builderElement.events)){
+          if(fun.functionName == functionName){
+            count++;
+          }
+        }
+      }
+    }
+    return count;
   }
 
   handleElementAdd({ element }: { element: HTMLElement }) {
@@ -23,7 +38,6 @@ export class AcBuilderEventsHandler {
           const instance = new builderElement.instanceClass();
           componentElement.instance = instance;
           instance.element = element;
-          this.builderApi.scriptEditor.addCodeInsideClass({className:this.builderApi.component.className!,code:`${componentElement.instanceName}!:${builderElement.instanceClass.name};`});
           if (componentElement) {
             const eventArgs: IAcBuilderElementEventArgs = {
               componentElement: componentElement
@@ -38,7 +52,26 @@ export class AcBuilderEventsHandler {
         }
       }
     }
+  }
 
+  async handleElementRemove({ element }: { element: HTMLElement }) {
+    if (element.nodeType === Node.ELEMENT_NODE) {
+      if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)) {
+        const elementId: string = element.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)!;
+        const builderElement = this.builderApi.component.elements![elementId];
+        if(builderElement){
+          const className = this.builderApi.component.className!;
+          await this.builderApi.scriptEditor.helper.removePropertyInClass({className:className,propertyName:builderElement.instanceName});
+          for(const fun of Object.values(builderElement.events)){
+            const useCount = this.getFunctionUseCount({functionName:fun.functionName!});
+            if(useCount <= 1){
+              await this.builderApi.scriptEditor.helper.removeFunctionInClass({className:className,functionName:fun.functionName!});
+            }
+          }
+          delete this.builderApi.component.elements![elementId];
+        }
+      }
+    }
   }
 
   handleElementSelect({ element }: { element: HTMLElement }) {
