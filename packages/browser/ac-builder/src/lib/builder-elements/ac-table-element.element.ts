@@ -39,16 +39,24 @@ export class AcTableElement extends AcBuilderElement{
   }
 
   override handleCommand({command,args}:{command:string,args:any}){
-    console.log(command);
     if(command == 'addRow'){
       const body = this.element.querySelector('tbody');
+      const columnCount = this.element.querySelectorAll('thead th').length;
       const row = document.createElement('tr');
-      row.innerHTML = `<td>Data 1</td>
-          <td>Data 2</td>
-          <td>Data 3</td>`;
+      row.innerHTML = Array.from({length: columnCount}, (_, i) => `<td>New Data</td>`).join('');
       body?.append(row);
+    }else if(command == 'addColumn'){
+      const header = this.element.querySelector('thead tr');
+      const bodyRows = this.element.querySelectorAll('tbody tr');
+      const th = document.createElement('th');
+      th.textContent = 'New Header';
+      header?.appendChild(th);
+      bodyRows.forEach(row=>{
+        const td = document.createElement('td');
+        td.textContent = 'New Data';
+        row.appendChild(td);
+      });
     }
-
   }
 
   private registerListeners(){
@@ -78,6 +86,7 @@ export const AC_BUILDER_TABLE_ELEMENT:IAcBuilderElement = {
   mediaSvg:AC_BUILDER_ICON_SVGS.table,
   instanceClass:AcTableElement,
   commands:[
-    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.plus}
+    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.plus},
+    {name:'addColumn',title:'Add Column',iconSvg:ACI_SVG_SOLID.podiumStar}    
   ]
 }

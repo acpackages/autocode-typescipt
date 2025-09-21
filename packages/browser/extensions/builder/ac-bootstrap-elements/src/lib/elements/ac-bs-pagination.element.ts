@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[]  = [];
 
@@ -51,6 +52,22 @@ export class AcBsPagination extends AcBuilderElement {
     });
   }
 
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command==='addPage'){
+      const ul = this.element.querySelector('ul.pagination');
+      if(ul){
+        const li = document.createElement('li');
+        li.className = 'page-item';
+        const a = document.createElement('a');
+        a.className = 'page-link';
+        a.href = '#';
+        a.textContent = 'New Page';
+        li.appendChild(a);
+        ul.insertBefore(li, ul.lastElementChild);
+      }
+    }
+  }
+
   private registerBsEvents(): void {
     BS_EVENTS.forEach((ev:any) => {
       try {
@@ -78,5 +95,8 @@ export const AC_BUILDER_BS_PAGINATION_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.pagination,
-  instanceClass: AcBsPagination
+  instanceClass: AcBsPagination,
+  commands:[
+    {name:'addPage',title:'Add Page',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

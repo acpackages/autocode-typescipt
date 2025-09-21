@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -29,28 +30,32 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsTable extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Table
-    this.element.innerHTML = `<thead ac-builder-element-interactive>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody ac-builder-element-interactive>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-  </tbody>`;
+    this.element.innerHTML = `
+      <thead contenteditable>
+        <tr>
+          <th>Header 1</th>
+          <th>Header 2</th>
+          <th>Header 3</th>
+        </tr>
+      </thead>
+      <tbody contenteditable>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+        </tr>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+        </tr>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+          <td>Data 3</td>
+        </tr>
+      </tbody>
+    `;
     this.element.classList.add('table');
     this.registerDomEvents();
     this.registerBsEvents();
@@ -61,6 +66,27 @@ export class AcBsTable extends AcBuilderElement {
     this.element.addEventListener('click', (event: MouseEvent) => {
       this.events.execute({ event: 'click', args: event });
     });
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addRow'){
+      const body = this.element.querySelector('tbody');
+      const columnCount = this.element.querySelectorAll('thead th').length;
+      const row = document.createElement('tr');
+      row.innerHTML = Array.from({length: columnCount}, (_, i) => `<td>New Data</td>`).join('');
+      body?.append(row);
+    }else if(command == 'addColumn'){
+      const header = this.element.querySelector('thead tr');
+      const bodyRows = this.element.querySelectorAll('tbody tr');
+      const th = document.createElement('th');
+      th.textContent = 'New Header';
+      header?.appendChild(th);
+      bodyRows.forEach(row=>{
+        const td = document.createElement('td');
+        td.textContent = 'New Data';
+        row.appendChild(td);
+      });
+    }
   }
 
   private registerBsEvents(): void {
@@ -90,5 +116,9 @@ export const AC_BUILDER_BS_TABLE_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.table,
-  instanceClass: AcBsTable
+  instanceClass: AcBsTable,
+  commands:[
+    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.tableRows},
+    {name:'addColumn',title:'Add Column',iconSvg:ACI_SVG_SOLID.tableColumns}
+  ]
 };

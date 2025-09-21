@@ -3,6 +3,7 @@ import './../../../../../packages/browser/ac-builder/src/lib/css/ac-builder.css'
 import { AcBuilder, AcBuilderApi } from '@autocode-ts/ac-builder';
 import { acRegisterDataDictionaryBuilderElements } from '@autocode-ts/ac-dd-builder-elements';
 import { PageHeader } from '../../components/page-header/page-header.component';
+import { acRegisterBootstrapBuilderElements } from '@autocode-ts/ac-bootstrap-elements';
 
 export class BasicBuilderPage extends HTMLElement {
   builder!: AcBuilder;
@@ -21,7 +22,7 @@ export class BasicBuilderPage extends HTMLElement {
   async initBuilder() {
     const container = document.querySelector<HTMLElement>('#builderContainer');
     if (container) {
-      // acRegisterBootstrapBuilderElements();
+      acRegisterBootstrapBuilderElements();
       acRegisterDataDictionaryBuilderElements();
       this.builder = new AcBuilder();
       this.builderApi = this.builder.builderApi;

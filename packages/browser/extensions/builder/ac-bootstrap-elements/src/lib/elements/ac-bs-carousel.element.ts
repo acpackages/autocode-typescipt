@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 // Bootstrap-specific events for this component
 const BS_EVENTS: IAcBuilderElementEvent[] = [
   { title: 'Slide', category: 'Bootstrap', name: "slide", htmlEventName: "slide.bs.carousel" },
@@ -46,28 +47,41 @@ export class AcBsCarousel extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Carousel
     this.element.innerHTML = `<div id="carouselExample" class="carousel slide" ac-builder-element-interactive>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://www.matemart.in/Assets/images/products/d457c0235036396f11714cb337bc0445.png" height="400" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://res.cloudinary.com/hni-corporation/image/upload/d_HON:Brand:Icons:HON_Icon_Outlines_HON-Icon-Gallery-001.png/f_auto,q_auto/d_HON:Brand:Icons:HON_Icon_Outlines_HON-Icon-Gallery-001.png/f_auto,q_auto/v1693919362/Surface%20Materials/Finishes/Paint/hni-paint-cove.jpg" height="400" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://preview.colorkit.co/color/A9A9A9.png?type=article-preview-logo&size=social&colorname=Dark%20Gray" height="400" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>`;
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://www.matemart.in/Assets/images/products/d457c0235036396f11714cb337bc0445.png" height="400" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://res.cloudinary.com/hni-corporation/image/upload/d_HON:Brand:Icons:HON_Icon_Outlines_HON-Icon-Gallery-001.png/f_auto,q_auto/d_HON:Brand:Icons:HON_Icon_Outlines_HON-Icon-Gallery-001.png/f_auto,q_auto/v1693919362/Surface%20Materials/Finishes/Paint/hni-paint-cove.jpg" height="400" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://preview.colorkit.co/color/A9A9A9.png?type=article-preview-logo&size=social&colorname=Dark%20Gray" height="400" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>`;
+    this.element.classList.add('py-1');
     this.registerDomEvents();
     this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addSlide'){
+      const carouselInner = this.element.querySelector('.carousel-inner');
+      if(carouselInner){
+        const slide = document.createElement('div');
+        slide.classList.add('carousel-item');
+        slide.innerHTML = `<img src="https://images.unsplash.com/photo-1587691592099-24045742c181?fm=jpg&amp;q=60&amp;w=3000&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" height="200">`;
+        carouselInner.appendChild(slide);
+      }
+    }
   }
 
   private registerDomEvents(): void {
@@ -104,5 +118,8 @@ export const AC_BUILDER_BS_CAROUSEL_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.carousel,
-  instanceClass: AcBsCarousel
+  instanceClass: AcBsCarousel,
+  commands:[
+    {name:'addSlide',title:'Add Slide',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

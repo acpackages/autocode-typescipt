@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -42,6 +43,19 @@ export class AcBsButtonGroup extends AcBuilderElement {
     this.registerBsEvents();
   }
 
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addButton'){
+      const btnGroup = this.element.querySelector('div.btn-group');
+      if(btnGroup){
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.classList.add('btn','btn-primary');
+        btn.textContent = 'New Button';
+        btnGroup.appendChild(btn);
+      }
+    }
+  }
+
   private registerDomEvents(): void {
     // Wire common DOM events to builder events where applicable
   }
@@ -73,5 +87,8 @@ export const AC_BUILDER_BS_BUTTON_GROUP_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.buttonGroup,
-  instanceClass: AcBsButtonGroup
+  instanceClass: AcBsButtonGroup,
+  commands:[
+    {name:'addButton',title:'Add Button',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

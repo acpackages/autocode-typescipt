@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -26,7 +27,10 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsRow extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Row
-    this.element.innerHTML = `<div class="row" contenteditable>Row1</div><div class="row" contenteditable>Row2</div>`;
+    this.element.classList.add('row','p-1');
+    this.element.setAttribute('ac-builder-element-interactive','');
+    this.element.setAttribute('contenteditable','');
+    this.element.innerHTML = "Row";
     this.registerDomEvents();
     this.registerBsEvents();
   }
@@ -36,6 +40,20 @@ export class AcBsRow extends AcBuilderElement {
     this.element.addEventListener('click', (event: MouseEvent) => {
       this.events.execute({ event: 'click', args: event });
     });
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addColumn'){
+      const col = document.createElement('div');
+      col.classList.add('col');
+      col.innerHTML = `Column`;
+      this.element.appendChild(col);
+    }else if(command == 'addRow'){
+      const row = document.createElement('div');
+      row.classList.add('row');
+      row.innerHTML = `Row`;
+      this.element.appendChild(row);
+    }
   }
 
   private registerBsEvents(): void {
@@ -65,5 +83,9 @@ export const AC_BUILDER_BS_ROW_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.row,
-  instanceClass: AcBsRow
+  instanceClass: AcBsRow,
+  commands:[
+    {name:'addColumn',title:'Add Column',iconSvg:ACI_SVG_SOLID.tableColumns},
+    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.tableRows}
+  ]
 };

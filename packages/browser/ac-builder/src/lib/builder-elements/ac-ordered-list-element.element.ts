@@ -1,3 +1,4 @@
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_LIST_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
@@ -32,6 +33,15 @@ export class AcOrderedListElement extends AcBuilderElement{
     this.registerListeners();
   }
 
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addItem'){
+      const li = document.createElement('li');
+      li.setAttribute('ac-builder-element-interactive','');
+      li.textContent = 'New List Item';
+      this.element.appendChild(li);
+    }
+  }
+
   private registerListeners(){
     this.element.addEventListener('click',(event:MouseEvent)=>{
       this.events.execute({event:'click',args:event});
@@ -60,5 +70,7 @@ export const AC_BUILDER_ORDERED_LIST_ELEMENT:IAcBuilderElement = {
     ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.orderedList,
-  instanceClass:AcOrderedListElement
+  instanceClass:AcOrderedListElement,commands:[
+    {name:'addItem',title:'Add Item',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 }
