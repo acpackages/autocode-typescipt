@@ -1,73 +1,91 @@
-import { AcEvents } from "@autocode-ts/autocode";
-import { AcEnumDrawerEvent } from "../enums/ac-enum-drawer-event.enum";
-
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-type AcDrawerPlacement = 'left' | 'right' | 'top' | 'bottom';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AcEnumDrawerEvent } from "../enums/ac-enum-drawer-event.enum";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_DRAWER_TAG } from "../consts/ac-drawer-tag.const";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-interface AcDrawerOptions {
-  placement?: AcDrawerPlacement;
-  backdrop?: boolean;
-  closeOnBackdropClick?: boolean;
-  animationDuration?: number; // in ms
-}
-
-export class AcDrawer {
-  private element: HTMLElement;
-  private options: Required<AcDrawerOptions>;
+export class AcDrawer extends AcElementBase{
   private backdropEl?: HTMLDivElement;
   private isOpen = false;
-  events:AcEvents = new AcEvents();
+  get animationDuration():number{
+    return parseInt(this.getAttribute('animation-duration')??"200");
+  }
+  set animationDuration(value:number){
+    this.setAttribute('animation-duration',value.toString());
+  }
 
-  constructor(element: HTMLElement, options?: AcDrawerOptions) {
-    this.element = element;
-    this.options = {
-      placement: options?.placement ?? 'right',
-      backdrop: options?.backdrop ?? true,
-      closeOnBackdropClick: options?.closeOnBackdropClick ?? true,
-      animationDuration: options?.animationDuration ?? 300
-    };
+  get suppressBackdropClose():boolean{
+    return this.getAttribute('suppress-backdrop-close')!='true';
+  }
+  set suppressBackdropClose(value:boolean){
+    this.setAttribute('suppress-backdrop-close',`${value}`);
+  }
 
+  get placement():string{
+    return this.getAttribute('placement')??'left';
+  }
+  set placement(value:'left'|'right'|'top'|'bottom'){
+    this.setAttribute('placement',value);
+  }
+
+  get showBackdrop():boolean{
+    return this.getAttribute('show-backdrop')!='false';
+  }
+  set showBackdrop(value:boolean){
+    this.setAttribute('show-backdrop',`${value}`);
+  }
+
+  constructor() {
+    super();
+    // this.style.display = 'contents';
     this.init();
   }
 
   private init() {
     // Apply base styles
-    this.element.style.position = 'fixed';
-    this.element.style.zIndex = '1050';
-    this.element.style.transition = `transform ${this.options.animationDuration}ms ease`;
-    this.element.style.willChange = 'transform';
+    const closeButton = this.querySelector('[ac-drawer-close]');
+    if(closeButton ){
+      closeButton.addEventListener('click',()=>{
+        this.close();
+      })
+    }
+    this.style.position = 'fixed';
+    this.style.zIndex = '1050';
+    this.style.transition = `transform ${this.animationDuration}ms ease`;
+    this.style.willChange = 'transform';
 
     // Placement styles
-    const placements: Record<AcDrawerPlacement, () => void> = {
+    const placements: Record<string, () => void> = {
       left: () => {
-        this.element.style.top = '0';
-        this.element.style.left = '0';
-        this.element.style.height = '100%';
-        this.element.style.transform = 'translateX(-100%)';
+        this.style.top = '0';
+        this.style.left = '0';
+        this.style.height = '100%';
+        this.style.transform = 'translateX(-100%)';
       },
       right: () => {
-        this.element.style.top = '0';
-        this.element.style.right = '0';
-        this.element.style.height = '100%';
-        this.element.style.transform = 'translateX(100%)';
+        this.style.top = '0';
+        this.style.right = '0';
+        this.style.height = '100%';
+        this.style.transform = 'translateX(100%)';
       },
       top: () => {
-        this.element.style.top = '0';
-        this.element.style.left = '0';
-        this.element.style.width = '100%';
-        this.element.style.transform = 'translateY(-100%)';
+        this.style.top = '0';
+        this.style.left = '0';
+        this.style.width = '100%';
+        this.style.transform = 'translateY(-100%)';
       },
       bottom: () => {
-        this.element.style.bottom = '0';
-        this.element.style.left = '0';
-        this.element.style.width = '100%';
-        this.element.style.transform = 'translateY(100%)';
+        this.style.bottom = '0';
+        this.style.left = '0';
+        this.style.width = '100%';
+        this.style.transform = 'translateY(100%)';
       }
     };
 
-    placements[this.options.placement]();
+    placements[this.placement]();
 
-    if (this.options.backdrop) {
+    if (this.showBackdrop) {
       this.backdropEl = document.createElement('div');
       this.backdropEl.style.position = 'fixed';
       this.backdropEl.style.top = '0';
@@ -76,24 +94,20 @@ export class AcDrawer {
       this.backdropEl.style.height = '100%';
       this.backdropEl.style.backgroundColor = 'rgba(0,0,0,0.5)';
       this.backdropEl.style.opacity = '0';
-      this.backdropEl.style.transition = `opacity ${this.options.animationDuration}ms ease`;
+      this.backdropEl.style.transition = `opacity ${this.animationDuration}ms ease`;
       this.backdropEl.style.zIndex = '1040';
 
-      if (this.options.closeOnBackdropClick) {
+      if (!this.suppressBackdropClose) {
         this.backdropEl.addEventListener('click', () => this.close());
       }
     }
-  }
-
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.events.subscribe({event,callback});
   }
 
   open() {
     if (this.isOpen) return;
     this.isOpen = true;
 
-    if (this.options.backdrop && this.backdropEl) {
+    if (this.showBackdrop && this.backdropEl) {
       document.body.appendChild(this.backdropEl);
       setTimeout(() => {
         this.backdropEl!.style.opacity = '1';
@@ -101,7 +115,7 @@ export class AcDrawer {
     }
 
     requestAnimationFrame(() => {
-      this.element.style.transform = 'translate(0,0)';
+      this.style.transform = 'translate(0,0)';
     });
     this.events.execute({event:AcEnumDrawerEvent.Open});
     this.events.execute({event:AcEnumDrawerEvent.Toggle});
@@ -111,22 +125,22 @@ export class AcDrawer {
     if (!this.isOpen) return;
     this.isOpen = false;
 
-    const placementsReset: Record<AcDrawerPlacement, string> = {
+    const placementsReset: Record<string, string> = {
       left: 'translateX(-100%)',
       right: 'translateX(100%)',
       top: 'translateY(-100%)',
       bottom: 'translateY(100%)'
     };
 
-    this.element.style.transform = placementsReset[this.options.placement];
+    this.style.transform = placementsReset[this.placement];
 
-    if (this.options.backdrop && this.backdropEl) {
+    if (this.showBackdrop && this.backdropEl) {
       this.backdropEl.style.opacity = '0';
       setTimeout(() => {
         if (this.backdropEl && this.backdropEl.parentElement) {
           this.backdropEl.parentElement.removeChild(this.backdropEl);
         }
-      }, this.options.animationDuration);
+      }, this.animationDuration);
     }
     this.events.execute({event:AcEnumDrawerEvent.Close});
     this.events.execute({event:AcEnumDrawerEvent.Toggle});
@@ -136,3 +150,5 @@ export class AcDrawer {
     this.isOpen ? this.close() : this.open();
   }
 }
+
+acRegisterCustomElement({tag:AC_DRAWER_TAG.drawer,type:AcDrawer})

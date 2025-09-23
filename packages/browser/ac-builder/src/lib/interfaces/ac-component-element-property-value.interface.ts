@@ -2,5 +2,6 @@
 
 export interface IAcComponentElementPropertyValue{
   name:string,
-  value:any
+  value:any,
+  valueType?:'PROPERTY'|'CLASS_PROPERTY_REFERENCE'
 }

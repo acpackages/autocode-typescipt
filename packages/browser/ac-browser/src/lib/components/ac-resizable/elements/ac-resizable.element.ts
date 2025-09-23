@@ -1,5 +1,7 @@
 import { AcEvents } from "@autocode-ts/autocode";
 import { AcEnumResizeDirection } from "../enums/ac-enum-resize-direction.enum";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_RESIZABLE_TAG } from "../_ac-resizable.export";
 
 export class AcResizable {
   private element: HTMLElement;
@@ -148,3 +150,5 @@ export class AcResizable {
     document.addEventListener('mouseup', onMouseUp);
   }
 }
+
+acRegisterCustomElement({tag:AC_RESIZABLE_TAG.resizable,type:AcResizable});

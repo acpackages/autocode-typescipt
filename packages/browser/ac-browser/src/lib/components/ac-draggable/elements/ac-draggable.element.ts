@@ -1,40 +1,36 @@
 import { Autocode } from "@autocode-ts/autocode";
 import { AcDraggableApi } from "../core/ac-draggable-api";
-import { AcDraggableAttributeName } from "../_ac-draggable.export";
+import { AC_DRAGGABLE_TAG, AcDraggableAttributeName } from "../_ac-draggable.export";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AcElementBase } from "../../../core/ac-element-base";
+import { IAcDragGroup } from "../interfaces/ac-drag-group.interface";
 
-type AcDragGroup = {
-  name: string;
-  accept?: string[];
-};
 
-export class AcDraggable {
+
+export class AcDraggable extends AcElementBase {
   draggableApi:AcDraggableApi = new AcDraggableApi({instance:this});
-  element: HTMLElement;
-  groups: Map<string, AcDragGroup> = new Map();
-  id:string = Autocode.uuid();
+  groups: Map<string, IAcDragGroup> = new Map();
+  override id:string = Autocode.uuid();
   private mutationObserver!: MutationObserver;
   originalUserSelect: any;
 
-  constructor({element}:{element: HTMLElement}) {
-    this.element = element;
+  constructor() {
+    super();
     this.observeDOM();
     this.initElement();
+    console.dir(this);
   }
 
   private observeDOM(): void {
     this.mutationObserver = new MutationObserver(() => {
       this.initElement();
     });
-    this.mutationObserver.observe(this.element, { childList: true, subtree: true });
+    this.mutationObserver.observe(this, { childList: true, subtree: true });
   }
 
   private initElement(): void {
-    if (!this.element.hasAttribute(AcDraggableAttributeName.acDraggable)){
-      this.element.setAttribute(AcDraggableAttributeName.acDraggable,"");
-    }
-
-    const draggables = this.element.querySelectorAll(`[${AcDraggableAttributeName.acDraggableElement}]`);
-    const targets = this.element.querySelectorAll(`[${AcDraggableAttributeName.acDraggableTarget}]`);
+    const draggables = this.querySelectorAll(`[${AcDraggableAttributeName.acDraggableElement}]`);
+    const targets = this.querySelectorAll(`[${AcDraggableAttributeName.acDraggableTarget}]`);
     draggables.forEach((el) => {
       this.draggableApi.registerDraggableElement({element:el as HTMLElement});
     });
@@ -55,3 +51,5 @@ export class AcDraggable {
     this.mutationObserver.disconnect();
   }
 }
+
+acRegisterCustomElement({tag:AC_DRAGGABLE_TAG.draggable,type:AcDraggable});

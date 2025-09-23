@@ -1,19 +1,20 @@
 import { AcEvents } from "@autocode-ts/autocode";
 import { AcEnumModalEvent } from "../enums/ac-enum-modal-event.enum";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_MODAL_TAG } from "../consts/ac-modal-tag.const";
+import { AcElementBase } from "../../../core/ac-element-base";
 
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-export class AcModal {
-  events:AcEvents = new AcEvents();
-  private modal: HTMLElement;
+export class AcModal extends AcElementBase{
   private backdrop: HTMLElement | null = null;
   private isOpen: boolean = false;
   private animationDuration: number = 400; // ms
   private lastTrigger?: HTMLElement;
   private cloneEl?: HTMLElement;
 
-  constructor({element}:{element: HTMLElement}) {
-    this.modal = element;
-    Object.assign(this.modal.style, {
+  constructor() {
+    super();
+    Object.assign(this.style, {
       display: "none",
       position: "fixed",
       zIndex: "1050",
@@ -29,20 +30,20 @@ export class AcModal {
 
 
   private fadeOutModal() {
-    this.modal.style.transition = `opacity ${this.animationDuration}ms ease`;
-    this.modal.style.opacity = "0";
+    this.style.transition = `opacity ${this.animationDuration}ms ease`;
+    this.style.opacity = "0";
     if (this.backdrop) this.backdrop.style.opacity = "0";
 
     setTimeout(() => {
-      this.modal.style.display = "none";
+      this.style.display = "none";
       if (this.backdrop && this.backdrop.parentElement) {
         this.backdrop.parentElement.removeChild(this.backdrop);
         this.backdrop = null;
       }
       document.body.style.overflow = "";
       document.removeEventListener("keydown", this.handleEscape);
-      this.modal.style.transition = "";
-      this.modal.style.opacity = "";
+      this.style.transition = "";
+      this.style.opacity = "";
     }, this.animationDuration);
   }
 
@@ -66,10 +67,10 @@ export class AcModal {
     }
 
     // Create clone from modal content for morph-back animation
-    this.cloneEl = this.modal.cloneNode(true) as HTMLElement;
+    this.cloneEl = this.cloneNode(true) as HTMLElement;
 
     // Get modal position & size
-    const modalRect = this.modal.getBoundingClientRect();
+    const modalRect = this.getBoundingClientRect();
 
     // Style clone to exactly overlay the modal
     Object.assign(this.cloneEl.style, {
@@ -80,9 +81,9 @@ export class AcModal {
       height: `${modalRect.height}px`,
       margin: "0",
       zIndex: "1060",
-      borderRadius: this.modal.style.borderRadius,
-      boxShadow: this.modal.style.boxShadow,
-      background: this.modal.style.background,
+      borderRadius: this.style.borderRadius,
+      boxShadow: this.style.boxShadow,
+      background: this.style.background,
       overflow: "hidden",
       pointerEvents: "none",
       transition: `all ${this.animationDuration}ms ease`,
@@ -92,11 +93,11 @@ export class AcModal {
     document.body.appendChild(this.cloneEl);
 
     // Hide actual modal immediately
-    this.modal.style.display = "none";
+    this.style.display = "none";
 
     // Animate backdrop fade out
     if (this.backdrop) {
-      this.backdrop.style.opacity = "0";
+      this.backdrop.remove();
     }
 
     // Animate clone back to trigger
@@ -138,10 +139,6 @@ export class AcModal {
     this.cloneEl.addEventListener("transitionend", onTransitionEnd);
   }
 
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.events.subscribe({event,callback});
-  }
-
   /**
    * Show modal with clone morph animation from trigger element.
    */
@@ -172,17 +169,17 @@ export class AcModal {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
     const finalWidth = Math.min(500, vw * 0.9);
-    this.modal.style.width = `${finalWidth}px`;
-    this.modal.style.display = "block";
+    this.style.width = `${finalWidth}px`;
+    this.style.display = "block";
 
     // Force reflow to get modal height for final position
-    const finalHeight = this.modal.offsetHeight || 300;
+    const finalHeight = this.offsetHeight || 300;
 
     const finalLeft = Math.round((vw - finalWidth) / 2);
     const finalTop = Math.round((vh - finalHeight) / 2);
 
     // Position modal at final place but hide it (opacity 0)
-    Object.assign(this.modal.style, {
+    Object.assign(this.style, {
       left: `${finalLeft}px`,
       top: `${finalTop}px`,
       opacity: "0",
@@ -191,11 +188,11 @@ export class AcModal {
 
     // If no trigger, just fade in modal + backdrop
     if (!triggerElement) {
-      this.modal.style.transition = `opacity ${this.animationDuration}ms ease`;
+      this.style.transition = `opacity ${this.animationDuration}ms ease`;
       requestAnimationFrame(() => {
-        this.modal.style.opacity = "1";
+        this.style.opacity = "1";
         if (this.backdrop) this.backdrop.style.opacity = "1";
-        this.modal.style.pointerEvents = "";
+        this.style.pointerEvents = "";
       });
       // Close on backdrop click
       this.backdrop.addEventListener("click", () => this.hide(), { once: true });
@@ -229,7 +226,7 @@ export class AcModal {
     document.body.appendChild(this.cloneEl);
 
     // Hide the actual modal content until animation finishes
-    this.modal.style.visibility = "hidden";
+    this.style.visibility = "hidden";
 
     // Force reflow for clone before animating
     this.cloneEl.getBoundingClientRect();
@@ -241,9 +238,9 @@ export class AcModal {
         top: `${finalTop}px`,
         width: `${finalWidth}px`,
         height: `${finalHeight}px`,
-        borderRadius: this.modal.style.borderRadius,
-        boxShadow: this.modal.style.boxShadow,
-        background: this.modal.style.background,
+        borderRadius: this.style.borderRadius,
+        boxShadow: this.style.boxShadow,
+        background: this.style.background,
       });
       if (this.backdrop) this.backdrop.style.opacity = "1";
     });
@@ -255,9 +252,9 @@ export class AcModal {
         this.cloneEl.parentElement.removeChild(this.cloneEl);
         this.cloneEl = undefined;
       }
-      this.modal.style.visibility = "visible";
-      this.modal.style.opacity = "1";
-      this.modal.style.pointerEvents = "";
+      this.style.visibility = "visible";
+      this.style.opacity = "1";
+      this.style.pointerEvents = "";
       this.events.execute({event:AcEnumModalEvent.Show});
     };
 
@@ -271,3 +268,5 @@ export class AcModal {
   }
 
 }
+
+acRegisterCustomElement({tag:AC_MODAL_TAG.modal,type:AcModal});

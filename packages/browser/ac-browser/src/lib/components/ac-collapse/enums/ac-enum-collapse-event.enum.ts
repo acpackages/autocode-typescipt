@@ -1,5 +1,5 @@
 export const AcEnumCollapseEvent = {
-  Close: 'CLOSE',
-  Open: 'OPEN',
-  Toggle: 'TOGGLE'
+  Close: 'close',
+  Open: 'open',
+  Toggle: 'toggle'
 }

@@ -15,44 +15,21 @@ export class AcDatagrid extends HTMLElement{
   datagridHeader:AcDatagridHeaderElement =  new AcDatagridHeaderElement({datagridApi:this.datagridApi});
   element:HTMLElement = document.createElement('div');
 
-  private handleClick(event:any){
-    console.log(this.datagridApi);
-    // this.datagridApi.setFocusedCell({cell:this.cell});
-  }
-
-  private handleKeyUp(event:any){
-    console.log(event);
-    // this.datagridApi.setFocusedCell({cell:this.cell});
-  }
-
-  private handleFocus(event:any){
-    console.log(event);
-  }
-
-  init(){
-    this.datagridApi.dataSource.getData();
-  }
-
-  connectedCallback(){
+  constructor(){
+    super();
+    this.style.display = 'contents';
+    this.append(this.element);
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this.element});
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
     this.element.append(this.containerElement);
     this.containerElement.append(this.datagridHeader.element);
     this.containerElement.append(this.datagridBody.element);
     this.element.append(this.datagridFooter.element);
+    this.datagridApi.dataSource.getData();
   }
 
   on({event,callback}:{event:string,callback:Function}):string{
     return this.datagridApi.on({event:event,callback:callback});
-  }
-
-  private registerEvents(){
-    this.element.addEventListener('click',(e:any)=>{
-      this.handleClick(e);
-    });
-    this.element.addEventListener('keydown',(e:any)=>{
-      this.handleKeyUp(e);
-    });
   }
 }
 

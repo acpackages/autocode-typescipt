@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcEvents } from "@autocode-ts/autocode";
 import { AcFilterableElementsAttributeName } from "../consts/ac-filterable-elements-attribute-name.const";
-import { acHideElement, acShowElement } from "../../../utils/ac-element-functions";
+import { acHideElement, acRegisterCustomElement, acShowElement } from "../../../utils/ac-element-functions";
+import { AC_FLITERABLE_TAG } from "../_ac-filterable-elements.export";
 
 export class AcFilterableElements {
   element: HTMLElement;
@@ -64,3 +65,5 @@ export class AcFilterableElements {
     });
   }
 }
+
+acRegisterCustomElement({tag:AC_FLITERABLE_TAG.filterableElements,type:AcFilterableElements});

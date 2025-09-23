@@ -4,7 +4,8 @@ import { AcTabsAttributeName } from "../consts/ac-tabs-attribute-name.const";
 import { AcTabsCssClassName } from "../consts/ac-tabs-css-class-name.const";
 import { IAcTabsOptions } from "../interfaces/ac-tabs-options.interface";
 import { AcTabsEvent } from "../enums/ac-tabs-event.enum";
-import { acAddClassToElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
+import { AC_TABS_TAG } from "../_ac-tabs.export";
 
 export class AcTabs {
   private element: HTMLElement;
@@ -322,3 +323,5 @@ export class AcTabs {
   }
 
 }
+
+acRegisterCustomElement({tag:AC_TABS_TAG.tabs,type:AcTabs});

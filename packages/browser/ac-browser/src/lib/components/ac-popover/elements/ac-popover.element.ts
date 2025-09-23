@@ -1,3 +1,6 @@
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_POPOVER_TAG } from "../consts/ac-popover-tag.const";
+
 type AcPopoverPosition = 'top' | 'bottom' | 'left' | 'right';
 
 export interface AcPopoverOptions {
@@ -127,3 +130,5 @@ export class AcPopover {
         }
     }
 }
+
+acRegisterCustomElement({tag:AC_POPOVER_TAG.popover,type:AcPopover});

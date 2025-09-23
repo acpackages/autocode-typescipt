@@ -9,7 +9,7 @@ const ATTRIBUTES_TO_LISTEN: string[] = [
   'ac-tooltip'
 ];
 
-export function acInit({ element,observe = true }: { element?: HTMLElement, observe?:boolean } = {}) {
+export function acInit({ element, observe = true }: { element?: HTMLElement, observe?: boolean } = {}) {
   const instances: any[] = [];
   if (element == undefined) {
     element = document.querySelector('body') as HTMLElement;
@@ -34,26 +34,18 @@ export function acInit({ element,observe = true }: { element?: HTMLElement, obse
     });
   });
   observer.observe(element as HTMLElement, {
-      attributes: true,
-      childList: true,
-      subtree: true
-    });
-    for (const attribute of ATTRIBUTES_TO_LISTEN) {
-      const elements = element.querySelectorAll(`[${attribute}]`);
-      if (elements) {
-        for (const child of Array.from(elements) as HTMLElement[]) {
-          acInit({ element:child,observe:false });
-        }
+    attributes: true,
+    childList: true,
+    subtree: true
+  });
+  for (const attribute of ATTRIBUTES_TO_LISTEN) {
+    const elements = element.querySelectorAll(`[${attribute}]`);
+    if (elements) {
+      for (const child of Array.from(elements) as HTMLElement[]) {
+        acInit({ element: child, observe: false });
       }
     }
-
-  element.querySelectorAll('[ac-accordion]').forEach((el) => {
-    instances.push(new AcAccordion({ element: el as HTMLElement }));
-  });
-
-  element.querySelectorAll('[ac-collapse]:not([ac-accordion] [ac-collapse])').forEach((el) => {
-    instances.push(new AcCollapse({ element: el as HTMLElement }));
-  });
+  }
 
   element.querySelectorAll('[ac-draggable]').forEach((el) => {
     instances.push(new AcDraggable({ element: el as HTMLElement }));
@@ -65,6 +57,8 @@ export function acInit({ element,observe = true }: { element?: HTMLElement, obse
   return instances;
 }
 
+AcAccordion;
+AcCollapse;
 AcDatagrid;
 
 // Start Input Elements

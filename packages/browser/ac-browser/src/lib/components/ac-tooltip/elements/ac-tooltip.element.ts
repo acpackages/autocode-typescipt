@@ -1,3 +1,6 @@
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_TOOLTIP_TAG } from "../_ac-tooltip.export";
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 type AcTooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'auto';
 
@@ -194,3 +197,5 @@ export class AcTooltip {
     }
   }
 }
+
+acRegisterCustomElement({tag:AC_TOOLTIP_TAG.tooltip,type:AcTooltip});

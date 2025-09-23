@@ -1,6 +1,6 @@
 import { acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDraggableApi } from "../../ac-draggable/core/ac-draggable-api";
-import { AcDraggableSort } from "../../ac-draggable/elements/ac-draggable-sort.element";
+import { AcSortable } from "../../ac-draggable/elements/ac-sortable.element";
 import { AcEnumDraggableEvent } from "../../ac-draggable/enums/ac-enum-draggable-event.enum";
 import { IAcDraggableDragDropEvent } from "../../ac-draggable/interfaces/ac-draggable-drag-drop-event.interface";
 
@@ -17,7 +17,8 @@ export class AcWindowTabs extends HTMLElement {
 
   async connectedCallback() {
     this.innerHTML = `<div class="ac-window-tabs-container"></div>`;
-    const acDraggable = new AcDraggableSort({ element: this.querySelector('.ac-window-tabs-container')! });
+    // const acDraggable = new AcSortable({ element: this.querySelector('.ac-window-tabs-container')! });
+    const acDraggable = new AcSortable();
     const draggableApi: AcDraggableApi = acDraggable.draggableApi;
     draggableApi.on({
       event: AcEnumDraggableEvent.DragDrop,

@@ -4,6 +4,7 @@ import { AcBuilderPropertyTextInput } from "../elements/property-inputs/ac-build
 import { IAcBuilderPropertyInputType } from "../interfaces/ac-builder-property-input-type.interface";
 import { AcBuilderPropertyNumberInput } from "../elements/property-inputs/ac-builder-property-number-input.element";
 import { AcBuilderPropertySelectInput } from "../elements/property-inputs/ac-builder-property-select-input.element";
+import { AcClassPropertySelectInput } from "../elements/property-inputs/ac-class-property-select-input.element";
 
 export class AcBuilderPropertyInputsManager {
   private static builtInInputsRegistered:boolean = false;
@@ -35,6 +36,7 @@ export class AcBuilderPropertyInputsManager {
       this.register({input:{inputClass:AcBuilderPropertyNumberInput,type:'number'}});
       this.register({input:{inputClass:AcBuilderPropertySelectInput,type:'select'}});
       this.register({input:{inputClass:AcBuilderPropertySelectInput,type:'boolean',properties:{selectOptions:[{'label':'True','value':true},{'label':'False','value':false}]}}});
+      this.register({input:{inputClass:AcClassPropertySelectInput,type:'classProperty'}});
       this.builtInInputsRegistered = true;
     }
   }

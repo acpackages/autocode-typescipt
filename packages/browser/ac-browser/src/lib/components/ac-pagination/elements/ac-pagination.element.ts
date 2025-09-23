@@ -1,4 +1,5 @@
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_PAGINATION_TAG } from "../_ac-pagination.export";
 import { AcPaginationCssClassName } from "../consts/ac-pagination-css-class-name.const";
 import { AcPaginationApi } from "../core/ac-pagination-api";
 import { AcPageDisplayedRowsLabel } from "./ac-page-displayed-rows-label.element";
@@ -67,3 +68,5 @@ export class AcPagination {
   }
 
 }
+
+acRegisterCustomElement({tag:AC_PAGINATION_TAG.pagination,type:AcPagination});

@@ -3,6 +3,8 @@ import { Autocode } from "@autocode-ts/autocode";
 import { IAcScrollableOptions } from "../interfaces/ac-scrollable-options.inteface";
 import { IAcScrollingElement } from "../interfaces/ac-scrolling-element.interface";
 import { AcScrollableAttributeName } from "../consts/ac-scrollable-attribute-name.const";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_SCROLLABLE_TAG } from "../_ac-scrollable.export";
 
 export class AcScrollable {
   private element: HTMLElement;
@@ -255,3 +257,5 @@ export class AcScrollable {
     }
   }
 }
+
+acRegisterCustomElement({tag:AC_SCROLLABLE_TAG.scrollable,type:AcScrollable});

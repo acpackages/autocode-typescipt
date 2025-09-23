@@ -1,4 +1,5 @@
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_SVG_ICON_TAG } from "../_ac-svg-icon.element";
 
 export class AcSvgIconElement extends HTMLElement {
   constructor() {
@@ -37,5 +38,4 @@ export class AcSvgIconElement extends HTMLElement {
   }
 }
 
-
-acRegisterCustomElement({tag:'ac-svg-icon',type:AcSvgIconElement});
+acRegisterCustomElement({tag:AC_SVG_ICON_TAG.svgIcon,type:AcSvgIconElement});

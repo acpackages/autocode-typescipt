@@ -23,7 +23,7 @@ export class CollapseTestPage extends HTMLElement {
     `;
 
     this.querySelectorAll('[ac-collapse]').forEach(el => {
-      console.log(new AcCollapse({ element: el as HTMLElement }));
+      console.log(new AcCollapse());
     });
   }
 
@@ -55,11 +55,10 @@ export class CollapseTestPage extends HTMLElement {
       flexDirection = 'column-reverse';
     }
     return `
-      <div class="mb-4 border rounded p-3 bg-light"
-          ac-collapse ac-collapse-open
-          ac-collapse-direction="${direction}">
+      <div class="mb-4 border rounded p-3 bg-light" >
         <h5>${title}</h5>
         <p><small class="text-muted">${description}</small></p>
+        <ac-collapse ac-collapse-open ac-collapse-direction="${direction}">
         <div class="mb-2">
           <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Toggle ${title}</button>
         </div>
@@ -69,6 +68,8 @@ export class CollapseTestPage extends HTMLElement {
                 <p>This is content for <strong>${title}</strong> direction collapse.</p>
                 <p>Click the button above to toggle this content visibility with animation.</p>
               </div>
-            </div> `+ (flexDirection == AcEnumCollapseDirection.BottomRightToTopLeft ? `</div>` : ``) + `</div></div>`;
+            </div> `+ (flexDirection == AcEnumCollapseDirection.BottomRightToTopLeft ? `</div>` : ``) + `</div>
+            </ac-collapse>
+            </div>`;
   }
 }

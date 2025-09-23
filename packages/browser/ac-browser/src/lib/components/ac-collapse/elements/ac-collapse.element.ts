@@ -1,33 +1,35 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEvents } from "@autocode-ts/autocode";
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcCollapseAttributeName } from "../consts/ac-collapse-attribute-name.const";
 import { AcCollapseCssClassName } from "../consts/ac-collapse-css-class-name.const";
 import { AcEnumCollapseDirection } from "../enums/ac-enum-collapse-direction.enum";
 import { AcEnumCollapseEvent } from "../enums/ac-enum-collapse-event.enum";
 import { IAcCollapseEvent } from "../interfaces/ac-collapse-event.interface";
+import { AC_COLLAPSE_TAG } from "../consts/ac-collapse-tag.const";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcCollapse {
+export class AcCollapse extends AcElementBase{
   useAnimation: boolean = true;
   contentElement: HTMLElement | undefined;
   toggleElement: HTMLElement | undefined;
-  element: HTMLElement;
   isOpen: boolean = false;
   isAnimating: boolean = false;
-  events: AcEvents = new AcEvents();
   direction: AcEnumCollapseDirection = AcEnumCollapseDirection.TopToBottom;
 
-  constructor({ element }: { element: HTMLElement }) {
-    this.element = element;
-    const directionAttr = element.getAttribute(AcCollapseAttributeName.acCollapseDirection);
+  constructor() {
+    super();
+    this.style.display = 'contents';
+    const directionAttr = this.getAttribute(AcCollapseAttributeName.acCollapseDirection);
     if (directionAttr && Object.values(AcEnumCollapseDirection).includes(directionAttr as AcEnumCollapseDirection)) {
       this.direction = directionAttr as AcEnumCollapseDirection;
     }
-    if (element.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
-      this.setToggleElement({ element: element.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
+    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
+      this.setToggleElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
     }
-    if (element.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
-      this.setContentElement({ element: element.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
+    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
+      this.setContentElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
     }
     this.initElement();
   }
@@ -36,8 +38,8 @@ export class AcCollapse {
     if (skipAnimation) {
       this.isAnimating = false;
       this.isOpen = false;
-      this.element.classList.remove(AcCollapseCssClassName.acCollapseOpen);
-      this.element.removeAttribute(AcCollapseAttributeName.acCollapseOpen);
+      this.classList.remove(AcCollapseCssClassName.acCollapseOpen);
+      this.removeAttribute(AcCollapseAttributeName.acCollapseOpen);
       if (this.contentElement) {
         this.contentElement.style.display = "none";
         this.contentElement.style.height = "";
@@ -48,8 +50,8 @@ export class AcCollapse {
       this.isOpen = false;
       this.isAnimating = true;
 
-      this.element.classList.remove(AcCollapseCssClassName.acCollapseOpen);
-      this.element.removeAttribute(AcCollapseAttributeName.acCollapseOpen);
+      this.classList.remove(AcCollapseCssClassName.acCollapseOpen);
+      this.removeAttribute(AcCollapseAttributeName.acCollapseOpen);
 
       if (this.contentElement) {
         const fullWidth = this.contentElement.scrollWidth + "px";
@@ -78,31 +80,27 @@ export class AcCollapse {
   }
 
   private initElement() {
-    acAddClassToElement({ element: this.element, class_: AcCollapseCssClassName.acCollapse });
-    if (this.element.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
-      this.setToggleElement({ element: this.element.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
+    acAddClassToElement({ element: this, class_: AcCollapseCssClassName.acCollapse });
+    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
+      this.setToggleElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
     }
-    if (this.element.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
-      this.setContentElement({ element: this.element.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
+    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
+      this.setContentElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
     } else {
-      this.setContentElement({ element: this.element });
+      this.setContentElement({ element: this });
     }
 
     const observer = new MutationObserver((mutations) => {
       for (const m of mutations) {
         if (m.attributeName === AcCollapseAttributeName.acCollapseOpen) {
-          const shouldBeOpen = this.element.hasAttribute(AcCollapseAttributeName.acCollapseOpen);
+          const shouldBeOpen = this.hasAttribute(AcCollapseAttributeName.acCollapseOpen);
           if (shouldBeOpen && !this.isOpen) this.open();
           else if (!shouldBeOpen && this.isOpen) this.close();
         }
       }
     });
 
-    observer.observe(this.element, { attributes: true });
-  }
-
-  on({ event, callback }: { event: string; callback: Function }): string {
-    return this.events.subscribe({ event, callback });
+    observer.observe(this, { attributes: true });
   }
 
   open({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
@@ -110,8 +108,8 @@ export class AcCollapse {
     this.isOpen = true;
     this.isAnimating = true;
 
-    this.element.classList.add(AcCollapseCssClassName.acCollapseOpen);
-    this.element.setAttribute(AcCollapseAttributeName.acCollapseOpen, "");
+    this.classList.add(AcCollapseCssClassName.acCollapseOpen);
+    this.setAttribute(AcCollapseAttributeName.acCollapseOpen, "");
 
     if (this.contentElement) {
       this.contentElement.style.display = "block";
@@ -202,7 +200,7 @@ export class AcCollapse {
       if (this.contentElement) {
         this.contentElement.style.opacity = "1";
       }
-      if (element.hasAttribute(AcCollapseAttributeName.acCollapseOpen)) {
+      if (this.hasAttribute(AcCollapseAttributeName.acCollapseOpen)) {
         this.open({ skipAnimation: true });
       } else {
         this.close({ skipAnimation: true });
@@ -229,3 +227,5 @@ export class AcCollapse {
     this.events.execute({ event: AcEnumCollapseEvent.Toggle, args: eventParams });
   }
 }
+
+acRegisterCustomElement({tag:AC_COLLAPSE_TAG.collapse,type:AcCollapse});

@@ -1,5 +1,4 @@
-import { AcDraggable, AcEnumDraggableEvent } from "@autocode-ts/ac-browser";
-import { AcDraggableApi } from "packages/browser/ac-browser/src/lib/ac-draggable/core/ac-draggable-api";
+import { AcDraggable, AcDraggableApi, AcEnumDraggableEvent } from "@autocode-ts/ac-browser";
 
 export class DraggableCloneRevertPage extends HTMLElement {
   static observedAttributes = [];
@@ -17,7 +16,7 @@ export class DraggableCloneRevertPage extends HTMLElement {
         <li><strong>Drop Zones:</strong> Only elements with <code>ac-drag-target</code> are treated as valid drop locations.</li>
         <li><strong>Events:</strong> You can listen to drag lifecycle events like <code>ac:drag:start</code>, <code>ac:drag:move</code>, <code>ac:drop</code>, etc.</li>
       </ul>
-
+      <ac-draggable>
       <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 20px;">
         <div ac-draggable-element
              data-clone="true"
@@ -33,9 +32,10 @@ export class DraggableCloneRevertPage extends HTMLElement {
 
         </div>
       </div>
+      </ac-draggable>
     `;
 
-        const acDraggable = new AcDraggable({ element: this as HTMLElement });
+        const acDraggable = this.querySelector('ac-draggable') as AcDraggable;
         const draggableApi: AcDraggableApi = acDraggable.draggableApi;
         draggableApi.events.subscribeAllEvents({
           callback: (eventName: string, eventArgs: any) => {

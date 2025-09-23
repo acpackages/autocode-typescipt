@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs, acInit } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
@@ -25,6 +25,7 @@ export class AggridOnDemandData extends HTMLElement {
     this.prepend(this.pageHeader.element);
     this.pageHeader.pageTitle = 'AGGrid on AcDatagrid : On Demand Data';
     this.initDatagrid();
+    acInit();
   }
 
   async initDatagrid() {
@@ -69,7 +70,7 @@ export class AggridOnDemandData extends HTMLElement {
 
       // this.datagrid.init();
 
-      this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
+      this.getElementsByClassName("aggrid-container")[0].append(this.datagrid);
       this.datagridApi.columnDefinitions = [
         { field: 'action', title: "", allowSort: false, cellRendererElement:ActionsDatagridColumn,width:65},
         { field: 'customer_id', title: "Id" },
@@ -164,7 +165,7 @@ export class AggridOnDemandData extends HTMLElement {
         ]
       });
 
-      this.datagridApi.on({eventName:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
+      this.datagridApi.on({event:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
         const instance = args.cellRendererElementInstance;
         if(instance instanceof ActionsDatagridColumn){
           instance.editButton.addEventListener('click',(event:any)=>{

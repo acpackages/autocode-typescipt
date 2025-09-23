@@ -150,7 +150,7 @@ export class AggridLocalData extends HTMLElement {
         ]
       });
 
-      this.datagridApi.on({eventName:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
+      this.datagridApi.on({event:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
         const instance = args.cellRendererElementInstance;
         if(instance instanceof ActionsDatagridColumn){
           instance.editButton.addEventListener('click',(event:any)=>{

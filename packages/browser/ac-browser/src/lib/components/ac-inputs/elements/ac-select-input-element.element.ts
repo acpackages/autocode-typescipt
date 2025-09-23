@@ -25,6 +25,18 @@ export class AcSelectInputElement extends AcInputBase {
     this.setAttribute('value-key', value);
   }
 
+  override get placeholder(): string | null {
+    return this.textInputElement.getAttribute('placeholder');
+  }
+  override set placeholder(value: string) {
+    if (value != '') {
+      this.textInputElement.setAttribute('placeholder', value);
+    }
+    else {
+      this.textInputElement.removeAttribute(value);
+    }
+  }
+
   private _selectOptions: any[] = [];
   get selectOptions(): any[] { return this._selectOptions; }
   set selectOptions(value: any[]) {
@@ -65,7 +77,7 @@ export class AcSelectInputElement extends AcInputBase {
   private dropdownContainer!: HTMLDivElement;
   override inputElement: HTMLDivElement = document.createElement('div');
   private highlightingIndex = -1;
-  private textInputElement!: HTMLInputElement;
+  private textInputElement: HTMLInputElement = document.createElement("input");
   private isDropdownOpen = false;
   private listEl!: HTMLDivElement;
   private maxDropdownHeight = 300;
@@ -78,8 +90,6 @@ export class AcSelectInputElement extends AcInputBase {
     this.valueKey = 'value';
     this.inputElement.style.position = "relative";
 
-    // Input
-    this.textInputElement = document.createElement("input");
     this.textInputElement.type = "text";
     this.textInputElement.autocomplete = "off";
     Object.assign(this.textInputElement.style, {

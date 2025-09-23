@@ -7,9 +7,10 @@ import { IAcDraggableDragDropEvent } from "../interfaces/ac-draggable-drag-drop-
 import { IAcDraggableDragEvent } from "../interfaces/ac-draggable-drag-event.interface";
 import { IAcDraggableDraggingPreviewCreatorArgs } from "../interfaces/ac-dragging-placeholder-creator-args.interface";
 import { acCopyElementStyles } from "../../../utils/ac-element-functions";
+import { AcSortable } from "../elements/ac-sortable.element";
 
 export class AcDraggableApi {
-  instance: AcDraggable;
+  instance: AcDraggable|AcSortable;
   elementInstances: Record<string, AcDraggableElement> = {};
   events: AcEvents = new AcEvents();
   targetInstances: Record<string, AcDraggableTarget> = {};
@@ -25,7 +26,7 @@ export class AcDraggableApi {
     return preview;
   };
 
-  constructor({ instance }: { instance: AcDraggable }) {
+  constructor({ instance }: { instance: AcDraggable|AcSortable }) {
     this.instance = instance;
   }
 

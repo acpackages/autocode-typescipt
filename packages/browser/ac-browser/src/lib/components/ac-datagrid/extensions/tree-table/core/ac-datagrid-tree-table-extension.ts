@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDraggableSort } from "../../../../ac-draggable/_ac-draggable.export";
+import { AcSortable } from "../../../../ac-draggable/_ac-draggable.export";
 import { AcDraggableApi } from "../../../../ac-draggable/core/ac-draggable-api";
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
 import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
@@ -66,7 +66,8 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
   });
 
   override init(): void {
-    const draggableSort = new AcDraggableSort({ element: this.datagridApi.datagrid.datagridBody.element });
+    // const draggableSort = new AcDraggableSort({ element: this.datagridApi.datagrid.datagridBody.element });
+    const draggableSort = new AcSortable();
     this.draggableApi = draggableSort.draggableApi;
     console.log(this, this.datagridApi.datagrid.datagridBody.element);
   }

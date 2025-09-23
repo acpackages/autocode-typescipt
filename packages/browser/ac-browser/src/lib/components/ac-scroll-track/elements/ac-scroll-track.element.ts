@@ -1,3 +1,6 @@
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_SCROLL_TRACK_TAG } from "../_ac-scroll-track.export";
+
 type ScrollTrackCallback = (activeId: string | null) => void;
 
 export class AcScrollTrack {
@@ -67,3 +70,6 @@ export class AcScrollTrack {
         this.observer?.disconnect();
     }
 }
+
+
+acRegisterCustomElement({tag:AC_SCROLL_TRACK_TAG.scrollTrack,type:AcScrollTrack});

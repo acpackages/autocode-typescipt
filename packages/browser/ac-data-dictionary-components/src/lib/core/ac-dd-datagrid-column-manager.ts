@@ -17,12 +17,12 @@ export class AcDDDatagridColumnManager {
     [AcEnumDDColumnType.Password]: { visible: false, allowSort: false },
   };
 
-  static getTableColumns({ tableName, excludeColumns, includeColumns, hiddenColumns, visibleColumns, columnDefinitions }: { tableName: string, excludeColumns?: string[], includeColumns?: string[], hiddenColumns?: string[], visibleColumns?: string[], columnDefinitions?: IAcDatagridColumnDefinition[] }):IAcDatagridColumnDefinition[] {
-    if (columnDefinitions) {
+  static getTableColumns({ tableName, excludeColumns, includeColumns, hiddenColumns, visibleColumns, columnDefinitions,dataDictionaryName = 'default' }: { tableName: string, excludeColumns?: string[], includeColumns?: string[], hiddenColumns?: string[], visibleColumns?: string[], columnDefinitions?: IAcDatagridColumnDefinition[],dataDictionaryName?:string }):IAcDatagridColumnDefinition[] {
+    if (columnDefinitions == undefined) {
       columnDefinitions = [];
     }
     const result: IAcDatagridColumnDefinition[] = [...columnDefinitions!];
-    const ddTable: AcDDTable | null = AcDataDictionary.getTable({ tableName: tableName });
+    const ddTable: AcDDTable | null = AcDataDictionary.getTable({ tableName,dataDictionaryName });
     if (ddTable) {
       for (const column of ddTable.tableColumns) {
         let continuOperation: boolean = true;

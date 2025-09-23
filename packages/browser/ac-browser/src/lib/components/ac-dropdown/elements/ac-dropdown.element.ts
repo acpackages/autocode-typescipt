@@ -1,40 +1,71 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable prefer-const */
-import { AcEvents, Autocode } from "@autocode-ts/autocode";
-import { IAcDropdownOptions } from "../interfaces/ac-dropdown-options.interface";
 import { AcDropdownAttributeName } from "../consts/ac-dropdown-attribute-name.const";
 import { AcEnumDropdownEvent } from "../enums/ac-enum-dropdown-event.enum";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_DROPDOWN_TAG } from "../consts/ac-dropdown-tag.const";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcDropdown {
-  private element!: HTMLElement;
-  events: AcEvents = new AcEvents();
+export class AcDropdown extends AcElementBase {
+  get autoClose(): string {
+    return this.getAttribute("auto-close") ?? "both";
+  }
+  set autoClose(value: "inside" | "outside" | "both" | "manual") {
+    this.setAttribute("auto-close", `${value}`);
+  }
+
+  get alignment(): string {
+    return this.getAttribute("alignment") ?? "start";
+  }
+  set alignment(value: "start" | "end") {
+    this.setAttribute("alignment", `${value}`);
+  }
+
+  get offset(): number {
+    return parseInt(this.getAttribute("offset") ?? "4");
+  }
+  set offset(value: number) {
+    this.setAttribute("offset", `${value}`);
+  }
+
+  get position(): string {
+    return this.getAttribute("position") ?? "auto";
+  }
+  set position(value: "auto" | "bottom" | "left" | "right" | "top") {
+    this.setAttribute("position", value);
+  }
+
+  get trigger(): string {
+    return this.getAttribute("trigger") ?? "click";
+  }
+  set trigger(value: "click" | "hover") {
+    this.setAttribute("trigger", value);
+  }
+
   private keydownHandler: (e: KeyboardEvent) => void;
-  private id: string = Autocode.uuid();
   private isOpen = false;
-  private observer!: IntersectionObserver;
-  private offset: number;
+  private observer?: IntersectionObserver;
   private outsideClickHandler: (e: MouseEvent) => void;
-  private position: 'auto'|'bottom'|'left'|'right'|'top';
+
   private positionAnimationFrameId?: number;
   private resizeHandler: () => void;
   private scrollHandler: () => void;
   private targetElement!: HTMLElement;
-  private triggerAction:'click'|'hover' = 'click';
   private triggerElement!: HTMLElement;
-  private autoClose: "inside" | "outside" | "both" | "manual";
-  private alignment: "start" | "end" = "start";
 
-  constructor({ element, options }: { element: HTMLElement; options: IAcDropdownOptions }) {
-    this.element = element;
-    this.element.setAttribute(AcDropdownAttributeName.acDropdownId, this.id);
-    this.element.setAttribute(AcDropdownAttributeName.acDropdown, "");
+  private triggerClickHandler?: (e: Event) => void;
+  private triggerEnterHandler?: () => void;
+  private triggerLeaveHandler?: () => void;
+  private targetEnterHandler?: () => void;
+  private targetLeaveHandler?: () => void;
 
-    this.position = options.position ?? 'auto';
-    this.offset = options.offset ?? 4;
-    this.autoClose = options.autoClose ?? "both";
-    this.triggerAction = options.triggerAction ?? 'click';
+  constructor() {
+    super();
+    this.style.display = "contents";
+    this.setAttribute(AcDropdownAttributeName.acDropdownId, this.id);
+    this.setAttribute(AcDropdownAttributeName.acDropdown, "");
 
     this.keydownHandler = (e) => this.handleKeydown(e);
-
     this.outsideClickHandler = (e) => this.handleOutsideClick(e);
     this.scrollHandler = () => this.updatePosition();
     this.resizeHandler = () => this.updatePosition();
@@ -42,18 +73,18 @@ export class AcDropdown {
     window.addEventListener("scroll", this.scrollHandler, true);
     window.addEventListener("resize", this.resizeHandler);
 
-    // Initialize target, trigger, and items
+    // Initialize elements if already present
     this.initElements();
   }
 
   private initElements() {
-    this.element.querySelectorAll(`[${AcDropdownAttributeName.acDropdownTarget}]`).forEach((el) => {
+    this.querySelectorAll(`[${AcDropdownAttributeName.acDropdownTarget}]`).forEach((el) => {
       this.setTargetElement({ element: el as HTMLElement });
     });
-    this.element.querySelectorAll(`[${AcDropdownAttributeName.acDropdownTrigger}]`).forEach((el) => {
+    this.querySelectorAll(`[${AcDropdownAttributeName.acDropdownTrigger}]`).forEach((el) => {
       this.setTriggerElement({ element: el as HTMLElement });
     });
-    this.element.querySelectorAll(`[${AcDropdownAttributeName.acDropdownItem}]`).forEach((el) => {
+    this.querySelectorAll(`[${AcDropdownAttributeName.acDropdownItem}]`).forEach((el) => {
       this.setDropdownItemElement({ element: el as HTMLElement });
     });
   }
@@ -68,8 +99,13 @@ export class AcDropdown {
     document.addEventListener("click", this.outsideClickHandler);
     this.triggerElement.setAttribute("aria-expanded", "true");
 
-    const firstItem = this.targetElement.querySelector(`[${AcDropdownAttributeName.acDropdownItem}]`) as HTMLElement;
-    if (firstItem) firstItem.tabIndex = 0; firstItem.focus();
+    const firstItem = this.targetElement.querySelector(
+      `[${AcDropdownAttributeName.acDropdownItem}]`
+    ) as HTMLElement;
+    if (firstItem) {
+      firstItem.tabIndex = 0;
+      firstItem.focus();
+    }
 
     this.events.execute({ event: AcEnumDropdownEvent.Open, args: { dropdown: this } });
     this.events.execute({ event: AcEnumDropdownEvent.Toggle, args: { dropdown: this } });
@@ -83,49 +119,57 @@ export class AcDropdown {
     this.stopAutoPosition();
     document.removeEventListener("click", this.outsideClickHandler);
     this.triggerElement.setAttribute("aria-expanded", "false");
+
     this.events.execute({ event: AcEnumDropdownEvent.Close, args: { dropdown: this } });
     this.events.execute({ event: AcEnumDropdownEvent.Toggle, args: { dropdown: this } });
   }
 
   toggle(): void {
-    if (this.isOpen) this.close();
-    else this.open();
+    this.isOpen ? this.close() : this.open();
   }
 
   destroy(): void {
     this.stopAutoPosition();
     window.removeEventListener("scroll", this.scrollHandler, true);
     window.removeEventListener("resize", this.resizeHandler);
-    this.triggerElement.removeEventListener("keydown", this.keydownHandler);
-    this.targetElement.removeEventListener("keydown", this.keydownHandler);
-    this.observer.disconnect();
-  }
 
-  on({ event, callback }: { event: AcEnumDropdownEvent; callback: Function }): string {
-    return this.events.subscribe({ event: event, callback: callback });
+    this.triggerElement?.removeEventListener("keydown", this.keydownHandler);
+    this.targetElement?.removeEventListener("keydown", this.keydownHandler);
+    if (this.triggerClickHandler) this.triggerElement?.removeEventListener("click", this.triggerClickHandler);
+    if (this.triggerEnterHandler) this.triggerElement?.removeEventListener("mouseenter", this.triggerEnterHandler);
+    if (this.triggerLeaveHandler) this.triggerElement?.removeEventListener("mouseleave", this.triggerLeaveHandler);
+    if (this.targetEnterHandler) this.targetElement?.removeEventListener("mouseenter", this.targetEnterHandler);
+    if (this.targetLeaveHandler) this.targetElement?.removeEventListener("mouseleave", this.targetLeaveHandler);
+
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    document.removeEventListener("click", this.outsideClickHandler);
   }
 
   setDropdownItemElement({ element }: { element: HTMLElement }): void {
     element.setAttribute("role", "menuitem");
     element.setAttribute(AcDropdownAttributeName.acDropdownItem, "");
     element.tabIndex = 0; // make focusable
-    if (this.triggerAction === 'hover') {
-      element.addEventListener("mouseenter", () => this.open());
-      element.addEventListener("mouseleave", () => this.close());
-    }
   }
 
   setTargetElement({ element }: { element: HTMLElement }): void {
     this.targetElement = element;
+    if (!this.targetElement.id) {
+      this.targetElement.id = `${this.id}-menu`;
+    }
     element.setAttribute(AcDropdownAttributeName.acDropdownTarget, "");
     element.setAttribute("role", "menu");
     element.style.position = "fixed";
     element.style.display = "none";
     element.style.zIndex = "9999";
     element.addEventListener("keydown", this.keydownHandler);
-    if (this.triggerAction === 'hover') {
-      element.addEventListener("mouseenter", () => this.open());
-      element.addEventListener("mouseleave", () => this.close());
+
+    if (this.trigger === "hover") {
+      this.targetEnterHandler = () => this.open();
+      this.targetLeaveHandler = () => this.close();
+      element.addEventListener("mouseenter", this.targetEnterHandler);
+      element.addEventListener("mouseleave", this.targetLeaveHandler);
     }
   }
 
@@ -134,6 +178,7 @@ export class AcDropdown {
     element.setAttribute(AcDropdownAttributeName.acDropdownTrigger, "");
     this.triggerElement.setAttribute("aria-haspopup", "true");
     this.triggerElement.setAttribute("aria-expanded", "false");
+    this.triggerElement.setAttribute("aria-controls", this.targetElement?.id ?? `${this.id}-menu`);
     this.triggerElement.addEventListener("keydown", this.keydownHandler);
 
     this.observer = new IntersectionObserver((entries) => {
@@ -143,18 +188,25 @@ export class AcDropdown {
     });
     this.observer.observe(this.triggerElement);
 
-    if (this.triggerAction === 'click') {
-      this.triggerElement.addEventListener("click", (e) => { e.preventDefault(); this.toggle(); });
-    } else if (this.triggerAction === 'hover') {
-      this.triggerElement.addEventListener("mouseenter", () => this.open());
-      this.triggerElement.addEventListener("mouseleave", () => this.close());
+    if (this.trigger === "click") {
+      this.triggerClickHandler = (e) => {
+        e.preventDefault();
+        this.toggle();
+      };
+      this.triggerElement.addEventListener("click", this.triggerClickHandler);
+    } else if (this.trigger === "hover") {
+      this.triggerEnterHandler = () => this.open();
+      this.triggerLeaveHandler = () => this.close();
+      this.triggerElement.addEventListener("mouseenter", this.triggerEnterHandler);
+      this.triggerElement.addEventListener("mouseleave", this.triggerLeaveHandler);
     }
   }
 
   private handleKeydown(e: KeyboardEvent): void {
-    const items = Array.from(this.targetElement.querySelectorAll(`[${AcDropdownAttributeName.acDropdownItem}]`)) as HTMLElement[];
-    let index = items.indexOf(document.activeElement as HTMLElement)
-    ;
+    const items = Array.from(
+      this.targetElement.querySelectorAll(`[${AcDropdownAttributeName.acDropdownItem}]`)
+    ) as HTMLElement[];
+    let index = items.indexOf(document.activeElement as HTMLElement);
 
     switch (e.key) {
       case "ArrowDown":
@@ -184,9 +236,13 @@ export class AcDropdown {
     const isInsideTarget = this.targetElement.contains(e.target as Node);
     const isInsideTrigger = this.triggerElement.contains(e.target as Node);
 
-    if (this.autoClose === "both" && !isInsideTarget && !isInsideTrigger) this.close();
-    else if (this.autoClose === "outside" && !isInsideTarget && !isInsideTrigger) this.close();
-    else if (this.autoClose === "inside" && isInsideTarget) this.close();
+    if (
+      (this.autoClose === "both" && !isInsideTarget && !isInsideTrigger) ||
+      (this.autoClose === "outside" && !isInsideTarget && !isInsideTrigger) ||
+      (this.autoClose === "inside" && isInsideTarget)
+    ) {
+      this.close();
+    }
   }
 
   private startAutoPosition(): void {
@@ -210,38 +266,57 @@ export class AcDropdown {
     if (!this.isOpen) return;
 
     const rect = this.triggerElement.getBoundingClientRect();
-    let top = 0, left = 0;
+    let top = 0,
+      left = 0;
 
     switch (this.position) {
-      case 'bottom':
+      case "bottom":
         top = rect.bottom + this.offset;
         left = rect.left;
         break;
-      case 'top':
+      case "top":
         top = rect.top - this.targetElement.offsetHeight - this.offset;
         left = rect.left;
         break;
-      case 'left':
+      case "left":
         top = rect.top;
         left = rect.left - this.targetElement.offsetWidth - this.offset;
         break;
-      case 'right':
+      case "right":
         top = rect.top;
         left = rect.right + this.offset;
+        break;
+      case "auto":
+      default:
+        // Default auto places below, unless overflow
+        top = rect.bottom + this.offset;
+        left = rect.left;
         break;
     }
 
     // Flip if overflow
     const menuRect = this.targetElement.getBoundingClientRect();
-    if (menuRect.bottom > window.innerHeight) top = rect.top - this.targetElement.offsetHeight - this.offset;
-    if (menuRect.top < 0) top = rect.bottom + this.offset;
-    if (menuRect.right > window.innerWidth) left = rect.right - this.targetElement.offsetWidth;
-    if (menuRect.left < 0) left = rect.left;
+    if (menuRect.bottom > window.innerHeight) {
+      top = rect.top - this.targetElement.offsetHeight - this.offset;
+    }
+    if (menuRect.top < 0) {
+      top = rect.bottom + this.offset;
+    }
+    if (menuRect.right > window.innerWidth) {
+      left = rect.right - this.targetElement.offsetWidth;
+    }
+    if (menuRect.left < 0) {
+      left = rect.left;
+    }
 
     // Alignment
-    // if (this.alignment === "end") left = rect.right - this.targetElement.offsetWidth;
+    if (this.alignment === "end") {
+      left = rect.right - this.targetElement.offsetWidth;
+    }
 
     this.targetElement.style.top = `${top}px`;
     this.targetElement.style.left = `${left}px`;
   }
 }
+
+acRegisterCustomElement({ tag: AC_DROPDOWN_TAG.dropdown, type: AcDropdown });

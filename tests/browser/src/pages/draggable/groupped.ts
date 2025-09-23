@@ -1,5 +1,4 @@
-import { AcDraggable, AcEnumDraggableEvent } from "@autocode-ts/ac-browser";
-import { AcDraggableApi } from "packages/browser/ac-browser/src/lib/ac-draggable/core/ac-draggable-api";
+import { AcDraggable, AcDraggableApi, AcEnumDraggableEvent } from "@autocode-ts/ac-browser";
 
 export class DraggableGroupedTestPage extends HTMLElement {
   static observedAttributes = [];
@@ -8,6 +7,8 @@ export class DraggableGroupedTestPage extends HTMLElement {
     this.innerHTML = `
       <h3>Grouped Drag & Drop</h3>
       <p>Only items from Group A can be dropped into Target A. Same for B.</p>
+
+      <ac-draggable>
       <div style="display: flex; gap: 40px;">
         <div>
           <h4>Draggables</h4>
@@ -41,10 +42,12 @@ export class DraggableGroupedTestPage extends HTMLElement {
           </div>
         </div>
       </div>
+
+        </ac-draggable>
     `;
 
 
-    const acDraggable = new AcDraggable({ element: this as HTMLElement });
+    const acDraggable = this.querySelector('ac-draggable') as AcDraggable;
     const draggableApi: AcDraggableApi = acDraggable.draggableApi;
     draggableApi.events.subscribeAllEvents({
       callback: (eventName: string, eventArgs: any) => {

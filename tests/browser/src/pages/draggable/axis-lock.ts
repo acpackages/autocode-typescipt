@@ -1,5 +1,4 @@
 import { AcDraggable, } from "@autocode-ts/ac-browser";
-import { AcDraggableApi } from "packages/browser/ac-browser/src/lib/ac-draggable/core/ac-draggable-api";
 
 export class DraggableAxisLockPage extends HTMLElement {
   connectedCallback() {
@@ -56,20 +55,22 @@ export class DraggableAxisLockPage extends HTMLElement {
       </div>
 
       <div id="container" class="lock-box">
+        <ac-draggable>
         <div class="drag-item drag-x" ac-draggable-element ac-draggable-lock-x-axis>X</div>
         <div class="drag-item drag-y" ac-draggable-element ac-draggable-lock-y-axis>Y</div>
         <div class="drag-item drag-both" ac-draggable-element>XY</div>
+        </ac-draggable>
       </div>
     `;
 
     const root = this.querySelector('#container')!;
-    const acDraggable = new AcDraggable({ element: root as HTMLElement });
-    const draggableApi: AcDraggableApi = acDraggable.draggableApi;
-    draggableApi.events.subscribeAllEvents({
-      callback: (eventName: string, eventArgs: any) => {
-        console.log(`Executed draggable event : ${eventName}`, eventArgs);
-      }
-    });
-    console.log(acDraggable);
+    // const acDraggable = new AcDraggable({ element: root as HTMLElement });
+    // const draggableApi: AcDraggableApi = acDraggable.draggableApi;
+    // draggableApi.events.subscribeAllEvents({
+    //   callback: (eventName: string, eventArgs: any) => {
+    //     console.log(`Executed draggable event : ${eventName}`, eventArgs);
+    //   }
+    // });
+    // console.log(acDraggable);
   }
 }

@@ -6,7 +6,7 @@ import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator'
 import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
-import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-data-dictionary';
+import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { dataDictionaryJson as ddeDataDictionary } from './../../../../data/dde-data-dictionary';
 
 export class DDEEditorDatagridPage  extends HTMLElement {

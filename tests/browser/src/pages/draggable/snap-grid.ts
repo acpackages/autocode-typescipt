@@ -1,5 +1,4 @@
-import { AcDraggable } from "@autocode-ts/ac-browser";
-import { AcDraggableApi } from "packages/browser/ac-browser/src/lib/ac-draggable/core/ac-draggable-api";
+import { AcDraggable, AcDraggableApi } from "@autocode-ts/ac-browser";
 
 export class DraggableSnapGridPage extends HTMLElement {
   connectedCallback() {
@@ -49,19 +48,22 @@ export class DraggableSnapGridPage extends HTMLElement {
           <li>Set snapping via the <code>data-ac-snap-grid</code> attribute.</li>
         </ul>
       </div>
-
+      <ac-draggable>
       <div id="gridContainer" class="grid-container">
         <div class="drag-grid-item" style="top:10px; left:10px" ac-draggable-element ac-draggable-snap-grid-size="50">
           G1
         </div>
       </div>
+      </ac-draggable>
     `;
 
-    const acDraggable = new AcDraggable({element:this});
-        const draggableApi:AcDraggableApi = acDraggable.draggableApi;
-        draggableApi.events.subscribeAllEvents({callback:(eventName:string,eventArgs:any)=>{
-          console.log(`Executed draggable event : ${eventName}`,eventArgs);
-        }});
-        console.log(acDraggable);
+    const acDraggable = this.querySelector('ac-draggable') as AcDraggable;
+    const draggableApi: AcDraggableApi = acDraggable.draggableApi;
+    draggableApi.events.subscribeAllEvents({
+      callback: (eventName: string, eventArgs: any) => {
+        console.log(`Executed draggable event : ${eventName}`, eventArgs);
+      }
+    });
+    console.log(acDraggable);
   }
 }

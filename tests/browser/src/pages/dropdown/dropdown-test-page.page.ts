@@ -50,41 +50,44 @@ export class DropdownTestPage extends HTMLElement {
     document.head.appendChild(style);
 
     // Initialize dropdowns
-    const dropdowns: Record<string, AcDropdown> = {
-      bottom: new AcDropdown({element:this.querySelector('[data-trigger="bottom"]')?.parentElement as HTMLElement, options:{
-        menu: this.querySelector('#menu-bottom') as HTMLElement,
-        position: 'bottom',
-      }}),
-      top: new AcDropdown({element:this.querySelector('[data-trigger="top"]')?.parentElement as HTMLElement,options: {
-        menu: this.querySelector('#menu-top') as HTMLElement,
-        position: 'top',
-      }}),
-      left: new AcDropdown({element:this.querySelector('[data-trigger="left"]')?.parentElement as HTMLElement,options:{
-        menu: this.querySelector('#menu-left') as HTMLElement,
-        position: 'left',
-      }}),
-      right: new AcDropdown({element:this.querySelector('[data-trigger="right"]')?.parentElement as HTMLElement, options:{
-        menu: this.querySelector('#menu-right') as HTMLElement,
-        position: 'right',
-      }}),
-      hoverBottom: new AcDropdown({element:this.querySelector('[data-trigger="hover-bottom"]')?.parentElement as HTMLElement,options: {
-        menu: this.querySelector('#menu-hover-bottom') as HTMLElement,
-        position: 'bottom',
-        triggerAction: 'hover'
-      }}),
-    };
+    // const dropdowns: Record<string, AcDropdown> = {
+    //   bottom: new AcDropdown({element:this.querySelector('#dropdowm')?.parentElement as HTMLElement, options:{
+    //     menu: this.querySelector('#menu-bottom') as HTMLElement,
+    //     position: 'bottom',
+    //   }}),
+    //   top: new AcDropdown({element:this.querySelector('[data-trigger="top"]')?.parentElement as HTMLElement,options: {
+    //     menu: this.querySelector('#menu-top') as HTMLElement,
+    //     position: 'top',
+    //   }}),
+    //   left: new AcDropdown({element:this.querySelector('[data-trigger="left"]')?.parentElement as HTMLElement,options:{
+    //     menu: this.querySelector('#menu-left') as HTMLElement,
+    //     position: 'left',
+    //   }}),
+    //   right: new AcDropdown({element:this.querySelector('[data-trigger="right"]')?.parentElement as HTMLElement, options:{
+    //     menu: this.querySelector('#menu-right') as HTMLElement,
+    //     position: 'right',
+    //   }}),
+    //   hoverBottom: new AcDropdown({element:this.querySelector('[data-trigger="hover-bottom"]')?.parentElement as HTMLElement,options: {
+    //     menu: this.querySelector('#menu-hover-bottom') as HTMLElement,
+    //     position: 'bottom',
+    //     triggerAction: 'hover'
+    //   }}),
+    // };
 
-    console.log('Dropdowns initialized:', dropdowns);
+    // console.log('Dropdowns initialized:', dropdowns);
   }
 
   private renderTestBlock(title: string, placement: string, hover: boolean = false,id: string, items: string[]): string {
     return `
       <div class="mb-4">
         <h5>${title}</h5>
+
+    <ac-dropdown placement="${placement}" id="dropdown${placement}${hover}" trigger="${hover?'hover':'click'}">
         <button type="button" class="btn btn-primary" data-trigger="${placement}" ac-dropdown-trigger>
           ${hover ? 'Hover ' : 'Toggle '} ${title}
         </button>
         ${this.renderMenu(id,items)}
+        </ac-dropdown>
       </div>
     `;
   }

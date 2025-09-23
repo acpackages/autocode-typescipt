@@ -1,8 +1,7 @@
 import { AcModal } from "@autocode-ts/ac-browser";
 
 export class AnimatedModalTestPage extends HTMLElement {
-  private modalInstance!: AcModal;
-  private modalElement!: HTMLElement;
+  private modalElement!: AcModal;
 
   connectedCallback() {
     this.innerHTML = `
@@ -17,7 +16,7 @@ export class AnimatedModalTestPage extends HTMLElement {
       </div>
 
       <!-- Modal HTML -->
-      <div id="ac-modal-demo">
+      <ac-modal>
         <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
           <h4 id="modal-title" style="margin: 0;">Modal</h4>
         </div>
@@ -28,12 +27,11 @@ export class AnimatedModalTestPage extends HTMLElement {
           <button id="modal-cancel" style="margin-right: 0.5rem;">Cancel</button>
           <button id="modal-ok">OK</button>
         </div>
-      </div>
+      </ac-modal>
     `;
 
     // Grab modal element and init AcModal
-    this.modalElement = this.querySelector("#ac-modal-demo") as HTMLElement;
-    this.modalInstance = new AcModal(this.modalElement);
+    this.modalElement = this.querySelector("ac-modal") as AcModal;
 
     // Hide footer initially
     this.getFooter().style.display = "none";
@@ -48,7 +46,7 @@ export class AnimatedModalTestPage extends HTMLElement {
   private addEventListeners() {
     this.querySelectorAll<HTMLButtonElement>("[data-action]").forEach(btn => {
       btn.addEventListener("click", () => {
-        const action = btn.dataset.action!;
+        const action = btn.dataset["action"];
 
         if (action === "simple") {
           this.showSimpleModal(btn);
@@ -61,11 +59,11 @@ export class AnimatedModalTestPage extends HTMLElement {
     // Modal footer buttons
     this.querySelector<HTMLButtonElement>("#modal-ok")?.addEventListener("click", () => {
       alert("OK clicked!");
-      this.modalInstance.hide();
+      this.modalElement.hide();
     });
     this.querySelector<HTMLButtonElement>("#modal-cancel")?.addEventListener("click", () => {
       alert("Cancel clicked!");
-      this.modalInstance.hide();
+      this.modalElement.hide();
     });
   }
 
@@ -73,14 +71,14 @@ export class AnimatedModalTestPage extends HTMLElement {
     this.getTitle().innerText = "Simple Modal";
     this.getMessage().innerText = "This is just a basic modal without action buttons.";
     this.getFooter().style.display = "none";
-    this.modalInstance.show(btn);
+    this.modalElement.show({triggerElement:btn});
   }
 
   private showConfirmModal(btn:HTMLElement) {
     this.getTitle().innerText = "Confirm Action";
     this.getMessage().innerText = "Do you want to proceed?";
     this.getFooter().style.display = "block";
-    this.modalInstance.show(btn);
+    this.modalElement.show({triggerElement:btn});
   }
 
   // Helpers to get modal parts

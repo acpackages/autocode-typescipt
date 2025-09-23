@@ -1,3 +1,6 @@
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_SLIDES_TAG } from "../_ac-slides.export";
+
 // ac-slides.ts
 interface AcSlidesOptions {
   interval?: number; // Auto slide interval in ms
@@ -73,3 +76,5 @@ export class AcSlides {
     this.intervalId = undefined;
   }
 }
+
+acRegisterCustomElement({tag:AC_SLIDES_TAG.slides,type:AcSlides});

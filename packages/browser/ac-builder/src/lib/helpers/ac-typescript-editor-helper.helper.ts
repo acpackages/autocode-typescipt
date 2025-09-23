@@ -218,7 +218,7 @@ export class AcTypescriptEditorHelper {
       .map((c: any) => c.text);
   }
 
-  async getVariablesInClass({ className }: { className: string }): Promise<string[]> {
+  async getPropertiesInClass({ className }: { className: string }): Promise<string[]> {
     const clsNode = await this.getClassNode(className);
     if (!clsNode) return [];
     return (clsNode.childItems || [])

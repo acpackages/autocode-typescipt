@@ -1,5 +1,6 @@
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcRepeaterCssClassName } from "../consts/ac-repeater-css-class-name.const";
+import { AC_REPEATER_TAG } from "../consts/ac-repeater-tag.const";
 import { AcRepeaterApi } from "../core/ac-repeater-api";
 import { AcRepeaterBodyElement } from "./ac-repeater-body.element";
 import { AcRepeaterFooterElement } from "./ac-repeater-footer.element";
@@ -57,3 +58,5 @@ export class AcRepeater{
     });
   }
 }
+
+acRegisterCustomElement({tag:AC_REPEATER_TAG.repeater,type:AcRepeater});
