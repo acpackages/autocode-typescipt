@@ -1,47 +1,77 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acRegisterCustomElement } from "@autocode-ts/ac-browser";
-import { AcBuilderApi, AcBuilderPropertySelectInput, AcEnumBuilderHook, IAcBuilderElementPropertyChangeHookArgs } from "@autocode-ts/ac-builder";
+import { AcModal, acRegisterCustomElement } from "@autocode-ts/ac-browser";
+import { AcBuilderApi, AcBuilderPropertyInput, AcBuilderPropertySelectInput, AcBuilderPropertyTextInput, AcEnumBuilderHook, IAcBuilderElementPropertyChangeHookArgs } from "@autocode-ts/ac-builder";
 import { AcDataDictionary, AcDDTable, AcDDView } from "@autocode-ts/ac-data-dictionary";
 
-export class AcDDDatagridColumnsInput extends AcBuilderPropertySelectInput {
+export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
   override set builderApi(value: AcBuilderApi) {
     super.value = value;
     value.hooks.subscribe({
       hook: AcEnumBuilderHook.ElementPropertyChange, callback: (args: IAcBuilderElementPropertyChangeHookArgs) => {
         if (this.componentElement?.instanceName == args.componentElement.instanceName && args.propertyName == 'sourceType') {
-          this.setSourceValueOptions();
+          // this.setSourceValueOptions();
         }
       }
     })
   }
 
+  displayElement: HTMLInputElement = document.createElement('input');
+  modal: AcModal = new AcModal();
+
   constructor() {
     super();
-    this.setSourceValueOptions();
+    this.displayElement.placeholder = "0 Column(s)";
+    this.displayElement.readOnly = true;
+    this.displayElement.addEventListener('click', () => {
+      this.openModal();
+    });
+    this.modal.innerHTML = `
+    <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
+          <h6 id="modal-title" style="margin: 0;">Datagid Columns</h6>
+        </div>
+        <div class="ac-modal-body" >
+          <ac-collapse ac-collapse-open>
+            <div class="mb-2">
+              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Additional Columns</button>
+            </div>
+            <div ac-collapse-content class="border bg-white p-3">
+              Additional Columns List
+            </div>
+          </ac-collapse>
+          <ac-collapse ac-collapse-open>
+            <div class="mb-2">
+              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Include Columns</button>
+            </div>
+            <div ac-collapse-content class="border bg-white p-3">
+              Include Columns List
+            </div>
+          </ac-collapse>
+          <ac-collapse ac-collapse-open>
+            <div class="mb-2">
+              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Include Columns</button>
+            </div>
+            <div ac-collapse-content class="border bg-white p-3">
+              Include Columns List
+            </div>
+          </ac-collapse>
+        </div>
+        <div class="ac-modal-footer" style="padding: 0.75rem; border-top: 1px solid #ddd; text-align: right;">
+          <button id="modal-cancel" style="margin-right: 0.5rem;">Cancel</button>
+          <button id="modal-ok">OK</button>
+        </div>
+    `;
   }
 
-  setSourceValueOptions() {
-    const options = [];
-    console.dir(this);
-    if (this.componentElement && this.componentElement.properties) {
-      if (this.componentElement.properties['sourceType']) {
-        const sourceType = this.componentElement.properties['sourceType'].value;
-        if (sourceType == 'TABLE') {
-          const tables: AcDDTable[] = Object.values(AcDataDictionary.getTables());
-          for (const table of tables) {
-            options.push({ 'label': table.tableName, 'value': table.tableName });
-          }
-        }
-        else if (sourceType == 'VIEW') {
-          const views: AcDDView[] = Object.values(AcDataDictionary.getViews());
-          for (const view of views) {
-            options.push({ 'label': view.viewName, 'value': view.viewName });
-          }
-        }
-      }
-    }
-    this.selectOptions = options;
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.innerHTML = "";
+    this.append(this.displayElement);
+  }
+
+  openModal() {
+    document.querySelector('body')?.append(this.modal);
+    this.modal.open({ triggerElement: this.displayElement });
   }
 
 }

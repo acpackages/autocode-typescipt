@@ -104,7 +104,7 @@ export const AC_BUILDER_DD_DATAGRID_ELEMENT: IAcBuilderElement = {
       {label:'View',value:'VIEW'}
     ]} },
     { name: 'sourceValue', 'category': 'Data Dictionary', title: 'Source Value', type: 'ddSelectDatagridSourceValueInput' },
-    { name: 'columns', 'category': 'Data Dictionary', title: 'Columns', type: 'dd-columns' },
+    { name: 'columns', 'category': 'Data Dictionary', title: 'Columns', type: 'ddDatagridColumns' },
     { name: 'data', 'category': 'Data Dictionary', title: 'Data', type: 'selectClassProperty' },
     { name: 'onDemandFunction', 'category': 'Data Dictionary', title: 'On Demand Data Function', type: 'selectClassProperty' },
   ],

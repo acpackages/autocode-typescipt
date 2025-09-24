@@ -59,11 +59,11 @@ export class ModalTestPage extends HTMLElement {
     // Modal footer buttons
     this.querySelector<HTMLButtonElement>("#modal-ok")?.addEventListener("click", () => {
       alert("OK clicked!");
-      this.modalElement.hide();
+      this.modalElement.close();
     });
     this.querySelector<HTMLButtonElement>("#modal-cancel")?.addEventListener("click", () => {
       alert("Cancel clicked!");
-      this.modalElement.hide();
+      this.modalElement.close();
     });
   }
 
@@ -71,14 +71,14 @@ export class ModalTestPage extends HTMLElement {
     this.getTitle().innerText = "Simple Modal";
     this.getMessage().innerText = "This is just a basic modal without action buttons.";
     this.getFooter().style.display = "none";
-    this.modalElement.show();
+    this.modalElement.open();
   }
 
   private showConfirmModal() {
     this.getTitle().innerText = "Confirm Action";
     this.getMessage().innerText = "Do you want to proceed?";
     this.getFooter().style.display = "block";
-    this.modalElement.show();
+    this.modalElement.open();
   }
 
   // Helpers to get modal parts

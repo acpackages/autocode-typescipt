@@ -48,6 +48,79 @@ export function acCopyElementStyles({fromElement,toElement}:{fromElement: HTMLEl
   }
 }
 
+export function acMorphElement({source,destination,duration = 300}:{source: HTMLElement, destination: HTMLElement, duration?: number}): void {
+  // Get bounding client rectangles
+  const sourceRect = source.getBoundingClientRect();
+  const destRect = destination.getBoundingClientRect();
+  const scrollX = window.scrollX || window.pageXOffset;
+const scrollY = window.scrollY || window.pageYOffset;
+
+  // Clone both source and destination elements
+  const sourceClone: HTMLElement = source.cloneNode(true) as HTMLElement;
+  const destClone: HTMLElement = destination.cloneNode(true) as HTMLElement;
+
+  // Style source clone to match source initially
+  Object.assign(sourceClone.style, {
+    position: "fixed",
+    left: `${sourceRect.x + scrollX}px`,
+  top: `${sourceRect.y + scrollY}px`,
+    width: `${sourceRect.width}px`,
+    height: `${sourceRect.height}px`,
+    margin: "0",
+    pointerEvents: "none",
+    zIndex: "9999",
+    transition: `all ${duration}ms ease-in-out`,
+    opacity: "1",
+  });
+
+  // Style destination clone to match source initially
+  Object.assign(destClone.style, {
+    position: "fixed",
+    left: `${sourceRect.x}px`,
+    top: `${sourceRect.y}px`,
+    width: `${sourceRect.width}px`,
+    height: `${sourceRect.height}px`,
+    margin: "0",
+    pointerEvents: "none",
+    zIndex: "9998",
+    transition: `all ${duration}ms ease-in-out`,
+    opacity: "0",
+  });
+
+  // Append clones to body
+  document.body.appendChild(sourceClone);
+  document.body.appendChild(destClone);
+
+  // Force reflow to ensure transition starts
+  void sourceClone.offsetHeight;
+  void destClone.offsetHeight;
+
+  // Animate source clone → fade out and move
+  Object.assign(sourceClone.style, {
+    left: `${destRect.x}px`,
+    top: `${destRect.y}px`,
+    width: `${destRect.width}px`,
+    height: `${destRect.height}px`,
+    opacity: "0",
+  });
+
+  // Animate destination clone → move & resize naturally, fade in
+  Object.assign(destClone.style, {
+    left: `${destRect.x}px`,
+    top: `${destRect.y}px`,
+    width: `${destRect.width}px`,
+    height: `${destRect.height}px`,
+    opacity: "1",
+  });
+
+  // Cleanup after animation
+  setTimeout(() => {
+    sourceClone.remove();
+    destClone.remove();
+  }, duration);
+}
+
+
 export function acRegisterCustomElement({tag,type}:{tag:string,type:any}){
   if (customElements.get(tag) == undefined) {
     customElements.define(tag, type);
