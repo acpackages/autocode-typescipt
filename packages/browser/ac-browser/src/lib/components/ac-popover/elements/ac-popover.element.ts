@@ -1,3 +1,4 @@
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_POPOVER_TAG } from "../consts/ac-popover-tag.const";
 
@@ -10,7 +11,7 @@ export interface AcPopoverOptions {
     className?: string;
 }
 
-export class AcPopover {
+export class AcPopover{
     private anchor: HTMLElement;
     private popoverEl: HTMLDivElement;
     private options: AcPopoverOptions;

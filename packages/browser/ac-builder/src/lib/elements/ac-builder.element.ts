@@ -104,8 +104,9 @@ export class AcBuilder {
     this.element.style.flexDirection = 'column';
     this.element.innerHTML = `
     <div class="ac-builder-body">
+      <ac-tabs>
       <div class="ac-builder-sidebar ac-builder-left-sidebar ">
-        <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
+        <div class="nav nav-tabs ac-sidebar-tabs" role="tablist">
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-elements-tab" ac-tooltip="Elements">
             <ac-svg-icon class="pb-2 pt-1">${ACI_SVG_SOLID.puzzlePiece}</ac-svg-icon>
           </button>
@@ -126,6 +127,7 @@ export class AcBuilder {
           <div class="ac-builder-layers-panel"  ${AcTabsAttributeName.acTabPane} role="tabpanel" aria-labelledby=""></div>
         </div>
       </div>
+        </ac-tabs>
       <div class="ac-builder-center-container">
         <div class="ac-builder-topbar">
           <div class="ac-builder-topbar-left">
@@ -175,6 +177,8 @@ export class AcBuilder {
                 <div class="ac-builder-canvas">
                 </div>
                 </div>
+
+      <ac-tabs>
                 <div class="ac-builder-sidebar ac-builder-right-sidebar">
                 <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
                 <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-styles-tab" ac-tooltip="Style">
@@ -196,8 +200,11 @@ export class AcBuilder {
           <div class="ac-builder-events-tab" ${AcTabsAttributeName.acTabPane}></div>
         </div>
       </div>
+      </ac-tabs>
     </div>
-    <div class="ac-builder-script-container"></div>
+    <ac-drawer placement="right">
+      <div class="ac-builder-script-container"></div>
+    </ac-drawer>
     `;
     this.setTabs();
     this.setDrawers();
@@ -237,7 +244,7 @@ export class AcBuilder {
   }
 
   private setDrawers() {
-    this.scriptEditorDrawer = new AcDrawer(this.element.querySelector('.ac-builder-script-container') as HTMLElement, { placement: 'right' });
+    this.scriptEditorDrawer = this.element.querySelector('ac-drawer') as AcDrawer;
     this.scriptEditorDrawer.on({
       event: AcEnumDrawerEvent.Close, callback: () => {
         this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.EditorClose });
@@ -279,9 +286,9 @@ export class AcBuilder {
   }
 
   private setTabs() {
-    const leftSidebarTabs = new AcTabs({ element: this.element.querySelector('.ac-builder-left-sidebar') as HTMLElement });
-    leftSidebarTabs.show({ tabIndex: 0 });
-    const rightSidebarTabs = new AcTabs({ element: this.element.querySelector('.ac-builder-right-sidebar') as HTMLElement });
-    rightSidebarTabs.show({ tabIndex: 0 });
+    // const leftSidebarTabs = new AcTabs({ element: this.element.querySelector('.ac-builder-left-sidebar') as HTMLElement });
+    // leftSidebarTabs.show({ tabIndex: 0 });
+    // const rightSidebarTabs = new AcTabs({ element: this.element.querySelector('.ac-builder-right-sidebar') as HTMLElement });
+    // rightSidebarTabs.show({ tabIndex: 0 });
   }
 }

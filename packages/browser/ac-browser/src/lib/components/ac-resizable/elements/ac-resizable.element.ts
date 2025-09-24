@@ -1,17 +1,15 @@
-import { AcEvents } from "@autocode-ts/autocode";
 import { AcEnumResizeDirection } from "../enums/ac-enum-resize-direction.enum";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_RESIZABLE_TAG } from "../_ac-resizable.export";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcResizable {
-  private element: HTMLElement;
+export class AcResizable extends AcElementBase{
   private handles: Record<any, HTMLDivElement> = {} as any;
-  events:AcEvents = new AcEvents();
 
-  constructor({element}:{element: HTMLElement}) {
-    this.element = element;
-    this.element.style.position = 'relative';
-    this.element.style.overflow = 'hidden';
+  constructor() {
+    super();
+    this.style.position = 'relative';
+    this.style.overflow = 'hidden';
 
     this.createHandles();
   }
@@ -24,7 +22,7 @@ export class AcResizable {
       handle.classList.add('ac-resize-handle', `ac-resize-${dir}`);
       this.styleHandle(handle, dir);
       handle.addEventListener('mousedown', (e) => this.startResize(e, dir));
-      this.element.appendChild(handle);
+      this.appendChild(handle);
       this.handles[dir] = handle;
     });
   }
@@ -116,28 +114,28 @@ export class AcResizable {
 
     const startX = event.clientX;
     const startY = event.clientY;
-    const startWidth = this.element.offsetWidth;
-    const startHeight = this.element.offsetHeight;
-    const startTop = this.element.offsetTop;
-    const startLeft = this.element.offsetLeft;
+    const startWidth = this.offsetWidth;
+    const startHeight = this.offsetHeight;
+    const startTop = this.offsetTop;
+    const startLeft = this.offsetLeft;
 
     const onMouseMove = (e: MouseEvent) => {
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
 
       if (dir.includes('right')) {
-        this.element.style.width = `${startWidth + dx}px`;
+        this.style.width = `${startWidth + dx}px`;
       }
       if (dir.includes('left')) {
-        this.element.style.width = `${startWidth - dx}px`;
-        this.element.style.left = `${startLeft + dx}px`;
+        this.style.width = `${startWidth - dx}px`;
+        this.style.left = `${startLeft + dx}px`;
       }
       if (dir.includes('bottom')) {
-        this.element.style.height = `${startHeight + dy}px`;
+        this.style.height = `${startHeight + dy}px`;
       }
       if (dir.includes('top')) {
-        this.element.style.height = `${startHeight - dy}px`;
-        this.element.style.top = `${startTop + dy}px`;
+        this.style.height = `${startHeight - dy}px`;
+        this.style.top = `${startTop + dy}px`;
       }
     };
 

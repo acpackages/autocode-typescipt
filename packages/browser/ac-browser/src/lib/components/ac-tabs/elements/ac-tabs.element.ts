@@ -6,39 +6,51 @@ import { IAcTabsOptions } from "../interfaces/ac-tabs-options.interface";
 import { AcTabsEvent } from "../enums/ac-tabs-event.enum";
 import { acAddClassToElement, acRegisterCustomElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
 import { AC_TABS_TAG } from "../_ac-tabs.export";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcTabs {
-  private element: HTMLElement;
+export class AcTabs extends AcElementBase{
+  get loop(): boolean{
+    return this.getAttribute('loop') != 'false';
+  }
+  set loop(value:boolean){
+    this.setAttribute('loop',`${value}`);
+  }
+
+  get preventScrollOnHash(): boolean{
+    return this.getAttribute('prevent-scroll-on-hash') == 'true';
+  }
+  set preventScrollOnHash(value:boolean){
+    this.setAttribute('prevent-scroll-on-hash',`${value}`);
+  }
+
+  get updateHash(): boolean{
+    return this.getAttribute('update-hash') == 'true';
+  }
+  set updateHash(value:boolean){
+    this.setAttribute('update-hash',`${value}`);
+  }
+
   private tabsList?: HTMLElement;
   private tabs: HTMLElement[] = [];
   private tabPanes: HTMLElement[] = [];
   private currentIndex = -1;
-  private loop: boolean;
-  private updateHash: boolean;
-  private preventScrollOnHash: boolean;
   private boundClick?: (e: Event) => void;
   private boundKeydown?: (e: KeyboardEvent) => void;
-  events: AcEvents = new AcEvents();
-  id:string = Autocode.uuid();
 
-  constructor({ element, options = {} }: { element: HTMLElement, options?: IAcTabsOptions }) {
-    this.element = element;
-    if (this.element) {
-      if (!this.element.hasAttribute('role')) this.element.setAttribute('role', 'tablist');
-    }
-    const tabs = Array.from(element.querySelectorAll(`.${AcTabsCssClassName.acTab}, [${AcTabsAttributeName.acTab}]`));
+  constructor() {
+    super();
+    this.style.display = "contents";
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'tablist');
+    const tabs = Array.from(this.querySelectorAll(`.${AcTabsCssClassName.acTab}, [${AcTabsAttributeName.acTab}]`));
     for (const el of tabs) {
       this.registerTabElement({ element: el as HTMLElement });
     }
-    const tabPanes = Array.from(element.querySelectorAll(`[${AcTabsAttributeName.acTabPane}]`));
+    const tabPanes = Array.from(this.querySelectorAll(`[${AcTabsAttributeName.acTabPane}]`));
     for (const el of tabPanes) {
       this.registerTabPaneElement({ element: el as HTMLElement });
     }
-    this.loop = options.loop ?? true;
-    this.updateHash = options.updateHash ?? false;
-    this.preventScrollOnHash = options.preventScrollOnHash ?? true;
     if (this.tabs.length === 0 || this.tabPanes.length === 0) return;
-    const initial = this.resolveIndexFromHash() ?? options.initialIndex ?? this.findFirstEnabledIndex();
+    const initial = this.resolveIndexFromHash() ?? this.findFirstEnabledIndex();
     this.show({ target: initial, options: { skipFocus: true, skipIfSame: true } });
   }
 
@@ -90,9 +102,9 @@ export class AcTabs {
   }
 
   public destroy() {
-    if (this.boundClick) this.element.removeEventListener('click', this.boundClick);
-    if (this.boundKeydown && this.element)
-      this.element.removeEventListener('keydown', this.boundKeydown);
+    if (this.boundClick) this.removeEventListener('click', this.boundClick);
+    if (this.boundKeydown)
+      this.removeEventListener('keydown', this.boundKeydown);
   }
 
   public enable({ target, enable = true }: { target: number | string | HTMLElement, enable?: boolean }) {
@@ -141,7 +153,7 @@ export class AcTabs {
       return targetQuery.replace('#', '')
     }
     else if(targetQuery){
-      const targetElement = this.element.querySelector(targetQuery);
+      const targetElement = this.querySelector(targetQuery);
       if(targetElement){
         return this.ensureId({element:targetElement as HTMLElement});
       }
@@ -220,7 +232,7 @@ export class AcTabs {
   registerTabElement({ element, index = -1 }: { element: HTMLElement, index?: number }) {
     if (!element.hasAttribute(AcTabsAttributeName.acTabPaneRegistered)) {
       element.setAttribute(AcTabsAttributeName.acTabRegistered, "true");
-      if (!this.element.hasAttribute(AcTabsAttributeName.acTabId)) {
+      if (!this.hasAttribute(AcTabsAttributeName.acTabId)) {
         const id = Autocode.uuid();
         element.setAttribute(AcTabsAttributeName.acTabId, id);
       }
@@ -241,7 +253,7 @@ export class AcTabs {
           const targetTabQuery = element.getAttribute(AcTabsAttributeName.acTabTarget);
           console.log(targetTabQuery);
           if (targetTabQuery) {
-            const targetTab = this.element.querySelector(targetTabQuery);
+            const targetTab = this.querySelector(targetTabQuery);
             if (targetTab) {
               this.show({ tabPane: targetTab as HTMLElement });
             }
@@ -278,7 +290,7 @@ export class AcTabs {
           if (tab) return this.tabs.indexOf(tab);
         }
       }
-      const el = this.element.querySelector<HTMLElement>(target);
+      const el = this.querySelector<HTMLElement>(target);
       if (el) return this.tabs.indexOf(el);
       return -1;
     }

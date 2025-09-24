@@ -257,5 +257,3 @@ export class AcScrollable {
     }
   }
 }
-
-acRegisterCustomElement({tag:AC_SCROLLABLE_TAG.scrollable,type:AcScrollable});

@@ -49,7 +49,7 @@ export class TabsTestPage extends HTMLElement {
       if (!tablist) return;
 
       // Create instance and stash it on the block element
-      const instance = new AcTabs({ element: block, options });
+      const instance = block.querySelector('ac-tabs') as AcTabs;
       (block as any).__acTabs = instance;
 
       // Hook up control buttons
@@ -100,6 +100,7 @@ export class TabsTestPage extends HTMLElement {
         <h5 class="mb-2">${title}</h5>
         <p class="text-muted mb-3"><small>${description}</small></p>
 
+        <ac-tabs>
         <!-- TABLIST -->
         <div class="nav nav-tabs" role="tablist" data-actabs-tablist>
           <button class="nav-link" type="button" role="tab"
@@ -134,6 +135,7 @@ export class TabsTestPage extends HTMLElement {
           </div>
         </div>
 
+          </ac-tabs>
         <!-- CONTROLS -->
         <div class="d-flex gap-2 mt-3 flex-wrap">
           <button type="button" class="btn btn-outline-primary btn-sm" data-actabs-action="prev">Prev</button>

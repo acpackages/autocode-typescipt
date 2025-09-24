@@ -1,42 +1,34 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEvents } from "@autocode-ts/autocode";
 import { AcResizableAttributeName } from "../consts/ac-resizable-attribute-name.const";
-import { AcEnumResizePanelDirection } from "../enums/ac-enum-resize-panel-direction.enum";
 import { AcEnumResizableEvent } from "../enums/ac-enum-resizable-event.enum";
 import { IAcResizablePanel } from "../interfaces/ac-resizable-panel.interface";
 import { IAcResizablePanelResizeEvent } from "../interfaces/ac-resizable-panel-resize-event.interface";
 import { IAcResizablePanelSize } from "../interfaces/ac-resizable-panel-size.interface";
+import { AcElementBase } from "../../../core/ac-element-base";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_RESIZABLE_TAG } from "../consts/ac-resizable-tag.const";
 
-export class AcResizablePanels {
-  private element: HTMLElement;
-  private direction: AcEnumResizePanelDirection;
+export class AcResizablePanels extends AcElementBase{
+  get direction():string{
+    return this.getAttribute('direction')??'horizontal';
+  }
+  set direction(value: 'horizontal'|'vertical'){
+    this.setAttribute('direction',value);
+  }
   private panels: IAcResizablePanel[] = [];
   private resizeObserver!: ResizeObserver;
   private updateTimeout: any;
   private updateAllowed: boolean = false;
-  events: AcEvents = new AcEvents();
 
   get isHorizontal(): boolean {
-    return this.direction == AcEnumResizePanelDirection.Horizontal;
+    return this.direction == 'horizontal';
   }
 
-  constructor({ element, direction = AcEnumResizePanelDirection.Vertical }: { element: HTMLElement, direction?: AcEnumResizePanelDirection }) {
-    this.element = element;
-    this.direction = direction;
-    if(element.hasAttribute(AcResizableAttributeName.acResizablePanelsDirection)){
-        this.direction = element.getAttribute(AcResizableAttributeName.acResizablePanelsDirection) as AcEnumResizePanelDirection;
-      }
-      else{
-        element.setAttribute(AcResizableAttributeName.acResizablePanelsDirection,this.direction);
-      }
-    for (const panelsContainer of Array.from(this.element.querySelectorAll(`[${AcResizableAttributeName.acResizablePanels}]`)) as HTMLElement[]) {
-      let subPanelsDirection:any = this.direction;
-      if(panelsContainer.hasAttribute(AcResizableAttributeName.acResizablePanelsDirection)){
-        subPanelsDirection = panelsContainer.getAttribute(AcResizableAttributeName.acResizablePanelsDirection);
-      }
-      new AcResizablePanels({element:panelsContainer,direction:subPanelsDirection});
-    }
-    for (const panelElement of Array.from(this.element.querySelectorAll(`[${AcResizableAttributeName.acResizablePanel}]`)) as HTMLElement[]) {
+  constructor() {
+    super();
+    this.style.display = 'contents';
+    for (const panelElement of Array.from(this.querySelectorAll(`[${AcResizableAttributeName.acResizablePanel}]`)) as HTMLElement[]) {
       if(!panelElement.hasAttribute(AcResizableAttributeName.acResizablePanelIndex)){
         const index: number = this.panels.length;
         this.panels.push({ index: index, element: panelElement, size: 0 });
@@ -72,9 +64,6 @@ export class AcResizablePanels {
     }, 500);
   }
 
-  on({ event, callback }: { event: string, callback: Function }): string {
-    return this.events.subscribe({ event: event, callback: callback });
-  }
 
   setPanelSize({ index, size }: { index: number, size: number }) {
     this.panels[index].size = size;
@@ -190,7 +179,7 @@ export class AcResizablePanels {
         this.panels[i + 1].element.getBoundingClientRect()[this.isHorizontal ? 'width' : 'height']];
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-        this.element.style.userSelect = 'none';
+        this.style.userSelect = 'none';
       };
 
       const onMouseMove = (e: MouseEvent) => {
@@ -214,7 +203,7 @@ export class AcResizablePanels {
       const onMouseUp = () => {
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        this.element.style.userSelect = ' ';
+        this.style.userSelect = ' ';
       };
 
       handle.addEventListener('mousedown', onMouseDown);
@@ -222,8 +211,8 @@ export class AcResizablePanels {
   }
 
   private setupLayout() {
-    this.element.style.display = 'flex';
-    this.element.style.flexDirection = this.isHorizontal ? 'row' : 'column';
+    // this.style.display = 'flex';
+    // this.style.flexDirection = this.isHorizontal ? 'row' : 'column';
     this.panels.forEach((panel) => {
       const size = 100 / this.panels.length;
       panel.size = size;
@@ -238,7 +227,7 @@ export class AcResizablePanels {
 
   private updatePanelSizes() {
     if (this.updateAllowed) {
-      const isHorizontal = this.direction === AcEnumResizePanelDirection.Horizontal;
+      const isHorizontal = this.direction === 'horizontal';
       const totalSize = this.panels.reduce((acc, panel) => {
         const rect = panel.element.getBoundingClientRect();
         return acc + (isHorizontal ? rect.width : rect.height);
@@ -271,3 +260,5 @@ export class AcResizablePanels {
   }
 
 }
+
+acRegisterCustomElement({tag:AC_RESIZABLE_TAG.resizablePanels,type:AcResizablePanels});

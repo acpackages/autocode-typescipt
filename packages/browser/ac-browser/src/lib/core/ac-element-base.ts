@@ -1,8 +1,8 @@
-import { AcEvents } from "@autocode-ts/autocode";
+import { AcEvents, Autocode } from "@autocode-ts/autocode";
 
 export class AcElementBase extends HTMLElement {
   events: AcEvents = new AcEvents();
-
+  acId:string = Autocode.uuid();
   constructor(){
     super();
     this.events.subscribeAllEvents({callback:(event:string,args:any)=>{

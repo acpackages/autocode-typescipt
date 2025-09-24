@@ -1,3 +1,4 @@
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_PAGINATION_TAG } from "../_ac-pagination.export";
 import { AcPaginationCssClassName } from "../consts/ac-pagination-css-class-name.const";
@@ -6,7 +7,7 @@ import { AcPageDisplayedRowsLabel } from "./ac-page-displayed-rows-label.element
 import { AcPageNavigationButtons } from "./ac-page-navigation-buttons.element";
 import { AcPageSizeDropdown } from "./ac-page-size-dropdown.element";
 
-export class AcPagination {
+export class AcPagination extends AcElementBase{
   get activePage():number{
     return this.paginationApi.activePage;
   }
@@ -50,6 +51,7 @@ export class AcPagination {
   paginationApi = new AcPaginationApi({pagination:this});
 
   constructor(){
+    super();
     this.pageDisplayedRowsLabel = new AcPageDisplayedRowsLabel({paginationApi:this.paginationApi});
     this.pageNavigationButtons = new AcPageNavigationButtons({paginationApi:this.paginationApi});
     this.pageSizeDropdown = new AcPageSizeDropdown({paginationApi:this.paginationApi});
@@ -57,14 +59,10 @@ export class AcPagination {
   }
 
   initElement() {
-    acAddClassToElement({class_:AcPaginationCssClassName.acPagination,element:this.element});
-    this.element.append(this.pageSizeDropdown.element);
-    this.element.append(this.pageDisplayedRowsLabel.element);
-    this.element.append(this.pageNavigationButtons.element);
-  }
-
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.paginationApi.on({event:event,callback:callback});
+    acAddClassToElement({class_:AcPaginationCssClassName.acPagination,element:this});
+    this.append(this.pageSizeDropdown.element);
+    this.append(this.pageDisplayedRowsLabel.element);
+    this.append(this.pageNavigationButtons.element);
   }
 
 }

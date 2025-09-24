@@ -1,21 +1,16 @@
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_SCROLL_TRACK_TAG } from "../_ac-scroll-track.export";
 
 type ScrollTrackCallback = (activeId: string | null) => void;
 
-export class AcScrollTrack {
-    private container: HTMLElement;
+export class AcScrollTrack extends AcElementBase{
     private sections: HTMLElement[] = [];
-    private callback: ScrollTrackCallback;
+    // private callback: ScrollTrackCallback;
     private observer?: IntersectionObserver;
 
-    constructor(container: HTMLElement, callback: ScrollTrackCallback) {
-        if (!(container instanceof HTMLElement)) {
-            throw new Error("Container must be an HTMLElement");
-        }
-
-        this.container = container;
-        this.callback = callback;
+    constructor() {
+      super();
     }
 
     /**
@@ -23,7 +18,7 @@ export class AcScrollTrack {
      */
     public registerSections(sections: string | HTMLElement[]): void {
         if (typeof sections === "string") {
-            this.sections = Array.from(this.container.querySelectorAll<HTMLElement>(sections));
+            this.sections = Array.from(this.querySelectorAll<HTMLElement>(sections));
         } else {
             this.sections = sections;
         }
@@ -51,11 +46,11 @@ export class AcScrollTrack {
 
                 if (visible.length > 0) {
                     const activeId = visible[0].target.id || null;
-                    this.callback(activeId);
+                    // this.callback(activeId);
                 }
             },
             {
-                root: this.container,
+                root: this,
                 threshold: 0.5 // 50% visible means "active"
             }
         );

@@ -20,7 +20,7 @@ export class AcDatagridFooterElement {
     if(this.datagridApi.usePagination && this.datagridApi.pagination){
       acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridFooterPaginationContainer, element: this.paginationContainer });
       this.element.append(this.paginationContainer);
-      this.paginationContainer.append(this.datagridApi.pagination.element);
+      this.paginationContainer.append(this.datagridApi.pagination);
     }
   }
 }

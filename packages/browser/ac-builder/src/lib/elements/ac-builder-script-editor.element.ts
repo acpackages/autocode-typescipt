@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acAddClassToElement, AcEnumResizePanelDirection, AcResizableAttributeName, AcResizablePanels } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcResizableAttributeName, AcResizablePanels } from "@autocode-ts/ac-browser";
 import { AcEvents } from "@autocode-ts/autocode";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import * as monaco from "monaco-editor";
@@ -45,9 +45,14 @@ export class AcBuilderScriptEditor {
       </div>
     </div>
     <div class="ac-builder-script-editor-body">
+
+    <ac-resizable-panels direction="horizontal">
       <div class="ac-html-editor-container ac-script-editor-container" ${AcResizableAttributeName.acResizablePanel}></div>
       <div class="ac-typescript-editor-container ac-script-editor-container" ${AcResizableAttributeName.acResizablePanel}></div>
-    </div>`;
+
+   </ac-resizable-panels>
+    </div>
+    `;
 
     this.title = "Component Code";
     ; (self as any).MonacoEnvironment = {
@@ -89,7 +94,7 @@ export class AcBuilderScriptEditor {
     closeButton.addEventListener('click', () => {
       this.events.execute({ 'event': 'close' });
     });
-    const panels = new AcResizablePanels({ element: this.element.querySelector('.ac-builder-script-editor-body') as HTMLElement, direction: AcEnumResizePanelDirection.Horizontal });
+    const panels = this.element.querySelector('ac-resizable-panels') as AcResizablePanels;
     panels.setPanelSizes({
       panelSizes: [
         { size: 30, index: 0 },

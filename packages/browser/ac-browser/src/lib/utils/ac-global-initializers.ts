@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { AcArrayValuesInputElement, AcDatagrid, AcDatetimeInputElement, AcInputElement, AcNumberInputElement, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
+import { AcArrayValuesInputElement, AcDatagrid, AcDatetimeInputElement, AcInputElement, AcModal, AcNumberInputElement, AcOptionInputElement, AcPagination, AcPopoutTextareaInputElement, AcResizable, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
 import { AcDraggable } from "../components/ac-draggable/elements/ac-draggable.element";
@@ -47,10 +47,6 @@ export function acInit({ element, observe = true }: { element?: HTMLElement, obs
     }
   }
 
-  element.querySelectorAll('[ac-draggable]').forEach((el) => {
-    instances.push(new AcDraggable({ element: el as HTMLElement }));
-  });
-
   if (element.hasAttribute('ac-tooltip')) {
     new AcTooltip({ element });
   }
@@ -73,4 +69,7 @@ AcTextInputElement;
 AcTextareaInputElement;
 // End Input Elements
 
+AcModal;
+AcPagination;
+AcResizable;
 AcSvgIconElement;

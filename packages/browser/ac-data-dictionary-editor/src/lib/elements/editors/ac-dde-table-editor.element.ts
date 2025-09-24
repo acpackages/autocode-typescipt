@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { acAddClassToElement, AcEnumDatagridEvent, AcEnumResizableEvent, AcEnumResizePanelDirection, AcResizableAttributeName, AcResizablePanels, IAcDatagridActiveRowChangeEvent, IAcDatagridRowEvent, IAcDatagridStateChangeEvent, IAcResizablePanelResizeEvent } from '@autocode-ts/ac-browser';
+import { acAddClassToElement, AcEnumDatagridEvent, AcEnumResizableEvent, AcResizableAttributeName, AcResizablePanels, IAcDatagridActiveRowChangeEvent, IAcDatagridRowEvent, IAcDatagridStateChangeEvent, IAcResizablePanelResizeEvent } from '@autocode-ts/ac-browser';
 import { IAcDDETable } from '../../interfaces/ac-dde-table.inteface';
 import { AcDDEApi } from '../../core/ac-dde-api';
 import { AcDDETableColumnsDatagrid } from '../datagrid/ac-dde-table-columns-datagrid.element';
@@ -182,7 +182,7 @@ export class AcDDETableEditor {
     acAddClassToElement({ class_: AcDDECssClassName.acDDETableTriggersContainer, element: this.tableTriggersContainer });
     this.tableTriggersContainer.append(this.tableTriggersDatagrid.element);
 
-    this.detailPanels = new AcResizablePanels({ element: this.tableDetailsContainer, direction: AcEnumResizePanelDirection.Vertical });
+    // this.detailPanels = new AcResizablePanels({ element: this.tableDetailsContainer, direction: AcEnumResizePanelDirection.Vertical });
     this.detailPanels.setPanelSizes({
       panelSizes: [
         { size: 60, index: 0 },
@@ -196,7 +196,7 @@ export class AcDDETableEditor {
       }
     });
 
-    this.editorPanels = new AcResizablePanels({ element: this.element, direction: AcEnumResizePanelDirection.Horizontal });
+    // this.editorPanels = new AcResizablePanels({ element: this.element, direction: AcEnumResizePanelDirection.Horizontal });
     this.editorPanels.setPanelSizes({
       panelSizes: [
         { size: 20, index: 0 },

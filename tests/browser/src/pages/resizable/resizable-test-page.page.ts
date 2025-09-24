@@ -23,7 +23,7 @@ export class ResizableTestPage extends HTMLElement {
     `;
 
     this.querySelectorAll('.ac-resizable-box').forEach((el) => {
-      new AcResizable({element:el as HTMLElement});
+      // new AcResizable({element:el as HTMLElement});
     });
   }
 
@@ -33,6 +33,7 @@ export class ResizableTestPage extends HTMLElement {
       <div class="mb-5">
         <h5>${title}</h5>
         <p><small class="text-muted">${description}</small></p>
+        <ac-resizable>
         <div id="${id}" class="ac-resizable-box border bg-light p-3" style="
           position: relative;
           width: 300px;
@@ -42,6 +43,7 @@ export class ResizableTestPage extends HTMLElement {
           <p>This box can be resized from the <strong>${direction.replace('-', ' ')}</strong>.</p>
           <p>Try dragging the handle on the corresponding edge or corner.</p>
         </div>
+        </ac-resizable>
       </div>
     `;
   }

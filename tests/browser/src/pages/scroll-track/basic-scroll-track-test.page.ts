@@ -81,10 +81,10 @@ export class BasicScrollTrackTestPage extends HTMLElement {
     this.statusEl = this.querySelector("#active-id") as HTMLElement;
 
     const container = this.querySelector("#scroll-container") as HTMLElement;
-    const tracker = new AcScrollTrack(container, (activeId) => this.onSectionChange(activeId));
+    // const tracker = new AcScrollTrack(container, (activeId) => this.onSectionChange(activeId));
 
-    tracker.registerSections("section");
-    tracker.startTracking();
+    // tracker.registerSections("section");
+    // tracker.startTracking();
   }
 
   private onSectionChange(activeId: string | null) {
