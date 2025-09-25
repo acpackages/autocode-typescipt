@@ -6,8 +6,9 @@ import { AcEvents, AcHooks } from "@autocode-ts/autocode";
 import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
 import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
 import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcInputBase extends HTMLElement {
+export class AcInputBase extends AcElementBase {
   static get observedAttributes() {
     return ['ac-context','ac-context-key','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
   }
@@ -95,7 +96,6 @@ export class AcInputBase extends HTMLElement {
   }
 
   hooks:AcHooks = new AcHooks();
-  events: AcEvents = new AcEvents();
   inputElement: HTMLElement|any = document.createElement('input');
 
   constructor() {
@@ -142,7 +142,8 @@ export class AcInputBase extends HTMLElement {
     }
   }
 
-  connectedCallback() {
+  override connectedCallback() {
+    super.connectedCallback();
     this.append(this.inputElement);
     this.refreshReflectedAttributes();
     this.inputElement.addEventListener('input', ()=>{
@@ -172,10 +173,6 @@ export class AcInputBase extends HTMLElement {
   handleInput(e: any) {
     const newValue = this.inputElement.value;
     this.value('value', newValue);
-  }
-
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.events.subscribe({event,callback});
   }
 
   setValue(value: any) {

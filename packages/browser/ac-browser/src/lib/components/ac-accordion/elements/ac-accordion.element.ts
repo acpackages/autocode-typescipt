@@ -5,10 +5,10 @@ import { AcEnumCollapseEvent } from "../../ac-collapse/enums/ac-enum-collapse-ev
 import { AcEvents } from "@autocode-ts/autocode";
 import { AC_ACCORDION_TAG } from "../consts/ac-accordion-tag.const";
 import { AC_COLLAPSE_TAG } from "../../_components.export";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcAccordion extends HTMLElement{
+export class AcAccordion extends AcElementBase{
   collapses: AcCollapse[] = [];
-  events:AcEvents = new AcEvents();
 
   constructor() {
     super();

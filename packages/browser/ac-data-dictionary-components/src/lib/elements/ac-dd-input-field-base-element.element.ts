@@ -56,9 +56,6 @@ export class AcDDInputFieldBaseElement extends AcElementBase {
     this.innerHTML = `Label : <label ac-dd-input-label-conatiner></label><div ac-dd-input-container></div>`;
   }
 
-  connectedCallback(){
-    //
-  }
 }
 
 acRegisterCustomElement({tag:'ac-dd-input-field-base',type:AcDDInputFieldBaseElement});

@@ -1,3 +1,4 @@
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDraggableApi } from "../../ac-draggable/core/ac-draggable-api";
 import { AcSortable } from "../../ac-draggable/elements/ac-sortable.element";
@@ -11,11 +12,12 @@ export interface AcWindowTab {
   icon?: string;
 }
 
-export class AcWindowTabs extends HTMLElement {
+export class AcWindowTabs extends AcElementBase {
   public static observedAttributes = [];
   private activeId: string | null = null;
 
-  async connectedCallback() {
+  override async connectedCallback() {
+    super.connectedCallback();
     this.innerHTML = `<div class="ac-window-tabs-container"></div>`;
     // const acDraggable = new AcSortable({ element: this.querySelector('.ac-window-tabs-container')! });
     const acDraggable = new AcSortable();

@@ -41,7 +41,13 @@ export default defineConfig(() => ({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [],
+      external: [
+        "@autocode-ts/autocode",
+        "@autocode-ts/ac-browser",
+        "@autocode-ts/ac-data-dictionary",
+        "@autocode-ts/ac-extensions"
+      ],
     },
   },
 }));
+

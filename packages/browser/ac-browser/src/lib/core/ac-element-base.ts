@@ -1,4 +1,5 @@
 import { AcEvents, Autocode } from "@autocode-ts/autocode";
+import { acRegisterCustomElement } from "../utils/ac-element-functions";
 
 export class AcElementBase extends HTMLElement {
   events: AcEvents = new AcEvents();
@@ -10,8 +11,14 @@ export class AcElementBase extends HTMLElement {
     }});
   }
 
+  connectedCallback(){
+    //
+  }
+
   on({ event, callback }: { event: string; callback: Function }): string {
     return this.events.subscribe({ event, callback });
   }
 
 }
+
+acRegisterCustomElement({tag:"ac-element-base",type: AcElementBase});

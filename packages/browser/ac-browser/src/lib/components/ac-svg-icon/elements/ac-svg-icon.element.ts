@@ -1,7 +1,8 @@
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_SVG_ICON_TAG } from "../_ac-svg-icon.element";
 
-export class AcSvgIconElement extends HTMLElement {
+export class AcSvgIconElement extends AcElementBase {
   constructor() {
     super();
     this.style.color = 'inherit';
@@ -10,7 +11,8 @@ export class AcSvgIconElement extends HTMLElement {
     this.style.height = '100%';
   }
 
-  connectedCallback() {
+  override connectedCallback() {
+    super.connectedCallback();
     const children = Array.from(this.childNodes) as HTMLElement[];
     for(const element of children){
       this.setChildElementStyle({element});
