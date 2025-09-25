@@ -39,7 +39,6 @@ export class AcTableElement extends AcBuilderElement{
   }
 
   override handleCommand({command,args}:{command:string,args:any}){
-    console.log(command);
     if(command == 'addRow'){
       const body = this.element.querySelector('tbody');
       const row = document.createElement('tr');

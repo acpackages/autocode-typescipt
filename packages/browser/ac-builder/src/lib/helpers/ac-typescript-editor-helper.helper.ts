@@ -42,23 +42,18 @@ export class AcTypescriptEditorHelper {
 
     // By default: insert before closing brace
     let insertOffset = node.spans[0].start + node.spans[0].length - 1;
-  console.log("Code : "+code);
-    console.log("Checking if is property");
     const propertyRegex = /^[A-Za-z_$][\w$]*!?(\?)?\s*(?:[:=])/;
     if (propertyRegex.test(code.trim())) {
       // Find last property node
-      console.log("Finding last property node");
       const lastProp = [...(node.childItems || [])].reverse().find(
         child => child.kind === "property"
       );
 
       if (lastProp) {
         // Insert after the last property
-        console.log(lastProp);
         insertOffset = lastProp.spans[0].start + lastProp.spans[0].length;
       } else {
         // No properties: insert at the start of the class body
-        console.log("Not found last prop");
         const classStart = model.getPositionAt(node.spans[0].start);
         insertOffset = model.getOffsetAt({
           lineNumber: classStart.lineNumber + 1,
@@ -67,7 +62,7 @@ export class AcTypescriptEditorHelper {
       }
     }
     else{
-      console.log("Code is not property");
+      //
     }
 
     const pos = model.getPositionAt(insertOffset);

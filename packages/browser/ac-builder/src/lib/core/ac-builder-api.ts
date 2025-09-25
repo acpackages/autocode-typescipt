@@ -48,10 +48,9 @@ export class AcBuilderApi {
     this.eventHandler = new AcBuilderEventsHandler({ builderApi: this });
     this.grapesJSApi = builder.grapesJSApi;
     this.initScriptEditor();
-    AcBuilderElementsManager.registerBuiltInExtensions();
+    AcBuilderElementsManager.init();
     this.addElementsFromRegister();
     this.component = { name: 'default', elements: {} };
-    console.log(AcBuilderElementsManager.getElements());
   }
 
   private addElementsFromRegister() {
@@ -137,7 +136,6 @@ export class AcBuilderApi {
   }
 
   setActiveComponent({ component }: { component: IAcBuilderComponent }) {
-    console.log(this);
     this.component = component;
     if (this.component.html) {
       this.grapesJSApi.setComponents(this.component.html);

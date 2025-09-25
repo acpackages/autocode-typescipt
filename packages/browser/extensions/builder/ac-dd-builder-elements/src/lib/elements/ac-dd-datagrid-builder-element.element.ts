@@ -1,5 +1,5 @@
 import { AcBuilderElement, IAcBuilderElement, IAcBuilderElementInitArgs } from "@autocode-ts/ac-builder";
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridOnDemandDataSource, AcEnumDataSourceType, IAcDatagridOnDemandRequestArgs } from "@autocode-ts/ac-browser";
+import { AcDatagrid, AcDatagridApi, IAcDatagridOnDemandRequestArgs } from "@autocode-ts/ac-browser";
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 import { AcDDDatagridElement } from "@autocode-ts/ac-data-dictionary-components";
 
@@ -32,6 +32,7 @@ export class AcDDDatagridBuilderElement extends AcBuilderElement {
   }
   set sourceType(value: string) {
     this.ddDatagrid.sourceType = value;
+    this.setDatagridDisplay();
   }
 
   get sourceValue(): string | null {
@@ -39,6 +40,7 @@ export class AcDDDatagridBuilderElement extends AcBuilderElement {
   }
   set sourceValue(value: string) {
     this.ddDatagrid.sourceValue = value;
+    this.setDatagridDisplay();
   }
 
   get excludeColumns(): any {
@@ -75,18 +77,17 @@ export class AcDDDatagridBuilderElement extends AcBuilderElement {
   }
 
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
-    // acAddClassToElement({ class_: "", element: this.element });
-    this.element.innerHTML = `DDDatagrid`;
-    this.element.append(this.ddDatagrid);
-    this.element.setAttribute('ac-builder-element-interactive', '');
-    this.registerDomEvents();
+    this.setDatagridDisplay();
   }
 
-  private registerDomEvents(): void {
-    // Wire common DOM events to builder events where applicable
-    this.element.addEventListener('click', (event: MouseEvent) => {
-      this.events.execute({ event: 'click', args: event });
-    });
+  private setDatagridDisplay() {
+    if (this.ddDatagrid.sourceType && this.ddDatagrid.sourceValue) {
+      this.element.innerHTML = '';
+      this.element.appendChild(this.ddDatagrid);
+    }
+    else {
+      this.element.innerHTML = "Data Dictionary Datagrid";
+    }
   }
 
 

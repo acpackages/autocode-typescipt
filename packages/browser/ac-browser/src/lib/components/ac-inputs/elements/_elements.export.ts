@@ -5,5 +5,6 @@ export * from './ac-number-input-element.element';
 export * from './ac-option-input-element.element';
 export * from './ac-popout-textarea-input-element.element';
 export * from './ac-select-input-element.element';
+export * from './ac-tags-input-element.element';
 export * from './ac-textarea-input-element.element';
 export * from './ac-text-input-element.element';

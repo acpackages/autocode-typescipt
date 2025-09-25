@@ -14,7 +14,7 @@ export class AcDatagridOnAgGridCell implements ICellRendererComp {
   defaultElement = document.createElement('div');
 
   constructor() {
-    // console.log(this);
+    //
   }
 
   getGui(): HTMLElement {

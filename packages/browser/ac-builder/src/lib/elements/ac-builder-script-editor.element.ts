@@ -188,7 +188,6 @@ export class AcBuilderScriptEditor {
     gjsAttrs.forEach(attr => node.removeAttribute(attr));
 
     for(const className of Array.from(element.classList)){
-      console.log(className);
       if(className.startsWith("gjs-")){
         (node as HTMLElement).classList.remove(className);
       }

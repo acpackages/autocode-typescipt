@@ -23,7 +23,6 @@ export class AcDDSelectDatagridSourceValueInput extends AcBuilderPropertySelectI
 
   setSourceValueOptions() {
     const options = [];
-    console.dir(this);
     if (this.componentElement && this.componentElement.properties) {
       if (this.componentElement.properties['sourceType']) {
         const sourceType = this.componentElement.properties['sourceType'].value;

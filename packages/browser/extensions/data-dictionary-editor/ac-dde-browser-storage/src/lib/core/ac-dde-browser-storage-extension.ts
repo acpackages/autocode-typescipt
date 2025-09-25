@@ -30,7 +30,7 @@ export class AcDDEBrowserStorageExtension extends AcDDEExtension {
               console.error(response);
             }
             else {
-              // console.info(response);
+              //
             }
           }
         }

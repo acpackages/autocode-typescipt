@@ -2,7 +2,6 @@
 import { AcArrayValuesInputElement, AcDatagrid, AcDatetimeInputElement, AcInputElement, AcModal, AcNumberInputElement, AcOptionInputElement, AcPagination, AcPopoutTextareaInputElement, AcResizable, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
-import { AcDraggable } from "../components/ac-draggable/elements/ac-draggable.element";
 import { AcSvgIconElement } from "../components/ac-svg-icon/_ac-svg-icon.element";
 
 const ATTRIBUTES_TO_LISTEN: string[] = [

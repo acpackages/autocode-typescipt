@@ -6,6 +6,7 @@ export const AC_INPUT_TAG = {
   optionInput:'ac-option-input',
   popoutTextareaInput:'ac-popout-textarea-input',
   selectInput:'ac-select-input',
+  tagsInput:'ac-tags-input',
   textInput:'ac-text-input',
   textareaInput:'ac-textarea-input'
 }

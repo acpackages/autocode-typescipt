@@ -21,13 +21,13 @@ export class AcDDERelationshipsDetector {
   createRelationshipFromResult({result}:{result:IAcIdentifiedResult}){
     if(result.relationships){
       for(const relationship of result.relationships){
-        console.log(this.dataStorage.addRelationship({
+        this.dataStorage.addRelationship({
           dataDictionaryId:result.dataDictionaryId,
           sourceColumnId:relationship.sourceColumnId,
           sourceTableId:relationship.sourceTableId,
           destinationColumnId:relationship.destinationColumnId,
           destinationTableId:relationship.destinationTableId,
-        }));
+        });
       }
     }
   }

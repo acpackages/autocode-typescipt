@@ -34,7 +34,7 @@ export class AcDatagridTree {
     this.treeDatagridContainer.style.paddingLeft = `${AcDatagridTreeTableDefaultConfig.treeChildPadding}px`;
     this.element.append(this.treeDatagridContainer);
     this.setTreeChildrenRows();
-    this.collapse = new AcCollapse({element:this.element});
+    this.collapse = new AcCollapse();
     this.collapse.on({event:AcEnumCollapseEvent.Toggle,callback:()=>{
       if(this.collapse){
         this.isOpen = this.collapse.isOpen;

@@ -41,7 +41,6 @@ export class AcDDInputElement extends AcInputBase {
       if (inputDefinition.defaultProperties) {
         for (const key in inputDefinition.defaultProperties) {
           this.inputElement[key] = inputDefinition.defaultProperties[key];
-          console.log(key);
         }
       }
       this.innerHTML = "";

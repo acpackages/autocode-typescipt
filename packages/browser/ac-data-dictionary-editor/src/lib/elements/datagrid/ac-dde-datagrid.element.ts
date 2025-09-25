@@ -52,7 +52,7 @@ export class AcDDEDatagrid {
     });
     this.afterRowsExtension.footerElement = this.footerElement;
     this.datagridApi.on({event: AcEnumDatagridEvent.StateChange, callback: (args: any) => {
-        console.log(args);
+        //
       }
     })
   }

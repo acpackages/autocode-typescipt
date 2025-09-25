@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_IMAGE_PICTURE_PROPERTIES, AC_KEYBOARD_EVENTS, AC_MEDIA_PROPERTIES, AC_MOUSE_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
@@ -28,8 +29,8 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcImageElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    args.element.style.height = "50px";
-    args.element.style.width = "50px";
+    args.element!.style.height = "50px";
+    args.element!.style.width = "50px";
     this.registerListeners();
   }
 
@@ -66,7 +67,7 @@ export const AC_BUILDER_IMAGE_ELEMENT:IAcBuilderElement = {
     AC_IMAGE_PICTURE_PROPERTIES.srcSet as IAcBuilderElementProperty,
     AC_IMAGE_PICTURE_PROPERTIES.sizes as IAcBuilderElementProperty,
     AC_IMAGE_PICTURE_PROPERTIES.fetchPriority as IAcBuilderElementProperty,
-    ...basicProperty, 
+    ...basicProperty,
     ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.image,

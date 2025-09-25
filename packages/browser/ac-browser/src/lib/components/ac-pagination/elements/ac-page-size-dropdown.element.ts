@@ -38,9 +38,7 @@ export class AcPageSizeDropdown {
     this.selectInput.innerHTML = optionsString;
     this.selectInput.value = this.paginationApi.activePageSize.toString();
     this.selectInput.addEventListener('change',(event:any)=>{
-      console.log('New page size : ',this.selectInput.value);
       this.paginationApi.activePageSize = parseInt(this.selectInput.value);
     });
-    console.log(this.selectInput.value);
   }
 }

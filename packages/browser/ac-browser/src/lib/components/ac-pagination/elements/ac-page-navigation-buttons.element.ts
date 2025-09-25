@@ -47,19 +47,15 @@ export class AcPageNavigationButtons {
   registerListeners(){
     this.firstButton.addEventListener('click',(event:Event)=>{
       this.paginationApi.activePage = 1;
-      console.log(this.paginationApi.activePage);
     });
     this.previousButton.addEventListener('click',(event:Event)=>{
       this.paginationApi.activePage = this.paginationApi.activePage - 1;
-      console.log(this.paginationApi.activePage);
     });
     this.nextButton.addEventListener('click',(event:Event)=>{
       this.paginationApi.activePage = this.paginationApi.activePage + 1;
-      console.log(this.paginationApi.activePage);
     });
     this.lastButton.addEventListener('click',(event:Event)=>{
       this.paginationApi.activePage = this.paginationApi.totalPages;
-      console.log(this.paginationApi.activePage);
     });
   }
 

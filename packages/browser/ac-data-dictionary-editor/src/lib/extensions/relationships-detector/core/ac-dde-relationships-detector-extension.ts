@@ -19,7 +19,6 @@ export class AcDDERelationshipsDetectorExtension extends AcDDEExtension {
           label: 'Detect Relationships',iconClass:'aci-locate', callback: () => {
             const result = this.detector.identifyRelationships();
             this.detector.createRelationshipFromResult({result:result});
-            console.log(this);
           }
         }
       ]

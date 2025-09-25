@@ -29,7 +29,6 @@ export class AcBuilderState {
     this.builderApi = builderApi;
     this.builderApi.hooks.subscribe({
       hook: AcEnumBuilderHook.EditorClose, callback: () => {
-        console.log("Editor close");
         this.refresh();
       }
     });

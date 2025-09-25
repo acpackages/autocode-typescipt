@@ -55,7 +55,6 @@ export class AcDatagridCellEditorElement implements IAcDatagridCellEditorElement
   render() {
     this.element.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field];
     this.element.addEventListener('input', (e: any) => {
-      console.log("Value changed");
       // this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
     });
   }

@@ -56,8 +56,6 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcBsAccordion extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
-    // Basic placeholder HTML for Accordion
-    console.log(this);
     acAddClassToElement({class_:"accordion accordion-flush",element:this.element});
     this.element.innerHTML = `
       <div class="accordion-item" contenteditable>
@@ -105,7 +103,7 @@ export const AC_BUILDER_BS_ACCORDION_ELEMENT: IAcBuilderElement = {
   title: "Accordion",
   events: [...BS_EVENTS],
   properties: [
-    ...basicProperty, 
+    ...basicProperty,
     ...ariaProperties,
     ...BS_PROPS
   ],

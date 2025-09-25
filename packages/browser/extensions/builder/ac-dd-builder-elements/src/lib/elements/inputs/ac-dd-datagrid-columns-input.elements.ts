@@ -28,25 +28,17 @@ export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
     });
     this.modal.innerHTML = `
     <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
-          <h6 id="modal-title" style="margin: 0;">Datagid Columns</h6>
+          <h5 style="margin: 0;font-weight:bold">Datagid Columns</h5>
         </div>
-        <div class="ac-modal-body" >
-          <ac-collapse ac-collapse-open>
-            <div class="mb-2">
-              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Additional Columns</button>
-            </div>
-            <div ac-collapse-content class="border bg-white p-3">
-              Additional Columns List
-            </div>
-          </ac-collapse>
-          <ac-collapse ac-collapse-open>
-            <div class="mb-2">
-              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Include Columns</button>
-            </div>
-            <div ac-collapse-content class="border bg-white p-3">
-              Include Columns List
-            </div>
-          </ac-collapse>
+        <div class="ac-modal-body p-3" >
+          <div class="form-group mb-2">
+            <label class="form-label">Exclude Columns</label>
+            <ac-tags-input class="form-control" />
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label">Include Columns</label>
+            <ac-tags-input class="form-control" />
+          </div>
           <ac-collapse ac-collapse-open>
             <div class="mb-2">
               <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Include Columns</button>
@@ -71,7 +63,7 @@ export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
 
   openModal() {
     document.querySelector('body')?.append(this.modal);
-    this.modal.open({ triggerElement: this.displayElement });
+    this.modal.open({ triggerElement: this.displayElement,morphModalColor:'white',morphTriggerColor:'#555' });
   }
 
 }

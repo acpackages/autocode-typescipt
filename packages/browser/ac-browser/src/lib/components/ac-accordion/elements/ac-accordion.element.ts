@@ -17,10 +17,8 @@ export class AcAccordion extends HTMLElement{
   }
 
   init() {
-    console.dir(this);
     const collapseElements = Array.from(this.querySelectorAll(`${AC_COLLAPSE_TAG.collapse}`)) as AcCollapse[];
     for(const collapse of collapseElements){
-      console.dir(collapse);
       this.collapses.push(collapse);
       collapse.addEventListener(AcEnumCollapseEvent.Open,() => {
           this.collapses.forEach((c) => {

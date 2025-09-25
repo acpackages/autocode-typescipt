@@ -15,7 +15,6 @@ export class AcDatagridOnDemandDataSource extends AcDatagridDataSource {
           responseArgs: response,
         }
         this.setData({ data: response.data, totalCount: response.totalCount, startIndex: startIndex });
-        console.log("Data Set");
         this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.GetOnDemandDataSuccessCallback, args: hookArgs });
       }
       const requestArgs: IAcDatagridOnDemandRequestArgs = {

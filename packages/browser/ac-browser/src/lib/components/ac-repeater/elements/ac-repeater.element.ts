@@ -19,17 +19,15 @@ export class AcRepeater{
   }
 
   private handleClick(event:any){
-    console.log(this.repeaterApi);
     // this.repeaterApi.setFocusedCell({cell:this.cell});
   }
 
   private handleKeyUp(event:any){
-    console.log(event);
     // this.repeaterApi.setFocusedCell({cell:this.cell});
   }
 
   private handleFocus(event:any){
-    console.log(event);
+    //
   }
 
   init(){

@@ -303,15 +303,12 @@ export class AcSelectInputElement extends AcInputBase {
       for (let i = 0; i < this._filteredOptions.length; i++) {
       const row = this.buildOptionElement(this._filteredOptions[i], i);
       if (this.name == 'sourceColumnId') {
-        console.log(row);
+        //
       }
       this.listEl.appendChild(row);
     }
     }
     else{
-      console.log(this._filteredOptions);
-      console.log(this._selectOptions);
-      console.dir(this);
       this.listEl.innerHTML = `<div style="text-align:center;">No matching records!</div>`;
     }
 

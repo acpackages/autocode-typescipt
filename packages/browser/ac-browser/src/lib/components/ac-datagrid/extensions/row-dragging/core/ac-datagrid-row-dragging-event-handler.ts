@@ -15,7 +15,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDrag, args: eventArgs });
   }
 
@@ -25,7 +24,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnd, args: eventArgs });
   }
 
@@ -35,7 +33,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragDrop, args: eventArgs });
   }
 
@@ -45,7 +42,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnd, args: eventArgs });
   }
 
@@ -55,7 +51,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnter, args: eventArgs });
   }
 
@@ -65,7 +60,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragLeave, args: eventArgs });
   }
 
@@ -75,7 +69,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragOver, args: eventArgs });
   }
 
@@ -85,7 +78,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    console.log(eventArgs);
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragStart, args: eventArgs });
   }
 }

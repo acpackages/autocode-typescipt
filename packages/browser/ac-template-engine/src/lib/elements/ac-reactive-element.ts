@@ -24,7 +24,6 @@ export class AcReactiveElement {
     this.bindValueExpression(0);
     this.bindAttributeExpressions();
     this.update();
-    console.log(this);
   }
 
   bindValueExpression(startPosition:number) {
@@ -96,16 +95,12 @@ export class AcReactiveElement {
         expressionResult = "";
       }
       expressionResult = expressionResult.toString();
-      // console.log(expressionDetails.expression,expressionResult);
       const newExpressionValueLength:number = expressionResult.length;
       const newStartPosition = expressionDetails.startPosition + lengthChange;
       const newEndPosition = expressionDetails.endPosition + lengthChange;
-      // console.log(newStartPosition,newEndPosition,=>);
       const beforeHtml = this.element.innerText.substring(0,newStartPosition);
       const afterHtml = this.element.innerText.substring(newEndPosition + 1);
       const newHtml = beforeHtml+expressionResult+afterHtml;
-      // console.log("Old Html",this.element.innerText);
-      // console.log("New Html",newHtml);
       this.element.innerText = newHtml;
       lengthChange = lengthChange + (previousExpressionValueLength - newExpressionValueLength);
       expressionDetails.startPosition = newStartPosition;

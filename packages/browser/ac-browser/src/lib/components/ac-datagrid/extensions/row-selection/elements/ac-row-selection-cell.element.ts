@@ -42,7 +42,6 @@ export class AcDatagridRowSelectionCell {
   registerListeners(){
     this.input.addEventListener('change',(e:Event)=>{
       this.selected = true;
-      console.log("Selection Changed",e);
     });
   }
 

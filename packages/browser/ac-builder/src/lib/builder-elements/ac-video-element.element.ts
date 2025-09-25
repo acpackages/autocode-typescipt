@@ -29,8 +29,8 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 
 export class AcVideoElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
-    args.element.style.height = "50px";
-    args.element.style.width = "50px";
+    args.element!.style.height = "50px";
+    args.element!.style.width = "50px";
     this.registerListeners();
   }
 
@@ -68,7 +68,7 @@ export const AC_BUILDER_VIDEO_ELEMENT:IAcBuilderElement = {
     AC_MEDIA_PROPERTIES.poster as IAcBuilderElementProperty,
     AC_MEDIA_PROPERTIES.preload as IAcBuilderElementProperty,
     AC_MEDIA_PROPERTIES.playsinline as IAcBuilderElementProperty,
-    ...basicProperty, 
+    ...basicProperty,
     ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.video,

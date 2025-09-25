@@ -38,13 +38,16 @@ export class AcBuilderEventsPanel {
       categoryContainer.setAttribute(AcFilterableElementsAttributeName.acFilterElementGroup, 'true');
       categoryContainer.setAttribute('ac-data-category', categoryAttributeValue);
       acAddClassToElement({ element: categoryContainer, class_: 'gjs-block-category gjs-open' });
-      categoryContainer.innerHTML = `<div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
+      categoryContainer.innerHTML = `
+        <ac-collapse>
+        <div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
           <span class="gjs-caret-icon"><ac-svg-icon class="p-1">${AC_BUILDER_SVGS.caretDown}</ac-svg-icon></span> ${categoryName}
         </div>
         <div class="gjs-blocks-c category-inputs-container gjs-sm-properties p-1" ${AcCollapseAttributeName.acCollapseContent} ${AcCollapseAttributeName.acCollapseOpen}></div>
+        </ac-collapse>
         `;
       this.inputsContainer.append(categoryContainer);
-      const collapse = new AcCollapse({ element: categoryContainer as HTMLElement });
+      const collapse = categoryContainer.querySelector('ac-collapse') as AcCollapse;
       collapse.on({event:AcEnumCollapseEvent.Open,callback:()=>{
         const iconElement = categoryContainer?.querySelector('.ac-builder-icon-svg');
         if(iconElement) iconElement.innerHTML = AC_BUILDER_SVGS.caretDown;

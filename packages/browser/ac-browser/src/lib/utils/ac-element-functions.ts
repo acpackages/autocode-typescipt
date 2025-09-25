@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-export function acAddClassToElement({class_,element}:{class_:string,element:Element}){
-  const classList:string[] = class_.trim().split(" ")
-  for(const className of classList){
+export function acAddClassToElement({ class_, element }: { class_: string, element: Element }) {
+  const classList: string[] = class_.trim().split(" ")
+  for (const className of classList) {
     element.classList.add(className);
   }
 }
@@ -37,8 +37,8 @@ export function acAnimateElement(
   requestAnimationFrame(step);
 }
 
-export function acCopyElementStyles({fromElement,toElement}:{fromElement: HTMLElement, toElement: HTMLElement}) {
-  const computed:any = window.getComputedStyle(fromElement);
+export function acCopyElementStyles({ fromElement, toElement }: { fromElement: HTMLElement, toElement: HTMLElement }) {
+  const computed: any = window.getComputedStyle(fromElement);
   for (const key of computed) {
     try {
       toElement.style.setProperty(key, computed.getPropertyValue(key), computed.getPropertyPriority(key));
@@ -48,12 +48,12 @@ export function acCopyElementStyles({fromElement,toElement}:{fromElement: HTMLEl
   }
 }
 
-export function acMorphElement({source,destination,duration = 300}:{source: HTMLElement, destination: HTMLElement, duration?: number}): void {
+export function acMorphElement({ source, destination,sourceColor,destinationColor, duration = 300 }: { source: HTMLElement, destination: HTMLElement,sourceColor?:string;destinationColor?:string; duration?: number }): void {
   // Get bounding client rectangles
   const sourceRect = source.getBoundingClientRect();
   const destRect = destination.getBoundingClientRect();
   const scrollX = window.scrollX || window.pageXOffset;
-const scrollY = window.scrollY || window.pageYOffset;
+  const scrollY = window.scrollY || window.pageYOffset;
 
   // Clone both source and destination elements
   const sourceClone: HTMLElement = source.cloneNode(true) as HTMLElement;
@@ -63,7 +63,7 @@ const scrollY = window.scrollY || window.pageYOffset;
   Object.assign(sourceClone.style, {
     position: "fixed",
     left: `${sourceRect.x + scrollX}px`,
-  top: `${sourceRect.y + scrollY}px`,
+    top: `${sourceRect.y + scrollY}px`,
     width: `${sourceRect.width}px`,
     height: `${sourceRect.height}px`,
     margin: "0",
@@ -72,6 +72,11 @@ const scrollY = window.scrollY || window.pageYOffset;
     transition: `all ${duration}ms ease-in-out`,
     opacity: "1",
   });
+  if(sourceColor){
+    sourceClone.innerHTML = "";
+    sourceClone.style.background = `${sourceColor}!important`;
+  }
+
 
   // Style destination clone to match source initially
   Object.assign(destClone.style, {
@@ -86,6 +91,10 @@ const scrollY = window.scrollY || window.pageYOffset;
     transition: `all ${duration}ms ease-in-out`,
     opacity: "0",
   });
+  if(destinationColor){
+    destClone.innerHTML = "";
+    destClone.style.background = `${destinationColor}!important`;
+  }
 
   // Append clones to body
   document.body.appendChild(sourceClone);
@@ -121,22 +130,22 @@ const scrollY = window.scrollY || window.pageYOffset;
 }
 
 
-export function acRegisterCustomElement({tag,type}:{tag:string,type:any}){
+export function acRegisterCustomElement({ tag, type }: { tag: string, type: any }) {
   if (customElements.get(tag) == undefined) {
     customElements.define(tag, type);
   }
 }
 
-export function acRemoveClassFromElement({class_,element}:{class_:string,element:Element}){
-  const classList:string[] = class_.trim().split(" ")
-  for(const className of classList){
+export function acRemoveClassFromElement({ class_, element }: { class_: string, element: Element }) {
+  const classList: string[] = class_.trim().split(" ")
+  for (const className of classList) {
     element.classList.remove(className);
   }
 }
 
-export function acSetElementAttributes({attributes,element}:{attributes:any,element:Element}){
-  for(const attributeName of Object.keys(attributes)){
-    element.setAttribute(attributeName,attributes[attributeName]);
+export function acSetElementAttributes({ attributes, element }: { attributes: any, element: Element }) {
+  for (const attributeName of Object.keys(attributes)) {
+    element.setAttribute(attributeName, attributes[attributeName]);
   }
 }
 

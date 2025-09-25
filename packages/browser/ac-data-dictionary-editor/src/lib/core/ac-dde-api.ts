@@ -67,7 +67,6 @@ export class AcDDEApi {
 
   addMenuGroup({ menuGroup }: { menuGroup: IAcDDEMenuGroup }) {
     this.menus.push(menuGroup);
-    console.log(menuGroup);
     const hookArgs: IAcDDEMenuGroupAddHookArgs = {
       editorApi: this,
       menuGroup: menuGroup

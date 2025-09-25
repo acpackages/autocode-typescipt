@@ -10,6 +10,8 @@ export class AcModal extends AcElementBase {
   private isOpen: boolean = false;
   private animationDuration: number = 400; // ms
   private lastTrigger?: HTMLElement;
+  private morphTriggerColor?:string;
+  private morphModalColor?:string;
   private cloneEl?: HTMLElement;
 
   constructor() {
@@ -44,7 +46,7 @@ export class AcModal extends AcElementBase {
     // Get modal position & size
     const modalRect = this.getBoundingClientRect();
 
-    acMorphElement({source:this,destination:this.lastTrigger});
+    acMorphElement({source:this,destination:this.lastTrigger,destinationColor:this.morphTriggerColor,sourceColor:this.morphModalColor});
 
     if (this.backdrop) {
       this.backdrop.remove();
@@ -81,7 +83,7 @@ export class AcModal extends AcElementBase {
   /**
    * Show modal with clone morph animation from trigger element.
    */
-  open({ triggerElement }: { triggerElement?: HTMLElement } = {}) {
+  open({ triggerElement, morphTriggerColor,morphModalColor }: { triggerElement?: HTMLElement,morphTriggerColor?:string,morphModalColor?:string } = {}) {
     if (this.isOpen) return;
     this.isOpen = true;
     this.lastTrigger = triggerElement;
@@ -141,7 +143,7 @@ export class AcModal extends AcElementBase {
     // Prepare modal for morphing
     this.style.visibility = "hidden";
 
-    acMorphElement({ source: triggerElement, destination: this, duration: this.animationDuration });
+    acMorphElement({ source: triggerElement, destination: this, duration: this.animationDuration,sourceColor:morphTriggerColor,destinationColor:morphModalColor });
 
     setTimeout(() => {
       this.style.visibility = "visible";

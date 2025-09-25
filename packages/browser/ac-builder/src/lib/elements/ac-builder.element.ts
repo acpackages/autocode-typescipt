@@ -57,7 +57,6 @@ export class AcBuilder {
     this.setGrapesJSElementStyles();
     this.setDeviceButtons();
     this.initGrapesJSCommands();
-    // console.log(plugin);
   }
 
   private initGrapesJSCommands(): void {
@@ -227,7 +226,6 @@ export class AcBuilder {
 
     };
     const btnDesktop = this.element.querySelector('.btn-desktop') as HTMLElement;
-    console.log(btnDesktop);
     btnDesktop.addEventListener('click', () => {
       setActiveDevice('desktop');
     });

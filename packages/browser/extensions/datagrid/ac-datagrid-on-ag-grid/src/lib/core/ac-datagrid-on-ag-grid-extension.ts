@@ -390,8 +390,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    // console.log(`Hook ${hook}`,args);
-
     if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.BeforeGetOnDemandData)) {
       this.handleBeforeGetOnDemandData(args);
     }

@@ -9,14 +9,16 @@ type Constructor<T = any> = new (...args: any[]) => T;
 
 export class AcRuntime {
   private static registry: Record<string, Constructor> = {};
+  private static scope: any = {};
 
   /**
    * Create a class dynamically
    */
   static createClass({ name, script, properties = {}, methods = {}, global = false, scope = {} }: { name: string; script?: string; properties?: Record<string, any>; methods?: Record<string, Function>; global?: boolean;scope?:Record<string, any> }): Constructor | undefined {
     let clazz: any;
-    const scopeKeys = Object.keys(scope);
-    const scopeValues = Object.values(scope);
+    const scriptScope = {...this.scope,...scope};
+    const scopeKeys = Object.keys(scriptScope);
+    const scopeValues = Object.values(scriptScope);
     if (script == undefined) {
       clazz = new Function(...scopeKeys,`
       return class ${name} {
@@ -60,6 +62,10 @@ export class AcRuntime {
       throw new Error(`Class '${name}' not found in registry.`);
     }
     return new clazz(...args);
+  }
+
+  static registerScopeClass({name,type}:{name:string,type:any}){
+    this.scope[name] = type;
   }
 
   /**

@@ -18,7 +18,6 @@ export class AcDraggable extends AcElementBase {
     super();
     this.observeDOM();
     this.initElement();
-    console.dir(this);
   }
 
   private observeDOM(): void {

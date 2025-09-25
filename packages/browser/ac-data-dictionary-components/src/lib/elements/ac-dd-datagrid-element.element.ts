@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcDatagrid, AcDatagridApi, AcDatagridOnDemandDataSource, AcEnumDataSourceType,acRegisterCustomElement, IAcDatagridColumnDefinition, IAcDatagridOnDemandRequestArgs } from "@autocode-ts/ac-browser";
-import { AcDataDictionary, AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
+import { AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
 import { AcEnumSqlEntity } from "@autocode-ts/autocode";
 import { AcDDDatagridColumnManager } from "../core/ac-dd-datagrid-column-manager";
 
@@ -96,7 +96,6 @@ export class AcDDDatagridElement extends HTMLElement {
     super();
     this.style.display = 'contents';
     this.datagridApi = this.datagrid.datagridApi;
-    console.dir(this);
   }
 
   connectedCallback(): void {

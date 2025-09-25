@@ -78,5 +78,4 @@ export function acRegisterBootstrapBuilderElements(){
   AcBuilderElementsManager.register({element:AC_BUILDER_BS_TEXTAREA_ELEMENT});
   AcBuilderElementsManager.register({element:AC_BUILDER_BS_TOAST_ELEMENT});
   AcBuilderElementsManager.register({element:AC_BUILDER_BS_TYPOGRAPHY_ELEMENT});
-  console.log(AcBuilderElementsManager);
 }

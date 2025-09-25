@@ -15,7 +15,6 @@ export class AcEventBinding{
     const context = this.elementContext.getContextValueObject();
     for (const attr of Array.from(this.element.attributes)) {
       const attrName:string = attr.name.toLowerCase();
-      // console.log("Checking if has acOn: on attribute "+attrName);
       if (!attrName.startsWith(AC_TEMPLATE_ENGINE_ATTRIBUTE.On)) continue;
 
       const event = attrName.slice(AC_TEMPLATE_ENGINE_ATTRIBUTE.On.length+1);
@@ -26,7 +25,6 @@ export class AcEventBinding{
       this.element.addEventListener(event, (event: Event) => {
         try {
           const fnBody = expr.includes('(') && expr.includes(')') ? expr : `${expr}($event)`;
-          // console.log(fnBody);
           const handler = new Function('$event', ...Object.keys(context), `return ${fnBody}`);
           handler(event, ...Object.values(context));
         } catch (e) {

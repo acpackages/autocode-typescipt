@@ -127,7 +127,6 @@ export class AcDataDictionaryDartCodeGenerator {
       for (const key of Object.keys(properties)) {
         const value = properties[key][AcDDTableColumnProperty.KeyPropertyValue];
         let propertyKey = stringToCamelCase(key);
-        console.log(`${key} => ${propertyKey}`);
         let propertyValue = `${value}`;
         let validProperty:boolean = false;
         if(boolColumnProperties.includes(key) && value == true){

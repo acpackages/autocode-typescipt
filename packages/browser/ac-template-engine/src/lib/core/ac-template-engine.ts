@@ -26,8 +26,7 @@ export class AcTemplateEngine {
       this.elementContext.copyFrom({ elementContext: elementContext });
     }
     this.elementContext.on('change', (params: any) => {
-      console.log("Template engive value change");
-      console.log(params);
+      //
     })
     this.element = element;
   }
@@ -97,7 +96,6 @@ export class AcTemplateEngine {
     const result = node.nodeValue.replace(/\{\{(.*?)\}\}/g, (_: any, expr: any) =>
       AcExpression.evaluate({ expression: expr, context: context })
     );
-    console.log(result);
     node.nodeValue = result;
   }
 
@@ -117,8 +115,6 @@ export class AcTemplateEngine {
     if (!tpl) return null;
 
     const fragment = tpl.cloneNode(true) as DocumentFragment;
-    console.log(fragment);
-    console.log(context);
     const engine = new AcTemplateEngine({ context, element: fragment });
     engine.render();
     return fragment;
@@ -133,9 +129,7 @@ export class AcTemplateEngine {
     let remove: boolean = true;
     if (templateName) {
       const context = this.elementContext.contexts[0];
-      console.log(context);
       const templateElement = this.renderTemplate(templateName,context.value);
-      console.log(this);
       if (templateElement) {
         el.replaceWith(templateElement);
         remove = false;
@@ -156,7 +150,6 @@ export class AcTemplateEngine {
 
   private processSlot(slot: HTMLElement) {
     const parent = slot.parentElement!;
-    console.log(parent);
     const projected = (slot as any).__projectedContent as Node[] || [];
     projected.forEach(n => parent.insertBefore(n.cloneNode(true), slot));
     slot.remove();

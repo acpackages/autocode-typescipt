@@ -74,7 +74,7 @@ export class AcGrapesJSEventsHandler {
           });
         }
         else {
-          // console.log(mutation);
+          //
         }
       });
     });
@@ -117,16 +117,16 @@ export class AcGrapesJSEventsHandler {
       //
     });
     editor.on('block:category:update', (args) => {
-      // console.log(args);
+      //
     });
     editor.on('block:category:add', (args) => {
-      // console.log(args);
+      //
     });
     editor.on('block:custom', (args) => {
       //
     });
     editor.on('block', (args) => {
-      // console.log(args);
+      //
     });
   }
 
@@ -177,7 +177,7 @@ export class AcGrapesJSEventsHandler {
       //
     });
     editor.on('component:update:attributes', (args) => {
-      // console.log(args);
+      //
     });
   }
 

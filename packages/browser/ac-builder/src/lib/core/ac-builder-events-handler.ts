@@ -11,7 +11,6 @@ export class AcBuilderEventsHandler {
   builderApi: AcBuilderApi;
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
-    console.log(this);
   }
 
   getFunctionUseCount({functionName}:{functionName:string}):number{

@@ -51,8 +51,7 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
         actionElement.element.appendChild(analyzeButton);
         analyzeButton.addEventListener('click',()=>{
           const query = args.datagridCell.datagridRow.data[AcEnumDDEView.ViewQuery];
-          // console.log(query);
-          console.log(new AcSqlParser().parse({sql:query}));
+          new AcSqlParser().parse({sql:query});
         });
       }, 10);
     }

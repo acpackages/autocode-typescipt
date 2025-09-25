@@ -86,7 +86,6 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
         oldParentId: oldParentId,
         previousGroupChildIndex: this.previousGroupChildIndex
       };
-      console.log(eventParams);
     }
     this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragEnd({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:event}),event:event.event});
   }

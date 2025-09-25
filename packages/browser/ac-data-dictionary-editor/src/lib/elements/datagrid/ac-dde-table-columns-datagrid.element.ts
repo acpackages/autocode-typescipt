@@ -98,7 +98,6 @@ export class AcDDETableColumnsDatagrid {
     this.datagridApi.on({
       event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
         this.editorApi.dataStorage.setTableColumnProperties(args.datagridCell.datagridRow.data);
-        console.log(args);
       }
     });
     this.datagridApi.on({
@@ -145,7 +144,6 @@ export class AcDDETableColumnsDatagrid {
     if (this.filterFunction != undefined) {
       data = data.filter((item: IAcDDETableColumn) => this.filterFunction!(item));
     }
-    console.log(data);
     this.datagridApi.data = data;
   }
 

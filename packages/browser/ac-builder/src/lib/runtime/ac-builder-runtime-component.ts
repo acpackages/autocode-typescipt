@@ -11,6 +11,7 @@ import { Autocode } from "@autocode-ts/autocode";
 export class AcBuilderRuntimeComponent {
   component: IAcBuilderComponent;
   componentInstance?: AcBuilderComponent | any;
+  scriptScope:any ={'AcBuilderComponent':AcBuilderComponent,'HTMLElement':HTMLElement} ;
   private componentElement?:HTMLElement;
   constructor({ component }: { component: IAcBuilderComponent }) {
     this.component = component;
@@ -37,7 +38,7 @@ export class AcBuilderRuntimeComponent {
         target: ts.ScriptTarget.ES2020,
         module: ts.ModuleKind.ESNext
       });
-      const result = AcRuntime.createClass({ name: className, script: jsScript,scope:{'AcBuilderComponent':AcBuilderComponent,'HTMLElement':HTMLElement} });
+      const result = AcRuntime.createClass({ name: className, script: jsScript,scope:this.scriptScope});
       this.componentInstance = AcRuntime.createInstance({ name: className });
     }
   }
@@ -46,7 +47,7 @@ export class AcBuilderRuntimeComponent {
     this.createInstanceFromScript();
     if(this.componentInstance && this.componentInstance.element){
       this.componentInstance.element.innerHTML = this.component.html;
-      this.componentInstance.init();
+      this.componentInstance.init({});
       this.componentElement = this.componentInstance.element;
       if(this.component.elementAttributes){
         for(const key of Object.keys(this.component.elementAttributes)){

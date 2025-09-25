@@ -1,6 +1,7 @@
-import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInputElement, AcEnumInputType, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInputElement, AcEnumInputType, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTagsInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcContext } from "@autocode-ts/ac-template-engine";
+import { languages } from "monaco-editor";
 
 export class InputBasicPage extends HTMLElement {
   pageHeader: PageHeader = new PageHeader();
@@ -207,6 +208,13 @@ export class InputBasicPage extends HTMLElement {
     select.className = 'form-select';
     addField('Preferred Framework', select, allInputsGroup);
 
+    const languageTags = new AcTagsInputElement();
+    languageTags.acContextKey = 'languages';
+    languageTags.acContext = this.context;
+    languageTags.tagOptions = ['English', 'Hindi', 'Gujarati', 'Spanish', 'Sanskrit'];
+    languageTags.className = 'form-control';
+    addField('Languages', languageTags, allInputsGroup);
+
     this.pageHeader.addMenuItem({
       label: 'Record',
       children: [
@@ -274,7 +282,8 @@ export class InputBasicPage extends HTMLElement {
       about_me: 'Product designer focused on user-centered design.',
       contact_preference: 'Phone',
       interested_fruits: ['Banana','Orange'],
-      preferred_framework: 'React'
+      preferred_framework: 'React',
+      languages: 'Telgu,English,Hindi,Sanskrit'
     });
   }
 }

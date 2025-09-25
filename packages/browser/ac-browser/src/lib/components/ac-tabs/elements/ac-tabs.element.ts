@@ -251,7 +251,6 @@ export class AcTabs extends AcElementBase{
       element.addEventListener('click', (event: MouseEvent) => {
         if (element.hasAttribute(AcTabsAttributeName.acTabTarget)) {
           const targetTabQuery = element.getAttribute(AcTabsAttributeName.acTabTarget);
-          console.log(targetTabQuery);
           if (targetTabQuery) {
             const targetTab = this.querySelector(targetTabQuery);
             if (targetTab) {

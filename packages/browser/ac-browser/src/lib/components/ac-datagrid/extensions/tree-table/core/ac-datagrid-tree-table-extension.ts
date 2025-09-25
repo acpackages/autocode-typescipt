@@ -69,7 +69,6 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
     // const draggableSort = new AcDraggableSort({ element: this.datagridApi.datagrid.datagridBody.element });
     const draggableSort = new AcSortable();
     this.draggableApi = draggableSort.draggableApi;
-    console.log(this, this.datagridApi.datagrid.datagridBody.element);
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {

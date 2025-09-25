@@ -22,7 +22,6 @@ export class AcRepeaterOnDemandDataSource extends AcRepeaterDataSource {
           responseArgs: response,
         }
         this.setData({ data: response.data, totalCount: response.totalCount, startIndex: startIndex });
-        console.log("Data Set");
         this.repeaterApi.hooks.execute({ hook: AcEnumRepeaterHook.GetOnDemandDataSuccessCallback, args: hookArgs });
       }
       const requestArgs: IAcRepeaterOnDemandRequestArgs = {
