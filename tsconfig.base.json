@@ -18,7 +18,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-ts/ac-angular": ["packages/angular/ac-angular/src/index,ts"],
+      "@autocode-ts/ac-angular": ["packages/angular/ac-angular/src/index.ts"],
       "@autocode-ts/ac-bootstrap-elements": ["packages/browser/extensions/builder/ac-bootstrap-elements/src/index.ts"],
       "@autocode-ts/ac-browser": ["packages/browser/ac-browser/src/index.ts"],
       "@autocode-ts/ac-builder": ["packages/browser/ac-builder/src/index.ts"],

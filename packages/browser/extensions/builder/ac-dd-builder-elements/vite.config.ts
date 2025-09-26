@@ -47,6 +47,7 @@ export default defineConfig(() => ({
         '@autocode-ts/ac-builder',
         '@autocode-ts/ac-data-dictionary',
         '@autocode-ts/ac-data-dictionary-components',
+        '@autocode-ts/ac-datagrid-on-ag-grid',
         '@autocode-ts/ac-extensions',
         '@autocode-ts/autocode'
       ],

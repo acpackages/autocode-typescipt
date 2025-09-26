@@ -67,7 +67,9 @@ export class AcBuilder {
 
     const btnDownload = this.element.querySelector('.btn-download') as HTMLElement;
     btnDownload.addEventListener('click', () => {
-      AcBrowser.downloadJsonObjectAsFile({ data: this.builderApi.toJson(), filename: 'builder-state.json' });
+      const jsonData = this.builderApi.toJson();
+      console.log(jsonData);
+      AcBrowser.downloadJsonObjectAsFile({ data: jsonData, filename: 'builder-state.json' });
     });
 
     const btnOutline = this.element.querySelector('.btn-outline') as HTMLElement;

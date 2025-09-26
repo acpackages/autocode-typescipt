@@ -25,6 +25,7 @@ export class AcElementPropertyInput {
   referenceInput?: AcClassPropertySelectInput;
   referencePropertyBtn!:HTMLElement;
   valuePropertyBtn!:HTMLElement;
+  valueType:'VALUE'|'CLASS_PROPERTY_REFERENCE' = 'VALUE';
 
   constructor({ builderApi, property, componentElement }: { builderApi: AcBuilderApi, componentElement: IAcComponentElement, property: IAcBuilderElementProperty }) {
     this.builderApi = builderApi;
@@ -63,7 +64,6 @@ export class AcElementPropertyInput {
   }
 
   private setInput() {
-
     if (this.property.name == 'instanceName') {
       const addPropertyBtn = this.element.querySelector('.btn-add-property') as HTMLElement | undefined;
       if (addPropertyBtn) {
@@ -95,10 +95,11 @@ export class AcElementPropertyInput {
   setInputEventListener({input}:{input:AcBuilderPropertyInput|any}) {
     input.on({
       event: AcEnumInputEvent.ValueChange, callback: (args: any) => {
-        this.componentElement.properties[this.property.name] = {
-          name: this.property.name,
-          value: this.input.value
-        };
+        this.setPropertyValue()
+        // this.componentElement.properties[this.property.name] = {
+        //   name: this.property.name,
+        //   value: this.input.value,
+        // };
         if (this.property.name == 'instanceName' && this.input.value) {
           const newValue = this.input.value.toString().trim();
           if (newValue) {
@@ -109,9 +110,7 @@ export class AcElementPropertyInput {
             this.builderApi.scriptEditor.helper.renamePropertyInClass({ className: this.builderApi.component.className!, oldName: oldName!, newName: this.componentElement.instanceName });
           }
         }
-        if (this.componentElement && this.componentElement.instance) {
-          this.componentElement.instance[this.property.name] = this.input.value;
-        }
+
         const hookArgs: IAcBuilderElementPropertyChangeHookArgs = {
           builderElement: this.builderElement,
           componentElement: this.componentElement,
@@ -134,6 +133,29 @@ export class AcElementPropertyInput {
     }
   }
 
+  setPropertyValue(){
+    const value = this.input.value;
+    if(value != undefined && value !=null){
+      this.componentElement.properties[this.property.name] = {
+        name:this.property.name,
+        value: this.input.value,
+        valueType:this.valueType
+      };
+      if (this.componentElement && this.componentElement.instance) {
+        if(this.valueType == 'CLASS_PROPERTY_REFERENCE' && this.builderApi.runtime && this.builderApi.runtime.runtimeComponent){
+          this.componentElement.instance[this.property.name] = this.builderApi.runtime.runtimeComponent.componentInstance[value];
+        }
+        else{
+          this.componentElement.instance[this.property.name] = this.input.value;
+        }
+      }
+    }
+    else{
+      delete this.componentElement.properties[this.property.name];
+    }
+
+  }
+
   setReferenceInput() {
     const inputContainer: HTMLElement = (this.element.querySelector('.gjs-input-holder') as HTMLInputElement);
     if (this.referenceInput == undefined) {
@@ -150,6 +172,8 @@ export class AcElementPropertyInput {
       this.valuePropertyBtn.classList.remove('d-none');
       this.referencePropertyBtn.classList.add('d-none');
     }
+    this.valueType = 'CLASS_PROPERTY_REFERENCE';
+    this.setPropertyValue();
   }
 
   setValueFromElement() {
@@ -184,6 +208,8 @@ export class AcElementPropertyInput {
       this.valuePropertyBtn.classList.add('d-none');
       this.referencePropertyBtn.classList.remove('d-none');
     }
+    this.valueType = 'VALUE';
+    this.setPropertyValue();
   }
 
 }

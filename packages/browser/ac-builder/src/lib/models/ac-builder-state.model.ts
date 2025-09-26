@@ -77,6 +77,7 @@ export class AcBuilderState {
 
   toJson(): IAcBuilderState {
     this.refresh();
+    console.log(this);
     const activePage: IAcBuilderComponent = { ...this.builderApi.component };
     if (activePage.elements) {
       for (const element of Object.values(activePage.elements) as IAcComponentElement[]) {

@@ -7,6 +7,10 @@ export abstract class AcBuilderComponent{
   element:HTMLElement = document.createElement('div');
   events:AcEvents = new AcEvents();
 
+  constructor(){
+    this.element.style.display = "contents";
+  }
+
   destroy(){
     //
   }

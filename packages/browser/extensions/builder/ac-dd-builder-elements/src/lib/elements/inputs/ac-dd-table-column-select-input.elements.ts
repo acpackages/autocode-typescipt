@@ -4,7 +4,7 @@ import { AcDataDictionary, AcDDTable } from "@autocode-ts/ac-data-dictionary";
 
 export class AcDDTableColumnSelectInput extends AcBuilderPropertySelectInput{
   override set builderApi(value: AcBuilderApi) {
-    super.value = value;
+    super.builderApi = value;
     value.hooks.subscribe({hook:AcEnumBuilderHook.ElementPropertyChange,callback:(args:IAcBuilderElementPropertyChangeHookArgs)=>{
       if(this.componentElement?.instanceName == args.componentElement.instanceName && args.propertyName == 'tableName'){
         this.setTableColumns();

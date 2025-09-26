@@ -6,7 +6,7 @@ import { AcDataDictionary, AcDDTable, AcDDView } from "@autocode-ts/ac-data-dict
 
 export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
   override set builderApi(value: AcBuilderApi) {
-    super.value = value;
+    super.builderApi = value;
     value.hooks.subscribe({
       hook: AcEnumBuilderHook.ElementPropertyChange, callback: (args: IAcBuilderElementPropertyChangeHookArgs) => {
         if (this.componentElement?.instanceName == args.componentElement.instanceName && args.propertyName == 'sourceType') {

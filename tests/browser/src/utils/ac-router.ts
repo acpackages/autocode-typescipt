@@ -52,7 +52,8 @@ export class AcRouter {
 
   static loadRoute(path: string) {
     const match = this.routes.find(route => route.path === path || (route.path === '' && path === '/'));
-    const outlet = document.querySelector('ac-router-outlet');
+    const outlet = document.querySelector('ac-router-outlet') as HTMLElement;
+    outlet.style.display = 'contents';
     if (!match || !outlet) return;
     outlet.innerHTML = '';
     const el = document.createElement(match.componentTag);

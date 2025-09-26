@@ -7,6 +7,7 @@ import { IAcBuilderComponent } from "../interfaces/ac-component.interface";
 import { AcBuilderComponent } from "../core/ac-builder-component";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { Autocode } from "@autocode-ts/autocode";
+import { IAcComponentElementPropertyValue } from "../interfaces/ac-component-element-property-value.interface";
 
 export class AcBuilderRuntimeComponent {
   component: IAcBuilderComponent;
@@ -82,8 +83,16 @@ export class AcBuilderRuntimeComponent {
 
   setElementInstanceProperties({ element }: { element: IAcComponentElement }) {
     if (element.instance && element.properties) {
-      for (const property of Object.values(element.properties)) {
-        element.instance[property.name] = property.value;
+      const propertyNames:string[] = Object.keys(element.properties)
+      for (const propertyName of propertyNames) {
+        const property:IAcComponentElementPropertyValue = element.properties[propertyName];
+        if(property.valueType == 'CLASS_PROPERTY_REFERENCE'){
+          console.log(property.value);
+          element.instance[propertyName] = this.componentInstance[property.value];
+        }
+        else{
+          element.instance[propertyName] = property.value;
+        }
       }
     }
   }

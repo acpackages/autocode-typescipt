@@ -85,7 +85,10 @@ export class AcBuilderApi {
               name: element.name,
               events: {},
               properties: {
-                instanceName: { name: 'instanceName', value: instanceName }
+                instanceName: {
+                  name:'instanceName',
+                  value: instanceName
+                }
               }
             }
             instance.component.elements![instanceName] = componentElement;
