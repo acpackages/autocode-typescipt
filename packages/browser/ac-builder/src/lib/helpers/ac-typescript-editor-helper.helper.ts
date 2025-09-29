@@ -1,4 +1,6 @@
 import * as monaco from "monaco-editor";
+import 'monaco-editor/esm/vs/basic-languages/typescript/typescript.contribution';
+import 'monaco-editor/esm/vs/language/typescript/monaco.contribution';
 import { IAcScriptClassChangeEventArgs } from "../interfaces/event-args/ac-script-class-change-event-args.interface";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderEvent } from "../enums/ac-enum-builder-event.enum";
@@ -11,7 +13,7 @@ export class AcTypescriptEditorHelper {
   private editor: monaco.editor.IStandaloneCodeEditor;
   private builderApi: AcBuilderApi;
 
-  constructor({ editor,builderApi }: { editor: monaco.editor.IStandaloneCodeEditor,builderApi:AcBuilderApi }) {
+  constructor({ editor, builderApi }: { editor: monaco.editor.IStandaloneCodeEditor, builderApi: AcBuilderApi }) {
     this.editor = editor;
     this.builderApi = builderApi;
     this.editor.handleInitialized = () => {
@@ -61,7 +63,7 @@ export class AcTypescriptEditorHelper {
         });
       }
     }
-    else{
+    else {
       //
     }
 
@@ -173,31 +175,34 @@ export class AcTypescriptEditorHelper {
   }
 
   async getClassStructure() {
-    const navTree = await this.getNavigationTree();
-    if (!navTree) return [];
-
     const classes: any[] = [];
+    try {
+      const navTree = await this.getNavigationTree();
+      if (!navTree) return [];
+      function walk(node: any) {
+        if (node.kind === "class") {
+          const cls: any = { name: node.text, functions: [], variables: [] };
 
-    function walk(node: any) {
-      if (node.kind === "class") {
-        const cls: any = { name: node.text, functions: [], variables: [] };
-
-        for (const child of node.childItems || []) {
-          if (child.kind === "method") {
-            cls.functions.push(child.text);
-          } else if (child.kind === "property") {
-            cls.variables.push(child.text);
+          for (const child of node.childItems || []) {
+            if (child.kind === "method") {
+              cls.functions.push(child.text);
+            } else if (child.kind === "property") {
+              cls.variables.push(child.text);
+            }
           }
+
+          classes.push(cls);
         }
+        for (const child of node.childItems || []) {
+          walk(child);
+        }
+      }
 
-        classes.push(cls);
-      }
-      for (const child of node.childItems || []) {
-        walk(child);
-      }
+      walk(navTree);
     }
-
-    walk(navTree);
+    catch (ex) {
+      //
+    }
     return classes;
   }
 
@@ -392,8 +397,6 @@ export class AcTypescriptEditorHelper {
       lastSnapshot = { vars };
     });
   }
-
-
 
   registerTypeToEditor({ type }: { type: any }): void {
     const decl = AcRuntimeDeclaration.getTypeDeclaration({ type });
@@ -635,12 +638,19 @@ export class AcTypescriptEditorHelper {
     compare: (prev: T, curr: T) => void
   ) {
     let prevState: T;
-    snapshot().then(s => (prevState = s));
-    this.editor.onDidChangeModelContent(async () => {
-      const currState = await snapshot();
-      if (prevState) compare(prevState, currState);
-      prevState = currState;
-    });
+
+    try {
+      snapshot().then(s => (prevState = s),()=>{
+        //
+      });
+      this.editor.onDidChangeModelContent(async () => {
+        const currState = await snapshot();
+        if (prevState) compare(prevState, currState);
+        prevState = currState;
+      });
+    } catch (ex) {
+      //
+    }
   }
 
 }

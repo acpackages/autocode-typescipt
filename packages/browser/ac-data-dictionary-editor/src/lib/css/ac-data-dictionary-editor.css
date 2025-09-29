@@ -85,14 +85,14 @@
   padding-right: 0px!important;
 }
 
-.ac-text-input,.ac-number-input,.ac-select-input{
+ac-text-input input, ac-number-input input,ac-select-input input{
   width: 100%!important;
   height: 100%!important;
   border: none;
   background-color: transparent;
 }
 
-.ac-option-input{
+ac-option-input input{
   margin: auto;
   border: none;
 }
@@ -103,18 +103,18 @@
   display: block;
 	margin: 4px auto;
 }
-.ac-option-input-wrap input {
+.ac-option-input-wrap ac-option-input input {
 	display: block;
 	margin: auto;
 	cursor: pointer;
 }
-.ac-option-input-wrap input[type="checkbox"] {
+.ac-option-input-wrap ac-option-input input[type="checkbox"] {
 	transition: all .3s;
 	width: 30px;
 	position: absolute;
 	visibility: hidden;
 }
-.ac-option-input-wrap input[type="checkbox"]:before {
+.ac-option-input-wrap ac-option-input input[type="checkbox"]:before {
 	transition: all .3s;
 	visibility: visible;
 	position: absolute;
@@ -133,7 +133,7 @@
 	background: rgb(244, 37, 0);
 	border: 1px solid #eee;
 }
-.ac-option-input-wrap input[type="checkbox"]:after {
+.ac-option-input-wrap ac-option-input input[type="checkbox"]:after {
 	transition: all .3s;
 	visibility: visible;
 	position: absolute;
@@ -149,7 +149,7 @@
 	box-sizing: border-box;
 	display: inline-block;
 }
-.ac-option-input-wrap input[type="checkbox"]:checked:before {
+.ac-option-input-wrap ac-option-input input[type="checkbox"]:checked:before {
 	transition: all .3s;
 	visibility: visible;
 	position: relative;
@@ -168,7 +168,7 @@
 	background: green;
 	border: 1px solid #eee;
 }
-.ac-option-input-wrap input[type="checkbox"]:checked:after {
+.ac-option-input-wrap ac-option-input input[type="checkbox"]:checked:after {
 	transition: all .3s;
 	visibility: visible;
 	position: absolute;

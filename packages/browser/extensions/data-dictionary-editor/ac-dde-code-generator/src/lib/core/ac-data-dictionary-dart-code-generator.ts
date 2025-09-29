@@ -2,7 +2,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringToCamelCase, stringToPascalCase } from '@autocode-ts/ac-extensions';
-import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
+import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTableProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
 import { AcDDECodeGeneratorDefaultConfig } from '../consts/ac-dde-code-generator-default-config.const';
 import { boolColumnProperties, numberColumnProperties, stringColumnProperties } from '../consts/ac-dde-property-groups.const';
 
@@ -314,6 +314,51 @@ export class AcDataDictionaryDartCodeGenerator {
     return result;
   }
 
+  getDDTableProperties({ tableDetails }: { tableDetails: any }): string {
+    let result: string = `{`;
+    this.tabsCount++;
+    const propertiesJson: string[] = [];
+    if (tableDetails && tableDetails[AcDDTable.KeyTableProperties]) {
+      const properties = tableDetails[AcDDTable.KeyTableProperties];
+      for (const key of Object.keys(properties)) {
+        const value = properties[key][AcDDTableProperty.KeyPropertyValue];
+        let propertyKey = stringToCamelCase(key);
+        let propertyValue = `${value}`;
+        let validProperty:boolean = false;
+        // if(boolColumnProperties.includes(key) && value == true){
+        //   validProperty = true;
+        // }
+        // else if(numberColumnProperties.includes(key) && value){
+        //   validProperty = true;
+        // }
+        // else if(stringColumnProperties.includes(key) && value){
+        //   validProperty = true;
+        //   propertyValue = `"${value}"`;
+        // }
+        validProperty = true;
+          propertyValue = `"${value}"`;
+        if(validProperty){
+          let propertyJson:string = '';
+          propertyJson += `${this.tabs}AcEnumDDTableProperty.${propertyKey} : {\n`;
+          this.tabsCount++;
+          propertyJson += `${this.tabs}AcDDTableProperty.keyPropertyName : AcEnumDDTableProperty.${propertyKey},\n`;
+          propertyJson += `${this.tabs}AcDDTableProperty.keyPropertyValue : ${propertyValue}\n`;
+          this.tabsCount--;
+          propertyJson += `${this.tabs}}`;
+          propertiesJson.push(propertyJson);
+        }
+      }
+    }
+
+    if (propertiesJson.length > 0) {
+      result += `\n`+propertiesJson.join(`,\n`)+``;
+    }
+    this.tabsCount--;
+
+    result += `\n${this.tabs}}`;
+    return result;
+  }
+
   getDDTableString({ tableDetails }: { tableDetails: any }): string {
     let result: string = ``;
     this.tabsCount++;
@@ -332,7 +377,8 @@ export class AcDataDictionaryDartCodeGenerator {
       result += columnStrings.join(',\n');
     }
 
-    result += `${this.tabs}\n${this.tabs}}\n`;
+    result += `${this.tabs}\n${this.tabs}},\n`;
+    result += `${this.tabs}AcDDTable.keyTableProperties : ${this.getDDTableProperties({tableDetails:tableDetails})}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;

@@ -39,6 +39,7 @@ import { DataDictionaryComponentsPage } from './pages/data-dictionary/data-dicti
 import { InputElementsPage } from './pages/inputs/elements.page';
 import { WindowTabsPage } from './pages/tabs/window-tabs.page';
 import { RuntimeComponentPage } from './pages/builder/runtime-component-page';
+import { HttpTestPage } from './pages/utils/http-test';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -194,6 +195,12 @@ window.addEventListener('DOMContentLoaded', () => {
     label: 'Template Engine',
     routes: [
       { label: 'Basic', path: '/template-engine', componentTag: 'template-engine', component: TemplateEnginePage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label: 'Utils',
+    routes: [
+      { label: 'HTTP', path: '/utils/http', componentTag: 'http-test', component: HttpTestPage }
     ]
   });
   window.addEventListener('popstate', () => AcRouter.loadRoute(location.pathname));

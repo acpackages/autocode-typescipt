@@ -29,17 +29,17 @@ export class AcBuilder {
     (this.element.querySelector('.ac-builder-properties-tab') as HTMLElement).append(this.propertiesPanel.element);
     this.eventsPanel = new AcBuilderEventsPanel({ builderApi: this.builderApi });
     (this.element.querySelector('.ac-builder-events-tab') as HTMLElement).append(this.eventsPanel.element);
-    acInit({element:this.element});
+    acInit({ element: this.element });
   }
 
   initGrapesJS() {
     this.grapesJSApi = grapesjs.init({
       height: '100%',
-      avoidInlineStyle:false,
+      avoidInlineStyle: false,
       showOffsets: true,
       noticeOnUnload: false,
       storageManager: false,
-      selectorManager:{
+      selectorManager: {
         appendTo: this.element.querySelector('.ac-builder-class-panel') as HTMLElement,
       },
       container: this.element.querySelector('.ac-builder-canvas') as HTMLElement,
@@ -68,7 +68,6 @@ export class AcBuilder {
     const btnDownload = this.element.querySelector('.btn-download') as HTMLElement;
     btnDownload.addEventListener('click', () => {
       const jsonData = this.builderApi.toJson();
-      console.log(jsonData);
       AcBrowser.downloadJsonObjectAsFile({ data: jsonData, filename: 'builder-state.json' });
     });
 
@@ -109,10 +108,10 @@ export class AcBuilder {
       <div class="ac-builder-sidebar ac-builder-left-sidebar ">
         <div class="nav nav-tabs ac-sidebar-tabs" role="tablist">
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-elements-tab" ac-tooltip="Elements">
-            <ac-svg-icon class="pb-2 pt-1">${ACI_SVG_SOLID.puzzlePiece}</ac-svg-icon>
+            <ac-svg-icon>${ACI_SVG_SOLID.puzzlePiece}</ac-svg-icon>
           </button>
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-layers-panel" ac-tooltip="Layers">
-          <ac-svg-icon class="pb-2 pt-1">${ACI_SVG_SOLID.layerGroup}</ac-svg-icon>
+          <ac-svg-icon>${ACI_SVG_SOLID.layerGroup}</ac-svg-icon>
           </button>
         </div>
         <div class="tab-content">
@@ -136,41 +135,41 @@ export class AcBuilder {
           <div class="ac-builder-topbar-center">
             <div class="btn-group btn-action-grp" role="group">
               <button type="button" class="btn btn-action btn-device btn-desktop text-white p-0" ac-tooltip="Desktop">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.desktop}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.desktop}</ac-svg-icon>
                 </button>
               <button type="button" class="btn btn-action btn-device btn-tablet text-secondary p-0" ac-tooltip="Tablet">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.tabletScreenButton}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.tabletScreenButton}</ac-svg-icon>
               </button>
               <button type="button" class="btn btn-action btn-device btn-mobilePortrait text-secondary p-0" ac-tooltip="Mobile">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.mobileScreenButton}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.mobileScreenButton}</ac-svg-icon>
                 </button>
             </div>
           </div>
           <div class="ac-builder-topbar-right">
             <div class="ac-builder-topbar-right-container me-2">
               <button type="button" class="btn btn-action btn-preview d-none" ac-tooltip="Preview">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.eye}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.eye}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-outline text-secondary" ac-tooltip="Component Outline">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.expand}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.expand}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-fullscreen text-secondary" ac-tooltip="Fullscreen">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.maximize}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.maximize}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-script-code text-secondary" ac-tooltip="Script">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.code}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.code}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-clear-canvas text-secondary" ac-tooltip="Clear Content">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.eraser}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.eraser}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-download text-secondary" ac-tooltip="Download">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.download}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.download}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-undo text-secondary" ac-tooltip="Undo">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.rotateLeft}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.rotateLeft}</ac-svg-icon>
                 </button>
                 <button type="button" class="btn btn-action btn-redo text-secondary" ac-tooltip="Redo">
-                <ac-svg-icon class="pb-2 pt-0">${ACI_SVG_SOLID.rotateRight}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.rotateRight}</ac-svg-icon>
                 </button>
                 </div>
                 </div>
@@ -183,13 +182,13 @@ export class AcBuilder {
                 <div class="ac-builder-sidebar ac-builder-right-sidebar">
                 <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
                 <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-styles-tab" ac-tooltip="Style">
-                <ac-svg-icon class="pb-2 pt-1">${ACI_SVG_BRANDS.css3}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_BRANDS.css3}</ac-svg-icon>
                 </button>
                 <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-properties-tab" ac-tooltip="Properties">
-                <ac-svg-icon class="pb-2 pt-1">${ACI_SVG_SOLID.penToSquare}</ac-svg-icon>
+                <ac-svg-icon>${ACI_SVG_SOLID.penToSquare}</ac-svg-icon>
           </button>
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-events-tab" ac-tooltip="Events">
-            <ac-svg-icon class="pb-2 pt-1">${ACI_SVG_SOLID.bolt}</ac-svg-icon>
+            <ac-svg-icon>${ACI_SVG_SOLID.bolt}</ac-svg-icon>
           </button>
         </div>
         <div class="tab-content">

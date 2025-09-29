@@ -49,16 +49,17 @@ export default defineConfig(() => ({
       // External packages that should not be bundled into your library.
       external: [
         "@autocode-ts/autocode",
-    "@autocode-ts/ac-browser",
-    "@autocode-ts/ac-extensions",
-    "@autocode-ts/ac-icons",
-    "@autocode-ts/ac-template-engine",
-    "@silexlabs/grapesjs-ui-suggest-classes",
-    "grapesjs",
-    "grapesjs-blocks-basic",
-    "grapesjs-preset-newsletter",
-    "grapesjs-preset-webpage",
-    "monaco-editor"
+        "@autocode-ts/ac-browser",
+        "@autocode-ts/ac-extensions",
+        "@autocode-ts/ac-icons",
+        "@autocode-ts/runtime-ts",
+        "@autocode-ts/ac-template-engine",
+        "@silexlabs/grapesjs-ui-suggest-classes",
+        "grapesjs",
+        "grapesjs-blocks-basic",
+        "grapesjs-preset-newsletter",
+        "grapesjs-preset-webpage",
+        "monaco-editor"
       ],
     },
   },

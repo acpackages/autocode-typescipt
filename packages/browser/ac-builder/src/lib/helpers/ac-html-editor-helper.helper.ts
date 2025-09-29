@@ -1,17 +1,23 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as monaco from "monaco-editor";
 import { AcBuilderApi } from "../core/ac-builder-api";
+import { IAcEditorHtmlChangeHookArgs } from "../interfaces/hook-args/ac-editor-html-change-hook-args.interface";
+import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
+import { AcEnumBuilderEvent } from "../enums/ac-enum-builder-event.enum";
 
 export class AcHtmlEditorHelper {
   private editor: monaco.editor.IStandaloneCodeEditor;
   private builderApi: AcBuilderApi;
+  private listenForChanges: boolean = true;
 
-  constructor({ editor,builderApi }: { editor: monaco.editor.IStandaloneCodeEditor,builderApi:AcBuilderApi }) {
+  constructor({ editor, builderApi }: { editor: monaco.editor.IStandaloneCodeEditor, builderApi: AcBuilderApi }) {
     this.editor = editor;
     this.builderApi = builderApi;
     this.editor.handleInitialized = () => {
       //
     };
+    this.registerListeners();
   }
 
   private cleanupBlankLines(): void {
@@ -35,29 +41,30 @@ export class AcHtmlEditorHelper {
     return this.editor.getValue();
   }
 
+  registerListeners() {
+    this.editor.onDidChangeModelContent(() => {
+      if (this.listenForChanges) {
+        const args: IAcEditorHtmlChangeHookArgs = {
+          html: this.getCode()
+        };
+        this.builderApi.hooks.execute({ hook: AcEnumBuilderHook.EditorHtmlChange, args: args });
+        this.builderApi.events.execute({ event: AcEnumBuilderEvent.EditorHtmlChange, args: args });
+      }
+    });
+  }
+
   async setCode({ code, autoFormat = true }: { code: string, autoFormat?: boolean }): Promise<void> {
+    this.listenForChanges = false;
     const model = this.editor.getModel();
-    this.editor.updateOptions({readOnly:false});
+    // this.editor.updateOptions({readOnly:false});
     if (model) {
       model.setValue(code);
     }
     if (autoFormat) {
       await this.formatCode();
     }
-    this.editor.updateOptions({readOnly:true});
-  }
-
-  private trackChanges<T>(
-    snapshot: () => Promise<T>,
-    compare: (prev: T, curr: T) => void
-  ) {
-    let prevState: T;
-    snapshot().then(s => (prevState = s));
-    this.editor.onDidChangeModelContent(async () => {
-      const currState = await snapshot();
-      if (prevState) compare(prevState, currState);
-      prevState = currState;
-    });
+    this.listenForChanges = true;
+    // this.editor.updateOptions({readOnly:true});
   }
 
 }

@@ -46,7 +46,9 @@ export class AcTooltip {
 
     // Hover behavior
     this.anchor.addEventListener('mouseenter', () => this.scheduleShow());
+    this.anchor.addEventListener('focus', () => this.scheduleShow());
     this.anchor.addEventListener('mouseleave', () => this.scheduleHide());
+    this.anchor.addEventListener('blur', () => this.scheduleHide());
     this.tooltipEl.addEventListener('mouseenter', () => this.cancelHide());
     this.tooltipEl.addEventListener('mouseleave', () => this.scheduleHide());
 

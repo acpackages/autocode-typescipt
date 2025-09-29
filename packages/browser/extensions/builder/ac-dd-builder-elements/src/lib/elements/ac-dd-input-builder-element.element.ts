@@ -54,6 +54,7 @@ export const AC_BUILDER_DD_INPUT_ELEMENT: IAcBuilderElement = {
   name: "ddInput",
   tag: "div",
   title: "Input",
+  keepHtml:false,
   mediaSvg: ACI_SVG_SOLID.inputText,
   instanceClass: AcDDInputBuilderElement,
   properties: [

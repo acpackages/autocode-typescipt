@@ -1,4 +1,7 @@
 export enum AcEnumHttpResponseCode {
+  Error = -1,
+  Unknown = 0,
+
   Continue = 100,
   SwitchingProtocols = 101,
   Processing = 102,

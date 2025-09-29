@@ -21,7 +21,7 @@ export class RuntimeComponentPage extends HTMLElement {
     this.initRuntimeComponent();
   }
 
-  initRuntimeComponent() {
+  async initRuntimeComponent() {
     AcDataDictionary.registerDataDictionary({jsonData:actDataDictionary});
           acRegisterDataDictionaryBuilderElements();
     // const component: IAcBuilderComponent = {
@@ -88,7 +88,7 @@ export class RuntimeComponentPage extends HTMLElement {
       "className": "DefaultPageScript"
     };
     const runtimeComponent: AcBuilderRuntimeComponent = new AcBuilderRuntimeComponent({ component });
-    runtimeComponent.render();
+    await runtimeComponent.render();
     console.log(runtimeComponent);
     const instance = runtimeComponent.componentInstance;
     this.append(instance.element)

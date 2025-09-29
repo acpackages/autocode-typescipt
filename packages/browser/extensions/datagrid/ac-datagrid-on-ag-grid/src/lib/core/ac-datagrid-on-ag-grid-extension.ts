@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridOnDemandRequestArgs, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs } from '@autocode-ts/ac-browser';
-import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, RowModelType, IServerSideDatasource, SuppressKeyboardEventParams } from 'ag-grid-community';
+import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridOnDemandRequestArgs, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridCellElement } from '@autocode-ts/ac-browser';
+import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, RowModelType, IServerSideDatasource, SuppressKeyboardEventParams, ICellRendererParams } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AcDatagridRowSelectionExtensionOnAgGrid } from './ac-datagrid-row-selection-extension-on-ag-grid';
 import { IAcDatagriOnAgGridColDefsChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-col-defs-set-hook-args.interface';
@@ -17,6 +17,7 @@ import { AcEnumConditionOperator, AcEnumLogicalOperator, AcFilterGroup, AcSortOr
 import { AcDatagridOnAgGridEventHandler } from './ac-datagrid-on-ag-grid-event-handler';
 import { AcDatagridOnAgGridCell } from '../elements/ac-datagrid-on-ag-grid-cell.element';
 import { stringEqualsIgnoreCase } from '@autocode-ts/ac-extensions';
+import { AC_DATAGRID_AGGRID_DEFAULT_OPTIONS } from '../const/ac-datagrid-aggrid-default-options.const';
 
 export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   agGridElement = document.createElement('div');
@@ -25,16 +26,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   colDefs: ColDef[] = [];
   data: any[] = [];
   gridApi!: GridApi;
-  gridOptions: GridOptions = {
-    alwaysMultiSort: true,
-    getRowId: (params: GetRowIdParams) => {
-      return params.data[this.rowKey];
-    },
-    pagination: false,
-    suppressContextMenu: true
-  };
+  gridOptions: GridOptions;
   isClientSideData: boolean = true;
-  navigate:boolean = true;
+  navigate: boolean = true;
   onDemandDataSource: IServerSideDatasource = {
     getRows: (params: IServerSideGetRowsParams) => {
       this.onDemandRequestParams = params;
@@ -54,6 +48,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   constructor() {
     super();
     this.registerModules();
+    this.gridOptions = { ...AC_DATAGRID_AGGRID_DEFAULT_OPTIONS };
+    this.gridOptions.getRowId = (params: GetRowIdParams) => {
+      return params.data[this.rowKey];
+    };
   }
 
   private getAgDataTypeFromAcDataType(dataType: any) {
@@ -103,14 +101,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         datagridColumn: column
       }
     };
-    // if (datagridColDef.cellRendererElement) {
-    //   colDef.cellRenderer = AcDatagridOnAgGridCellRendererElement;
-    //   colDef.cellRendererParams = {
-    //     datagridApi: this.datagridApi,
-    //     agGridExtension: this,
-    //     datagridColumn: column
-    //   };
-    // }
     return colDef;
   }
 
@@ -177,7 +167,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         this.navigate = false;
       }
 
-      if(this.navigate && key.toLowerCase() == KEY_ESCAPE.toLowerCase()){
+      if (this.navigate && key.toLowerCase() == KEY_ESCAPE.toLowerCase()) {
         this.navigate = true;
       }
     }
@@ -390,55 +380,55 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.BeforeGetOnDemandData)) {
+    if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.BeforeGetOnDemandData)) {
       this.handleBeforeGetOnDemandData(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.CellFocus)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.CellFocus)) {
       this.navigate = true;
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.ColumnDefinitionsChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.ColumnDefinitionsChange)) {
       this.setColumnDefs();
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.DataChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.DataChange)) {
       this.handleDataChange();
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.DataSourceTypeChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.DataSourceTypeChange)) {
       this.handleDataSourceTypeChange(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.ExtensionEnable)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.ExtensionEnable)) {
       this.handleExtensionEnabled(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.GetOnDemandDataSuccessCallback)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.GetOnDemandDataSuccessCallback)) {
       this.handleGetOnDemandDataSuccessCallback(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.RowAdd)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.RowAdd)) {
       this.handleRowAdd(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.RowDelete)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.RowDelete)) {
       this.handleRowDelete(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.RowFocus)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.RowFocus)) {
       this.handleRowFocus(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.RowUpdate)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.RowUpdate)) {
       this.handleRowUpdate(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridHook.UsePaginationChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.UsePaginationChange)) {
       this.handleUsePaginationChange();
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridRowNumbersHook.ShowRowNumbersChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridRowNumbersHook.ShowRowNumbersChange)) {
       this.setShowRowNumbers();
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange)) {
       this.setColumnsCustomizerExtension();
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel)) {
       this.handleColumnsCustomizerToggle(args);
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange)) {
       this.setColumnDragging();
     }
-    else if (stringEqualsIgnoreCase(hook,AcEnumDatagridDataExportXlsxHook.ExportData)) {
+    else if (stringEqualsIgnoreCase(hook, AcEnumDatagridDataExportXlsxHook.ExportData)) {
       this.handleDataExportXlsx(args);
     }
   }
@@ -677,7 +667,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   override setState({ state }: { state: any; }): void {
-    if(state){
+    if (state) {
       this.agGridEventHandler.ignoreEvents = true;
       this.gridApi.setState(state);
       setTimeout(() => {

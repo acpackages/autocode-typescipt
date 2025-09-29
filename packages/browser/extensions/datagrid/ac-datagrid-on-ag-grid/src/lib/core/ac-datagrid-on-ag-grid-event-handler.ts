@@ -4,6 +4,7 @@ import { AcDatagridApi, AcDatagridCell, AcDatagridColumn, AcDatagridRow } from "
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { CellClickedEvent, GridApi, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellFocusedEvent, CellKeyDownEvent, CellMouseDownEvent, FullWidthCellKeyDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, PaginationChangedEvent, ComponentStateChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEndEvent, RowDragEnterEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowSelectedEvent, RowValueChangedEvent, SelectionChangedEvent, SortChangedEvent, StateUpdatedEvent, ModelUpdatedEvent } from "ag-grid-community";
 import { AcEnumSortOrder } from "@autocode-ts/autocode";
+import { GlobalColumnRenderer } from "../elements/global-column-renderer";
 
 export class AcDatagridOnAgGridEventHandler {
   agGridExtension!: AcDatagridOnAgGridExtension;
@@ -176,6 +177,9 @@ export class AcDatagridOnAgGridEventHandler {
     });
     // this.gridApi.addEventListener('stateUpdated', (event: StateUpdatedEvent) => {
     //   this.datagridApi.eventHandler.handleStateChange({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+    // });
+    // this.gridApi.addEventListener('firstDataRendered', () => {
+    //   new GlobalColumnRenderer(this.agGridExtension.agGridElement.parentElement!);
     // });
   }
 

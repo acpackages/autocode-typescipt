@@ -233,19 +233,22 @@ export function stringRegexMatch(str: string, pattern: string, matches: { [key: 
  */
 export function stringWords(str: string): string[] {
     if (typeof str !== 'string') return [];
-    const matches = str
-        .trim()
-        .replaceAll(/[_\-\\.\s]+/g, ' ')
-        .split(' ');
-      const result= [];
-    for(const match of matches){
-      if(match != ' ' && match.trim() != ''){
-        result.push(match);
-      }
-    }
-    return result;
-}
 
+    return str
+        // normalize delimiters (_ - . / \ and spaces) → space
+        .replace(/[_\-./\\\s]+/g, ' ')
+        // split before Uppercase following lowercase or number: helloWorld → hello World, id2User → id2 User
+        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        // split between acronym and next word: XMLParser → XML Parser
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+        // split letters and numbers: order123 → order 123, X9Y → X 9 Y
+        .replace(/([a-zA-Z])([0-9])/g, '$1 $2')
+        .replace(/([0-9])([a-zA-Z])/g, '$1 $2')
+        // trim and split
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+}
 /**
  * Converts a string to a specified case format.
  * @param str The input string.

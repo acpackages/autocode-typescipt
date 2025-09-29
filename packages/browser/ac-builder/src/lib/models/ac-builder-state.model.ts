@@ -3,8 +3,6 @@
 import { AcJsonUtils } from "@autocode-ts/autocode";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { IAcBuilderState } from "../interfaces/ac-builder-state.interface";
-import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
-import { stat } from "fs";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { IAcBuilderComponent } from "../interfaces/ac-component.interface";
@@ -63,21 +61,13 @@ export class AcBuilderState {
     this.setExtensionsState();
     if (this.builderApi.component) {
       const activeComponent = this.builderApi.component;
-      activeComponent.html = this.builderApi.grapesJSApi.getHtml({
-        attributes(component, attr) {
-          if (component && component.view && component.view.el && component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)) {
-            attr[AcBuilderAttributeName.acBuilderElementInstanceName] = component.view.el.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName);
-          }
-          return attr;
-        },
-      });
+      activeComponent.html = this.builderApi.getHtml();
       activeComponent.script = this.builderApi.scriptEditor.getCode();
     }
   }
 
   toJson(): IAcBuilderState {
     this.refresh();
-    console.log(this);
     const activePage: IAcBuilderComponent = { ...this.builderApi.component };
     if (activePage.elements) {
       for (const element of Object.values(activePage.elements) as IAcComponentElement[]) {

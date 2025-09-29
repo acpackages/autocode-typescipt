@@ -11,6 +11,7 @@ import { AcTypescriptEditorHelper } from "../helpers/ac-typescript-editor-helper
 import { AC_BUILDER_SVGS } from "../consts/ac-builder-svgs.consts";
 import { AcHtmlEditorHelper } from "../helpers/ac-html-editor-helper.helper";
 
+
 export class AcBuilderScriptEditor {
   builderApi: AcBuilderApi;
   htmlEditor!: monaco.editor.IStandaloneCodeEditor;
@@ -38,8 +39,8 @@ export class AcBuilderScriptEditor {
       </div>
       <div class="ac-builder-script-editor-header-actions">
         <div class="ac-builder-script-editor-header-actions-container">
-          <button type="button" class="btn btn-action btn-close-action p-0 text-secondary me-1" style="width:28px;height:100%;padding-top:5px;" ac-tooltip="Close Editor">
-                <ac-svg-icon class="p-1">${AC_BUILDER_SVGS.xMark}</ac-svg-icon>
+          <button type="button" class="btn btn-action btn-close-action px-2 py-1 pb-0 text-secondary " style="" ac-tooltip="Close Editor">
+                <ac-svg-icon>${AC_BUILDER_SVGS.xMark}</ac-svg-icon>
               </button>
         </div>
       </div>
@@ -76,20 +77,18 @@ export class AcBuilderScriptEditor {
       theme: 'vs-dark',
       automaticLayout: true,
       wordWrap: "on", // ✅ enable word wrap
-  wrappingIndent: "same",
+      wrappingIndent: "same",
     });
-     this.htmlEditor = monaco.editor.create(this.element.querySelector('.ac-html-editor-container') as HTMLElement, {
+    this.htmlEditor = monaco.editor.create(this.element.querySelector('.ac-html-editor-container') as HTMLElement, {
       value: ``,
       language: 'html',
       theme: 'vs-dark',
       automaticLayout: true,
-      tabSize: 2,
-      insertSpaces: true,
       wordWrap: "on", // ✅ enable word wrap
       wrappingIndent: "same",
     });
-    this.helper = new AcTypescriptEditorHelper({ editor: this.tsEditor,builderApi:this.builderApi });
-    this.htmlHelper = new AcHtmlEditorHelper({ editor: this.htmlEditor,builderApi:this.builderApi });
+    this.helper = new AcTypescriptEditorHelper({ editor: this.tsEditor, builderApi: this.builderApi });
+    this.htmlHelper = new AcHtmlEditorHelper({ editor: this.htmlEditor, builderApi: this.builderApi });
     const closeButton = this.element.querySelector(".btn-close-action") as HTMLElement;
     closeButton.addEventListener('click', () => {
       this.events.execute({ 'event': 'close' });
@@ -97,8 +96,8 @@ export class AcBuilderScriptEditor {
     const panels = this.element.querySelector('ac-resizable-panels') as AcResizablePanels;
     panels.setPanelSizes({
       panelSizes: [
-        { size: 30, index: 0 },
-        { size: 70, index: 1 },
+        { size: 50, index: 0 },
+        { size: 50, index: 1 },
       ]
     });
   }
@@ -118,6 +117,10 @@ export class AcBuilderScriptEditor {
 
   getCode(): string {
     return this.helper.getCode();
+  }
+
+  getHtmlCode(): string {
+    return this.htmlHelper.getCode();
   }
 
   on({ event, callback }: { event: string, callback: Function }): string {
@@ -150,61 +153,7 @@ export class AcBuilderScriptEditor {
     await this.helper.setCode({ code });
   }
 
-  getCleanHtml() {
-  const container = document.createElement("div");
-
-
-  const builderIframe = this.builderApi.grapesJSApi.Canvas.getFrameEl();
-    if(builderIframe){
-      const iframeDocument = builderIframe.contentDocument || builderIframe.contentWindow?.document;
-      if (iframeDocument) {
-        const iframeBody = (iframeDocument.querySelector('body') as HTMLElement).cloneNode(true) as HTMLElement;
-        for(const styleEl of Array.from(iframeBody.querySelectorAll('style'))){
-          styleEl.remove();
-        }
-        for(const scriptEl of Array.from(iframeBody.querySelectorAll('script'))){
-          scriptEl.remove();
-        }
-        container.innerHTML = iframeBody.innerHTML; // raw GrapesJS HTML
-      }
-
-      const el = container.querySelector('.gjs-css-rules') as HTMLElement|undefined;
-    if(el){
-      el.remove();
-    }
-     const el1 = container.querySelector('.gjs-js-cont') as HTMLElement|undefined;
-    if(el1){
-      el1.remove();
-    }
-    }
-
-
-  // recursively remove GrapesJS internal attributes
-  function clean(node:any) {
-    if (node.nodeType !== Node.ELEMENT_NODE) return;
-    const element = node as HTMLElement;
-    // list of GrapesJS internal attributes
-    const gjsAttrs = ["gjs-id", "gjs-type", "gjs-name", "data-gjs-type", "data-gjs-name","data-gjs-highlightable","draggable","contenteditable"];
-    gjsAttrs.forEach(attr => node.removeAttribute(attr));
-
-    for(const className of Array.from(element.classList)){
-      if(className.startsWith("gjs-")){
-        (node as HTMLElement).classList.remove(className);
-      }
-    }
-
-    // clean children recursively
-    node.childNodes.forEach(clean);
-  }
-
-  container.childNodes.forEach(clean);
-  return container.innerHTML;
-}
-
-  async refreshHtmlCode(){
-
-        // await this.htmlHelper.setCode({code:iframeBody.innerHTML});
-        // this.builderApi.component.html = this.htmlHelper.getCode();
-        await this.htmlHelper.setCode({code:this.getCleanHtml()});
+  async refreshHtmlCode() {
+    await this.htmlHelper.setCode({ code: this.builderApi.getHtml() });
   }
 }

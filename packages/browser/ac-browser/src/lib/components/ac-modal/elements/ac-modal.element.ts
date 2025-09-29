@@ -3,12 +3,13 @@ import { AcEnumModalEvent } from "../enums/ac-enum-modal-event.enum";
 import { acMorphElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_MODAL_TAG } from "../consts/ac-modal-tag.const";
 import { AcElementBase } from "../../../core/ac-element-base";
+import { AC_MODAL_CONFIG } from "../consts/ac-modal-config.const";
 
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 export class AcModal extends AcElementBase {
   private backdrop: HTMLElement | null = null;
   private isOpen: boolean = false;
-  private animationDuration: number = 400; // ms
+  animationDuration: number = AC_MODAL_CONFIG.animationDuration; // ms
   private lastTrigger?: HTMLElement;
   private morphTriggerColor?:string;
   private morphModalColor?:string;
@@ -16,18 +17,7 @@ export class AcModal extends AcElementBase {
 
   constructor() {
     super();
-    Object.assign(this.style, {
-      display: "none",
-      position: "fixed",
-      zIndex: "1050",
-      background: "#fff",
-      boxShadow: "0 3px 9px rgba(0,0,0,.5)",
-      maxWidth: "500px",
-      width: "90%",
-      borderRadius: "8px",
-      overflow: "hidden",
-      willChange: "transform, opacity",
-    } as Partial<CSSStyleDeclaration>);
+    Object.assign(this.style, AC_MODAL_CONFIG.closeStyle);
   }
 
   /**
@@ -53,6 +43,7 @@ export class AcModal extends AcElementBase {
     }
 
     this.style.display = "none";
+    this.events.execute({ event: AcEnumModalEvent.Close });
 
   }
 
@@ -90,17 +81,8 @@ export class AcModal extends AcElementBase {
 
     // Create backdrop
     this.backdrop = document.createElement("div");
-    Object.assign(this.backdrop.style, {
-      position: "fixed",
-      top: "0",
-      left: "0",
-      width: "100vw",
-      height: "100vh",
-      background: "rgba(0,0,0,0.5)",
-      opacity: "0",
-      transition: `opacity ${this.animationDuration}ms ease`,
-      zIndex: "1040",
-    });
+    const style = {...AC_MODAL_CONFIG.openStyle, "transition":`opacity ${this.animationDuration}ms ease`};
+    Object.assign(this.backdrop.style, style);
     document.body.appendChild(this.backdrop);
 
     document.body.style.overflow = "hidden";
@@ -135,12 +117,6 @@ export class AcModal extends AcElementBase {
       document.addEventListener("keydown", this.handleEscape);
       return;
     }
-
-    // Trigger exists → morph animation
-    // const clone = triggerElement.cloneNode(true) as HTMLElement;
-    // document.body.appendChild(clone);
-
-    // Prepare modal for morphing
     this.style.visibility = "hidden";
 
     acMorphElement({ source: triggerElement, destination: this, duration: this.animationDuration,sourceColor:morphTriggerColor,destinationColor:morphModalColor });
@@ -150,7 +126,7 @@ export class AcModal extends AcElementBase {
       this.style.opacity = "1";
       this.style.pointerEvents = "";
       if (this.backdrop) this.backdrop.style.opacity = "1";
-      this.events.execute({ event: AcEnumModalEvent.Show });
+      this.events.execute({ event: AcEnumModalEvent.Open });
     }, this.animationDuration);
 
     this.backdrop.addEventListener("click", () => this.close(), { once: true });

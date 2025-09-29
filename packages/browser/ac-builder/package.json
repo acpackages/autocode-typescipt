@@ -10,6 +10,7 @@
     "@autocode-ts/ac-browser": "^0.0.1",
     "@autocode-ts/ac-extensions": "^0.0.4",
     "@autocode-ts/ac-icons": "^0.0.1",
+    "@autocode-ts/runtime-ts": "^0.0.1",
     "@autocode-ts/ac-template-engine": "^0.0.1",
     "@silexlabs/grapesjs-ui-suggest-classes": "^1.1.0",
     "grapesjs": "^0.22.12",

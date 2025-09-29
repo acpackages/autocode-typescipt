@@ -2,7 +2,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringToPascalCase } from '@autocode-ts/ac-extensions';
-import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
+import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTableProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
 import { AcDDECodeGeneratorDefaultConfig } from '../consts/ac-dde-code-generator-default-config.const';
 import { boolColumnProperties, numberColumnProperties, stringColumnProperties } from '../consts/ac-dde-property-groups.const';
 
@@ -47,7 +47,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
   }
 
   getDataDictionaryString() {
-    let result: string = `import { AcDataDictionary, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty,AcEnumDDColumnType,AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary"; \n`;
+    let result: string = `import { AcDataDictionary, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty,AcEnumDDColumnType,AcEnumDDColumnProperty, AcEnumDDTableProperty } from "@autocode-ts/ac-data-dictionary"; \n`;
     result += `${this.getDDKeysString()}\n\n`;
     result += `export const ${AcDDECodeGeneratorDefaultConfig.dataDictionaryConstName} = {\n`;
     this.tabsCount++;
@@ -208,9 +208,6 @@ export class AcDataDictionaryTypescriptCodeGenerator {
       case AcEnumDDColumnType.Timestamp:
         result = `AcEnumDDColumnType.Timestamp`;
         break;
-      case AcEnumDDColumnType.UserDefinedFunction:
-        result = `AcEnumDDColumnType.UserDefinedFunction`;
-        break;
       case AcEnumDDColumnType.Uuid:
         result = `AcEnumDDColumnType.Uuid`;
         break;
@@ -316,6 +313,41 @@ export class AcDataDictionaryTypescriptCodeGenerator {
     return result;
   }
 
+  getDDTableProperties({ tableDetails }: { tableDetails: any }): string {
+    let result: string = `{`;
+    this.tabsCount++;
+    const propertiesJson: string[] = [];
+    if (tableDetails && tableDetails[AcDDTable.KeyTableProperties]) {
+      const properties = tableDetails[AcDDTable.KeyTableProperties];
+      for (const key of Object.keys(properties)) {
+        const value = properties[key][AcDDTableProperty.KeyPropertyValue];
+        let propertyKey = stringToPascalCase(key.replaceAll('_',' '));
+        let propertyValue = `${value}`;
+        let validProperty:boolean = false;
+        validProperty = true;
+        propertyValue = `"${value}"`;
+        if(validProperty){
+          let propertyJson:string = '';
+          propertyJson += `${this.tabs}[AcEnumDDTableProperty.${propertyKey}] : {\n`;
+          this.tabsCount++;
+          propertyJson += `${this.tabs}[AcEnumDDTableProperty.KeyPropertyName] : AcEnumDDTableProperty.${propertyKey},\n`;
+          propertyJson += `${this.tabs}[AcEnumDDTableProperty.KeyPropertyValue] : ${propertyValue}\n`;
+          this.tabsCount--;
+          propertyJson += `${this.tabs}}`;
+          propertiesJson.push(propertyJson);
+        }
+      }
+    }
+
+    if (propertiesJson.length > 0) {
+      result += `\n`+propertiesJson.join(`,\n`)+``;
+    }
+    this.tabsCount--;
+
+    result += `\n${this.tabs}}`;
+    return result;
+  }
+
   getDDTableString({ tableDetails }: { tableDetails: any }): string {
     let result: string = ``;
     this.tabsCount++;
@@ -334,7 +366,8 @@ export class AcDataDictionaryTypescriptCodeGenerator {
       result += columnStrings.join(',\n');
     }
 
-    result += `${this.tabs}\n${this.tabs}}\n`;
+    result += `${this.tabs}\n${this.tabs}},\n`;
+    result += `${this.tabs}[AcDDTable.KeyTableProperties] : ${this.getDDTableProperties({tableDetails:tableDetails})}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;

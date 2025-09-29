@@ -94,7 +94,7 @@ export class AcOptionInputElement extends AcInputElement {
 
   constructor() {
     super();
-    this.type = AcEnumInputType.Radio;
+    this.type = AcEnumInputType.Checkbox;
     acAddClassToElement({ class_: AcInputCssClassName.acOptionInput, element: this });
     if (this.isArray == undefined || this.isArray == null) {
       if (this.type == AcEnumInputType.Checkbox) {

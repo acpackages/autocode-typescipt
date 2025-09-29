@@ -20,7 +20,22 @@ export class DropdownTestPage extends HTMLElement {
         ${this.renderTestBlock('Left Dropdown', 'left', false,'menu-left', ['Option X', 'Option Y', 'Option Z'])}
         ${this.renderTestBlock('Right Dropdown', 'right', false,'menu-right', ['Alpha', 'Beta', 'Gamma'])}
         ${this.renderTestBlock('Hover Dropdown (bottom)', 'hover-bottom', true,'menu-hover-bottom', ['Hover A', 'Hover B', 'Hover C'])}
+        <div style="position:fixed;top:0px;right:0px">
+        <ac-dropdown>
+        <button type="button" class="btn btn-primary"  ac-dropdown-trigger>
+          Dropdown
+        </button>
+        <div class="dropdown-menu-test" role="menu" ac-dropdown-target>
+        <ul class="list-unstyled m-0 p-2">
+          <li>Item 01</li>
+          <li>Item 02</li>
+          <li>Item 03</li>
+        </ul>
+      </div>
+        </ac-dropdown>
+        </div>
 
+      </div>
         <hr class="my-5">
         <p class="text-muted"><small>All dropdowns above are positioned using JavaScript and <code>AcDropdown</code> internal logic with extra Bootstrap-like behavior.</small></p>
       </div>

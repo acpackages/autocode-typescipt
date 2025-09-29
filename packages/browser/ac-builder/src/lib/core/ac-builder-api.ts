@@ -6,7 +6,7 @@ import { stringToCamelCase } from "@autocode-ts/ac-extensions";
 import { AcEvents, AcHooks } from "@autocode-ts/autocode";
 import { Editor } from "grapesjs";
 import { AcBuilder } from "../elements/ac-builder.element";
-import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
+import { AC_BUILDER_ELEMENT_ATTRIBUTE } from "../consts/ac-builder-element-attribute.const";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
 import { AcBuilderState } from "../models/ac-builder-state.model";
 import { IAcBuilderState } from "../interfaces/ac-builder-state.interface";
@@ -18,6 +18,7 @@ import { IAcBuilderComponent } from "../interfaces/ac-component.interface";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { AcBuilderComponent } from "./ac-builder-component";
 import { title } from "process";
+import { AC_BUILDER_CONFIG } from "../consts/ac-builder-config.const";
 
 export class AcBuilderApi {
   private _component!: IAcBuilderComponent;
@@ -40,6 +41,9 @@ export class AcBuilderApi {
   scriptEditor!: AcBuilderScriptEditor;
   selectedElement?: IAcComponentElement;
   runtime?: AcBuilderDevelopmentRuntime;
+  editorOpen: boolean = false;
+  editorHtmlModified = false;
+  refreshingEditorHtml = false;
 
   constructor({ builder }: { builder: AcBuilder }) {
     this.builder = builder;
@@ -51,6 +55,11 @@ export class AcBuilderApi {
     AcBuilderElementsManager.init();
     this.addElementsFromRegister();
     this.component = { name: 'default', elements: {} };
+    this.hooks.subscribe({
+      hook: AcEnumBuilderHook.EditorHtmlChange, callback: () => {
+        this.editorHtmlModified = true;
+      }
+    })
   }
 
   private addElementsFromRegister() {
@@ -70,30 +79,42 @@ export class AcBuilderApi {
         model: {
           defaults: {
             tagName: element.tag,
-          },
+          }
         },
         view: {
           init(args: any) {
             let currentCount: number = 0;
             if (instance.component && instance.component.elements) {
-              currentCount = Object.values(instance.component.elements).filter((el) => { return el.name == element.name }).length;
+              currentCount = Object.values(instance.component.elements).filter((el) => { return el.name == element.name }).length - 1;
             }
             currentCount++;
-            const instanceName: string = stringToCamelCase(`${element.name.replaceAll(" ", "_")}_${currentCount}`);
+            let instanceName: string = stringToCamelCase(`${element.name.replaceAll(" ", "_")}`);
+            if (currentCount > 0) {
+              instanceName += currentCount;
+            }
+
             const componentElement: IAcComponentElement = {
               instanceName: instanceName,
               name: element.name,
               events: {},
               properties: {
                 instanceName: {
-                  name:'instanceName',
+                  name: 'instanceName',
                   value: instanceName
                 }
               }
             }
             instance.component.elements![instanceName] = componentElement;
             setTimeout(() => {
-              this.el.setAttribute(AcBuilderAttributeName.acBuilderElementInstanceName, instanceName);
+              this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName, instanceName);
+              if (!this.el.hasAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml)) {
+                if (element.keepHtml != false) {
+                  this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'true');
+                }
+                else {
+                  this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'false');
+                }
+              }
             }, 1);
           },
 
@@ -111,11 +132,91 @@ export class AcBuilderApi {
       });
       this.scriptEditor.registerType({ type: element.instanceClass });
     }
-
+    this.builder.setFilterableElementsGroups();
   }
 
   fromJson(json: IAcBuilderState) {
     this.builderState.fromJson(json);
+  }
+
+  getHtml() {
+    const container = document.createElement("div");
+    const builderIframe = this.grapesJSApi.Canvas.getFrameEl();
+    if (builderIframe) {
+      const iframeDocument = builderIframe.contentDocument || builderIframe.contentWindow?.document;
+      if (iframeDocument) {
+        const iframeBody = (iframeDocument.querySelector('body') as HTMLElement).cloneNode(true) as HTMLElement;
+        for (const styleEl of Array.from(iframeBody.querySelectorAll('style'))) {
+          styleEl.remove();
+        }
+        for (const scriptEl of Array.from(iframeBody.querySelectorAll('script'))) {
+          scriptEl.remove();
+        }
+        container.innerHTML = iframeBody.innerHTML;
+      }
+      const el = container.querySelector('.gjs-css-rules') as HTMLElement | undefined;
+      if (el) {
+        el.remove();
+      }
+      const el1 = container.querySelector('.gjs-js-cont') as HTMLElement | undefined;
+      if (el1) {
+        el1.remove();
+      }
+    }
+
+    function clean(node: any) {
+      if (node.nodeType !== Node.ELEMENT_NODE) return;
+      const element = node as HTMLElement;
+      for (const attribute of element.getAttributeNames()) {
+        if (attribute.startsWith("data-gjs-") ||
+          attribute === "draggable" ||
+          attribute === "contenteditable" ||
+          attribute === "spellcheck") {
+          element.removeAttribute(attribute);
+        }
+      }
+      if (node.id && /^i\w{2,}$/.test(node.id)) {
+        node.removeAttribute("id");
+      }
+      for (const className of Array.from(element.classList)) {
+        if (className.startsWith("gjs-")) {
+          (node as HTMLElement).classList.remove(className);
+        }
+      }
+      if(element.hasAttribute('class')){
+        if(element.classList.length == 0){
+          element.removeAttribute('class');
+        }
+      }
+      if(element.hasAttribute('style')){
+        const attrValue =  element.getAttribute('style');
+        if(!attrValue || attrValue.trim().length > 0){
+          element.removeAttribute('style');
+        }
+      }
+      let includeHtml: boolean = true;
+      if (element.hasAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml)) {
+        includeHtml = element.getAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml) != 'false';
+      }
+      if (!includeHtml) {
+        const children = Array.from(element.children);
+        if (children.length > 0) {
+          for (const child of children) {
+            if (!child.hasAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName)) {
+              child.remove();
+            }
+          }
+        }
+        else {
+          element.innerHTML = "";
+        }
+
+      }
+      node.childNodes.forEach(clean);
+    }
+    container.childNodes.forEach(clean);
+    const result = container.innerHTML;
+    return result;
   }
 
   initScriptEditor() {
@@ -129,6 +230,22 @@ export class AcBuilderApi {
       this.scriptEditor.on({
         event: 'close', callback: () => {
           this.builder.scriptEditorDrawer.close();
+        }
+      });
+      this.builder.scriptEditorDrawer.on({
+        event: 'close', callback: () => {
+          this.editorOpen = false;
+          if (this.editorHtmlModified) {
+            this.refreshingEditorHtml = true;
+            this.setHtml({ html: this.scriptEditor.getHtmlCode() })
+            this.refreshingEditorHtml = false;
+          }
+        }
+      });
+      this.builder.scriptEditorDrawer.on({
+        event: 'open', callback: () => {
+          this.editorOpen = true;
+          this.editorHtmlModified = false;
         }
       });
     }
@@ -148,9 +265,14 @@ export class AcBuilderApi {
     }
   }
 
+  setHtml({ html }: { html: string }) {
+    this.grapesJSApi.setComponents(html);
+  }
+
   toggleScriptEditor() {
     this.initScriptEditor();
     this.builder.scriptEditorDrawer.toggle();
+
   }
 
   toJson(): IAcBuilderState {

@@ -48,6 +48,18 @@ export function acCopyElementStyles({ fromElement, toElement }: { fromElement: H
   }
 }
 
+export function acElementHasParentTag({element,tag}:{element: HTMLElement, tag: string}): boolean {
+  tag = tag.toLowerCase(); // normalize for comparison
+  let parent = element.parentElement;
+  while (parent) {
+    if (parent.tagName.toLowerCase() == tag) {
+      return true;
+    }
+    parent = parent.parentElement;
+  }
+  return false;
+}
+
 export function acMorphElement({ source, destination,sourceColor,destinationColor, duration = 300 }: { source: HTMLElement, destination: HTMLElement,sourceColor?:string;destinationColor?:string; duration?: number }): void {
   // Get bounding client rectangles
   const sourceRect = source.getBoundingClientRect();

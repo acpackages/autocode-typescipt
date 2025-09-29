@@ -47,7 +47,6 @@ export class AcDropdown extends AcElementBase {
   private observer?: IntersectionObserver;
   private outsideClickHandler: (e: MouseEvent) => void;
 
-  private positionAnimationFrameId?: number;
   private resizeHandler: () => void;
   private scrollHandler: () => void;
   private targetElement!: HTMLElement;
@@ -58,6 +57,8 @@ export class AcDropdown extends AcElementBase {
   private triggerLeaveHandler?: () => void;
   private targetEnterHandler?: () => void;
   private targetLeaveHandler?: () => void;
+
+  private chosenPosition: "auto" | "bottom" | "left" | "right" | "top" | string = "auto";
 
   constructor() {
     super();
@@ -73,7 +74,6 @@ export class AcDropdown extends AcElementBase {
     window.addEventListener("scroll", this.scrollHandler, true);
     window.addEventListener("resize", this.resizeHandler);
 
-    // Initialize elements if already present
     this.initElements();
   }
 
@@ -94,8 +94,10 @@ export class AcDropdown extends AcElementBase {
     this.isOpen = true;
     this.targetElement.style.display = "block";
     this.targetElement.classList.add("fade-in");
+
+    this.chosenPosition = this.position === "auto" ? this.getBestPosition() : this.position;
     this.updatePosition();
-    this.startAutoPosition();
+
     document.addEventListener("click", this.outsideClickHandler);
     this.triggerElement.setAttribute("aria-expanded", "true");
 
@@ -116,7 +118,7 @@ export class AcDropdown extends AcElementBase {
     this.isOpen = false;
     this.targetElement.classList.remove("fade-in");
     this.targetElement.style.display = "none";
-    this.stopAutoPosition();
+
     document.removeEventListener("click", this.outsideClickHandler);
     this.triggerElement.setAttribute("aria-expanded", "false");
 
@@ -129,7 +131,6 @@ export class AcDropdown extends AcElementBase {
   }
 
   destroy(): void {
-    this.stopAutoPosition();
     window.removeEventListener("scroll", this.scrollHandler, true);
     window.removeEventListener("resize", this.resizeHandler);
 
@@ -150,7 +151,7 @@ export class AcDropdown extends AcElementBase {
   setDropdownItemElement({ element }: { element: HTMLElement }): void {
     element.setAttribute("role", "menuitem");
     element.setAttribute(AcDropdownAttributeName.acDropdownItem, "");
-    element.tabIndex = 0; // make focusable
+    element.tabIndex = 0;
   }
 
   setTargetElement({ element }: { element: HTMLElement }): void {
@@ -245,78 +246,86 @@ export class AcDropdown extends AcElementBase {
     }
   }
 
-  private startAutoPosition(): void {
-    const loop = () => {
-      if (this.isOpen) {
-        this.updatePosition();
-        this.positionAnimationFrameId = requestAnimationFrame(loop);
-      }
-    };
-    this.positionAnimationFrameId = requestAnimationFrame(loop);
-  }
+  private getBestPosition(): "bottom" | "top" | "right" | "left" {
+  const rect = this.triggerElement.getBoundingClientRect();
+  const menuHeight = this.targetElement.offsetHeight;
+  const menuWidth = this.targetElement.offsetWidth;
 
-  private stopAutoPosition(): void {
-    if (this.positionAnimationFrameId) {
-      cancelAnimationFrame(this.positionAnimationFrameId);
-      this.positionAnimationFrameId = undefined;
-    }
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const spaceAbove = rect.top;
+  const spaceRight = window.innerWidth - rect.right;
+  const spaceLeft = rect.left;
+
+  // Preferred order: bottom → top → right → left
+  if (spaceBelow >= menuHeight) return "bottom";
+  if (spaceAbove >= menuHeight) return "top";
+  if (spaceRight >= menuWidth) return "right";
+  if (spaceLeft >= menuWidth) return "left";
+
+  // fallback (pick the side with max space)
+  const maxSpace = Math.max(spaceBelow, spaceAbove, spaceRight, spaceLeft);
+  switch (maxSpace) {
+    case spaceBelow: return "bottom";
+    case spaceAbove: return "top";
+    case spaceRight: return "right";
+    case spaceLeft: return "left";
   }
+  return "bottom";
+}
 
   private updatePosition(): void {
-    if (!this.isOpen) return;
+  if (!this.isOpen) return;
+  const rect = this.triggerElement.getBoundingClientRect();
+  let top = 0, left = 0;
 
-    const rect = this.triggerElement.getBoundingClientRect();
-    let top = 0,
-      left = 0;
-
-    switch (this.position) {
-      case "bottom":
-        top = rect.bottom + this.offset;
-        left = rect.left;
-        break;
-      case "top":
-        top = rect.top - this.targetElement.offsetHeight - this.offset;
-        left = rect.left;
-        break;
-      case "left":
-        top = rect.top;
-        left = rect.left - this.targetElement.offsetWidth - this.offset;
-        break;
-      case "right":
-        top = rect.top;
-        left = rect.right + this.offset;
-        break;
-      case "auto":
-      default:
-        // Default auto places below, unless overflow
-        top = rect.bottom + this.offset;
-        left = rect.left;
-        break;
-    }
-
-    // Flip if overflow
-    const menuRect = this.targetElement.getBoundingClientRect();
-    if (menuRect.bottom > window.innerHeight) {
-      top = rect.top - this.targetElement.offsetHeight - this.offset;
-    }
-    if (menuRect.top < 0) {
+  switch (this.chosenPosition) {
+    case "bottom":
       top = rect.bottom + this.offset;
-    }
-    if (menuRect.right > window.innerWidth) {
-      left = rect.right - this.targetElement.offsetWidth;
-    }
-    if (menuRect.left < 0) {
       left = rect.left;
-    }
-
-    // Alignment
-    if (this.alignment === "end") {
-      left = rect.right - this.targetElement.offsetWidth;
-    }
-
-    this.targetElement.style.top = `${top}px`;
-    this.targetElement.style.left = `${left}px`;
+      break;
+    case "top":
+      top = rect.top - this.targetElement.offsetHeight - this.offset;
+      left = rect.left;
+      break;
+    case "left":
+      top = rect.top + (rect.height - this.targetElement.offsetHeight) / 2;
+      left = rect.left - this.targetElement.offsetWidth - this.offset;
+      break;
+    case "right":
+      top = rect.top + (rect.height - this.targetElement.offsetHeight) / 2;
+      left = rect.right + this.offset;
+      break;
   }
+
+  // Collision adjustment: keep inside viewport
+  const menuRect = this.targetElement.getBoundingClientRect();
+
+  // adjust vertically
+  if (top + this.targetElement.offsetHeight > window.innerHeight) {
+    top = window.innerHeight - this.targetElement.offsetHeight - this.offset;
+  }
+  if (top < this.offset) {
+    top = this.offset;
+  }
+
+  // adjust horizontally
+  if (left + this.targetElement.offsetWidth > window.innerWidth) {
+    left = window.innerWidth - this.targetElement.offsetWidth - this.offset;
+  }
+  if (left < this.offset) {
+    left = this.offset;
+  }
+
+  // alignment: "start" = align left edge, "end" = align right edge
+  if (this.alignment === "end") {
+    left = rect.right - this.targetElement.offsetWidth;
+    // clamp after alignment
+    if (left < this.offset) left = this.offset;
+  }
+
+  this.targetElement.style.top = `${Math.round(top)}px`;
+  this.targetElement.style.left = `${Math.round(left)}px`;
+}
 }
 
 acRegisterCustomElement({ tag: AC_DROPDOWN_TAG.dropdown, type: AcDropdown });

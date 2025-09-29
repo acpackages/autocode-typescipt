@@ -2,7 +2,7 @@
 import { Editor } from "grapesjs";
 import { AcBuilderApi } from "./ac-builder-api";
 import { AcBuilderEventsHandler } from "./ac-builder-events-handler";
-import { AcBuilderAttributeName } from "../consts/ac-builder-attribute-name.const";
+import { AC_BUILDER_ELEMENT_ATTRIBUTE } from "../consts/ac-builder-element-attribute.const";
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { AcBuilderElementsManager } from "./ac-builder-elements-manager";
@@ -20,12 +20,12 @@ export class AcGrapesJSEventsHandler {
     this.registerEventListeners();
   }
 
-  getComponentElement({component}:{component:any}):IAcComponentElement|undefined{
+  getComponentElement({ component }: { component: any }): IAcComponentElement | undefined {
     let result;
-    if(component && component.view && component.view.el && this.builderApi && this.builderApi.component && this.builderApi.component.elements){
-      const element:HTMLElement = component.view.el;
-      if(element.hasAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)){
-        const instanceName:string = element.getAttribute(AcBuilderAttributeName.acBuilderElementInstanceName)!;
+    if (component && component.view && component.view.el && this.builderApi && this.builderApi.component && this.builderApi.component.elements) {
+      const element: HTMLElement = component.view.el;
+      if (element.hasAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName)) {
+        const instanceName: string = element.getAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName)!;
         result = this.builderApi.component.elements[instanceName];
       }
     }
@@ -60,14 +60,14 @@ export class AcGrapesJSEventsHandler {
         if (mutation.type == 'attributes') {
           const element = mutation.target as HTMLElement;
           const attrName: string = mutation.attributeName!;
-          if (attrName == AcBuilderAttributeName.acBuilderElementInteractive) {
+          if (attrName == AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInteractive) {
             this.makeElementInteractive({ element });
           }
         }
         else if (mutation.type == "childList" && mutation.addedNodes.length > 0) {
           mutation.addedNodes.forEach((element) => {
             if (element instanceof HTMLElement) {
-              if (element.hasAttribute(AcBuilderAttributeName.acBuilderElementInteractive)) {
+              if (element.hasAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInteractive)) {
                 this.makeElementInteractive({ element });
               }
             }
@@ -83,7 +83,7 @@ export class AcGrapesJSEventsHandler {
       childList: true,
       subtree: true
     });
-    const interactiveElements = this.builderRoot?.querySelectorAll(`[${AcBuilderAttributeName.acBuilderElementInteractive}]`);
+    const interactiveElements = this.builderRoot?.querySelectorAll(`[${AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInteractive}]`);
     if (interactiveElements) {
       for (const element of Array.from(interactiveElements) as HTMLElement[]) {
         this.makeElementInteractive({ element });
@@ -157,9 +157,9 @@ export class AcGrapesJSEventsHandler {
     });
     editor.on('component:remove', (component) => {
       if (component && component.view && component.view.el) {
-        this.eventsHandler.handleElementRemove({element:component.view.el});
+        this.eventsHandler.handleElementRemove({ element: component.view.el });
         const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
-        if (toolbarEl){
+        if (toolbarEl) {
           toolbarEl.style.display = 'none';
         }
       }
@@ -364,18 +364,19 @@ export class AcGrapesJSEventsHandler {
     const toolbarEl = this.grapesJSApi.Canvas.getToolbarEl();
 
     if (!toolbarEl) return;
-    const componentElement = this.getComponentElement({component:comp});
+    const componentElement = this.getComponentElement({ component: comp });
+    const element = comp.view.el as HTMLElement;
 
-    const getMenuElement = ({ icon, title, callback }: { icon: string, title: string, callback: Function }) => {
+    const getMenuElement = ({ icon, title, callback, color = 'white' }: { icon: string, title: string, callback: Function, color?: string }) => {
       const menuElement = document.createElement('button');
       menuElement.style.background = "transparent";
       menuElement.style.border = "none";
-      menuElement.style.color = "white";
+      menuElement.style.color = color;
       menuElement.style.height = '20px';
       menuElement.style.width = '30px';
-      menuElement.innerHTML = `<ac-svg-icon class="ac-builder-toolbar-btn pb-1">${icon}</ac-svg-icon>`;
+      menuElement.innerHTML = `<ac-svg-icon class="ac-builder-toolbar-btn">${icon}</ac-svg-icon>`;
       menuElement.setAttribute('ac-tooltip', title);
-      menuElement.addEventListener('click', () => { callback() });
+      menuElement.addEventListener('click', () => { callback(menuElement) });
       return menuElement;
     };
     setTimeout(() => {
@@ -387,24 +388,44 @@ export class AcGrapesJSEventsHandler {
       toolbarEl.style.border = 'solid 1px #555'
       setTimeout(() => {
 
-        if(componentElement && componentElement.instance){
-          const builderElement = AcBuilderElementsManager.getElement({name:componentElement.name});
-          if(builderElement?.commands){
-            for(const command of builderElement.commands){
+        if (componentElement && componentElement.instance) {
+          const builderElement = AcBuilderElementsManager.getElement({ name: componentElement.name });
+          if (builderElement?.commands) {
+            for (const command of builderElement.commands) {
               toolbarEl.append(getMenuElement({
                 title: command.title, icon: command.iconSvg ?? ACI_SVG_SOLID.command, callback: () => {
-                  componentElement.instance.handleCommand({command:command.name,args:{}});
+                  componentElement.instance.handleCommand({ command: command.name, args: {} });
                 }
               }));
             }
           }
         }
+        if (element.getAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml) == 'true') {
+          toolbarEl.append(getMenuElement({
+            title: 'Html will be exported! <br>Click to exclude html', icon: ACI_SVG_SOLID.code, callback: (menuElement:HTMLElement) => {
+              element.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'false');
+              menuElement.blur();
+              this.renderElementToolbar(comp);
+            }
+          }));
+        }
+        else {
+          toolbarEl.append(getMenuElement({
+            title: 'Html will not be exported! <br>Click to keep html', icon: ACI_SVG_SOLID.code, color: '#555', callback: (menuElement:HTMLElement) => {
+              element.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'true');
+              menuElement.blur();
+              this.renderElementToolbar(comp);
+            }
+          }));
+        }
+
         toolbarEl.append(getMenuElement({
           title: 'Clone', icon: ACI_SVG_SOLID.clone, callback: () => {
             const cloned = comp.clone();
             comp.parent()?.append(cloned);
           }
         }));
+
         toolbarEl.append(getMenuElement({
           title: 'Remove', icon: ACI_SVG_SOLID.trash, callback: () => {
             comp.remove();

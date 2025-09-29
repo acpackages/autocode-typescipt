@@ -15,5 +15,6 @@ export * from './ac-resizable/_ac-resizable.export';
 export * from './ac-scroll-track/_ac-scroll-track.export';
 export * from './ac-scrollable/_ac-scrollable.export';
 export * from './ac-slides/_ac-slides.export';
+export * from './ac-svg-icon/_ac-svg-icon.element';
 export * from './ac-tabs/_ac-tabs.export';
 export * from './ac-tooltip/_ac-tooltip.export';

@@ -4692,10 +4692,22 @@ export const dataDictionaryJson = {
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
               "propertyValue": [
-                {"label":"Adjustment","value":"ADJUSTMENT"},
-                {"label":"Trading Account","value":"TRADING ACCOUNT"},
-                {"label":"Profit & Loss Account","value":"PROFIT AND LOSS ACCOUNT"},
-                {"label":"Balance Sheet","value":"BALANCE SHEET"}
+                {
+                  "label": "Adjustment",
+                  "value": "ADJUSTMENT"
+                },
+                {
+                  "label": "Trading Account",
+                  "value": "TRADING ACCOUNT"
+                },
+                {
+                  "label": "Profit & Loss Account",
+                  "value": "PROFIT AND LOSS ACCOUNT"
+                },
+                {
+                  "label": "Balance Sheet",
+                  "value": "BALANCE SHEET"
+                }
               ]
             }
           }

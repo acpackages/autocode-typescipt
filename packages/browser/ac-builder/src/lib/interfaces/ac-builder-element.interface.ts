@@ -10,6 +10,7 @@ export interface IAcBuilderElement<T extends AcBuilderElement = AcBuilderElement
   category:string;
   mediaPath?:string;
   mediaSvg?:string;
+  keepHtml?:boolean;
   properties?:IAcBuilderElementProperty[];
   events?:IAcBuilderElementEvent[];
   instanceClass: new (...args: any[]) => T;

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcRuntime } from "@autocode-ts/ac-browser";
+import { AcTsRuntime } from "@autocode-ts/ac-runtime-ts";
 import { AcBuilderElementsManager } from "../core/ac-builder-elements-manager";
 import { AcBuilderElement } from "../core/ac-builder-element";
 import ts from "typescript";
@@ -29,7 +29,7 @@ export class AcBuilderRuntimeComponent {
     }
   }
 
-  createInstanceFromScript() {
+  async createInstanceFromScript() {
     if (this.component && this.component.script) {
       let className = this.component.className;
       if(!className){
@@ -39,13 +39,13 @@ export class AcBuilderRuntimeComponent {
         target: ts.ScriptTarget.ES2020,
         module: ts.ModuleKind.ESNext
       });
-      const result = AcRuntime.createClass({ name: className, script: jsScript,scope:this.scriptScope});
-      this.componentInstance = AcRuntime.createInstance({ name: className });
+      const result =await  AcTsRuntime.createClass({ name: className, script: jsScript,scope:this.scriptScope});
+      this.componentInstance = AcTsRuntime.createInstance({ name: className });
     }
   }
 
-  render() {
-    this.createInstanceFromScript();
+  async render() {
+    await this.createInstanceFromScript();
     if(this.componentInstance && this.componentInstance.element){
       this.componentInstance.element.innerHTML = this.component.html;
       this.componentInstance.init({});
@@ -87,7 +87,6 @@ export class AcBuilderRuntimeComponent {
       for (const propertyName of propertyNames) {
         const property:IAcComponentElementPropertyValue = element.properties[propertyName];
         if(property.valueType == 'CLASS_PROPERTY_REFERENCE'){
-          console.log(property.value);
           element.instance[propertyName] = this.componentInstance[property.value];
         }
         else{

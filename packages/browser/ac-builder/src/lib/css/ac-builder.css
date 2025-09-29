@@ -2666,7 +2666,6 @@ span.CodeMirror-selectedtext {
 .gjs-block-category .gjs-caret-icon {
     display: inline-block;
     width: 20px !important;
-    height: 20px !important;
     padding:0px;
 }
 

@@ -38,8 +38,8 @@ export class AcDDETableEditor {
   tablesDatagrid!: AcDDETablesDatagrid;
   tableTriggersDatagrid!: AcDDETriggersDatagrid;
 
-  editorPanels!: AcResizablePanels;
-  detailPanels!: AcResizablePanels;
+  editorPanels: AcResizablePanels = new AcResizablePanels();
+  detailPanels: AcResizablePanels = new AcResizablePanels();
 
   state: IAcDDETableEditorState = {};
 
@@ -147,6 +147,7 @@ export class AcDDETableEditor {
   }
 
   private initElement() {
+    // this.element.innerHTML =
     acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
     acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
@@ -183,31 +184,31 @@ export class AcDDETableEditor {
     this.tableTriggersContainer.append(this.tableTriggersDatagrid.element);
 
     // this.detailPanels = new AcResizablePanels({ element: this.tableDetailsContainer, direction: AcEnumResizePanelDirection.Vertical });
-    this.detailPanels.setPanelSizes({
-      panelSizes: [
-        { size: 60, index: 0 },
-        { size: 20, index: 1 },
-        { size: 20, index: 1 }
-      ]
-    });
-    this.detailPanels.on({
-      event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
-        this.updateEditorState();
-      }
-    });
+    // this.detailPanels.setPanelSizes({
+    //   panelSizes: [
+    //     { size: 60, index: 0 },
+    //     { size: 20, index: 1 },
+    //     { size: 20, index: 1 }
+    //   ]
+    // });
+    // this.detailPanels.on({
+    //   event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
+    //     this.updateEditorState();
+    //   }
+    // });
 
     // this.editorPanels = new AcResizablePanels({ element: this.element, direction: AcEnumResizePanelDirection.Horizontal });
-    this.editorPanels.setPanelSizes({
-      panelSizes: [
-        { size: 20, index: 0 },
-        { size: 80, index: 1 }
-      ]
-    });
-    this.editorPanels.on({
-      event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
-        this.updateEditorState();
-      }
-    });
+    // this.editorPanels.setPanelSizes({
+    //   panelSizes: [
+    //     { size: 20, index: 0 },
+    //     { size: 80, index: 1 }
+    //   ]
+    // });
+    // this.editorPanels.on({
+    //   event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
+    //     this.updateEditorState();
+    //   }
+    // });
     this.refreshEditorState();
     setTimeout(() => {
       this.editorInitialized = true;

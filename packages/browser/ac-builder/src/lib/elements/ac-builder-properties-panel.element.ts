@@ -42,7 +42,7 @@ export class AcBuilderPropertiesPanel {
       acAddClassToElement({ element: categoryContainer, class_: 'gjs-block-category gjs-open' });
       categoryContainer.innerHTML = `<ac-collapse>
       <div class="gjs-title" ${AcCollapseAttributeName.acCollapseToggle}>
-        <span class="gjs-caret-icon"><ac-svg-icon class="p-1">${AC_BUILDER_SVGS.caretDown}</ac-svg-icon></span> ${categoryName}
+        <span class="gjs-caret-icon"><ac-svg-icon>${AC_BUILDER_SVGS.caretDown}</ac-svg-icon></span> ${categoryName}
       </div>
       <div class="gjs-blocks-c category-inputs-container gjs-sm-properties p-1" ${AcCollapseAttributeName.acCollapseContent} ${AcCollapseAttributeName.acCollapseOpen}></div>
       </ac-collapse>

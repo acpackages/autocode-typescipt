@@ -62,7 +62,6 @@ export class AcDDDatagridBuilderElement extends AcBuilderElement {
     return this.ddDatagrid.onDemandFunction;
   };
   set onDemandFunction(value: (args: IAcDatagridOnDemandRequestArgs) => void) {
-    console.log(value);
     this.ddDatagrid.onDemandFunction = value;
     this.dataSource = this.datagridApi.dataSource;
     this.datagridApi.dataSource.getData();
@@ -94,8 +93,6 @@ export class AcDDDatagridBuilderElement extends AcBuilderElement {
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
     this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
-    console.log(this);
-
   }
 
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
@@ -122,6 +119,7 @@ export const AC_BUILDER_DD_DATAGRID_ELEMENT: IAcBuilderElement = {
   name: "ddDatagrid",
   tag: "div",
   title: "Datagrid",
+  keepHtml:false,
   properties: [
     { name: 'sourceType', 'category': 'Data Dictionary', title: 'Source Type', type: 'select',inputProperties:{'selectOptions':[
       {label:'Sql',value:'SQL'},
