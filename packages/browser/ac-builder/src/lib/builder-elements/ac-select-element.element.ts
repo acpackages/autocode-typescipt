@@ -1,3 +1,4 @@
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 import { AC_BUILDER_ICON_SVGS } from "../consts/ac-builder-icon-svgs.consts";
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_FORM_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_SCROLL_EVENTS, AC_TOUCH_EVENTS } from "../consts/ac-element-properties-events.consts";
 import { AcBuilderElement } from "../core/ac-builder-element";
@@ -37,6 +38,17 @@ export class AcSelectElement extends AcBuilderElement{
     this.registerListeners();
   }
 
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addOption'){
+      const option = document.createElement('option');
+      option.textContent = 'New Option';
+      option.setAttribute('ac-builder-element-interactive','');
+      option.setAttribute('contenteditable','');
+      option.value = 'newOption';
+      this.element.appendChild(option);
+    }
+  }
+
   private registerListeners(){
     this.element.addEventListener('click',(event:MouseEvent)=>{
       this.events.execute({event:'click',args:event});
@@ -73,5 +85,8 @@ export const AC_BUILDER_SELECT_ELEMENT:IAcBuilderElement = {
     ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.select,
-  instanceClass:AcSelectElement
+  instanceClass:AcSelectElement,
+  commands:[
+    {name:'addOption',title:'Add Option',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 }

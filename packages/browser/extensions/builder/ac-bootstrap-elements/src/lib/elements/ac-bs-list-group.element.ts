@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_INPUT_EVENTS, AC_KEYBOARD_EVENTS, AC_MOUSE_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -38,14 +39,29 @@ export class AcBsListGroup extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for ListGroup
     this.element.innerHTML = `<ul class="list-group" ac-builder-element-interactive>
-  <li class="list-group-item">An item</li>
-  <li class="list-group-item">A second item</li>
-  <li class="list-group-item">A third item</li>
-  <li class="list-group-item">A fourth item</li>
-  <li class="list-group-item">And a fifth one</li>
-</ul>`;
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">A fourth item</li>
+      <li class="list-group-item">And a fifth one</li>
+    </ul>`;
+    this.element.classList.add('py-1')
     this.registerDomEvents();
     this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command==='addBullet'){
+      const ul = this.element.querySelector('ul.list-group');
+      if(ul){
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = 'New item';
+        li.setAttribute('ac-builder-element-interactive','');
+        ul.appendChild(li);
+        this.events.execute({ event: 'contentChanged', args: { command, item: li } });
+      }
+    }
   }
 
   private registerDomEvents(): void {
@@ -82,5 +98,8 @@ export const AC_BUILDER_BS_LIST_GROUP_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.unorderdList,
-  instanceClass: AcBsListGroup
+  instanceClass: AcBsListGroup,
+  commands:[
+    {name:'addBullet',title:'Add Bullet',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

@@ -1,5 +1,6 @@
-import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES,AcBuilderElement,IAcBuilderElement,IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty,} from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -40,11 +41,25 @@ export class AcBsBreadcrumb extends AcBuilderElement {
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Library</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Data</li>
+        <li class="breadcrumb-item">Data</li>
       </ol>
     </nav>`;
+    this.element.classList.add('py-1');
+    this.element.setAttribute('contenteditable', '');
     this.registerDomEvents();
     this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addLink'){
+      const ol = this.element.querySelector('ol.breadcrumb');
+      if(ol){
+        const li = document.createElement('li');
+        li.classList.add('breadcrumb-item');
+        li.innerHTML = `<a href="#">New Link</a>`;
+        ol.append(li);
+      }      
+    }
   }
 
   private registerDomEvents(): void {
@@ -81,5 +96,8 @@ export const AC_BUILDER_BS_BREADCRUMB_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.breadcrumb,
-  instanceClass: AcBsBreadcrumb
+  instanceClass: AcBsBreadcrumb,
+  commands:[
+    {name:'addLink',title:'Add Link',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

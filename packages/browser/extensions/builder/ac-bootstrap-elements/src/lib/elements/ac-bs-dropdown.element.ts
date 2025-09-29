@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AC_MOUSE_EVENTS, AC_POINTER_EVENTS, AC_TOUCH_EVENTS, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 // Bootstrap-specific events for this component
 const BS_EVENTS: IAcBuilderElementEvent[] = [
@@ -63,8 +64,25 @@ export class AcBsDropdown extends AcBuilderElement {
         <li><a class="dropdown-item" href="#">Something else here</a></li>
       </ul>
     </div>`;
+    this.element.classList.add('py-1');
     this.registerDomEvents();
     this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command==='addOption'){
+      const ul = this.element.querySelector('ul.dropdown-menu');
+      if(ul){
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.className = 'dropdown-item';
+        a.href = '#';
+        a.textContent = 'New Option';
+        a.setAttribute('contenteditable','');
+        li.appendChild(a);
+        ul.appendChild(li);
+      }
+    }
   }
 
   private registerDomEvents(): void {
@@ -101,5 +119,8 @@ export const AC_BUILDER_BS_DROPDOWN_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.dropdown,
-  instanceClass: AcBsDropdown
+  instanceClass: AcBsDropdown,
+  commands:[
+    {name:'addOption',title:'Add Option',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

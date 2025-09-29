@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 // Bootstrap-specific events for this component
 const BS_EVENTS: IAcBuilderElementEvent[]  = [
@@ -49,14 +50,28 @@ export class AcBsTabs extends AcBuilderElement {
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
       </li>`;
     this.element.classList.add('nav', 'nav-tabs');
     this.element.setAttribute('contenteditable','');
     this.registerDomEvents();
     this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command==='addTab'){
+      const ul = this.element;
+      if(ul){
+        const li = document.createElement('li');
+        li.className = 'nav-item';
+        const a = document.createElement('a');
+        a.className = 'nav-link';
+        a.href = '#';
+        a.textContent = 'New Tab';
+        a.setAttribute('ac-builder-element-interactive','');
+        li.appendChild(a);
+        ul.appendChild(li);
+      }
+    }
   }
 
   private registerDomEvents(): void {
@@ -93,5 +108,8 @@ export const AC_BUILDER_BS_TABS_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.tabs,
-  instanceClass: AcBsTabs
+  instanceClass: AcBsTabs,
+  commands:[
+    {name:'addTab',title:'Add Tab',iconSvg:ACI_SVG_SOLID.plus}
+  ]
 };

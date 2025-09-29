@@ -1,5 +1,6 @@
 import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
 import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 const BS_EVENTS: IAcBuilderElementEvent[] = [];
 
@@ -29,11 +30,26 @@ const ariaProperties : IAcBuilderElementProperty[] = [
 export class AcBsCol extends AcBuilderElement {
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Col
-    this.element.innerHTML = `<div class="col" ac-builder-element-interactive>
-      Column
-    </div>`;
+    this.element.classList.add('col','p-1');
+    this.element.setAttribute('ac-builder-element-interactive','');
+    this.element.setAttribute('contenteditable','');
+    this.element.innerHTML = "Col";
     this.registerDomEvents();
     this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addColumn'){
+      const col = document.createElement('div');
+      col.classList.add('col');
+      col.innerHTML = `Column`;
+      this.element.appendChild(col);
+    }else if(command == 'addRow'){
+      const row = document.createElement('div');
+      row.classList.add('row');
+      row.innerHTML = `Row`;
+      this.element.appendChild(row);
+    }
   }
 
   private registerDomEvents(): void {
@@ -70,5 +86,9 @@ export const AC_BUILDER_BS_COL_ELEMENT: IAcBuilderElement = {
     ...BS_PROPS
   ],
   mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.col,
-  instanceClass: AcBsCol
+  instanceClass: AcBsCol,
+  commands:[
+    {name:'addColumn',title:'Add Column',iconSvg:ACI_SVG_SOLID.tableColumns},
+    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.tableRows}
+  ]
 };
