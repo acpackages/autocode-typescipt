@@ -17,8 +17,6 @@ import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcBuilderComponent } from "../interfaces/ac-component.interface";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { AcBuilderComponent } from "./ac-builder-component";
-import { title } from "process";
-import { AC_BUILDER_CONFIG } from "../consts/ac-builder-config.const";
 
 export class AcBuilderApi {
   private _component!: IAcBuilderComponent;
@@ -78,6 +76,9 @@ export class AcBuilderApi {
       domc.addType(element.name, {
         model: {
           defaults: {
+            droppable: true,        // allows drops
+            draggable: true,
+            highlightable: true,
             tagName: element.tag,
           }
         },
@@ -92,7 +93,6 @@ export class AcBuilderApi {
             if (currentCount > 0) {
               instanceName += currentCount;
             }
-
             const componentElement: IAcComponentElement = {
               instanceName: instanceName,
               name: element.name,
@@ -106,15 +106,11 @@ export class AcBuilderApi {
             }
             instance.component.elements![instanceName] = componentElement;
             setTimeout(() => {
+              this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementAdded, 'true');
+              setTimeout(() => {
+                this.el.removeAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementAdded);
+              }, 1500);
               this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName, instanceName);
-              if (!this.el.hasAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml)) {
-                if (element.keepHtml != false) {
-                  this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'true');
-                }
-                else {
-                  this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'false');
-                }
-              }
             }, 1);
           },
 
@@ -125,6 +121,7 @@ export class AcBuilderApi {
         attributes: { [AcFilterableElementsAttributeName.acFilterValue]: element.title.toLowerCase() },
         content: {
           type: element.name,
+
         },
         category: element.category,
         media: element.mediaSvg,
@@ -133,6 +130,13 @@ export class AcBuilderApi {
       this.scriptEditor.registerType({ type: element.instanceClass });
     }
     this.builder.setFilterableElementsGroups();
+  }
+
+  exposeTypesToEditor({ types }: { types: any[] }) {
+    this.initScriptEditor();
+    for (const type of types) {
+      this.scriptEditor.registerType({ type });
+    }
   }
 
   fromJson(json: IAcBuilderState) {
@@ -183,14 +187,14 @@ export class AcBuilderApi {
           (node as HTMLElement).classList.remove(className);
         }
       }
-      if(element.hasAttribute('class')){
-        if(element.classList.length == 0){
+      if (element.hasAttribute('class')) {
+        if (element.classList.length == 0) {
           element.removeAttribute('class');
         }
       }
-      if(element.hasAttribute('style')){
-        const attrValue =  element.getAttribute('style');
-        if(!attrValue || attrValue.trim().length > 0){
+      if (element.hasAttribute('style')) {
+        const attrValue = element.getAttribute('style');
+        if (!attrValue || attrValue.trim().length > 0) {
           element.removeAttribute('style');
         }
       }

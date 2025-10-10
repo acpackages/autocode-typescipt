@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcModal, acRegisterCustomElement } from "@autocode-ts/ac-browser";
-import { AcBuilderApi, AcBuilderPropertyInput, AcBuilderPropertySelectInput, AcBuilderPropertyTextInput, AcEnumBuilderHook, IAcBuilderElementPropertyChangeHookArgs } from "@autocode-ts/ac-builder";
+import { AcBuilderApi, AcBuilderPropertyInput, AcEnumBuilderHook, IAcBuilderElementPropertyChangeHookArgs } from "@autocode-ts/ac-builder";
 import { AcDataDictionary, AcDDTable, AcDDView } from "@autocode-ts/ac-data-dictionary";
 
 export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
@@ -27,7 +27,7 @@ export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
       this.openModal();
     });
     this.modal.innerHTML = `
-    <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
+    <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;min-width:50vw;">
           <h5 style="margin: 0;font-weight:bold">Datagid Columns</h5>
         </div>
         <div class="ac-modal-body p-3" >
@@ -39,18 +39,18 @@ export class AcDDDatagridColumnsInput extends AcBuilderPropertyInput {
             <label class="form-label">Include Columns</label>
             <ac-tags-input class="form-control" />
           </div>
+          <div class="form-group mb-2">
+            <label class="form-label">Additional Columns</label>
+            <ac-tags-input class="form-control" />
+          </div>
           <ac-collapse ac-collapse-open>
             <div class="mb-2">
-              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Include Columns</button>
+              <button type="button" class="btn btn-primary btn-sm" ac-collapse-toggle>Additional Columns</button>
             </div>
             <div ac-collapse-content class="border bg-white p-3">
               Include Columns List
             </div>
           </ac-collapse>
-        </div>
-        <div class="ac-modal-footer" style="padding: 0.75rem; border-top: 1px solid #ddd; text-align: right;">
-          <button id="modal-cancel" style="margin-right: 0.5rem;">Cancel</button>
-          <button id="modal-ok">OK</button>
         </div>
     `;
   }

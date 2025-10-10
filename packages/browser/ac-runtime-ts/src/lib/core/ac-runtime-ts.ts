@@ -208,6 +208,9 @@ export class AcTsRuntime {
   global?: boolean;
   scope?: Record<string, any>;
 }): Promise<Constructor | undefined> {
+  if(this.registry[name]){
+    return  this.registry[name];
+  }
   // Default TS code for class if no script provided
   const tsClassCode =
     script ??

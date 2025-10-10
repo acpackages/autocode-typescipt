@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { ElementRef, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 

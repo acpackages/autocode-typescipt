@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build:ac-angular": "nx run ac-angular:build",
-    "build:ac-bootstrap-elements": "nx run ac-bootstrap-elements:build",
+    "build:ac-bootstrap-builder-elements": "nx run ac-bootstrap-builder-elements:build",
     "build:ac-browser": "nx run ac-browser:build",
     "build:ac-builder": "nx run ac-builder:build",
     "build:ac-data-dictionary": "nx run ac-data-dictionary:build",
@@ -22,7 +22,8 @@
     "build:autocode": "nx run autocode:build",
     "dev:angular": "npx nx serve test-angular",
     "dev:browser": "npx nx serve test-browser",
-    "dev:node": "npx nx serve test-node"
+    "dev:node": "npx nx serve test-node",
+    "gen:declaration:json": "node scripts/generate-declaration-json.js"
   },
   "private": true,
   "devDependencies": {

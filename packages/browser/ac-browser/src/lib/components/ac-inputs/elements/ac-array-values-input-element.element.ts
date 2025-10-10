@@ -6,6 +6,8 @@ import { arrayRemoveByIndex } from "@autocode-ts/ac-extensions";
 import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
+import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
 
 interface IAcArrayValueItem {
   id: string,
@@ -68,7 +70,24 @@ export class AcArrayValuesInputElement extends AcInputBase {
       this.value.push(data);
       this.items.push(arrayValueItem);
       this.renderArrayValueItem({ arrayValueItem });
+      this.notifyValueChange();
     }
+  }
+
+  notifyValueChange() {
+    this.dispatchEvent(new CustomEvent('valuechange', {
+      detail: { value: this.value },
+      bubbles: true,
+      composed: true
+    }));
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    const eventArgs: IAcInputValueChangeEvent = {
+      oldValue: null,
+      value: this.value,
+      instance: this
+    };
+    this.events.execute({ event: AcEnumInputEvent.ValueChange, args: eventArgs });
+    this.events.execute({ event: AcEnumInputEvent.Input, args: eventArgs });
   }
 
   private registerValueInputListeners({ arrayValueItem }: { arrayValueItem: IAcArrayValueItem }) {
@@ -86,7 +105,7 @@ export class AcArrayValuesInputElement extends AcInputBase {
         }
         if (arrayValueItem.item) {
           if (itemKey) {
-            if(arrayValueItem.item[itemKey]){
+            if (arrayValueItem.item[itemKey]) {
               inputElement.value = arrayValueItem.item[itemKey];
             }
           }
@@ -94,7 +113,9 @@ export class AcArrayValuesInputElement extends AcInputBase {
             inputElement.value = arrayValueItem.item;
           }
         }
-
+        inputElement.addEventListener('keyup', () => {
+          setValue();
+        });
         inputElement.addEventListener('input', () => {
           setValue();
         });
@@ -131,6 +152,7 @@ export class AcArrayValuesInputElement extends AcInputBase {
       item.index = newIndex;
       newIndex++;
     }
+    this.notifyValueChange();
   }
 
 
@@ -162,6 +184,7 @@ export class AcArrayValuesInputElement extends AcInputBase {
       this.refreshItems();
     }
   }
+
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.arrayValuesInput,type:AcArrayValuesInputElement});
+acRegisterCustomElement({ tag: AC_INPUT_TAG.arrayValuesInput, type: AcArrayValuesInputElement });

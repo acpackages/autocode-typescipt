@@ -34,24 +34,39 @@ export class AcGrapesJSEventsHandler {
 
   makeElementInteractive({ element }: { element: HTMLElement }) {
     if (!element) return;
-    const wrapper = this.grapesJSApi.getWrapper()!;
-    let cmp: any = wrapper.find('*').filter(c => c.getEl() === element)[0];
-    if (!cmp) {
-      cmp = wrapper.append(element.outerHTML)
-      element.replaceWith(cmp[0].view.el);
-      cmp = wrapper.components().last();
+    if (!element.hasAttribute('ac-builder-interactive-set')) {
+      const wrapper = this.grapesJSApi.getWrapper()!;
+      let cmp: any = wrapper.find('*').filter(c => c.getEl() === element)[0];
+      if (!cmp) {
+        const createComponent = () => {
+          if (element.parentNode) {
+            cmp = this.grapesJSApi.addComponents(element.outerHTML);
+            element.replaceWith(cmp[0].view.el);
+            cmp[0].view.el.setAttribute('ac-builder-interactive-set', "true");
+            cmp = wrapper.components().last();
+            const setInteractive = (component: any) => {
+              component.set({
+                editable: true,
+                draggable: true,
+                removable: true,
+                copyable: true,
+                droppable: true
+              });
+              component.components().each((child: any) => setInteractive(child));
+            };
+            setInteractive(cmp);
+          }
+          else {
+            setTimeout(() => {
+              createComponent();
+            }, 1);
+          }
+        }
+        createComponent();
+      }
+
     }
-    const setInteractive = (component: any) => {
-      component.set({
-        editable: true,
-        draggable: true,
-        removable: true,
-        copyable: true,
-        droppable: true
-      });
-      component.components().each((child: any) => setInteractive(child));
-    };
-    setInteractive(cmp);
+
   }
 
   registerAttributesChangeListener() {
@@ -402,7 +417,7 @@ export class AcGrapesJSEventsHandler {
         }
         if (element.getAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml) == 'true') {
           toolbarEl.append(getMenuElement({
-            title: 'Html will be exported! <br>Click to exclude html', icon: ACI_SVG_SOLID.code, callback: (menuElement:HTMLElement) => {
+            title: 'Html will be exported! <br>Click to exclude html', icon: ACI_SVG_SOLID.code, callback: (menuElement: HTMLElement) => {
               element.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'false');
               menuElement.blur();
               this.renderElementToolbar(comp);
@@ -411,7 +426,7 @@ export class AcGrapesJSEventsHandler {
         }
         else {
           toolbarEl.append(getMenuElement({
-            title: 'Html will not be exported! <br>Click to keep html', icon: ACI_SVG_SOLID.code, color: '#555', callback: (menuElement:HTMLElement) => {
+            title: 'Html will not be exported! <br>Click to keep html', icon: ACI_SVG_SOLID.code, color: '#555', callback: (menuElement: HTMLElement) => {
               element.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderKeepHtml, 'true');
               menuElement.blur();
               this.renderElementToolbar(comp);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi, AcBuilderPropertySelectInput, AcEnumBuilderHook, IAcBuilderElementPropertyChangeHookArgs } from "@autocode-ts/ac-builder";
 import { AcDataDictionary, AcDDTable } from "@autocode-ts/ac-data-dictionary";
@@ -12,14 +13,16 @@ export class AcDDTableColumnSelectInput extends AcBuilderPropertySelectInput{
     }})
   }
 
+  private fetchedColumns:boolean = false;
+
   constructor() {
     super();
     this.setTableColumns();
   }
 
-  setTableColumns(){
-    const options = [];
+  setTableColumns(retry:boolean = false){
     if(this.componentElement && this.componentElement.properties){
+      const options = [];
       if(this.componentElement.properties['tableName']){
         const tableName = this.componentElement.properties['tableName'].value;
         if(tableName){
@@ -28,12 +31,26 @@ export class AcDDTableColumnSelectInput extends AcBuilderPropertySelectInput{
             for(const column of Object.values(table.tableColumns)){
               options.push({'label':column.columnName,'value':column.columnName});
             }
+            this.fetchedColumns = true;
           }
         }
       }
+      this.selectOptions = options;
     }
-    this.selectOptions = options;
+    else if(retry){
+      setTimeout(() => {
+        this.setTableColumns(true);
+      }, 150);
+    }
   }
+
+  override setValue(value:any){
+    super.setValue(value);
+    if(!this.fetchedColumns){
+      this.setTableColumns();
+    }
+  }
+
 }
 
 acRegisterCustomElement({tag:'ac-dd-table-column-select-input',type:AcDDTableColumnSelectInput});

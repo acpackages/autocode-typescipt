@@ -14,40 +14,44 @@ export class AcDatagridOnAgGridCell implements ICellRendererComp {
   defaultElement = document.createElement('div');
 
   constructor() {
-    //
+    this.defaultElement.style.display = "contents";
   }
 
   getGui(): HTMLElement {
-    if (this.datagridCell) {
-      return this.datagridCell.instance!.element;
-    }
     return this.defaultElement;
   }
 
   init?(params: ICellRendererParams | any): AgPromise<void> | void {
     this.params = params;
-    setTimeout(() => {
-      if (this.datagridCell == undefined) {
-        this.agGridExtension = params.agGridExtension;
-        this.datagridColumn = params.datagridColumn;
-        this.datagridApi = params.datagridApi;
-        this.datagridRow = this.datagridApi.getRowById({ rowId: params.data[this.agGridExtension.rowKey] });
-        if (this.datagridRow && this.datagridColumn) {
-          let datagridCell: any = this.datagridRow.getCellForColumn({ datagridColumn: this.datagridColumn });
-          if (datagridCell == undefined) {
-            const cellElement = new AcDatagridCellElement({ datagridApi: this.datagridApi, datagridRow: this.datagridRow, datagridColumn: this.datagridColumn });
-            datagridCell = cellElement.datagridCell;
-          }
-          if (datagridCell) {
-            this.datagridCell = datagridCell;
-            this.defaultElement.replaceWith(this.datagridCell!.instance!.element);
-            this.params.eGridCell.addEventListener('focusin', () => { this.datagridCell!.instance!.focus(); });
-            this.params.eGridCell.addEventListener('focusout', () => { this.datagridCell!.instance!.blur(); });
-          }
+    this.defaultElement.innerHTML = "";
+    if (this.datagridCell == undefined) {
+      this.agGridExtension = params.agGridExtension;
+      this.datagridColumn = params.datagridColumn;
+      this.datagridApi = params.datagridApi;
+      this.datagridRow = this.datagridApi.getRowById({ rowId: params.data[this.agGridExtension.rowKey] });
+      if (this.datagridRow && this.datagridColumn) {
+        let datagridCell: any = this.datagridRow.getCellForColumn({ datagridColumn: this.datagridColumn });
+        if (datagridCell == undefined) {
+          const cellElement = new AcDatagridCellElement({ datagridApi: this.datagridApi, datagridRow: this.datagridRow, datagridColumn: this.datagridColumn });
+          datagridCell = cellElement.datagridCell;
+        }
+        if (datagridCell) {
+          this.datagridCell = datagridCell;
+          this.defaultElement.append(this.datagridCell!.instance!.element);
+          this.params.eGridCell.addEventListener('focusin', () => { this.datagridCell!.instance!.focus(); });
+          this.params.eGridCell.addEventListener('focusout', () => { this.datagridCell!.instance!.blur(); });
+        }
+        else {
+          console.warn(`Datagrid Cell Not Found`);
         }
       }
-    }, 0);
-
+      else {
+        console.warn(`Datagrid Row and Datagrid Column Not Found`);
+      }
+    }
+    else {
+      this.defaultElement.append(this.datagridCell!.instance!.element);
+    }
   }
 
   refresh(params: ICellRendererParams<any, any, any>): boolean {

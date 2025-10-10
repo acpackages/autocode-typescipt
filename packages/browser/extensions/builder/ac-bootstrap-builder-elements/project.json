@@ -1,0 +1,9 @@
+{
+  "name": "ac-bootstrap-builder-elements",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/extensions/builder/ac-bootstrap-builder-elements/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-bootstrap-builder-elements --web",
+  "targets": {}
+}

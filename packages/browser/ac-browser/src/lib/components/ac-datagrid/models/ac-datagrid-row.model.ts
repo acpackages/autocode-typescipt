@@ -27,6 +27,9 @@ export class AcDatagridRow {
 
   constructor({ data = {},datagridApi, index = -1 }: { data?: any,datagridApi:AcDatagridApi, index?: number }) {
     this.data = data;
+    if(data['__ac_row_id__']){
+      this.acRowId = data['__ac_row_id__'];
+    }
     this.datagridApi = datagridApi;
     this.index = index;
   }

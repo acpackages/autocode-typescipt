@@ -33,7 +33,6 @@ export class AcPopover{
         this.popoverEl.style.position = 'absolute';
         this.popoverEl.style.zIndex = '9999';
         this.popoverEl.style.display = 'none';
-        document.body.appendChild(this.popoverEl);
 
         if (this.options.trigger === 'click') {
             this.anchor.addEventListener('click', () => this.toggle());
@@ -102,6 +101,8 @@ export class AcPopover{
         if (this.options.content) {
             this.setContent(this.options.content);
         }
+
+        this.anchor.ownerDocument.body.appendChild(this.popoverEl);
         this.popoverEl.style.display = 'block';
         this.positionPopover();
         this.isVisible = true;
@@ -109,6 +110,7 @@ export class AcPopover{
 
     public hide() {
         this.popoverEl.style.display = 'none';
+        this.popoverEl.remove();
         this.isVisible = false;
     }
 

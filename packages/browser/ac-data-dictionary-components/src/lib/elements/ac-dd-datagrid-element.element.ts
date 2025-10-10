@@ -24,12 +24,12 @@ export class AcDDDatagridElement extends AcElementBase {
     this.setAttribute('data-dictionary',value);
   }
 
-  private _additionalColumns:IAcDatagridColumnDefinition[] = [];
-  get additionalColumns(): any {
-    return this._additionalColumns;
+  private _columnDefinitions:IAcDatagridColumnDefinition[] = [];
+  get columnDefinitions(): any {
+    return this._columnDefinitions;
   }
-  set additionalColumns(value: any) {
-    this._additionalColumns = value;
+  set columnDefinitions(value: any) {
+    this._columnDefinitions = value;
     this.setDatagridColumns();
   }
 
@@ -102,12 +102,18 @@ export class AcDDDatagridElement extends AcElementBase {
     super.connectedCallback();
     this.append(this.datagrid);
     this.setDatagridColumns();
+    console.dir(this);
   }
 
   private setDatagridColumns() {
     if(this.sourceValue){
       if(this.sourceType.toUpperCase() == AcEnumSqlEntity.Table){
-        const columns = AcDDDatagridColumnManager.getTableColumns({tableName:this.sourceValue});
+        const columns = AcDDDatagridColumnManager.getTableColumns({
+          tableName:this.sourceValue,
+          columnDefinitions:this.columnDefinitions,
+          excludeColumns:this.excludeColumns,
+          includeColumns:this.includeColumns
+        });
         this.datagridApi.columnDefinitions = columns;
       }
     }
@@ -118,7 +124,7 @@ export class AcDDDatagridElement extends AcElementBase {
       //   this.ddTableColumn = column;
       // }
       // const inputDefinition = AcDDInputManager.getColumnInputDefinition({ tableName: this.tableName, columnName: this.columnName });
-      // this.inputElement = new inputDefinition.inputClass();
+      // this.inputElement = new inputDefinition.inputElement();
       // if (inputDefinition.defaultProperties) {
       //   for (const key in inputDefinition.defaultProperties) {
       //     this.inputElement[key] = inputDefinition.defaultProperties[key];

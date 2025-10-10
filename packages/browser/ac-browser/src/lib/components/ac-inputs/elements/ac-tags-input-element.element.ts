@@ -292,7 +292,7 @@ export class AcTagsInputElement extends AcInputBase {
 
   private openDropdown() {
     if (!this.isDropdownOpen) {
-      document.body.appendChild(this.dropdownContainer);
+      this.ownerDocument.body.appendChild(this.dropdownContainer);
       this.isDropdownOpen = true;
       this.dropdownContainer.style.display = 'block';
     }

@@ -149,7 +149,7 @@ export class AcTooltip {
       this.setContent(this.options.content);
     }
 
-    document.body.appendChild(this.tooltipEl);
+    this.anchor.ownerDocument.body.appendChild(this.tooltipEl);
     this.positionTooltip();
     this.isVisible = true;
   }

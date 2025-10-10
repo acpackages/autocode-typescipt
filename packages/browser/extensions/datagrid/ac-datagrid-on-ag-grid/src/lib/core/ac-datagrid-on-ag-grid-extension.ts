@@ -221,10 +221,16 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     return result;
   }
 
-  getDatagridCellFromEvent({ event }: { event: any }): AcDatagridCell {
+  getDatagridCellFromEvent({ event }: { event: any }): AcDatagridCell|undefined {
+    let datagridCell;
     const datagridRow: AcDatagridRow = this.getDatagridRowFromEvent({ event: event })!;
     const datagridColumn: AcDatagridColumn = this.getDatagridColumnFromEvent({ event: event })!;
-    const datagridCell: AcDatagridCell = datagridRow.getCellForColumn({ datagridColumn: datagridColumn })!;
+    if(datagridRow){
+      datagridCell = datagridRow.getCellForColumn({ datagridColumn: datagridColumn })!;
+    }
+    else{
+      console.warn("Not found row for event : ",event,this);
+    }
     return datagridCell;
   }
 
@@ -243,8 +249,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     return datagridColumn;
   }
 
-  getDatagridRowFromEvent({ event }: { event: any }): AcDatagridRow {
-    let datagridRow!: AcDatagridRow;
+  getDatagridRowFromEvent({ event }: { event: any }): AcDatagridRow|undefined {
+    let datagridRow: AcDatagridRow|undefined;
     if (event.data) {
       datagridRow = this.datagridApi.getRowById({ rowId: event.data[this.rowKey] })!;
     }
@@ -253,6 +259,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
     else if (event.rowIndex >= 0) {
       datagridRow = this.datagridApi.getRowByIndex({ index: event.rowIndex })!;
+    }
+    else{
+      console.log("get row from event, no valid parameter found in event") ;
     }
     return datagridRow;
   }

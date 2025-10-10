@@ -787,6 +787,70 @@ export const dataDictionaryJson = {
               "propertyValue": "Type"
             }
           }
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": "Value Options"
+            }
+          }
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          }
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          }
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Numbers"
+            }
+          }
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
+            }
+          }
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -3176,6 +3240,66 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          }
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          }
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          }
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          }
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "websites"
+            }
+          }
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "fax_numbers"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -4206,6 +4330,56 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            }
+          }
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          }
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          }
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          }
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          }
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
             }
           }
         }
@@ -17897,6 +18071,66 @@ export const dataDictionaryJson = {
               "propertyValue": "Type"
             }
           }
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          }
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          }
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Numbers"
+            }
+          }
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          }
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
+            }
+          }
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -18826,6 +19060,55 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "websites"
+        }
+      }
+    },
+    "act_supplier_bank_accounts": {
+      "tableName": "act_supplier_bank_accounts",
+      "tableColumns": {
+        "bank_account_id": {
+          "columnName": "bank_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Account"
+            }
+          }
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier"
+            }
+          }
+        },
+        "supplier_bank_account_id": {
+          "columnName": "supplier_bank_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_bank_account"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_bank_accounts"
         }
       }
     }

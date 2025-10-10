@@ -56,7 +56,15 @@ export class AcContext {
     Object.defineProperties(this.proxy, {
       __acContextName__: { value: this.__acContextName__, enumerable: false },
       on: { value: (event: string, callback: Function) => this.on(event, callback), enumerable: false },
-      toJSON:{ value: ()=>{ return this.value }}
+      toJson:{ value: ()=>{
+        const result:any = {};
+        for(const key of Object.keys(this.value)){
+          if(!['__acContextName__','on','toJson'].includes(key)){
+            result[key] = value[key];
+          }
+        }
+        return  result;
+      }}
     });
 
     if (instance.__acContextName__) {

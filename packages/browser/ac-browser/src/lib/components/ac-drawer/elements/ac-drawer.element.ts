@@ -108,7 +108,7 @@ export class AcDrawer extends AcElementBase{
     this.isOpen = true;
 
     if (this.showBackdrop && this.backdropEl) {
-      document.body.appendChild(this.backdropEl);
+      this.ownerDocument.body.appendChild(this.backdropEl);
       setTimeout(() => {
         this.backdropEl!.style.opacity = '1';
       }, 10);

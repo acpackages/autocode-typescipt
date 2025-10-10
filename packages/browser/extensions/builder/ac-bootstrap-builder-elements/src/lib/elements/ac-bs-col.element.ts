@@ -1,0 +1,98 @@
+import { AC_ARIA_PROPERTIES, AC_BASIC_PROPERTIES, AcBuilderElement, IAcBuilderElement, IAcBuilderElementEvent, IAcBuilderElementInitArgs, IAcBuilderElementProperty } from "@autocode-ts/ac-builder";
+import { AC_BOOTSTRAP_ELEMENT_ICON_SVG } from "../consts/ac-bootstrap-element-icon-svg.consts";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
+
+const BS_EVENTS: IAcBuilderElementEvent[] = [];
+
+const BS_PROPS: IAcBuilderElementProperty[] = [];
+
+const basicProperty : IAcBuilderElementProperty[] = [
+  AC_BASIC_PROPERTIES.id as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.title as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.hidden as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.lang as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.dir as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.translate as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.tabindex as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.accesskey as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.autofocus as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.draggable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.contenteditable as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.spellcheck as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.part as IAcBuilderElementProperty,
+  AC_BASIC_PROPERTIES.inert as IAcBuilderElementProperty
+];
+
+const ariaProperties : IAcBuilderElementProperty[] = [
+  AC_ARIA_PROPERTIES["aria-label"] as IAcBuilderElementProperty,
+];
+
+export class AcBsCol extends AcBuilderElement {
+  override initBuilder({ args }: { args?: IAcBuilderElementInitArgs; }): void {
+    // Basic placeholder HTML for Col
+    this.element.classList.add('col','p-1');
+    this.element.setAttribute('ac-builder-element-interactive','');
+    this.element.setAttribute('contenteditable','');
+    this.element.innerHTML = "Col";
+
+  }
+
+  override init({ args }: { args: IAcBuilderElementInitArgs }): void {
+    this.registerDomEvents();
+    this.registerBsEvents();
+  }
+
+  override handleCommand({command,args}:{command:string,args:any}){
+    if(command == 'addColumn'){
+      const col = document.createElement('div');
+      col.classList.add('col');
+      col.innerHTML = `Column`;
+      this.element.appendChild(col);
+    }else if(command == 'addRow'){
+      const row = document.createElement('div');
+      row.classList.add('row');
+      row.innerHTML = `Row`;
+      this.element.appendChild(row);
+    }
+  }
+
+  private registerDomEvents(): void {
+    // Wire common DOM events to builder events where applicable
+    this.element.addEventListener('click', (event: MouseEvent) => {
+      this.events.execute({ event: 'click', args: event });
+    });
+  }
+
+  private registerBsEvents(): void {
+    BS_EVENTS.forEach((ev:any) => {
+      try {
+        if (ev.htmlEventName && typeof ev.htmlEventName === 'string') {
+          this.element.addEventListener(ev.htmlEventName, (event: Event) => {
+            this.events.execute({ event: ev.name, args: event });
+          });
+        }
+      } catch (e) {
+        // ignore registration errors in builder preview
+      }
+    });
+  }
+}
+
+export const AC_BUILDER_BS_COL_ELEMENT: IAcBuilderElement = {
+  category: "Bootstrap",
+  name: "bsCol",
+  tag: "div",
+  title: "Col",
+  events: [ ...BS_EVENTS ],
+  properties: [
+    ...basicProperty,
+    ...ariaProperties,
+    ...BS_PROPS
+  ],
+  mediaSvg: AC_BOOTSTRAP_ELEMENT_ICON_SVG.col,
+  instanceClass: AcBsCol,
+  commands:[
+    {name:'addColumn',title:'Add Column',iconSvg:ACI_SVG_SOLID.tableColumns},
+    {name:'addRow',title:'Add Row',iconSvg:ACI_SVG_SOLID.tableRows}
+  ]
+};

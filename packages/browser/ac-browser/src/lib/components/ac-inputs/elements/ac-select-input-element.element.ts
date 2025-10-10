@@ -70,6 +70,12 @@ export class AcSelectInputElement extends AcInputBase {
       this.textInputElement.value = typeof match === "object" ? match[this.labelKey] : match;
     }
 
+    if(this._selectOptions.length == 0 && super.value != undefined){
+      console.log(val);
+      this.selectOptions = [{
+        [this.labelKey]:super.value,[this.valueKey]:super.value
+      }];
+    }
   }
 
   private _filteredOptions: any[] = [];
@@ -268,7 +274,7 @@ export class AcSelectInputElement extends AcInputBase {
 
   openDropdown() {
     if (!this.isDropdownOpen) {
-      document.body.appendChild(this.dropdownContainer);
+      this.ownerDocument.body.appendChild(this.dropdownContainer);
       this.isDropdownOpen = true;
       this.dropdownContainer.style.display = "block";
     }

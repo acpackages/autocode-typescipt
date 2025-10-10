@@ -104,6 +104,9 @@ export class AcLogger {
     if(Array.isArray(message)){
       console.log(...message);
     }
+    else{
+      console.log(message);
+    }
   }
 
   private _loggerMessage(args: any, type: string) {

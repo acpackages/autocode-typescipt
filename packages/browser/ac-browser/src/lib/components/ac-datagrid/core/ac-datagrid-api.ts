@@ -154,7 +154,7 @@ export class AcDatagridApi {
   datagridState:AcDatagridState;
   dataSource!: AcDatagridDataSource;
   eventHandler!:AcDatagridEventHandler;
-  events: AcEvents = new AcEvents();
+  events: AcEvents;
   extensions: Record<string, AcDatagridExtension> = {};
   focusedCell?: AcDatagridCell;
   hooks: AcHooks = new AcHooks();
@@ -166,7 +166,8 @@ export class AcDatagridApi {
 
   constructor({ datagrid }: { datagrid: AcDatagrid }) {
     AcDatagridExtensionManager.registerBuiltInExtensions();
-    this.datagrid = datagrid
+    this.datagrid = datagrid;
+    this.events = datagrid.events;
     this.datagridState = new AcDatagridState({datagridApi:this});
     this.eventHandler = new AcDatagridEventHandler({datagridApi:this});
     this.dataSourceType = AcEnumDataSourceType.Unknown;

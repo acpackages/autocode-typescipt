@@ -1,42 +1,36 @@
-import { AcEvents } from "@autocode-ts/autocode";
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumModalEvent } from "../enums/ac-enum-modal-event.enum";
 import { acMorphElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_MODAL_TAG } from "../consts/ac-modal-tag.const";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AC_MODAL_CONFIG } from "../consts/ac-modal-config.const";
 
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 export class AcModal extends AcElementBase {
   private backdrop: HTMLElement | null = null;
   private isOpen: boolean = false;
   animationDuration: number = AC_MODAL_CONFIG.animationDuration; // ms
   private lastTrigger?: HTMLElement;
-  private morphTriggerColor?:string;
-  private morphModalColor?:string;
+  private morphTriggerColor?: string;
+  private morphModalColor?: string;
   private cloneEl?: HTMLElement;
+  private originalBodyStyleOverflow:any;
 
   constructor() {
     super();
     Object.assign(this.style, AC_MODAL_CONFIG.closeStyle);
   }
 
-  /**
-   * Hide modal and morph back to trigger element using clone.
-   */
   close() {
     if (!this.isOpen) return;
     this.isOpen = false;
-    // If no trigger or clone, just fade out modal + backdrop
     if (!this.lastTrigger) {
       this.fadeOutModal();
+      this.events.execute({ event: AcEnumModalEvent.Close });
       return;
     }
     this.cloneEl = this.cloneNode(true) as HTMLElement;
 
-    // Get modal position & size
-    const modalRect = this.getBoundingClientRect();
-
-    acMorphElement({source:this,destination:this.lastTrigger,destinationColor:this.morphTriggerColor,sourceColor:this.morphModalColor});
+    acMorphElement({ source: this, destination: this.lastTrigger, destinationColor: this.morphTriggerColor, sourceColor: this.morphModalColor });
 
     if (this.backdrop) {
       this.backdrop.remove();
@@ -58,8 +52,8 @@ export class AcModal extends AcElementBase {
         this.backdrop.parentElement.removeChild(this.backdrop);
         this.backdrop = null;
       }
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", this.handleEscape);
+      this.ownerDocument.body.style.overflow = this.originalBodyStyleOverflow;
+      this.ownerDocument.removeEventListener("keydown", this.handleEscape);
       this.style.transition = "";
       this.style.opacity = "";
     }, this.animationDuration);
@@ -71,33 +65,29 @@ export class AcModal extends AcElementBase {
     }
   };
 
-  /**
-   * Show modal with clone morph animation from trigger element.
-   */
-  open({ triggerElement, morphTriggerColor,morphModalColor }: { triggerElement?: HTMLElement,morphTriggerColor?:string,morphModalColor?:string } = {}) {
+  open({ triggerElement, morphTriggerColor, morphModalColor }: { triggerElement?: HTMLElement, morphTriggerColor?: string, morphModalColor?: string } = {}) {
     if (this.isOpen) return;
     this.isOpen = true;
     this.lastTrigger = triggerElement;
 
     // Create backdrop
     this.backdrop = document.createElement("div");
-    const style = {...AC_MODAL_CONFIG.openStyle, "transition":`opacity ${this.animationDuration}ms ease`};
+    const style = { ...AC_MODAL_CONFIG.openStyle, "transition": `opacity ${this.animationDuration}ms ease` };
     Object.assign(this.backdrop.style, style);
-    document.body.appendChild(this.backdrop);
+    this.ownerDocument.body.appendChild(this.backdrop);
+    this.originalBodyStyleOverflow = this.ownerDocument.body.style.overflow;
+    this.ownerDocument.body.style.overflow = "hidden";
 
-    document.body.style.overflow = "hidden";
+    this.style.display = "block";
+    const rect = this.getBoundingClientRect();
 
-    // Compute modal final size & position
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const finalWidth = Math.min(500, vw * 0.9);
-    this.style.width = `${finalWidth}px`;
-    this.style.display = "block";
 
-    const finalHeight = this.offsetHeight || 300;
+    const finalWidth = Math.min(rect.width, vw * 0.9);
+    const finalHeight = Math.min(rect.height, vh * 0.9);
     const finalLeft = Math.round((vw - finalWidth) / 2);
     const finalTop = Math.round((vh - finalHeight) / 2);
-
     Object.assign(this.style, {
       left: `${finalLeft}px`,
       top: `${finalTop}px`,
@@ -106,7 +96,6 @@ export class AcModal extends AcElementBase {
     });
 
     if (!triggerElement) {
-      // No trigger → simple fade-in
       this.style.transition = `opacity ${this.animationDuration}ms ease`;
       requestAnimationFrame(() => {
         this.style.opacity = "1";
@@ -114,12 +103,13 @@ export class AcModal extends AcElementBase {
         this.style.pointerEvents = "";
       });
       this.backdrop.addEventListener("click", () => this.close(), { once: true });
-      document.addEventListener("keydown", this.handleEscape);
+      this.ownerDocument.addEventListener("keydown", this.handleEscape);
+      this.events.execute({ event: AcEnumModalEvent.Open });
       return;
     }
-    this.style.visibility = "hidden";
 
-    acMorphElement({ source: triggerElement, destination: this, duration: this.animationDuration,sourceColor:morphTriggerColor,destinationColor:morphModalColor });
+
+    acMorphElement({ source: triggerElement, destination: this, duration: this.animationDuration, sourceColor: morphTriggerColor, destinationColor: morphModalColor });
 
     setTimeout(() => {
       this.style.visibility = "visible";
@@ -130,7 +120,7 @@ export class AcModal extends AcElementBase {
     }, this.animationDuration);
 
     this.backdrop.addEventListener("click", () => this.close(), { once: true });
-    document.addEventListener("keydown", this.handleEscape);
+    this.ownerDocument.addEventListener("keydown", this.handleEscape);
   }
 
 }

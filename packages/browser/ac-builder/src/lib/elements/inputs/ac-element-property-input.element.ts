@@ -189,7 +189,7 @@ export class AcElementPropertyInput {
     if (this.valueInput == undefined) {
       if (AcBuilderPropertyInputsManager.hasType({ type: this.property.type })) {
         const inputType: IAcBuilderPropertyInputType = AcBuilderPropertyInputsManager.getInput({ type: this.property.type })!;
-        this.valueInput = new inputType.inputClass();
+        this.valueInput = new inputType.inputElement();
       }
       if (this.valueInput == undefined) {
         this.valueInput = new AcBuilderPropertyTextInput();

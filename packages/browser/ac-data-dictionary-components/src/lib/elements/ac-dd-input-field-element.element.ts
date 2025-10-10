@@ -4,6 +4,7 @@ import { AcDDInputElement } from "./ac-dd-input-element.element";
 import { AcDDInputFieldBaseElement } from "./ac-dd-input-field-base-element.element";
 import { AcDDInputManager } from "../core/ac-dd-input-manager";
 import { AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
+import { AcContext } from "@autocode-ts/ac-template-engine";
 
 export class AcDDInputFieldElement extends AcInputBase {
   get columnName(): string {
@@ -19,6 +20,47 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
   set tableName(value: string) {
     this.setAttribute('table-name', value);
+    this.setDDInput();
+  }
+
+  get inputName(): string {
+    return this.getAttribute('input-name') ?? '';
+  }
+  set inputName(value: string) {
+    this.setAttribute('input-name', value);
+    this.setDDInput();
+  }
+
+  get label(): string {
+    return this.getAttribute('label') ?? '';
+  }
+  set label(value: string) {
+    this.setAttribute('label', value);
+    this.setDDInput();
+  }
+
+  override get acContext(): AcContext {
+    return super.acContext;
+  }
+  override set acContext(value: AcContext) {
+    super.acContext = value;
+    this.setDDInput();
+  }
+
+  override get acContextKey(): string {
+    return super.acContextKey??"";
+  }
+  override set acContextKey(value: string) {
+    super.acContextKey = value;
+    this.setDDInput();
+  }
+
+  private _inputProperties:any = {};
+  get inputProperties(): any {
+    return this._inputProperties;
+  }
+  set inputProperties(value: any) {
+    this._inputProperties = value;
     this.setDDInput();
   }
 
@@ -40,11 +82,20 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
 
   private setDDInput() {
-    if (this.tableName && this.columnName) {
+    if ((this.tableName && this.columnName) || this.inputName) {
       this.ddInput.tableName = this.tableName;
       this.ddInput.columnName = this.columnName;
-      this.ddTableColumn = this.ddInput.ddTableColumn!;
-      this.ddInputField.ddInputLabel = this.ddTableColumn.getColumnTitle();
+      this.ddInput.inputName = this.inputName;
+      this.ddInput.acContext = this.acContext;
+      this.ddInput.acContextKey = this.acContextKey;
+      if(this.ddInput && this.ddInput.ddTableColumn){
+        this.ddTableColumn = this.ddInput.ddTableColumn!;
+        this.ddInputField.ddInputLabel = this.ddTableColumn.getColumnTitle();
+      }
+      if(this.label){
+        this.ddInputField.ddInputLabel = this.label;
+      }
+      this.events.execute({event:'ddInputSet'});
       const container = this.querySelector('ac-dd-input-container');
       if(container){
         container.innerHTML = '';

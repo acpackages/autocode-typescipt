@@ -25,7 +25,9 @@ export class AcInputBase extends AcElementBase {
   }
   set acContext(value:AcContext){
     this._acContext = value;
-    this.setAttribute('ac-context',value.__acContextName__);
+    if(value){
+      this.setAttribute('ac-context',value.__acContextName__);
+    }
     this.setValueFromAcContext();
   }
 

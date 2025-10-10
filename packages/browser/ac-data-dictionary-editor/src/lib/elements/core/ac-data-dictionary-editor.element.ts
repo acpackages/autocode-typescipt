@@ -61,7 +61,7 @@ export class AcDataDictionaryEditor {
 
   private initElement() {
     acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
-    acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
+    // acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
     this.element.append(this.header.element);
     // acAddClassToElement({class_:AcDDECssClassName.acDDEHeader,element:this.header});

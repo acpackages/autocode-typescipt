@@ -21,7 +21,7 @@ export class AcDDDatagridColumnManager {
     if (columnDefinitions == undefined) {
       columnDefinitions = [];
     }
-    const result: IAcDatagridColumnDefinition[] = [...columnDefinitions!];
+    const result: IAcDatagridColumnDefinition[] = [];
     const ddTable: AcDDTable | null = AcDataDictionary.getTable({ tableName,dataDictionaryName });
     if (ddTable) {
       for (const column of ddTable.tableColumns) {
@@ -33,6 +33,9 @@ export class AcDDDatagridColumnManager {
           continuOperation = false;
         }
         if (continuOperation && result.findIndex((col) => { return col.field == column.columnName }) >= 0) {
+          continuOperation = false;
+        }
+        if (continuOperation && columnDefinitions.findIndex((col) => { return col.field == column.columnName }) >= 0) {
           continuOperation = false;
         }
         if (continuOperation) {
@@ -59,7 +62,7 @@ export class AcDDDatagridColumnManager {
         }
       }
     }
-    return result;
+    return [...result,...columnDefinitions];
   }
 
   static getTableColumn({ tableName, columnName, skipResolver }: { tableName: string, columnName: string, skipResolver?: boolean }): IAcDatagridColumnDefinition | undefined {

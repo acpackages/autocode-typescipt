@@ -201,7 +201,7 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
     if (this.textarea) return;
     const ta = document.createElement("textarea");
     this.textarea = ta;
-    document.body.appendChild(ta);
+    this.ownerDocument.body.appendChild(ta);
     ta.addEventListener("input", () => {
       if (!this.textarea) return;
       if (this.opts.respectMaxLength && this.inputElement.maxLength > 0) {

@@ -5,6 +5,7 @@ import { IAcBuilderPropertyInputType } from "../interfaces/ac-builder-property-i
 import { AcBuilderPropertyNumberInput } from "../elements/property-inputs/ac-builder-property-number-input.element";
 import { AcBuilderPropertySelectInput } from "../elements/property-inputs/ac-builder-property-select-input.element";
 import { AcClassPropertySelectInput } from "../elements/property-inputs/ac-class-property-select-input.element";
+import { AcBuilderPropertyKeyValueInput } from "../elements/_elements.export";
 
 export class AcBuilderPropertyInputsManager {
   private static builtInInputsRegistered:boolean = false;
@@ -32,11 +33,12 @@ export class AcBuilderPropertyInputsManager {
 
   static registerBuiltInExtensions(){
     if(!this.builtInInputsRegistered){
-      this.register({input:{inputClass:AcBuilderPropertyTextInput,type:'string'}});
-      this.register({input:{inputClass:AcBuilderPropertyNumberInput,type:'number'}});
-      this.register({input:{inputClass:AcBuilderPropertySelectInput,type:'select'}});
-      this.register({input:{inputClass:AcBuilderPropertySelectInput,type:'boolean',properties:{selectOptions:[{'label':'True','value':true},{'label':'False','value':false}]}}});
-      this.register({input:{inputClass:AcClassPropertySelectInput,type:'classProperty'}});
+      this.register({input:{inputElement:AcBuilderPropertyTextInput,type:'string'}});
+      this.register({input:{inputElement:AcBuilderPropertyNumberInput,type:'number'}});
+      this.register({input:{inputElement:AcBuilderPropertySelectInput,type:'select'}});
+      this.register({input:{inputElement:AcBuilderPropertyKeyValueInput,type:'keyValue'}});
+      this.register({input:{inputElement:AcBuilderPropertySelectInput,type:'boolean',properties:{selectOptions:[{'label':'True','value':true},{'label':'False','value':false}]}}});
+      this.register({input:{inputElement:AcClassPropertySelectInput,type:'classProperty'}});
       this.builtInInputsRegistered = true;
     }
   }

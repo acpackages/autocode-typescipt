@@ -11,6 +11,36 @@ export class AcDDInputBuilderElement extends AcBuilderElement {
     this.setInputDisplay();
   }
 
+  get context(): any {
+    return this.ddInputFiled.acContext;
+  }
+  set context(value: any) {
+    this.ddInputFiled.acContext = value;
+  }
+
+  get contextKey(): string|null {
+    return this.ddInputFiled.acContextKey;
+  }
+  set contextKey(value: string) {
+    this.ddInputFiled.acContextKey = value;
+  }
+
+  get inputName(): string {
+    return this.ddInputFiled.inputName;
+  }
+  set inputName(value: string) {
+    this.ddInputFiled.inputName = value;
+    this.setInputDisplay();
+  }
+
+  get inputProperties(): any {
+    return this.ddInputFiled.inputProperties;
+  }
+  set inputProperties(value: any) {
+    this.ddInputFiled.inputProperties = value;
+    this.setInputDisplay();
+  }
+
   get tableName(): string {
     return this.ddInputFiled.tableName;
   }
@@ -26,6 +56,10 @@ export class AcDDInputBuilderElement extends AcBuilderElement {
 
   ddInputFiled = new AcDDInputElement();
   override element = document.createElement('div');
+  override initBuilder({ args }: { args?: IAcBuilderElementInitArgs; }): void {
+    //
+  }
+
   override init({ args }: { args: IAcBuilderElementInitArgs }): void {
     this.registerDomEvents();
     this.setInputDisplay();
@@ -38,7 +72,7 @@ export class AcDDInputBuilderElement extends AcBuilderElement {
   }
 
   private setInputDisplay() {
-    if (this.tableName && this.columnName) {
+    if ((this.tableName && this.columnName) || this.inputName) {
       this.element.innerHTML = '';
       this.element.appendChild(this.ddInputFiled);
     }
@@ -54,11 +88,15 @@ export const AC_BUILDER_DD_INPUT_ELEMENT: IAcBuilderElement = {
   name: "ddInput",
   tag: "div",
   title: "Input",
-  keepHtml:false,
+  keepHtml: false,
   mediaSvg: ACI_SVG_SOLID.inputText,
   instanceClass: AcDDInputBuilderElement,
   properties: [
     { name: 'tableName', 'category': 'Data Dictionary', title: 'Table', type: 'ddTable' },
-    { name: 'columnName', 'category': 'Data Dictionary', title: 'Column', type: 'ddTableCSolumn' }
+    { name: 'columnName', 'category': 'Data Dictionary', title: 'Column', type: 'ddTableColumn' },
+    { name: 'inputName', 'category':'Data Dictionary', title:'Input Name', type:'ddSelectInputName'},
+    { name: 'inputProperties','category':'Data Dictionary',title:'Input Properties', type:'keyValue'},
+    { name:'context','category':'Autocode',title:'Context',type:'text'},
+    { name:'contextKey','category':'Autocode',title:'Context Key',type:'text'}
   ]
 };

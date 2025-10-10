@@ -113,8 +113,12 @@ export class AcBuilder {
           <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-layers-panel" ac-tooltip="Layers">
           <ac-svg-icon>${ACI_SVG_SOLID.layerGroup}</ac-svg-icon>
           </button>
+          <button class="nav-link d-none" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-components-tab" ac-tooltip="Components">
+            <ac-svg-icon>${ACI_SVG_SOLID.folderTree}</ac-svg-icon>
+          </button>
         </div>
         <div class="tab-content">
+
           <div class="ac-builder-elements-tab" ${AcTabsAttributeName.acTabPane} role="tabpanel" aria-labelledby="">
             <div class="ac-builder-elements-tab-container">
               <div class="p-2">
@@ -125,6 +129,7 @@ export class AcBuilder {
             </div>
           </div>
           <div class="ac-builder-layers-panel"  ${AcTabsAttributeName.acTabPane} role="tabpanel" aria-labelledby=""></div>
+          <div class="ac-builder-components-tab d-none"  ${AcTabsAttributeName.acTabPane} role="tabpanel" aria-labelledby=""></div>
         </div>
       </div>
         </ac-tabs>
@@ -178,7 +183,7 @@ export class AcBuilder {
                 </div>
                 </div>
 
-      <ac-tabs>
+              <ac-tabs>
                 <div class="ac-builder-sidebar ac-builder-right-sidebar">
                 <div class="nav nav-tabs ac-sidebar-tabs" role="tablist" data-actabs-tablist>
                 <button class="nav-link" type="button" role="tab" aria-selected="true" ${AcTabsAttributeName.acTab} ${AcTabsAttributeName.acTabTarget}=".ac-builder-styles-tab" ac-tooltip="Style">

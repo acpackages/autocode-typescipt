@@ -31,7 +31,6 @@ export class AcBuilderPropertySelectInput extends AcBuilderPropertyInput {
   override set value(val: any) {
     this.inputElement.value = val;
     this.setValue(val);
-
   }
 
   override inputElement: any = new AcSelectInputElement();

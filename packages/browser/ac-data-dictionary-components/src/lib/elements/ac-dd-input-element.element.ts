@@ -1,6 +1,7 @@
 import { AcInputBase, acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import { AcDDInputManager } from "../core/ac-dd-input-manager";
 import { AcDataDictionary, AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
+import { IAcDDInputDefinition } from "../interfaces/ac-dd-input-definition.interface";
 
 export class AcDDInputElement extends AcInputBase {
   get columnName(): string {
@@ -8,7 +9,7 @@ export class AcDDInputElement extends AcInputBase {
   }
   set columnName(value: string) {
     this.setAttribute('column-name', value);
-    this.setDDTableColumn();
+    this.setInputElement();
   }
 
   get tableName(): string {
@@ -16,8 +17,26 @@ export class AcDDInputElement extends AcInputBase {
   }
   set tableName(value: string) {
     this.setAttribute('table-name', value);
-    this.setDDTableColumn();
+    this.setInputElement();
   }
+
+  get inputName(): string {
+    return this.getAttribute('input-name') ?? '';
+  }
+  set inputName(value: string) {
+    this.setAttribute('input-name', value);
+    this.setInputElement();
+  }
+
+  private _inputProperties: any = {};
+  get inputProperties(): any {
+    return this._inputProperties;
+  }
+  set inputProperties(value: any) {
+    this._inputProperties = value;
+    this.setInputElement();
+  }
+
 
   ddTableColumn?: AcDDTableColumn;
 
@@ -27,26 +46,41 @@ export class AcDDInputElement extends AcInputBase {
 
   override connectedCallback(): void {
     this.innerHTML = "ACDDInputElement";
-    this.setDDTableColumn();
+    this.setInputElement();
   }
 
-  private setDDTableColumn() {
-    if (this.tableName && this.columnName) {
-      const column = AcDataDictionary.getTableColumn({ tableName: this.tableName, columnName: this.columnName });
-      if (column) {
-        this.ddTableColumn = column;
-      }
-      const inputDefinition = AcDDInputManager.getColumnInputDefinition({ tableName: this.tableName, columnName: this.columnName });
-      this.inputElement = new inputDefinition.inputClass();
-      if (inputDefinition.defaultProperties) {
-        for (const key in inputDefinition.defaultProperties) {
-          this.inputElement[key] = inputDefinition.defaultProperties[key];
+  private setInputElement() {
+    if ((this.tableName && this.columnName) || this.inputName) {
+      let inputDefinition: IAcDDInputDefinition | undefined;
+      if (this.tableName && this.columnName) {
+        const column = AcDataDictionary.getTableColumn({ tableName: this.tableName, columnName: this.columnName });
+        if (column) {
+          this.ddTableColumn = column;
         }
+        inputDefinition = AcDDInputManager.getColumnInputDefinition({ tableName: this.tableName, columnName: this.columnName });
       }
-      this.innerHTML = "";
-      this.append(this.inputElement);
+      if (this.inputName) {
+        inputDefinition = AcDDInputManager.getInputDefinition({ name: this.inputName });
+      }
+      if (inputDefinition) {
+        this.inputElement = new inputDefinition.inputElement();
+        if (inputDefinition.defaultProperties) {
+          for (const key in inputDefinition.defaultProperties) {
+            this.inputElement[key] = inputDefinition.defaultProperties[key];
+          }
+        }
+        this.events.execute({event:'inputElementSet'});
+        this.innerHTML = "";
+        this.append(this.inputElement);
+        this.inputElement.addEventListener('input', ()=>{
+          this.value = this.inputElement.value;
+        });
+        this.inputElement.addEventListener('change', ()=>{
+          this.value = this.inputElement.value;
+        });
+      }
     }
   }
 }
 
-acRegisterCustomElement({tag:'ac-dd-input',type:AcDDInputElement});
+acRegisterCustomElement({ tag: 'ac-dd-input', type: AcDDInputElement });

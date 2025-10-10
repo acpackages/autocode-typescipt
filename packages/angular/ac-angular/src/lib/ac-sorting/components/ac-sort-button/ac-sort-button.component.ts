@@ -4,6 +4,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AcBase } from '../../../_base/ac-base.component';
 import { AcEnumSort } from '../../enums/ac-sort.enum';
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 @Component({
   selector: 'ac-sort-button',
@@ -13,11 +14,11 @@ import { AcEnumSort } from '../../enums/ac-sort.enum';
 })
 export class AcSortButtonComponent extends AcBase{
   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-  protected sortHtml:any = '<i class="fa fa-sort"></i>';
+  protected sortHtml:any = `<ac-svg-icon>${ACI_SVG_SOLID.sort}</ac-svg-icon>`;
   private sortOptions:any={
-    [AcEnumSort.asc]:'<i class="fa fa-arrow-down-short-wide"></i>',
-    [AcEnumSort.desc]:'<i class="fa fa-arrow-down-wide-short"></i>',
-    [AcEnumSort.none]:'<i class="fa fa-sort"></i>'
+    [AcEnumSort.asc]:`<ac-svg-icon>${ACI_SVG_SOLID.arrowDownShortWide}</ac-svg-icon>`,
+    [AcEnumSort.desc]:`<ac-svg-icon>${ACI_SVG_SOLID.arrowDownWideShort}</ac-svg-icon>`,
+    [AcEnumSort.none]:`<ac-svg-icon>${ACI_SVG_SOLID.sort}</ac-svg-icon>`
   }
 
   private value:AcEnumSort = AcEnumSort.none;
