@@ -13,4 +13,5 @@ export * from './ac-dde-table-editor-state.interface';
 export * from './ac-dde-table.inteface';
 export * from './ac-dde-trigger.inteface';
 export * from './ac-dde-view-column.inteface';
+export * from './ac-dde-view-editor-state.interface';
 export * from './ac-dde-view.inteface';

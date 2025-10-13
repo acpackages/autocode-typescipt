@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
-import { AcDDTableColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
+import { AcDDTable, AcDDTableColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-select-column-type-input.element";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
@@ -13,13 +13,14 @@ import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
-import { AcEnumDDETableColumn } from "../../enums/ac-enum-dde-storage-keys.enum";
+import { AcEnumDDETable, AcEnumDDETableColumn } from "../../enums/ac-enum-dde-storage-keys.enum";
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETableColumn } from "../../interfaces/ac-dde-table-column.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 import { AcDDEDatagridValueOptionsInput } from "../inputs/ac-dde-datagrid-values-options-input.element";
+import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
 
 export class AcDDETableColumnsDatagrid {
   data: any[] = [];
@@ -50,6 +51,7 @@ export class AcDDETableColumnsDatagrid {
           editorApi: this.editorApi
         }, width: 50, maxWidth: 50, minWidth: 50
       },
+
       { 'field': AcDDTableColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcDDTableColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.PrimaryKey, 'title': 'Primary Key', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
@@ -72,6 +74,10 @@ export class AcDDETableColumnsDatagrid {
       { 'field': AcEnumDDColumnProperty.UseForRowLikeFilter, 'title': 'In Search Query', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.Remarks, 'title': 'Remarks', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.Size, 'title': 'Size', cellEditorElement: AcDDEDatagridNumberInput, useCellEditorForRenderer: true,allowFilter:true },
+      { 'field': AcEnumDDETableColumn.TableId, 'title': 'Table', cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
+                editorApi: this.editorApi
+              }, useCellEditorForRenderer: true,allowFilter:true
+            },
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
       datagridApi: this.datagridApi,

@@ -40,6 +40,7 @@ import { InputElementsPage } from './pages/inputs/elements.page';
 import { WindowTabsPage } from './pages/tabs/window-tabs.page';
 import { RuntimeComponentPage } from './pages/builder/runtime-component-page';
 import { HttpTestPage } from './pages/utils/http-test';
+import { AppBrowserTestPage } from './pages/utils/app-browser-tests';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -200,7 +201,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Utils',
     routes: [
-      { label: 'HTTP', path: '/utils/http', componentTag: 'http-test', component: HttpTestPage }
+      { label: 'HTTP', path: '/utils/http', componentTag: 'http-test', component: HttpTestPage },
+      { label: 'App Browser', path: '/utils/app-browser', componentTag: 'app-browser-test', component: AppBrowserTestPage },
     ]
   });
   window.addEventListener('popstate', () => AcRouter.loadRoute(location.pathname));

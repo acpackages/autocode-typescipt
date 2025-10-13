@@ -5,6 +5,7 @@ import { IAcDatagridState } from "@autocode-ts/ac-browser";
 import { IAcDDEState } from "../interfaces/ac-dde-state.interface";
 import { AcDDEApi } from "./ac-dde-api";
 import { IAcDDETableEditorState } from "../interfaces/ac-dde-table-editor-state.interface";
+import { IAcDDEViewEditorState } from "../interfaces/ac-dde-view-editor-state.interface";
 
 export class AcDDEState {
 
@@ -14,6 +15,7 @@ export class AcDDEState {
   static readonly KeyRelationshipsDatagrid = "relationshipsDatagrid";
   static readonly KeyStoredProceduresDatagrid = "storedProceduresDatagrid";
   static readonly KeyTableEditorState = "tableEditorState";
+  static readonly KeyViewEditorState = "viewEditorState";
   static readonly KeyTablesDatagrid = "tablesDatagrid";
   static readonly KeyTableColumnsDatagrid = "tableColumnsDatagrid";
   static readonly KeyTriggersDatagrid = "triggersDatagrid";
@@ -141,6 +143,17 @@ export class AcDDEState {
     if(value != this._viewColumnsDatagrid){
       this._viewColumnsDatagrid = value;
       this.notifyChange(AcDDEState.KeyViewColumnssDatagrid);
+    }
+  }
+
+  private _viewEditorState:IAcDDEViewEditorState = {};
+  get viewEditorState():IAcDDEViewEditorState {
+    return this._viewEditorState;
+  }
+  set viewEditorState(value:IAcDDEViewEditorState) {
+    if(value != this._viewEditorState){
+      this._viewEditorState = value;
+      this.notifyChange(AcDDEState.KeyViewEditorState);
     }
   }
 

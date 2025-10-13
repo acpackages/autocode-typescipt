@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEApi, AcDDEDataStorage, IAcDDERelationship, IAcDDETableColumn } from "../../../_ac-data-dictionary-editor.export";
 import { IAcConflictingRelationshipColumn } from "../interfaces/ac-conflicting-relationship-column.interface";
 import { IAcIdentifiedResult } from "../interfaces/ac-identification-result.interface";
@@ -38,8 +39,8 @@ export class AcDDERelationshipsDetector {
     const primaryKeyColumns: Record<string, IAcRepeatingColumn> = {};
     const conflictingColumns: Record<string, IAcConflictingRelationshipColumn> = {};
     for (const column of this.dataStorage.getTableColumns({
-      filter: (row: IAcDDETableColumn) => {
-        return row.primaryKey == true && row.dataDictionaryId == activeDataDictionaryId;
+      filter: (row: IAcDDETableColumn|any) => {
+        return row[AcEnumDDColumnProperty.PrimaryKey] == true && row.dataDictionaryId == activeDataDictionaryId;
       }
     })) {
       const columnName = column.columnName;
@@ -69,8 +70,8 @@ export class AcDDERelationshipsDetector {
     for (const columnName of Object.keys(primaryKeyColumns)) {
       const sourceColumns = primaryKeyColumns[columnName];
       const destinationColumnRows = this.dataStorage.getTableColumns({
-        filter: (row: IAcDDETableColumn) => {
-          return row.primaryKey != true && row.dataDictionaryId == activeDataDictionaryId && row.columnName == columnName;
+        filter: (row: IAcDDETableColumn|any) => {
+          return row[AcEnumDDColumnProperty.PrimaryKey] != true && row.dataDictionaryId == activeDataDictionaryId && row.columnName == columnName;
         }
       });
       const destinationColumns: IAcTableColumn[] = [];

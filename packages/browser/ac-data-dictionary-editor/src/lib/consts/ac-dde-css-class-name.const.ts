@@ -1,6 +1,8 @@
 export const AcDDECssClassName = {
   acDataDictionaryEditor: 'ac-data-dictionary-editor',
   acDDEContainer: 'ac-dde-container',
+  acDDEListMasterContainer: 'ac-dde-list-master-container',
+  acDDEMasterContainer: 'ac-dde-master-container',
   acDDEBody: 'ac-dde-body',
   acDDEDatagridWrapper: 'ac-dde-datagrid-wrapper',
   acDDEHeader: 'ac-dde-header',

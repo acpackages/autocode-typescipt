@@ -464,7 +464,9 @@ export class AcMessage {
 .acmsg-title { font-weight:600; margin-bottom:2px; }
 .acmsg-text { font-size: 13px; opacity: .9; }
 
-.acmsg-close { background: none; border: none; font-size: 18px; cursor:pointer; margin-left:8px; color: #666; }
+.acmsg-close { background: none; border: none; font-size: 18px; cursor:pointer;     position: relative;
+    right: -5px;
+    top: -15px; color: #666; }
 .acmsg-close:hover { color: #000; }
 
 .acmsg-progress-wrap { height:4px; background: rgba(0,0,0,0.06); width:100%; margin-top:8px; }

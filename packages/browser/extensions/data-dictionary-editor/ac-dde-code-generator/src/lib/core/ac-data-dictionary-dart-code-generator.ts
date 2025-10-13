@@ -10,7 +10,7 @@ export class AcDataDictionaryDartCodeGenerator {
   dataDictionaryJson: any = {};
   tabsCount: number = 0;
 
-  get tabs():string{
+  get tabs(): string {
     let result: string = ``;
     for (let i = 0; i < this.tabsCount; i++) {
       result += `\t`;
@@ -71,7 +71,7 @@ export class AcDataDictionaryDartCodeGenerator {
         viewStrings.push(this.getDDViewString({ viewDetails: viewDetails }));
       }
     }
-    result += viewStrings.join(`\n`) + `\n`;
+    result += viewStrings.join(`,\n`) + `\n`;
     result += this.tabs + `},\n`;
 
     result += `${this.tabs}AcDataDictionary.keyRelationships : {\n`;
@@ -91,7 +91,7 @@ export class AcDataDictionaryDartCodeGenerator {
         triggerStrings.push(this.getDDTriggerString({ triggerDetails: triggerDetails }));
       }
     }
-    result += triggerStrings.join(`\n`) + `\n`;
+    result += triggerStrings.join(`,\n`) + `\n`;
     result += this.tabs + `},\n`;
 
     result += `${this.tabs}AcDataDictionary.keyStoredProcedures : {\n`;
@@ -101,7 +101,7 @@ export class AcDataDictionaryDartCodeGenerator {
         storedProcedureStrings.push(this.getDDStoredProcedureString({ storedProcedureDetails: storedProcedureDetails }));
       }
     }
-    result += storedProcedureStrings.join(`\n`) + `\n`;
+    result += storedProcedureStrings.join(`,\n`) + `\n`;
     result += this.tabs + `},\n`;
 
     result += `${this.tabs}AcDataDictionary.keyFunctions : {\n`;
@@ -111,7 +111,7 @@ export class AcDataDictionaryDartCodeGenerator {
         functionStrings.push(this.getDDFunctionString({ functionDetails: functionDetails }));
       }
     }
-    result += functionStrings.join(`\n`) + `\n`;
+    result += functionStrings.join(`,\n`) + `\n`;
     result += this.tabs + `}\n`;
     this.tabsCount--;
     result += this.tabs + `};\n`;
@@ -128,19 +128,19 @@ export class AcDataDictionaryDartCodeGenerator {
         const value = properties[key][AcDDTableColumnProperty.KeyPropertyValue];
         let propertyKey = stringToCamelCase(key);
         let propertyValue = `${value}`;
-        let validProperty:boolean = false;
-        if(boolColumnProperties.includes(key) && value == true){
+        let validProperty: boolean = false;
+        if (boolColumnProperties.includes(key) && value == true) {
           validProperty = true;
         }
-        else if(numberColumnProperties.includes(key) && value){
+        else if (numberColumnProperties.includes(key) && value) {
           validProperty = true;
         }
-        else if(stringColumnProperties.includes(key) && value){
+        else if (stringColumnProperties.includes(key) && value) {
           validProperty = true;
           propertyValue = `"${value}"`;
         }
-        if(validProperty){
-          let propertyJson:string = '';
+        if (validProperty) {
+          let propertyJson: string = '';
           propertyJson += `${this.tabs}AcEnumDDColumnProperty.${propertyKey} : {\n`;
           this.tabsCount++;
           propertyJson += `${this.tabs}AcDDTableColumnProperty.keyPropertyName : AcEnumDDColumnProperty.${propertyKey},\n`;
@@ -153,7 +153,7 @@ export class AcDataDictionaryDartCodeGenerator {
     }
 
     if (propertiesJson.length > 0) {
-      result += `\n`+propertiesJson.join(`,\n`)+``;
+      result += `\n` + propertiesJson.join(`,\n`) + ``;
     }
     this.tabsCount--;
 
@@ -163,7 +163,7 @@ export class AcDataDictionaryDartCodeGenerator {
 
   getDDColumnTypeString({ columnType }: { columnType: any }): string {
     let result: string = columnType;
-    switch(columnType){
+    switch (columnType) {
       case AcEnumDDColumnType.AutoIncrement:
         result = `AcEnumDDColumnType.autoIncrement`;
         break;
@@ -223,16 +223,16 @@ export class AcDataDictionaryDartCodeGenerator {
     let result: string = ``;
     result += this.tabs + `/* Keys Start */\n`;
     if (this.dataDictionaryJson) {
-      if(this.dataDictionaryJson[AcDataDictionary.KeyTables]){
-        const tableKeys:string[] = [];
-        const tableColumnKeys:string[] = [];
+      if (this.dataDictionaryJson[AcDataDictionary.KeyTables]) {
+        const tableKeys: string[] = [];
+        const tableColumnKeys: string[] = [];
         for (const tableDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyTables] as any[])) {
           const tableName = tableDetails[AcDDTable.KeyTableName];
           this.tabsCount++;
           tableKeys.push(`${this.tabs}static const String ${stringToCamelCase(tableName)} = "${tableName}";`);
           this.tabsCount--;
 
-          const columnKeys:string[] = [];
+          const columnKeys: string[] = [];
           this.tabsCount++;
           for (const columnName of Object.keys(tableDetails[AcDDTable.KeyTableColumns])) {
             columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(columnName)} = "${columnName}";`);
@@ -245,13 +245,103 @@ export class AcDataDictionaryDartCodeGenerator {
           tableColumnKeys.push(tableColumnsKeyString);
 
         }
-        result += this.tabs + `/* Table Keys Start */\n`;
-        result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.tableKeysClassName} {\n`;
-        result += tableKeys.join(`\n`);
-        result += `\n${this.tabs}}\n\n`;
-        result += tableColumnKeys.join(`\n`);
-        result += `\n\n`;
-        result += this.tabs + `/* Table Keys End */\n`;
+        if (tableKeys.length > 0 || tableColumnKeys.length > 0) {
+          result += this.tabs + `/* Table Keys Start */\n`;
+          if (tableKeys.length > 0) {
+            result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.tableKeysClassName} {\n`;
+            result += tableKeys.join(`\n`);
+            result += `\n${this.tabs}}\n\n`;
+          }
+          if (tableColumnKeys.length > 0) {
+            result += tableColumnKeys.join(`\n`);
+            result += `\n\n`;
+          }
+          result += this.tabs + `/* Table Keys End */\n`;
+        }
+      }
+      if (this.dataDictionaryJson[AcDataDictionary.KeyViews]) {
+        const viewKeys: string[] = [];
+        const viewColumnKeys: string[] = [];
+        for (const viewDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyViews] as any[])) {
+          const viewName = viewDetails[AcDDView.KeyViewName];
+          this.tabsCount++;
+          viewKeys.push(`${this.tabs}static const String ${stringToCamelCase(viewName)} = "${viewName}";`);
+          this.tabsCount--;
+
+          const columnKeys: string[] = [];
+          this.tabsCount++;
+          for (const columnName of Object.keys(viewDetails[AcDDView.KeyViewColumns])) {
+            columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(columnName)} = "${columnName}";`);
+          }
+          this.tabsCount--;
+
+          let viewColumnsKeyString = this.tabs + `class ${AcDDECodeGeneratorDefaultConfig.viewNameColumnClassPrefix}${stringToPascalCase(viewName)} {\n`;
+          viewColumnsKeyString += columnKeys.join(`\n`);
+          viewColumnsKeyString += `\n${this.tabs}}`;
+          viewColumnKeys.push(viewColumnsKeyString);
+
+        }
+        if (viewKeys.length > 0 || viewColumnKeys.length > 0) {
+          result += this.tabs + `/* View Keys Start */\n`;
+          if (viewKeys.length > 0) {
+            result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.viewKeysClassName} {\n`;
+            result += viewKeys.join(`\n`);
+            result += `\n${this.tabs}}\n\n`;
+          }
+          if (viewColumnKeys.length > 0) {
+            result += viewColumnKeys.join(`\n`);
+            result += `\n\n`;
+          }
+          result += this.tabs + `/* View Keys End */\n`;
+        }
+      }
+      if (this.dataDictionaryJson[AcDataDictionary.KeyStoredProcedures]) {
+        const storedProcedureKeys: string[] = [];
+        for (const storedProcedureDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyStoredProcedures] as any[])) {
+          const storedProcedureName = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureName];
+          this.tabsCount++;
+          storedProcedureKeys.push(`${this.tabs}static const String ${stringToCamelCase(storedProcedureName)} = "${storedProcedureName}";`);
+          this.tabsCount--;
+        }
+        if (storedProcedureKeys.length > 0) {
+          result += this.tabs + `/* Stored Procedure Keys Start */\n`;
+          result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.storeProcedureKeysClassName} {\n`;
+          result += storedProcedureKeys.join(`\n`);
+          result += `\n${this.tabs}}\n\n`;
+          result += this.tabs + `/* Stored Procedure Keys End */\n`;
+        }
+      }
+      if (this.dataDictionaryJson[AcDataDictionary.KeyTriggers]) {
+        const triggerKeys: string[] = [];
+        for (const triggerDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyTriggers] as any[])) {
+          const triggerName = triggerDetails[AcDDTrigger.KeyTriggerName];
+          this.tabsCount++;
+          triggerKeys.push(`${this.tabs}static const String ${stringToCamelCase(triggerName)} = "${triggerName}";`);
+          this.tabsCount--;
+        }
+        if (triggerKeys.length > 0) {
+          result += this.tabs + `/* Trigger Keys Start */\n`;
+          result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.triggerKeysClassName} {\n`;
+          result += triggerKeys.join(`\n`);
+          result += `\n${this.tabs}}\n\n`;
+          result += this.tabs + `/* Trigger Keys End */\n`;
+        }
+      }
+      if (this.dataDictionaryJson[AcDataDictionary.KeyFunctions]) {
+        const functionKeys: string[] = [];
+        for (const functionDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyFunctions] as any[])) {
+          const functionName = functionDetails[AcDDFunction.KeyFunctionName];
+          this.tabsCount++;
+          functionKeys.push(`${this.tabs}static const String ${stringToCamelCase(functionName)} = "${functionName}";`);
+          this.tabsCount--;
+        }
+        if (functionKeys.length > 0) {
+          result += this.tabs + `/* Function Keys Start */\n`;
+          result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.functionKeysClassName} {\n`;
+          result += functionKeys.join(`\n`);
+          result += `\n${this.tabs}}\n\n`;
+          result += this.tabs + `/* Function Keys End */\n`;
+        }
       }
     }
     result += this.tabs + `/* Keys End */\n`;
@@ -262,13 +352,13 @@ export class AcDataDictionaryDartCodeGenerator {
     let result: string = ``;
     this.tabsCount++;
     const functionName = functionDetails[AcDDFunction.KeyFunctionName];
-    let functionCode:string = functionDetails[AcDDFunction.KeyFunctionCode];
+    let functionCode: string = functionDetails[AcDDFunction.KeyFunctionCode] ?? "";
     functionCode = functionCode.trim();
     const keyName = `${AcDDECodeGeneratorDefaultConfig.functionKeysClassName}.${stringToCamelCase(functionName)}`;
     result += `${keyName} : {\n`;
     this.tabsCount++;
     result += `AcDDFunction.keyFunctionName : ${keyName},\n`;
-    result += `AcDDFunction.keyFunctionCode : "${functionCode}"\n`;
+    result += `AcDDFunction.keyFunctionCode : "${functionCode. replaceAll("\n"," "). replaceAll("\t"," ")}"\n`;
     this.tabsCount--;
     result += `}`;
     this.tabsCount--;
@@ -278,8 +368,8 @@ export class AcDataDictionaryDartCodeGenerator {
   getDDRelationshipString({ relationshipDetails }: { relationshipDetails: any }): string {
     let result: string = `${this.tabs}{\n`;
     this.tabsCount++;
-    const cascadeDeleteDestination = relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination];
-    const cascadeDeleteSource = relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource];
+    const cascadeDeleteDestination = relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination] ?? false;
+    const cascadeDeleteSource = relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource] ?? false;
     const destinationColumn = relationshipDetails[AcDDRelationship.KeyDestinationColumn];
     const destinationTable = relationshipDetails[AcDDRelationship.KeyDestinationTable];
     const sourceTable = relationshipDetails[AcDDRelationship.KeySourceTable];
@@ -301,13 +391,13 @@ export class AcDataDictionaryDartCodeGenerator {
     let result: string = ``;
     this.tabsCount++;
     const storedProcedureName = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureName];
-    let storedProcedureCode:string = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureCode];
+    let storedProcedureCode: string = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureCode] ?? "";
     storedProcedureCode = storedProcedureCode.trim();
     const keyName = `${AcDDECodeGeneratorDefaultConfig.storeProcedureKeysClassName}.${stringToCamelCase(storedProcedureName)}`;
     result += `${keyName} : {\n`;
     this.tabsCount++;
     result += `AcDDStoredProcedure.keyStoredProcedureName : ${keyName},\n`;
-    result += `AcDDStoredProcedure.keyStoredProcedureCode : "${storedProcedureCode}"\n`;
+    result += `AcDDStoredProcedure.keyStoredProcedureCode : "${storedProcedureCode. replaceAll("\n"," "). replaceAll("\t"," ")}"\n`;
     this.tabsCount--;
     result += `}`;
     this.tabsCount--;
@@ -324,7 +414,7 @@ export class AcDataDictionaryDartCodeGenerator {
         const value = properties[key][AcDDTableProperty.KeyPropertyValue];
         let propertyKey = stringToCamelCase(key);
         let propertyValue = `${value}`;
-        let validProperty:boolean = false;
+        let validProperty: boolean = false;
         // if(boolColumnProperties.includes(key) && value == true){
         //   validProperty = true;
         // }
@@ -336,9 +426,9 @@ export class AcDataDictionaryDartCodeGenerator {
         //   propertyValue = `"${value}"`;
         // }
         validProperty = true;
-          propertyValue = `"${value}"`;
-        if(validProperty){
-          let propertyJson:string = '';
+        propertyValue = `"${value}"`;
+        if (validProperty) {
+          let propertyJson: string = '';
           propertyJson += `${this.tabs}AcEnumDDTableProperty.${propertyKey} : {\n`;
           this.tabsCount++;
           propertyJson += `${this.tabs}AcDDTableProperty.keyPropertyName : AcEnumDDTableProperty.${propertyKey},\n`;
@@ -351,7 +441,7 @@ export class AcDataDictionaryDartCodeGenerator {
     }
 
     if (propertiesJson.length > 0) {
-      result += `\n`+propertiesJson.join(`,\n`)+``;
+      result += `\n` + propertiesJson.join(`,\n`) + ``;
     }
     this.tabsCount--;
 
@@ -372,20 +462,20 @@ export class AcDataDictionaryDartCodeGenerator {
     if (tableDetails[AcDDTable.KeyTableColumns]) {
       const columnStrings: string[] = [];
       for (const columnDetails of Object.values(tableDetails[AcDDTable.KeyTableColumns])) {
-        columnStrings.push(this.getDDTableColumnString({ tableName:tableName,columnDetails: columnDetails }));
+        columnStrings.push(this.getDDTableColumnString({ tableName: tableName, columnDetails: columnDetails }));
       }
       result += columnStrings.join(',\n');
     }
 
     result += `${this.tabs}\n${this.tabs}},\n`;
-    result += `${this.tabs}AcDDTable.keyTableProperties : ${this.getDDTableProperties({tableDetails:tableDetails})}\n`;
+    result += `${this.tabs}AcDDTable.keyTableProperties : ${this.getDDTableProperties({ tableDetails: tableDetails })}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;
     return result;
   }
 
-  getDDTableColumnString({ tableName,columnDetails }: { tableName:string,columnDetails: any }): string {
+  getDDTableColumnString({ tableName, columnDetails }: { tableName: string, columnDetails: any }): string {
     let result: string = ``;
     this.tabsCount++;
     const columnName = columnDetails[AcDDTableColumn.KeyColumnName];
@@ -393,8 +483,8 @@ export class AcDataDictionaryDartCodeGenerator {
     result += `${this.tabs}${keyName} : {\n`;
     this.tabsCount++;
     result += `${this.tabs}AcDDTableColumn.keyColumnName : ${keyName},\n`;
-    result += `${this.tabs}AcDDTableColumn.keyColumnType : ${this.getDDColumnTypeString({columnType:columnDetails[AcDDTableColumn.KeyColumnType]})},\n`;
-    result += `${this.tabs}AcDDTableColumn.keyColumnProperties : ${this.getDDColumnProperties({columnDetails:columnDetails})}\n`;
+    result += `${this.tabs}AcDDTableColumn.keyColumnType : ${this.getDDColumnTypeString({ columnType: columnDetails[AcDDTableColumn.KeyColumnType] })},\n`;
+    result += `${this.tabs}AcDDTableColumn.keyColumnProperties : ${this.getDDColumnProperties({ columnDetails: columnDetails })}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;
@@ -405,18 +495,18 @@ export class AcDataDictionaryDartCodeGenerator {
     let result: string = ``;
     this.tabsCount++;
     const viewName = viewDetails[AcDDView.KeyViewName];
-    let viewQuery:string = viewDetails[AcDDView.KeyViewQuery] ?? ``;
+    let viewQuery: string = viewDetails[AcDDView.KeyViewQuery] ?? ``;
     viewQuery = viewQuery.trim();
     const keyName = `${AcDDECodeGeneratorDefaultConfig.viewKeysClassName}.${stringToCamelCase(viewName)}`;
     result += `${this.tabs}${keyName} : {\n`;
     this.tabsCount++;
     result += `${this.tabs}AcDDView.keyViewName : ${keyName},\n`;
-    result += `${this.tabs}AcDDView.keyViewQuery : "${viewQuery}",\n`;
+    result += `${this.tabs}AcDDView.keyViewQuery : "${viewQuery. replaceAll("\n"," "). replaceAll("\t"," ")}",\n`;
     result += `${this.tabs}AcDDView.keyViewColumns : {\n`;
     if (viewDetails[AcDDView.KeyViewColumns]) {
       const columnStrings: string[] = [];
       for (const columnDetails of Object.values(viewDetails[AcDDView.KeyViewColumns])) {
-        columnStrings.push(this.getDDViewColumnString({ viewName:viewName,columnDetails: columnDetails }));
+        columnStrings.push(this.getDDViewColumnString({ viewName: viewName, columnDetails: columnDetails }));
       }
       result += columnStrings.join(',\n');
     }
@@ -427,7 +517,7 @@ export class AcDataDictionaryDartCodeGenerator {
     return result;
   }
 
-  getDDViewColumnString({ viewName,columnDetails }: { viewName:string,columnDetails: any }): string {
+  getDDViewColumnString({ viewName, columnDetails }: { viewName: string, columnDetails: any }): string {
     let result: string = ``;
     this.tabsCount++;
     const columnName = columnDetails[AcDDViewColumn.KeyColumnName];
@@ -439,8 +529,8 @@ export class AcDataDictionaryDartCodeGenerator {
     result += `${this.tabs}AcDDViewColumn.keyColumnName : ${keyName},\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnSource : "${columnSource}",\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnSourceName : "${columnSourceName}",\n`;
-    result += `${this.tabs}AcDDViewColumn.keyColumnType : ${this.getDDColumnTypeString({columnType:columnDetails[AcDDViewColumn.KeyColumnType]})},\n`;
-    result += `${this.tabs}AcDDViewColumn.keyColumnProperties : ${this.getDDColumnProperties({columnDetails:columnDetails})}\n`;
+    result += `${this.tabs}AcDDViewColumn.keyColumnType : ${this.getDDColumnTypeString({ columnType: columnDetails[AcDDViewColumn.KeyColumnType] })},\n`;
+    result += `${this.tabs}AcDDViewColumn.keyColumnProperties : ${this.getDDColumnProperties({ columnDetails: columnDetails })}\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;
@@ -454,7 +544,7 @@ export class AcDataDictionaryDartCodeGenerator {
     const triggerExecution = triggerDetails[AcDDTrigger.KeyTriggerExecution];
     const rowOperation = triggerDetails[AcDDTrigger.KeyRowOperation];
     const tableName = triggerDetails[AcDDTrigger.KeyTableName];
-    let triggerCode:string = triggerDetails[AcDDTrigger.KeyTriggerCode];
+    let triggerCode: string = triggerDetails[AcDDTrigger.KeyTriggerCode] ?? "";
     triggerCode = triggerCode.trim();
     result += `${this.tabs}${AcDDECodeGeneratorDefaultConfig.triggerKeysClassName}.${stringToCamelCase(triggerName)} : {\n`;
     this.tabsCount++;
@@ -462,7 +552,7 @@ export class AcDataDictionaryDartCodeGenerator {
     result += `${this.tabs}AcDDTrigger.keyTriggerExecution : "${triggerExecution}",\n`;
     result += `${this.tabs}AcDDTrigger.keyRowOperation : "${rowOperation}",\n`;
     result += `${this.tabs}AcDDTrigger.keyTableName : ${AcDDECodeGeneratorDefaultConfig.tableKeysClassName}.${stringToCamelCase(tableName)},\n`;
-    result += `${this.tabs}AcDDTrigger.keyTriggerCode : "${triggerCode}"\n`;
+    result += `${this.tabs}AcDDTrigger.keyTriggerCode : "${triggerCode. replaceAll("\n"," "). replaceAll("\t"," ")}"\n`;
     this.tabsCount--;
     result += `${this.tabs}}`;
     this.tabsCount--;

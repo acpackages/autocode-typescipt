@@ -17,6 +17,7 @@ import { IAcDDEHookArgs } from '../../interfaces/hook-args/ac-dde-hook-args.inte
 import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
 import { IAcDDEDataDictionary } from '../../interfaces/ac-dde-data-dictionary.inteface';
+import { AcDDEViewEditor } from '../editors/ac-dde-view-editor.element';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDataDictionaryEditor {
@@ -28,6 +29,7 @@ export class AcDataDictionaryEditor {
   element: HTMLElement = document.createElement('div');
 
   tableEditor?: AcDDETableEditor;
+  viewEditor?: AcDDEViewEditor;
   header!: AcDataDictionaryEditorHeader;
   functionsDatagrid?: AcDDEFunctionsDatagrid;
   relationshipsDatagrid?: AcDDERelationshipsDatagrid;
@@ -104,6 +106,13 @@ export class AcDataDictionaryEditor {
       if(this.tableEditor == undefined){
         this.tableEditor = new AcDDETableEditor({editorApi:this.editorApi});
         const tabContent = getElementTab(tab,this.tableEditor.element);
+        this.bodyElement.appendChild(tabContent);
+      }
+    }
+    else if(tab == AcEnumDDETab.ViewEditor){
+      if(this.viewEditor == undefined){
+        this.viewEditor = new AcDDEViewEditor({editorApi:this.editorApi});
+        const tabContent = getElementTab(tab,this.viewEditor.element);
         this.bodyElement.appendChild(tabContent);
       }
     }

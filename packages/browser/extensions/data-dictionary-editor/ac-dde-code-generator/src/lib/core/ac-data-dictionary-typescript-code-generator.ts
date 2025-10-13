@@ -252,6 +252,36 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         result += `\n\n`;
         result += this.tabs + `/* Table Keys End */\n`;
       }
+      if(this.dataDictionaryJson[AcDataDictionary.KeyViews]){
+        const tableKeys:string[] = [];
+        const tableColumnKeys:string[] = [];
+        for (const tableDetails of Object.values(this.dataDictionaryJson[AcDataDictionary.KeyTables] as any[])) {
+          const tableName = tableDetails[AcDDTable.KeyTableName];
+          this.tabsCount++;
+          tableKeys.push(`${this.tabs}static readonly ${stringToPascalCase(tableName)} = "${tableName}";`);
+          this.tabsCount--;
+
+          const columnKeys:string[] = [];
+          this.tabsCount++;
+          for (const columnName of Object.keys(tableDetails[AcDDTable.KeyTableColumns])) {
+            columnKeys.push(`${this.tabs}static readonly ${stringToPascalCase(columnName)} = "${columnName}";`);
+          }
+          this.tabsCount--;
+
+          let tableColumnsKeyString = this.tabs + `export class ${AcDDECodeGeneratorDefaultConfig.tableNameColumnClassPrefix}${stringToPascalCase(tableName)} {\n`;
+          tableColumnsKeyString += columnKeys.join(`\n`);
+          tableColumnsKeyString += `\n${this.tabs}}`;
+          tableColumnKeys.push(tableColumnsKeyString);
+
+        }
+        result += this.tabs + `/* Table Keys Start */\n`;
+        result += this.tabs + `\nexport class ${AcDDECodeGeneratorDefaultConfig.tableKeysClassName} {\n`;
+        result += tableKeys.join(`\n`);
+        result += `\n${this.tabs}}\n\n`;
+        result += tableColumnKeys.join(`\n`);
+        result += `\n\n`;
+        result += this.tabs + `/* Table Keys End */\n`;
+      }
     }
     result += this.tabs + `/* Keys End */\n`;
     return result;
@@ -261,7 +291,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
     let result: string = ``;
     this.tabsCount++;
     const functionName = functionDetails[AcDDFunction.KeyFunctionName];
-    let functionCode:string = functionDetails[AcDDFunction.KeyFunctionCode];
+    let functionCode:string = functionDetails[AcDDFunction.KeyFunctionCode] ?? "";
     functionCode = functionCode.trim();
     const keyName = `${AcDDECodeGeneratorDefaultConfig.functionKeysClassName}.${stringToPascalCase(functionName)}`;
     result += `[${keyName}] : {\n`;
@@ -277,8 +307,8 @@ export class AcDataDictionaryTypescriptCodeGenerator {
   getDDRelationshipString({ relationshipDetails }: { relationshipDetails: any }): string {
     let result: string = `${this.tabs}{\n`;
     this.tabsCount++;
-    const cascadeDeleteDestination = relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination];
-    const cascadeDeleteSource = relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource];
+    const cascadeDeleteDestination = relationshipDetails[AcDDRelationship.KeyCascadeDeleteDestination] ?? false;
+    const cascadeDeleteSource = relationshipDetails[AcDDRelationship.KeyCascadeDeleteSource] ?? false;
     const destinationColumn = relationshipDetails[AcDDRelationship.KeyDestinationColumn];
     const destinationTable = relationshipDetails[AcDDRelationship.KeyDestinationTable];
     const sourceTable = relationshipDetails[AcDDRelationship.KeySourceTable];
@@ -300,7 +330,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
     let result: string = ``;
     this.tabsCount++;
     const storedProcedureName = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureName];
-    let storedProcedureCode:string = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureCode];
+    let storedProcedureCode:string = storedProcedureDetails[AcDDStoredProcedure.KeyStoredProcedureCode] ?? "";
     storedProcedureCode = storedProcedureCode.trim();
     const keyName = `${AcDDECodeGeneratorDefaultConfig.storeProcedureKeysClassName}.${stringToPascalCase(storedProcedureName)}`;
     result += `[${keyName}] : {\n`;
@@ -443,7 +473,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
     const triggerExecution = triggerDetails[AcDDTrigger.KeyTriggerExecution];
     const rowOperation = triggerDetails[AcDDTrigger.KeyRowOperation];
     const tableName = triggerDetails[AcDDTrigger.KeyTableName];
-    let triggerCode:string = triggerDetails[AcDDTrigger.KeyTriggerCode];
+    let triggerCode:string = triggerDetails[AcDDTrigger.KeyTriggerCode] ?? "";
     const keyName = `${AcDDECodeGeneratorDefaultConfig.triggerKeysClassName}.${stringToPascalCase(triggerName)}`;
     triggerCode = triggerCode.trim();
     result += `${this.tabs}[${keyName}] : {\n`;

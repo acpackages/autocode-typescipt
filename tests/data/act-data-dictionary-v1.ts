@@ -994,6 +994,16 @@ export const dataDictionaryJson = {
               "propertyValue": "State"
             }
           }
+        },
+        "city_name": {
+          "columnName": "city_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "City"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -2119,16 +2129,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Primary?"
-            }
-          }
-        },
-        "status_lookup_value_id": {
-          "columnName": "status_lookup_value_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Status"
             }
           }
         },
@@ -3287,7 +3287,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "websites"
+              "propertyValue": "Websites"
             }
           }
         },
@@ -3297,7 +3297,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "fax_numbers"
+              "propertyValue": "Fax Numbers"
             }
           }
         }
@@ -5481,7 +5481,7 @@ export const dataDictionaryJson = {
       "tableColumns": {
         "location_id": {
           "columnName": "location_id",
-          "columnType": "STRING",
+          "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -5538,7 +5538,7 @@ export const dataDictionaryJson = {
       "tableColumns": {
         "location_id": {
           "columnName": "location_id",
-          "columnType": "STRING",
+          "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -6314,7 +6314,7 @@ export const dataDictionaryJson = {
       "tableColumns": {
         "new_product_price_id": {
           "columnName": "new_product_price_id",
-          "columnType": "DOUBLE",
+          "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -8441,7 +8441,7 @@ export const dataDictionaryJson = {
         },
         "payment_status": {
           "columnName": "payment_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -9285,7 +9285,7 @@ export const dataDictionaryJson = {
         },
         "purchase_order_expense_status": {
           "columnName": "purchase_order_expense_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -9446,9 +9446,9 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "purchase_order_payment_stats": {
-          "columnName": "purchase_order_payment_stats",
-          "columnType": "UUID",
+        "purchase_order_payment_status": {
+          "columnName": "purchase_order_payment_status",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -9637,7 +9637,7 @@ export const dataDictionaryJson = {
         },
         "product_status": {
           "columnName": "product_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -9784,16 +9784,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "status_lookup_value_id": {
-          "columnName": "status_lookup_value_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Status"
-            }
-          }
-        },
         "supplier_id": {
           "columnName": "supplier_id",
           "columnType": "UUID",
@@ -9826,7 +9816,7 @@ export const dataDictionaryJson = {
         },
         "purchase_order_status": {
           "columnName": "purchase_order_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -9995,7 +9985,7 @@ export const dataDictionaryJson = {
         },
         "chargeable_service_status": {
           "columnName": "chargeable_service_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -10144,7 +10134,7 @@ export const dataDictionaryJson = {
         },
         "purchase_return_expense_status": {
           "columnName": "purchase_return_expense_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -10283,7 +10273,7 @@ export const dataDictionaryJson = {
         },
         "purchase_return_payment_status": {
           "columnName": "purchase_return_payment_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -10356,8 +10346,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "inward_inventory_tracking_id": {
-          "columnName": "inward_inventory_tracking_id",
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10446,8 +10436,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "purchase_debit_note_product_id": {
-          "columnName": "purchase_debit_note_product_id",
+        "purchase_return_product_id": {
+          "columnName": "purchase_return_product_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10472,7 +10462,7 @@ export const dataDictionaryJson = {
         },
         "product_status": {
           "columnName": "product_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -11434,7 +11424,7 @@ export const dataDictionaryJson = {
         },
         "sale_invoice_expense_status": {
           "columnName": "sale_invoice_expense_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -11573,7 +11563,7 @@ export const dataDictionaryJson = {
         },
         "sale_invoice_payment_status": {
           "columnName": "sale_invoice_payment_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -11762,7 +11752,7 @@ export const dataDictionaryJson = {
         },
         "product_status": {
           "columnName": "product_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -12428,7 +12418,7 @@ export const dataDictionaryJson = {
         },
         "sale_maintenance_payment_status": {
           "columnName": "sale_maintenance_payment_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -12617,7 +12607,7 @@ export const dataDictionaryJson = {
         },
         "product_status": {
           "columnName": "product_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -13468,7 +13458,7 @@ export const dataDictionaryJson = {
         },
         "chargeable_service_status": {
           "columnName": "chargeable_service_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -13796,7 +13786,7 @@ export const dataDictionaryJson = {
         },
         "product_status": {
           "columnName": "product_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -13965,7 +13955,7 @@ export const dataDictionaryJson = {
         },
         "sale_quotation_status": {
           "columnName": "sale_quotation_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -14164,7 +14154,7 @@ export const dataDictionaryJson = {
         },
         "chargeable_service_status": {
           "columnName": "chargeable_service_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -14313,7 +14303,7 @@ export const dataDictionaryJson = {
         },
         "sale_return_expense_status": {
           "columnName": "sale_return_expense_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -14452,7 +14442,7 @@ export const dataDictionaryJson = {
         },
         "sale_return_payment_status": {
           "columnName": "sale_return_payment_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -14525,8 +14515,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "inward_inventory_tracking_id": {
-          "columnName": "inward_inventory_tracking_id",
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14641,7 +14631,7 @@ export const dataDictionaryJson = {
         },
         "product_status": {
           "columnName": "product_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -14836,7 +14826,7 @@ export const dataDictionaryJson = {
         },
         "sale_return_status": {
           "columnName": "sale_return_status",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -14891,7 +14881,7 @@ export const dataDictionaryJson = {
         },
         "sale_return_type": {
           "columnName": "sale_return_type",
-          "columnType": "UUID",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -16202,9 +16192,9 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "status_lookup_value_id": {
-          "columnName": "status_lookup_value_id",
-          "columnType": "UUID",
+        "stock_transfer_product_status": {
+          "columnName": "stock_transfer_product_status",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -19113,9 +19103,3151 @@ export const dataDictionaryJson = {
       }
     }
   },
-  "views": {},
-  "relationships": [],
+  "views": {
+    "vw_act_customers": {
+      "viewName": "vw_act_customers",
+      "viewColumns": {},
+      "viewQuery": "SELECT * FROM act_customers"
+    },
+    "vw_act_products": {
+      "viewName": "vw_act_products",
+      "viewColumns": {},
+      "viewQuery": "SELECT * FROM act_products"
+    }
+  },
+  "relationships": [
+    {
+      "destinationColumn": "access_group_id",
+      "destinationTable": "act_access_rights",
+      "sourceColumn": "access_group_id",
+      "sourceTable": "act_access_groups"
+    },
+    {
+      "destinationColumn": "access_group_id",
+      "destinationTable": "act_user_accountees",
+      "sourceColumn": "access_group_id",
+      "sourceTable": "act_access_groups"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_addresses",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_bank_accounts",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_email_addresses",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_fax_numbers",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_legal_documents",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_medias",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_phone_numbers",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_settings",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_websites",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_asset_depreciations",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_assets",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_chargeable_services",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_customers",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_employee_attendances",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_employee_contracts",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_employees",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_ledger_account_types",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_ledger_accounts",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_locations",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_payment_methods",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_price_changes",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_product_variant_groups",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_purchase_orders",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_purchase_terms",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_coupons",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_offers",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_quotations",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_sale_terms",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_stock_audits",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_stock_transfers",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_stock_updates",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_suppliers",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_tax_rates",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_taxing_schemes",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_transactions",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_user_accountees",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "address_id",
+      "destinationTable": "act_accountee_addresses",
+      "sourceColumn": "address_id",
+      "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "address_id",
+      "destinationTable": "act_customer_addresses",
+      "sourceColumn": "address_id",
+      "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "address_id",
+      "destinationTable": "act_employee_addresses",
+      "sourceColumn": "address_id",
+      "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "address_id",
+      "destinationTable": "act_location_addresses",
+      "sourceColumn": "address_id",
+      "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "address_id",
+      "destinationTable": "act_supplier_addresses",
+      "sourceColumn": "address_id",
+      "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "asset_id",
+      "destinationTable": "act_asset_attributes",
+      "sourceColumn": "asset_id",
+      "sourceTable": "act_assets"
+    },
+    {
+      "destinationColumn": "asset_id",
+      "destinationTable": "act_asset_depreciations",
+      "sourceColumn": "asset_id",
+      "sourceTable": "act_assets"
+    },
+    {
+      "destinationColumn": "asset_id",
+      "destinationTable": "act_asset_legal_documents",
+      "sourceColumn": "asset_id",
+      "sourceTable": "act_assets"
+    },
+    {
+      "destinationColumn": "asset_id",
+      "destinationTable": "act_asset_medias",
+      "sourceColumn": "asset_id",
+      "sourceTable": "act_assets"
+    },
+    {
+      "destinationColumn": "automated_task_id",
+      "destinationTable": "act_automated_task_logs",
+      "sourceColumn": "automated_task_id",
+      "sourceTable": "act_automated_tasks"
+    },
+    {
+      "destinationColumn": "bank_account_id",
+      "destinationTable": "act_accountee_bank_accounts",
+      "sourceColumn": "bank_account_id",
+      "sourceTable": "act_bank_accounts"
+    },
+    {
+      "destinationColumn": "bank_account_id",
+      "destinationTable": "act_customer_bank_accounts",
+      "sourceColumn": "bank_account_id",
+      "sourceTable": "act_bank_accounts"
+    },
+    {
+      "destinationColumn": "bank_account_id",
+      "destinationTable": "act_employee_bank_accounts",
+      "sourceColumn": "bank_account_id",
+      "sourceTable": "act_bank_accounts"
+    },
+    {
+      "destinationColumn": "bank_account_id",
+      "destinationTable": "act_supplier_bank_accounts",
+      "sourceColumn": "bank_account_id",
+      "sourceTable": "act_bank_accounts"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_purchase_invoice_chargeable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_purchase_order_chargeable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_purchase_return_chargeable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_sale_invoice_chargable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_sale_maintenance_chargeable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_sale_quotation_chargeable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_sale_return_chargeable_services",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_chargeable_service_medias",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_chargeable_service_uoms",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_purchase_invoice_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_purchase_order_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_purchase_return_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_sale_invoice_chargable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_sale_maintenance_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_sale_quotation_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_sale_return_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_supplier_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "contact_person_id",
+      "destinationTable": "act_customer_contact_persons",
+      "sourceColumn": "contact_person_id",
+      "sourceTable": "act_contact_persons"
+    },
+    {
+      "destinationColumn": "contact_person_id",
+      "destinationTable": "act_supplier_contact_persons",
+      "sourceColumn": "contact_person_id",
+      "sourceTable": "act_contact_persons"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_asset_depreciations",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_assets",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_bank_accounts",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_customers",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_ledger_accounts",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_payment_methods",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_product_prices",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_invoice_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_invoice_payments",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_order_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_order_payments",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_orders",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_return_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_return_payments",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_invoice_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_invoice_payments",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_maintenance_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_maintenance_payments",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_quotation_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_quotations",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_return_expenses",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_return_payments",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_supplier_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_supplier_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_suppliers",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_transactions",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_addresses",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_bank_accounts",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_contact_persons",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_email_addresses",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_fax_numbers",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_legal_documents",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_medias",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_phone_numbers",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_customer_websites",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_sale_quotations",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "device_id",
+      "sourceTable": "act_devices"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "device_id",
+      "sourceTable": "act_devices"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "device_id",
+      "sourceTable": "act_devices"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "device_id",
+      "sourceTable": "act_devices"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "device_id",
+      "sourceTable": "act_devices"
+    },
+    {
+      "destinationColumn": "email_address_id",
+      "destinationTable": "act_accountee_email_addresses",
+      "sourceColumn": "email_address_id",
+      "sourceTable": "act_email_addresses"
+    },
+    {
+      "destinationColumn": "email_address_id",
+      "destinationTable": "act_customer_email_addresses",
+      "sourceColumn": "email_address_id",
+      "sourceTable": "act_email_addresses"
+    },
+    {
+      "destinationColumn": "email_address_id",
+      "destinationTable": "act_employee_email_addresses",
+      "sourceColumn": "email_address_id",
+      "sourceTable": "act_email_addresses"
+    },
+    {
+      "destinationColumn": "email_address_id",
+      "destinationTable": "act_location_email_addresses",
+      "sourceColumn": "email_address_id",
+      "sourceTable": "act_email_addresses"
+    },
+    {
+      "destinationColumn": "email_address_id",
+      "destinationTable": "act_supplier_email_addresses",
+      "sourceColumn": "email_address_id",
+      "sourceTable": "act_email_addresses"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_addresses",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_attendances",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_bank_accounts",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_contracts",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_email_addresses",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_legal_documents",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_medias",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_phone_numbers",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_employee_websites",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_user_accountees",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "entity_id",
+      "destinationTable": "act_legal_document_types",
+      "sourceColumn": "entity_id",
+      "sourceTable": "act_entities"
+    },
+    {
+      "destinationColumn": "fax_number_id",
+      "destinationTable": "act_accountee_fax_numbers",
+      "sourceColumn": "fax_number_id",
+      "sourceTable": "act_fax_numbers"
+    },
+    {
+      "destinationColumn": "fax_number_id",
+      "destinationTable": "act_customer_fax_numbers",
+      "sourceColumn": "fax_number_id",
+      "sourceTable": "act_fax_numbers"
+    },
+    {
+      "destinationColumn": "fax_number_id",
+      "destinationTable": "act_location_fax_numbers",
+      "sourceColumn": "fax_number_id",
+      "sourceTable": "act_fax_numbers"
+    },
+    {
+      "destinationColumn": "fax_number_id",
+      "destinationTable": "act_supplier_fax_numbers",
+      "sourceColumn": "fax_number_id",
+      "sourceTable": "act_fax_numbers"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_stock_update_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "ledger_account_type_id",
+      "destinationTable": "act_ledger_accounts",
+      "sourceColumn": "ledger_account_type_id",
+      "sourceTable": "act_ledger_account_types"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_accountee_bank_accounts",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_assets",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_customers",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_employees",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_payment_methods",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_purchase_invoice_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_purchase_order_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_purchase_return_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_sale_invoice_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_sale_maintenance_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_sale_quotation_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_sale_return_expenses",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_suppliers",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "legal_document_type_id",
+      "destinationTable": "act_legal_documents",
+      "sourceColumn": "legal_document_type_id",
+      "sourceTable": "act_legal_document_types"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_accountee_legal_documents",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_asset_legal_documents",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_customer_legal_documents",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_employee_legal_documents",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_legal_document_medias",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_location_legal_documents",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "legal_document_id",
+      "destinationTable": "act_supplier_legal_documents",
+      "sourceColumn": "legal_document_id",
+      "sourceTable": "act_legal_documents"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_addresses",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_email_addresses",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_fax_numbers",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_legal_documents",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_medias",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_phone_numbers",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_location_websites",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_product_location_data",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_product_prices",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_stock_audits",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_stock_updates",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "location_id",
+      "destinationTable": "act_storage_locations",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_accountee_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_accountee_settings",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_asset_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_chargeable_service_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_customer_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_employee_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_legal_document_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_location_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_product_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_supplier_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_transaction_entry_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "menu_id",
+      "destinationTable": "act_menu_items",
+      "sourceColumn": "menu_id",
+      "sourceTable": "act_menus"
+    },
+    {
+      "destinationColumn": "menu_id",
+      "destinationTable": "act_user_accountees",
+      "sourceColumn": "menu_id",
+      "sourceTable": "act_menus"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_purchase_invoice_expenses",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_purchase_invoice_payments",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_purchase_order_expenses",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_purchase_order_payments",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_purchase_return_payments",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_sale_invoice_payments",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_sale_maintenance_payments",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "payment_method_id",
+      "destinationTable": "act_sale_return_payments",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "phone_number_id",
+      "destinationTable": "act_accountee_phone_numbers",
+      "sourceColumn": "phone_number_id",
+      "sourceTable": "act_phone_numbers"
+    },
+    {
+      "destinationColumn": "phone_number_id",
+      "destinationTable": "act_customer_phone_numbers",
+      "sourceColumn": "phone_number_id",
+      "sourceTable": "act_phone_numbers"
+    },
+    {
+      "destinationColumn": "phone_number_id",
+      "destinationTable": "act_employee_phone_numbers",
+      "sourceColumn": "phone_number_id",
+      "sourceTable": "act_phone_numbers"
+    },
+    {
+      "destinationColumn": "phone_number_id",
+      "destinationTable": "act_location_phone_numbers",
+      "sourceColumn": "phone_number_id",
+      "sourceTable": "act_phone_numbers"
+    },
+    {
+      "destinationColumn": "phone_number_id",
+      "destinationTable": "act_supplier_phone_numbers",
+      "sourceColumn": "phone_number_id",
+      "sourceTable": "act_phone_numbers"
+    },
+    {
+      "destinationColumn": "price_change_id",
+      "destinationTable": "act_price_change_products",
+      "sourceColumn": "price_change_id",
+      "sourceTable": "act_price_changes"
+    },
+    {
+      "destinationColumn": "product_barcode_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "product_barcode_id",
+      "sourceTable": "act_product_barcodes"
+    },
+    {
+      "destinationColumn": "product_category_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_category_id",
+      "sourceTable": "act_product_categories"
+    },
+    {
+      "destinationColumn": "product_price_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "product_price_id",
+      "sourceTable": "act_product_prices"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_sale_quotation_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_stock_audit_product_storage_locations",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_stock_audit_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_stock_transfer_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_stock_update_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_variant_group_id",
+      "destinationTable": "act_product_variants",
+      "sourceColumn": "product_variant_group_id",
+      "sourceTable": "act_product_variant_groups"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_inventory_trackings",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_price_change_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_attributes",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_barcodes",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_location_data",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_medias",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_prices",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_reference_urls",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_storage_location_data",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_uoms",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_variants",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_sale_offer_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_sale_quotation_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_stock_audit_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_stock_transfer_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_stock_update_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_supplier_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "purchase_invoice_id",
+      "destinationTable": "act_purchase_invoice_chargeable_services",
+      "sourceColumn": "purchase_invoice_id",
+      "sourceTable": "act_purchase_invoices"
+    },
+    {
+      "destinationColumn": "purchase_invoice_id",
+      "destinationTable": "act_purchase_invoice_expenses",
+      "sourceColumn": "purchase_invoice_id",
+      "sourceTable": "act_purchase_invoices"
+    },
+    {
+      "destinationColumn": "purchase_invoice_id",
+      "destinationTable": "act_purchase_invoice_payments",
+      "sourceColumn": "purchase_invoice_id",
+      "sourceTable": "act_purchase_invoices"
+    },
+    {
+      "destinationColumn": "purchase_invoice_id",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "purchase_invoice_id",
+      "sourceTable": "act_purchase_invoices"
+    },
+    {
+      "destinationColumn": "purchase_invoice_id",
+      "destinationTable": "act_purchase_order_expenses",
+      "sourceColumn": "purchase_invoice_id",
+      "sourceTable": "act_purchase_invoices"
+    },
+    {
+      "destinationColumn": "purchase_invoice_id",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "purchase_invoice_id",
+      "sourceTable": "act_purchase_invoices"
+    },
+    {
+      "destinationColumn": "purchase_order_id",
+      "destinationTable": "act_purchase_order_chargeable_services",
+      "sourceColumn": "purchase_order_id",
+      "sourceTable": "act_purchase_orders"
+    },
+    {
+      "destinationColumn": "purchase_order_id",
+      "destinationTable": "act_purchase_order_payments",
+      "sourceColumn": "purchase_order_id",
+      "sourceTable": "act_purchase_orders"
+    },
+    {
+      "destinationColumn": "purchase_order_id",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "purchase_order_id",
+      "sourceTable": "act_purchase_orders"
+    },
+    {
+      "destinationColumn": "purchase_return_id",
+      "destinationTable": "act_purchase_return_chargeable_services",
+      "sourceColumn": "purchase_return_id",
+      "sourceTable": "act_purchase_returns"
+    },
+    {
+      "destinationColumn": "purchase_return_id",
+      "destinationTable": "act_purchase_return_expenses",
+      "sourceColumn": "purchase_return_id",
+      "sourceTable": "act_purchase_returns"
+    },
+    {
+      "destinationColumn": "purchase_return_id",
+      "destinationTable": "act_purchase_return_payments",
+      "sourceColumn": "purchase_return_id",
+      "sourceTable": "act_purchase_returns"
+    },
+    {
+      "destinationColumn": "purchase_return_id",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "purchase_return_id",
+      "sourceTable": "act_purchase_returns"
+    },
+    {
+      "destinationColumn": "purchase_term_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "purchase_term_id",
+      "sourceTable": "act_purchase_terms"
+    },
+    {
+      "destinationColumn": "purchase_term_id",
+      "destinationTable": "act_purchase_orders",
+      "sourceColumn": "purchase_term_id",
+      "sourceTable": "act_purchase_terms"
+    },
+    {
+      "destinationColumn": "sale_coupon_issue_id",
+      "destinationTable": "act_sale_coupon_uses",
+      "sourceColumn": "sale_coupon_issue_id",
+      "sourceTable": "act_sale_coupon_issues"
+    },
+    {
+      "destinationColumn": "sale_coupon_id",
+      "destinationTable": "act_sale_coupon_issues",
+      "sourceColumn": "sale_coupon_id",
+      "sourceTable": "act_sale_coupons"
+    },
+    {
+      "destinationColumn": "sale_coupon_id",
+      "destinationTable": "act_sale_coupon_uses",
+      "sourceColumn": "sale_coupon_id",
+      "sourceTable": "act_sale_coupons"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_sale_invoice_chargable_services",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_sale_invoice_expenses",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_sale_invoice_payments",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "sale_maintenance_id",
+      "destinationTable": "act_sale_maintenance_chargeable_services",
+      "sourceColumn": "sale_maintenance_id",
+      "sourceTable": "act_sale_maintenances"
+    },
+    {
+      "destinationColumn": "sale_maintenance_id",
+      "destinationTable": "act_sale_maintenance_expenses",
+      "sourceColumn": "sale_maintenance_id",
+      "sourceTable": "act_sale_maintenances"
+    },
+    {
+      "destinationColumn": "sale_maintenance_id",
+      "destinationTable": "act_sale_maintenance_payments",
+      "sourceColumn": "sale_maintenance_id",
+      "sourceTable": "act_sale_maintenances"
+    },
+    {
+      "destinationColumn": "sale_maintenance_id",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "sale_maintenance_id",
+      "sourceTable": "act_sale_maintenances"
+    },
+    {
+      "destinationColumn": "sale_offer_id",
+      "destinationTable": "act_sale_offer_products",
+      "sourceColumn": "sale_offer_id",
+      "sourceTable": "act_sale_offers"
+    },
+    {
+      "destinationColumn": "sale_quotation_id",
+      "destinationTable": "act_sale_quotation_chargeable_services",
+      "sourceColumn": "sale_quotation_id",
+      "sourceTable": "act_sale_quotations"
+    },
+    {
+      "destinationColumn": "sale_quotation_id",
+      "destinationTable": "act_sale_quotation_expenses",
+      "sourceColumn": "sale_quotation_id",
+      "sourceTable": "act_sale_quotations"
+    },
+    {
+      "destinationColumn": "sale_quotation_id",
+      "destinationTable": "act_sale_quotation_products",
+      "sourceColumn": "sale_quotation_id",
+      "sourceTable": "act_sale_quotations"
+    },
+    {
+      "destinationColumn": "sale_return_id",
+      "destinationTable": "act_sale_return_chargeable_services",
+      "sourceColumn": "sale_return_id",
+      "sourceTable": "act_sale_returns"
+    },
+    {
+      "destinationColumn": "sale_return_id",
+      "destinationTable": "act_sale_return_expenses",
+      "sourceColumn": "sale_return_id",
+      "sourceTable": "act_sale_returns"
+    },
+    {
+      "destinationColumn": "sale_return_id",
+      "destinationTable": "act_sale_return_payments",
+      "sourceColumn": "sale_return_id",
+      "sourceTable": "act_sale_returns"
+    },
+    {
+      "destinationColumn": "sale_return_id",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "sale_return_id",
+      "sourceTable": "act_sale_returns"
+    },
+    {
+      "destinationColumn": "sale_term_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "sale_term_id",
+      "sourceTable": "act_sale_terms"
+    },
+    {
+      "destinationColumn": "sale_term_id",
+      "destinationTable": "act_sale_quotations",
+      "sourceColumn": "sale_term_id",
+      "sourceTable": "act_sale_terms"
+    },
+    {
+      "destinationColumn": "stock_audit_product_id",
+      "destinationTable": "act_stock_audit_product_storage_locations",
+      "sourceColumn": "stock_audit_product_id",
+      "sourceTable": "act_stock_audit_products"
+    },
+    {
+      "destinationColumn": "stock_audit_id",
+      "destinationTable": "act_stock_audit_products",
+      "sourceColumn": "stock_audit_id",
+      "sourceTable": "act_stock_audits"
+    },
+    {
+      "destinationColumn": "stock_transfer_packing_id",
+      "destinationTable": "act_stock_transfer_packing_products",
+      "sourceColumn": "stock_transfer_packing_id",
+      "sourceTable": "act_stock_transfer_packings"
+    },
+    {
+      "destinationColumn": "stock_transfer_product_id",
+      "destinationTable": "act_stock_transfer_packing_products",
+      "sourceColumn": "stock_transfer_product_id",
+      "sourceTable": "act_stock_transfer_products"
+    },
+    {
+      "destinationColumn": "stock_transfer_id",
+      "destinationTable": "act_stock_transfer_packings",
+      "sourceColumn": "stock_transfer_id",
+      "sourceTable": "act_stock_transfers"
+    },
+    {
+      "destinationColumn": "stock_transfer_id",
+      "destinationTable": "act_stock_transfer_products",
+      "sourceColumn": "stock_transfer_id",
+      "sourceTable": "act_stock_transfers"
+    },
+    {
+      "destinationColumn": "stock_update_id",
+      "destinationTable": "act_stock_update_products",
+      "sourceColumn": "stock_update_id",
+      "sourceTable": "act_stock_updates"
+    },
+    {
+      "destinationColumn": "storage_location_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "storage_location_id",
+      "sourceTable": "act_storage_locations"
+    },
+    {
+      "destinationColumn": "storage_location_id",
+      "destinationTable": "act_product_storage_location_data",
+      "sourceColumn": "storage_location_id",
+      "sourceTable": "act_storage_locations"
+    },
+    {
+      "destinationColumn": "storage_location_id",
+      "destinationTable": "act_stock_audit_product_storage_locations",
+      "sourceColumn": "storage_location_id",
+      "sourceTable": "act_storage_locations"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_purchase_orders",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_addresses",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_chargeable_services",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_contact_persons",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_email_addresses",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_fax_numbers",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_legal_documents",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_medias",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_phone_numbers",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_products",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_websites",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_supplier_bank_accounts",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_purchase_invoice_chargeable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_purchase_order_chargeable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_purchase_return_chargeable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_invoice_chargable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_maintenance_chargeable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_quotation_chargeable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_quotation_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_return_chargeable_services",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_tax_parts",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_invoice_chargeable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_order_chargeable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_orders",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_return_chargeable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_invoice_chargable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_maintenance_chargeable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_quotation_chargeable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_quotation_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_quotations",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_return_chargeable_services",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_tax_rates",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_asset_depreciations",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_invoice_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_invoice_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_order_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_order_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_orders",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_return_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_return_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_coupon_uses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_invoice_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_invoice_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_maintenance_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_maintenance_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_quotation_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_return_expenses",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_return_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_entry_id",
+      "destinationTable": "act_transaction_entry_medias",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "transaction_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "transaction_id",
+      "sourceTable": "act_transactions"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_notifications",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_price_changes",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_purchase_invoices",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_purchase_returns",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_sale_invoices",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_sale_maintenances",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_sale_quotations",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_sale_returns",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_signatures",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_stock_audits",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_stock_updates",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_user_accountees",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "website_id",
+      "destinationTable": "act_accountee_websites",
+      "sourceColumn": "website_id",
+      "sourceTable": "act_websites"
+    },
+    {
+      "destinationColumn": "website_id",
+      "destinationTable": "act_customer_websites",
+      "sourceColumn": "website_id",
+      "sourceTable": "act_websites"
+    },
+    {
+      "destinationColumn": "website_id",
+      "destinationTable": "act_employee_websites",
+      "sourceColumn": "website_id",
+      "sourceTable": "act_websites"
+    },
+    {
+      "destinationColumn": "website_id",
+      "destinationTable": "act_location_websites",
+      "sourceColumn": "website_id",
+      "sourceTable": "act_websites"
+    },
+    {
+      "destinationColumn": "website_id",
+      "destinationTable": "act_supplier_websites",
+      "sourceColumn": "website_id",
+      "sourceTable": "act_websites"
+    },
+    {
+      "destinationColumn": "accountee_image_media_id",
+      "destinationTable": "act_accountees",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "asset_image_media_id",
+      "destinationTable": "act_assets",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "chargeable_service_image_media_id",
+      "destinationTable": "act_chargeable_services",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "parent_chargeable_service_id",
+      "destinationTable": "act_chargeable_services",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "contact_person_image_media_id",
+      "destinationTable": "act_contact_persons",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "customer_image_media_id",
+      "destinationTable": "act_customers",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "device_image_media_id",
+      "destinationTable": "act_devices",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "employee_image_media_id",
+      "destinationTable": "act_employees",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "in_uom_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "out_uom_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "parent_ledger_account_type_id",
+      "destinationTable": "act_ledger_account_types",
+      "sourceColumn": "ledger_account_type_id",
+      "sourceTable": "act_ledger_account_types"
+    },
+    {
+      "destinationColumn": "location_image_media_id",
+      "destinationTable": "act_locations",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "menu_icon_media_id",
+      "destinationTable": "act_menu_items",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "notification_icon_media_id",
+      "destinationTable": "act_notifications",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "payment_method_image_media_id",
+      "destinationTable": "act_payment_methods",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "new_product_price_id",
+      "destinationTable": "act_price_change_products",
+      "sourceColumn": "product_price_id",
+      "sourceTable": "act_product_prices"
+    },
+    {
+      "destinationColumn": "old_product_price_id",
+      "destinationTable": "act_price_change_products",
+      "sourceColumn": "product_price_id",
+      "sourceTable": "act_product_prices"
+    },
+    {
+      "destinationColumn": "minimum_order_quantity_uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_image_media_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "purchase_tax_rate_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "purchase_uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "sale_tax_rate_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "sale_uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "maximum_stock__uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "minimum_stock_uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "reorder_level_uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "stock_uom_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "product_attribute_media_id",
+      "destinationTable": "act_product_attributes",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "parent_product_categroy_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "product_category_id",
+      "sourceTable": "act_product_categories"
+    },
+    {
+      "destinationColumn": "product_category_image_media_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "purchase_tax_rate_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "purchase_taxing_scheme_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "sale_tax_rate_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "sale_taxing_scheme_id",
+      "destinationTable": "act_product_categories",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "asset_attribute_media_id",
+      "destinationTable": "act_asset_attributes",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "parent_menu_item_id",
+      "destinationTable": "act_menu_items",
+      "sourceColumn": "menu_item_id",
+      "sourceTable": "act_menu_items"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "inventory_tracking_id",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "signature_media_id",
+      "destinationTable": "act_signatures",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "destination_inventory_tracking_id",
+      "destinationTable": "act_stock_transfer_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "source_inventory_tracking_id",
+      "destinationTable": "act_stock_transfer_products",
+      "sourceColumn": "inventory_tracking_id",
+      "sourceTable": "act_inventory_trackings"
+    },
+    {
+      "destinationColumn": "destination_location_id",
+      "destinationTable": "act_stock_transfers",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "destination_user_id",
+      "destinationTable": "act_stock_transfers",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "source_location_id",
+      "destinationTable": "act_stock_transfers",
+      "sourceColumn": "location_id",
+      "sourceTable": "act_locations"
+    },
+    {
+      "destinationColumn": "source_user_id",
+      "destinationTable": "act_stock_transfers",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "parent_storage_location_id",
+      "destinationTable": "act_storage_locations",
+      "sourceColumn": "storage_location_id",
+      "sourceTable": "act_storage_locations"
+    },
+    {
+      "destinationColumn": "storage_location_image_media_id",
+      "destinationTable": "act_storage_locations",
+      "sourceColumn": "media_name",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "debit_ledger_account_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "credit_ledger_account_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    }
+  ],
   "storedProcedures": {},
   "functions": {},
-  "triggers": {}
-}
+  "triggers": {
+    "act_trg_set_accountee_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_addresses",
+      "triggerName": "act_trg_set_accountee_addresses_on_delete",
+      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_addresses",
+      "triggerName": "act_trg_set_accountee_addresses_on_insert",
+      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_set_accountee_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_addresses",
+      "triggerName": "act_trg_set_accountee_addresses_on_update",
+      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_bank_accounts_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_bank_accounts",
+      "triggerName": "act_trg_set_accountee_bank_accounts_on_delete",
+      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_bank_accounts_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_bank_accounts",
+      "triggerName": "act_trg_set_accountee_bank_accounts_on_insert",
+      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_set_accountee_bank_accounts_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_bank_accounts",
+      "triggerName": "act_trg_set_accountee_bank_accounts_on_update",
+      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_email_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_email_addresses",
+      "triggerName": "act_trg_set_accountee_email_addresses_on_delete",
+      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_email_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_email_addresses",
+      "triggerName": "act_trg_set_accountee_email_addresses_on_insert",
+      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_set_accountee_email_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_email_addresses",
+      "triggerName": "act_trg_set_accountee_email_addresses_on_update",
+      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_fax_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_fax_numbers",
+      "triggerName": "act_trg_set_accountee_fax_numbers_on_delete",
+      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_fax_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_fax_numbers",
+      "triggerName": "act_trg_set_accountee_fax_numbers_on_insert",
+      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_set_accountee_fax_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_fax_numbers",
+      "triggerName": "act_trg_set_accountee_fax_numbers_on_update",
+      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_phone_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_phone_numbers",
+      "triggerName": "act_trg_set_accountee_phone_numbers_on_delete",
+      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_phone_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_phone_numbers",
+      "triggerName": "act_trg_set_accountee_phone_numbers_on_insert",
+      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_set_accountee_phone_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_phone_numbers",
+      "triggerName": "act_trg_set_accountee_phone_numbers_on_update",
+      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_websites_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_websites",
+      "triggerName": "act_trg_set_accountee_websites_on_delete",
+      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_accountee_websites_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_websites",
+      "triggerName": "act_trg_set_accountee_websites_on_insert",
+      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_set_accountee_websites_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_websites",
+      "triggerName": "act_trg_set_accountee_websites_on_update",
+      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_customer_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customer_addresses",
+      "triggerName": "act_trg_set_customer_addresses_on_delete",
+      "triggerCode": "UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customer_addresses",
+      "triggerName": "act_trg_set_customer_addresses_on_insert",
+      "triggerCode": "UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+    },
+    "act_trg_set_customer_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customer_addresses",
+      "triggerName": "act_trg_set_customer_addresses_on_update",
+      "triggerCode": "UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_bank_accounts_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customer_bank_accounts",
+      "triggerName": "act_trg_set_customer_bank_accounts_on_delete",
+      "triggerCode": "UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_bank_accounts_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customer_bank_accounts",
+      "triggerName": "act_trg_set_customer_bank_accounts_on_insert",
+      "triggerCode": "UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+    },
+    "act_trg_set_customer_bank_accounts_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customer_bank_accounts",
+      "triggerName": "act_trg_set_customer_bank_accounts_on_update",
+      "triggerCode": "UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_email_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customer_email_addresses",
+      "triggerName": "act_trg_set_customer_email_addresses_on_delete",
+      "triggerCode": "UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_email_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customer_email_addresses",
+      "triggerName": "act_trg_set_customer_email_addresses_on_insert",
+      "triggerCode": "UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+    },
+    "act_trg_set_customer_email_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customer_email_addresses",
+      "triggerName": "act_trg_set_customer_email_addresses_on_update",
+      "triggerCode": "UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_fax_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customer_fax_numbers",
+      "triggerName": "act_trg_set_customer_fax_numbers_on_delete",
+      "triggerCode": "UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_fax_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customer_fax_numbers",
+      "triggerName": "act_trg_set_customer_fax_numbers_on_insert",
+      "triggerCode": "UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+    },
+    "act_trg_set_customer_fax_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customer_fax_numbers",
+      "triggerName": "act_trg_set_customer_fax_numbers_on_update",
+      "triggerCode": "UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_phone_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customer_phone_numbers",
+      "triggerName": "act_trg_set_customer_phone_numbers_on_delete",
+      "triggerCode": "UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_phone_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customer_phone_numbers",
+      "triggerName": "act_trg_set_customer_phone_numbers_on_insert",
+      "triggerCode": "UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+    },
+    "act_trg_set_customer_phone_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customer_phone_numbers",
+      "triggerName": "act_trg_set_customer_phone_numbers_on_update",
+      "triggerCode": "UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_websites_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customer_websites",
+      "triggerName": "act_trg_set_customer_websites_on_delete",
+      "triggerCode": "UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_customer_websites_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customer_websites",
+      "triggerName": "act_trg_set_customer_websites_on_insert",
+      "triggerCode": "UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+    },
+    "act_trg_set_customer_websites_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customer_websites",
+      "triggerName": "act_trg_set_customer_websites_on_update",
+      "triggerCode": "UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+    },
+    "act_trg_set_employee_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employee_addresses",
+      "triggerName": "act_trg_set_employee_addresses_on_delete",
+      "triggerCode": "UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employee_addresses",
+      "triggerName": "act_trg_set_employee_addresses_on_insert",
+      "triggerCode": "UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
+    },
+    "act_trg_set_employee_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employee_addresses",
+      "triggerName": "act_trg_set_employee_addresses_on_update",
+      "triggerCode": "UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_bank_accounts_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employee_bank_accounts",
+      "triggerName": "act_trg_set_employee_bank_accounts_on_delete",
+      "triggerCode": "UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_bank_accounts_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employee_bank_accounts",
+      "triggerName": "act_trg_set_employee_bank_accounts_on_insert",
+      "triggerCode": "UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
+    },
+    "act_trg_set_employee_bank_accounts_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employee_bank_accounts",
+      "triggerName": "act_trg_set_employee_bank_accounts_on_update",
+      "triggerCode": "UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_email_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employee_email_addresses",
+      "triggerName": "act_trg_set_employee_email_addresses_on_delete",
+      "triggerCode": "UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_email_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employee_email_addresses",
+      "triggerName": "act_trg_set_employee_email_addresses_on_insert",
+      "triggerCode": "UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
+    },
+    "act_trg_set_employee_email_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employee_email_addresses",
+      "triggerName": "act_trg_set_employee_email_addresses_on_update",
+      "triggerCode": "UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_phone_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employee_phone_numbers",
+      "triggerName": "act_trg_set_employee_phone_numbers_on_delete",
+      "triggerCode": "UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_phone_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employee_phone_numbers",
+      "triggerName": "act_trg_set_employee_phone_numbers_on_insert",
+      "triggerCode": "UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
+    },
+    "act_trg_set_employee_phone_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employee_phone_numbers",
+      "triggerName": "act_trg_set_employee_phone_numbers_on_update",
+      "triggerCode": "UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_websites_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employee_websites",
+      "triggerName": "act_trg_set_employee_websites_on_delete",
+      "triggerCode": "UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_employee_websites_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employee_websites",
+      "triggerName": "act_trg_set_employee_websites_on_insert",
+      "triggerCode": "UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
+    },
+    "act_trg_set_employee_websites_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employee_websites",
+      "triggerName": "act_trg_set_employee_websites_on_update",
+      "triggerCode": "UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
+    },
+    "act_trg_set_supplier_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_supplier_addresses",
+      "triggerName": "act_trg_set_supplier_addresses_on_delete",
+      "triggerCode": "UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_supplier_addresses",
+      "triggerName": "act_trg_set_supplier_addresses_on_insert",
+      "triggerCode": "UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
+    },
+    "act_trg_set_supplier_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_supplier_addresses",
+      "triggerName": "act_trg_set_supplier_addresses_on_update",
+      "triggerCode": "UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_bank_accounts_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_supplier_bank_accounts",
+      "triggerName": "act_trg_set_supplier_bank_accounts_on_delete",
+      "triggerCode": "UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_bank_accounts_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_supplier_bank_accounts",
+      "triggerName": "act_trg_set_supplier_bank_accounts_on_insert",
+      "triggerCode": "UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
+    },
+    "act_trg_set_supplier_bank_accounts_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_supplier_bank_accounts",
+      "triggerName": "act_trg_set_supplier_bank_accounts_on_update",
+      "triggerCode": "UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_email_addresses_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_supplier_email_addresses",
+      "triggerName": "act_trg_set_supplier_email_addresses_on_delete",
+      "triggerCode": "UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_email_addresses_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_supplier_email_addresses",
+      "triggerName": "act_trg_set_supplier_email_addresses_on_insert",
+      "triggerCode": "UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
+    },
+    "act_trg_set_supplier_email_addresses_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_supplier_email_addresses",
+      "triggerName": "act_trg_set_supplier_email_addresses_on_update",
+      "triggerCode": "UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_fax_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_supplier_fax_numbers",
+      "triggerName": "act_trg_set_supplier_fax_numbers_on_delete",
+      "triggerCode": "UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_fax_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_supplier_fax_numbers",
+      "triggerName": "act_trg_set_supplier_fax_numbers_on_insert",
+      "triggerCode": "UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
+    },
+    "act_trg_set_supplier_fax_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_supplier_fax_numbers",
+      "triggerName": "act_trg_set_supplier_fax_numbers_on_update",
+      "triggerCode": "UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_phone_numbers_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_supplier_phone_numbers",
+      "triggerName": "act_trg_set_supplier_phone_numbers_on_delete",
+      "triggerCode": "UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_phone_numbers_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_supplier_phone_numbers",
+      "triggerName": "act_trg_set_supplier_phone_numbers_on_insert",
+      "triggerCode": "UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
+    },
+    "act_trg_set_supplier_phone_numbers_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_supplier_phone_numbers",
+      "triggerName": "act_trg_set_supplier_phone_numbers_on_update",
+      "triggerCode": "UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_websites_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_supplier_websites",
+      "triggerName": "act_trg_set_supplier_websites_on_delete",
+      "triggerCode": "UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    },
+    "act_trg_set_supplier_websites_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_supplier_websites",
+      "triggerName": "act_trg_set_supplier_websites_on_insert",
+      "triggerCode": "UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
+    },
+    "act_trg_set_supplier_websites_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_supplier_websites",
+      "triggerName": "act_trg_set_supplier_websites_on_update",
+      "triggerCode": "UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+    }
+  }
+};

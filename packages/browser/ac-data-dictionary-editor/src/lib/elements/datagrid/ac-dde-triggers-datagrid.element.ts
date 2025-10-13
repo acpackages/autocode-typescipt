@@ -19,6 +19,7 @@ import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETrigger } from "../../interfaces/ac-dde-trigger.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { AcDDETriggerMaster } from "../masters/ac-dde-trigger-master.element";
 
 export class AcDDETriggersDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -26,11 +27,13 @@ export class AcDDETriggersDatagrid {
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
   filterFunction: Function | undefined;
+  triggerMaster:AcDDETriggerMaster;
   hooks: AcHooks = new AcHooks();
   data: any[] = [];
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
+    this.triggerMaster = new AcDDETriggerMaster({editorApi});
     this.editorApi = editorApi;
     this.initDatagrid();
     this.initElement();
@@ -158,8 +161,11 @@ export class AcDDETriggersDatagrid {
   }
 
   initElement() {
+    this.ddeDatagrid.element.style.width = "50%";
     this.element.append(this.ddeDatagrid.element);
-    acAddClassToElement({ class_: AcDDECssClassName.acDDEContainer, element: this.element });
+     this.triggerMaster.element.style.width = "50%";
+    this.element.append(this.triggerMaster.element);
+    acAddClassToElement({ class_: AcDDECssClassName.acDDEListMasterContainer, element: this.element });
   }
 
   setTriggersData() {

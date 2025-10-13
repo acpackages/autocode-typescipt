@@ -110,7 +110,7 @@ export class AcDataDictionaryEditorHeader {
       {
         label: 'Views',
         icon:'aci-union',
-        tab: AcEnumDDETab.Views
+        tab: AcEnumDDETab.ViewEditor
       },
       {
         label: 'View Columns',
@@ -152,7 +152,7 @@ export class AcDataDictionaryEditorHeader {
       this.element.querySelector('.btn-tabs-group')?.append(btn);
       new AcTooltip({element:btn});
     }
-    this.setActiveTab({tab:AcEnumDDETab.TableColumns});
+    this.setActiveTab({tab:AcEnumDDETab.ViewEditor});
   }
 
   private setDataDictionaryDropdown(){
