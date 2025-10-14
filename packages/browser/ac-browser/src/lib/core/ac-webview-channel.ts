@@ -5,6 +5,7 @@ declare var acWebviewJavascriptChannel: any;
 
 export class AcWebviewChannel {
   events:AcEvents = new AcEvents();
+  webviewEvents:AcEvents = new AcEvents();
   private actions: AcHooks = new AcHooks();
   private callbacks: any = {};
   type: 'cefBrowser'|'webviewBrowser'|undefined = undefined;
@@ -26,16 +27,25 @@ export class AcWebviewChannel {
 
   isWebviewBrowser() {
     let result = false;
-    if (acWebviewJavascriptChannel) {
-      result = true;
-      this.webviewBrowser = acWebviewJavascriptChannel;
-      this.type = 'webviewBrowser';
+    try{
+      if (acWebviewJavascriptChannel) {
+        result = true;
+        this.webviewBrowser = acWebviewJavascriptChannel;
+        this.type = 'webviewBrowser';
+      }
+    }
+    catch(ex){
+      //
     }
     return result;
   }
 
   on({event,callback}:{event:string,callback:any}):string {
     return this.events.subscribe({event,callback});
+  }
+
+  onEvent({event,callback}:{event:string,callback:any}):string {
+    return this.webviewEvents.subscribe({event,callback});
   }
 
   performAction({name,data = {},callback}:{name: string,data?:any, callback?: any}) {
@@ -53,6 +63,12 @@ export class AcWebviewChannel {
         this.callbacks[functionId](actionResponse);
         delete this.callbacks[functionId];
       }
+    }
+    else if (data["event"] != undefined) {
+      const event = data["event"];
+      const eventData = data["data"];
+      this.webviewEvents.execute({event:event,args:eventData});
+      this.events.execute({event:'receive',args:data});
     }
     else {
       const action:string = data["action"];
@@ -95,4 +111,5 @@ export class AcWebviewChannel {
 }
 
 export const acWebviewChannel = new AcWebviewChannel();
+acWebviewChannel.isAppBrowser();
 window["acWebviewChannel"] = acWebviewChannel;
