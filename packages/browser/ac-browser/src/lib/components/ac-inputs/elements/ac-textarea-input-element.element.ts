@@ -4,9 +4,13 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 
-export class AcTextareaInputElement extends AcInputBase {
+export class AcTextareaInput extends AcInputBase {
   static override get observedAttributes() {
-    return [... super.observedAttributes, 'minlength', 'maxlength', 'cols', 'rows'];
+    return [... super.observedAttributes, 'minlength', 'maxlength','pattern', 'cols', 'rows'];
+  }
+
+  override get inputReflectedAttributes(){
+    return [... super.inputReflectedAttributes,'minlength', 'maxlength','pattern','cols', 'rows'];
   }
 
   get cols(): number | null {
@@ -63,6 +67,20 @@ export class AcTextareaInputElement extends AcInputBase {
     }
   }
 
+  get pattern():string|null{
+    return this.getAttribute('pattern');
+  }
+  set pattern(value:string){
+    if(value != ''){
+      this.setAttribute('pattern',`${value}`);
+      this.inputElement.setAttribute('pattern',`${value}`);
+    }
+    else{
+      this.removeAttribute('pattern');
+      this.inputElement.removeAttribute('pattern');
+    }
+  }
+
   get rows(): number {
     let result: number = 0;
     if (this.hasAttribute('rows')) {
@@ -94,6 +112,9 @@ export class AcTextareaInputElement extends AcInputBase {
     else if (name == 'maxlength') {
       this.maxLength = newValue;
     }
+    else if (name == 'pattern') {
+      this.pattern = newValue;
+    }
     else if (name == 'rows') {
       this.rows = newValue;
     }
@@ -103,4 +124,4 @@ export class AcTextareaInputElement extends AcInputBase {
   }
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.textareaInput,type:AcTextareaInputElement});
+acRegisterCustomElement({tag:AC_INPUT_TAG.textareaInput,type:AcTextareaInput});

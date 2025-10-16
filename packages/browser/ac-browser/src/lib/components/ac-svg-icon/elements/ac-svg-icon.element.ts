@@ -6,7 +6,7 @@ export class AcSvgIconElement extends AcElementBase {
   private slotEl: HTMLSlotElement;
 
   static get observedAttributes(): string[] {
-    return ['color', 'size', 'src', 'aria-label', 'spin'];
+    return ['color', 'size', 'src', 'aria-label', 'spin','svg-code'];
   }
 
   constructor() {
@@ -76,6 +76,9 @@ export class AcSvgIconElement extends AcElementBase {
         break;
       case 'src':
         if (newValue) this.loadFromSrc(newValue);
+        break;
+      case 'svg-code':
+        this.innerHTML = newValue ?? '';
         break;
       case 'aria-label':
         if (newValue) this.removeAttribute('aria-hidden');

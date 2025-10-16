@@ -41,6 +41,7 @@ import { WindowTabsPage } from './pages/tabs/window-tabs.page';
 import { RuntimeComponentPage } from './pages/builder/runtime-component-page';
 import { HttpTestPage } from './pages/utils/http-test';
 import { AppBrowserTestPage } from './pages/utils/app-browser-tests';
+import { AcFormTest } from './pages/inputs/form-test.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -136,7 +137,8 @@ window.addEventListener('DOMContentLoaded', () => {
     label: 'Inputs',
     routes: [
       { label: 'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage },
-      { label: 'Elements', path: '/inputs/elements', componentTag: 'input-elements', component: InputElementsPage }
+      { label: 'Elements', path: '/inputs/elements', componentTag: 'input-elements', component: InputElementsPage },
+      { label: 'Form', path: '/inputs/form', componentTag: 'form-test', component: AcFormTest }
     ]
   });
   AcRouter.registerRouteGroup({

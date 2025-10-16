@@ -1,10 +1,10 @@
-import { AcDatagridCell, AcEnumModalEvent, AcModal, AcTextInputElement, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridCell, AcEnumModalEvent, AcModal, AcTextInput, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class AcDDEDatagridValueOptionsInput implements IAcDatagridCellEditorElement {
   datagridCell!: AcDatagridCell;
   private modalInstance?: AcModal;
   private modalElement?: HTMLElement;
-  textInput: AcTextInputElement = new AcTextInputElement();
+  textInput: AcTextInput = new AcTextInput();
 
   destroy(): void {
     // this.textInput.destroy();

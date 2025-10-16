@@ -4,7 +4,7 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 
-export class AcInputElement extends AcInputBase {
+export class AcInput extends AcInputBase {
   static override get observedAttributes() {
     return [... super.observedAttributes, 'type'];
   }
@@ -38,4 +38,4 @@ export class AcInputElement extends AcInputBase {
   }
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.input,type:AcInputElement});
+acRegisterCustomElement({tag:AC_INPUT_TAG.input,type:AcInput});

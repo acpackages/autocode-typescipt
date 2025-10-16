@@ -342,3 +342,11 @@ export function acHideElement({
   );
 }
 
+export function acWrapElementWithTag({element,wrapperTag = "div"}:{element: HTMLElement, wrapperTag:string}): HTMLElement {
+  const wrapper = document.createElement(wrapperTag);
+  if (element.isConnected && element.parentNode) {
+    element.parentNode.insertBefore(wrapper, element);
+  }
+  wrapper.appendChild(element);
+  return wrapper;
+}

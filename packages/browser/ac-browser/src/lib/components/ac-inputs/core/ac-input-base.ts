@@ -10,11 +10,11 @@ import { AcElementBase } from "../../../core/ac-element-base";
 
 export class AcInputBase extends AcElementBase {
   static get observedAttributes() {
-    return ['ac-context','ac-context-key','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style'];
+    return ['ac-context','ac-context-key','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style','required'];
   }
 
   get inputReflectedAttributes(){
-    return ['class', 'value', 'placeholder', 'disabled', 'readonly','name'];
+    return ['class', 'value', 'placeholder', 'disabled', 'readonly','name','required'];
   }
 
   reflectValueAttribute:boolean = true;
@@ -87,6 +87,26 @@ export class AcInputBase extends AcElementBase {
     }
   }
 
+  get required(): boolean {
+    return this.getAttribute('required') == 'true';
+  }
+  set required(value: boolean) {
+    if (value) {
+      this.setAttribute('required', "true");
+    }
+    else {
+      this.removeAttribute('required');
+    }
+  }
+
+  get validationMessage():any{
+    return this.inputElement.validationMessage;
+  }
+
+  get validity():ValidityState{
+    return this.inputElement.validity;
+  }
+
   protected _value: any;
   get value(): any {
     return this._value;
@@ -103,6 +123,8 @@ export class AcInputBase extends AcElementBase {
   constructor() {
     super();
     this.style.display = 'contents';
+    this.handleInput = this.handleInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -132,6 +154,9 @@ export class AcInputBase extends AcElementBase {
       case 'readonly':
         this.readonly = newValue == 'true';
         break;
+      case 'required':
+        this.required = newValue == 'true';
+        break;
       case 'name':
         this.name = newValue;
         break;
@@ -144,16 +169,16 @@ export class AcInputBase extends AcElementBase {
     }
   }
 
+  checkValidity(): boolean {
+    return 'checkValidity' in this.inputElement ? this.inputElement.checkValidity() : true;
+  }
+
   override connectedCallback() {
     super.connectedCallback();
-    this.append(this.inputElement);
+    this.appendChild(this.inputElement);
     this.refreshReflectedAttributes();
-    this.inputElement.addEventListener('input', ()=>{
-      this.value = this.inputElement.value;
-    });
-    this.inputElement.addEventListener('change', ()=>{
-      this.value = this.inputElement.value;
-    });
+    this.inputElement.addEventListener('input', this.handleInput);
+    this.inputElement.addEventListener('change', this.handleChange);
   }
 
   disconnectedCallback() {
@@ -161,20 +186,20 @@ export class AcInputBase extends AcElementBase {
     this.inputElement.removeEventListener('change', this.handleChange);
   }
 
-  handleChange(e:any) {
-    const newValue = this.inputElement.value;
-    this.value = newValue;
-    this.dispatchEvent(new CustomEvent('value-changed', {
-      detail: { value: newValue },
-      bubbles: true,
-      composed: true
-    }));
+  handleChange(e: Event) {
+    this.setValue(this.inputElement.value);
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    this.events.execute({ event: AcEnumInputEvent.Change, args: this.value });
   }
 
-  handleInput(e: any) {
-    const newValue = this.inputElement.value;
-    this.value('value', newValue);
+  handleInput(e: Event) {
+    this.setValue(this.inputElement.value);
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    this.events.execute({ event: AcEnumInputEvent.Input, args: this.value });
+  }
+
+  reportValidity(): boolean {
+    return 'reportValidity' in this.inputElement ? this.inputElement.reportValidity() : true;
   }
 
   setValue(value: any) {
@@ -183,19 +208,6 @@ export class AcInputBase extends AcElementBase {
       this._value = value;
       const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
       inputElement.value = value;
-      this.dispatchEvent(new CustomEvent('valuechange', {
-        detail: { value: value },
-        bubbles: true,
-        composed: true
-      }));
-      this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
-      const eventArgs: IAcInputValueChangeEvent = {
-        oldValue: oldValue,
-        value: this.value,
-        instance: this
-      };
-      this.events.execute({ event: AcEnumInputEvent.ValueChange, args: eventArgs });
-      this.events.execute({ event: AcEnumInputEvent.Input, args: eventArgs });
       if(this.reflectValueAttribute){
         this.setAttribute('value',value);
       }

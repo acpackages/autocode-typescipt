@@ -2,12 +2,16 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
-import { AcInputElement } from "./ac-input-element.element";
+import { AcInput } from "./ac-input-element.element";
 
-export class AcNumberInputElement extends AcInputElement{
+export class AcNumberInput extends AcInput{
 
   static override get observedAttributes() {
     return [... super.observedAttributes, 'min','max','step'];
+  }
+
+  override get inputReflectedAttributes(){
+    return [... super.inputReflectedAttributes,'min', 'max','step'];
   }
 
   get min():number{
@@ -89,4 +93,4 @@ export class AcNumberInputElement extends AcInputElement{
 
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.numberInput,type:AcNumberInputElement});
+acRegisterCustomElement({tag:AC_INPUT_TAG.numberInput,type:AcNumberInput});

@@ -1,8 +1,8 @@
-import { AcSelectInputElement } from '@autocode-ts/ac-browser';
+import { AcSelectInput } from '@autocode-ts/ac-browser';
 import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
 import { AcDDEApi } from '../../core/ac-dde-api';
 export class AcDDESelectDataDictionaryInput{
-  selectInput:AcSelectInputElement = new AcSelectInputElement();
+  selectInput:AcSelectInput = new AcSelectInput();
   editorApi!:AcDDEApi;;
   filter:Function|undefined;
 

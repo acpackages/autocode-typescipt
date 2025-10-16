@@ -2619,536 +2619,9 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_customer_addresses": {
-      "tableName": "act_customer_addresses",
-      "tableColumns": {
-        "address_id": {
-          "columnName": "address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Address"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_address_id": {
-          "columnName": "customer_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_address"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_addresses"
-        }
-      }
-    },
-    "act_customer_bank_accounts": {
-      "tableName": "act_customer_bank_accounts",
-      "tableColumns": {
-        "bank_account_id": {
-          "columnName": "bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Account"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_bank_account_id": {
-          "columnName": "customer_bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "bank_account"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "bank_accounts"
-        }
-      }
-    },
-    "act_customer_contact_persons": {
-      "tableName": "act_customer_contact_persons",
-      "tableColumns": {
-        "contact_person_id": {
-          "columnName": "contact_person_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Contact Person"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_contact_person_id": {
-          "columnName": "customer_contact_person_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_contact_person"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_contact_person"
-        }
-      }
-    },
-    "act_customer_email_addresses": {
-      "tableName": "act_customer_email_addresses",
-      "tableColumns": {
-        "customer_email_address_id": {
-          "columnName": "customer_email_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "email_address_id": {
-          "columnName": "email_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Address"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_email_address"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_email_addresses"
-        }
-      }
-    },
-    "act_customer_fax_numbers": {
-      "tableName": "act_customer_fax_numbers",
-      "tableColumns": {
-        "customer_fax_number_id": {
-          "columnName": "customer_fax_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "fax_number_id": {
-          "columnName": "fax_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Number"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_fax_number"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_fax_numbers"
-        }
-      }
-    },
-    "act_customer_legal_documents": {
-      "tableName": "act_customer_legal_documents",
-      "tableColumns": {
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_legal_document_id": {
-          "columnName": "customer_legal_document_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "legal_document_id": {
-          "columnName": "legal_document_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Legal Document"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_legal_document"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_legal_documents"
-        }
-      }
-    },
-    "act_customer_medias": {
-      "tableName": "act_customer_medias",
-      "tableColumns": {
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_media_id": {
-          "columnName": "customer_media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "media_id": {
-          "columnName": "media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Media"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_media"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_medias"
-        }
-      }
-    },
-    "act_customer_phone_numbers": {
-      "tableName": "act_customer_phone_numbers",
-      "tableColumns": {
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_phone_number_id": {
-          "columnName": "customer_phone_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "phone_number_id": {
-          "columnName": "phone_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Number"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_phone_number"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_phone_numbers"
-        }
-      }
-    },
-    "act_customer_websites": {
-      "tableName": "act_customer_websites",
-      "tableColumns": {
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_website_id": {
-          "columnName": "customer_website_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "website_id": {
-          "columnName": "website_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Webiste"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "customer_website"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customer_websites"
-        }
-      }
-    },
     "act_customers": {
       "tableName": "act_customers",
       "tableColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "customer_category": {
           "columnName": "customer_category",
           "columnType": "STRING",
@@ -3159,20 +2632,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "customer_id": {
           "columnName": "customer_id",
           "columnType": "UUID",
@@ -3183,30 +2642,6 @@ export const dataDictionaryJson = {
             },
             "PRIMARY_KEY": {
               "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "customer_image_media_id": {
-          "columnName": "customer_image_media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Profile Image"
-            }
-          }
-        },
-        "customer_name": {
-          "columnName": "customer_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
               "propertyValue": true
             }
           }
@@ -3221,16 +2656,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "ledger_account_id": {
-          "columnName": "ledger_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
-            }
-          }
-        },
         "remarks": {
           "columnName": "remarks",
           "columnType": "TEXT",
@@ -3238,66 +2663,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Remarks"
-            }
-          }
-        },
-        "phone_numbers": {
-          "columnName": "phone_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Numbers"
-            }
-          }
-        },
-        "email_addresses": {
-          "columnName": "email_addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Addresses"
-            }
-          }
-        },
-        "addresses": {
-          "columnName": "addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Addresses"
-            }
-          }
-        },
-        "bank_accounts": {
-          "columnName": "bank_accounts",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Accounts"
-            }
-          }
-        },
-        "websites": {
-          "columnName": "websites",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Websites"
-            }
-          }
-        },
-        "fax_numbers": {
-          "columnName": "fax_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Numbers"
             }
           }
         }
@@ -3499,63 +2864,6 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_employee_addresses": {
-      "tableName": "act_employee_addresses",
-      "tableColumns": {
-        "address_id": {
-          "columnName": "address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Address"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_address_id": {
-          "columnName": "employee_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_address"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_addresses"
-        }
-      }
-    },
     "act_employee_attendances": {
       "tableName": "act_employee_attendances",
       "tableColumns": {
@@ -3662,63 +2970,6 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "employee_attendances"
-        }
-      }
-    },
-    "act_employee_bank_accounts": {
-      "tableName": "act_employee_bank_accounts",
-      "tableColumns": {
-        "bank_account_id": {
-          "columnName": "bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Account"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_bank_account_id": {
-          "columnName": "employee_bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_bank_account"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_bank_accounts"
         }
       }
     },
@@ -3844,291 +3095,6 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "employee_contracts"
-        }
-      }
-    },
-    "act_employee_email_addresses": {
-      "tableName": "act_employee_email_addresses",
-      "tableColumns": {
-        "email_address_id": {
-          "columnName": "email_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Address"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_email_address_id": {
-          "columnName": "employee_email_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_email_address"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_email_addresses"
-        }
-      }
-    },
-    "act_employee_legal_documents": {
-      "tableName": "act_employee_legal_documents",
-      "tableColumns": {
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_legal_document_id": {
-          "columnName": "employee_legal_document_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "legal_document_id": {
-          "columnName": "legal_document_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Legal Document"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_legal_document"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_legal_documents"
-        }
-      }
-    },
-    "act_employee_medias": {
-      "tableName": "act_employee_medias",
-      "tableColumns": {
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_media_id": {
-          "columnName": "employee_media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "media_id": {
-          "columnName": "media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Media"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_media"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_medias"
-        }
-      }
-    },
-    "act_employee_phone_numbers": {
-      "tableName": "act_employee_phone_numbers",
-      "tableColumns": {
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_phone_number_id": {
-          "columnName": "employee_phone_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "phone_number_id": {
-          "columnName": "phone_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Number"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_phone_number"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_phone_numbers"
-        }
-      }
-    },
-    "act_employee_websites": {
-      "tableName": "act_employee_websites",
-      "tableColumns": {
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "employee_website_id": {
-          "columnName": "employee_website_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "website_id": {
-          "columnName": "website_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Webiste"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "employee_website"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employee_websites"
         }
       }
     },
@@ -4392,63 +3358,6 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "employees"
-        }
-      }
-    },
-    "act_entities": {
-      "tableName": "act_entities",
-      "tableColumns": {
-        "entity_id": {
-          "columnName": "entity_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "entity_name": {
-          "columnName": "entity_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "entity_value": {
-          "columnName": "entity_value",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Value"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "entity"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "entities"
         }
       }
     },
@@ -6087,6 +4996,645 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_parties": {
+      "tableName": "act_parties",
+      "tableColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          }
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ledger Account"
+            }
+          }
+        },
+        "party_details": {
+          "columnName": "party_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          }
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          }
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Numbers"
+            }
+          }
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          }
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
+            }
+          }
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          }
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer"
+            }
+          }
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier"
+            }
+          }
+        },
+        "employee_id": {
+          "columnName": "employee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Employee"
+            }
+          }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
+        },
+        "party_image_media_id": {
+          "columnName": "party_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party Image"
+            }
+          }
+        }
+      }
+    },
+    "act_party_addresses": {
+      "tableName": "act_party_addresses",
+      "tableColumns": {
+        "address_id": {
+          "columnName": "address_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Address"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_address_id": {
+          "columnName": "party_address_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_address"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_addresses"
+        }
+      }
+    },
+    "act_party_contact_persons": {
+      "tableName": "act_party_contact_persons",
+      "tableColumns": {
+        "contact_person_id": {
+          "columnName": "contact_person_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Contact Person"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_contact_person_id": {
+          "columnName": "party_contact_person_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_contact_person"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_contact_persons"
+        }
+      }
+    },
+    "act_party_email_addresses": {
+      "tableName": "act_party_email_addresses",
+      "tableColumns": {
+        "email_address_id": {
+          "columnName": "email_address_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Address"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_email_address_id": {
+          "columnName": "party_email_address_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_email_address"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_email_addresses"
+        }
+      }
+    },
+    "act_party_fax_numbers": {
+      "tableName": "act_party_fax_numbers",
+      "tableColumns": {
+        "fax_number_id": {
+          "columnName": "fax_number_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Number"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_fax_number_id": {
+          "columnName": "party_fax_number_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_fax_number"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_fax_numbers"
+        }
+      }
+    },
+    "act_party_legal_documents": {
+      "tableName": "act_party_legal_documents",
+      "tableColumns": {
+        "legal_document_id": {
+          "columnName": "legal_document_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Legal Document"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_legal_document_id": {
+          "columnName": "party_legal_document_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_legal_document"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_legal_documents"
+        }
+      }
+    },
+    "act_party_medias": {
+      "tableName": "act_party_medias",
+      "tableColumns": {
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Media"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_media_id": {
+          "columnName": "party_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_media"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_medias"
+        }
+      }
+    },
+    "act_party_phone_numbers": {
+      "tableName": "act_party_phone_numbers",
+      "tableColumns": {
+        "phone_number_id": {
+          "columnName": "phone_number_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Number"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_phone_number_id": {
+          "columnName": "party_phone_number_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_phone_number"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_phone_numbers"
+        }
+      }
+    },
+    "act_party_websites": {
+      "tableName": "act_party_websites",
+      "tableColumns": {
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "party_website_id": {
+          "columnName": "party_website_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "website_id": {
+          "columnName": "website_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Website"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "supplier_website"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "supplier_websites"
+        }
+      }
+    },
     "act_payment_methods": {
       "tableName": "act_payment_methods",
       "tableColumns": {
@@ -7169,6 +6717,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "progit_margin": {
+          "columnName": "progit_margin",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "profit_margin"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -7179,6 +6737,85 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "product_prices"
+        }
+      }
+    },
+    "act_product_purchase_details": {
+      "tableName": "act_product_purchase_details",
+      "tableColumns": {
+        "product_purchase_detail_id": {
+          "columnName": "product_purchase_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product"
+            }
+          }
+        },
+        "minimum_order_quantity": {
+          "columnName": "minimum_order_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Min Order Qunatity"
+            }
+          }
+        },
+        "minimum_order_quantity_uom_id": {
+          "columnName": "minimum_order_quantity_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Min Order UOM"
+            }
+          }
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Rate"
+            }
+          }
+        },
+        "purchase_uom_id": {
+          "columnName": "purchase_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase UOM"
+            }
+          }
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxing Scheme"
+            }
+          }
         }
       }
     },
@@ -7250,6 +6887,164 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "product_reference_urls"
+        }
+      }
+    },
+    "act_product_sale_details": {
+      "tableName": "act_product_sale_details",
+      "tableColumns": {
+        "product_sale_detail_id": {
+          "columnName": "product_sale_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product"
+            }
+          }
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Rate"
+            }
+          }
+        },
+        "sale_uom_id": {
+          "columnName": "sale_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale UOM"
+            }
+          }
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxing Scheme"
+            }
+          }
+        }
+      }
+    },
+    "act_product_stock_details": {
+      "tableName": "act_product_stock_details",
+      "tableColumns": {
+        "product_stock_detail_id": {
+          "columnName": "product_stock_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product"
+            }
+          }
+        },
+        "maximum_stock_quantity": {
+          "columnName": "maximum_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Max Stock Quantity"
+            }
+          }
+        },
+        "maximum_stock_uom_id": {
+          "columnName": "maximum_stock_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Max Stock UOM"
+            }
+          }
+        },
+        "minimum_stock_quantity": {
+          "columnName": "minimum_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Min Stock Quantity"
+            }
+          }
+        },
+        "minimum_stock_uom_id": {
+          "columnName": "minimum_stock_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Min Stock UOM"
+            }
+          }
+        },
+        "reorder_level_quantity": {
+          "columnName": "reorder_level_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Reorder Level Quantity"
+            }
+          }
+        },
+        "reorder_level_uom_id": {
+          "columnName": "reorder_level_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Reorder Level UOM"
+            }
+          }
+        },
+        "stock_uom_id": {
+          "columnName": "stock_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock UOM"
+            }
+          }
         }
       }
     },
@@ -7622,26 +7417,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "minimum_order_quantity": {
-          "columnName": "minimum_order_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Min Order Qty"
-            }
-          }
-        },
-        "minimum_order_quantity_uom_id": {
-          "columnName": "minimum_order_quantity_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Min Order UOM"
-            }
-          }
-        },
         "product_category_id": {
           "columnName": "product_category_id",
           "columnType": "UUID",
@@ -7748,98 +7523,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "purchase_tax_rate_id": {
-          "columnName": "purchase_tax_rate_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Tax"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "purchase_uom_id": {
-          "columnName": "purchase_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase UOM"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "sale_tax_rate_id": {
-          "columnName": "sale_tax_rate_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale Tax"
-            }
-          }
-        },
-        "sale_uom_id": {
-          "columnName": "sale_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale UOM"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "maximum_stock_quantity": {
-          "columnName": "maximum_stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Max Stock"
-            }
-          }
-        },
-        "maximum_stock__uom_id": {
-          "columnName": "maximum_stock__uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Max Stock UOM"
-            }
-          }
-        },
-        "minimum_stock_quantity": {
-          "columnName": "minimum_stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Min Stock"
-            }
-          }
-        },
-        "minimum_stock_uom_id": {
-          "columnName": "minimum_stock_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Min Stock UOM"
-            }
-          }
-        },
         "stock_quantity": {
           "columnName": "stock_quantity",
           "columnType": "DOUBLE",
@@ -7847,40 +7530,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock"
-            }
-          }
-        },
-        "reorder_level_quantity": {
-          "columnName": "reorder_level_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Reorder Level"
-            }
-          }
-        },
-        "reorder_level_uom_id": {
-          "columnName": "reorder_level_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Reorder Level UOM"
-            }
-          }
-        },
-        "stock_uom_id": {
-          "columnName": "stock_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock UOM"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
             }
           }
         },
@@ -7911,6 +7560,36 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Brand"
+            }
+          }
+        },
+        "product_purchase_detail_id": {
+          "columnName": "product_purchase_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Active Purchase Detail"
+            }
+          }
+        },
+        "product_sale_detail_id": {
+          "columnName": "product_sale_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Active Sale Detail"
+            }
+          }
+        },
+        "product_stock_detail_id": {
+          "columnName": "product_stock_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Active Stock Detail"
             }
           }
         }
@@ -17237,25 +16916,31 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_supplier_addresses": {
-      "tableName": "act_supplier_addresses",
+    "act_party_bank_accounts": {
+      "tableName": "act_party_bank_accounts",
       "tableColumns": {
-        "address_id": {
-          "columnName": "address_id",
+        "bank_account_id": {
+          "columnName": "bank_account_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Address"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
+              "propertyValue": "Bank Account"
             }
           }
         },
-        "supplier_address_id": {
-          "columnName": "supplier_address_id",
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            }
+          }
+        },
+        "party_bank_account_id": {
+          "columnName": "party_bank_account_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17267,30 +16952,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
         }
       },
       "tableProperties": {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_address"
+          "propertyValue": "supplier_bank_account"
         },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_addresses"
+          "propertyValue": "supplier_bank_accounts"
         }
       }
     },
@@ -17431,348 +17102,6 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_supplier_contact_persons": {
-      "tableName": "act_supplier_contact_persons",
-      "tableColumns": {
-        "contact_person_id": {
-          "columnName": "contact_person_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Contact Person"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_contact_person_id": {
-          "columnName": "supplier_contact_person_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_contact_person"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_contact_persons"
-        }
-      }
-    },
-    "act_supplier_email_addresses": {
-      "tableName": "act_supplier_email_addresses",
-      "tableColumns": {
-        "email_address_id": {
-          "columnName": "email_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Address"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_email_address_id": {
-          "columnName": "supplier_email_address_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_email_address"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_email_addresses"
-        }
-      }
-    },
-    "act_supplier_fax_numbers": {
-      "tableName": "act_supplier_fax_numbers",
-      "tableColumns": {
-        "fax_number_id": {
-          "columnName": "fax_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Number"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_fax_number_id": {
-          "columnName": "supplier_fax_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_fax_number"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_fax_numbers"
-        }
-      }
-    },
-    "act_supplier_legal_documents": {
-      "tableName": "act_supplier_legal_documents",
-      "tableColumns": {
-        "legal_document_id": {
-          "columnName": "legal_document_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Legal Document"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_legal_document_id": {
-          "columnName": "supplier_legal_document_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_legal_document"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_legal_documents"
-        }
-      }
-    },
-    "act_supplier_medias": {
-      "tableName": "act_supplier_medias",
-      "tableColumns": {
-        "media_id": {
-          "columnName": "media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Media"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_media_id": {
-          "columnName": "supplier_media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_media"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_medias"
-        }
-      }
-    },
-    "act_supplier_phone_numbers": {
-      "tableName": "act_supplier_phone_numbers",
-      "tableColumns": {
-        "phone_number_id": {
-          "columnName": "phone_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Number"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_phone_number_id": {
-          "columnName": "supplier_phone_number_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_phone_number"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_phone_numbers"
-        }
-      }
-    },
     "act_supplier_products": {
       "tableName": "act_supplier_products",
       "tableColumns": {
@@ -17910,90 +17239,9 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_supplier_websites": {
-      "tableName": "act_supplier_websites",
-      "tableColumns": {
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "supplier_website_id": {
-          "columnName": "supplier_website_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "website_id": {
-          "columnName": "website_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Website"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_website"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_websites"
-        }
-      }
-    },
     "act_suppliers": {
       "tableName": "act_suppliers",
       "tableColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency"
-            }
-          }
-        },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
@@ -18001,16 +17249,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
-            }
-          }
-        },
-        "ledger_account_id": {
-          "columnName": "ledger_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
             }
           }
         },
@@ -18038,20 +17276,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "supplier_name": {
-          "columnName": "supplier_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "supplier_type": {
           "columnName": "supplier_type",
           "columnType": "STRING",
@@ -18059,66 +17283,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
-            }
-          }
-        },
-        "addresses": {
-          "columnName": "addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Addresses"
-            }
-          }
-        },
-        "email_addresses": {
-          "columnName": "email_addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Addresses"
-            }
-          }
-        },
-        "fax_numbers": {
-          "columnName": "fax_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Numbers"
-            }
-          }
-        },
-        "phone_numbers": {
-          "columnName": "phone_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Numbers"
-            }
-          }
-        },
-        "websites": {
-          "columnName": "websites",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Websites"
-            }
-          }
-        },
-        "bank_accounts": {
-          "columnName": "bank_accounts",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Accounts"
             }
           }
         }
@@ -19052,55 +18216,6 @@ export const dataDictionaryJson = {
           "propertyValue": "websites"
         }
       }
-    },
-    "act_supplier_bank_accounts": {
-      "tableName": "act_supplier_bank_accounts",
-      "tableColumns": {
-        "bank_account_id": {
-          "columnName": "bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Account"
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            }
-          }
-        },
-        "supplier_bank_account_id": {
-          "columnName": "supplier_bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_bank_account"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_bank_accounts"
-        }
-      }
     }
   },
   "views": {
@@ -19197,12 +18312,6 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "accountee_id",
       "destinationTable": "act_chargeable_services",
-      "sourceColumn": "accountee_id",
-      "sourceTable": "act_accountees"
-    },
-    {
-      "destinationColumn": "accountee_id",
-      "destinationTable": "act_customers",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
@@ -19358,12 +18467,6 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "accountee_id",
-      "destinationTable": "act_suppliers",
-      "sourceColumn": "accountee_id",
-      "sourceTable": "act_accountees"
-    },
-    {
-      "destinationColumn": "accountee_id",
       "destinationTable": "act_tax_rates",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
@@ -19394,25 +18497,13 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "address_id",
-      "destinationTable": "act_customer_addresses",
-      "sourceColumn": "address_id",
-      "sourceTable": "act_addresses"
-    },
-    {
-      "destinationColumn": "address_id",
-      "destinationTable": "act_employee_addresses",
-      "sourceColumn": "address_id",
-      "sourceTable": "act_addresses"
-    },
-    {
-      "destinationColumn": "address_id",
       "destinationTable": "act_location_addresses",
       "sourceColumn": "address_id",
       "sourceTable": "act_addresses"
     },
     {
       "destinationColumn": "address_id",
-      "destinationTable": "act_supplier_addresses",
+      "destinationTable": "act_party_addresses",
       "sourceColumn": "address_id",
       "sourceTable": "act_addresses"
     },
@@ -19454,19 +18545,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "bank_account_id",
-      "destinationTable": "act_customer_bank_accounts",
-      "sourceColumn": "bank_account_id",
-      "sourceTable": "act_bank_accounts"
-    },
-    {
-      "destinationColumn": "bank_account_id",
-      "destinationTable": "act_employee_bank_accounts",
-      "sourceColumn": "bank_account_id",
-      "sourceTable": "act_bank_accounts"
-    },
-    {
-      "destinationColumn": "bank_account_id",
-      "destinationTable": "act_supplier_bank_accounts",
+      "destinationTable": "act_party_bank_accounts",
       "sourceColumn": "bank_account_id",
       "sourceTable": "act_bank_accounts"
     },
@@ -19574,13 +18653,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "contact_person_id",
-      "destinationTable": "act_customer_contact_persons",
-      "sourceColumn": "contact_person_id",
-      "sourceTable": "act_contact_persons"
-    },
-    {
-      "destinationColumn": "contact_person_id",
-      "destinationTable": "act_supplier_contact_persons",
+      "destinationTable": "act_party_contact_persons",
       "sourceColumn": "contact_person_id",
       "sourceTable": "act_contact_persons"
     },
@@ -19605,12 +18678,6 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "currency_code",
       "destinationTable": "act_chargeable_services",
-      "sourceColumn": "currency_code",
-      "sourceTable": "act_currencies"
-    },
-    {
-      "destinationColumn": "currency_code",
-      "destinationTable": "act_customers",
       "sourceColumn": "currency_code",
       "sourceTable": "act_currencies"
     },
@@ -19766,12 +18833,6 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "currency_code",
-      "destinationTable": "act_suppliers",
-      "sourceColumn": "currency_code",
-      "sourceTable": "act_currencies"
-    },
-    {
-      "destinationColumn": "currency_code",
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "currency_code",
       "sourceTable": "act_currencies"
@@ -19781,60 +18842,6 @@ export const dataDictionaryJson = {
       "destinationTable": "act_transactions",
       "sourceColumn": "currency_code",
       "sourceTable": "act_currencies"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_addresses",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_bank_accounts",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_contact_persons",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_email_addresses",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_fax_numbers",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_legal_documents",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_medias",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_phone_numbers",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_customer_websites",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
     },
     {
       "destinationColumn": "customer_id",
@@ -19898,43 +18905,19 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "email_address_id",
-      "destinationTable": "act_customer_email_addresses",
-      "sourceColumn": "email_address_id",
-      "sourceTable": "act_email_addresses"
-    },
-    {
-      "destinationColumn": "email_address_id",
-      "destinationTable": "act_employee_email_addresses",
-      "sourceColumn": "email_address_id",
-      "sourceTable": "act_email_addresses"
-    },
-    {
-      "destinationColumn": "email_address_id",
       "destinationTable": "act_location_email_addresses",
       "sourceColumn": "email_address_id",
       "sourceTable": "act_email_addresses"
     },
     {
       "destinationColumn": "email_address_id",
-      "destinationTable": "act_supplier_email_addresses",
+      "destinationTable": "act_party_email_addresses",
       "sourceColumn": "email_address_id",
       "sourceTable": "act_email_addresses"
     },
     {
       "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_addresses",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
       "destinationTable": "act_employee_attendances",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_bank_accounts",
       "sourceColumn": "employee_id",
       "sourceTable": "act_employees"
     },
@@ -19946,55 +18929,13 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_email_addresses",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_legal_documents",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_medias",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_phone_numbers",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
-      "destinationTable": "act_employee_websites",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
-      "destinationColumn": "employee_id",
       "destinationTable": "act_user_accountees",
       "sourceColumn": "employee_id",
       "sourceTable": "act_employees"
     },
     {
-      "destinationColumn": "entity_id",
-      "destinationTable": "act_legal_document_types",
-      "sourceColumn": "entity_id",
-      "sourceTable": "act_entities"
-    },
-    {
       "destinationColumn": "fax_number_id",
       "destinationTable": "act_accountee_fax_numbers",
-      "sourceColumn": "fax_number_id",
-      "sourceTable": "act_fax_numbers"
-    },
-    {
-      "destinationColumn": "fax_number_id",
-      "destinationTable": "act_customer_fax_numbers",
       "sourceColumn": "fax_number_id",
       "sourceTable": "act_fax_numbers"
     },
@@ -20006,7 +18947,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "fax_number_id",
-      "destinationTable": "act_supplier_fax_numbers",
+      "destinationTable": "act_party_fax_numbers",
       "sourceColumn": "fax_number_id",
       "sourceTable": "act_fax_numbers"
     },
@@ -20066,12 +19007,6 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "ledger_account_id",
-      "destinationTable": "act_customers",
-      "sourceColumn": "ledger_account_id",
-      "sourceTable": "act_ledger_accounts"
-    },
-    {
-      "destinationColumn": "ledger_account_id",
       "destinationTable": "act_employees",
       "sourceColumn": "ledger_account_id",
       "sourceTable": "act_ledger_accounts"
@@ -20125,12 +19060,6 @@ export const dataDictionaryJson = {
       "sourceTable": "act_ledger_accounts"
     },
     {
-      "destinationColumn": "ledger_account_id",
-      "destinationTable": "act_suppliers",
-      "sourceColumn": "ledger_account_id",
-      "sourceTable": "act_ledger_accounts"
-    },
-    {
       "destinationColumn": "legal_document_type_id",
       "destinationTable": "act_legal_documents",
       "sourceColumn": "legal_document_type_id",
@@ -20150,18 +19079,6 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "legal_document_id",
-      "destinationTable": "act_customer_legal_documents",
-      "sourceColumn": "legal_document_id",
-      "sourceTable": "act_legal_documents"
-    },
-    {
-      "destinationColumn": "legal_document_id",
-      "destinationTable": "act_employee_legal_documents",
-      "sourceColumn": "legal_document_id",
-      "sourceTable": "act_legal_documents"
-    },
-    {
-      "destinationColumn": "legal_document_id",
       "destinationTable": "act_legal_document_medias",
       "sourceColumn": "legal_document_id",
       "sourceTable": "act_legal_documents"
@@ -20174,7 +19091,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "legal_document_id",
-      "destinationTable": "act_supplier_legal_documents",
+      "destinationTable": "act_party_legal_documents",
       "sourceColumn": "legal_document_id",
       "sourceTable": "act_legal_documents"
     },
@@ -20282,18 +19199,6 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "media_id",
-      "destinationTable": "act_customer_medias",
-      "sourceColumn": "media_id",
-      "sourceTable": "act_medias"
-    },
-    {
-      "destinationColumn": "media_id",
-      "destinationTable": "act_employee_medias",
-      "sourceColumn": "media_id",
-      "sourceTable": "act_medias"
-    },
-    {
-      "destinationColumn": "media_id",
       "destinationTable": "act_legal_document_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
@@ -20312,7 +19217,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "media_id",
-      "destinationTable": "act_supplier_medias",
+      "destinationTable": "act_party_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
@@ -20390,25 +19295,13 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "phone_number_id",
-      "destinationTable": "act_customer_phone_numbers",
-      "sourceColumn": "phone_number_id",
-      "sourceTable": "act_phone_numbers"
-    },
-    {
-      "destinationColumn": "phone_number_id",
-      "destinationTable": "act_employee_phone_numbers",
-      "sourceColumn": "phone_number_id",
-      "sourceTable": "act_phone_numbers"
-    },
-    {
-      "destinationColumn": "phone_number_id",
       "destinationTable": "act_location_phone_numbers",
       "sourceColumn": "phone_number_id",
       "sourceTable": "act_phone_numbers"
     },
     {
       "destinationColumn": "phone_number_id",
-      "destinationTable": "act_supplier_phone_numbers",
+      "destinationTable": "act_party_phone_numbers",
       "sourceColumn": "phone_number_id",
       "sourceTable": "act_phone_numbers"
     },
@@ -20959,10 +19852,10 @@ export const dataDictionaryJson = {
       "sourceTable": "act_suppliers"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_addresses",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_addresses",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
       "destinationColumn": "supplier_id",
@@ -20971,40 +19864,40 @@ export const dataDictionaryJson = {
       "sourceTable": "act_suppliers"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_contact_persons",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_contact_persons",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_email_addresses",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_email_addresses",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_fax_numbers",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_fax_numbers",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_legal_documents",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_legal_documents",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_medias",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_medias",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_phone_numbers",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_phone_numbers",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
       "destinationColumn": "supplier_id",
@@ -21013,16 +19906,16 @@ export const dataDictionaryJson = {
       "sourceTable": "act_suppliers"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_websites",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_websites",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_supplier_bank_accounts",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_bank_accounts",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     },
     {
       "destinationColumn": "tax_rate_id",
@@ -21446,25 +20339,13 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "website_id",
-      "destinationTable": "act_customer_websites",
-      "sourceColumn": "website_id",
-      "sourceTable": "act_websites"
-    },
-    {
-      "destinationColumn": "website_id",
-      "destinationTable": "act_employee_websites",
-      "sourceColumn": "website_id",
-      "sourceTable": "act_websites"
-    },
-    {
-      "destinationColumn": "website_id",
       "destinationTable": "act_location_websites",
       "sourceColumn": "website_id",
       "sourceTable": "act_websites"
     },
     {
       "destinationColumn": "website_id",
-      "destinationTable": "act_supplier_websites",
+      "destinationTable": "act_party_websites",
       "sourceColumn": "website_id",
       "sourceTable": "act_websites"
     },
@@ -21495,12 +20376,6 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "contact_person_image_media_id",
       "destinationTable": "act_contact_persons",
-      "sourceColumn": "media_id",
-      "sourceTable": "act_medias"
-    },
-    {
-      "destinationColumn": "customer_image_media_id",
-      "destinationTable": "act_customers",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
@@ -21571,64 +20446,10 @@ export const dataDictionaryJson = {
       "sourceTable": "act_product_prices"
     },
     {
-      "destinationColumn": "minimum_order_quantity_uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
-    },
-    {
       "destinationColumn": "product_image_media_id",
       "destinationTable": "act_products",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
-    },
-    {
-      "destinationColumn": "purchase_tax_rate_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "tax_rate_id",
-      "sourceTable": "act_tax_rates"
-    },
-    {
-      "destinationColumn": "purchase_uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
-    },
-    {
-      "destinationColumn": "sale_tax_rate_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "tax_rate_id",
-      "sourceTable": "act_tax_rates"
-    },
-    {
-      "destinationColumn": "sale_uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
-    },
-    {
-      "destinationColumn": "maximum_stock__uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
-    },
-    {
-      "destinationColumn": "minimum_stock_uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
-    },
-    {
-      "destinationColumn": "reorder_level_uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
-    },
-    {
-      "destinationColumn": "stock_uom_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_uom_id",
-      "sourceTable": "act_product_uoms"
     },
     {
       "destinationColumn": "product_attribute_media_id",
@@ -21761,6 +20582,150 @@ export const dataDictionaryJson = {
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "ledger_account_id",
       "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_parties",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_parties",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_parties",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "supplier_id",
+      "destinationTable": "act_parties",
+      "sourceColumn": "supplier_id",
+      "sourceTable": "act_suppliers"
+    },
+    {
+      "destinationColumn": "employee_id",
+      "destinationTable": "act_parties",
+      "sourceColumn": "employee_id",
+      "sourceTable": "act_employees"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_parties",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "party_image_media_id",
+      "destinationTable": "act_parties",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_purchase_details",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_sale_details",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_stock_details",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "maximum_stock_uom_id",
+      "destinationTable": "act_product_stock_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "minimum_stock_uom_id",
+      "destinationTable": "act_product_stock_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "reorder_level_uom_id",
+      "destinationTable": "act_product_stock_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "stock_uom_id",
+      "destinationTable": "act_product_stock_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_product_sale_details",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "sale_uom_id",
+      "destinationTable": "act_product_sale_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "minimum_order_quantity_uom_id",
+      "destinationTable": "act_product_purchase_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_product_purchase_details",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "purchase_uom_id",
+      "destinationTable": "act_product_purchase_details",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_product_purchase_details",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_product_sale_details",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "product_purchase_detail_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_purchase_detail_id",
+      "sourceTable": "act_product_purchase_details"
+    },
+    {
+      "destinationColumn": "product_sale_detail_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_sale_detail_id",
+      "sourceTable": "act_product_sale_details"
+    },
+    {
+      "destinationColumn": "product_stock_detail_id",
+      "destinationTable": "act_products",
+      "sourceColumn": "product_stock_detail_id",
+      "sourceTable": "act_product_stock_details"
     }
   ],
   "storedProcedures": {},
@@ -21892,362 +20857,131 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_set_accountee_websites_on_update",
       "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
     },
-    "act_trg_set_customer_addresses_on_delete": {
+    "act_trg_set_party_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
-      "tableName": "act_customer_addresses",
-      "triggerName": "act_trg_set_customer_addresses_on_delete",
-      "triggerCode": "UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_addresses",
+      "triggerName": "act_trg_set_party_addresses_on_delete",
+      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_addresses_on_insert": {
+    "act_trg_set_party_addresses_on_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
-      "tableName": "act_customer_addresses",
-      "triggerName": "act_trg_set_customer_addresses_on_insert",
-      "triggerCode": "UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+      "tableName": "act_party_addresses",
+      "triggerName": "act_trg_set_party_addresses_on_insert",
+      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
     },
-    "act_trg_set_customer_addresses_on_update": {
+    "act_trg_set_party_addresses_on_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
-      "tableName": "act_customer_addresses",
-      "triggerName": "act_trg_set_customer_addresses_on_update",
-      "triggerCode": "UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_customer_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_addresses",
+      "triggerName": "act_trg_set_party_addresses_on_update",
+      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_bank_accounts_on_delete": {
+    "act_trg_set_party_bank_accounts_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
-      "tableName": "act_customer_bank_accounts",
-      "triggerName": "act_trg_set_customer_bank_accounts_on_delete",
-      "triggerCode": "UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_bank_accounts",
+      "triggerName": "act_trg_set_party_bank_accounts_on_delete",
+      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_bank_accounts_on_insert": {
+    "act_trg_set_party_bank_accounts_on_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
-      "tableName": "act_customer_bank_accounts",
-      "triggerName": "act_trg_set_customer_bank_accounts_on_insert",
-      "triggerCode": "UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+      "tableName": "act_party_bank_accounts",
+      "triggerName": "act_trg_set_party_bank_accounts_on_insert",
+      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
     },
-    "act_trg_set_customer_bank_accounts_on_update": {
+    "act_trg_set_party_bank_accounts_on_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
-      "tableName": "act_customer_bank_accounts",
-      "triggerName": "act_trg_set_customer_bank_accounts_on_update",
-      "triggerCode": "UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_customer_bank_accounts WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_bank_accounts",
+      "triggerName": "act_trg_set_party_bank_accounts_on_update",
+      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_email_addresses_on_delete": {
+    "act_trg_set_party_email_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
-      "tableName": "act_customer_email_addresses",
-      "triggerName": "act_trg_set_customer_email_addresses_on_delete",
-      "triggerCode": "UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_email_addresses",
+      "triggerName": "act_trg_set_party_email_addresses_on_delete",
+      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_email_addresses_on_insert": {
+    "act_trg_set_party_email_addresses_on_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
-      "tableName": "act_customer_email_addresses",
-      "triggerName": "act_trg_set_customer_email_addresses_on_insert",
-      "triggerCode": "UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+      "tableName": "act_party_email_addresses",
+      "triggerName": "act_trg_set_party_email_addresses_on_insert",
+      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
     },
-    "act_trg_set_customer_email_addresses_on_update": {
+    "act_trg_set_party_email_addresses_on_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
-      "tableName": "act_customer_email_addresses",
-      "triggerName": "act_trg_set_customer_email_addresses_on_update",
-      "triggerCode": "UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_customer_email_addresses WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_email_addresses",
+      "triggerName": "act_trg_set_party_email_addresses_on_update",
+      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_fax_numbers_on_delete": {
+    "act_trg_set_party_fax_numbers_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
-      "tableName": "act_customer_fax_numbers",
-      "triggerName": "act_trg_set_customer_fax_numbers_on_delete",
-      "triggerCode": "UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_fax_numbers",
+      "triggerName": "act_trg_set_party_fax_numbers_on_delete",
+      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_fax_numbers_on_insert": {
+    "act_trg_set_party_fax_numbers_on_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
-      "tableName": "act_customer_fax_numbers",
-      "triggerName": "act_trg_set_customer_fax_numbers_on_insert",
-      "triggerCode": "UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+      "tableName": "act_party_fax_numbers",
+      "triggerName": "act_trg_set_party_fax_numbers_on_insert",
+      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
     },
-    "act_trg_set_customer_fax_numbers_on_update": {
+    "act_trg_set_party_fax_numbers_on_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
-      "tableName": "act_customer_fax_numbers",
-      "triggerName": "act_trg_set_customer_fax_numbers_on_update",
-      "triggerCode": "UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_customer_fax_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_fax_numbers",
+      "triggerName": "act_trg_set_party_fax_numbers_on_update",
+      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_phone_numbers_on_delete": {
+    "act_trg_set_party_phone_numbers_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
-      "tableName": "act_customer_phone_numbers",
-      "triggerName": "act_trg_set_customer_phone_numbers_on_delete",
-      "triggerCode": "UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_phone_numbers",
+      "triggerName": "act_trg_set_party_phone_numbers_on_delete",
+      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_phone_numbers_on_insert": {
+    "act_trg_set_party_phone_numbers_on_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
-      "tableName": "act_customer_phone_numbers",
-      "triggerName": "act_trg_set_customer_phone_numbers_on_insert",
-      "triggerCode": "UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+      "tableName": "act_party_phone_numbers",
+      "triggerName": "act_trg_set_party_phone_numbers_on_insert",
+      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
     },
-    "act_trg_set_customer_phone_numbers_on_update": {
+    "act_trg_set_party_phone_numbers_on_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
-      "tableName": "act_customer_phone_numbers",
-      "triggerName": "act_trg_set_customer_phone_numbers_on_update",
-      "triggerCode": "UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_customer_phone_numbers WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_phone_numbers",
+      "triggerName": "act_trg_set_party_phone_numbers_on_update",
+      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_websites_on_delete": {
+    "act_trg_set_party_websites_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
-      "tableName": "act_customer_websites",
-      "triggerName": "act_trg_set_customer_websites_on_delete",
-      "triggerCode": "UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
+      "tableName": "act_party_websites",
+      "triggerName": "act_trg_set_party_websites_on_delete",
+      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
-    "act_trg_set_customer_websites_on_insert": {
+    "act_trg_set_party_websites_on_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
-      "tableName": "act_customer_websites",
-      "triggerName": "act_trg_set_customer_websites_on_insert",
-      "triggerCode": "UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;"
+      "tableName": "act_party_websites",
+      "triggerName": "act_trg_set_party_websites_on_insert",
+      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
     },
-    "act_trg_set_customer_websites_on_update": {
+    "act_trg_set_party_websites_on_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
-      "tableName": "act_customer_websites",
-      "triggerName": "act_trg_set_customer_websites_on_update",
-      "triggerCode": "UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = NEW.customer_id;   UPDATE act_customers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_customer_websites WHERE customer_id = act_customers.customer_id)) WHERE customer_id = OLD.customer_id;"
-    },
-    "act_trg_set_employee_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_employee_addresses",
-      "triggerName": "act_trg_set_employee_addresses_on_delete",
-      "triggerCode": "UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_employee_addresses",
-      "triggerName": "act_trg_set_employee_addresses_on_insert",
-      "triggerCode": "UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
-    },
-    "act_trg_set_employee_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_employee_addresses",
-      "triggerName": "act_trg_set_employee_addresses_on_update",
-      "triggerCode": "UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_employee_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_bank_accounts_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_employee_bank_accounts",
-      "triggerName": "act_trg_set_employee_bank_accounts_on_delete",
-      "triggerCode": "UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_bank_accounts_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_employee_bank_accounts",
-      "triggerName": "act_trg_set_employee_bank_accounts_on_insert",
-      "triggerCode": "UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
-    },
-    "act_trg_set_employee_bank_accounts_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_employee_bank_accounts",
-      "triggerName": "act_trg_set_employee_bank_accounts_on_update",
-      "triggerCode": "UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_employee_bank_accounts WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_email_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_employee_email_addresses",
-      "triggerName": "act_trg_set_employee_email_addresses_on_delete",
-      "triggerCode": "UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_email_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_employee_email_addresses",
-      "triggerName": "act_trg_set_employee_email_addresses_on_insert",
-      "triggerCode": "UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
-    },
-    "act_trg_set_employee_email_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_employee_email_addresses",
-      "triggerName": "act_trg_set_employee_email_addresses_on_update",
-      "triggerCode": "UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_employee_email_addresses WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_phone_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_employee_phone_numbers",
-      "triggerName": "act_trg_set_employee_phone_numbers_on_delete",
-      "triggerCode": "UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_phone_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_employee_phone_numbers",
-      "triggerName": "act_trg_set_employee_phone_numbers_on_insert",
-      "triggerCode": "UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
-    },
-    "act_trg_set_employee_phone_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_employee_phone_numbers",
-      "triggerName": "act_trg_set_employee_phone_numbers_on_update",
-      "triggerCode": "UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_employee_phone_numbers WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_websites_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_employee_websites",
-      "triggerName": "act_trg_set_employee_websites_on_delete",
-      "triggerCode": "UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_employee_websites_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_employee_websites",
-      "triggerName": "act_trg_set_employee_websites_on_insert",
-      "triggerCode": "UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;"
-    },
-    "act_trg_set_employee_websites_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_employee_websites",
-      "triggerName": "act_trg_set_employee_websites_on_update",
-      "triggerCode": "UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = NEW.employee_id;   UPDATE act_employees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_employee_websites WHERE employee_id = act_employees.employee_id)) WHERE employee_id = OLD.employee_id;"
-    },
-    "act_trg_set_supplier_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_supplier_addresses",
-      "triggerName": "act_trg_set_supplier_addresses_on_delete",
-      "triggerCode": "UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_supplier_addresses",
-      "triggerName": "act_trg_set_supplier_addresses_on_insert",
-      "triggerCode": "UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
-    },
-    "act_trg_set_supplier_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_supplier_addresses",
-      "triggerName": "act_trg_set_supplier_addresses_on_update",
-      "triggerCode": "UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_supplier_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_bank_accounts_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_supplier_bank_accounts",
-      "triggerName": "act_trg_set_supplier_bank_accounts_on_delete",
-      "triggerCode": "UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_bank_accounts_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_supplier_bank_accounts",
-      "triggerName": "act_trg_set_supplier_bank_accounts_on_insert",
-      "triggerCode": "UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
-    },
-    "act_trg_set_supplier_bank_accounts_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_supplier_bank_accounts",
-      "triggerName": "act_trg_set_supplier_bank_accounts_on_update",
-      "triggerCode": "UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_supplier_bank_accounts WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_email_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_supplier_email_addresses",
-      "triggerName": "act_trg_set_supplier_email_addresses_on_delete",
-      "triggerCode": "UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_email_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_supplier_email_addresses",
-      "triggerName": "act_trg_set_supplier_email_addresses_on_insert",
-      "triggerCode": "UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
-    },
-    "act_trg_set_supplier_email_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_supplier_email_addresses",
-      "triggerName": "act_trg_set_supplier_email_addresses_on_update",
-      "triggerCode": "UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_supplier_email_addresses WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_fax_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_supplier_fax_numbers",
-      "triggerName": "act_trg_set_supplier_fax_numbers_on_delete",
-      "triggerCode": "UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_fax_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_supplier_fax_numbers",
-      "triggerName": "act_trg_set_supplier_fax_numbers_on_insert",
-      "triggerCode": "UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
-    },
-    "act_trg_set_supplier_fax_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_supplier_fax_numbers",
-      "triggerName": "act_trg_set_supplier_fax_numbers_on_update",
-      "triggerCode": "UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_supplier_fax_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_phone_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_supplier_phone_numbers",
-      "triggerName": "act_trg_set_supplier_phone_numbers_on_delete",
-      "triggerCode": "UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_phone_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_supplier_phone_numbers",
-      "triggerName": "act_trg_set_supplier_phone_numbers_on_insert",
-      "triggerCode": "UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
-    },
-    "act_trg_set_supplier_phone_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_supplier_phone_numbers",
-      "triggerName": "act_trg_set_supplier_phone_numbers_on_update",
-      "triggerCode": "UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_supplier_phone_numbers WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_websites_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_supplier_websites",
-      "triggerName": "act_trg_set_supplier_websites_on_delete",
-      "triggerCode": "UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
-    },
-    "act_trg_set_supplier_websites_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_supplier_websites",
-      "triggerName": "act_trg_set_supplier_websites_on_insert",
-      "triggerCode": "UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;"
-    },
-    "act_trg_set_supplier_websites_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_supplier_websites",
-      "triggerName": "act_trg_set_supplier_websites_on_update",
-      "triggerCode": "UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = NEW.supplier_id;   UPDATE act_suppliers SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_supplier_websites WHERE supplier_id = act_suppliers.supplier_id)) WHERE supplier_id = OLD.supplier_id;"
+      "tableName": "act_party_websites",
+      "triggerName": "act_trg_set_party_websites_on_update",
+      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     }
   }
 };

@@ -3,11 +3,15 @@
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcInputElement } from "./ac-input-element.element";
+import { AcInput } from "./ac-input-element.element";
 
-export class AcTextInputElement extends AcInputElement{
+export class AcTextInput extends AcInput{
   static override get observedAttributes() {
     return [... super.observedAttributes, 'minlength', 'maxlength','pattern'];
+  }
+
+  override get inputReflectedAttributes(){
+    return [... super.inputReflectedAttributes,'minlength', 'maxlength','pattern'];
   }
 
   get minLength():number|null{
@@ -83,4 +87,4 @@ export class AcTextInputElement extends AcInputElement{
 
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.textInput,type:AcTextInputElement});
+acRegisterCustomElement({tag:AC_INPUT_TAG.textInput,type:AcTextInput});

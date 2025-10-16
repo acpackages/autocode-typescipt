@@ -72,9 +72,9 @@ export class AcModal extends AcElementBase {
 
     // Create backdrop
     this.backdrop = document.createElement("div");
-    const style = { ...AC_MODAL_CONFIG.openStyle, "transition": `opacity ${this.animationDuration}ms ease` };
-    Object.assign(this.backdrop.style, style);
-    this.ownerDocument.body.appendChild(this.backdrop);
+    const backdropStyle = { ...AC_MODAL_CONFIG.backdropStyle, "transition": `opacity ${this.animationDuration}ms ease` };
+    Object.assign(this.backdrop.style, backdropStyle);
+    this.appendChild(this.backdrop);
     this.originalBodyStyleOverflow = this.ownerDocument.body.style.overflow;
     this.ownerDocument.body.style.overflow = "hidden";
 
@@ -88,12 +88,7 @@ export class AcModal extends AcElementBase {
     const finalHeight = Math.min(rect.height, vh * 0.9);
     const finalLeft = Math.round((vw - finalWidth) / 2);
     const finalTop = Math.round((vh - finalHeight) / 2);
-    Object.assign(this.style, {
-      left: `${finalLeft}px`,
-      top: `${finalTop}px`,
-      opacity: "0",
-      pointerEvents: "none",
-    });
+    Object.assign(this.style, AC_MODAL_CONFIG.openStyle);
 
     if (!triggerElement) {
       this.style.transition = `opacity ${this.animationDuration}ms ease`;

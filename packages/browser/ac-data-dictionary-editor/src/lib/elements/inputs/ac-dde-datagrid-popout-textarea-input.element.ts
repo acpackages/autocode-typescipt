@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellElementArgs, IAcDatagridCellEditorElement, AcPopoutTextareaInputElement } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, IAcDatagridCellEditorElement, AcPopoutTextareaInput } from '@autocode-ts/ac-browser';
 export class AcDDEDatagridPopoutTextareaInput implements IAcDatagridCellEditorElement{
-  textareaInput:AcPopoutTextareaInputElement = new AcPopoutTextareaInputElement();
+  textareaInput:AcPopoutTextareaInput = new AcPopoutTextareaInput();
 
   destroy(): void {
     // this.textareaInput.destroy();

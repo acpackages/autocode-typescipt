@@ -1,8 +1,8 @@
-import { AcDatagridCell, AcSelectInputElement, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridCell, AcSelectInput, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class AcDDEDatagridSelectInput implements IAcDatagridCellEditorElement{
   datagridCell!:AcDatagridCell;
-  selectInput:AcSelectInputElement = new AcSelectInputElement();
+  selectInput:AcSelectInput = new AcSelectInput();
   get selectOptions():any[]{
     return this.selectInput.selectOptions;
   }

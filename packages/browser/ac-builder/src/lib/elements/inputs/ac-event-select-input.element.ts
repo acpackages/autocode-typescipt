@@ -1,10 +1,10 @@
-import { AcInputBase, acRegisterCustomElement, AcSelectInputElement } from "@autocode-ts/ac-browser";
+import { AcInputBase, acRegisterCustomElement, AcSelectInput } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../../enums/ac-enum-builder-hook.enum";
 
 export class AcEventSelectInput extends AcInputBase{
   builderApi:AcBuilderApi;
-  override inputElement:AcSelectInputElement = new AcSelectInputElement();
+  override inputElement:AcSelectInput = new AcSelectInput();
 
   override get value(): any {
     return this.inputElement.value;

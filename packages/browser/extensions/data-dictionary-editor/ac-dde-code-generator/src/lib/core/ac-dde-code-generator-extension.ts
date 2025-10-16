@@ -33,6 +33,28 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
             }
           }
         },
+        {
+          label:'Dart Keys',
+          iconClass:'aci-dart-lang',
+          callback:()=>{
+            if(this.editorApi.activeDataDictionary){
+              const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId!});
+              AcBrowser.downloadFile({content:codeGenerator.getDDKeysString(),filename:'data_dictionary_keys.dart'});
+            }
+          }
+        },
+        {
+          label:'Typescript Keys',
+          iconClass:'aci-typescript',
+          callback:()=>{
+            if(this.editorApi.activeDataDictionary){
+              const codeGenerator:AcDataDictionaryDartCodeGenerator = new AcDataDictionaryDartCodeGenerator();
+              codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId!});
+              AcBrowser.downloadFile({content:codeGenerator.getDDKeysString(),filename:'data_dictionary_keys.ts'});
+            }
+          }
+        },
       ]
     }
     this.editorApi.addMenuGroup({menuGroup:menuGroup});

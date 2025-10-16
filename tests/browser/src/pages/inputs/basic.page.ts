@@ -1,10 +1,12 @@
-import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInputElement, AcEnumInputType, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTagsInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcContext } from "@autocode-ts/ac-template-engine";
 import { languages } from "monaco-editor";
 
 export class InputBasicPage extends HTMLElement {
   pageHeader: PageHeader = new PageHeader();
+  form!:AcForm;
+  btnSubmit!:HTMLButtonElement;
   context: AcContext = new AcContext({
     value: {
       full_name: 'Alice Johnson',
@@ -35,7 +37,17 @@ export class InputBasicPage extends HTMLElement {
 
   async connectedCallback() {
 
-    this.innerHTML = `<div class="container py-4"><div class="accordion" id="formAccordion"></div></div>`;
+    this.innerHTML = `<ac-form>
+      <div class="container py-4">
+        <div class="accordion" id="formAccordion"></div>
+        <buton type="submit" class="btn btn-primary my-2">Submit</buton>
+      </div>
+    </ac-form>`;
+    this.form = this.querySelector('ac-form') as AcForm;
+    this.form.addEventListener('submit',()=>{
+      console.log(this.form.valuesToJsonObject());
+    });
+    console.dir(this);
     this.prepend(this.pageHeader.element);
     this.pageHeader.pageTitle = 'All Real-Life Inputs';
 
@@ -66,11 +78,13 @@ export class InputBasicPage extends HTMLElement {
     const allInputsGroup = createCard('Real-Life Inputs', 'real-inputs');
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {
-      const input = new AcTextInputElement();
+      const input = new AcTextInput();
       input.type = type;
+      input.name = key;
       input.acContextKey = key;
       input.acContext = this.context;
       input.className = 'form-control';
+      input.setAttribute('required','true');
       addField(label, input, allInputsGroup);
     };
 
@@ -84,7 +98,7 @@ export class InputBasicPage extends HTMLElement {
     arrayValuesLabel.className = 'fw-bold mt-3';
     arrayValuesLabel.textContent = 'Phone Numbers';
     allInputsGroup.appendChild(arrayValuesLabel);
-    const arrayValuesElement = new AcArrayValuesInputElement();
+    const arrayValuesElement = new AcArrayValuesInput();
     arrayValuesElement.innerHTML = `
     <table>
     <thead>
@@ -118,6 +132,7 @@ export class InputBasicPage extends HTMLElement {
     `;
     arrayValuesElement.acContext = this.context;
     arrayValuesElement.acContextKey = 'phone_numbers';
+    arrayValuesElement.name = 'phone_numbers';
     allInputsGroup.appendChild(arrayValuesElement);
 
     addInput(AcEnumInputType.Color, 'Favorite Color', 'favorite_color');
@@ -135,13 +150,14 @@ export class InputBasicPage extends HTMLElement {
     addInput(AcEnumInputType.Image, 'Profile Picture', 'profile_picture');
 
     // Textarea: About Me
-    const textarea = new AcTextareaInputElement();
+    const textarea = new AcTextareaInput();
     textarea.acContextKey = 'about_me';
+    textarea.name = 'about_me';
     textarea.acContext = this.context;
     textarea.className = 'form-control';
     addField('About Me', textarea, allInputsGroup);
 
-    const popoutTextArea = new AcPopoutTextareaInputElement();
+    const popoutTextArea = new AcPopoutTextareaInput();
     popoutTextArea.acContextKey = 'favourite_quote';
     popoutTextArea.acContext = this.context;
     popoutTextArea.className = 'form-control';
@@ -154,7 +170,7 @@ export class InputBasicPage extends HTMLElement {
     allInputsGroup.appendChild(radioLabel);
 
     ['Email', 'Phone', 'In-app'].forEach((method) => {
-      const radio = new AcOptionInputElement();
+      const radio = new AcOptionInput();
       radio.type = AcEnumInputType.Radio;
       radio.name = 'contact_preference';
       radio.value = method;
@@ -181,7 +197,7 @@ export class InputBasicPage extends HTMLElement {
     allInputsGroup.appendChild(checkboxLabel);
 
     ['Apple', 'Banana', 'Mango','Orange'].forEach((fruit) => {
-      const checkbox = new AcOptionInputElement();
+      const checkbox = new AcOptionInput();
       checkbox.type = AcEnumInputType.Checkbox;
       checkbox.value = fruit;
       checkbox.acContextKey = 'interested_fruits';
@@ -201,15 +217,17 @@ export class InputBasicPage extends HTMLElement {
     });
 
     // Select: Preferred Framework
-    const select = new AcSelectInputElement();
+    const select = new AcSelectInput();
     select.acContextKey = 'preferred_framework';
+    select.name = 'preferred_framework';
     select.acContext = this.context;
     select.selectOptions = ['Angular', 'React', 'Vue.js', 'Svelte'];
     select.className = 'form-select';
     addField('Preferred Framework', select, allInputsGroup);
 
-    const languageTags = new AcTagsInputElement();
+    const languageTags = new AcTagsInput();
     languageTags.acContextKey = 'languages';
+    languageTags.name = 'languages';
     languageTags.acContext = this.context;
     languageTags.tagOptions = ['English', 'Hindi', 'Gujarati', 'Spanish', 'Sanskrit'];
     languageTags.className = 'form-control';

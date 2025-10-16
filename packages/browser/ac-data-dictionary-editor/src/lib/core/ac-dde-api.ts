@@ -234,8 +234,10 @@ export class AcDDEApi {
     const dataDictionaryId = dataDictionaryRow.dataDictionaryId;
 
     if (dataDictionaryJson[AcDataDictionary.KeyTables]) {
-      for (const tableDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyTables]) as any[]) {
-        const tableName = tableDetails[AcDDTable.KeyTableName];
+      const tableNames:string[] = Object.keys(dataDictionaryJson[AcDataDictionary.KeyTables]);
+      tableNames.sort();
+      for (const tableName of tableNames) {
+        const tableDetails = dataDictionaryJson[AcDataDictionary.KeyTables][tableName];
         const tableColumns = tableDetails[AcDDTable.KeyTableColumns];
         const tableProperties = tableDetails[AcDDTable.KeyTableProperties];
         const tableRow = this.dataStorage.addTable({
@@ -254,8 +256,10 @@ export class AcDDEApi {
     }
 
     if (dataDictionaryJson[AcDataDictionary.KeyViews]) {
-      for (const viewDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyViews]) as any[]) {
-        const viewName = viewDetails[AcDDView.KeyViewName];
+      const viewNames:string[] = Object.keys(dataDictionaryJson[AcDataDictionary.KeyViews]);
+      viewNames.sort();
+      for (const viewName of viewNames) {
+        const viewDetails = dataDictionaryJson[AcDataDictionary.KeyViews][viewName];
         const viewQuery = viewDetails[AcDDView.KeyViewQuery];
         const viewColumns = viewDetails[AcDDView.KeyViewColumns];
         const viewRow = this.dataStorage.addView({ dataDictionaryId: dataDictionaryId, viewName: viewName, viewQuery: viewQuery });
@@ -272,7 +276,10 @@ export class AcDDEApi {
     }
 
     if (dataDictionaryJson[AcDataDictionary.KeyTriggers]) {
-      for (const triggerDetails of Object.values(dataDictionaryJson[AcDataDictionary.KeyTriggers]) as any[]) {
+      const triggerNames:string[] = Object.keys(dataDictionaryJson[AcDataDictionary.KeyTriggers]);
+      triggerNames.sort();
+      for (const triggerName of triggerNames) {
+        const triggerDetails = dataDictionaryJson[AcDataDictionary.KeyTriggers][triggerName];
         const tableRows = this.dataStorage.getTables({ tableName: triggerDetails[AcDDTrigger.KeyTableName], dataDictionaryId: dataDictionaryId! });
         if (tableRows.length > 0) {
           const triggerId = this.dataStorage.addTrigger({

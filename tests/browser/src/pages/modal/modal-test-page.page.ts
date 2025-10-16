@@ -1,13 +1,15 @@
-import { AcModal } from "@autocode-ts/ac-browser";
+import { acInit, AcModal, AcSvgIconElement } from "@autocode-ts/ac-browser";
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 export class ModalTestPage extends HTMLElement {
   private modalElement!: AcModal;
 
   connectedCallback() {
+    acInit();
     this.innerHTML = `
       <div class="container py-4">
-        <h2 class="mb-4">AcModal Test Page</h2>
-        <p>This page demonstrates basic usage of <code>AcModal</code>.</p>
+        <h2 class="mb-4">AcModal Test Page </h2>
+        <p>This page demonstrates basic usage of <code>AcModal</code>. <i><ac-svg-icon>${ACI_SVG_SOLID.window}</ac-svg-icon></i></p>
 
         <div class="mb-3">
           ${this.renderBtn("Open Simple Modal", "simple")}
@@ -17,6 +19,7 @@ export class ModalTestPage extends HTMLElement {
 
       <!-- Modal HTML -->
       <ac-modal>
+      <div style="background:white;border-radius:10px;">
         <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
           <h4 id="modal-title" style="margin: 0;">Modal</h4>
         </div>
@@ -27,9 +30,14 @@ export class ModalTestPage extends HTMLElement {
           <button id="modal-cancel" style="margin-right: 0.5rem;">Cancel</button>
           <button id="modal-ok">OK</button>
         </div>
+        </div>
       </ac-modal>
     `;
-
+    const svgIcon = this.querySelector('ac-svg-icon') as AcSvgIconElement;
+    console.log(svgIcon);
+    setTimeout(() => {
+      svgIcon.setAttribute('svg-code',ACI_SVG_SOLID.clone);
+    }, 1500);
     // Grab modal element and init AcModal
     this.modalElement = this.querySelector("ac-modal") as AcModal;
 

@@ -1,30 +1,30 @@
 import { AcDataDictionary, AcDDTableColumn, AcEnumDDColumnType } from "@autocode-ts/ac-data-dictionary";
-import { AcDatetimeInputElement, AcInputElement, AcNumberInputElement, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
+import { AcDatetimeInput, AcInput, AcNumberInput, AcSelectInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { IAcDDInputDefinition } from "../interfaces/ac-dd-input-definition.interface";
 import { AcDDInputFieldBaseElement } from "../elements/ac-dd-input-field-base-element.element";
 
 export class AcDDInputManager{
   private static columnTypeInputs:Record<string,IAcDDInputDefinition> = {
-    [AcEnumDDColumnType.AutoNumber]:{ inputElement:AcTextInputElement },
-    [AcEnumDDColumnType.Blob]:{ inputElement:AcInputElement },
-    [AcEnumDDColumnType.Date]:{ inputElement:AcDatetimeInputElement},
-    [AcEnumDDColumnType.Datetime]:{ inputElement:AcDatetimeInputElement},
-    [AcEnumDDColumnType.Double]:{ inputElement:AcNumberInputElement},
-    [AcEnumDDColumnType.Integer]:{ inputElement:AcNumberInputElement},
-    [AcEnumDDColumnType.Json]:{ inputElement:AcTextInputElement, },
-    [AcEnumDDColumnType.Password]:{ inputElement:AcInputElement, defaultProperties:{type:'password'} },
-    [AcEnumDDColumnType.String]:{ inputElement:AcTextInputElement },
-    [AcEnumDDColumnType.Text]:{ inputElement:AcTextInputElement },
-    [AcEnumDDColumnType.Time]:{ inputElement:AcTextInputElement },
-    [AcEnumDDColumnType.YesNo]:{ inputElement:AcTextInputElement },
+    [AcEnumDDColumnType.AutoNumber]:{ inputElement:AcTextInput },
+    [AcEnumDDColumnType.Blob]:{ inputElement:AcInput },
+    [AcEnumDDColumnType.Date]:{ inputElement:AcDatetimeInput},
+    [AcEnumDDColumnType.Datetime]:{ inputElement:AcDatetimeInput},
+    [AcEnumDDColumnType.Double]:{ inputElement:AcNumberInput},
+    [AcEnumDDColumnType.Integer]:{ inputElement:AcNumberInput},
+    [AcEnumDDColumnType.Json]:{ inputElement:AcTextInput, },
+    [AcEnumDDColumnType.Password]:{ inputElement:AcInput, defaultProperties:{type:'password'} },
+    [AcEnumDDColumnType.String]:{ inputElement:AcTextInput },
+    [AcEnumDDColumnType.Text]:{ inputElement:AcTextInput },
+    [AcEnumDDColumnType.Time]:{ inputElement:AcTextInput },
+    [AcEnumDDColumnType.YesNo]:{ inputElement:AcTextInput },
   };
   private static inputDefinitions:Record<string,IAcDDInputDefinition> = {
-    "text":{ inputElement:AcTextInputElement },
-    "dateTime":{ inputElement:AcDatetimeInputElement},
-    "number":{ inputElement:AcNumberInputElement},
-    "password":{ inputElement:AcInputElement, defaultProperties:{type:'password'} },
-    "select":{ inputElement:AcSelectInputElement },
-    "textarea":{ inputElement:AcTextareaInputElement },
+    "text":{ inputElement:AcTextInput },
+    "dateTime":{ inputElement:AcDatetimeInput},
+    "number":{ inputElement:AcNumberInput},
+    "password":{ inputElement:AcInput, defaultProperties:{type:'password'} },
+    "select":{ inputElement:AcSelectInput },
+    "textarea":{ inputElement:AcTextareaInput },
   };
   private static inputElementProperties:Record<string,any> = {
   };
@@ -33,7 +33,7 @@ export class AcDDInputManager{
   static inputResolver?:Function;
 
   static getColumnInputDefinition({columnName,tableName}:{columnName:string,tableName:string}):IAcDDInputDefinition{
-    let result:IAcDDInputDefinition = {inputElement:AcInputElement,defaultProperties:{}};
+    let result:IAcDDInputDefinition = {inputElement:AcInput,defaultProperties:{}};
     const ddTableColumn:AcDDTableColumn|null = AcDataDictionary.getTableColumn({tableName,columnName});
     let resolvedDefinition;
     if(this.inputResolver){
@@ -64,7 +64,7 @@ export class AcDDInputManager{
         }
         const selectOptions:any[] = ddTableColumn.getValueOptions();
         if(selectOptions.length > 0){
-          result.inputElement = AcSelectInputElement;
+          result.inputElement = AcSelectInput;
           result.defaultProperties['selectOptions'] = selectOptions;
         }
       }

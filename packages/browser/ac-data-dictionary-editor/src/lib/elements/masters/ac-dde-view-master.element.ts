@@ -1,9 +1,9 @@
-import { AcTextareaInputElement } from "@autocode-ts/ac-browser";
+import { AcTextareaInput } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 
 export class AcDDEViewMaster{
   element:HTMLElement = document.createElement('div');
-  queryInput:AcTextareaInputElement;
+  queryInput:AcTextareaInput;
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.element.style.display = 'contents';
     this.element.innerHTML = `
@@ -14,6 +14,6 @@ export class AcDDEViewMaster{
       </div>
     </div>
     `;
-    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInputElement;
+    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInput;
   }
 }

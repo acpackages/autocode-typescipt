@@ -5,7 +5,8 @@
     "allowSyntheticDefaultImports": true,
     "rootDir": ".",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -51,42 +52,42 @@
       ],
       "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/index.ts"],
       "@autocode-ts/ac-icons": ["packages/browser/ac-icons/src/index.ts"],
-      "@autocode-ts/ac-ng-data-dictionary-editor": [
-        "packages/angular/ac-ng-data-dictionary-editor/index.ts"
-      ],
-      "@autocode-ts/ac-ng-data-grid": [
-        "packages/angular/ac-ng-data-grid/src/index.ts"
-      ],
-      "@autocode-ts/ac-ng-data-grid-on-aggrid": [
-        "packages/angular/ac-ng-data-grid-on-aggrid/index.ts"
-      ],
-      "@autocode-ts/ac-ng-drag-drop-builder": [
-        "packages/angular/ac-ng-drag-drop-builder/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-audio-recording": [
-        "packages/angular/ac-ng-input-audio-recording/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-on-ngselect": [
-        "packages/angular/ac-ng-input-on-ngselect/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-on-quill": [
-        "packages/angular/ac-ng-input-on-quill/index.ts"
-      ],
-      "@autocode-ts/ac-ng-input-on-tinymce": [
-        "packages/angular/ac-ng-input-on-tinymce/index.ts"
-      ],
-      "@autocode-ts/ac-ng-media-library": [
-        "packages/angular/ac-ng-media-library/src/index.ts"
-      ],
-      "@autocode-ts/ac-ng-menu-editor": [
-        "packages/angular/ac-ng-menu-editor/src/index.ts"
-      ],
-      "@autocode-ts/ac-ng-node-editor": [
-        "packages/angular/ac-ng-node-editor/index.ts"
-      ],
-      "@autocode-ts/ac-ng-runtime": [
-        "packages/angular/ac-ng-runtime/src/index.ts"
-      ],
+      // "@autocode-ts/ac-ng-data-dictionary-editor": [
+      //   "packages/angular/ac-ng-data-dictionary-editor/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-data-grid": [
+      //   "packages/angular/ac-ng-data-grid/src/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-data-grid-on-aggrid": [
+      //   "packages/angular/ac-ng-data-grid-on-aggrid/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-drag-drop-builder": [
+      //   "packages/angular/ac-ng-drag-drop-builder/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-input-audio-recording": [
+      //   "packages/angular/ac-ng-input-audio-recording/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-input-on-ngselect": [
+      //   "packages/angular/ac-ng-input-on-ngselect/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-input-on-quill": [
+      //   "packages/angular/ac-ng-input-on-quill/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-input-on-tinymce": [
+      //   "packages/angular/ac-ng-input-on-tinymce/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-media-library": [
+      //   "packages/angular/ac-ng-media-library/src/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-menu-editor": [
+      //   "packages/angular/ac-ng-menu-editor/src/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-node-editor": [
+      //   "packages/angular/ac-ng-node-editor/index.ts"
+      // ],
+      // "@autocode-ts/ac-ng-runtime": [
+      //   "packages/angular/ac-ng-runtime/src/index.ts"
+      // ],
       "@autocode-ts/ac-nodeflow-designer": [
         "packages/browser/ac-nodeflow-designer/src/index.ts"
       ],

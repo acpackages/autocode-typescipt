@@ -26,7 +26,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
   AC_ARIA_PROPERTIES["aria-hidden"] as IAcBuilderElementProperty,
 ];
 
-export class AcFormElement extends AcBuilderElement{
+export class AcForm extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
     this.element.innerHTML = "Form Element";
     this.registerListeners();
@@ -64,9 +64,9 @@ export const AC_BUILDER_FORM_ELEMENT:IAcBuilderElement = {
     AC_FORM_PROPERTIES.name as IAcBuilderElementProperty,
     AC_FORM_PROPERTIES.target as IAcBuilderElementProperty,
     AC_FORM_PROPERTIES.acceptCharset as IAcBuilderElementProperty,
-    ...basicProperty, 
+    ...basicProperty,
     ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.form,
-  instanceClass:AcFormElement
+  instanceClass:AcForm
 }

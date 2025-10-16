@@ -1,9 +1,9 @@
-import { IAcDatagridCellElementArgs, AcSelectInputElement, IAcDatagridCellEditorElement, AcDatagridCell } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditorElement, AcDatagridCell } from '@autocode-ts/ac-browser';
 import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
 import { AcDDEApi } from '../../core/ac-dde-api';
 export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEditorElement {
   editorApi!: AcDDEApi;
-  selectInput: AcSelectInputElement = new AcSelectInputElement();
+  selectInput: AcSelectInput = new AcSelectInput();
   datagridCell!: AcDatagridCell;
   filter:Function|undefined;
 

@@ -1,10 +1,10 @@
-import { AcTextareaInputElement } from "@autocode-ts/ac-browser";
+import { AcTextareaInput } from "@autocode-ts/ac-browser";
 import { AcDDEAttributeName, AcDDECssClassName } from "../../_ac-data-dictionary-editor.export";
 import { AcDDEApi } from "../../core/ac-dde-api";
 
 export class AcDDETriggerMaster {
   element: HTMLElement = document.createElement('div');
-  queryInput:AcTextareaInputElement;
+  queryInput:AcTextareaInput;
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.element.classList.add(AcDDECssClassName.acDDEMasterContainer);
     this.element.innerHTML = `
@@ -15,6 +15,6 @@ export class AcDDETriggerMaster {
         </div>
       </div>
     `;
-    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInputElement;
+    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInput;
   }
 }

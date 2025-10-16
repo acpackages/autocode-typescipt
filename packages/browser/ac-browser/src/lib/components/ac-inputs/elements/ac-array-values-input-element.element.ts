@@ -16,7 +16,7 @@ interface IAcArrayValueItem {
   element?: HTMLElement,
 }
 
-export class AcArrayValuesInputElement extends AcInputBase {
+export class AcArrayValuesInput extends AcInputBase {
   override reflectValueAttribute: boolean = false;
   itemsElement?: HTMLElement;
   itemClone?: HTMLElement;
@@ -187,4 +187,4 @@ export class AcArrayValuesInputElement extends AcInputBase {
 
 }
 
-acRegisterCustomElement({ tag: AC_INPUT_TAG.arrayValuesInput, type: AcArrayValuesInputElement });
+acRegisterCustomElement({ tag: AC_INPUT_TAG.arrayValuesInput, type: AcArrayValuesInput });

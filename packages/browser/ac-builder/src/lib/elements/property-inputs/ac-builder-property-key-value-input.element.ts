@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcArrayValuesInputElement, AcModal, acRegisterCustomElement } from "@autocode-ts/ac-browser";
+import { AcArrayValuesInput, AcModal, acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import { AcBuilderPropertyInput } from "../../core/ac-builder-property-input";
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 
 export class AcBuilderPropertyKeyValueInput extends AcBuilderPropertyInput {
-  arrayValuesElement:AcArrayValuesInputElement = new AcArrayValuesInputElement();
+  arrayValuesElement:AcArrayValuesInput = new AcArrayValuesInput();
   override inputElement: HTMLInputElement = document.createElement('input');
   modal:AcModal = new AcModal();
   override get value(): any {
