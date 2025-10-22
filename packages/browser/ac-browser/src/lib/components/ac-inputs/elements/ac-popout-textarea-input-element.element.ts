@@ -2,7 +2,6 @@
 // One class, all features. No frameworks, no wrapper <div>, only input + textarea.
 
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 import { IAcPopoutTextareaOptions } from "../interfaces/input-options/ac-popout-textarea-input-options.interface";
@@ -10,23 +9,23 @@ import { IAcPopoutTextareaOptions } from "../interfaces/input-options/ac-popout-
 export class AcPopoutTextareaInput extends AcInputBase {
   private textarea: HTMLTextAreaElement | null = null;
 
-  private opts: Required<IAcPopoutTextareaOptions>;
+  private opts!: Required<IAcPopoutTextareaOptions>;
   private isOpen = false;
   private preEditValue = "";
   private rafPending = false;
   private visibleInViewport = true;
 
   private io: IntersectionObserver | null = null;
-  private boundRafTick: () => void;
-  private boundScroll: (e: Event) => void;
-  private boundResize: () => void;
-  private boundDocMouseDown: (e: MouseEvent) => void;
-  private boundKeydown: (e: KeyboardEvent) => void;
+  private boundRafTick!: () => void;
+  private boundScroll!: (e: Event) => void;
+  private boundResize!: () => void;
+  private boundDocMouseDown!: (e: MouseEvent) => void;
+  private boundKeydown!: (e: KeyboardEvent) => void;
 
   override inputElement: HTMLInputElement = document.createElement('input');
 
-  constructor(options: IAcPopoutTextareaOptions = {}) {
-    super();
+  override connectedCallback() {
+    const options:any = {};
     this.opts = {
       triggerOnFocus: options.triggerOnFocus ?? true,
       triggerOnDblClick: options.triggerOnDblClick ?? false,
@@ -61,6 +60,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
       this.inputElement.addEventListener("dblclick", () => this.open());
     }
     this.setupIntersectionObserver();
+    super.connectedCallback();
   }
 
   private applyBaseStyles() {

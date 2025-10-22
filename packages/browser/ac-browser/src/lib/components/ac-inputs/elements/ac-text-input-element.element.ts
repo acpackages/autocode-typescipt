@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { acListenAllElementEvents, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcInput } from "./ac-input-element.element";
@@ -64,9 +64,11 @@ export class AcTextInput extends AcInput{
     }
   }
 
-  constructor(){
-    super();
-    this.type = AcEnumInputType.Text;
+  override connectedCallback(){
+    if(!this.hasAttribute('type')){
+      this.type = AcEnumInputType.Text;
+    }
+    super.connectedCallback();
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {

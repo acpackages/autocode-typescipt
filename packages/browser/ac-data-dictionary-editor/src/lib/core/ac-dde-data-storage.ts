@@ -3,7 +3,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcHooks, AcJsonUtils, Autocode } from "@autocode-ts/autocode";
-import { AcDDTableColumnProperty, AcDDTableProperty, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
+import { AcDDTableColumnProperty, AcDDTableProperty, AcEnumDDColumnProperty, AcEnumDDTableProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEApi } from "./ac-dde-api";
 import { IAcDDEDataDictionary } from "../interfaces/ac-dde-data-dictionary.inteface";
 import { IAcDDEFunction } from "../interfaces/ac-dde-function.inteface";
@@ -563,6 +563,26 @@ export class AcDDEDataStorage {
     return row;
   }
 
+  setTableProperties(table:IAcDDETable){
+    const properties:any = {};
+    const tableRow:any =table;
+    const setProperty:Function = (propertyName:any)=>{
+      let propertyValue = tableRow[propertyName]
+      if(propertyValue != undefined){
+        let validPropertyValue = true;
+        if(validPropertyValue){
+          properties[propertyName] = {
+            [AcDDTableColumnProperty.KeyPropertyName]: propertyName,
+            [AcDDTableColumnProperty.KeyPropertyValue]: tableRow[propertyName]
+          };
+        }
+      }
+    };
+    for(const propertyName of Object.values(AcEnumDDTableProperty)){
+      setProperty(propertyName);
+    }
+    table.tableProperties = properties;
+  }
 
   setTableColumnProperties(column:IAcDDETableColumn){
     const properties:any = {};

@@ -6,22 +6,27 @@ export const boolColumnProperties: any[] = [
   AcEnumDDColumnProperty.CheckInModify,
   AcEnumDDColumnProperty.CheckInSave,
   AcEnumDDColumnProperty.ForeignKey,
-  AcEnumDDColumnProperty.InSearchQuery,
   AcEnumDDColumnProperty.IsSelectDistinct,
   AcEnumDDColumnProperty.NotNull,
   AcEnumDDColumnProperty.PrimaryKey,
   AcEnumDDColumnProperty.Required,
   AcEnumDDColumnProperty.SetNullBeforeDelete,
-  AcEnumDDColumnProperty.UniqueKey
+  AcEnumDDColumnProperty.UniqueKey,
+  AcEnumDDColumnProperty.UseForRowLikeFilter,
 ];
 export const numberColumnProperties: any[] = [
   AcEnumDDColumnProperty.AutoNumberLength,
   AcEnumDDColumnProperty.Size
 ];
-
 export const stringColumnProperties: any[] = [
   AcEnumDDColumnProperty.AutoNumberPrefix,
   AcEnumDDColumnProperty.ColumnTitle,
   AcEnumDDColumnProperty.Format,
   AcEnumDDColumnProperty.Remarks
+];
+export const columnBasedProperties: any[] = [
+  AcEnumDDColumnProperty.DefaultValue,
+];
+export const arrayColumnProperties: any[] = [
+  AcEnumDDColumnProperty.ValueOptions,
 ];

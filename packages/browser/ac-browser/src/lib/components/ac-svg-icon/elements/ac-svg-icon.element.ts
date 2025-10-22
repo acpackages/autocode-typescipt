@@ -3,14 +3,12 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_SVG_ICON_TAG } from "../_ac-svg-icon.element";
 
 export class AcSvgIconElement extends AcElementBase {
-  private slotEl: HTMLSlotElement;
+  private slotEl!: HTMLSlotElement;
 
   static get observedAttributes(): string[] {
     return ['color', 'size', 'src', 'aria-label', 'spin','svg-code'];
   }
-
-  constructor() {
-    super();
+  override connectedCallback(): void {
     const shadow = this.attachShadow({ mode: 'open' });
 
     shadow.innerHTML = `
@@ -44,10 +42,6 @@ export class AcSvgIconElement extends AcElementBase {
     `;
 
     this.slotEl = shadow.querySelector('#slot') as HTMLSlotElement;
-  }
-
-  override connectedCallback(): void {
-    // Load external SVG if src attribute is present
     const src = this.getAttribute('src');
     if (src) this.loadFromSrc(src);
 

@@ -26,6 +26,7 @@ export class AcDDEImportExportExtension extends AcDDEExtension {
           }
         }},
         {label:'Download JSON',iconClass:'aci-download',callback:()=>{
+          console.log(this.editorApi);
           if(this.editorApi.activeDataDictionary){
             AcBrowser.downloadJsonObjectAsFile({data:this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId}),filename:'data_dictionary.json'});
           }

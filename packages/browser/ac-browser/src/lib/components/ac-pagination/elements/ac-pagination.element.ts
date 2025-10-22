@@ -45,13 +45,13 @@ export class AcPagination extends AcElementBase{
     this.paginationApi.totalRows = value;
   }
   element:HTMLElement = document.createElement('div');
-  pageDisplayedRowsLabel:AcPageDisplayedRowsLabel;
-  pageNavigationButtons:AcPageNavigationButtons;
-  pageSizeDropdown:AcPageSizeDropdown;
+  pageDisplayedRowsLabel!:AcPageDisplayedRowsLabel;
+  pageNavigationButtons!:AcPageNavigationButtons;
+  pageSizeDropdown!:AcPageSizeDropdown;
   paginationApi = new AcPaginationApi({pagination:this});
 
-  constructor(){
-    super();
+  override connectedCallback(){
+    super.connectedCallback();
     this.pageDisplayedRowsLabel = new AcPageDisplayedRowsLabel({paginationApi:this.paginationApi});
     this.pageNavigationButtons = new AcPageNavigationButtons({paginationApi:this.paginationApi});
     this.pageSizeDropdown = new AcPageSizeDropdown({paginationApi:this.paginationApi});

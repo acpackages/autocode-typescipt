@@ -1,28 +1,28 @@
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 
-export class AcFormFieldErrorMessage extends HTMLElement {
-  private _message = "";
-  get message(): string {
-    return this._message;
-  }
-  set message(value: string) {
-    if (this._message != value) {
-      this._message = value;
-      console.log(value);
-      this.innerHTML = value;
-      this.innerText = value;
-      if (value) {
-        this.style.display = "";
-      }
-      else {
-        this.style.display = "none";
-      }
-    }
+export class AcFormFieldErrorMessage extends AcElementBase {
+  private originalMessageHtml = "";
+
+  override connectedCallback(): void {
+    this.style.display = "none";
+    this.originalMessageHtml = this.innerHTML;
   }
 
-  constructor() {
-    super();
-    this.style.display = 'none';
+  setError({message,show = true}:{message?:string,show?:boolean}){
+    if(show){
+      this.style.display = "block";
+      if(this.originalMessageHtml){
+        this.innerHTML = this.originalMessageHtml;
+      }
+      else{
+        this.innerHTML = message ?? "";
+      }
+    }
+    else{
+      this.style.display = "none";
+    }
+
   }
 
 }

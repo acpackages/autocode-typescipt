@@ -36,8 +36,8 @@ export class AcDrawer extends AcElementBase{
     this.setAttribute('show-backdrop',`${value}`);
   }
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
     // this.style.display = 'contents';
     this.init();
   }

@@ -42,13 +42,13 @@ export class AcDropdown extends AcElementBase {
     this.setAttribute("trigger", value);
   }
 
-  private keydownHandler: (e: KeyboardEvent) => void;
+  private keydownHandler!: (e: KeyboardEvent) => void;
   private isOpen = false;
   private observer?: IntersectionObserver;
-  private outsideClickHandler: (e: MouseEvent) => void;
+  private outsideClickHandler!: (e: MouseEvent) => void;
 
-  private resizeHandler: () => void;
-  private scrollHandler: () => void;
+  private resizeHandler!: () => void;
+  private scrollHandler!: () => void;
   private targetElement!: HTMLElement;
   private triggerElement!: HTMLElement;
 
@@ -60,8 +60,8 @@ export class AcDropdown extends AcElementBase {
 
   private chosenPosition: "auto" | "bottom" | "left" | "right" | "top" | string = "auto";
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
     this.style.display = "contents";
     this.setAttribute(AcDropdownAttributeName.acDropdownId, this.id);
     this.setAttribute(AcDropdownAttributeName.acDropdown, "");

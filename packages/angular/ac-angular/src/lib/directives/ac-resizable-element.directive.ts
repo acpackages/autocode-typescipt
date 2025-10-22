@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/directive-selector */
@@ -51,12 +52,12 @@ export class AcResizableElementDirective extends AcBase {
     this.startHeight = this.element.offsetHeight;
 
     this.ngZone.runOutsideAngular(() => {
-      document.addEventListener('mousemove', this.onMouseMove);
-      document.addEventListener('mouseup', this.onMouseUp);
+      document.addEventListener('mousemove', this.handleMouseMove);
+      document.addEventListener('mouseup', this.handleMouseUp);
     });
   }
 
-  private onMouseMove = (event: MouseEvent) => {
+  private handleMouseMove = (event: MouseEvent) => {
     if (!this.resizing) return;
 
     const newWidth = this.startWidth + (event.clientX - this.startX);
@@ -68,9 +69,9 @@ export class AcResizableElementDirective extends AcBase {
     this.ngZone.run(() => this.onResize.emit({ width: newWidth, height: newHeight }));
   };
 
-  private onMouseUp = () => {
+  private handleMouseUp = () => {
     this.resizing = false;
-    document.removeEventListener('mousemove', this.onMouseMove);
-    document.removeEventListener('mouseup', this.onMouseUp);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
   };
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { acAddClassToElement, AcDatagridExtensionManager, acSetElementAttributes } from '@autocode-ts/ac-browser';
+import { acAddClassToElement, AcDatagridExtensionManager, acInit, acSetElementAttributes } from '@autocode-ts/ac-browser';
 import { AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataDictionaryEditorHeader } from "./ac-data-dictionary-editor-header.element";
 import { AcDDERelationshipsDatagrid } from "../datagrid/ac-dde-relationships-datagrid.element";
@@ -41,6 +41,7 @@ export class AcDataDictionaryEditor {
   viewColumnsDatagrid?: AcDDEViewColumnsDatagrid;
 
   constructor() {
+    acInit();
     this.editorApi = new AcDDEApi({editor:this});
 
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);

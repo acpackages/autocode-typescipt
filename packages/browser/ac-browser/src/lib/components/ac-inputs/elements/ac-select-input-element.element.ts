@@ -16,6 +16,9 @@ export class AcSelectInput extends AcInputBase {
   }
   set labelKey(value: string) {
     this.setAttribute('label-key', value);
+    if(this._value){
+      this.value = this._value;
+    }
   }
 
   get valueKey(): string {
@@ -23,6 +26,9 @@ export class AcSelectInput extends AcInputBase {
   }
   set valueKey(value: string) {
     this.setAttribute('value-key', value);
+    if(this._value){
+      this.value = this._value;
+    }
   }
 
   override get placeholder(): string | null {
@@ -56,7 +62,9 @@ export class AcSelectInput extends AcInputBase {
     if (this.isDropdownOpen){
       this.renderVirtualList()
     };
-    this.value = this._value;
+    if(this._value){
+      this.value = this._value;
+    }
   }
 
   override get value() { return super.value; }
@@ -67,11 +75,10 @@ export class AcSelectInput extends AcInputBase {
       return optVal == val;
     });
     if (match && !this.isDropdownOpen) {
-      this.textInputElement.value = typeof match === "object" ? match[this.labelKey] : match;
+      this.textInputElement.value = (typeof match === "object" ? match[this.labelKey] : match)??'';
     }
 
     if(this._selectOptions.length == 0 && super.value != undefined){
-      console.log(val);
       this.selectOptions = [{
         [this.labelKey]:super.value,[this.valueKey]:super.value
       }];
@@ -90,10 +97,14 @@ export class AcSelectInput extends AcInputBase {
   private optionHeight = 32;
   private scrollable!: AcScrollable;
 
-  constructor() {
-    super();
-    this.labelKey = 'label';
-    this.valueKey = 'value';
+  override connectedCallback() {
+    if(!this.hasAttribute('label-key')){
+      this.labelKey = 'label';
+    }
+    if(!this.hasAttribute('value-key')){
+      this.valueKey = 'value';
+    }
+
     this.inputElement.style.position = "relative";
 
     this.textInputElement.type = "text";
@@ -130,6 +141,7 @@ export class AcSelectInput extends AcInputBase {
       options: { bufferCount: 3, elementHeight: this.optionHeight }
     });
     this.attachEvents();
+    super.connectedCallback();
   }
 
   private applyHighlightStyles() {

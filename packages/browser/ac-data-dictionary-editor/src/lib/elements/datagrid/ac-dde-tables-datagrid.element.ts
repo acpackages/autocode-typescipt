@@ -1,4 +1,4 @@
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcHooks } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
@@ -14,6 +14,8 @@ import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETable } from "../../interfaces/ac-dde-table.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { AcDDEDatagridTableConstraintsInput } from "../inputs/ac-dde-datagrid-table-constraints-input.element";
+import { AcEnumDDTableProperty } from "@autocode-ts/ac-data-dictionary";
 
 export class AcDDETablesDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -51,47 +53,53 @@ export class AcDDETablesDatagrid {
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SingularName, 'title': 'Singular Name',allowFilter:true,
+        'field': AcEnumDDTableProperty.SingularName, 'title': 'Singular Name',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.PluralName, 'title': 'Plural Name',allowFilter:true,
+        'field': AcEnumDDTableProperty.PluralName, 'title': 'Plural Name',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SelectQuery, 'title': 'Select Query',allowFilter:true,
+        'field': AcEnumDDTableProperty.Constraints, 'title': 'Constraints',allowFilter:true,
+        cellEditorElement: AcDDEDatagridTableConstraintsInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      {
+        'field': AcEnumDDTableProperty.SelectSqlQuery, 'title': 'Select Query',allowFilter:true,
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+          editorApi: this.editorApi
+        }, useCellEditorForRenderer: true
+      },
+      // {
+      //   'field': AcEnumDDTableProperty.SelectQueryColumns, 'title': 'Query Columns',allowFilter:true,
+      //   cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+      //     editorApi: this.editorApi
+      //   }, useCellEditorForRenderer: true
+      // },
+      // {
+      //   'field': AcEnumDDTableProperty.SelectRequestColumns, 'title': 'Request Columns',allowFilter:true,
+      //   cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+      //     editorApi: this.editorApi
+      //   }, useCellEditorForRenderer: true
+      // },
+      {
+        'field': AcEnumDDTableProperty.OrderBy, 'title': 'Order By',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.SelectQueryColumns, 'title': 'Query Columns',allowFilter:true,
+        'field': AcEnumDDETable.SqlViewName, 'title': 'View',allowFilter:true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
-      {
-        'field': AcEnumDDETable.SelectRequestColumns, 'title': 'Request Columns',allowFilter:true,
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcEnumDDETable.OrderBy, 'title': 'Order By',allowFilter:true,
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
-      {
-        'field': AcEnumDDETable.ViewId, 'title': 'View',allowFilter:true,
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
       datagridApi: this.datagridApi,
@@ -102,6 +110,12 @@ export class AcDDETablesDatagrid {
     this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TablesDatagridBeforeColumnsSet, args: colSetHookArgs });
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
+    this.datagridApi.on({
+          event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
+            this.editorApi.dataStorage.setTableProperties(args.datagridCell.datagridRow.data);
+            console.log(args.datagridCell.datagridRow);
+          }
+        });
     this.datagridApi.on({
       event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         const row = this.editorApi.dataStorage.addTable({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });

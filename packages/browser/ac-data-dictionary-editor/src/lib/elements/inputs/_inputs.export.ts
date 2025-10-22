@@ -5,6 +5,7 @@ export * from './ac-dde-datagrid-select-format-input.elemen';
 export * from './ac-dde-datagrid-select-input.element';
 export * from './ac-dde-datagrid-select-table-column-input.element';
 export * from './ac-dde-datagrid-select-table-input.element';
+export * from './ac-dde-datagrid-table-constraints-input.element';
 export * from './ac-dde-datagrid-text-input.element';
 export * from './ac-dde-datagrid-values-options-input.element';
 export * from './ac-dde-datagrid-yes-no-input.element';

@@ -37,8 +37,8 @@ export class AcTabs extends AcElementBase{
   private boundClick?: (e: Event) => void;
   private boundKeydown?: (e: KeyboardEvent) => void;
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
     this.style.display = "contents";
     if (!this.hasAttribute('role')) this.setAttribute('role', 'tablist');
     const tabs = Array.from(this.querySelectorAll(`.${AcTabsCssClassName.acTab}, [${AcTabsAttributeName.acTab}]`));

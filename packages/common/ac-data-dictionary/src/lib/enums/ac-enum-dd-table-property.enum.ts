@@ -1,4 +1,5 @@
 export enum AcEnumDDTableProperty {
+  Constraints = "CONSTRAINTS",
   Index = "INDEX",
   OrderBy = "ORDER_BY",
   PluralName = "PLURAL_NAME",
@@ -6,5 +7,6 @@ export enum AcEnumDDTableProperty {
   SelectSqlQuery = "SELECT_SQL_QUERY",
   SqlViewName = "SQL_VIEW_NAME",
   SingularName = "SINGULAR_NAME",
-  Tags = "TAGS"
+  Tags = "TAGS",
+  Unknown = "Unknown"
 }

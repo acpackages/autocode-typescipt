@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "target": "es2022",
+    "module": "es2020",
     "forceConsistentCasingInFileNames": true,
     "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "declaration": false,
+    "emitDeclarationOnly": false
   },
   "files": [],
   "include": [],

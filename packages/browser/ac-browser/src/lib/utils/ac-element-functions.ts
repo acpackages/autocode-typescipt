@@ -48,7 +48,7 @@ export function acCopyElementStyles({ fromElement, toElement }: { fromElement: H
   }
 }
 
-export function acElementHasParentTag({element,tag}:{element: HTMLElement, tag: string}): boolean {
+export function acElementHasParentTag({ element, tag }: { element: HTMLElement, tag: string }): boolean {
   tag = tag.toLowerCase(); // normalize for comparison
   let parent = element.parentElement;
   while (parent) {
@@ -60,7 +60,20 @@ export function acElementHasParentTag({element,tag}:{element: HTMLElement, tag: 
   return false;
 }
 
-export function acMorphElement({ source, destination,sourceColor,destinationColor, duration = 300 }: { source: HTMLElement, destination: HTMLElement,sourceColor?:string;destinationColor?:string; duration?: number }): void {
+export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({name,event}:{name:string,event:Event})=>void }) {
+  const proto = HTMLElement.prototype as any;
+
+  for (const key in proto) {
+    if (key.startsWith("on")) {
+      const eventName = key.slice(2);
+      element.addEventListener(eventName, (e) => {
+        callback({name:eventName,event:e});
+      });
+    }
+  }
+}
+
+export function acMorphElement({ source, destination, sourceColor, destinationColor, duration = 300 }: { source: HTMLElement, destination: HTMLElement, sourceColor?: string; destinationColor?: string; duration?: number }): void {
   // Get bounding client rectangles
   const sourceRect = source.getBoundingClientRect();
   const destRect = destination.getBoundingClientRect();
@@ -84,7 +97,7 @@ export function acMorphElement({ source, destination,sourceColor,destinationColo
     transition: `all ${duration}ms ease-in-out`,
     opacity: "1",
   });
-  if(sourceColor){
+  if (sourceColor) {
     sourceClone.innerHTML = "";
     sourceClone.style.background = `${sourceColor}!important`;
   }
@@ -103,7 +116,7 @@ export function acMorphElement({ source, destination,sourceColor,destinationColo
     transition: `all ${duration}ms ease-in-out`,
     opacity: "0",
   });
-  if(destinationColor){
+  if (destinationColor) {
     destClone.innerHTML = "";
     destClone.style.background = `${destinationColor}!important`;
   }
@@ -140,7 +153,6 @@ export function acMorphElement({ source, destination,sourceColor,destinationColo
     destClone.remove();
   }, duration);
 }
-
 
 export function acRegisterCustomElement({ tag, type }: { tag: string, type: any }) {
   if (customElements.get(tag) == undefined) {
@@ -342,7 +354,7 @@ export function acHideElement({
   );
 }
 
-export function acWrapElementWithTag({element,wrapperTag = "div"}:{element: HTMLElement, wrapperTag:string}): HTMLElement {
+export function acWrapElementWithTag({ element, wrapperTag = "div" }: { element: HTMLElement, wrapperTag: string }): HTMLElement {
   const wrapper = document.createElement(wrapperTag);
   if (element.isConnected && element.parentNode) {
     element.parentNode.insertBefore(wrapper, element);

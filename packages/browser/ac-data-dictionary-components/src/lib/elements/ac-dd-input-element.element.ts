@@ -4,6 +4,10 @@ import { AcDataDictionary, AcDDTableColumn } from "@autocode-ts/ac-data-dictiona
 import { IAcDDInputDefinition } from "../interfaces/ac-dd-input-definition.interface";
 
 export class AcDDInputElement extends AcInputBase {
+  static override get observedAttributes() {
+    return [...super.observedAttributes, 'column-name', 'input-name', 'table-name'];
+  }
+
   get columnName(): string {
     return this.getAttribute('column-name') ?? '';
   }
@@ -42,6 +46,24 @@ export class AcDDInputElement extends AcInputBase {
 
   constructor() {
     super();
+  }
+
+   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    switch (name) {
+      case 'column-name':
+        this.columnName = newValue;
+        break;
+      case 'input-name':
+        this.inputName = newValue;
+        break;
+      case 'table-name':
+        this.tableName = newValue;
+        break;
+      default:
+        super.attributeChangedCallback(name, oldValue, newValue);
+        break;
+    }
   }
 
   override connectedCallback(): void {

@@ -17,8 +17,8 @@ export class AcSortable extends AcElementBase {
   private mutationObserver!: MutationObserver;
   originalUserSelect: any;
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
     this.observeDOM();
     this.initElement();
   }

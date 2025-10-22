@@ -7,6 +7,10 @@ import { AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
 import { AcContext } from "@autocode-ts/ac-template-engine";
 
 export class AcDDInputFieldElement extends AcInputBase {
+  static override get observedAttributes() {
+    return [...super.observedAttributes, 'column-name', 'input-name', 'label', 'table-name'];
+  }
+
   get columnName(): string {
     return this.getAttribute('column-name') ?? '';
   }
@@ -48,14 +52,14 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
 
   override get acContextKey(): string {
-    return super.acContextKey??"";
+    return super.acContextKey ?? "";
   }
   override set acContextKey(value: string) {
     super.acContextKey = value;
     this.setDDInput();
   }
 
-  private _inputProperties:any = {};
+  private _inputProperties: any = {};
   get inputProperties(): any {
     return this._inputProperties;
   }
@@ -65,14 +69,35 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
 
   override inputElement = document.createElement('div');
-  ddInput:AcDDInputElement = new AcDDInputElement();
-  ddInputField:AcDDInputFieldBaseElement;
-  ddTableColumn!:AcDDTableColumn;
+  ddInput: AcDDInputElement = new AcDDInputElement();
+  ddInputField: AcDDInputFieldBaseElement;
+  ddTableColumn!: AcDDTableColumn;
 
   constructor() {
     super();
     this.ddInputField = new AcDDInputManager.inputFieldElementClass();
     this.ddInputField.ddInputFieldElement = this;
+  }
+
+  override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+    if (oldValue === newValue) return;
+    switch (name) {
+      case 'column-name':
+        this.columnName = newValue;
+        break;
+      case 'input-name':
+        this.inputName = newValue;
+        break;
+      case 'label':
+        this.label = newValue;
+        break;
+      case 'table-name':
+        this.tableName = newValue;
+        break;
+      default:
+        super.attributeChangedCallback(name, oldValue, newValue);
+        break;
+    }
   }
 
   override connectedCallback(): void {
@@ -88,16 +113,16 @@ export class AcDDInputFieldElement extends AcInputBase {
       this.ddInput.inputName = this.inputName;
       this.ddInput.acContext = this.acContext;
       this.ddInput.acContextKey = this.acContextKey;
-      if(this.ddInput && this.ddInput.ddTableColumn){
+      if (this.ddInput && this.ddInput.ddTableColumn) {
         this.ddTableColumn = this.ddInput.ddTableColumn!;
         this.ddInputField.ddInputLabel = this.ddTableColumn.getColumnTitle();
       }
-      if(this.label){
+      if (this.label) {
         this.ddInputField.ddInputLabel = this.label;
       }
-      this.events.execute({event:'ddInputSet'});
+      this.events.execute({ event: 'ddInputSet' });
       const container = this.querySelector('ac-dd-input-container');
-      if(container){
+      if (container) {
         container.innerHTML = '';
         container.append(this.ddInput);
       }
@@ -105,4 +130,4 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
 }
 
-acRegisterCustomElement({tag:'ac-dd-input-field',type:AcDDInputFieldElement});
+acRegisterCustomElement({ tag: 'ac-dd-input-field', type: AcDDInputFieldElement });

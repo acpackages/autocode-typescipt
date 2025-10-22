@@ -79,12 +79,6 @@ export class AcTagsInput extends AcInputBase {
   private scrollable!: AcScrollable;
   private highlightingIndex: number = -1;
 
-  constructor() {
-    super();
-    this.setupElements();
-    this.attachEvents();
-  }
-
   private setupElements() {
     Object.assign(this.inputElement.style, {
       position: 'relative',
@@ -214,6 +208,8 @@ export class AcTagsInput extends AcInputBase {
   }
 
   override connectedCallback() {
+    this.setupElements();
+    this.attachEvents();
     this.append(this.inputElement);
     this.refreshReflectedAttributes();
   }

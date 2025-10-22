@@ -12,11 +12,12 @@ export class AcFormTest extends HTMLElement {
   private render() {
     this.innerHTML = `
       <h3>AC Form Test</h3>
+      <form id="manuallyAddedForm">
       <ac-form id="test-form" novalidate>
         <ac-form-field>
         <div class="form-group mb-2">
           <input type="text" name="username" placeholder="Username" required />
-          <ac-form-field-error-message>Username is required</ac-form-field-error-message>
+          <ac-form-field-error-message></ac-form-field-error-message>
           </div>
         </ac-form-field>
 
@@ -48,7 +49,7 @@ export class AcFormTest extends HTMLElement {
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
       </ac-form>
-
+</form>
       <pre id="form-output"></pre>
     `;
 

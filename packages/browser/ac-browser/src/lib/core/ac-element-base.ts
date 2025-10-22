@@ -6,9 +6,12 @@ export class AcElementBase extends HTMLElement {
   acId:string = Autocode.uuid();
   constructor(){
     super();
-    this.events.subscribeAllEvents({callback:(event:string,args:any)=>{
-      this.dispatchEvent(new CustomEvent(event.toLowerCase(),{detail:args}));
-    }});
+    const originalDispatch = this.dispatchEvent;
+    this.dispatchEvent = (event: Event): boolean => {
+      console.log(`Dispatching event: ${event.type}`, event);
+       this.events.execute({event:event.type,args:event});
+      return originalDispatch.call(this, event);
+    };
   }
 
   connectedCallback(){

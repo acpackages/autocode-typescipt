@@ -9,7 +9,7 @@ import { Autocode } from "./autocode";
 import { blobToBase64 } from '@autocode-ts/ac-extensions';
 import { AcEnumHttpResponseCode } from "../enums/ac-enum-http-response-code.enum";
 
-export interface IAcHttpRequest{
+export interface IAcHttpRequest {
   url:string,
   queryParams?: { [key: string]: string | number },
   data?:any,
@@ -17,7 +17,7 @@ export interface IAcHttpRequest{
   headers?: { [key: string]: string }
 }
 
-export interface IAcHttpResponse{
+export interface IAcHttpResponse {
   data?:any,
   status:AcEnumHttpResponseCode,
   details?:any,

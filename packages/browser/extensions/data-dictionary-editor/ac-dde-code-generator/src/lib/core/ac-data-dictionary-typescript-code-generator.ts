@@ -4,7 +4,7 @@
 import { stringToPascalCase } from '@autocode-ts/ac-extensions';
 import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTableProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
 import { AcDDECodeGeneratorDefaultConfig } from '../consts/ac-dde-code-generator-default-config.const';
-import { boolColumnProperties, numberColumnProperties, stringColumnProperties } from '../consts/ac-dde-property-groups.const';
+import { arrayColumnProperties, boolColumnProperties, numberColumnProperties, stringColumnProperties } from '../consts/ac-dde-property-groups.const';
 
 export class AcDataDictionaryTypescriptCodeGenerator {
   dataDictionaryJson: any = {};
@@ -134,7 +134,11 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         else if (numberColumnProperties.includes(key) && value) {
           validProperty = true;
         }
-        else if (stringColumnProperties.includes(key) && value) {
+        else if (arrayColumnProperties) {
+          validProperty = true;
+          propertyValue = JSON.stringify(value);
+        }
+        else if (value) {
           validProperty = true;
           propertyValue = `"${value}"`;
         }
@@ -238,7 +242,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
           }
           this.tabsCount--;
 
-          let tableColumnsKeyString = this.tabs + `class ${AcDDECodeGeneratorDefaultConfig.tableNameColumnClassPrefix}${stringToPascalCase(tableName)} {\n`;
+          let tableColumnsKeyString = this.tabs + `export class ${AcDDECodeGeneratorDefaultConfig.tableNameColumnClassPrefix}${stringToPascalCase(tableName)} {\n`;
           tableColumnsKeyString += columnKeys.join(`\n`);
           tableColumnsKeyString += `\n${this.tabs}}`;
           tableColumnKeys.push(tableColumnsKeyString);
@@ -247,7 +251,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         if (tableKeys.length > 0 || tableColumnKeys.length > 0) {
           result += this.tabs + `/* Table Keys Start */\n`;
           if (tableKeys.length > 0) {
-            result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.tableKeysClassName} {\n`;
+            result += this.tabs + `\nexport class ${AcDDECodeGeneratorDefaultConfig.tableKeysClassName} {\n`;
             result += tableKeys.join(`\n`);
             result += `\n${this.tabs}}\n\n`;
           }
@@ -274,7 +278,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
           }
           this.tabsCount--;
 
-          let viewColumnsKeyString = this.tabs + `class ${AcDDECodeGeneratorDefaultConfig.viewNameColumnClassPrefix}${stringToPascalCase(viewName)} {\n`;
+          let viewColumnsKeyString = this.tabs + `export class ${AcDDECodeGeneratorDefaultConfig.viewNameColumnClassPrefix}${stringToPascalCase(viewName)} {\n`;
           viewColumnsKeyString += columnKeys.join(`\n`);
           viewColumnsKeyString += `\n${this.tabs}}`;
           viewColumnKeys.push(viewColumnsKeyString);
@@ -283,7 +287,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         if (viewKeys.length > 0 || viewColumnKeys.length > 0) {
           result += this.tabs + `/* View Keys Start */\n`;
           if (viewKeys.length > 0) {
-            result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.viewKeysClassName} {\n`;
+            result += this.tabs + `\nexport class ${AcDDECodeGeneratorDefaultConfig.viewKeysClassName} {\n`;
             result += viewKeys.join(`\n`);
             result += `\n${this.tabs}}\n\n`;
           }
@@ -304,7 +308,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         }
         if (storedProcedureKeys.length > 0) {
           result += this.tabs + `/* Stored Procedure Keys Start */\n`;
-          result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.storeProcedureKeysClassName} {\n`;
+          result += this.tabs + `\nexport class ${AcDDECodeGeneratorDefaultConfig.storeProcedureKeysClassName} {\n`;
           result += storedProcedureKeys.join(`\n`);
           result += `\n${this.tabs}}\n\n`;
           result += this.tabs + `/* Stored Procedure Keys End */\n`;
@@ -320,7 +324,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         }
         if (triggerKeys.length > 0) {
           result += this.tabs + `/* Trigger Keys Start */\n`;
-          result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.triggerKeysClassName} {\n`;
+          result += this.tabs + `\nexport class ${AcDDECodeGeneratorDefaultConfig.triggerKeysClassName} {\n`;
           result += triggerKeys.join(`\n`);
           result += `\n${this.tabs}}\n\n`;
           result += this.tabs + `/* Trigger Keys End */\n`;
@@ -336,7 +340,7 @@ export class AcDataDictionaryTypescriptCodeGenerator {
         }
         if (functionKeys.length > 0) {
           result += this.tabs + `/* Function Keys Start */\n`;
-          result += this.tabs + `\nclass ${AcDDECodeGeneratorDefaultConfig.functionKeysClassName} {\n`;
+          result += this.tabs + `\nexport class ${AcDDECodeGeneratorDefaultConfig.functionKeysClassName} {\n`;
           result += functionKeys.join(`\n`);
           result += `\n${this.tabs}}\n\n`;
           result += this.tabs + `/* Function Keys End */\n`;

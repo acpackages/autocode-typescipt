@@ -3,16 +3,12 @@ import { AcFormFieldErrorMessage } from "./ac-form-field-error-element.element";
 
 export class AcFormField extends HTMLElement {
   private inputElement?: HTMLInputElement | any;
-  private mutationObserver: MutationObserver;
+  private mutationObserver!: MutationObserver;
   private inputListener: (() => void) | null = null;
 
-  constructor() {
-    super();
+  connectedCallback(): void {
     this.style.display = 'contents';
     this.mutationObserver = new MutationObserver(() => this.bindInput());
-  }
-
-  connectedCallback(): void {
     this.bindInput();
     this.mutationObserver.observe(this, { childList: true, subtree: true });
   }
@@ -51,7 +47,7 @@ export class AcFormField extends HTMLElement {
     this.inputListener = null;
   }
 
-  private updateState() {
+  updateState() {
     if (!this.inputElement) return;
     if ((this.inputElement as any).form && this.inputElement.form.submitted) {
       const isValid = (this.inputElement as any).validity.valid;
@@ -61,12 +57,10 @@ export class AcFormField extends HTMLElement {
       for (const msg of errorMessages) {
         if (hasError) {
           const error: string = this.inputElement.validationMessage;
-          msg.innerHTML = error;
-          msg.style.display = 'block';
+          msg.setError({message:error});
         }
         else {
-          msg.innerHTML = '';
-          msg.style.display = 'none';
+          msg.setError({show:false});
         }
       }
     }

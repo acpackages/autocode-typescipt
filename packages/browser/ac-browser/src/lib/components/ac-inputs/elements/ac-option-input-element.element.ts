@@ -92,26 +92,6 @@ export class AcOptionInput extends AcInput {
     }
   }
 
-  constructor() {
-    super();
-    this.type = AcEnumInputType.Checkbox;
-    acAddClassToElement({ class_: AcInputCssClassName.acOptionInput, element: this });
-    if (this.isArray == undefined || this.isArray == null) {
-      if (this.type == AcEnumInputType.Checkbox) {
-        this.isArray = true;
-      }
-      else {
-        this.isArray = false;
-      }
-    }
-    if (this.isArray == undefined) {
-      this.isArray = false;
-    }
-    this.inputElement.addEventListener('change', () => {
-      this.checked = this.inputElement.checked;
-    });
-  }
-
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     if (name == 'is-array') {
@@ -135,6 +115,24 @@ export class AcOptionInput extends AcInput {
   }
 
   override connectedCallback(): void {
+    if(!this.hasAttribute('type')){
+      this.type = AcEnumInputType.Checkbox;
+    }
+    acAddClassToElement({ class_: AcInputCssClassName.acOptionInput, element: this });
+    if (this.isArray == undefined || this.isArray == null) {
+      if (this.type == AcEnumInputType.Checkbox) {
+        this.isArray = true;
+      }
+      else {
+        this.isArray = false;
+      }
+    }
+    if (this.isArray == undefined) {
+      this.isArray = false;
+    }
+    this.inputElement.addEventListener('change', () => {
+      this.checked = this.inputElement.checked;
+    });
     super.connectedCallback();
     this.refreshChecked();
   }

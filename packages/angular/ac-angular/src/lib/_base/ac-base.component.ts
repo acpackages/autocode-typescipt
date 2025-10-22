@@ -21,7 +21,6 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
   constructor(protected elementRef:ElementRef,protected autocodeService:AutocodeService){
   }
 
-
   ngAfterViewInit(){
     if(this.commentElementTag){
       this.commentTag();
@@ -69,14 +68,8 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
     }
   }
 
-  on(event:string,callback:Function){
+  on({event,callback}:{event:string,callback:Function}):string{
     return this.events.subscribe({event:event,callback:callback});
   }
-
-
-
-
-
-
 
 }

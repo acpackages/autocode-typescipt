@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable prefer-const */
 /* eslint-disable @angular-eslint/no-output-on-prefix */

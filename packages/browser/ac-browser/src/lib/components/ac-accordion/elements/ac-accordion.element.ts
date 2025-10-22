@@ -10,8 +10,8 @@ import { AcElementBase } from "../../../core/ac-element-base";
 export class AcAccordion extends AcElementBase{
   collapses: AcCollapse[] = [];
 
-  constructor() {
-    super();
+  override connectedCallback(): void {
+    super.connectedCallback();
     this.style.display = 'contents';
     this.init();
   }

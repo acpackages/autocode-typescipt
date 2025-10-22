@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcArrayValuesInput, AcDatagridCell, AcEnumModalEvent, AcModal, AcTextInput, IAcDatagridCellEditorElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDDEApi } from "../../core/ac-dde-api";
+import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
 
-export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditorElement {
+export class AcDDEDatagridTableConstraintsInput implements IAcDatagridCellEditorElement {
   datagridCell!: AcDatagridCell;
+  editorApi!: AcDDEApi;
   textInput: AcTextInput = new AcTextInput();
   isModalOpen: boolean = false;
 
@@ -15,13 +19,12 @@ export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditorEle
   }
 
   getDisplayLabel(): string {
+    let count: number = 0;
     const optionLabels: string[] = [];
     if (this.datagridCell && this.datagridCell.cellValue) {
-      for(const option of this.datagridCell.cellValue){
-        optionLabels.push(option.value)
-      }
+      count = this.datagridCell.cellValue.length;
     }
-    return optionLabels.join(',');
+    return `${count} Constraints`;
   }
 
   getElement(): HTMLElement {
@@ -34,6 +37,9 @@ export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditorEle
 
   init(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;
+    if (args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']) {
+      this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];
+    }
     this.textInput.on({
       event: 'click', callback: () => {
         if (!this.isModalOpen) {
@@ -52,28 +58,33 @@ export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditorEle
 
   openModal() {
     const acModal = new AcModal();
+    const tableColumns = this.getTableColumns();
     acModal.innerHTML = `
       <div class="ac-modal bg-white">
         <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
-          <h4 id="modal-title" style="margin: 0;">Value Options</h4>
+          <h4 id="modal-title" style="margin: 0;">Constraints</h4>
         </div>
         <div class="ac-modal-body" style="padding: 1rem;">
           <ac-array-values-input>
             <table style="min-width:600px;">
               <thead>
                 <tr>
+                  <th>Type</th>
                   <th>Value</th>
-                  <th>Label</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody ac-array-values-items>
                 <tr >
                   <td>
-                    <input class="form-control" ac-array-values-item-input ac-array-value-item-key="value"/>
+                    <select class="form-control" ac-array-values-item-input ac-array-value-item-key="type">
+                      <option value="" >Select Constraint Type</option>
+                      <option value="COMPOSITE_UNIQUE_KEY">Composite Unique Key</option>
+                      <option value="COMPOSITE_PRIMARY_KEY">Composite Primary Key</option>
+                    </select>
                   </td>
                   <td>
-                    <input class="form-control" ac-array-values-item-input ac-array-value-item-key="label"/>
+                    <ac-tags-input class="form-control" ac-array-values-item-input ac-array-value-item-key="value" tag-options='${JSON.stringify(tableColumns)}'/>
                   </td>
                   <td>
                     <button type="button" class="btn btn-danger" ac-array-values-item-remove><i class="fa fa-trash"></i></button>
@@ -104,6 +115,14 @@ export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditorEle
     this.textInput.ownerDocument.querySelector('body')?.append(acModal);
     acModal.open();
     arrayValues.value = this.datagridCell.cellValue ? [...this.datagridCell.cellValue] : [];
+  }
+
+  getTableColumns() {
+    const options: any[] = [];
+    for (const row of Object.values(this.editorApi.dataStorage.getTableColumns({ tableId:this.datagridCell.datagridRow.data['tableId'] }))) {
+      options.push({ 'label': row.columnName, 'value': row.columnName });
+    }
+    return options;
   }
 
 }

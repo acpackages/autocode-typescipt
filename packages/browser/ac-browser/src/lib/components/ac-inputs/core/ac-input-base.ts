@@ -7,35 +7,36 @@ import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
 import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
 import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
 import { AcElementBase } from "../../../core/ac-element-base";
+import { acListenAllElementEvents } from "../../../utils/ac-element-functions";
 
 export class AcInputBase extends AcElementBase {
   static get observedAttributes() {
-    return ['ac-context','ac-context-key','class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style','required'];
+    return ['ac-context', 'ac-context-key', 'class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'style', 'required'];
   }
 
-  get inputReflectedAttributes(){
-    return ['class', 'value', 'placeholder', 'disabled', 'readonly','name','required'];
+  get inputReflectedAttributes() {
+    return ['class', 'value', 'placeholder', 'disabled', 'readonly', 'name', 'required'];
   }
 
-  reflectValueAttribute:boolean = true;
+  reflectValueAttribute: boolean = true;
 
-  _acContext?:any;
-  get acContext():any{
+  _acContext?: any;
+  get acContext(): any {
     return this._acContext;
   }
-  set acContext(value:AcContext){
+  set acContext(value: AcContext) {
     this._acContext = value;
-    if(value){
-      this.setAttribute('ac-context',value.__acContextName__);
+    if (value) {
+      this.setAttribute('ac-context', value.__acContextName__);
     }
     this.setValueFromAcContext();
   }
 
-  get acContextKey():string|null{
+  get acContextKey(): string | null {
     return this.getAttribute('ac-context-key');
   }
-  set acContextKey(value:string){
-    this.setAttribute('ac-context-key',value);
+  set acContextKey(value: string) {
+    this.setAttribute('ac-context-key', value);
     this.setValueFromAcContext();
   }
 
@@ -99,11 +100,11 @@ export class AcInputBase extends AcElementBase {
     }
   }
 
-  get validationMessage():any{
+  get validationMessage(): any {
     return this.inputElement.validationMessage;
   }
 
-  get validity():ValidityState{
+  get validity(): ValidityState {
     return this.inputElement.validity;
   }
 
@@ -112,27 +113,31 @@ export class AcInputBase extends AcElementBase {
     return this._value;
   }
   set value(value: any) {
-    if(value != this._value){
+    if (value != this._value) {
       this.setValue(value);
     }
   }
 
-  hooks:AcHooks = new AcHooks();
-  inputElement: HTMLElement|any = document.createElement('input');
+  hooks: AcHooks = new AcHooks();
+  inputElement: HTMLElement | any = document.createElement('input');
 
   constructor() {
     super();
-    this.style.display = 'contents';
-    this.handleInput = this.handleInput.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    setTimeout(() => {
+      acListenAllElementEvents({ element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
+          this.events.execute({ event: name, args: event });
+        }
+      });
+    }, 1);
+
   }
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     switch (name) {
       case 'ac-context':
-        if(AcContextRegistry.exists({name:newValue})){
-          this.acContext = AcContextRegistry.get({name:newValue})!;
+        if (AcContextRegistry.exists({ name: newValue })) {
+          this.acContext = AcContextRegistry.get({ name: newValue })!;
         }
         break;
       case 'ac-context-key':
@@ -161,11 +166,11 @@ export class AcInputBase extends AcElementBase {
         this.name = newValue;
         break;
       case 'type':
-        this.inputElement.setAttribute('type',newValue);
+        this.inputElement.setAttribute('type', newValue);
         break;
     }
-    if(this.inputReflectedAttributes.includes(name)){
-      this.refreshReflectedAttributes({attribute:name});
+    if (this.inputReflectedAttributes.includes(name)) {
+      this.refreshReflectedAttributes({ attribute: name });
     }
   }
 
@@ -175,6 +180,9 @@ export class AcInputBase extends AcElementBase {
 
   override connectedCallback() {
     super.connectedCallback();
+    this.style.display = 'contents';
+    this.handleInput = this.handleInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.appendChild(this.inputElement);
     this.refreshReflectedAttributes();
     this.inputElement.addEventListener('input', this.handleInput);
@@ -206,59 +214,59 @@ export class AcInputBase extends AcElementBase {
     const oldValue: any = this._value;
     if (oldValue != value) {
       this._value = value;
-      const inputElement:HTMLInputElement = this.inputElement as HTMLInputElement;
+      const inputElement: HTMLInputElement = this.inputElement as HTMLInputElement;
       inputElement.value = value;
-      if(this.reflectValueAttribute){
-        this.setAttribute('value',value);
+      if (this.reflectValueAttribute) {
+        this.setAttribute('value', value);
       }
-      if(this.isConnected){
+      if (this.isConnected) {
         this.setValueToAcContext();
       }
     }
   }
 
-  protected setValueFromAcContext(){
-    if(this.acContextKey && this.acContext){
+  protected setValueFromAcContext() {
+    if (this.acContextKey && this.acContext) {
       this.value = this.acContext[this.acContextKey];
-      this.acContext.on(AcEnumContextEvent.Change,(args:any)=>{
-        if(args.property == this.acContextKey){
+      this.acContext.on(AcEnumContextEvent.Change, (args: any) => {
+        if (args.property == this.acContextKey) {
           this.setValue(args.value);
         }
       });
     }
   }
 
-  protected setValueToAcContext(){
-    if(this.acContextKey && this.acContext){
+  protected setValueToAcContext() {
+    if (this.acContextKey && this.acContext) {
       this.acContext[this.acContextKey] = this.value;
     }
   }
 
   upgradeProperty(prop: string) {
     if (this.hasOwnProperty(prop)) {
-      const instance:any = this;
+      const instance: any = this;
       const val = instance[prop];
       delete instance[prop];
       instance[prop] = val;
     }
   }
 
-  refreshReflectedAttributes({attribute}:{attribute?:string} = {}){
-    const setAttributeFromThis = (attributeName:string)=>{
-      if(this.hasAttribute(attributeName)){
-        this.inputElement.setAttribute(attributeName,this.getAttribute(attributeName)!);
+  refreshReflectedAttributes({ attribute }: { attribute?: string } = {}) {
+    const setAttributeFromThis = (attributeName: string) => {
+      if (this.hasAttribute(attributeName)) {
+        this.inputElement.setAttribute(attributeName, this.getAttribute(attributeName)!);
       }
-      else{
+      else {
         this.inputElement.removeAttribute(attributeName);
       }
     };
-    if(attribute){
-      for(const attributeName of this.inputReflectedAttributes){
-      setAttributeFromThis(attribute);
+    if (attribute) {
+      for (const attributeName of this.inputReflectedAttributes) {
+        setAttributeFromThis(attribute);
+      }
     }
-    }
-    else{
-      for(const attributeName of this.inputReflectedAttributes){
+    else {
+      for (const attributeName of this.inputReflectedAttributes) {
         setAttributeFromThis(attributeName);
       }
     }

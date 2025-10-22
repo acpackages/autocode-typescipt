@@ -25,11 +25,6 @@ export class AcForm extends HTMLElement {
   form!: HTMLFormElement | any;
   private inputContextListeners: Map<HTMLElement, any> = new Map();
 
-
-  constructor() {
-    super();
-  }
-
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     switch (name) {
@@ -45,7 +40,15 @@ export class AcForm extends HTMLElement {
     if (!this.isWrapped) {
       this.isWrapped = true;
       const object = this;
-      this.form = acWrapElementWithTag({ element: this, wrapperTag: 'form' }) as HTMLFormElement;
+      if (this.isConnected && this.parentNode) {
+        const parent: HTMLElement = this.parentElement!;
+        if (parent.tagName.toLowerCase() === 'form') {
+          this.form = parent;
+        }
+      }
+      if (this.form == undefined || this.form == null) {
+        this.form = acWrapElementWithTag({ element: this, wrapperTag: 'form' }) as HTMLFormElement;
+      }
       this.form.style.display = 'contents';
       this.form.submitted = false;
       this.form.noValidate = true;

@@ -112,4 +112,5 @@ export class AcWebviewChannel {
 
 export const acWebviewChannel = new AcWebviewChannel();
 acWebviewChannel.isAppBrowser();
-window["acWebviewChannel"] = acWebviewChannel;
+const _window:any = window;
+_window["acWebviewChannel"] = acWebviewChannel;

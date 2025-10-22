@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { CommonModule } from '@angular/common';
@@ -185,7 +186,7 @@ export class AcRuntimeService {
       module: ts.ModuleKind.CommonJS, // or ESNext, etc.
       emitDecoratorMetadata: true,
       experimentalDecorators: true,
-      moduleResolution: ts.ModuleResolutionKind.NodeJs,
+      moduleResolution: ts.ModuleResolutionKind.Bundler,
       downlevelIteration: true,
       strict: false
     };

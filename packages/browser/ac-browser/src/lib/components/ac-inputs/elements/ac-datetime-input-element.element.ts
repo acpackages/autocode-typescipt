@@ -50,11 +50,6 @@ export class AcDatetimeInput extends AcInput{
     }
   }
 
-  constructor(){
-    super();
-    this.type = AcEnumInputType.DatetimeLocal;
-  }
-
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     if (name == 'type') {
@@ -69,6 +64,13 @@ export class AcDatetimeInput extends AcInput{
     else {
       super.attributeChangedCallback(name, oldValue, newValue);
     }
+  }
+
+  override connectedCallback(): void {
+    if(!this.hasAttribute("type")){
+      this.type = AcEnumInputType.DatetimeLocal;
+    }
+    super.connectedCallback();
   }
 }
 

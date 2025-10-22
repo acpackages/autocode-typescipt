@@ -70,6 +70,7 @@ export enum AcEnumDDETable {
 	SelectQueryColumns = "selectQueryColumns",
 	SelectRequestColumns = "selectRequestColumns",
 	SingularName = "singularName",
+  TableConstraints = "tableConstraints",
 	ViewId = "viewId",
 	TableId = "tableId",
 	TableName = "tableName",

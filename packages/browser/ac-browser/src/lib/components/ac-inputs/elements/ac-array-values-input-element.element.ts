@@ -133,7 +133,7 @@ export class AcArrayValuesInput extends AcInputBase {
         const arrayValueItem: IAcArrayValueItem = {
           id: Autocode.uniqueId(),
           item: item,
-          index: this.value.length
+          index: this.items.length
         };
         this.items.push(arrayValueItem);
         this.renderArrayValueItem({ arrayValueItem });
@@ -142,6 +142,7 @@ export class AcArrayValuesInput extends AcInputBase {
   }
 
   removeItem({ index }: { index: number }) {
+    console.log(index);
     if (this.items[index].element) {
       this.items[index].element.remove();
     }
@@ -154,7 +155,6 @@ export class AcArrayValuesInput extends AcInputBase {
     }
     this.notifyValueChange();
   }
-
 
   private renderArrayValueItem({ arrayValueItem }: { arrayValueItem: IAcArrayValueItem }) {
     if (this.itemsElement && this.itemClone) {
@@ -181,8 +181,8 @@ export class AcArrayValuesInput extends AcInputBase {
     if (value != this._value) {
       super.setValue(value);
       this._value = value;
-      this.refreshItems();
     }
+    this.refreshItems();
   }
 
 }

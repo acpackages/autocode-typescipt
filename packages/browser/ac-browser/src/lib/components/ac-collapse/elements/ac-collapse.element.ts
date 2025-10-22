@@ -18,8 +18,8 @@ export class AcCollapse extends AcElementBase{
   isAnimating: boolean = false;
   direction: AcEnumCollapseDirection = AcEnumCollapseDirection.TopToBottom;
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
     this.style.display = 'contents';
     const directionAttr = this.getAttribute(AcCollapseAttributeName.acCollapseDirection);
     if (directionAttr && Object.values(AcEnumCollapseDirection).includes(directionAttr as AcEnumCollapseDirection)) {

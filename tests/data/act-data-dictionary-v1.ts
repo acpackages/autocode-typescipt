@@ -56,6 +56,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "access_group_description": {
+          "columnName": "access_group_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -765,6 +775,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -785,6 +803,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -851,16 +873,39 @@ export const dataDictionaryJson = {
               "propertyValue": "Bank Accounts"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "INR"
+            }
+          }
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "accountee"
+        "CONSTRAINTS": {
+          "propertyName": "CONSTRAINTS",
+          "propertyValue": [
+            {
+              "type": "COMPOSITE_UNIQUE_KEY",
+              "value": "accountee_name,financial_year_end,financial_year_start"
+            }
+          ]
         },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "accountees"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "accountee"
         }
       }
     },
@@ -1044,14 +1089,6 @@ export const dataDictionaryJson = {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
-              "propertyValue": true
-            },
-            "is_select_distinct": {
-              "propertyName": "is_select_distinct",
-              "propertyValue": true
-            },
-            "in_search_query": {
-              "propertyName": "in_search_query",
               "propertyValue": true
             }
           }
@@ -1911,6 +1948,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "automated_task_description": {
+          "columnName": "automated_task_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -2330,10 +2377,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Number"
-            },
-            "unique_key": {
-              "propertyName": "unique_key",
-              "propertyValue": true
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -3646,6 +3689,96 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_ledger_account_mappings": {
+      "tableName": "act_ledger_account_mappings",
+      "tableColumns": {
+        "ledger_account_mapping_id": {
+          "columnName": "ledger_account_mapping_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ledger Account"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "mapping_key": {
+          "columnName": "mapping_key",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Mapping Key"
+            },
+            "FORMAT": {
+              "propertyName": "FORMAT",
+              "propertyValue": "UPPERCASE"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            }
+          }
+        },
+        "mapping_description": {
+          "columnName": "mapping_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "CONSTRAINTS": {
+          "propertyName": "CONSTRAINTS",
+          "propertyValue": [
+            {
+              "value": "mapping_key,accountee_id",
+              "type": "COMPOSITE_UNIQUE_KEY"
+            }
+          ]
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "ledger_account_mappings"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "ledger_account_mapping"
+        }
+      }
+    },
     "act_ledger_account_types": {
       "tableName": "act_ledger_account_types",
       "tableColumns": {
@@ -3680,6 +3813,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3716,16 +3853,35 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "ledger_account_types_description": {
+          "columnName": "ledger_account_types_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "ledger_account_type"
+        "CONSTRAINTS": {
+          "propertyName": "CONSTRAINTS",
+          "propertyValue": [
+            {
+              "type": "COMPOSITE_UNIQUE_KEY",
+              "value": "parent_ledger_account_type_id,ledger_account_type_name,accountee_id"
+            }
+          ]
         },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "ledger_account_types"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "ledger_account_type"
         }
       }
     },
@@ -3753,6 +3909,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": ""
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -3802,6 +3962,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -3866,16 +4030,63 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "is_expense": {
+          "columnName": "is_expense",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Expense?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            }
+          }
+        },
+        "is_income": {
+          "columnName": "is_income",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Income?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            }
+          }
+        },
+        "ledger_account_description": {
+          "columnName": "ledger_account_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "ledger_account"
+        "CONSTRAINTS": {
+          "propertyName": "CONSTRAINTS",
+          "propertyValue": [
+            {
+              "type": "COMPOSITE_UNIQUE_KEY",
+              "value": "accountee_id,ledger_account_name"
+            }
+          ]
         },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "ledger_accounts"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "ledger_account"
         }
       }
     },
@@ -4854,6 +5065,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "menu_description": {
+          "columnName": "menu_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -5177,6 +5398,16 @@ export const dataDictionaryJson = {
             }
           }
         }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "parties"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party"
+        }
       }
     },
     "act_party_addresses": {
@@ -5226,13 +5457,62 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_address"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_addresses"
+          "propertyValue": "party_addresses"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_address"
+        }
+      }
+    },
+    "act_party_bank_accounts": {
+      "tableName": "act_party_bank_accounts",
+      "tableColumns": {
+        "bank_account_id": {
+          "columnName": "bank_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Account"
+            }
+          }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            }
+          }
+        },
+        "party_bank_account_id": {
+          "columnName": "party_bank_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "party_bank_accounts"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_bank_account"
         }
       }
     },
@@ -5283,13 +5563,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_contact_person"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_contact_persons"
+          "propertyValue": "party_contact_persons"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_contact_person"
         }
       }
     },
@@ -5340,13 +5620,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_email_address"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_email_addresses"
+          "propertyValue": "party_email_addresses"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_email_address"
         }
       }
     },
@@ -5397,13 +5677,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_fax_number"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_fax_numbers"
+          "propertyValue": "party_fax_numbers"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_fax_number"
         }
       }
     },
@@ -5454,13 +5734,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_legal_document"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_legal_documents"
+          "propertyValue": "party_legal_documents"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_legal_document"
         }
       }
     },
@@ -5511,13 +5791,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_media"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_medias"
+          "propertyValue": "party_medias"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_media"
         }
       }
     },
@@ -5568,13 +5848,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_phone_number"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_phone_numbers"
+          "propertyValue": "party_phone_numbers"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_phone_number"
         }
       }
     },
@@ -5625,13 +5905,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_website"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_websites"
+          "propertyValue": "party_websites"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_website"
         }
       }
     },
@@ -6816,6 +7096,26 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_purchase_details"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_purchase_detail"
         }
       }
     },
@@ -6946,6 +7246,36 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current"
+            }
+          }
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Barcode Id"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_sale_details"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_sale_detail"
         }
       }
     },
@@ -7045,6 +7375,26 @@ export const dataDictionaryJson = {
               "propertyValue": "Stock UOM"
             }
           }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current?"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_stock_details"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_stock_detail"
         }
       }
     },
@@ -7560,36 +7910,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Brand"
-            }
-          }
-        },
-        "product_purchase_detail_id": {
-          "columnName": "product_purchase_detail_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Active Purchase Detail"
-            }
-          }
-        },
-        "product_sale_detail_id": {
-          "columnName": "product_sale_detail_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Active Sale Detail"
-            }
-          }
-        },
-        "product_stock_detail_id": {
-          "columnName": "product_stock_detail_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Active Stock Detail"
             }
           }
         }
@@ -10477,6 +10797,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "purchase_term_description": {
+          "columnName": "purchase_term_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -10554,10 +10884,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Coupon Identifier"
-            },
-            "unique_key": {
-              "propertyName": "unique_key",
-              "propertyValue": true
             }
           }
         },
@@ -10712,10 +11038,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Code"
-            },
-            "unique_key": {
-              "propertyName": "unique_key",
-              "propertyValue": true
             }
           }
         },
@@ -10790,6 +11112,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            }
+          }
+        },
+        "sale_coupon_description": {
+          "columnName": "sale_coupon_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
             }
           }
         }
@@ -12914,10 +13246,6 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
-            },
-            "in_search_query": {
-              "propertyName": "in_search_query",
-              "propertyValue": true
             }
           }
         },
@@ -12973,6 +13301,16 @@ export const dataDictionaryJson = {
                   "value": "INACTIVE"
                 }
               ]
+            }
+          }
+        },
+        "sale_offer_description": {
+          "columnName": "sale_offer_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
             }
           }
         }
@@ -14644,6 +14982,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            }
+          }
+        },
+        "sale_term_description": {
+          "columnName": "sale_term_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
             }
           }
         }
@@ -16869,10 +17217,6 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
-            },
-            "in_search_query": {
-              "propertyName": "in_search_query",
-              "propertyValue": true
             }
           }
         },
@@ -16893,14 +17237,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Unique Identifier"
-            },
-            "unique_key": {
-              "propertyName": "unique_key",
-              "propertyValue": true
-            },
-            "in_search_query": {
-              "propertyName": "in_search_query",
-              "propertyValue": true
             }
           }
         }
@@ -16913,55 +17249,6 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "storage_locations"
-        }
-      }
-    },
-    "act_party_bank_accounts": {
-      "tableName": "act_party_bank_accounts",
-      "tableColumns": {
-        "bank_account_id": {
-          "columnName": "bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Account"
-            }
-          }
-        },
-        "party_id": {
-          "columnName": "party_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Party"
-            }
-          }
-        },
-        "party_bank_account_id": {
-          "columnName": "party_bank_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "supplier_bank_account"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "supplier_bank_accounts"
         }
       }
     },
@@ -17311,8 +17598,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "part_percentage": {
-          "columnName": "part_percentage",
+        "tax_part_percentage": {
+          "columnName": "tax_part_percentage",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17378,20 +17665,6 @@ export const dataDictionaryJson = {
     "act_tax_rates": {
       "tableName": "act_tax_rates",
       "tableColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "index": {
           "columnName": "index",
           "columnType": "INTEGER",
@@ -17542,6 +17815,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            }
+          }
+        },
+        "taxing_scheme_description": {
+          "columnName": "taxing_scheme_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
             }
           }
         }
@@ -17855,6 +18138,26 @@ export const dataDictionaryJson = {
               "propertyValue": "Type"
             }
           }
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxing Scheme"
+            }
+          }
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -17955,6 +18258,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            }
+          }
+        },
+        "uom_description": {
+          "columnName": "uom_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
             }
           }
         }
@@ -18462,12 +18775,6 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "accountee_id",
       "destinationTable": "act_stock_updates",
-      "sourceColumn": "accountee_id",
-      "sourceTable": "act_accountees"
-    },
-    {
-      "destinationColumn": "accountee_id",
-      "destinationTable": "act_tax_rates",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
@@ -20710,22 +21017,40 @@ export const dataDictionaryJson = {
       "sourceTable": "act_taxing_schemes"
     },
     {
-      "destinationColumn": "product_purchase_detail_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_purchase_detail_id",
-      "sourceTable": "act_product_purchase_details"
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_accountees",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
     },
     {
-      "destinationColumn": "product_sale_detail_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_sale_detail_id",
-      "sourceTable": "act_product_sale_details"
+      "destinationColumn": "ledger_account_id",
+      "destinationTable": "act_ledger_account_mappings",
+      "sourceColumn": "ledger_account_id",
+      "sourceTable": "act_ledger_accounts"
     },
     {
-      "destinationColumn": "product_stock_detail_id",
-      "destinationTable": "act_products",
-      "sourceColumn": "product_stock_detail_id",
-      "sourceTable": "act_product_stock_details"
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_ledger_account_mappings",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_transactions",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_transactions",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "product_barcode_id",
+      "destinationTable": "act_product_sale_details",
+      "sourceColumn": "product_barcode_id",
+      "sourceTable": "act_product_barcodes"
     }
   ],
   "storedProcedures": {},

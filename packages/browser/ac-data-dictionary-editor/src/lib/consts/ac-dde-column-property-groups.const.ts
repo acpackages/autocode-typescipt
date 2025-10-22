@@ -6,7 +6,6 @@ export const boolColumnProperties: any[] = [
   AcEnumDDColumnProperty.CheckInModify,
   AcEnumDDColumnProperty.CheckInSave,
   AcEnumDDColumnProperty.ForeignKey,
-  AcEnumDDColumnProperty.InSearchQuery,
   AcEnumDDColumnProperty.IsSelectDistinct,
   AcEnumDDColumnProperty.NotNull,
   AcEnumDDColumnProperty.PrimaryKey,

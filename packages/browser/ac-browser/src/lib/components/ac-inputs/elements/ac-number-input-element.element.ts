@@ -4,75 +4,77 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInput } from "./ac-input-element.element";
 
-export class AcNumberInput extends AcInput{
+export class AcNumberInput extends AcInput {
 
   static override get observedAttributes() {
-    return [... super.observedAttributes, 'min','max','step'];
+    return [... super.observedAttributes, 'min', 'max', 'step'];
   }
 
-  override get inputReflectedAttributes(){
-    return [... super.inputReflectedAttributes,'min', 'max','step'];
+  override get inputReflectedAttributes() {
+    return [... super.inputReflectedAttributes, 'min', 'max', 'step'];
   }
 
-  get min():number{
-    let result:number = 0;
-    if(this.hasAttribute("min")){
+  get min(): number {
+    let result: number = 0;
+    if (this.hasAttribute("min")) {
       result = parseInt(this.getAttribute('min')!);
     }
     return result;
   }
-  set min(value:number){
-    if(value > 0){
-      this.setAttribute('min',`${value}`);
-      this.inputElement.setAttribute('min',`${value}`);
+  set min(value: number) {
+    if (value > 0) {
+      this.setAttribute('min', `${value}`);
+      this.inputElement.setAttribute('min', `${value}`);
     }
-    else{
+    else {
       this.removeAttribute('min');
       this.inputElement.removeAttribute('min');
     }
   }
 
 
-  get max():number{
-    let result:number = 0;
-    if(this.hasAttribute("max")){
+  get max(): number {
+    let result: number = 0;
+    if (this.hasAttribute("max")) {
       result = parseInt(this.getAttribute('max')!);
     }
     return result;
   }
-  set max(value:number){
-    if(value > 0){
-      this.setAttribute('max',`${value}`);
-      this.inputElement.setAttribute('max',`${value}`);
+  set max(value: number) {
+    if (value > 0) {
+      this.setAttribute('max', `${value}`);
+      this.inputElement.setAttribute('max', `${value}`);
     }
-    else{
+    else {
       this.removeAttribute('max');
       this.inputElement.removeAttribute('max');
     }
   }
 
-  get step():number{
-    let result:number = 0;
-    if(this.hasAttribute("step")){
+  get step(): number {
+    let result: number = 0;
+    if (this.hasAttribute("step")) {
       result = parseInt(this.getAttribute('step')!);
     }
     return result;
   }
 
-  set step(value:number){
-    if(value > 0){
-      this.setAttribute('step',`${value}`);
-      this.inputElement.setAttribute('step',`${value}`);
+  set step(value: number) {
+    if (value > 0) {
+      this.setAttribute('step', `${value}`);
+      this.inputElement.setAttribute('step', `${value}`);
     }
-    else{
+    else {
       this.removeAttribute('step');
       this.inputElement.removeAttribute('step');
     }
   }
 
-  constructor() {
-    super();
-    this.type = 'number';
+  override connectedCallback() {
+    if(!this.hasAttribute('type')){
+      this.type = 'number';
+    }
+    super.connectedCallback();
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -93,4 +95,4 @@ export class AcNumberInput extends AcInput{
 
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.numberInput,type:AcNumberInput});
+acRegisterCustomElement({ tag: AC_INPUT_TAG.numberInput, type: AcNumberInput });
