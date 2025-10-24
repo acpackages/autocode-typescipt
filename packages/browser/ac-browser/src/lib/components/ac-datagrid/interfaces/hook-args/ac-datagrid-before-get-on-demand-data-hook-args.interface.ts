@@ -1,4 +1,5 @@
-import { IAcOnDemandRequestArgs } from "../../../../interfaces/_interfaces.export";
+
+import { IAcOnDemandRequestArgs } from "../../../../data-source/interfaces/ac-on-demand-request-args.interface";
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 
 export interface IAcDatagridBeforeGetOnDemandDataHookArgs{

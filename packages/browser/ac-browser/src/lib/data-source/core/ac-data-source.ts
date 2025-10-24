@@ -4,20 +4,35 @@ import { AcEnumConditionOperator, AcEnumLogicalOperator, AcEnumSortOrder, AcEven
 import { AcDataSourceRow } from "../models/ac-data-source-row.model";
 import { IAcOnDemandRequestArgs } from "../interfaces/ac-on-demand-request-args.interface";
 import { IAcOnDemandResponseArgs } from "../interfaces/ac-on-demand-response-args.interface";
+import { AcEnumDataSourceHook } from "../enums/ac-enum-data-source-hook.enum";
+import { AcEnumDataSourceEvent } from "../enums/ac-enum-data-source-event.enum";
+import { IAcDataSourceDisplayedRowsChangeEvent } from "../interfaces/event-args/ac-data-source-displayed-rows-change-event.interface";
+import { IAcDataSourceTotalRowsChangeEvent } from "../interfaces/event-args/ac-data-source-total-rows-change-event.interface";
+import { IAcDataSourceGetOnDemandDataSuccessCallbackHookArgs } from "../interfaces/hook-args/ac-data-source-get-on-demand-data-success-callback-hook-args.interface";
+import { IAcDataSourceBeforeGetOnDemandDataHookArgs } from "../interfaces/hook-args/ac-data-source-before-get-on-demand-data-hook-args.interface";
+import { IAcDataSourceDataChangeHookArgs } from "../interfaces/hook-args/ac-data-source-data-change-hook-args.interface";
+import { IAcDataSourceRowHookArgs } from "../interfaces/hook-args/ac-data-source-row-hook-args.interface";
 
 export class AcDataSource {
+  private _data:any[] = [];
+  get data(): any[] {
+    return this._data;
+  }
+  set data(value: any[]) {
+    this.setData({ data: value });
+  }
   private _displayedRows: AcDataSourceRow[] = [];
   get displayedRows(): AcDataSourceRow[] {
     return this._displayedRows;
   }
   set displayedRows(value: AcDataSourceRow[]) {
     this._displayedRows = value;
-    // const eventArgs: IAcDatagridDisplayedRowsChangeEvent = {
-    //   displayedRows: value,
-    //   datagridApi: this.datagridApi
-    // };
-    // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DisplayedRowsChange, args: eventArgs });
-    // this.events.execute({ event: AcEnumDatagridEvent.DisplayedRowsChange, args: eventArgs });
+    const eventArgs: IAcDataSourceDisplayedRowsChangeEvent = {
+      displayedRows: value,
+      dataSource: this
+    };
+    this.hooks.execute({ hook: AcEnumDataSourceHook.DisplayedRowsChange, args: eventArgs });
+    this.events.execute({ event: AcEnumDataSourceEvent.DisplayedRowsChange, args: eventArgs });
   }
 
   private _totalRows: number = 0;
@@ -26,18 +41,17 @@ export class AcDataSource {
   }
   set totalRows(value: number) {
     this._totalRows = value;
-    // const eventArgs: IAcDatagridTotalRowsChangeEvent = {
-    //   totalRows: value,
-    //   datagridApi: this.datagridApi
-    // };
-    // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.TotalRowsChange, args: eventArgs });
-    // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DisplayedRowsChange, args: eventArgs });
-    // this.events.execute({ event: AcEnumDatagridEvent.TotalRowsChange, args: eventArgs });
-    // this.events.execute({ event: AcEnumDatagridEvent.DisplayedRowsChange, args: eventArgs });
+    const eventArgs: IAcDataSourceTotalRowsChangeEvent = {
+      totalRows: value,
+      dataSource: this
+    };
+    this.hooks.execute({ hook: AcEnumDataSourceHook.TotalRowsChange, args: eventArgs });
+    this.hooks.execute({ hook: AcEnumDataSourceHook.DisplayedRowsChange, args: eventArgs });
+    this.events.execute({ event: AcEnumDataSourceEvent.TotalRowsChange, args: eventArgs });
+    this.events.execute({ event: AcEnumDataSourceEvent.DisplayedRowsChange, args: eventArgs });
   }
 
   allDataAvailable: boolean = false;
-  data: any[] = [];
   events: AcEvents = new AcEvents();
   filterGroup: AcFilterGroup = new AcFilterGroup();
   hooks: AcHooks = new AcHooks();
@@ -173,13 +187,13 @@ export class AcDataSource {
     if (this.type == "ondemand") {
       if (this.onDemandFunction) {
         const successCallback: Function = (response: IAcOnDemandResponseArgs) => {
-          // const hookArgs: IAcDatagridGetOnDemandDataSuccessCallbackHookArgs = {
-          //   datagridApi: this.datagridApi,
-          //   requestArgs: requestArgs,
-          //   responseArgs: response,
-          // }
+          const hookArgs: IAcDataSourceGetOnDemandDataSuccessCallbackHookArgs = {
+            dataSource: this,
+            requestArgs: requestArgs,
+            responseArgs: response,
+          }
           this.setData({ data: response.data, totalCount: response.totalCount, startIndex: startIndex });
-          // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.GetOnDemandDataSuccessCallback, args: hookArgs });
+          this.hooks.execute({ hook: AcEnumDataSourceHook.GetOnDemandDataSuccessCallback, args: hookArgs });
         }
         const requestArgs: IAcOnDemandRequestArgs = {
           filterGroup: new AcFilterGroup(),
@@ -188,14 +202,32 @@ export class AcDataSource {
           successCallback: successCallback,
           sortOrder: new AcSortOrder()
         };
-        // const hookArgs: IAcDatagridBeforeGetOnDemandDataHookArgs = {
-        //   datagridApi: this.datagridApi,
-        //   requestArgs: requestArgs
-        // }
-        // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BeforeGetOnDemandData, args: hookArgs });
+        const hookArgs: IAcDataSourceBeforeGetOnDemandDataHookArgs = {
+          dataSource: this,
+          requestArgs: requestArgs
+        }
+        this.hooks.execute({ hook: AcEnumDataSourceHook.BeforeGetOnDemandData, args: hookArgs });
         this.onDemandFunction(requestArgs);
       }
     }
+  }
+
+  getRowIndex({key,value}:{key:string,value:any}):number{
+    return this.rows.findIndex((row:AcDataSourceRow)=>{
+      return row.data[key] == value;
+    });
+  }
+
+  getRowAtIndex({index}:{index:number}):AcDataSourceRow|undefined{
+    return this.rows.find((row:AcDataSourceRow)=>{
+      return row.index == index;
+    });
+  }
+
+  getRow({key,value}:{key:string,value:any}):AcDataSourceRow|undefined{
+    return this.rows.find((row:AcDataSourceRow)=>{
+      return row.data[key] == value;
+    });
   }
 
   processData() {
@@ -244,68 +276,68 @@ export class AcDataSource {
 
   setData({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
     if (this.type == 'offline') {
-      // const hookArgs: IAcDatagridDataChangeHookArgs = {
-      //   data: data,
-      //   datagridApi: this.datagridApi,
-      //   oldData: this.data
-      // }
-      // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BeforeDataChange, args: hookArgs });
-      this.data = data;
+      const hookArgs: IAcDataSourceDataChangeHookArgs = {
+        data: data,
+        dataSource: this,
+        oldData: this.data
+      }
+      this.hooks.execute({ hook: AcEnumDataSourceHook.BeforeDataChange, args: hookArgs });
+      this._data = data;
       let index = 0;
       this.rows = [];
-      for (const row of this.data) {
-        const datagridRow: AcDataSourceRow = new AcDataSourceRow({
+      for (const row of this._data) {
+        const dataSourceRow: AcDataSourceRow = new AcDataSourceRow({
           data: row,
           index: index,
           dataSource: this
         });
-        this.rows.push(datagridRow);
-        // const hookArgs: IAcDataSourceRowHookArgs = {
-        //   datagridApi: this.datagridApi,
-        //   datagridRow: datagridRow,
-        // };
-        // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DatagridRowCreate, args: hookArgs });
+        this.rows.push(dataSourceRow);
+        const hookArgs: IAcDataSourceRowHookArgs = {
+          dataSource: this,
+          dataSourceRow: dataSourceRow,
+        };
+        this.hooks.execute({ hook: AcEnumDataSourceHook.RowCreate, args: hookArgs });
         index++;
       }
-      // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DataChange, args: hookArgs });
+      this.hooks.execute({ hook: AcEnumDataSourceHook.DataChange, args: hookArgs });
       this.allDataAvailable = true;
       this.totalRows = index;
-      // this.processData();
+      this.processData();
     }
     else if (this.type == 'ondemand') {
       if (totalCount == undefined) {
         totalCount = data.length;
       }
-      if (this.data.length < totalCount) {
-        this.data = new Array(totalCount).fill(undefined);
+      if (this._data.length < totalCount) {
+        this._data = new Array(totalCount).fill(undefined);
       }
-      // const hookArgs: IAcDatagridDataChangeHookArgs = {
-      //   data: data,
-      //   datagridApi: this.datagridApi,
-      //   oldData: this.data
-      // }
-      // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BeforeDataChange, args: hookArgs });
+      const hookArgs: IAcDataSourceDataChangeHookArgs = {
+        data: data,
+        dataSource: this,
+        oldData: this.data
+      }
+      this.hooks.execute({ hook: AcEnumDataSourceHook.BeforeDataChange, args: hookArgs });
       this.rows = [];
       if (startIndex == undefined) {
         startIndex = 0;
       }
       let index: number = startIndex;
       for (const row of data) {
-        this.data[index] = row;
-        const datagridRow: AcDataSourceRow = new AcDataSourceRow({
+        this._data[index] = row;
+        const dataSourceRow: AcDataSourceRow = new AcDataSourceRow({
           data: row,
           index: index,
           dataSource: this
         });
-        this.rows.push(datagridRow);
-        // const hookArgs: IAcDatagridRowHookArgs = {
-        //   datagridApi: this.datagridApi,
-        //   datagridRow: datagridRow,
-        // };
-        // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DatagridRowCreate, args: hookArgs });
+        this.rows.push(dataSourceRow);
+        const hookArgs: IAcDataSourceRowHookArgs = {
+          dataSource: this,
+          dataSourceRow: dataSourceRow,
+        };
+        this.hooks.execute({ hook: AcEnumDataSourceHook.RowCreate, args: hookArgs });
         index++;
       }
-      // this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DataChange, args: hookArgs });
+      this.hooks.execute({ hook: AcEnumDataSourceHook.DataChange, args: hookArgs });
       this.allDataAvailable = this.data.filter((item) => { return item == undefined }).length == 0;
       this.totalRows = totalCount;
       this.processData();
@@ -313,20 +345,20 @@ export class AcDataSource {
   }
 
   setDisplayedData() {
-    // let displayedRows: AcDataSourceRow[] = [];
-    // // if (this.datagridApi.usePagination && this.datagridApi.pagination) {
-    // //   const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
-    // //   const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
-    // //   if (startIndex >= 0 && endIndex >= 0) {
-    // //     for (let index = startIndex; index <= endIndex; index++) {
-    // //       displayedRows.push(this.processedRows[index]);
-    // //     }
-    // //   }
-    // // }
-    // // else {
-    // //   displayedRows = this.processedRows;
-    // // }
-    // this.displayedRows = displayedRows;
+    let displayedRows: AcDataSourceRow[] = [];
+    // if (this.datagridApi.usePagination && this.datagridApi.pagination) {
+    //   const startIndex = this.datagridApi.pagination.paginationApi.startRow - 1;
+    //   const endIndex = this.datagridApi.pagination.paginationApi.endRow - 1;
+    //   if (startIndex >= 0 && endIndex >= 0) {
+    //     for (let index = startIndex; index <= endIndex; index++) {
+    //       displayedRows.push(this.processedRows[index]);
+    //     }
+    //   }
+    // }
+    // else {
+      displayedRows = this.processedRows;
+    // }
+    this.displayedRows = displayedRows;
   }
 
 }
