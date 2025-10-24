@@ -1,4 +1,5 @@
 export const AcEnumDatagridHook = {
+  ApplyFilter: 'applyFilter',
   BeforeColumnDefinitionsChange: 'beforeColumnDefinitionsChange',
   BeforeDataChange: 'beforeDataChange',
   BeforeGetOnDemandData: 'beforeGetOnDemandData',
@@ -27,6 +28,7 @@ export const AcEnumDatagridHook = {
   GetOnDemandDataSuccessCallback: 'getOnDemandDataSuccessCallback',
   HeaderCreate: 'headerCreate',
   HeaderColumnCellsCreate: 'headerColumnCellsCreate',
+  RefreshRows: 'refreshRows',
   RowCellsCreate: 'rowCellsCreate',
   RowAdd: 'rowAdd',
   RowFocus: 'rowFocus',

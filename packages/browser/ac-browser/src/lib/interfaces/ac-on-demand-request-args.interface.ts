@@ -1,6 +1,6 @@
 import { AcFilterGroup, AcSortOrder } from "@autocode-ts/autocode";
 
-export interface IAcDatagridOnDemandRequestArgs{
+export interface IAcOnDemandRequestArgs{
   startIndex:number;
   rowsCount:number;
   filterGroup:AcFilterGroup;

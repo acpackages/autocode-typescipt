@@ -60,14 +60,14 @@ export class RuntimeComponentPage extends HTMLElement {
     "html": "<div ac-builder-element-instance-name=\"ddDatagrid\"></div>",
     "script": `
     class DefaultPageScript extends AcBuilderComponent {
-      onDemandFunction: Function = async (requestArgs: IAcDatagridOnDemandRequestArgs) => {
+      onDemandFunction: Function = async (requestArgs: IAcOnDemandRequestArgs) => {
         console.log('Getting records in onDemandFunction');
         const pageSize: number = requestArgs.rowsCount;
         const pageNumber: number = (requestArgs.startIndex / pageSize) + 1;
         const res = await fetch(\`http://localhost:8081/api/customers/get?page_size=\${pageSize}&page_number=\${pageNumber}\`);
         if (res.ok) {
           const response = await res.json();
-          const callbackResponse: IAcDatagridOnDemandResponseArgs = {
+          const callbackResponse: IAcOnDemandResponseArgs = {
             data: response.rows,
             totalCount: response.total_rows
           };

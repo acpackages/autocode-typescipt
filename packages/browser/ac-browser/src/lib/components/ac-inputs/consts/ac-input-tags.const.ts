@@ -1,5 +1,6 @@
 export const AC_INPUT_TAG = {
   arrayValuesInput:'ac-array-values-input',
+  datagridSelectInput:'ac-datagrid-select-input',
   dateTimeInput:'ac-datetime-input',
   input:'ac-input',
   numberInput:'ac-number-input',

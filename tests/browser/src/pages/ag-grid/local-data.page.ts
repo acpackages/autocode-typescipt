@@ -3,6 +3,7 @@ import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSel
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
+import { customersData } from './../../../../data/customers-data';
 
 export class AggridLocalData extends HTMLElement {
   datagrid!: AcDatagrid;
@@ -66,11 +67,8 @@ export class AggridLocalData extends HTMLElement {
         { field: 'website', title: "Website" },
 
       ];
-      const res = await fetch('http://autocode.localhost/tests/ac-web/mvc-test/api/customers/get?page_size=1000');
-      if (res.ok) {
-        const response = await res.json();
-        this.datagridApi.data = response.rows;
-      }
+
+      this.datagridApi.data = customersData;
 
       this.pageHeader.addMenuItem({
         label: 'Row Numbers',

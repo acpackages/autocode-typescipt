@@ -200,6 +200,10 @@ export class AcDatagridApi {
     this.dataSource.totalRows++;
   }
 
+  applyFilter({search}:{search?:string}){
+    this.hooks.execute({ hook: AcEnumDatagridHook.ApplyFilter, args: {search} });
+  }
+
   autoResizeColumn({ datagridColumn }: { datagridColumn: AcDatagridColumn }) {
     let maxWidth: number = 0;
     for (const datagridRow of this.datagridRows) {
@@ -347,6 +351,10 @@ export class AcDatagridApi {
   getState():IAcDatagridState{
     this.datagridState.refresh();
     return this.datagridState.toJson();
+  }
+
+  refreshRows():void{
+    this.hooks.execute({ hook: AcEnumDatagridHook.RefreshRows, args: {} });
   }
 
   setColumnFilter({ datagridColumn, filter }: { datagridColumn: AcDatagridColumn, filter: AcFilter }) {

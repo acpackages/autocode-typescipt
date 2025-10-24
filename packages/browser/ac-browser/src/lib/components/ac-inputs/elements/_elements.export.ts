@@ -1,4 +1,5 @@
 export * from './ac-array-values-input-element.element';
+export * from './ac-datagrid-select-input-element.element';
 export * from './ac-datetime-input-element.element';
 export * from './ac-input-element.element';
 export * from './ac-number-input-element.element';

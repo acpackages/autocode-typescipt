@@ -1,8 +1,8 @@
-import { IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs } from "../../_ac-datagrid.export";
+import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from "../../../../interfaces/_interfaces.export";
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 
 export interface IAcDatagridGetOnDemandDataSuccessCallbackHookArgs{
   datagridApi:AcDatagridApi,
-  requestArgs:IAcDatagridOnDemandRequestArgs,
-  responseArgs:IAcDatagridOnDemandResponseArgs
+  requestArgs:IAcOnDemandRequestArgs,
+  responseArgs:IAcOnDemandResponseArgs
 }

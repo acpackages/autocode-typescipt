@@ -1,12 +1,23 @@
-import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AcEnumDatagridExtension, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput, IAcOnDemandRequestArgs } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcContext } from "@autocode-ts/ac-template-engine";
 import { languages } from "monaco-editor";
+import { customersData } from './../../../../data/customers-data';
+import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
+import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 
 export class InputBasicPage extends HTMLElement {
+  datagridApi!: AcDatagridApi;
   pageHeader: PageHeader = new PageHeader();
-  form!:AcForm;
-  btnSubmit!:HTMLButtonElement;
+  agGridExtension!: AcDatagridOnAgGridExtension;
+  columnDraggingExtension!: AcDatagridColumnDraggingExtension;
+  columnsCustomizerExtension!: AcDatagridColumnsCustomizerExtension;
+  dataExportXlsxExtension!: AcDatagridDataExportXlsxExtension;
+  rowDraggingExtension!: AcDatagridRowDraggingExtension;
+  rowNumbersExtension!: AcDatagridRowNumbersExtension;
+  rowSelectionExtension!: AcDatagridRowSelectionExtension;
+  form!: AcForm;
+  btnSubmit!: HTMLButtonElement;
   context: AcContext = new AcContext({
     value: {
       full_name: 'Alice Johnson',
@@ -31,7 +42,7 @@ export class InputBasicPage extends HTMLElement {
       contact_preference: 'Email',
       interested_fruits: ['Apple', 'Mango'],
       preferred_framework: 'Vue.js',
-      phone_numbers:[{"label":"Home","value":"0123456789"},{"label":"Mobile","value":"9876543210"}]
+      phone_numbers: [{ "label": "Home", "value": "0123456789" }, { "label": "Mobile", "value": "9876543210" }]
     }, name: 'record'
   });
 
@@ -44,7 +55,7 @@ export class InputBasicPage extends HTMLElement {
       </div>
     </ac-form>`;
     this.form = this.querySelector('ac-form') as AcForm;
-    this.form.addEventListener('submit',()=>{
+    this.form.addEventListener('submit', () => {
       console.log(this.form.valuesToJsonObject());
     });
     console.dir(this);
@@ -76,6 +87,104 @@ export class InputBasicPage extends HTMLElement {
     };
 
     const allInputsGroup = createCard('Real-Life Inputs', 'real-inputs');
+    AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
+
+    const datagridSelectContainer = document.createElement('div');
+    datagridSelectContainer.className = 'mb-3';
+    datagridSelectContainer.innerHTML = '<label>Linked Customer</label><ac-datagrid-select-input class="form-control"></ac-datagrid-select-input>';
+    // allInputsGroup.appendChild(datagridSelectContainer);
+    const datagridSelectInput: AcDatagridSelectInput = datagridSelectContainer.querySelector('ac-datagrid-select-input') as AcDatagridSelectInput;
+    this.datagridApi = datagridSelectInput.datagrid.datagridApi;
+    this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
+    this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
+    this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
+    this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
+    this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
+    this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
+    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
+
+    this.datagridApi.usePagination = true;
+
+    this.columnsCustomizerExtension.showColumnCustomizerPanel = true;
+
+    this.rowNumbersExtension.showRowNumbers = true;
+
+    this.rowSelectionExtension.allowSelection = true;
+    this.rowSelectionExtension.allowMultipleSelection = true;
+    datagridSelectInput.columnDefinitions = [
+      { field: 'action', title: "", allowSort: false, cellRendererElement: ActionsDatagridColumn, width: 65 },
+      { field: 'customer_id', title: "Id" },
+      { field: 'first_name', title: "First Name", allowEdit: true },
+      { field: 'last_name', title: "Last Name" },
+      { field: 'company', title: "Company" },
+      { field: 'city', title: "City" },
+      { field: 'country', title: "Country" },
+      { field: 'phone_1', title: "Phone 1" },
+      { field: 'phone_2', title: "Phone 2" },
+      { field: 'email', title: "Email" },
+      { field: 'subscription_date', title: "Subscription Date" },
+      { field: 'website', title: "Website" },
+    ];
+
+    datagridSelectInput.data = customersData;
+    console.dir(datagridSelectInput);
+
+    // // On Demand Select Start
+    const onDemandSelectContainer = document.createElement('div');
+    onDemandSelectContainer.className = 'mb-3';
+    onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control"></ac-select-input>';
+    allInputsGroup.appendChild(onDemandSelectContainer);
+    const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
+    onDemandSelectInput.labelKey = 'first_name'
+    onDemandSelectInput.onDemandFunction = (args: IAcOnDemandRequestArgs) => {
+      console.log(args);
+      let filteredData = [...customersData];
+
+      // Apply filters from filterGroup
+      if (args.filterGroup && args.filterGroup.filters && args.filterGroup.filters.length > 0) {
+        filteredData = filteredData.filter(record => {
+          return args.filterGroup.filters.every(filter => {
+            const fieldValue:any = record[filter.field];
+            const filterValue = filter.value;
+            switch (filter.operator) {
+              case 'contains':
+                return String(fieldValue || '').toLowerCase().includes(String(filterValue || '').toLowerCase());
+              case 'equals':
+                return fieldValue == filterValue;
+              case 'startsWith':
+                return String(fieldValue || '').toLowerCase().startsWith(String(filterValue || '').toLowerCase());
+              // Add more operators as needed, e.g., 'endsWith', 'greaterThan', etc.
+              default:
+                return true;
+            }
+          });
+        });
+      }
+
+      // // Apply sorting
+      // if (args.sortOrder && args.sortOrder.field) {
+      //   filteredData.sort((a, b) => {
+      //     const aVal = a[args.sortOrder.field];
+      //     const bVal = b[args.sortOrder.field];
+      //     if (args.sortOrder.direction === 'desc') {
+      //       return (bVal > aVal) ? 1 : (bVal < aVal) ? -1 : 0;
+      //     } else {
+      //       return (aVal > bVal) ? 1 : (aVal < bVal) ? -1 : 0;
+      //     }
+      //   });
+      // }
+
+      const totalCount = filteredData.length;
+      const data = filteredData.slice(args.startIndex, args.startIndex + args.rowsCount);
+
+      // Call success callback with response
+      args.successCallback({
+        totalCount,
+        data
+      });
+    };
+    // // On Demand Select End
+
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {
       const input = new AcTextInput();
@@ -84,7 +193,7 @@ export class InputBasicPage extends HTMLElement {
       input.acContextKey = key;
       input.acContext = this.context;
       input.className = 'form-control';
-      input.setAttribute('required','true');
+      input.setAttribute('required', 'true');
       addField(label, input, allInputsGroup);
     };
 
@@ -196,7 +305,7 @@ export class InputBasicPage extends HTMLElement {
     checkboxLabel.textContent = 'Fruits You Like';
     allInputsGroup.appendChild(checkboxLabel);
 
-    ['Apple', 'Banana', 'Mango','Orange'].forEach((fruit) => {
+    ['Apple', 'Banana', 'Mango', 'Orange'].forEach((fruit) => {
       const checkbox = new AcOptionInput();
       checkbox.type = AcEnumInputType.Checkbox;
       checkbox.value = fruit;
@@ -299,7 +408,7 @@ export class InputBasicPage extends HTMLElement {
       profile_picture: '',
       about_me: 'Product designer focused on user-centered design.',
       contact_preference: 'Phone',
-      interested_fruits: ['Banana','Orange'],
+      interested_fruits: ['Banana', 'Orange'],
       preferred_framework: 'React',
       languages: 'Telgu,English,Hindi,Sanskrit'
     });

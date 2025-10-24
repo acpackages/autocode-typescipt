@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcDatagrid, AcDatagridApi, AcDatagridOnDemandDataSource, AcElementBase, AcEnumDataSourceType,acRegisterCustomElement, IAcDatagridColumnDefinition, IAcDatagridOnDemandRequestArgs } from "@autocode-ts/ac-browser";
+import { AcDatagrid, AcDatagridApi, AcDatagridOnDemandDataSource, AcElementBase, AcEnumDataSourceType,acRegisterCustomElement, IAcDatagridColumnDefinition, IAcOnDemandRequestArgs } from "@autocode-ts/ac-browser";
 import { AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
 import { AcEnumSqlEntity } from "@autocode-ts/autocode";
 import { AcDDDatagridColumnManager } from "../core/ac-dd-datagrid-column-manager";
@@ -77,7 +77,7 @@ export class AcDDDatagridElement extends AcElementBase {
     }
     return undefined;
   };
-  set onDemandFunction(value:(args: IAcDatagridOnDemandRequestArgs) => void){
+  set onDemandFunction(value:(args: IAcOnDemandRequestArgs) => void){
     if(this.onDemandDataSource == undefined){
       this.datagridApi.dataSourceType = AcEnumDataSourceType.OnDemand;
       this.onDemandDataSource = this.datagridApi.dataSource;

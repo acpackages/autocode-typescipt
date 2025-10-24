@@ -8,7 +8,7 @@ import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { AcDDDatagridElement, AcDDInputElement, AcDDInputFieldElement, AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
-import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 
 export class DataDictionaryComponentsPage extends HTMLElement {
@@ -69,13 +69,13 @@ export class DataDictionaryComponentsPage extends HTMLElement {
     this.rowSelectionExtension.allowSelection = true;
     this.rowSelectionExtension.allowMultipleSelection = true;
 
-    this.ddDatagrid.onDemandFunction = async (args:IAcDatagridOnDemandRequestArgs) =>{
+    this.ddDatagrid.onDemandFunction = async (args:IAcOnDemandRequestArgs) =>{
             const pageSize: number = args.rowsCount;
             const pageNumber: number = (args.startIndex / pageSize) + 1;
             const res = await fetch(`http://localhost:8081/api/accounts/get?page_size=${pageSize}&page_number=${pageNumber}`);
             if (res.ok) {
               const response = await res.json();
-              const callbackResponse:IAcDatagridOnDemandResponseArgs  = {
+              const callbackResponse:IAcOnDemandResponseArgs  = {
                 data:response.rows,
                 totalCount:response.total_rows
               };

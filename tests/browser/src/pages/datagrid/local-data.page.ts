@@ -3,6 +3,7 @@
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
 import { AcDatagrid, AcDatagridApi, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
+import { customersData } from './../../../../data/customers-data';
 
 export class DatagridLocalData extends HTMLElement {
   public static observedAttributes = [];
@@ -18,7 +19,7 @@ export class DatagridLocalData extends HTMLElement {
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowNumbers});
-    const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
+    // const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowDragging});
     this.datagridApi.usePagination = true
     // this.datagridApi.allowRowSelect = true;
@@ -38,24 +39,20 @@ export class DatagridLocalData extends HTMLElement {
       {field:'subscription_date',title:"Subscription Date"},
       {field:'website',title:"Website"},
     ];
-    const res = await fetch('http://autocode.localhost/tests/ac-web/mvc-test/api/customers/get?page_size=1000');
-    if(res.ok){
-      const response = await res.json();
-      this.datagridApi.data = response.rows;
-    }
+    this.datagridApi.data = customersData;
 
-    setTimeout(() => {
-      // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
-      // console.log("Set selection true");
-      // this.element.checked != this.datagridRow.isSelected
-      selectionExtension.setAllRowsSelection({isSelected:true});
-      setTimeout(() => {
-      // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
-      // console.log("Set selection true");
-      // this.element.checked != this.datagridRow.isSelected
-      selectionExtension.setAllRowsSelection({isSelected:false});
-    }, 2500);
-    }, 2500);
+    // setTimeout(() => {
+    //   // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
+    //   // console.log("Set selection true");
+    //   // this.element.checked != this.datagridRow.isSelected
+    //   selectionExtension.setAllRowsSelection({isSelected:true});
+    //   setTimeout(() => {
+    //   // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
+    //   // console.log("Set selection true");
+    //   // this.element.checked != this.datagridRow.isSelected
+    //   selectionExtension.setAllRowsSelection({isSelected:false});
+    // }, 2500);
+    // }, 2500);
 
     console.log(this.datagrid);
   }

@@ -1,14 +1,15 @@
 import { AcFilterGroup, AcSortOrder } from "@autocode-ts/autocode";
-import { AcDatagridRow, AcEnumDatagridHook, IAcDatagridDataChangeHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, IAcDatagridOnDemandRequestArgs, IAcDatagridOnDemandResponseArgs, IAcDatagridRowHookArgs } from "../_ac-datagrid.export";
+import { AcDatagridRow, AcEnumDatagridHook, IAcDatagridDataChangeHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, IAcDatagridRowHookArgs } from "../_ac-datagrid.export";
 import { AcDatagridDataSource } from "./ac-datagrid-data-source";
 import { IAcDatagridBeforeGetOnDemandDataHookArgs } from "../interfaces/hook-args/ac-datagrid-before-get-on-demand-data-hook-args.interface";
+import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from "../../../interfaces/_interfaces.export";
 
 export class AcDatagridOnDemandDataSource extends AcDatagridDataSource {
-  onDemandFunction?: (args: IAcDatagridOnDemandRequestArgs) => void;
+  onDemandFunction?: (args: IAcOnDemandRequestArgs) => void;
 
   override getData({ startIndex = 0, rowsCount = 100 }: { startIndex?: number; rowsCount?: number; } = {}): void {
     if (this.onDemandFunction) {
-      const successCallback: Function = (response: IAcDatagridOnDemandResponseArgs) => {
+      const successCallback: Function = (response: IAcOnDemandResponseArgs) => {
         const hookArgs: IAcDatagridGetOnDemandDataSuccessCallbackHookArgs = {
           datagridApi: this.datagridApi,
           requestArgs: requestArgs,
@@ -17,7 +18,7 @@ export class AcDatagridOnDemandDataSource extends AcDatagridDataSource {
         this.setData({ data: response.data, totalCount: response.totalCount, startIndex: startIndex });
         this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.GetOnDemandDataSuccessCallback, args: hookArgs });
       }
-      const requestArgs: IAcDatagridOnDemandRequestArgs = {
+      const requestArgs: IAcOnDemandRequestArgs = {
         filterGroup: new AcFilterGroup(),
         rowsCount: rowsCount,
         startIndex: startIndex,
