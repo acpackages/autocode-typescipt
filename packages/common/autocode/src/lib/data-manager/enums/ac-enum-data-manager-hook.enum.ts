@@ -1,6 +1,6 @@
 
 
-export enum AcEnumDataSourceHook {
+export enum AcEnumDataManagerHook {
   BeforeDataChange = 'beforeDataChange',
   BeforeGetOnDemandData = 'beforeGetOnDemandData',
   DataChange = 'dataChange',

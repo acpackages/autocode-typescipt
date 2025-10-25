@@ -43,6 +43,7 @@ import { HttpTestPage } from './pages/utils/http-test';
 import { AppBrowserTestPage } from './pages/utils/app-browser-tests';
 import { AcFormTest } from './pages/inputs/form-test.page';
 import { AcStorageTestPage } from './pages/utils/ac-storage-tests';
+import { AcDataManagerTestPage } from './pages/utils/ac-data-maganer.tests';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -206,6 +207,7 @@ window.addEventListener('DOMContentLoaded', () => {
     routes: [
       { label: 'App Browser', path: '/utils/app-browser', componentTag: 'app-browser-test', component: AppBrowserTestPage },
       { label: 'HTTP', path: '/utils/http', componentTag: 'http-test', component: HttpTestPage },
+      { label: 'Data Manager', path: '/utils/data-manager', componentTag: 'data-manager', component: AcDataManagerTestPage },
       { label: 'Storage', path: '/utils/ac-storage', componentTag: 'ac-storage-test', component: AcStorageTestPage }
     ]
   });

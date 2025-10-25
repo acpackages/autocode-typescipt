@@ -1,5 +1,5 @@
 
-export enum AcEnumDataSourceEvent {
+export enum AcEnumDataManagerEvent {
   BeforeDataChange = 'beforeDataChange',
   BeforeGetOnDemandData = 'beforeGetOnDemandData',
   DataChange = 'dataChange',

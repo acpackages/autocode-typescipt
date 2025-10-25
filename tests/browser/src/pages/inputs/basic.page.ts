@@ -1,12 +1,16 @@
-import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AcEnumDatagridExtension, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput, IAcOnDemandRequestArgs } from "@autocode-ts/ac-browser";
+/* eslint-disable @nx/enforce-module-boundaries */
+import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AcEnumDatagridExtension, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcContext } from "@autocode-ts/ac-template-engine";
 import { languages } from "monaco-editor";
 import { customersData } from './../../../../data/customers-data';
 import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
+import { AcDataManager, IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
 
 export class InputBasicPage extends HTMLElement {
+  offlineDataManager: AcDataManager = new AcDataManager();
+
   datagridApi!: AcDatagridApi;
   pageHeader: PageHeader = new PageHeader();
   agGridExtension!: AcDatagridOnAgGridExtension;
@@ -88,6 +92,8 @@ export class InputBasicPage extends HTMLElement {
 
     const allInputsGroup = createCard('Real-Life Inputs', 'real-inputs');
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
+    this.offlineDataManager.autoSetUniqueIdToData = true;
+    this.offlineDataManager.data = customersData;
 
     const datagridSelectContainer = document.createElement('div');
     datagridSelectContainer.className = 'mb-3';
@@ -127,63 +133,30 @@ export class InputBasicPage extends HTMLElement {
     ];
 
     datagridSelectInput.data = customersData;
-    console.dir(datagridSelectInput);
 
-    // // On Demand Select Start
     const onDemandSelectContainer = document.createElement('div');
     onDemandSelectContainer.className = 'mb-3';
     onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control"></ac-select-input>';
     allInputsGroup.appendChild(onDemandSelectContainer);
     const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
     onDemandSelectInput.labelKey = 'first_name'
-    onDemandSelectInput.onDemandFunction = (args: IAcOnDemandRequestArgs) => {
+    onDemandSelectInput.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
+      console.log("Getting on demand data");
       console.log(args);
-      let filteredData = [...customersData];
-
-      // Apply filters from filterGroup
       if (args.filterGroup && args.filterGroup.filters && args.filterGroup.filters.length > 0) {
-        filteredData = filteredData.filter(record => {
-          return args.filterGroup.filters.every(filter => {
-            const fieldValue:any = record[filter.field];
-            const filterValue = filter.value;
-            switch (filter.operator) {
-              case 'contains':
-                return String(fieldValue || '').toLowerCase().includes(String(filterValue || '').toLowerCase());
-              case 'equals':
-                return fieldValue == filterValue;
-              case 'startsWith':
-                return String(fieldValue || '').toLowerCase().startsWith(String(filterValue || '').toLowerCase());
-              // Add more operators as needed, e.g., 'endsWith', 'greaterThan', etc.
-              default:
-                return true;
-            }
-          });
-        });
+        this.offlineDataManager.filterGroup = args.filterGroup;
+        this.offlineDataManager.processRows();
       }
 
-      // // Apply sorting
-      // if (args.sortOrder && args.sortOrder.field) {
-      //   filteredData.sort((a, b) => {
-      //     const aVal = a[args.sortOrder.field];
-      //     const bVal = b[args.sortOrder.field];
-      //     if (args.sortOrder.direction === 'desc') {
-      //       return (bVal > aVal) ? 1 : (bVal < aVal) ? -1 : 0;
-      //     } else {
-      //       return (aVal > bVal) ? 1 : (aVal < bVal) ? -1 : 0;
-      //     }
-      //   });
-      // }
-
-      const totalCount = filteredData.length;
-      const data = filteredData.slice(args.startIndex, args.startIndex + args.rowsCount);
-
-      // Call success callback with response
-      args.successCallback({
+      const totalCount = this.offlineDataManager.totalRows;
+      const data = await this.offlineDataManager.getData({ startIndex: args.startIndex, rowsCount: args.rowsCount });
+      const response = {
         totalCount,
         data
-      });
+      };
+      console.log(response);
+      args.successCallback(response);
     };
-    // // On Demand Select End
 
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {

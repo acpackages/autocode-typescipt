@@ -5,9 +5,7 @@ import { AcScrollable } from "../../ac-scrollable/_ac-scrollable.export";
 import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcDataSource } from "../../../data-source/core/ac-data-source";
-import { AcDataSourceRow } from "../../../data-source/models/ac-data-source-row.model";
-import { AcEnumConditionOperator } from "@autocode-ts/autocode";
+import { AcDataManager, AcDataRow, AcEnumConditionOperator } from "@autocode-ts/autocode";
 
 export class AcSelectInput extends AcInputBase {
   static override get observedAttributes() {
@@ -46,7 +44,7 @@ export class AcSelectInput extends AcInputBase {
     }
   }
 
-  get selectOptions(): any[] { return this.dataSource.data; }
+  get selectOptions(): any[] { return this.dataManager.data; }
   set selectOptions(value: any[]) {
     let valueOptions:any[] = [];
     if(value.length>0){
@@ -59,7 +57,7 @@ export class AcSelectInput extends AcInputBase {
         valueOptions = [...value];
       }
     }
-    this.dataSource.data = valueOptions;
+    this.dataManager.data = valueOptions;
     if (this.isDropdownOpen){
       this.renderVirtualList();
     };
@@ -71,19 +69,19 @@ export class AcSelectInput extends AcInputBase {
   override get value() { return super.value; }
   override set value(val: any) {
     super.value = val;
-    const matchRow = this.dataSource.getRow({key:this.valueKey,value:this.value});
+    const matchRow = this.dataManager.getRow({key:this.valueKey,value:this.value});
     if (matchRow && !this.isDropdownOpen) {
       this.textInputElement.value = matchRow.data[this.labelKey];
     }
 
-    if(this.dataSource.rows.length == 0 && super.value != undefined){
-      this.dataSource.data = [{
+    if(this.dataManager.totalRows == 0 && super.value != undefined){
+      this.dataManager.data = [{
         [this.labelKey]:super.value,[this.valueKey]:super.value
       }];
     }
   }
 
-  dataSource:AcDataSource = new AcDataSource();
+  dataManager:AcDataManager = new AcDataManager();
   private dropdownContainer!: HTMLDivElement;
   override inputElement: HTMLDivElement = document.createElement('div');
   private highlightingIndex = -1;
@@ -96,11 +94,9 @@ export class AcSelectInput extends AcInputBase {
 
   constructor(){
     super();
-    this.dataSource.on
   }
 
   override connectedCallback() {
-    console.dir(this);
     if(!this.hasAttribute('label-key')){
       this.labelKey = 'label';
     }
@@ -160,12 +156,10 @@ export class AcSelectInput extends AcInputBase {
     // Filter on input
     this.textInputElement.addEventListener("input", () => {
       const term = this.textInputElement.value.toLowerCase();
-      this.dataSource.filterGroup.filters = [];
-      this.dataSource.filterGroup.addFilter({key:this.labelKey,operator:AcEnumConditionOperator.Contains,value:term});
-      this.dataSource.processData();
+      this.dataManager.filterGroup.setFilter({key:this.labelKey,operator:AcEnumConditionOperator.Contains,value:term});
       this.openDropdown();
       // auto-highlight first match for quick Enter
-      this.highlightingIndex = this.dataSource.displayedRows.length ? 0 : -1;
+      this.highlightingIndex = this.dataManager.displayedRows.length ? 0 : -1;
       this.renderVirtualList();
       this.ensureHighlightInView();
     });
@@ -173,7 +167,7 @@ export class AcSelectInput extends AcInputBase {
     this.textInputElement.addEventListener("focus", () => {
       this.openDropdown();
       // default to selected value
-      const idx = this.dataSource.getRowIndex({key:this.labelKey,value:this.value});
+      const idx = this.dataManager.getRowIndex({key:this.labelKey,value:this.value});
       this.highlightingIndex = idx >= 0 ? idx : -1;
       this.renderVirtualList();
       this.scrollToIndex(this.highlightingIndex);
@@ -191,16 +185,16 @@ export class AcSelectInput extends AcInputBase {
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        if (this.dataSource.displayedRows.length === 0) return;
+        if (this.dataManager.displayedRows.length === 0) return;
         this.highlightingIndex = Math.min(
           (this.highlightingIndex < 0 ? 0 : this.highlightingIndex + 1),
-          this.dataSource.displayedRows.length - 1
+          this.dataManager.displayedRows.length - 1
         );
         this.applyHighlightStyles();
         this.ensureHighlightInView();
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        if (this.dataSource.displayedRows.length === 0) return;
+        if (this.dataManager.displayedRows.length === 0) return;
         this.highlightingIndex = Math.max(
           (this.highlightingIndex < 0 ? 0 : this.highlightingIndex - 1),
           0
@@ -210,7 +204,7 @@ export class AcSelectInput extends AcInputBase {
       } else if (e.key === "Enter") {
         e.preventDefault();
         if (this.highlightingIndex >= 0) {
-          this.selectOption(this.dataSource.getRowAtIndex({index:this.highlightingIndex})?.data);
+          this.selectOption(this.dataManager.getRowAtIndex({index:this.highlightingIndex})?.data);
         }
       } else if (e.key === "Escape") {
         this.closeDropdown();
@@ -241,7 +235,7 @@ export class AcSelectInput extends AcInputBase {
     }
   }
 
-  private buildOptionElement(row:AcDataSourceRow): HTMLElement {
+  private buildOptionElement(row:AcDataRow): HTMLElement {
     const el = document.createElement("div");
     el.dataset["optionIndex"] = String(row.index);
     el.style.padding = "4px 8px";
@@ -307,16 +301,18 @@ export class AcSelectInput extends AcInputBase {
 
   }
 
-  private renderVirtualList() {
+  private async renderVirtualList() {
     this.listEl.innerHTML = "";
-    if(this.dataSource.displayedRows.length > 0){
-      for (let i = 0; i < this.dataSource.displayedRows.length; i++) {
-      const row = this.buildOptionElement(this.dataSource.displayedRows[i]);
-      if (this.name == 'sourceColumnId') {
-        //
+    const rows = await this.dataManager.getRows();
+    console.log(rows);
+    if(rows.length > 0){
+      for(const row of rows){
+        const rowElement = this.buildOptionElement(row);
+        if (this.name == 'sourceColumnId') {
+          //
+        }
+        this.listEl.appendChild(rowElement);
       }
-      this.listEl.appendChild(row);
-    }
     }
     else{
       this.listEl.innerHTML = `<div style="text-align:center;">No matching records!</div>`;
@@ -327,7 +323,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private scrollToIndex(index: number) {
-    if (index < 0 || index >= this.dataSource.displayedRows.length) return;
+    if (index < 0 || index >= this.dataManager.displayedRows.length) return;
     this.scrollable.scrollTo({ index });
   }
 
