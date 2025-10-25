@@ -1,9 +1,14 @@
+import { AcBindJsonProperty } from "../annotations/ac-bind-json-property.annotation";
+import { AcEvents } from "../core/ac-events";
 import { AcEnumSortOrder } from "../enums/ac-enum-sort-order.enum";
 import { AcJsonUtils } from "../utils/ac-json-utils";
 import { AcSort } from "./ac-sort.model";
 
 export class AcSortOrder {
   static readonly KeySorts = "sortOrders";
+
+  @AcBindJsonProperty({skipInFromJson:true,skipInToJson:true})
+  events:AcEvents = new AcEvents();
 
   sortOrders: AcSort[] = [];
 
@@ -20,6 +25,7 @@ export class AcSortOrder {
     if(order!=AcEnumSortOrder.None){
       this.sortOrders.push(AcSort.instanceWithValues({key:key,order:order}));
     }
+    this.events.execute({event:'change',args:{ key,order,removeIfExist }});
   }
 
   cloneInstance():AcSortOrder{
@@ -32,6 +38,14 @@ export class AcSortOrder {
       jsonData,
     });
     return this;
+  }
+
+  off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {
+    this.events.unsubscribe({ event, callback,subscriptionId });
+  }
+
+  on({ event, callback }: { event: string, callback: Function }): string {
+    return this.events.subscribe({ event, callback });
   }
 
   toJson(): Record<string, any> {

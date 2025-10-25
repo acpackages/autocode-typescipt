@@ -1,17 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
+    "outDir": "../../../dist/out-tsc",
     "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": false,
-    "declarationDir": "../../../dist/packages/common/ac-data-dictionary",
-    "rootDir": "src",
-    "skipLibCheck": true,
-    "composite": false,
-    "sourceMap": true
+    "types": ["node", "vite/client"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "include": ["src/**/*.ts"]
 }

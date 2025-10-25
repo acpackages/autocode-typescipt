@@ -59,10 +59,9 @@ export class AcSelectInput extends AcInputBase {
         valueOptions = [...value];
       }
     }
-    console.log(valueOptions);
     this.dataSource.data = valueOptions;
     if (this.isDropdownOpen){
-      this.renderVirtualList()
+      this.renderVirtualList();
     };
     if(this._value){
       this.value = this._value;
@@ -94,6 +93,11 @@ export class AcSelectInput extends AcInputBase {
   private maxDropdownHeight = 300;
   private optionHeight = 32;
   private scrollable!: AcScrollable;
+
+  constructor(){
+    super();
+    this.dataSource.on
+  }
 
   override connectedCallback() {
     console.dir(this);

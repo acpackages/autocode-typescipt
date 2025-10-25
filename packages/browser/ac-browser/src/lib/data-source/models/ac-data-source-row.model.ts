@@ -10,6 +10,7 @@ export class AcDataSourceRow {
   extensionData: Record<string, any> = {};
   hooks: AcHooks = new AcHooks();
   index: number = -1;
+  isPlaceholder:boolean = false;
   displayIndex:number = -1;
 
   get isFirst(): boolean {
@@ -22,14 +23,23 @@ export class AcDataSourceRow {
 
   constructor({ data = {},dataSource, index = -1 }: { data?: any,dataSource:AcDataSource, index?: number }) {
     this.data = data;
-    if(data['__ac_row_id__']){
-      this.acRowId = data['__ac_row_id__'];
-    }
     this.dataSource = dataSource;
+    if(dataSource.autoSetUniqueIdToData){
+      if(data['__ac_row_id__']){
+        this.acRowId = data['__ac_row_id__'];
+      }
+      else{
+        data['__ac_row_id__'] = this.acRowId;
+      }
+    }
     this.index = index;
   }
 
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.events.subscribe({event,callback});
+  off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {
+    this.events.unsubscribe({ event, callback,subscriptionId });
+  }
+
+  on({ event, callback }: { event: string, callback: Function }): string {
+    return this.events.subscribe({ event, callback });
   }
 }

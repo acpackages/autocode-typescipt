@@ -3,11 +3,11 @@
   "version": "0.0.2",
   "type": "module",
   "main": "./index.cjs",
-  "module": "./index.mjs",
-  "browser": "./index.umd.js",
+  "module": "./index.js",
+  "browser": "./index.umd.cjs",
   "types": "./index.d.ts",
   "exports": {
-    "import": "./index.mjs",
+    "import": "./index.js",
     "require": "./index.cjs"
   },
   "dependencies": {

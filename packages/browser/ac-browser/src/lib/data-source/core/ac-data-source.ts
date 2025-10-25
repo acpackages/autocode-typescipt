@@ -14,13 +14,14 @@ import { IAcDataSourceDataChangeHookArgs } from "../interfaces/hook-args/ac-data
 import { IAcDataSourceRowHookArgs } from "../interfaces/hook-args/ac-data-source-row-hook-args.interface";
 
 export class AcDataSource {
-  private _data:any[] = [];
+  private _data: any[] = [];
   get data(): any[] {
     return this._data;
   }
   set data(value: any[]) {
-    this.setData({ data: value });
+    this.setRows({ data: value });
   }
+
   private _displayedRows: AcDataSourceRow[] = [];
   get displayedRows(): AcDataSourceRow[] {
     return this._displayedRows;
@@ -35,34 +36,72 @@ export class AcDataSource {
     this.events.execute({ event: AcEnumDataSourceEvent.DisplayedRowsChange, args: eventArgs });
   }
 
+  private _filterGroup: AcFilterGroup = new AcFilterGroup();
+  get filterGroup(): AcFilterGroup {
+    return this._filterGroup;
+  }
+  set filterGroup(value: AcFilterGroup) {
+    if (value != this._filterGroup) {
+      this._filterGroup = value;
+    }
+  }
+
+  private _sortOrder: AcSortOrder = new AcSortOrder();
+  get sortOrder(): AcSortOrder {
+    return this._sortOrder;
+  }
+  set sortOrder(value: AcSortOrder) {
+    if (value != this._sortOrder) {
+      this._sortOrder = value;
+    }
+  }
+
   private _totalRows: number = 0;
   get totalRows(): number {
     return this._totalRows;
   }
   set totalRows(value: number) {
-    this._totalRows = value;
-    const eventArgs: IAcDataSourceTotalRowsChangeEvent = {
-      totalRows: value,
-      dataSource: this
-    };
-    this.hooks.execute({ hook: AcEnumDataSourceHook.TotalRowsChange, args: eventArgs });
-    this.hooks.execute({ hook: AcEnumDataSourceHook.DisplayedRowsChange, args: eventArgs });
-    this.events.execute({ event: AcEnumDataSourceEvent.TotalRowsChange, args: eventArgs });
-    this.events.execute({ event: AcEnumDataSourceEvent.DisplayedRowsChange, args: eventArgs });
+    if (value != this._totalRows) {
+      this._totalRows = value;
+      const eventArgs: IAcDataSourceTotalRowsChangeEvent = {
+        totalRows: value,
+        dataSource: this
+      };
+      this.hooks.execute({ hook: AcEnumDataSourceHook.TotalRowsChange, args: eventArgs });
+      this.hooks.execute({ hook: AcEnumDataSourceHook.DisplayedRowsChange, args: eventArgs });
+      this.events.execute({ event: AcEnumDataSourceEvent.TotalRowsChange, args: eventArgs });
+      this.events.execute({ event: AcEnumDataSourceEvent.DisplayedRowsChange, args: eventArgs });
+    }
+  }
+
+  private _type: 'offline' | 'ondemand' = 'offline';
+  get type(): 'offline' | 'ondemand' {
+    return this._type;
+  }
+  set type(value: 'offline' | 'ondemand') {
+    if (this._type != value) {
+      this._type = value;
+    }
   }
 
   allDataAvailable: boolean = false;
+  autoSetUniqueIdToData:boolean = false;
   events: AcEvents = new AcEvents();
-  filterGroup: AcFilterGroup = new AcFilterGroup();
   hooks: AcHooks = new AcHooks();
   onDemandFunction?: (args: IAcOnDemandRequestArgs) => void;
   processedRows: AcDataSourceRow[] = [];
   rows: AcDataSourceRow[] = [];
-  sortOrder: AcSortOrder = new AcSortOrder();
-  type: 'offline' | 'ondemand' = 'offline';
 
   constructor() {
     //
+  }
+
+  clearRows() {
+    this._data = [];
+    this.totalRows = 0;
+    this.rows = [];
+    this.displayedRows = [];
+    this.processedRows = [];
   }
 
   /**
@@ -183,7 +222,8 @@ export class AcDataSource {
     return results.every(Boolean);
   }
 
-  getData({ startIndex = 0, rowsCount = 100 }: { startIndex?: number; rowsCount?: number; } = {}) {
+  getRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): AcDataSourceRow[] {
+    const result: AcDataSourceRow[] = [];
     if (this.type == "ondemand") {
       if (this.onDemandFunction) {
         const successCallback: Function = (response: IAcOnDemandResponseArgs) => {
@@ -192,7 +232,7 @@ export class AcDataSource {
             requestArgs: requestArgs,
             responseArgs: response,
           }
-          this.setData({ data: response.data, totalCount: response.totalCount, startIndex: startIndex });
+          this.setRows({ data: response.data, totalCount: response.totalCount, startIndex: startIndex });
           this.hooks.execute({ hook: AcEnumDataSourceHook.GetOnDemandDataSuccessCallback, args: hookArgs });
         }
         const requestArgs: IAcOnDemandRequestArgs = {
@@ -210,27 +250,43 @@ export class AcDataSource {
         this.onDemandFunction(requestArgs);
       }
     }
+    else {
+      const fromIndex: number = startIndex ?? 0;
+      const toIndex: number = fromIndex + ((rowsCount > -1 ? rowsCount : this.totalRows) - 1);
+      for (let index = fromIndex; index < toIndex && index < this.totalRows; index++) {
+        result.push(this.rows[index]);
+      }
+    }
+    return result;
   }
 
-  getRowIndex({key,value}:{key:string,value:any}):number{
-    return this.rows.findIndex((row:AcDataSourceRow)=>{
+  getRowIndex({ key, value }: { key: string, value: any }): number {
+    return this.rows.findIndex((row: AcDataSourceRow) => {
       return row.data[key] == value;
     });
   }
 
-  getRowAtIndex({index}:{index:number}):AcDataSourceRow|undefined{
-    return this.rows.find((row:AcDataSourceRow)=>{
+  getRowAtIndex({ index }: { index: number }): AcDataSourceRow | undefined {
+    return this.rows.find((row: AcDataSourceRow) => {
       return row.index == index;
     });
   }
 
-  getRow({key,value}:{key:string,value:any}):AcDataSourceRow|undefined{
-    return this.rows.find((row:AcDataSourceRow)=>{
+  getRow({ key, value }: { key: string, value: any }): AcDataSourceRow | undefined {
+    return this.rows.find((row: AcDataSourceRow) => {
       return row.data[key] == value;
     });
   }
 
-  processData() {
+  off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {
+    this.events.unsubscribe({ event, callback,subscriptionId });
+  }
+
+  on({ event, callback }: { event: string, callback: Function }): string {
+    return this.events.subscribe({ event, callback });
+  }
+
+  processRows() {
     // Step 1: clone all rows
     let filteredRows = [...this.rows];
 
@@ -274,7 +330,7 @@ export class AcDataSource {
     this.setDisplayedData();
   }
 
-  setData({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
+  setRows({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
     if (this.type == 'offline') {
       const hookArgs: IAcDataSourceDataChangeHookArgs = {
         data: data,
@@ -302,7 +358,7 @@ export class AcDataSource {
       this.hooks.execute({ hook: AcEnumDataSourceHook.DataChange, args: hookArgs });
       this.allDataAvailable = true;
       this.totalRows = index;
-      this.processData();
+      this.processRows();
     }
     else if (this.type == 'ondemand') {
       if (totalCount == undefined) {
@@ -340,7 +396,7 @@ export class AcDataSource {
       this.hooks.execute({ hook: AcEnumDataSourceHook.DataChange, args: hookArgs });
       this.allDataAvailable = this.data.filter((item) => { return item == undefined }).length == 0;
       this.totalRows = totalCount;
-      this.processData();
+      this.processRows();
     }
   }
 
@@ -356,7 +412,7 @@ export class AcDataSource {
     //   }
     // }
     // else {
-      displayedRows = this.processedRows;
+    displayedRows = this.processedRows;
     // }
     this.displayedRows = displayedRows;
   }

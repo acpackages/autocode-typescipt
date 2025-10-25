@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
@@ -8,7 +9,7 @@ export class AcEvents {
   private events: Record<string, Record<string, Function>> = {};
   private allEventCallbacks: Record<string, Function> = {};
 
-  clearSubscriptions(){
+  clearSubscriptions() {
     this.events = {};
     this.allEventCallbacks = {};
   }
@@ -21,7 +22,7 @@ export class AcEvents {
       if (this.events[name]) {
         const functionsToExecute = this.events[name];
         for (const [functionId, fun] of Object.entries(functionsToExecute)) {
-          try{
+          try {
             const functionResult = fun(args);
             if (
               functionResult &&
@@ -36,7 +37,7 @@ export class AcEvents {
         }
       }
       for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
-        try{
+        try {
           const functionResult = fun(name, args);
           if (
             functionResult &&
@@ -78,18 +79,69 @@ export class AcEvents {
     return subscriptionId;
   }
 
-  unsubscribe({ subscriptionId }: { subscriptionId: string }): void {
-    for (const event in this.events) {
-      const eventFunctions = this.events[event];
-      if (eventFunctions[subscriptionId]) {
-        delete eventFunctions[subscriptionId];
+  unsubscribe({ event, callback, subscriptionId }: { event?: string; callback?: Function, subscriptionId?: string }): boolean {
+    let removed: boolean = false;
+    if (subscriptionId) {
+      for (const event in this.events) {
+        const eventFunctions = this.events[event];
+        if (eventFunctions[subscriptionId]) {
+          delete eventFunctions[subscriptionId];
+          removed = true;
+        }
+      }
+
+    }
+    else if (callback) {
+      const removeFunction = (eventName: string): boolean => {
+        let found: boolean = false;
+        const eventFunctions = this.events[eventName];
+        for (const subscriptionId of Object.keys(eventFunctions)) {
+          if (!found) {
+            if (eventFunctions[subscriptionId] == callback) {
+              delete eventFunctions[subscriptionId];
+              found = true;
+              break;
+            }
+          }
+        }
+        return found;
+      };
+      if (event) {
+        removed = removeFunction(event);
+      }
+      else {
+        for (const eventName of Object.keys(this.events)) {
+          if (!removed) {
+            const found = removeFunction(eventName);
+            if (found) {
+              removed = true;
+              break;
+            }
+          }
+        }
       }
     }
+    return removed;
   }
 
-  unsubscribeAllEvents({ subscriptionId }: { subscriptionId: string }): void {
-    if (this.allEventCallbacks[subscriptionId]) {
-      delete this.allEventCallbacks[subscriptionId];
+  unsubscribeAllEvents({ callback, subscriptionId }: { callback?: Function, subscriptionId?: string }): boolean {
+    let removed: boolean = false;
+    if (subscriptionId) {
+      if (this.allEventCallbacks[subscriptionId]) {
+        delete this.allEventCallbacks[subscriptionId];
+      }
     }
+    else {
+      for (const subscriptionId of Object.keys(this.allEventCallbacks)) {
+        if (!removed) {
+          if (this.allEventCallbacks[subscriptionId] == callback) {
+            delete this.allEventCallbacks[subscriptionId];
+            removed = true;
+            break;
+          }
+        }
+      }
+    }
+    return removed;
   }
 }
