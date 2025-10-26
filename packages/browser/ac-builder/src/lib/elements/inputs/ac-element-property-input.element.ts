@@ -60,7 +60,7 @@ export class AcElementPropertyInput {
 
   private async addVariableInScript() {
     await this.builderApi.scriptEditor.addCodeInsideClass({ className: this.builderApi.component.className!, code: `${this.componentElement.instanceName}!:${this.builderElement.instanceClass.name};` });
-    AcMessage.show({ message: 'Property added in script!', mode: "toast", type: 'success' });
+    AcMessage.success({ message: 'Property added in script!' });
   }
 
   private setInput() {

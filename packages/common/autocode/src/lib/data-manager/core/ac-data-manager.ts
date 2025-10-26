@@ -131,6 +131,19 @@ export class AcDataManager {
     this.filterGroup = new AcFilterGroup();
   }
 
+  addData({ data }: { data: any }) {
+    this._data.push(data);
+    const index: number = this._data.length - 1;
+    const dataSourceRow: AcDataRow = new AcDataRow({
+      data: data,
+      index: index,
+      dataManager: this
+    });
+    this.allRows.push(dataSourceRow);
+    this.totalRows++;
+    this.processRows();
+  }
+
   private checkOnDemandRowsAvailable({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): boolean {
     let available: boolean = false;
     if (this.totalRows > 0) {
@@ -151,11 +164,11 @@ export class AcDataManager {
           }
         }
       }
-      else{
+      else {
         // console.warn(`Index range is > total rows >>>>>>>> start index : ${startIndex}, end index : ${endIndex}`);
       }
     }
-    else{
+    else {
       // console.warn("Total rows is 0");
     }
     // console.log(`Available on demand row : ${available}`)
@@ -296,7 +309,7 @@ export class AcDataManager {
     const result: AcDataRow[] = [];
     if (this.type === "ondemand") {
       if (this.onDemandFunction) {
-        if (this.checkOnDemandRowsAvailable({startIndex,rowsCount})) {
+        if (this.checkOnDemandRowsAvailable({ startIndex, rowsCount })) {
           setResultFromRows();
         }
         else {
@@ -420,17 +433,17 @@ export class AcDataManager {
           return index;
         });
       }
+      this.totalRows = this.rows.length;
     }
     else {
       this.rows = filteredRows;
     }
-    this.totalRows = this.rows.length;
     this.setDisplayedData();
   }
 
   refreshRows() {
     if (this.type == "offline") {
-      this.processRows();
+      this.setRows({ data: this.data });
     }
     else {
       this.reset();
@@ -515,8 +528,8 @@ export class AcDataManager {
       }
       this.hooks.execute({ hook: AcEnumDataManagerHook.DataChange, args: hookArgs });
       this.allDataAvailable = this.data.filter((item) => { return item == undefined }).length == 0;
-      this.processRows();
       this.totalRows = totalCount;
+      this.processRows();
     }
   }
 

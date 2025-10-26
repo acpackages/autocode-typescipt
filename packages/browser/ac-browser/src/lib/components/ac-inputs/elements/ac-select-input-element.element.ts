@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
 import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow } from "@autocode-ts/autocode";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
@@ -9,14 +10,19 @@ export class AcSelectInput extends AcInputBase {
     return [...super.observedAttributes, 'label-key', 'value-key', 'select-options'];
   }
 
+  get addOption(): boolean {
+    return this.getAttribute('add-option') ? this.getAttribute('add-option') == 'true':true;
+  }
+  set addOption(value: boolean) {
+    this.setAttribute('add-option', `${value}`);
+  }
+
   get labelKey(): string {
     return this.getAttribute('label-key') ?? 'label';
   }
   set labelKey(value: string) {
     this.setAttribute('label-key', value);
-    if (this._value) {
-      this.value = this._value;
-    }
+    if (this._value) this.value = this._value;
   }
 
   get valueKey(): string {
@@ -24,9 +30,7 @@ export class AcSelectInput extends AcInputBase {
   }
   set valueKey(value: string) {
     this.setAttribute('value-key', value);
-    if (this._value) {
-      this.value = this._value;
-    }
+    if (this._value) this.value = this._value;
   }
 
   get onDemandFunction(): ((args: IAcOnDemandRequestArgs) => void) | undefined {
@@ -40,11 +44,8 @@ export class AcSelectInput extends AcInputBase {
     return this.textInputElement.getAttribute('placeholder');
   }
   override set placeholder(value: string) {
-    if (value !== '') {
-      this.textInputElement.setAttribute('placeholder', value);
-    } else {
-      this.textInputElement.removeAttribute('placeholder');
-    }
+    if (value !== '') this.textInputElement.setAttribute('placeholder', value);
+    else this.textInputElement.removeAttribute('placeholder');
   }
 
   get selectOptions(): any[] { return this.dataManager.data; }
@@ -61,19 +62,17 @@ export class AcSelectInput extends AcInputBase {
       }
     }
     this.dataManager.data = valueOptions;
-    if (this.isDropdownOpen) {
-      this.renderVirtualList();
-    }
-    if (this._value) {
-      this.value = this._value;
-    }
+    if (this.isDropdownOpen) this.renderVirtualList();
+    if (this._value) this.value = this._value;
   }
 
   override get value() { return super.value; }
   override set value(val: any) {
     super.value = val;
     const matchRow = this.dataManager.getRow({ key: this.valueKey, value: this.value });
-    this.textInputElement.value = matchRow ? matchRow.data[this.labelKey] : String(super.value);
+    if(matchRow){
+      this.textInputElement.value = matchRow.data[this.labelKey];
+    }
 
     if (this.dataManager.rows.length === 0 && super.value !== undefined) {
       this.dataManager.data = [{
@@ -94,21 +93,21 @@ export class AcSelectInput extends AcInputBase {
   private scrollable!: AcScrollable;
   private batchSize = 20;
   private loadedCount = 0;
+  private addOptionText = "";
+  addOptionCallback:Function = ({query,callback}:{query:string,callback:Function}):void=>{
+    const newOption = { [this.labelKey]: query, [this.valueKey]: query };
+    callback(newOption);
+  };
 
   constructor() {
     super();
   }
 
   override connectedCallback() {
-    if (!this.hasAttribute('label-key')) {
-      this.labelKey = 'label';
-    }
-    if (!this.hasAttribute('value-key')) {
-      this.valueKey = 'value';
-    }
+    if (!this.hasAttribute('label-key')) this.labelKey = 'label';
+    if (!this.hasAttribute('value-key')) this.valueKey = 'value';
 
     this.inputElement.style.position = "relative";
-
     this.textInputElement.type = "text";
     this.textInputElement.autocomplete = "off";
     Object.assign(this.textInputElement.style, {
@@ -121,7 +120,6 @@ export class AcSelectInput extends AcInputBase {
     });
     this.inputElement.appendChild(this.textInputElement);
 
-    // Floating dropdown container
     this.dropdownContainer = document.createElement("div");
     Object.assign(this.dropdownContainer.style, {
       position: "fixed",
@@ -134,9 +132,7 @@ export class AcSelectInput extends AcInputBase {
       boxSizing: "border-box",
     });
 
-    // Inner list element (virtualized)
     this.listEl = document.createElement("div");
-    // AcScrollable will set overflow + handle virtualization
     this.dropdownContainer.appendChild(this.listEl);
     this.scrollable = new AcScrollable({
       element: this.listEl,
@@ -149,94 +145,69 @@ export class AcSelectInput extends AcInputBase {
   private applyHighlightStyles() {
     const all = this.dropdownContainer.querySelectorAll<HTMLElement>('[data-option-index]');
     all.forEach(n => n.style.background = "");
-    if (this.highlightingIndex >= 0 && this.highlightingIndex < this.loadedCount) {
+    if (this.highlightingIndex >= 0) {
       const el = this.dropdownContainer.querySelector<HTMLElement>(`[data-option-index="${this.highlightingIndex}"]`);
       if (el) el.style.background = "#ddd";
     }
   }
 
   private attachEvents() {
-    // Filter on input
     this.textInputElement.addEventListener("input", async () => {
-      const term = this.textInputElement.value.toLowerCase();
+      const term = this.textInputElement.value.trim().toLowerCase();
       this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
       this.openDropdown();
-      // auto-highlight first match for quick Enter
+
       this.highlightingIndex = this.dataManager.displayedRows.length ? 0 : -1;
-      if (this.dataManager.type === 'ondemand') {
-        this.loadedCount = 0;
-      }
+      if (this.dataManager.type === 'ondemand') this.loadedCount = 0;
       await this.renderVirtualList();
       this.ensureHighlightInView();
     });
 
     this.textInputElement.addEventListener("focus", async () => {
       this.openDropdown();
-      // default to selected value
       const idx = this.dataManager.getRowIndex({ key: this.labelKey, value: this.value });
       this.highlightingIndex = idx >= 0 ? idx : -1;
-      if (this.dataManager.type === 'ondemand') {
-        this.loadedCount = 0;
-      }
+      if (this.dataManager.type === 'ondemand') this.loadedCount = 0;
       await this.renderVirtualList();
-      if (this.highlightingIndex >= 0) {
-        await this.loadMoreUntil(this.highlightingIndex);
-      }
+      if (this.highlightingIndex >= 0) await this.loadMoreUntil(this.highlightingIndex);
       this.scrollToIndex(this.highlightingIndex);
       this.applyHighlightStyles();
     });
 
-    // Delay closing to allow mousedown on options
     this.textInputElement.addEventListener("blur", () => {
       setTimeout(() => this.closeDropdown(), 150);
     });
 
-    // Keyboard navigation
     this.textInputElement.addEventListener("keydown", async (e) => {
       if (!this.isDropdownOpen) return;
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        if (this.dataManager.displayedRows.length === 0) return;
-        const newIndex = Math.min(
-          (this.highlightingIndex < 0 ? 0 : this.highlightingIndex + 1),
-          this.dataManager.displayedRows.length - 1
-        );
+        const maxIndex = this.loadedCount - 1 + (this.addOption ? 1 : 0);
+        const newIndex = Math.min(this.highlightingIndex + 1, maxIndex);
         this.highlightingIndex = newIndex;
-        if (this.highlightingIndex >= this.loadedCount) {
-          await this.loadMoreUntil(this.highlightingIndex);
-        }
         this.applyHighlightStyles();
         this.ensureHighlightInView();
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        if (this.dataManager.displayedRows.length === 0) return;
-        const newIndex = Math.max(
-          (this.highlightingIndex < 0 ? 0 : this.highlightingIndex - 1),
-          0
-        );
+        const newIndex = Math.max(this.highlightingIndex - 1, 0);
         this.highlightingIndex = newIndex;
-        if (this.highlightingIndex >= this.loadedCount) {
-          await this.loadMoreUntil(this.highlightingIndex);
-        }
         this.applyHighlightStyles();
         this.ensureHighlightInView();
       } else if (e.key === "Enter") {
         e.preventDefault();
-        if (this.highlightingIndex >= 0) {
+        if (this.addOption && this.highlightingIndex === this.loadedCount) {
+          this.addNewOption(this.addOptionText);
+        } else if (this.highlightingIndex >= 0) {
           const row = this.dataManager.getRowAtIndex({ index: this.highlightingIndex });
-          if (row) {
-            this.selectOption(row.data);
-          }
+          if (row) this.selectOption(row.data);
         }
       } else if (e.key === "Escape") {
         this.closeDropdown();
       }
     });
 
-    // Infinite scrolling for on-demand data
     this.listEl.addEventListener("scroll", this.handleScroll.bind(this), { passive: true });
-
     window.addEventListener("scroll", () => { if (this.isDropdownOpen) this.positionDropdown(); }, true);
     window.addEventListener("resize", () => { if (this.isDropdownOpen) this.positionDropdown(); });
   }
@@ -244,9 +215,7 @@ export class AcSelectInput extends AcInputBase {
   private handleScroll() {
     if (this.dataManager.type !== 'ondemand') return;
     const { scrollTop, scrollHeight, clientHeight } = this.listEl;
-    if (scrollTop + clientHeight >= scrollHeight - (this.optionHeight * 3)) {
-      this.loadMore();
-    }
+    if (scrollTop + clientHeight >= scrollHeight - (this.optionHeight * 3)) this.loadMore();
   }
 
   private async loadMoreUntil(targetIndex: number) {
@@ -257,39 +226,25 @@ export class AcSelectInput extends AcInputBase {
 
   private async loadMore() {
     if (this.dataManager.type !== 'ondemand' || this.dataManager.allDataAvailable || this.loadedCount >= this.dataManager.totalRows) return;
-
     const startIndex = this.loadedCount;
     const newRows = await this.dataManager.getRows({ startIndex, rowsCount: this.batchSize });
-
     if (newRows.length === 0) return;
-
     for (const row of newRows) {
       const rowElement = this.buildOptionElement(row);
-      if (this.name === 'sourceColumnId') {
-        //
-      }
       this.listEl.appendChild(rowElement);
     }
-
     this.loadedCount += newRows.length;
     this.scrollable.registerExistingElements();
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
-    if (name === 'label-key') {
-      this.labelKey = newValue;
-    } else if (name === 'value-key') {
-      this.valueKey = newValue;
-    } else if (name === 'select-options') {
-      if (stringIsJson(newValue)) {
-        this.selectOptions = JSON.parse(newValue);
-      } else {
-        this.selectOptions = newValue.split(",");
-      }
-    } else {
-      super.attributeChangedCallback(name, oldValue, newValue);
-    }
+    if (name === 'label-key') this.labelKey = newValue;
+    else if (name === 'value-key') this.valueKey = newValue;
+    else if (name === 'select-options') {
+      if (stringIsJson(newValue)) this.selectOptions = JSON.parse(newValue);
+      else this.selectOptions = newValue.split(",");
+    } else super.attributeChangedCallback(name, oldValue, newValue);
   }
 
   private buildOptionElement(row: AcDataRow): HTMLElement {
@@ -312,10 +267,34 @@ export class AcSelectInput extends AcInputBase {
     return el;
   }
 
+  private buildAddOptionElement(label: string): HTMLElement {
+    const el = document.createElement("div");
+    el.dataset["optionIndex"] = String(this.loadedCount);
+    el.style.padding = "4px 8px";
+    el.style.cursor = "pointer";
+    el.style.color = "#0078d7";
+    el.style.fontStyle = "italic";
+    el.textContent = `Add "${label}"`;
+    el.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      this.addNewOption(label);
+    });
+    el.addEventListener("mouseenter", () => {
+      this.highlightingIndex = this.loadedCount;
+      this.applyHighlightStyles();
+    });
+    return el;
+  }
+
+  private addNewOption(label: string) {
+    this.addOptionCallback({query:label,callback:(option:any)=>{
+      this.dataManager.addData({data:option});
+      this.selectOption(option);
+    }});
+  }
+
   closeDropdown() {
-    if (this.dropdownContainer.parentNode) {
-      this.dropdownContainer.remove();
-    }
+    if (this.dropdownContainer.parentNode) this.dropdownContainer.remove();
     this.isDropdownOpen = false;
   }
 
@@ -348,11 +327,7 @@ export class AcSelectInput extends AcInputBase {
       const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
       this.dropdownContainer.style.width = rect.width + "px";
       this.dropdownContainer.style.left = rect.left + "px";
-      if (showAbove) {
-        this.dropdownContainer.style.top = (rect.top - dropdownHeight) + "px";
-      } else {
-        this.dropdownContainer.style.top = rect.bottom + "px";
-      }
+      this.dropdownContainer.style.top = showAbove ? (rect.top - dropdownHeight) + "px" : rect.bottom + "px";
       this.dropdownContainer.style.overflowY = "auto";
       this.dropdownContainer.style.border = "1px solid #ccc";
       this.dropdownContainer.style.background = "#fff";
@@ -364,52 +339,49 @@ export class AcSelectInput extends AcInputBase {
     let rows: AcDataRow[] = [];
     const startIndex = 0;
     let rowsCount = -1;
-    if (this.dataManager.type === 'ondemand') {
-      rowsCount = this.batchSize;
-    }
+    if (this.dataManager.type === 'ondemand') rowsCount = this.batchSize;
+
     rows = await this.dataManager.getRows({ startIndex, rowsCount });
     this.loadedCount = rows.length;
-    if (this.dataManager.type === 'offline') {
-      this.loadedCount = this.dataManager.totalRows;
-    }
-    console.log(rows);
+    if (this.dataManager.type === 'offline') this.loadedCount = this.dataManager.totalRows;
+
+    const term = this.textInputElement.value.trim();
+    const hasMatch = rows.some(r => String(r.data[this.labelKey]).toLowerCase() === term.toLowerCase());
+
     if (rows.length > 0) {
-      for (const row of rows) {
-        const rowElement = this.buildOptionElement(row);
-        if (this.name === 'sourceColumnId') {
-          //
-        }
-        this.listEl.appendChild(rowElement);
-      }
-      this.scrollable.registerExistingElements();
-    } else {
-      this.listEl.innerHTML = `<div style="text-align:center;">No matching records!</div>`;
+      for (const row of rows) this.listEl.appendChild(this.buildOptionElement(row));
     }
+
+
+    if (rows.length === 0 && !term) {
+      this.listEl.innerHTML = `<div style="text-align:center;">No records!</div>`;
+    }
+    if (this.addOption && !hasMatch && term) {
+      this.addOptionText = term;
+      this.listEl.appendChild(this.buildAddOptionElement(term));
+    }
+
+    this.scrollable.registerExistingElements();
+
     setTimeout(() => this.applyHighlightStyles(), 0);
   }
 
   private scrollToIndex(index: number) {
-    if (index < 0 || index >= this.dataManager.displayedRows.length) return;
+    if (index < 0) return;
     this.scrollable.scrollTo({ index });
   }
 
   private selectOption(option: any) {
     const label = typeof option === "object" ? option[this.labelKey] : option;
     const value = typeof option === "object" ? option[this.valueKey] : option;
-
     this.textInputElement.value = String(label);
     this.value = value;
-
     this.closeDropdown();
     this.textInputElement.dispatchEvent(new Event("change"));
   }
 
   toggleDropdown() {
-    if (this.isDropdownOpen) {
-      this.closeDropdown();
-    } else {
-      this.openDropdown();
-    }
+    this.isDropdownOpen ? this.closeDropdown() : this.openDropdown();
   }
 }
 

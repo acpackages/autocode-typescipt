@@ -33,47 +33,74 @@ export class AcDatagridOnAgGridEventHandler {
   registerAgGridListeners() {
     this.gridApi.addEventListener('cellClicked', (event: CellClickedEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellClick({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellClick({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellDoubleClicked', (event: CellDoubleClickedEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellDoubleClick({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellDoubleClick({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellEditingStarted', (event: CellEditingStartedEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellEditingStart({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellEditingStart({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellEditingStopped', (event: CellEditingStoppedEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellEditingStop({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellEditingStop({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellKeyDown', (event: CellKeyDownEvent | FullWidthCellKeyDownEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellKeyDown({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellKeyDown({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellMouseDown', (event: CellMouseDownEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellMouseDown({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellMouseDown({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellMouseOut', (event: CellMouseOutEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellMouseLeave({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellMouseLeave({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellMouseOver', (event: CellMouseOverEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellMouseOver({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellMouseOver({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('cellValueChanged', (event: CellValueChangedEvent) => {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleCellValueChange({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if(datagridCell){
+          this.datagridApi.eventHandler.handleCellValueChange({ datagridCell , event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('columnHeaderClicked', (event: ColumnHeaderClickedEvent) => {
@@ -127,38 +154,59 @@ export class AcDatagridOnAgGridEventHandler {
     });
     this.gridApi.addEventListener('rowClicked', (event: RowClickedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowClick({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowClick({ datagridRow, event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('rowDataUpdated', (event: RowDataUpdatedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowDataChange({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }) });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowDataChange({ datagridRow, event: event as any });
+        }
       }
     });
     this.gridApi.addEventListener('rowDoubleClicked', (event: RowDoubleClickedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowDoubleClick({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowDoubleClick({ datagridRow, event: event.event as any });
+        }
       }
     });
 
     this.gridApi.addEventListener('rowEditingStarted', (event: RowEditingStartedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowEditingStart({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowEditingStart({ datagridRow, event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('rowEditingStopped', (event: RowEditingStoppedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowEditingStop({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowEditingStop({ datagridRow, event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('rowSelected', (event: RowSelectedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowSelectionChange({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowSelectionChange({ datagridRow, event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('rowValueChanged', (event: RowValueChangedEvent) => {
       if (!this.ignoreEvents) {
-        this.datagridApi.eventHandler.handleRowDataChange({ datagridRow: this.agGridExtension.getDatagridRowFromEvent({ event: event }), event: event.event as any });
+        const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+        if(datagridRow){
+          this.datagridApi.eventHandler.handleRowDataChange({ datagridRow, event: event.event as any });
+        }
       }
     });
     this.gridApi.addEventListener('sortChanged', (event: SortChangedEvent) => {

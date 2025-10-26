@@ -37,13 +37,22 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
       this.handleAgGridRowDragEnd(args);
     });
     this.gridApi.addEventListener('rowDragCancel', (args: RowDragCancelEvent) => {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragCancel({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:args}),event:args.event});
+      const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: args });
+      if (datagridRow) {
+        this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragCancel({ datagridRow, event: args.event });
+      }
     });
     this.gridApi.addEventListener('rowDragLeave', (args: RowDragLeaveEvent) => {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragLeave({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:args}),event:args.event});
+      const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: args });
+      if (datagridRow) {
+        this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragLeave({ datagridRow, event: args.event });
+      }
     });
     this.gridApi.addEventListener('rowDragMove', (args: RowDragMoveEvent) => {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragOver({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:args}),event:args.event});
+      const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: args });
+      if (datagridRow) {
+        this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragOver({ datagridRow, event: args.event });
+      }
     });
   }
 
@@ -87,7 +96,10 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
         previousGroupChildIndex: this.previousGroupChildIndex
       };
     }
-    this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragEnd({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:event}),event:event.event});
+    const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+    if (datagridRow) {
+      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragEnd({ datagridRow, event: event.event });
+    }
   }
 
   private handleAgGridRowDragStart(event: RowDragEnterEvent) {
@@ -109,7 +121,10 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
         }
       }
     }
-    this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragStart({datagridRow:this.agGridExtension.getDatagridRowFromEvent({event:event}),event:event.event});
+    const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event: event });
+    if (datagridRow) {
+      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragStart({ datagridRow, event: event.event });
+    }
   }
 
   private handleBeforeColDefsChange(event: IAcDatagriOnAgGridColDefsChangeHookArgs) {
@@ -124,7 +139,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
         suppressHeaderMenuButton: true,
         suppressHeaderContextMenu: true,
         width: 50,
-        resizable:false
+        resizable: false
       }
       event.colDefs.push(internalActionColumns);
     }
@@ -160,10 +175,10 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
 
   setAllowRowDragging() {
     this.allowRowDragging = this.rowDraggingExtension.allowRowDragging;
-    if(this.allowRowDragging){
-      this.gridApi.setGridOption('rowDragManaged',true);
-      this.gridApi.setGridOption('rowDragEntireRow',true);
-      this.gridApi.setGridOption('suppressMoveWhenRowDragging',true);
+    if (this.allowRowDragging) {
+      this.gridApi.setGridOption('rowDragManaged', true);
+      this.gridApi.setGridOption('rowDragEntireRow', true);
+      this.gridApi.setGridOption('suppressMoveWhenRowDragging', true);
     }
   }
 

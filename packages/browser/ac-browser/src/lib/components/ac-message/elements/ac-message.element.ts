@@ -7,7 +7,7 @@ type IconType = 'success' | 'error' | 'info' | 'warning' | 'none';
 
 interface BaseOptions {
   title?: string;
-  text?: string;
+  message?: string;
   html?: string;
   icon?: IconType;
   timer?: number; // ms, 0 = no auto close
@@ -81,24 +81,24 @@ export class AcMessage {
   }
 
   // Convenience methods
-  public static success(title?: string, options?: Partial<BaseOptions>) {
-    return this.fire({ title, icon: 'success', ...options });
+  public static success(options?: Partial<BaseOptions>) {
+    return this.fire({ icon: 'success', ...options });
   }
-  public static error(title?: string, options?: Partial<BaseOptions>) {
-    return this.fire({ title, icon: 'error', ...options });
+  public static error(options?: Partial<BaseOptions>) {
+    return this.fire({ icon: 'error', ...options });
   }
-  public static info(title?: string, options?: Partial<BaseOptions>) {
-    return this.fire({ title, icon: 'info', ...options });
+  public static info( options?: Partial<BaseOptions>) {
+    return this.fire({ icon: 'info', ...options });
   }
-  public static warning(title?: string, options?: Partial<BaseOptions>) {
-    return this.fire({ title, icon: 'warning', ...options });
+  public static warning(options?: Partial<BaseOptions>) {
+    return this.fire({ icon: 'warning', ...options });
   }
 
   // Generic fire method - either toast or modal depending on options
   public static fire(options: Partial<BaseOptions> = {}): Promise<any> {
     const opts: BaseOptions = { ...this.defaultConfig, ...options } as BaseOptions;
     if (opts.toast) {
-      this.toast(opts.title ?? '', opts);
+      this.toast(opts);
       return Promise.resolve(null);
     } else {
       // show modal confirm-like dialog (if showConfirmButton true) or alert
@@ -107,8 +107,8 @@ export class AcMessage {
   }
 
   // Show toast (stackable)
-  public static toast(title: string, options: Partial<BaseOptions> = {}) {
-    const opts: BaseOptions = { ...this.defaultConfig, ...options, title, toast: true } as BaseOptions;
+  public static toast(options: Partial<BaseOptions> = {}) {
+    const opts: BaseOptions = { ...this.defaultConfig, ...options, toast: true } as BaseOptions;
     this.injectCSS();
 
     const pos = opts.position as ToastPosition;
@@ -264,7 +264,7 @@ export class AcMessage {
   private static buildToastInnerHTML(opts: BaseOptions) {
     const iconHtml = opts.icon && opts.icon !== 'none' ? `<span class="acmsg-icon acmsg-icon-${opts.icon}"></span>` : '';
     const titleHtml = opts.title ? `<div class="acmsg-title">${opts.title}</div>` : '';
-    const textHtml = opts.text ? `<div class="acmsg-text">${opts.text}</div>` : '';
+    const textHtml = opts.message ? `<div class="acmsg-text">${opts.message}</div>` : '';
     const htmlContent = opts.html ?? '';
 
     const closeBtn = opts.showCloseButton ? `<button class="acmsg-close" aria-label="close">&times;</button>` : '';
@@ -310,7 +310,7 @@ export class AcMessage {
     // build content
     const icon = opts.icon && opts.icon !== 'none' ? `<span class="acmsg-modal-icon acmsg-icon-${opts.icon}"></span>` : '';
     const title = opts.title ? `<h3 class="acmsg-modal-title">${opts.title}</h3>` : '';
-    const text = opts.text ? `<div class="acmsg-modal-text">${opts.text}</div>` : '';
+    const text = opts.message ? `<div class="acmsg-modal-text">${opts.message}</div>` : '';
     const html = opts.html ?? '';
 
     // input (simple)

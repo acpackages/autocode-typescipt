@@ -47,8 +47,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "access_group_remarks": {
+          "columnName": "access_group_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -786,8 +786,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "accountee_remarks": {
+          "columnName": "accountee_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -1141,8 +1141,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "asset_attribute_remarks": {
+          "columnName": "asset_attribute_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -1611,8 +1611,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "asset_remarks": {
+          "columnName": "asset_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -1746,8 +1746,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "automated_task_log_remarks": {
+          "columnName": "automated_task_log_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -1939,8 +1939,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "task_remarks": {
+          "columnName": "task_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -2186,6 +2186,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "SWIFT/BIC"
+            }
+          }
+        },
+        "bank_label": {
+          "columnName": "bank_label",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Label"
             }
           }
         }
@@ -2476,8 +2486,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "chargeable_service_remarks": {
+          "columnName": "chargeable_service_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -2699,8 +2709,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "customer_remarks": {
+          "columnName": "customer_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -2788,8 +2798,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "device_remarks": {
+          "columnName": "device_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -2966,8 +2976,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "employee_attendance_remarks": {
+          "columnName": "employee_attendance_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -3144,20 +3154,6 @@ export const dataDictionaryJson = {
     "act_employees": {
       "tableName": "act_employees",
       "tableColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "date_of_birth": {
           "columnName": "date_of_birth",
           "columnType": "DATE",
@@ -3230,16 +3226,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "employee_image_media_id": {
-          "columnName": "employee_image_media_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Profile Image"
-            }
-          }
-        },
         "employee_salary_amount": {
           "columnName": "employee_salary_amount",
           "columnType": "DOUBLE",
@@ -3247,20 +3233,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Salary Amount"
-            }
-          }
-        },
-        "first_name": {
-          "columnName": "first_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "First Name"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
             }
           }
         },
@@ -3288,42 +3260,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "last_name": {
-          "columnName": "last_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Last Name"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "ledger_account_id": {
-          "columnName": "ledger_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
-            }
-          }
-        },
-        "middle_name": {
-          "columnName": "middle_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Middle Name"
-            }
-          }
-        },
-        "remarks": {
-          "columnName": "remarks",
+        "employee_remarks": {
+          "columnName": "employee_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -3339,56 +3277,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
-            }
-          }
-        },
-        "email_addresses": {
-          "columnName": "email_addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Addresses"
-            }
-          }
-        },
-        "addresses": {
-          "columnName": "addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Addresses"
-            }
-          }
-        },
-        "bank_accounts": {
-          "columnName": "bank_accounts",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Accounts"
-            }
-          }
-        },
-        "phone_numbers": {
-          "columnName": "phone_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Numbers"
-            }
-          }
-        },
-        "websites": {
-          "columnName": "websites",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Websites"
             }
           }
         }
@@ -3844,8 +3732,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "ledger_account_type_remarks": {
+          "columnName": "ledger_account_type_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -4021,8 +3909,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "ledger_account_remarks": {
+          "columnName": "ledger_account_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -5056,8 +4944,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "menu_remarks": {
+          "columnName": "menu_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -6202,8 +6090,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "price_change_product_remarks": {
+          "columnName": "price_change_product_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -6335,8 +6223,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "price_change_remarks": {
+          "columnName": "price_change_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -6814,8 +6702,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "product_location_data_remarks": {
+          "columnName": "product_location_data_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -7429,8 +7317,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "product_storage_location_data_remarks": {
+          "columnName": "product_storage_location_data_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8265,8 +8153,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_invoice_expense_remarks": {
+          "columnName": "purchase_invoice_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8428,8 +8316,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_invoice_payment_remarks": {
+          "columnName": "purchase_invoice_payment_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8826,8 +8714,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_invoice_remarks": {
+          "columnName": "purchase_invoice_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9272,8 +9160,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_order_expense_remarks": {
+          "columnName": "purchase_order_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9435,8 +9323,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_order_payment_remarks": {
+          "columnName": "purchase_order_payment_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9773,8 +9661,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_order_remarks": {
+          "columnName": "purchase_order_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10121,8 +10009,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_return_expense_remarks": {
+          "columnName": "purchase_return_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10260,8 +10148,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_return_payment_remarks": {
+          "columnName": "purchase_return_payment_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10634,8 +10522,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_return_remarks": {
+          "columnName": "purchase_return_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10788,8 +10676,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "purchase_term_remarks": {
+          "columnName": "purchase_term_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10843,8 +10731,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_coupon_issue_remarks": {
+          "columnName": "sale_coupon_issue_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10912,8 +10800,8 @@ export const dataDictionaryJson = {
     "act_sale_coupon_uses": {
       "tableName": "act_sale_coupon_uses",
       "tableColumns": {
-        "remarks": {
-          "columnName": "remarks",
+        "sale_coupon_use_remarks": {
+          "columnName": "sale_coupon_use_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11011,8 +10899,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_coupon_remarks": {
+          "columnName": "sale_coupon_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11379,8 +11267,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_invoice_expense_remarks": {
+          "columnName": "sale_invoice_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11518,8 +11406,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_invoice_payment_remarks": {
+          "columnName": "sale_invoice_payment_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11866,8 +11754,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_invoice_remarks": {
+          "columnName": "sale_invoice_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -12234,8 +12122,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_maintenance_expense_remarks": {
+          "columnName": "sale_maintenance_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -12373,8 +12261,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_maintenance_payment_remarks": {
+          "columnName": "sale_maintenance_payment_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -12737,8 +12625,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_maintenance_remarks": {
+          "columnName": "sale_maintenance_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -12993,8 +12881,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_offer_product_remarks": {
+          "columnName": "sale_offer_product_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -13197,8 +13085,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_offer_remarks": {
+          "columnName": "sale_offer_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -13568,8 +13456,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_quotation_expense_remarks": {
+          "columnName": "sale_quotation_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -13906,8 +13794,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_quotation_remarks": {
+          "columnName": "sale_quotation_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14264,8 +14152,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_return_expense_remarks": {
+          "columnName": "sale_return_expense_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14403,8 +14291,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_return_payment_remarks": {
+          "columnName": "sale_return_payment_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14767,8 +14655,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_return_remarks": {
+          "columnName": "sale_return_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14951,8 +14839,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "sale_term_remarks": {
+          "columnName": "sale_term_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -15364,8 +15252,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "stock_audit_product_remarks": {
+          "columnName": "stock_audit_product_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -15512,8 +15400,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "stock_audit_remarks": {
+          "columnName": "stock_audit_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -16139,8 +16027,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "stock_transfer_product_remarks": {
+          "columnName": "stock_transfer_product_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -16460,8 +16348,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "stock_transfer_remarks": {
+          "columnName": "stock_transfer_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -16765,8 +16653,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "stock_update_product_remarks": {
+          "columnName": "stock_update_product_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -16913,8 +16801,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "stock_update_remarks": {
+          "columnName": "stock_update_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17107,8 +16995,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "storage_location_remarks": {
+          "columnName": "storage_location_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17329,8 +17217,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "supplier_chargeable_service_remarks": {
+          "columnName": "supplier_chargeable_service_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17466,8 +17354,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "supplier_product_remarks": {
+          "columnName": "supplier_product_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17570,6 +17458,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            }
+          }
+        },
+        "supplier_remarks": {
+          "columnName": "supplier_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -17780,8 +17678,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "taxing_scheme_remarks": {
+          "columnName": "taxing_scheme_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17930,6 +17828,26 @@ export const dataDictionaryJson = {
               "propertyValue": "Credit Ledger Account"
             }
           }
+        },
+        "debit_payment_method_id": {
+          "columnName": "debit_payment_method_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Debit Payment Method"
+            }
+          }
+        },
+        "credit_payment_method_id": {
+          "columnName": "credit_payment_method_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Credit Payment Method"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -18047,8 +17965,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "remarks": {
-          "columnName": "remarks",
+        "transaction_remarks": {
+          "columnName": "transaction_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -18534,13 +18452,756 @@ export const dataDictionaryJson = {
   "views": {
     "vw_act_customers": {
       "viewName": "vw_act_customers",
-      "viewColumns": {},
-      "viewQuery": "SELECT * FROM act_customers"
+      "viewColumns": {
+        "customer_category": {
+          "columnName": "customer_category",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Category"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ledger Account"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_details": {
+          "columnName": "party_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Numbers"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "employee_id": {
+          "columnName": "employee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Employee"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_image_media_id": {
+          "columnName": "party_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party Image"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        }
+      },
+      "viewQuery": "SELECT act_customers.customer_category,act_parties.* FROM act_customers LEFT JOIN act_parties ON act_customers.customer_id = act_parties.customer_id"
+    },
+    "vw_act_employees": {
+      "viewName": "vw_act_employees",
+      "viewColumns": {
+        "employee_code": {
+          "columnName": "employee_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Code"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "date_of_birth": {
+          "columnName": "date_of_birth",
+          "columnType": "DATE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Birth Date"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "date_of_joining": {
+          "columnName": "date_of_joining",
+          "columnType": "DATE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Joining Date"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "salary_duration": {
+          "columnName": "salary_duration",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Salary Duration"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "employee_designation": {
+          "columnName": "employee_designation",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Designation"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "employee_salary_amount": {
+          "columnName": "employee_salary_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Salary Amount"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "employee_gender": {
+          "columnName": "employee_gender",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gender"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ledger Account"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_details": {
+          "columnName": "party_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Numbers"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "employee_id": {
+          "columnName": "employee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Employee"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_image_media_id": {
+          "columnName": "party_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party Image"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        }
+      },
+      "viewQuery": "SELECT act_employees.employee_code,act_employees.date_of_birth,act_employees.date_of_joining,act_employees.salary_duration,act_employees.employee_designation,act_employees.employee_salary_amount,act_employees.employee_gender,act_parties.* FROM act_employees LEFT JOIN act_parties ON act_employees.employee_id = act_parties.employee_id"
     },
     "vw_act_products": {
       "viewName": "vw_act_products",
       "viewColumns": {},
       "viewQuery": "SELECT * FROM act_products"
+    },
+    "vw_act_suppliers": {
+      "viewName": "vw_act_suppliers",
+      "viewColumns": {
+        "supplier_type": {
+          "columnName": "supplier_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Type"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ledger Account"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_details": {
+          "columnName": "party_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Addresses"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Addresses"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Fax Numbers"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Phone Numbers"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Websites"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Bank Accounts"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "employee_id": {
+          "columnName": "employee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Employee"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        },
+        "party_image_media_id": {
+          "columnName": "party_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party Image"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": ""
+        }
+      },
+      "viewQuery": "SELECT act_suppliers.supplier_type,act_parties.* FROM act_suppliers LEFT JOIN act_parties ON act_suppliers.supplier_id = act_parties.supplier_id"
+    },
+    "vw_act_transaction_credit_entries": {
+      "viewName": "vw_act_transaction_credit_entries",
+      "viewColumns": {},
+      "viewQuery": "SELECT SUM(entry_amount) as credit_amount, credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
+    },
+    "vw_act_transaction_debit_entries": {
+      "viewName": "vw_act_transaction_debit_entries",
+      "viewColumns": {},
+      "viewQuery": "SELECT SUM(entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
     }
   },
   "relationships": [
@@ -18637,12 +19298,6 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "accountee_id",
       "destinationTable": "act_employee_contracts",
-      "sourceColumn": "accountee_id",
-      "sourceTable": "act_accountees"
-    },
-    {
-      "destinationColumn": "accountee_id",
-      "destinationTable": "act_employees",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
@@ -19309,12 +19964,6 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "ledger_account_id",
       "destinationTable": "act_assets",
-      "sourceColumn": "ledger_account_id",
-      "sourceTable": "act_ledger_accounts"
-    },
-    {
-      "destinationColumn": "ledger_account_id",
-      "destinationTable": "act_employees",
       "sourceColumn": "ledger_account_id",
       "sourceTable": "act_ledger_accounts"
     },
@@ -20693,12 +21342,6 @@ export const dataDictionaryJson = {
       "sourceTable": "act_medias"
     },
     {
-      "destinationColumn": "employee_image_media_id",
-      "destinationTable": "act_employees",
-      "sourceColumn": "media_id",
-      "sourceTable": "act_medias"
-    },
-    {
       "destinationColumn": "in_uom_id",
       "destinationTable": "act_inventory_tracking_entries",
       "sourceColumn": "product_uom_id",
@@ -21051,6 +21694,18 @@ export const dataDictionaryJson = {
       "destinationTable": "act_product_sale_details",
       "sourceColumn": "product_barcode_id",
       "sourceTable": "act_product_barcodes"
+    },
+    {
+      "destinationColumn": "debit_payment_method_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
+    },
+    {
+      "destinationColumn": "credit_payment_method_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "payment_method_id",
+      "sourceTable": "act_payment_methods"
     }
   ],
   "storedProcedures": {},

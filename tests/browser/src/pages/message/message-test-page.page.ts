@@ -69,34 +69,38 @@ export class MessageTestPage extends HTMLElement {
     switch (action) {
       // ---- Basic toasts ----
       case "toast-success":
-        AcMessage.success("Success!", {
-          text: "Your operation completed successfully.",
+        AcMessage.success({
+          title:"Success!",
+          message: "Your operation completed successfully.",
           toast: true,
           timer: 3000,
         });
         break;
       case "toast-error":
-        AcMessage.error("Error occurred", {
-          text: "Something went wrong.",
+        AcMessage.error({
+          title:"Error occurred",
+          message: "Something went wrong.",
           toast: true,
         });
         break;
       case "toast-info":
-        AcMessage.info("Information", {
-          text: "This is an informational message.",
+        AcMessage.info( {
+          title:"Information",
+          message: "This is an informational message.",
           toast: true,
         });
         break;
       case "toast-warning":
-        AcMessage.warning("Warning", {
-          text: "Be cautious with this action.",
+        AcMessage.warning( {
+          title:"Warning",
+          message: "Be cautious with this action.",
           toast: true,
         });
         break;
       case "toast-none":
         AcMessage.fire({
           title: "Plain Toast",
-          text: "No icon, custom style, 5s timer.",
+          message: "No icon, custom style, 5s timer.",
           icon: "none",
           toast: true,
           timer: 5000,
@@ -113,8 +117,9 @@ export class MessageTestPage extends HTMLElement {
       case "pos-bottom-center":
       case "pos-bottom-right":
         const pos = action.replace("pos-", "") as any;
-        AcMessage.info(`Toast ${pos}`, {
-          text: `This toast is positioned at ${pos}`,
+        AcMessage.info( {
+          title:`Toast ${pos}`,
+          message: `This toast is positioned at ${pos}`,
           toast: true,
           position: pos,
           timer: 2500,
@@ -125,17 +130,17 @@ export class MessageTestPage extends HTMLElement {
       case "confirm-basic": {
         const result:any = await AcMessage.confirm({
           title: "Are you sure?",
-          text: "Do you want to proceed?",
+          message: "Do you want to proceed?",
           icon: "warning",
           confirmText: "Yes",
           denyText: "No",
           onConfirm:(result:any)=>{
             console.log("Confirm result:", result);
-            AcMessage.success("Confirmed ✅");
+            AcMessage.success({message:"Confirmed ✅"});
           },
           onCancel:(result:any)=>{
             console.log("Confirm result:", result);
-            AcMessage.error("Cancelled ❌", { toast: true });
+            AcMessage.error({title:"Cancelled ❌", toast: true });
           }
         });
 
@@ -145,16 +150,16 @@ export class MessageTestPage extends HTMLElement {
       case "confirm-input": {
         const result:any = await AcMessage.confirm({
           title: "Enter your name",
-          text: "We will greet you!",
+          message: "We will greet you!",
           icon: "info",
           showInput: true,
           inputPlaceholder: "Your name",
           confirmText: "Submit",
         });
         if (result.confirmed) {
-          AcMessage.success(`Hello, ${result.value ?? "Anonymous"}!`, { toast: true });
+          AcMessage.success({message:`Hello, ${result.value ?? "Anonymous"}!`, toast: true });
         } else {
-          AcMessage.warning("You cancelled.", { toast: true });
+          AcMessage.warning( {message:"You cancelled.", toast: true });
         }
         break;
       }
@@ -163,7 +168,7 @@ export class MessageTestPage extends HTMLElement {
         const runModal = async (i: number) => {
           await AcMessage.confirm({
             title: `Dialog ${i}`,
-            text: "Click OK to continue.",
+            message: "Click OK to continue.",
             icon: "info",
             confirmText: "Next",
           });
@@ -171,32 +176,36 @@ export class MessageTestPage extends HTMLElement {
         await runModal(1);
         await runModal(2);
         await runModal(3);
-        AcMessage.success("Queue complete!", { toast: true });
+        AcMessage.success({message:"Queue complete!", toast: true });
         break;
       }
 
       // ---- Alert modals ----
       case "modal-info":
-        AcMessage.info("Info Modal", {
-          text: "This is an informational modal dialog.",
+        AcMessage.info({
+          title:"Info Modal",
+          message: "This is an informational modal dialog.",
           toast: false,
         });
         break;
       case "modal-error":
-        AcMessage.error("Error Modal", {
-          text: "An unexpected error occurred.",
+        AcMessage.error( {
+          title:"Error Modal",
+          message: "An unexpected error occurred.",
           toast: false,
         });
         break;
       case "modal-success":
-        AcMessage.success("Success Modal", {
-          text: "Your data has been saved successfully.",
+        AcMessage.success( {
+          title:"Success Modal",
+          message: "Your data has been saved successfully.",
           toast: false,
         });
         break;
       case "modal-warning":
-        AcMessage.warning("Warning Modal", {
-          text: "This action is irreversible!",
+        AcMessage.warning( {
+          title:"Warning Modal",
+          message: "This action is irreversible!",
           toast: false,
         });
         break;
@@ -205,14 +214,15 @@ export class MessageTestPage extends HTMLElement {
       case "close-all":
         AcMessage.closeAllToasts();
         AcMessage.flushModalQueue();
-        AcMessage.info("All messages closed!", { toast: true });
+        AcMessage.info({title:"All messages closed!",  toast: true });
         break;
 
       case "stack":
         for (let i = 1; i <= 5; i++) {
           setTimeout(() => {
-            AcMessage.info(`Stacked Toast #${i}`, {
-              text: "Appears with delay.",
+            AcMessage.info({
+              title:`Stacked Toast #${i}`,
+              message: "Appears with delay.",
               toast: true,
               timer: 1500,
               position: "top-right",

@@ -305,6 +305,11 @@ export class InputBasicPage extends HTMLElement {
     select.acContext = this.context;
     select.selectOptions = ['Angular', 'React', 'Vue.js', 'Svelte'];
     select.className = 'form-select';
+    select.addOption = true;
+    select.addOptionCallback = ({query,callback}:{query:string,callback:Function})=>{
+      alert(`Adding option : ${query}`);
+      callback({label:query,value:query});;
+    };
     addField('Preferred Framework', select, allInputsGroup);
 
     const languageTags = new AcTagsInput();
