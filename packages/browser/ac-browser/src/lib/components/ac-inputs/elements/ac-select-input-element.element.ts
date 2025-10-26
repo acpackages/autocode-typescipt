@@ -82,18 +82,18 @@ export class AcSelectInput extends AcInputBase {
   }
 
   dataManager: AcDataManager = new AcDataManager();
-  private dropdownContainer!: HTMLDivElement;
+  protected dropdownContainer!: HTMLDivElement;
   override inputElement: HTMLDivElement = document.createElement('div');
-  private highlightingIndex = -1;
-  private textInputElement: HTMLInputElement = document.createElement("input");
-  private isDropdownOpen = false;
-  private listEl!: HTMLDivElement;
-  private maxDropdownHeight = 300;
-  private optionHeight = 32;
-  private scrollable!: AcScrollable;
-  private batchSize = 20;
-  private loadedCount = 0;
-  private addOptionText = "";
+  protected highlightingIndex = -1;
+  protected textInputElement: HTMLInputElement = document.createElement("input");
+  protected isDropdownOpen = false;
+  protected listEl!: HTMLDivElement;
+  protected maxDropdownHeight = 300;
+  protected optionHeight = 32;
+  protected scrollable!: AcScrollable;
+  protected batchSize = 20;
+  protected loadedCount = 0;
+  protected addOptionText = "";
   addOptionCallback:Function = ({query,callback}:{query:string,callback:Function}):void=>{
     const newOption = { [this.labelKey]: query, [this.valueKey]: query };
     callback(newOption);

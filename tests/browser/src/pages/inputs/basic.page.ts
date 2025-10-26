@@ -136,7 +136,7 @@ export class InputBasicPage extends HTMLElement {
 
     const onDemandSelectContainer = document.createElement('div');
     onDemandSelectContainer.className = 'mb-3';
-    onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control"></ac-select-input>';
+    onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control" placeholder="Select Customer"></ac-select-input>';
     allInputsGroup.appendChild(onDemandSelectContainer);
     const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
     onDemandSelectInput.labelKey = 'first_name'

@@ -102,7 +102,6 @@ export class AcDDInputElement extends AcInputBase {
         if(this.value){
           this.inputElement.value = this.value;
         }
-        console.log(this);
       }
     }
   }

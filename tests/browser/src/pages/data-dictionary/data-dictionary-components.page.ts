@@ -4,13 +4,14 @@ import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
 import { AcDataDictionaryEditor, AcDDEApi } from '@autocode-ts/ac-data-dictionary-editor';
 import { PageHeader } from '../../components/page-header/page-header.component';
-// import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
-import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
+import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+// import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { AcDDDatagridElement, AcDDInputElement, AcDDInputFieldElement, AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
 import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/autocode';
+import { ProductCategorySelectInput } from '../../components/inputs/product-category-select-input.element';
 
 export class DataDictionaryComponentsPage extends HTMLElement {
   accountTargetInput!:AcDDInputFieldElement;
@@ -39,12 +40,22 @@ export class DataDictionaryComponentsPage extends HTMLElement {
     this.style.height = '100vh;'
     this.prepend(this.pageHeader.element);
     this.pageHeader.pageTitle = 'Data Dictionary Components';
-    AcDataDictionary.registerDataDictionary({ jsonData: unifiDataDictionary });
-    console.log(AcDataDictionary.dataDictionaries);
-    console.log(AcDDInputFieldElement);
-    console.log(AcDDDatagridElement);
+    AcDataDictionary.registerDataDictionary({ jsonData: actDataDictionary });
+    AcDDInputManager.registerForeignKeyInput({
+      primaryTableName:'act_product_categories',
+      inputDefinition:{
+        inputElement:ProductCategorySelectInput
+      }
+    })
+    // console.log(AcDataDictionary.dataDictionaries);
+    // console.log(AcDDInputFieldElement);
+    // console.log(AcDDDatagridElement);
     this.innerHTML = `
-    <ac-dd-input-field class="account-target-input" table-name="accounts" column-name="account_target" value="TRADING"></ac-dd-input-field>
+    <ac-dd-input-field class="account-target-input" table-name="act_ledger_accounts" column-name="reflecting_statement" value="ADJUSTMENT"></ac-dd-input-field>
+    <ac-dd-input-field class="account-target-input" table-name="act_products" column-name="product_category_id"></ac-dd-input-field>
+    <div style="height:80vh">
+    <ac-dd-datagrid source-value="accounts" source-type="table"></ac-dd-datagrid>
+    </div>
     <div style="height:80vh">
     <ac-dd-datagrid source-value="accounts" source-type="table"></ac-dd-datagrid>
     </div>

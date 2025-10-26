@@ -102,7 +102,6 @@ export class AcDDDatagridElement extends AcElementBase {
     super.connectedCallback();
     this.append(this.datagrid);
     this.setDatagridColumns();
-    console.dir(this);
   }
 
   private setDatagridColumns() {

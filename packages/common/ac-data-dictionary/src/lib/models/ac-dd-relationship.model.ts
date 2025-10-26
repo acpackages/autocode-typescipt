@@ -48,25 +48,12 @@ export class AcDDRelationship {
   }): AcDDRelationship[] {
     const result: AcDDRelationship[] = [];
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
-
-    if (
-      acDataDictionary.relationships.hasOwnProperty(destinationTable) &&
-      acDataDictionary.relationships[destinationTable].hasOwnProperty(destinationColumn)
-    ) {
-      const sourceDetails = acDataDictionary.relationships[destinationTable][destinationColumn];
-      for (const sourceTable in sourceDetails) {
-        if (sourceDetails.hasOwnProperty(sourceTable)) {
-          const sourceColumnDetails = sourceDetails[sourceTable];
-          for (const sourceColumn in sourceColumnDetails) {
-            if (sourceColumnDetails.hasOwnProperty(sourceColumn)) {
-              const relationshipDetails = sourceColumnDetails[sourceColumn];
-              result.push(AcDDRelationship.instanceFromJson({ jsonData: relationshipDetails }));
-            }
-          }
-        }
+    for(const relationshipDetails of Object.values(acDataDictionary.relationships)){
+      const relationship = AcDDRelationship.instanceFromJson({ jsonData: relationshipDetails })
+      if(relationship.destinationColumn == destinationColumn && relationship.destinationTable == destinationTable){
+        result.push(relationship);
       }
     }
-
     return result;
   }
 
