@@ -8,10 +8,12 @@ import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { AcDDDatagridElement, AcDDInputElement, AcDDInputFieldElement, AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
-import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
+import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/autocode';
 
 export class DataDictionaryComponentsPage extends HTMLElement {
+  accountTargetInput!:AcDDInputFieldElement;
   dataDictionaryEditor!: AcDataDictionaryEditor;
 
   datagrid!: AcDatagrid;
@@ -42,11 +44,16 @@ export class DataDictionaryComponentsPage extends HTMLElement {
     console.log(AcDDInputFieldElement);
     console.log(AcDDDatagridElement);
     this.innerHTML = `
-    <ac-dd-input-field table-name="accounts" column-name="account_target"></ac-dd-input-field>
+    <ac-dd-input-field class="account-target-input" table-name="accounts" column-name="account_target" value="TRADING"></ac-dd-input-field>
     <div style="height:80vh">
     <ac-dd-datagrid source-value="accounts" source-type="table"></ac-dd-datagrid>
     </div>
     `;
+    this.accountTargetInput = this.querySelector('.account-target-input') as AcDDInputFieldElement;
+    setTimeout(() => {
+      this.accountTargetInput.setAttribute('value','TRADING ACCOUNT');
+      console.log("Updated Account Target");
+    }, 5000);
     this.ddDatagrid = this.querySelector('ac-dd-datagrid')!;
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
     this.datagrid = this.ddDatagrid.datagrid;
@@ -70,8 +77,8 @@ export class DataDictionaryComponentsPage extends HTMLElement {
     this.rowSelectionExtension.allowMultipleSelection = true;
 
     this.ddDatagrid.onDemandFunction = async (args:IAcOnDemandRequestArgs) =>{
-            const pageSize: number = args.rowsCount;
-            const pageNumber: number = (args.startIndex / pageSize) + 1;
+            const pageSize: number = args.rowsCount!;
+            const pageNumber: number = (args.startIndex! / pageSize) + 1;
             const res = await fetch(`http://localhost:8081/api/accounts/get?page_size=${pageSize}&page_number=${pageNumber}`);
             if (res.ok) {
               const response = await res.json();

@@ -29,6 +29,8 @@ interface BaseOptions {
   allowOutsideClick?: boolean;
   allowEscapeKey?: boolean;
   // callback hooks
+  onConfirm?: (result: ConfirmResult) => void;
+  onCancel?: (result: ConfirmResult) => void;
   onOpen?: (el: HTMLElement) => void;
   onClose?: (el: HTMLElement) => void;
   // arbitrary extra data
@@ -45,7 +47,7 @@ export class AcMessage {
   // --- Global config ---
   private static defaultConfig: Partial<BaseOptions> = {
     timer: 3000,
-    toast: false,
+    toast: true,
     position: 'top-right',
     showCloseButton: true,
     pauseOnHover: true,
@@ -204,7 +206,7 @@ export class AcMessage {
 
   // Confirmation modal (queueing to keep single modal on screen)
   public static confirm(options: Partial<BaseOptions> = {}): Promise<ConfirmResult | boolean | string | null> {
-    const opts: BaseOptions = { ...this.defaultConfig, ...options, toast: false } as BaseOptions;
+    const opts: BaseOptions = { ...this.defaultConfig, ...options, toast: true } as BaseOptions;
     this.injectCSS();
 
     return new Promise((resolve) => {
@@ -370,12 +372,20 @@ export class AcMessage {
       const value = inputEl ? inputEl.value : undefined;
       opts.onClose?.(dialog);
       cleanup();
-      resolve(opts.showInput ? { confirmed: true, value } : { confirmed: true });
+      const result:any = { confirmed: true, value };
+      if(opts.onConfirm){
+        opts.onConfirm(result);
+      }
+      resolve(result);
     };
     const deny = () => {
       opts.onClose?.(dialog);
       cleanup();
-      resolve({ confirmed: false, dismissed: true });
+      const result:any = { confirmed: false, dismissed: true };
+      if(opts.onCancel){
+        opts.onCancel(result);
+      }
+      resolve(result);
     };
 
     const confirmBtnEl = dialog.querySelector('.acmsg-confirm') as HTMLElement | null;

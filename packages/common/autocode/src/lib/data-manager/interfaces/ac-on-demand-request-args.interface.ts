@@ -3,10 +3,10 @@ import { AcSortOrder } from "../../models/ac-sort-order.model";
 
 
 export interface IAcOnDemandRequestArgs{
-  startIndex:number;
-  rowsCount:number;
-  filterGroup:AcFilterGroup;
-  sortOrder:AcSortOrder;
+  startIndex?:number;
+  rowsCount?:number;
+  filterGroup?:AcFilterGroup;
+  sortOrder?:AcSortOrder;
   successCallback:Function
-  errorCallback:Function
+  errorCallback?:Function
 }

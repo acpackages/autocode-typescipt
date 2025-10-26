@@ -1,4 +1,4 @@
-import { IAcOnDemandResponseArgs } from "../../../ac-datagrid/interfaces/callback-args/ac-datagrid-on-demand-response-args.interface";
+import { IAcOnDemandResponseArgs } from "@autocode-ts/autocode";
 import { AcRepeaterApi } from "../../core/ac-repeater-api";
 import { IAcRepeaterOnDemandRequestArgs } from "../callback-args/ac-repeater-on-demand-request-args.interface";
 

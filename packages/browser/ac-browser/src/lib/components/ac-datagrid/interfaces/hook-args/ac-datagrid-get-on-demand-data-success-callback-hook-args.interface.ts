@@ -1,4 +1,4 @@
-import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from "../../../../interfaces/_interfaces.export";
+import { IAcOnDemandRequestArgs,IAcOnDemandResponseArgs } from "@autocode-ts/autocode";
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
 
 export interface IAcDatagridGetOnDemandDataSuccessCallbackHookArgs{

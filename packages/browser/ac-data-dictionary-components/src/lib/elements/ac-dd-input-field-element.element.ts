@@ -68,6 +68,13 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.setDDInput();
   }
 
+  override get value(): any {
+    return this.ddInput.value;
+  }
+  override set value(value: any) {
+    this.ddInput.value = value;
+  }
+
   override inputElement = document.createElement('div');
   ddInput: AcDDInputElement = new AcDDInputElement();
   ddInputField: AcDDInputFieldBaseElement;

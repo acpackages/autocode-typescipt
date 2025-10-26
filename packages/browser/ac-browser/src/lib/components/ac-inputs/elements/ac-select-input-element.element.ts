@@ -1,67 +1,70 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
-import { AcScrollable } from "../../ac-scrollable/_ac-scrollable.export";
-import { AcInputBase } from "../core/ac-input-base";
-import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
+import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow } from "@autocode-ts/autocode";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcDataManager, AcDataRow, AcEnumConditionOperator } from "@autocode-ts/autocode";
+import { AcScrollable } from "../../_components.export";
+import { AcInputBase, AC_INPUT_TAG } from "../_ac-inputs.export";
 
 export class AcSelectInput extends AcInputBase {
   static override get observedAttributes() {
-    return [... super.observedAttributes, 'label-key', 'value-key', 'select-options'];
+    return [...super.observedAttributes, 'label-key', 'value-key', 'select-options'];
   }
 
   get labelKey(): string {
-    return this.getAttribute('label-key')??'label';
+    return this.getAttribute('label-key') ?? 'label';
   }
   set labelKey(value: string) {
     this.setAttribute('label-key', value);
-    if(this._value){
+    if (this._value) {
       this.value = this._value;
     }
   }
 
   get valueKey(): string {
-    return this.getAttribute('value-key')??'value';
+    return this.getAttribute('value-key') ?? 'value';
   }
   set valueKey(value: string) {
     this.setAttribute('value-key', value);
-    if(this._value){
+    if (this._value) {
       this.value = this._value;
     }
+  }
+
+  get onDemandFunction(): ((args: IAcOnDemandRequestArgs) => void) | undefined {
+    return this.dataManager.onDemandFunction;
+  }
+  set onDemandFunction(value: (args: IAcOnDemandRequestArgs) => void) {
+    this.dataManager.onDemandFunction = value;
   }
 
   override get placeholder(): string | null {
     return this.textInputElement.getAttribute('placeholder');
   }
   override set placeholder(value: string) {
-    if (value != '') {
+    if (value !== '') {
       this.textInputElement.setAttribute('placeholder', value);
-    }
-    else {
-      this.textInputElement.removeAttribute(value);
+    } else {
+      this.textInputElement.removeAttribute('placeholder');
     }
   }
 
   get selectOptions(): any[] { return this.dataManager.data; }
   set selectOptions(value: any[]) {
-    let valueOptions:any[] = [];
-    if(value.length>0){
-      if(typeof value[0] != "object"){
-        for(const val of value){
-          valueOptions.push({[this.labelKey]:val,[this.valueKey]:val});
+    this.dataManager.type = 'offline';
+    let valueOptions: any[] = [];
+    if (value.length > 0) {
+      if (typeof value[0] !== "object") {
+        for (const val of value) {
+          valueOptions.push({ [this.labelKey]: val, [this.valueKey]: val });
         }
-      }
-      else{
+      } else {
         valueOptions = [...value];
       }
     }
     this.dataManager.data = valueOptions;
-    if (this.isDropdownOpen){
+    if (this.isDropdownOpen) {
       this.renderVirtualList();
-    };
-    if(this._value){
+    }
+    if (this._value) {
       this.value = this._value;
     }
   }
@@ -69,19 +72,17 @@ export class AcSelectInput extends AcInputBase {
   override get value() { return super.value; }
   override set value(val: any) {
     super.value = val;
-    const matchRow = this.dataManager.getRow({key:this.valueKey,value:this.value});
-    if (matchRow && !this.isDropdownOpen) {
-      this.textInputElement.value = matchRow.data[this.labelKey];
-    }
+    const matchRow = this.dataManager.getRow({ key: this.valueKey, value: this.value });
+    this.textInputElement.value = matchRow ? matchRow.data[this.labelKey] : String(super.value);
 
-    if(this.dataManager.totalRows == 0 && super.value != undefined){
+    if (this.dataManager.rows.length === 0 && super.value !== undefined) {
       this.dataManager.data = [{
-        [this.labelKey]:super.value,[this.valueKey]:super.value
+        [this.labelKey]: super.value, [this.valueKey]: super.value
       }];
     }
   }
 
-  dataManager:AcDataManager = new AcDataManager();
+  dataManager: AcDataManager = new AcDataManager();
   private dropdownContainer!: HTMLDivElement;
   override inputElement: HTMLDivElement = document.createElement('div');
   private highlightingIndex = -1;
@@ -91,16 +92,18 @@ export class AcSelectInput extends AcInputBase {
   private maxDropdownHeight = 300;
   private optionHeight = 32;
   private scrollable!: AcScrollable;
+  private batchSize = 20;
+  private loadedCount = 0;
 
-  constructor(){
+  constructor() {
     super();
   }
 
   override connectedCallback() {
-    if(!this.hasAttribute('label-key')){
+    if (!this.hasAttribute('label-key')) {
       this.labelKey = 'label';
     }
-    if(!this.hasAttribute('value-key')){
+    if (!this.hasAttribute('value-key')) {
       this.valueKey = 'value';
     }
 
@@ -131,7 +134,7 @@ export class AcSelectInput extends AcInputBase {
       boxSizing: "border-box",
     });
 
-    // Inner list inputElement (virtualized)
+    // Inner list element (virtualized)
     this.listEl = document.createElement("div");
     // AcScrollable will set overflow + handle virtualization
     this.dropdownContainer.appendChild(this.listEl);
@@ -146,7 +149,7 @@ export class AcSelectInput extends AcInputBase {
   private applyHighlightStyles() {
     const all = this.dropdownContainer.querySelectorAll<HTMLElement>('[data-option-index]');
     all.forEach(n => n.style.background = "");
-    if (this.highlightingIndex >= 0) {
+    if (this.highlightingIndex >= 0 && this.highlightingIndex < this.loadedCount) {
       const el = this.dropdownContainer.querySelector<HTMLElement>(`[data-option-index="${this.highlightingIndex}"]`);
       if (el) el.style.background = "#ddd";
     }
@@ -154,22 +157,31 @@ export class AcSelectInput extends AcInputBase {
 
   private attachEvents() {
     // Filter on input
-    this.textInputElement.addEventListener("input", () => {
+    this.textInputElement.addEventListener("input", async () => {
       const term = this.textInputElement.value.toLowerCase();
-      this.dataManager.filterGroup.setFilter({key:this.labelKey,operator:AcEnumConditionOperator.Contains,value:term});
+      this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
       this.openDropdown();
       // auto-highlight first match for quick Enter
       this.highlightingIndex = this.dataManager.displayedRows.length ? 0 : -1;
-      this.renderVirtualList();
+      if (this.dataManager.type === 'ondemand') {
+        this.loadedCount = 0;
+      }
+      await this.renderVirtualList();
       this.ensureHighlightInView();
     });
 
-    this.textInputElement.addEventListener("focus", () => {
+    this.textInputElement.addEventListener("focus", async () => {
       this.openDropdown();
       // default to selected value
-      const idx = this.dataManager.getRowIndex({key:this.labelKey,value:this.value});
+      const idx = this.dataManager.getRowIndex({ key: this.labelKey, value: this.value });
       this.highlightingIndex = idx >= 0 ? idx : -1;
-      this.renderVirtualList();
+      if (this.dataManager.type === 'ondemand') {
+        this.loadedCount = 0;
+      }
+      await this.renderVirtualList();
+      if (this.highlightingIndex >= 0) {
+        await this.loadMoreUntil(this.highlightingIndex);
+      }
       this.scrollToIndex(this.highlightingIndex);
       this.applyHighlightStyles();
     });
@@ -180,62 +192,107 @@ export class AcSelectInput extends AcInputBase {
     });
 
     // Keyboard navigation
-    this.textInputElement.addEventListener("keydown", (e) => {
+    this.textInputElement.addEventListener("keydown", async (e) => {
       if (!this.isDropdownOpen) return;
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
         if (this.dataManager.displayedRows.length === 0) return;
-        this.highlightingIndex = Math.min(
+        const newIndex = Math.min(
           (this.highlightingIndex < 0 ? 0 : this.highlightingIndex + 1),
           this.dataManager.displayedRows.length - 1
         );
+        this.highlightingIndex = newIndex;
+        if (this.highlightingIndex >= this.loadedCount) {
+          await this.loadMoreUntil(this.highlightingIndex);
+        }
         this.applyHighlightStyles();
         this.ensureHighlightInView();
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         if (this.dataManager.displayedRows.length === 0) return;
-        this.highlightingIndex = Math.max(
+        const newIndex = Math.max(
           (this.highlightingIndex < 0 ? 0 : this.highlightingIndex - 1),
           0
         );
+        this.highlightingIndex = newIndex;
+        if (this.highlightingIndex >= this.loadedCount) {
+          await this.loadMoreUntil(this.highlightingIndex);
+        }
         this.applyHighlightStyles();
         this.ensureHighlightInView();
       } else if (e.key === "Enter") {
         e.preventDefault();
         if (this.highlightingIndex >= 0) {
-          this.selectOption(this.dataManager.getRowAtIndex({index:this.highlightingIndex})?.data);
+          const row = this.dataManager.getRowAtIndex({ index: this.highlightingIndex });
+          if (row) {
+            this.selectOption(row.data);
+          }
         }
       } else if (e.key === "Escape") {
         this.closeDropdown();
       }
     });
+
+    // Infinite scrolling for on-demand data
+    this.listEl.addEventListener("scroll", this.handleScroll.bind(this), { passive: true });
+
     window.addEventListener("scroll", () => { if (this.isDropdownOpen) this.positionDropdown(); }, true);
     window.addEventListener("resize", () => { if (this.isDropdownOpen) this.positionDropdown(); });
   }
 
+  private handleScroll() {
+    if (this.dataManager.type !== 'ondemand') return;
+    const { scrollTop, scrollHeight, clientHeight } = this.listEl;
+    if (scrollTop + clientHeight >= scrollHeight - (this.optionHeight * 3)) {
+      this.loadMore();
+    }
+  }
+
+  private async loadMoreUntil(targetIndex: number) {
+    while (this.loadedCount <= targetIndex && !this.dataManager.allDataAvailable && this.loadedCount < this.dataManager.totalRows) {
+      await this.loadMore();
+    }
+  }
+
+  private async loadMore() {
+    if (this.dataManager.type !== 'ondemand' || this.dataManager.allDataAvailable || this.loadedCount >= this.dataManager.totalRows) return;
+
+    const startIndex = this.loadedCount;
+    const newRows = await this.dataManager.getRows({ startIndex, rowsCount: this.batchSize });
+
+    if (newRows.length === 0) return;
+
+    for (const row of newRows) {
+      const rowElement = this.buildOptionElement(row);
+      if (this.name === 'sourceColumnId') {
+        //
+      }
+      this.listEl.appendChild(rowElement);
+    }
+
+    this.loadedCount += newRows.length;
+    this.scrollable.registerExistingElements();
+  }
+
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
-    if (name == 'label-key') {
+    if (name === 'label-key') {
       this.labelKey = newValue;
-    }
-    else if (name == 'value-key') {
+    } else if (name === 'value-key') {
       this.valueKey = newValue;
-    }
-    else if (name == 'select-options') {
+    } else if (name === 'select-options') {
       if (stringIsJson(newValue)) {
-        this.selectOptions = newValue;
-      }
-      else {
+        this.selectOptions = JSON.parse(newValue);
+      } else {
         this.selectOptions = newValue.split(",");
       }
-    }
-    else {
+    } else {
       super.attributeChangedCallback(name, oldValue, newValue);
     }
   }
 
-  private buildOptionElement(row:AcDataRow): HTMLElement {
+  private buildOptionElement(row: AcDataRow): HTMLElement {
     const el = document.createElement("div");
     el.dataset["optionIndex"] = String(row.index);
     el.style.padding = "4px 8px";
@@ -256,7 +313,9 @@ export class AcSelectInput extends AcInputBase {
   }
 
   closeDropdown() {
-    this.dropdownContainer.remove();
+    if (this.dropdownContainer.parentNode) {
+      this.dropdownContainer.remove();
+    }
     this.isDropdownOpen = false;
   }
 
@@ -298,27 +357,34 @@ export class AcSelectInput extends AcInputBase {
       this.dropdownContainer.style.border = "1px solid #ccc";
       this.dropdownContainer.style.background = "#fff";
     }, 10);
-
   }
 
   private async renderVirtualList() {
     this.listEl.innerHTML = "";
-    const rows = await this.dataManager.getRows();
+    let rows: AcDataRow[] = [];
+    const startIndex = 0;
+    let rowsCount = -1;
+    if (this.dataManager.type === 'ondemand') {
+      rowsCount = this.batchSize;
+    }
+    rows = await this.dataManager.getRows({ startIndex, rowsCount });
+    this.loadedCount = rows.length;
+    if (this.dataManager.type === 'offline') {
+      this.loadedCount = this.dataManager.totalRows;
+    }
     console.log(rows);
-    if(rows.length > 0){
-      for(const row of rows){
+    if (rows.length > 0) {
+      for (const row of rows) {
         const rowElement = this.buildOptionElement(row);
-        if (this.name == 'sourceColumnId') {
+        if (this.name === 'sourceColumnId') {
           //
         }
         this.listEl.appendChild(rowElement);
       }
-    }
-    else{
+      this.scrollable.registerExistingElements();
+    } else {
       this.listEl.innerHTML = `<div style="text-align:center;">No matching records!</div>`;
     }
-
-    this.scrollable.registerExistingElements();
     setTimeout(() => this.applyHighlightStyles(), 0);
   }
 
@@ -341,11 +407,10 @@ export class AcSelectInput extends AcInputBase {
   toggleDropdown() {
     if (this.isDropdownOpen) {
       this.closeDropdown();
-    }
-    else {
+    } else {
       this.openDropdown();
     }
   }
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.selectInput,type:AcSelectInput});
+acRegisterCustomElement({ tag: AC_INPUT_TAG.selectInput, type: AcSelectInput });

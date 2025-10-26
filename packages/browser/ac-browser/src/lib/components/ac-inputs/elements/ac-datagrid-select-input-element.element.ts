@@ -3,9 +3,9 @@
 import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcDatagrid, AcDatagridOnDemandDataSource, IAcDatagridColumnDefinition } from "../../_components.export";
+import { AcDatagrid, AcDatagridOnDemandDataSource } from "../../_components.export";
 import { AcEnumDataSourceType } from "../../../enums/ac-enum-data-source-type.enum";
-import { IAcOnDemandRequestArgs } from "../../../interfaces/_interfaces.export";
+import { IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
 
 export class AcDatagridSelectInput extends AcInputBase {
   static override get observedAttributes() {

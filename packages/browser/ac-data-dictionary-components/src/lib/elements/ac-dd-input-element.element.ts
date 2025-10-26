@@ -41,7 +41,6 @@ export class AcDDInputElement extends AcInputBase {
     this.setInputElement();
   }
 
-
   ddTableColumn?: AcDDTableColumn;
 
   constructor() {
@@ -100,6 +99,10 @@ export class AcDDInputElement extends AcInputBase {
         this.inputElement.addEventListener('change', ()=>{
           this.value = this.inputElement.value;
         });
+        if(this.value){
+          this.inputElement.value = this.value;
+        }
+        console.log(this);
       }
     }
   }

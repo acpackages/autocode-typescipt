@@ -129,9 +129,16 @@ export class MessageTestPage extends HTMLElement {
           icon: "warning",
           confirmText: "Yes",
           denyText: "No",
+          onConfirm:(result:any)=>{
+            console.log("Confirm result:", result);
+            AcMessage.success("Confirmed ✅");
+          },
+          onCancel:(result:any)=>{
+            console.log("Confirm result:", result);
+            AcMessage.error("Cancelled ❌", { toast: true });
+          }
         });
-        console.log("Confirm result:", result);
-        AcMessage.info(result.confirmed ? "Confirmed ✅" : "Cancelled ❌", { toast: true });
+
         break;
       }
 
