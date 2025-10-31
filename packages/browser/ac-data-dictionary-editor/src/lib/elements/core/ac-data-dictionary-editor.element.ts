@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { acAddClassToElement, AcDatagridExtensionManager, acInit, acSetElementAttributes } from '@autocode-ts/ac-browser';
+import { acAddClassToElement, AcDatagridExtensionManager, AcElementBase, acInit, acRegisterCustomElement, acSetElementAttributes } from '@autocode-ts/ac-browser';
 import { AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataDictionaryEditorHeader } from "./ac-data-dictionary-editor-header.element";
 import { AcDDERelationshipsDatagrid } from "../datagrid/ac-dde-relationships-datagrid.element";
@@ -18,15 +18,15 @@ import { AcEnumDDEHook } from '../../enums/ac-enum-dde-hooks.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
 import { IAcDDEDataDictionary } from '../../interfaces/ac-dde-data-dictionary.inteface';
 import { AcDDEViewEditor } from '../editors/ac-dde-view-editor.element';
+import { AC_DDE_TAG } from '../../_ac-data-dictionary-editor.export';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-export class AcDataDictionaryEditor {
+export class AcDataDictionaryEditor extends AcElementBase{
   activeDataDictionary?: IAcDDEDataDictionary;
   editorApi!: AcDDEApi;
 
   bodyElement: HTMLElement = document.createElement('div');
   tabsContainer:HTMLElement = document.createElement('div');
-  element: HTMLElement = document.createElement('div');
 
   tableEditor?: AcDDETableEditor;
   viewEditor?: AcDDEViewEditor;
@@ -41,6 +41,7 @@ export class AcDataDictionaryEditor {
   viewColumnsDatagrid?: AcDDEViewColumnsDatagrid;
 
   constructor() {
+    super();
     acInit();
     this.editorApi = new AcDDEApi({editor:this});
 
@@ -63,13 +64,13 @@ export class AcDataDictionaryEditor {
   }
 
   private initElement() {
-    acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
+    acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this });
     // acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
-    this.element.append(this.header.element);
+    this.append(this.header.element);
     // acAddClassToElement({class_:AcDDECssClassName.acDDEHeader,element:this.header});
 
-    this.element.append(this.bodyElement);
+    this.append(this.bodyElement);
     acAddClassToElement({ class_: AcDDECssClassName.acDDEBody, element: this.bodyElement });
 
     // acAddClassToElement({ class_: `tab-content`, element: this.tabsContainer });
@@ -182,3 +183,5 @@ export class AcDataDictionaryEditor {
   }
 
 }
+
+acRegisterCustomElement({ tag: AC_DDE_TAG.dataDictionaryEditor, type: AcDataDictionaryEditor });

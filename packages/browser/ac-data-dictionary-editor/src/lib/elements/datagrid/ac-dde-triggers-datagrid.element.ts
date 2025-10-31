@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, AcResizablePanels, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDTrigger, AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks } from "@autocode-ts/autocode";
@@ -22,18 +22,44 @@ import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-
 import { AcDDETriggerMaster } from "../masters/ac-dde-trigger-master.element";
 
 export class AcDDETriggersDatagrid {
+  activeTrigger?: IAcDDETrigger;
   ddeDatagrid!: AcDDEDatagrid;
   datagridApi!: AcDatagridApi;
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
   filterFunction: Function | undefined;
-  triggerMaster:AcDDETriggerMaster;
+  triggerMaster: AcDDETriggerMaster;
   hooks: AcHooks = new AcHooks();
   data: any[] = [];
 
+  editorPanels: AcResizablePanels = new AcResizablePanels();
+
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
-    this.triggerMaster = new AcDDETriggerMaster({editorApi});
+    this.ddeDatagrid.datagridApi.on({
+      event: AcEnumDatagridEvent.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
+        setTimeout(() => {
+          this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TableEditorActiveTableChange });
+          this.activeTrigger = this.ddeDatagrid.datagridApi!.activeDatagridRow!.data;
+          this.triggerMaster.trigger = this.activeTrigger!;
+        }, 10);
+      }
+    });
+    this.ddeDatagrid.datagridApi.on({
+      event: AcEnumDatagridEvent.CellValueChange, callback: (args: any) => {
+        this.triggerMaster.trigger = this.activeTrigger!;
+      }
+    });
+
+    this.triggerMaster = new AcDDETriggerMaster({ editorApi });
+    this.triggerMaster.on({
+      event: "change", callback: (args: any) => {
+        if (this.ddeDatagrid.datagridApi.activeDatagridRow) {
+          this.ddeDatagrid.datagridApi!.updateRow({ rowId: this.ddeDatagrid.datagridApi.activeDatagridRow!.acRowId, data: args.trigger });
+        }
+      }
+    });
+
     this.editorApi = editorApi;
     this.initDatagrid();
     this.initElement();
@@ -60,7 +86,7 @@ export class AcDDETriggersDatagrid {
             { label: 'After', value: 'AFTER' },
             { label: 'Before', value: 'BEFORE' }
           ]
-        }, useCellEditorForRenderer: true,allowFilter:true
+        }, useCellEditorForRenderer: true, allowFilter: true
       },
       {
         'field': AcDDTrigger.KeyRowOperation, 'title': 'Operation',
@@ -71,25 +97,25 @@ export class AcDDETriggersDatagrid {
             { label: 'Update', value: AcEnumDDRowOperation.Update },
             { label: 'Delete', value: AcEnumDDRowOperation.Delete }
           ]
-        }, useCellEditorForRenderer: true,allowFilter:true
+        }, useCellEditorForRenderer: true, allowFilter: true
       },
       {
         'field': 'tableId', 'title': 'Table',
         cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true,allowFilter:true
+        }, useCellEditorForRenderer: true, allowFilter: true
       },
       {
         'field': AcDDTrigger.KeyTriggerName, 'title': 'Trigger Name',
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true,allowFilter:true
+        }, useCellEditorForRenderer: true, allowFilter: true
       },
       {
         'field': AcDDTrigger.KeyTriggerCode, 'title': 'Trigger Code',
-        cellEditorElement: AcDDEDatagridPopoutTextareaInput, cellEditorElementParams: {
+        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true,allowFilter:true
+        }, useCellEditorForRenderer: true, allowFilter: true
       }
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
@@ -161,11 +187,29 @@ export class AcDDETriggersDatagrid {
   }
 
   initElement() {
-    this.ddeDatagrid.element.style.width = "50%";
-    this.element.append(this.ddeDatagrid.element);
-     this.triggerMaster.element.style.width = "50%";
-    this.element.append(this.triggerMaster.element);
     acAddClassToElement({ class_: AcDDECssClassName.acDDEListMasterContainer, element: this.element });
+
+    this.element.innerHTML = `<ac-resizable-panels class="editor-resizable-panels">
+      <ac-resizable-panel ac-dde-triggers-wrapper></ac-resizable-panel>
+      <ac-resizable-panel ac-dde-trigger-details-wrapper></ac-resizable-panel>
+    </ac-resizable-panels>`;
+    this.editorPanels = this.element.querySelector('.editor-resizable-panels') as AcResizablePanels;
+
+    setTimeout(() => {
+      this.editorPanels.setPanelSizes({
+        panelSizes: [
+          { size: 30, index: 0 },
+          { size: 70, index: 1 }
+        ]
+      });
+    }, 50);
+
+    const datagridWrapper = this.element.querySelector('[ac-dde-triggers-wrapper]') as HTMLElement;
+    datagridWrapper.append(this.ddeDatagrid.element);
+
+    const detailsWrapper = this.element.querySelector('[ac-dde-trigger-details-wrapper]') as HTMLElement;
+    detailsWrapper.append(this.triggerMaster.element);
+
   }
 
   setTriggersData() {

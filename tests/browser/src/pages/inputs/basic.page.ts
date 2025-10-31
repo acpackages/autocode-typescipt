@@ -1,4 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
+import './../../../../../packages/browser/ac-tiptap-editor-input/src/lib/css/ac-tiptap-editor-simple-editor.css';
+import "./../../../../../node_modules/quill/dist/quill.snow.css";
 import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AcEnumDatagridExtension, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcContext } from "@autocode-ts/ac-template-engine";
@@ -7,6 +9,8 @@ import { customersData } from './../../../../data/customers-data';
 import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataManager, IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
+import { acInitTipTapEditor, AcTiptapEditorInput } from "@autocode-ts/ac-tiptap-editor-input";
+import { AcQuillEditorInput, acInitQuillEditor } from "@autocode-ts/ac-quill-editor-input";
 
 export class InputBasicPage extends HTMLElement {
   offlineDataManager: AcDataManager = new AcDataManager();
@@ -25,6 +29,7 @@ export class InputBasicPage extends HTMLElement {
   context: AcContext = new AcContext({
     value: {
       full_name: 'Alice Johnson',
+      bio:"This is bio of the element",
       personal_email: 'alice.j@example.com',
       user_password: 'Secret123!',
       age: 29,
@@ -51,6 +56,8 @@ export class InputBasicPage extends HTMLElement {
   });
 
   async connectedCallback() {
+    acInitQuillEditor();
+    acInitTipTapEditor();
 
     this.innerHTML = `<ac-form>
       <div class="container py-4">
@@ -157,6 +164,21 @@ export class InputBasicPage extends HTMLElement {
       console.log(response);
       args.successCallback(response);
     };
+
+    const tiptapEditorContainer = document.createElement('div');
+    tiptapEditorContainer.style.height = "300px";
+    tiptapEditorContainer.className = 'mb-3';
+    tiptapEditorContainer.innerHTML = '<label>Bio</label><ac-tiptap-editor-input></ac-tiptap-editor-input>';
+    // allInputsGroup.appendChild(tiptapEditorContainer);
+
+    const quillEditorContainer = document.createElement('div');
+    quillEditorContainer.style.height = "300px";
+    quillEditorContainer.className = 'mb-3';
+    quillEditorContainer.innerHTML = '<label>Bio</label><ac-quill-editor-input value="Sample editor content"></ac-quill-editor-input>';
+    const quillEditor: AcQuillEditorInput = quillEditorContainer.querySelector('ac-quill-editor-input') as AcQuillEditorInput;
+    quillEditor.acContextKey = 'bio';
+    quillEditor.acContext = this.context;
+    allInputsGroup.appendChild(quillEditorContainer);
 
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {
@@ -306,9 +328,9 @@ export class InputBasicPage extends HTMLElement {
     select.selectOptions = ['Angular', 'React', 'Vue.js', 'Svelte'];
     select.className = 'form-select';
     select.addOption = true;
-    select.addOptionCallback = ({query,callback}:{query:string,callback:Function})=>{
+    select.addOptionCallback = ({ query, callback }: { query: string, callback: Function }) => {
       alert(`Adding option : ${query}`);
-      callback({label:query,value:query});;
+      callback({ label: query, value: query });;
     };
     addField('Preferred Framework', select, allInputsGroup);
 

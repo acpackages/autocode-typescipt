@@ -44,6 +44,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -611,6 +615,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -889,6 +897,10 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "INR"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         }
@@ -974,13 +986,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -991,6 +1007,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -1104,6 +1124,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1135,13 +1159,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1212,6 +1240,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -1253,6 +1285,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Percentage"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -1296,6 +1332,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -1309,6 +1349,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1319,6 +1363,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "New Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1329,6 +1377,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Old Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1514,6 +1566,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Depreciation %"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1572,6 +1628,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1582,6 +1642,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -1592,6 +1656,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -1602,6 +1670,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -1903,6 +1975,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Execution Priority"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -1914,9 +1990,23 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "FORMAT": {
+              "propertyName": "FORMAT",
+              "propertyValue": [
+                "UPPERCASE"
+              ]
+            },
             "REMARKS": {
               "propertyName": "REMARKS",
               "propertyValue": "status_field"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
@@ -1929,16 +2019,6 @@ export const dataDictionaryJson = {
                   "label": "INACTIVE",
                   "value": "INACTIVE"
                 }
-              ]
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            },
-            "FORMAT": {
-              "propertyName": "FORMAT",
-              "propertyValue": [
-                "UPPERCASE"
               ]
             }
           }
@@ -2153,13 +2233,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -2170,6 +2254,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2295,13 +2383,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -2326,6 +2418,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -2369,6 +2465,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -2477,6 +2577,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2570,6 +2674,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -2648,6 +2756,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -2661,6 +2773,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -2710,6 +2826,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2722,16 +2842,30 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "customers"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "customer"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "customers"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_customers"
         }
       }
     },
@@ -2799,6 +2933,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2819,6 +2957,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Online?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -2889,13 +3031,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -2906,6 +3052,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -3140,6 +3290,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -3237,6 +3391,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Salary Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3261,6 +3419,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -3283,16 +3445,30 @@ export const dataDictionaryJson = {
               "propertyValue": "Status"
             }
           }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "employees"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "employee"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "employees"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_employees"
         }
       }
     },
@@ -3341,13 +3517,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3358,6 +3538,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -3383,6 +3567,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "In Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3393,6 +3581,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "In Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3437,6 +3629,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Out Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3447,6 +3643,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Out Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3556,6 +3756,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3876,6 +4080,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Balance"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4047,63 +4255,6 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_legal_document_types": {
-      "tableName": "act_legal_document_types",
-      "tableColumns": {
-        "entity_id": {
-          "columnName": "entity_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Entity"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
-        "legal_document_type_id": {
-          "columnName": "legal_document_type_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "legal_document_type_name": {
-          "columnName": "legal_document_type_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Document Type Name"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "legal_document_type"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "legal_document_types"
-        }
-      }
-    },
     "act_legal_documents": {
       "tableName": "act_legal_documents",
       "tableColumns": {
@@ -4117,13 +4268,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4134,6 +4289,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -4144,6 +4303,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "is_expired"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4154,6 +4317,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Verified?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4171,20 +4338,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "legal_document_type_id": {
-          "columnName": "legal_document_type_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Type"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "legal_document_value": {
           "columnName": "legal_document_value",
           "columnType": "TEXT",
@@ -4196,6 +4349,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            }
+          }
+        },
+        "legal_document_label": {
+          "columnName": "legal_document_label",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Label"
             }
           }
         }
@@ -4634,6 +4797,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -4704,13 +4871,17 @@ export const dataDictionaryJson = {
     "act_medias": {
       "tableName": "act_medias",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4769,6 +4940,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Size"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4801,8 +4976,8 @@ export const dataDictionaryJson = {
     "act_menu_items": {
       "tableName": "act_menu_items",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -4925,6 +5100,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -5141,6 +5320,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -5252,36 +5435,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            }
-          }
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            }
-          }
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            }
-          }
-        },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
@@ -5289,6 +5442,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -5309,6 +5466,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Customer?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -5319,6 +5480,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Supplier?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -5329,6 +5494,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Employee?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -5398,6 +5567,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_address"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_addresses"
         }
       }
     },
@@ -5447,6 +5620,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_bank_account"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_bank_accounts"
         }
       }
     },
@@ -5504,6 +5681,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_contact_person"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_contact_persons"
         }
       }
     },
@@ -5561,6 +5742,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_email_address"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_email_addresses"
         }
       }
     },
@@ -5618,6 +5803,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_fax_number"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_fax_numbers"
         }
       }
     },
@@ -5675,6 +5864,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_legal_document"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_legal_documents"
         }
       }
     },
@@ -5732,6 +5925,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_media"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_medias"
         }
       }
     },
@@ -5789,6 +5986,63 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_phone_number"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_phone_numbers"
+        }
+      }
+    },
+    "act_party_social_medias": {
+      "tableName": "act_party_social_medias",
+      "tableColumns": {
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            }
+          }
+        },
+        "social_media_id": {
+          "columnName": "social_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Social media"
+            }
+          }
+        },
+        "party_social_media_id": {
+          "columnName": "party_social_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "party_social_medias"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "party_social_media"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_social_medias"
         }
       }
     },
@@ -5846,6 +6100,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "party_website"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_party_websites"
         }
       }
     },
@@ -5887,6 +6145,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -5949,6 +6211,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Use For Expenses"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -5959,6 +6225,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Use For Incomes"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -5969,6 +6239,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Use For Purchase"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -5979,6 +6253,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Use For Sales"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -5997,13 +6275,17 @@ export const dataDictionaryJson = {
     "act_phone_numbers": {
       "tableName": "act_phone_numbers",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6014,6 +6296,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -6192,6 +6478,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6352,6 +6642,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6463,6 +6757,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -6523,13 +6821,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6540,6 +6842,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -6594,6 +6900,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6693,6 +7003,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Waitlist Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6703,6 +7017,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "In Order Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6765,6 +7083,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -6861,6 +7183,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -6881,6 +7207,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "MRP"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6891,6 +7221,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Purchase Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6901,6 +7235,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Sale Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -6939,6 +7277,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "profit_margin"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -6988,6 +7330,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Min Order Qunatity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7038,6 +7384,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -7188,6 +7538,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7247,6 +7601,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Max Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7267,6 +7625,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Min Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7287,6 +7649,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Reorder Level Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7317,6 +7683,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -7380,6 +7750,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7412,13 +7786,17 @@ export const dataDictionaryJson = {
     "act_product_uoms": {
       "tableName": "act_product_uoms",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7429,6 +7807,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -7482,6 +7864,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -7517,13 +7903,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7534,6 +7924,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -7580,13 +7974,17 @@ export const dataDictionaryJson = {
     "act_product_variants": {
       "tableName": "act_product_variants",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7597,6 +7995,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -7678,6 +8080,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Home Delivery Available"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7688,6 +8094,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Pickup Available"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7698,6 +8108,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -7814,6 +8228,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7824,6 +8242,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Waitlist Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7849,13 +8271,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "products"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "product"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "products"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_products"
         }
       }
     },
@@ -7869,6 +8295,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7879,6 +8309,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7889,6 +8323,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7924,6 +8362,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -7952,6 +8394,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -7965,6 +8411,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7975,6 +8425,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -7985,16 +8439,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8093,19 +8555,27 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8140,6 +8610,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -8266,19 +8740,27 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8317,6 +8799,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -8414,6 +8900,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8424,6 +8914,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8434,16 +8928,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8493,6 +8995,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -8506,6 +9012,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8516,6 +9026,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8526,6 +9040,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -8550,6 +9068,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8666,7 +9188,11 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Exchange  Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -8681,6 +9207,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8691,6 +9221,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Profit Margin%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8701,6 +9235,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -8865,6 +9403,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -8878,6 +9420,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8888,6 +9434,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8927,6 +9477,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -8955,6 +9509,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -8968,6 +9526,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8978,6 +9540,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -8988,16 +9554,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9100,19 +9674,27 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9140,13 +9722,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "purchase_invoice_id": {
-          "columnName": "purchase_invoice_id",
+        "purchase_order_id": {
+          "columnName": "purchase_order_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Invoice"
+              "propertyValue": "Purchase Order"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -9161,6 +9743,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -9271,7 +9857,11 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -9279,13 +9869,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9324,6 +9918,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -9421,6 +10019,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9431,6 +10033,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9441,16 +10047,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9491,6 +10105,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9501,6 +10119,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9511,6 +10133,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9521,6 +10147,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9541,6 +10171,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9634,6 +10268,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -9643,7 +10281,15 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -9654,6 +10300,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9664,6 +10314,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9783,6 +10437,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9793,6 +10451,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9803,6 +10465,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9833,6 +10499,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9853,6 +10523,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9863,6 +10537,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9873,6 +10551,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9883,16 +10565,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -9972,6 +10662,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -9982,16 +10676,28 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10012,6 +10718,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10111,6 +10821,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -10120,17 +10834,29 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10161,6 +10887,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10250,6 +10980,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10260,6 +10994,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10270,16 +11008,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10320,6 +11066,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10330,6 +11080,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10340,6 +11094,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10350,6 +11108,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10370,6 +11132,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10479,6 +11245,10 @@ export const dataDictionaryJson = {
               "propertyValue": [
                 "UPPERCASE"
               ]
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -10498,7 +11268,15 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -10509,6 +11287,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10529,6 +11311,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10707,6 +11493,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -10769,13 +11559,17 @@ export const dataDictionaryJson = {
     "act_sale_coupon_issues": {
       "tableName": "act_sale_coupon_issues",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10786,6 +11580,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -10958,6 +11756,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -10978,6 +11780,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11022,6 +11828,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Coupon%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11097,6 +11907,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11107,6 +11921,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11117,6 +11935,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11147,6 +11969,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11167,6 +11993,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11177,6 +12007,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11187,6 +12021,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11197,16 +12035,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11286,6 +12132,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -11296,16 +12146,28 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11346,6 +12208,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11425,6 +12291,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -11434,17 +12304,29 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11495,6 +12377,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11564,6 +12450,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11574,6 +12464,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11584,16 +12478,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11634,6 +12536,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11644,6 +12550,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11654,6 +12564,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11664,6 +12578,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11684,6 +12602,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11777,6 +12699,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -11806,7 +12732,15 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -11817,6 +12751,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11837,6 +12775,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11956,6 +12898,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11966,6 +12912,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -11976,6 +12926,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12006,6 +12960,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12026,6 +12984,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12036,6 +12998,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12046,6 +13012,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12056,16 +13026,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12145,6 +13123,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -12155,16 +13137,28 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12205,6 +13199,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12284,6 +13282,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -12293,17 +13295,29 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12354,6 +13368,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12423,6 +13441,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12433,6 +13455,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12443,16 +13469,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12493,6 +13527,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12503,6 +13541,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12513,6 +13555,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12523,6 +13569,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12543,6 +13593,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12652,6 +13706,10 @@ export const dataDictionaryJson = {
               "propertyValue": [
                 "UPPERCASE"
               ]
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -12681,7 +13739,15 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -12692,6 +13758,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12722,6 +13792,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12895,6 +13969,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Discount Value"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12905,6 +13983,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -12992,6 +14074,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Offer Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13143,6 +14229,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Discount Value"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -13156,6 +14246,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -13298,6 +14392,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13308,6 +14406,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13318,6 +14420,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13348,6 +14454,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13368,6 +14478,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13378,6 +14492,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13388,6 +14506,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13398,16 +14520,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13487,6 +14617,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -13497,16 +14631,28 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13547,6 +14693,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13626,6 +14776,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13636,6 +14790,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13646,16 +14804,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13686,6 +14852,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13696,6 +14866,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13706,6 +14880,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13716,6 +14894,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13736,6 +14918,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13829,6 +15015,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -13848,17 +15038,29 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13869,6 +15071,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13889,6 +15095,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13998,6 +15208,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14008,6 +15222,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14018,6 +15236,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14048,6 +15270,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14068,6 +15294,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14078,6 +15308,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14088,6 +15322,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14098,16 +15336,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14187,6 +15433,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -14197,16 +15447,28 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14247,6 +15509,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14326,6 +15592,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -14335,17 +15605,29 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14396,6 +15678,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14465,6 +15751,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "CD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14475,6 +15765,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Rebate%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14485,16 +15779,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "TD%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14535,6 +15837,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Actual Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14545,6 +15851,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Gross Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14555,6 +15865,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Net Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14565,6 +15879,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14585,6 +15903,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14694,6 +16016,10 @@ export const dataDictionaryJson = {
               "propertyValue": [
                 "UPPERCASE"
               ]
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -14723,7 +16049,15 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency Rate"
+              "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -14734,6 +16068,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14764,6 +16102,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14922,6 +16264,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -14984,13 +16330,17 @@ export const dataDictionaryJson = {
     "act_signatures": {
       "tableName": "act_signatures",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15063,13 +16413,17 @@ export const dataDictionaryJson = {
     "act_social_medias": {
       "tableName": "act_social_medias",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15080,6 +16434,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -15139,6 +16497,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Found Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15149,16 +16511,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Found Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15244,6 +16614,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15254,6 +16628,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15289,6 +16667,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Found Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15299,16 +16681,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Found Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15424,6 +16814,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15434,6 +16828,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -15473,6 +16871,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15630,13 +17032,17 @@ export const dataDictionaryJson = {
     "act_stock_transfer_packing_products": {
       "tableName": "act_stock_transfer_packing_products",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15647,6 +17053,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15657,6 +17067,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15709,13 +17123,17 @@ export const dataDictionaryJson = {
     "act_stock_transfer_packings": {
       "tableName": "act_stock_transfer_packings",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15947,6 +17365,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Destination New Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15957,6 +17379,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Destination New Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15967,6 +17393,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Destination Old Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15977,6 +17407,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Destination Old Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15987,6 +17421,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Destination Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -15997,16 +17435,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Destination Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16144,6 +17590,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Source New Stock"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16154,6 +17604,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Source New Stock Unit"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16164,6 +17618,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Source Old Stock"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16174,6 +17632,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Source Old Stock"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16184,6 +17646,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Source Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16194,6 +17660,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Source Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16439,6 +17909,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16667,13 +18141,17 @@ export const dataDictionaryJson = {
     "act_stock_update_products": {
       "tableName": "act_stock_update_products",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16694,6 +18172,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "New Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16704,6 +18186,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "New Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16714,6 +18200,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Old Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16724,6 +18214,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Old Stock Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16833,6 +18327,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Update Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16843,6 +18341,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Update Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -16882,6 +18384,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17049,13 +18555,17 @@ export const dataDictionaryJson = {
     "act_storage_locations": {
       "tableName": "act_storage_locations",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17066,6 +18576,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -17248,6 +18762,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17272,6 +18790,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -17282,6 +18804,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -17292,6 +18822,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Last Purchase Charge"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17302,6 +18836,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Min Order Qty"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17385,6 +18923,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -17395,6 +18937,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -17405,6 +18955,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Last Purchase Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17415,6 +18969,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Min Order Qty"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17449,6 +19007,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Purchase Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17522,6 +19084,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -17568,16 +19134,30 @@ export const dataDictionaryJson = {
               "propertyValue": "Remarks"
             }
           }
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Party"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "suppliers"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "supplier"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "suppliers"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_suppliers"
         }
       }
     },
@@ -17591,6 +19171,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -17601,6 +19185,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Percentage"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -17661,13 +19249,17 @@ export const dataDictionaryJson = {
     "act_tax_rates": {
       "tableName": "act_tax_rates",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17678,6 +19270,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -17716,6 +19312,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Percentage"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -17773,6 +19373,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -17846,6 +19450,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -17856,6 +19464,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -17866,6 +19478,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -18040,6 +19660,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -18050,6 +19674,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -18060,6 +19692,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -18080,6 +19716,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Amount"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -18340,13 +19980,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -18357,6 +20001,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -18420,6 +20068,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -18480,13 +20132,17 @@ export const dataDictionaryJson = {
     "act_websites": {
       "tableName": "act_websites",
       "tableColumns": {
-        "index": {
-          "columnName": "index",
+        "display_index": {
+          "columnName": "display_index",
           "columnType": "INTEGER",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -18497,6 +20153,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -18548,8 +20208,8 @@ export const dataDictionaryJson = {
     }
   },
   "views": {
-    "vw_act_customers": {
-      "viewName": "vw_act_customers",
+    "act_vw_customers": {
+      "viewName": "act_vw_customers",
       "viewColumns": {
         "customer_category": {
           "columnName": "customer_category",
@@ -18768,10 +20428,10 @@ export const dataDictionaryJson = {
           "columnSourceName": ""
         }
       },
-      "viewQuery": "SELECT act_customers.customer_category,act_parties.* FROM act_customers LEFT JOIN act_parties ON act_customers.customer_id = act_parties.customer_id"
+      "viewQuery": "SELECT act_customers.customer_id,act_customers.customer_category,act_customers.customer_remarks, act_parties.* FROM act_customers LEFT JOIN act_parties ON act_customers.party_id = act_parties.party_id"
     },
-    "vw_act_employees": {
-      "viewName": "vw_act_employees",
+    "act_vw_employees": {
+      "viewName": "act_vw_employees",
       "viewColumns": {
         "employee_code": {
           "columnName": "employee_code",
@@ -19062,15 +20722,65 @@ export const dataDictionaryJson = {
           "columnSourceName": ""
         }
       },
-      "viewQuery": "SELECT act_employees.employee_code,act_employees.date_of_birth,act_employees.date_of_joining,act_employees.salary_duration,act_employees.employee_designation,act_employees.employee_salary_amount,act_employees.employee_gender,act_parties.* FROM act_employees LEFT JOIN act_parties ON act_employees.employee_id = act_parties.employee_id"
+      "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_salary_amount, act_employees.employee_gender, act_parties.* FROM act_employees LEFT JOIN act_parties ON act_employees.party_id = act_parties.party_id"
     },
-    "vw_act_products": {
-      "viewName": "vw_act_products",
+    "act_vw_party_addresses": {
+      "viewName": "act_vw_party_addresses",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_addresses.party_address_id,act_party_addresses.party_id,act_addresses .* FROM act_party_addresses LEFT JOIN act_addresses ON act_party_addresses.address_id = act_addresses.address_id"
+    },
+    "act_vw_party_bank_accounts": {
+      "viewName": "act_vw_party_bank_accounts",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_bank_accounts.party_bank_account_id,act_party_bank_accounts.party_id,act_bank_accounts .* FROM act_party_bank_accounts LEFT JOIN act_bank_accounts ON act_party_bank_accounts.bank_account_id = act_bank_accounts.bank_account_id"
+    },
+    "act_vw_party_contact_persons": {
+      "viewName": "act_vw_party_contact_persons",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_contact_persons.party_contact_person_id,act_party_contact_persons.party_id,act_contact_persons .* FROM act_party_contact_persons LEFT JOIN act_contact_persons ON act_party_contact_persons.contact_person_id = act_contact_persons.contact_person_id "
+    },
+    "act_vw_party_email_addresses": {
+      "viewName": "act_vw_party_email_addresses",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_email_addresses.party_email_address_id,act_party_email_addresses.party_id,act_email_addresses .* FROM act_party_email_addresses LEFT JOIN act_email_addresses ON act_party_email_addresses.email_address_id = act_email_addresses.email_address_id "
+    },
+    "act_vw_party_fax_numbers": {
+      "viewName": "act_vw_party_fax_numbers",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_fax_numbers.party_fax_number_id,act_party_fax_numbers.party_id,act_fax_numbers .* FROM act_party_fax_numbers LEFT JOIN act_fax_numbers ON act_party_fax_numbers.fax_number_id = act_fax_numbers.fax_number_id "
+    },
+    "act_vw_party_legal_documents": {
+      "viewName": "act_vw_party_legal_documents",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_legal_documents.party_legal_document_id,act_party_legal_documents.party_id,act_legal_documents .* FROM act_party_legal_documents LEFT JOIN act_legal_documents ON act_party_legal_documents.legal_document_id = act_legal_documents.legal_document_id"
+    },
+    "act_vw_party_medias": {
+      "viewName": "act_vw_party_medias",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_medias.party_media_id,act_party_medias.party_id,act_medias .* FROM act_party_medias LEFT JOIN act_medias ON act_party_medias.media_id = act_medias.media_id"
+    },
+    "act_vw_party_phone_numbers": {
+      "viewName": "act_vw_party_phone_numbers",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_phone_numbers.party_phone_number_id,act_party_phone_numbers.party_id,act_phone_numbers .* FROM act_party_phone_numbers LEFT JOIN act_phone_numbers ON act_party_phone_numbers.phone_number_id = act_phone_numbers.phone_number_id"
+    },
+    "act_vw_party_social_medias": {
+      "viewName": "act_vw_party_social_medias",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_social_medias.party_social_media_id,act_party_social_medias.party_id,act_social_medias .* FROM act_party_social_medias LEFT JOIN act_social_medias ON act_party_social_medias.social_media_id = act_social_medias.social_media_id"
+    },
+    "act_vw_party_websites": {
+      "viewName": "act_vw_party_websites",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_party_websites.party_website_id,act_party_websites.party_id,act_websites .* FROM act_party_websites LEFT JOIN act_websites ON act_party_websites.website_id = act_websites.website_id"
+    },
+    "act_vw_products": {
+      "viewName": "act_vw_products",
       "viewColumns": {},
       "viewQuery": "SELECT * FROM act_products"
     },
-    "vw_act_suppliers": {
-      "viewName": "vw_act_suppliers",
+    "act_vw_suppliers": {
+      "viewName": "act_vw_suppliers",
       "viewColumns": {
         "supplier_type": {
           "columnName": "supplier_type",
@@ -19289,21 +20999,22 @@ export const dataDictionaryJson = {
           "columnSourceName": ""
         }
       },
-      "viewQuery": "SELECT act_suppliers.supplier_type,act_parties.* FROM act_suppliers LEFT JOIN act_parties ON act_suppliers.supplier_id = act_parties.supplier_id"
+      "viewQuery": "SELECT act_suppliers.supplier_id,act_suppliers.supplier_type, act_parties.* FROM act_suppliers LEFT JOIN act_parties ON act_suppliers.party_id = act_parties.party_id"
     },
-    "vw_act_transaction_credit_entries": {
-      "viewName": "vw_act_transaction_credit_entries",
+    "act_vw_transaction_credit_entries": {
+      "viewName": "act_vw_transaction_credit_entries",
       "viewColumns": {},
       "viewQuery": "SELECT SUM(entry_amount) as credit_amount, credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
     },
-    "vw_act_transaction_debit_entries": {
-      "viewName": "vw_act_transaction_debit_entries",
+    "act_vw_transaction_debit_entries": {
+      "viewName": "act_vw_transaction_debit_entries",
       "viewColumns": {},
       "viewQuery": "SELECT SUM(entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
     }
   },
   "relationships": [
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "access_group_id",
       "destinationTable": "act_access_rights",
       "sourceColumn": "access_group_id",
@@ -19316,60 +21027,70 @@ export const dataDictionaryJson = {
       "sourceTable": "act_access_groups"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_addresses",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_bank_accounts",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_email_addresses",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_fax_numbers",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_legal_documents",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_medias",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_phone_numbers",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_settings",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_accountee_websites",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": false,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_asset_depreciations",
       "sourceColumn": "accountee_id",
@@ -19532,6 +21253,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_taxing_schemes",
       "sourceColumn": "accountee_id",
@@ -19550,42 +21272,49 @@ export const dataDictionaryJson = {
       "sourceTable": "act_accountees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "address_id",
       "destinationTable": "act_accountee_addresses",
       "sourceColumn": "address_id",
       "sourceTable": "act_addresses"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "address_id",
       "destinationTable": "act_location_addresses",
       "sourceColumn": "address_id",
       "sourceTable": "act_addresses"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "address_id",
       "destinationTable": "act_party_addresses",
       "sourceColumn": "address_id",
       "sourceTable": "act_addresses"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "asset_id",
       "destinationTable": "act_asset_attributes",
       "sourceColumn": "asset_id",
       "sourceTable": "act_assets"
     },
     {
+      "cascadeDeleteDestination": false,
       "destinationColumn": "asset_id",
       "destinationTable": "act_asset_depreciations",
       "sourceColumn": "asset_id",
       "sourceTable": "act_assets"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "asset_id",
       "destinationTable": "act_asset_legal_documents",
       "sourceColumn": "asset_id",
       "sourceTable": "act_assets"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "asset_id",
       "destinationTable": "act_asset_medias",
       "sourceColumn": "asset_id",
@@ -19598,12 +21327,14 @@ export const dataDictionaryJson = {
       "sourceTable": "act_automated_tasks"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "bank_account_id",
       "destinationTable": "act_accountee_bank_accounts",
       "sourceColumn": "bank_account_id",
       "sourceTable": "act_bank_accounts"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "bank_account_id",
       "destinationTable": "act_party_bank_accounts",
       "sourceColumn": "bank_account_id",
@@ -19652,12 +21383,14 @@ export const dataDictionaryJson = {
       "sourceTable": "act_chargeable_service_uoms"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "chargeable_service_id",
       "destinationTable": "act_chargeable_service_medias",
       "sourceColumn": "chargeable_service_id",
       "sourceTable": "act_chargeable_services"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "chargeable_service_id",
       "destinationTable": "act_chargeable_service_uoms",
       "sourceColumn": "chargeable_service_id",
@@ -19712,6 +21445,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_chargeable_services"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "contact_person_id",
       "destinationTable": "act_party_contact_persons",
       "sourceColumn": "contact_person_id",
@@ -19958,18 +21692,21 @@ export const dataDictionaryJson = {
       "sourceTable": "act_devices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "email_address_id",
       "destinationTable": "act_accountee_email_addresses",
       "sourceColumn": "email_address_id",
       "sourceTable": "act_email_addresses"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "email_address_id",
       "destinationTable": "act_location_email_addresses",
       "sourceColumn": "email_address_id",
       "sourceTable": "act_email_addresses"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "email_address_id",
       "destinationTable": "act_party_email_addresses",
       "sourceColumn": "email_address_id",
@@ -19994,24 +21731,28 @@ export const dataDictionaryJson = {
       "sourceTable": "act_employees"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "fax_number_id",
       "destinationTable": "act_accountee_fax_numbers",
       "sourceColumn": "fax_number_id",
       "sourceTable": "act_fax_numbers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "fax_number_id",
       "destinationTable": "act_location_fax_numbers",
       "sourceColumn": "fax_number_id",
       "sourceTable": "act_fax_numbers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "fax_number_id",
       "destinationTable": "act_party_fax_numbers",
       "sourceColumn": "fax_number_id",
       "sourceTable": "act_fax_numbers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "inventory_tracking_id",
       "destinationTable": "act_inventory_tracking_entries",
       "sourceColumn": "inventory_tracking_id",
@@ -20054,6 +21795,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_ledger_account_types"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "ledger_account_id",
       "destinationTable": "act_accountee_bank_accounts",
       "sourceColumn": "ledger_account_id",
@@ -20114,36 +21856,35 @@ export const dataDictionaryJson = {
       "sourceTable": "act_ledger_accounts"
     },
     {
-      "destinationColumn": "legal_document_type_id",
-      "destinationTable": "act_legal_documents",
-      "sourceColumn": "legal_document_type_id",
-      "sourceTable": "act_legal_document_types"
-    },
-    {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "legal_document_id",
       "destinationTable": "act_accountee_legal_documents",
       "sourceColumn": "legal_document_id",
       "sourceTable": "act_legal_documents"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "legal_document_id",
       "destinationTable": "act_asset_legal_documents",
       "sourceColumn": "legal_document_id",
       "sourceTable": "act_legal_documents"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "legal_document_id",
       "destinationTable": "act_legal_document_medias",
       "sourceColumn": "legal_document_id",
       "sourceTable": "act_legal_documents"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "legal_document_id",
       "destinationTable": "act_location_legal_documents",
       "sourceColumn": "legal_document_id",
       "sourceTable": "act_legal_documents"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "legal_document_id",
       "destinationTable": "act_party_legal_documents",
       "sourceColumn": "legal_document_id",
@@ -20156,42 +21897,49 @@ export const dataDictionaryJson = {
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_addresses",
       "sourceColumn": "location_id",
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_email_addresses",
       "sourceColumn": "location_id",
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_fax_numbers",
       "sourceColumn": "location_id",
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_legal_documents",
       "sourceColumn": "location_id",
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_medias",
       "sourceColumn": "location_id",
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_phone_numbers",
       "sourceColumn": "location_id",
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "location_id",
       "destinationTable": "act_location_websites",
       "sourceColumn": "location_id",
@@ -20228,48 +21976,56 @@ export const dataDictionaryJson = {
       "sourceTable": "act_locations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_accountee_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_accountee_settings",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_asset_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_chargeable_service_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_legal_document_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_location_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_product_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "media_id",
       "destinationTable": "act_party_medias",
       "sourceColumn": "media_id",
@@ -20282,6 +22038,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "menu_id",
       "destinationTable": "act_menu_items",
       "sourceColumn": "menu_id",
@@ -20342,24 +22099,28 @@ export const dataDictionaryJson = {
       "sourceTable": "act_payment_methods"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "phone_number_id",
       "destinationTable": "act_accountee_phone_numbers",
       "sourceColumn": "phone_number_id",
       "sourceTable": "act_phone_numbers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "phone_number_id",
       "destinationTable": "act_location_phone_numbers",
       "sourceColumn": "phone_number_id",
       "sourceTable": "act_phone_numbers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "phone_number_id",
       "destinationTable": "act_party_phone_numbers",
       "sourceColumn": "phone_number_id",
       "sourceTable": "act_phone_numbers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "price_change_id",
       "destinationTable": "act_price_change_products",
       "sourceColumn": "price_change_id",
@@ -20474,12 +22235,14 @@ export const dataDictionaryJson = {
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_attributes",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_barcodes",
       "sourceColumn": "product_id",
@@ -20492,30 +22255,35 @@ export const dataDictionaryJson = {
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_medias",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_prices",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_reference_urls",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_storage_location_data",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_uoms",
       "sourceColumn": "product_id",
@@ -20600,34 +22368,39 @@ export const dataDictionaryJson = {
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_invoice_id",
       "destinationTable": "act_purchase_invoice_chargeable_services",
       "sourceColumn": "purchase_invoice_id",
       "sourceTable": "act_purchase_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_invoice_id",
       "destinationTable": "act_purchase_invoice_expenses",
       "sourceColumn": "purchase_invoice_id",
       "sourceTable": "act_purchase_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_invoice_id",
       "destinationTable": "act_purchase_invoice_payments",
       "sourceColumn": "purchase_invoice_id",
       "sourceTable": "act_purchase_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_invoice_id",
       "destinationTable": "act_purchase_invoice_products",
       "sourceColumn": "purchase_invoice_id",
       "sourceTable": "act_purchase_invoices"
     },
     {
-      "destinationColumn": "purchase_invoice_id",
+      "cascadeDeleteDestination": true,
+      "destinationColumn": "purchase_order_id",
       "destinationTable": "act_purchase_order_expenses",
-      "sourceColumn": "purchase_invoice_id",
-      "sourceTable": "act_purchase_invoices"
+      "sourceColumn": "purchase_order_id",
+      "sourceTable": "act_purchase_orders"
     },
     {
       "destinationColumn": "purchase_invoice_id",
@@ -20636,42 +22409,49 @@ export const dataDictionaryJson = {
       "sourceTable": "act_purchase_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_order_id",
       "destinationTable": "act_purchase_order_chargeable_services",
       "sourceColumn": "purchase_order_id",
       "sourceTable": "act_purchase_orders"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_order_id",
       "destinationTable": "act_purchase_order_payments",
       "sourceColumn": "purchase_order_id",
       "sourceTable": "act_purchase_orders"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_order_id",
       "destinationTable": "act_purchase_order_products",
       "sourceColumn": "purchase_order_id",
       "sourceTable": "act_purchase_orders"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_return_id",
       "destinationTable": "act_purchase_return_chargeable_services",
       "sourceColumn": "purchase_return_id",
       "sourceTable": "act_purchase_returns"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_return_id",
       "destinationTable": "act_purchase_return_expenses",
       "sourceColumn": "purchase_return_id",
       "sourceTable": "act_purchase_returns"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_return_id",
       "destinationTable": "act_purchase_return_payments",
       "sourceColumn": "purchase_return_id",
       "sourceTable": "act_purchase_returns"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "purchase_return_id",
       "destinationTable": "act_purchase_return_products",
       "sourceColumn": "purchase_return_id",
@@ -20696,6 +22476,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_sale_coupon_issues"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_coupon_id",
       "destinationTable": "act_sale_coupon_issues",
       "sourceColumn": "sale_coupon_id",
@@ -20708,24 +22489,28 @@ export const dataDictionaryJson = {
       "sourceTable": "act_sale_coupons"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_invoice_id",
       "destinationTable": "act_sale_invoice_chargable_services",
       "sourceColumn": "sale_invoice_id",
       "sourceTable": "act_sale_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_invoice_id",
       "destinationTable": "act_sale_invoice_expenses",
       "sourceColumn": "sale_invoice_id",
       "sourceTable": "act_sale_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_invoice_id",
       "destinationTable": "act_sale_invoice_payments",
       "sourceColumn": "sale_invoice_id",
       "sourceTable": "act_sale_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_invoice_id",
       "destinationTable": "act_sale_invoice_products",
       "sourceColumn": "sale_invoice_id",
@@ -20744,72 +22529,84 @@ export const dataDictionaryJson = {
       "sourceTable": "act_sale_invoices"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_maintenance_id",
       "destinationTable": "act_sale_maintenance_chargeable_services",
       "sourceColumn": "sale_maintenance_id",
       "sourceTable": "act_sale_maintenances"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_maintenance_id",
       "destinationTable": "act_sale_maintenance_expenses",
       "sourceColumn": "sale_maintenance_id",
       "sourceTable": "act_sale_maintenances"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_maintenance_id",
       "destinationTable": "act_sale_maintenance_payments",
       "sourceColumn": "sale_maintenance_id",
       "sourceTable": "act_sale_maintenances"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_maintenance_id",
       "destinationTable": "act_sale_maintenance_products",
       "sourceColumn": "sale_maintenance_id",
       "sourceTable": "act_sale_maintenances"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_offer_id",
       "destinationTable": "act_sale_offer_products",
       "sourceColumn": "sale_offer_id",
       "sourceTable": "act_sale_offers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_quotation_id",
       "destinationTable": "act_sale_quotation_chargeable_services",
       "sourceColumn": "sale_quotation_id",
       "sourceTable": "act_sale_quotations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_quotation_id",
       "destinationTable": "act_sale_quotation_expenses",
       "sourceColumn": "sale_quotation_id",
       "sourceTable": "act_sale_quotations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_quotation_id",
       "destinationTable": "act_sale_quotation_products",
       "sourceColumn": "sale_quotation_id",
       "sourceTable": "act_sale_quotations"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_return_id",
       "destinationTable": "act_sale_return_chargeable_services",
       "sourceColumn": "sale_return_id",
       "sourceTable": "act_sale_returns"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_return_id",
       "destinationTable": "act_sale_return_expenses",
       "sourceColumn": "sale_return_id",
       "sourceTable": "act_sale_returns"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_return_id",
       "destinationTable": "act_sale_return_payments",
       "sourceColumn": "sale_return_id",
       "sourceTable": "act_sale_returns"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "sale_return_id",
       "destinationTable": "act_sale_return_products",
       "sourceColumn": "sale_return_id",
@@ -20828,18 +22625,21 @@ export const dataDictionaryJson = {
       "sourceTable": "act_sale_terms"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "stock_audit_product_id",
       "destinationTable": "act_stock_audit_product_storage_locations",
       "sourceColumn": "stock_audit_product_id",
       "sourceTable": "act_stock_audit_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "stock_audit_id",
       "destinationTable": "act_stock_audit_products",
       "sourceColumn": "stock_audit_id",
       "sourceTable": "act_stock_audits"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "stock_transfer_packing_id",
       "destinationTable": "act_stock_transfer_packing_products",
       "sourceColumn": "stock_transfer_packing_id",
@@ -20852,18 +22652,21 @@ export const dataDictionaryJson = {
       "sourceTable": "act_stock_transfer_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "stock_transfer_id",
       "destinationTable": "act_stock_transfer_packings",
       "sourceColumn": "stock_transfer_id",
       "sourceTable": "act_stock_transfers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "stock_transfer_id",
       "destinationTable": "act_stock_transfer_products",
       "sourceColumn": "stock_transfer_id",
       "sourceTable": "act_stock_transfers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "stock_update_id",
       "destinationTable": "act_stock_update_products",
       "sourceColumn": "stock_update_id",
@@ -20906,6 +22709,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_suppliers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_addresses",
       "sourceColumn": "party_id",
@@ -20918,36 +22722,42 @@ export const dataDictionaryJson = {
       "sourceTable": "act_suppliers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_contact_persons",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_email_addresses",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_fax_numbers",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_legal_documents",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_medias",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_phone_numbers",
       "sourceColumn": "party_id",
@@ -20960,12 +22770,14 @@ export const dataDictionaryJson = {
       "sourceTable": "act_suppliers"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_websites",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "party_id",
       "destinationTable": "act_party_bank_accounts",
       "sourceColumn": "party_id",
@@ -21056,6 +22868,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_tax_rates"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "tax_rate_id",
       "destinationTable": "act_tax_parts",
       "sourceColumn": "tax_rate_id",
@@ -21170,6 +22983,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_taxing_schemes"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "taxing_scheme_id",
       "destinationTable": "act_tax_rates",
       "sourceColumn": "taxing_scheme_id",
@@ -21302,12 +23116,14 @@ export const dataDictionaryJson = {
       "sourceTable": "act_transaction_entries"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "transaction_entry_id",
       "destinationTable": "act_transaction_entry_medias",
       "sourceColumn": "transaction_entry_id",
       "sourceTable": "act_transaction_entries"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "transaction_id",
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "transaction_id",
@@ -21380,30 +23196,35 @@ export const dataDictionaryJson = {
       "sourceTable": "act_users"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "user_id",
       "destinationTable": "act_user_accountees",
       "sourceColumn": "user_id",
       "sourceTable": "act_users"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "website_id",
       "destinationTable": "act_accountee_websites",
       "sourceColumn": "website_id",
       "sourceTable": "act_websites"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "website_id",
       "destinationTable": "act_location_websites",
       "sourceColumn": "website_id",
       "sourceTable": "act_websites"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "website_id",
       "destinationTable": "act_party_websites",
       "sourceColumn": "website_id",
       "sourceTable": "act_websites"
     },
     {
+      "cascadeDeleteDestination": false,
       "destinationColumn": "accountee_image_media_id",
       "destinationTable": "act_accountees",
       "sourceColumn": "media_id",
@@ -21644,24 +23465,6 @@ export const dataDictionaryJson = {
       "sourceTable": "act_ledger_accounts"
     },
     {
-      "destinationColumn": "customer_id",
-      "destinationTable": "act_parties",
-      "sourceColumn": "customer_id",
-      "sourceTable": "act_customers"
-    },
-    {
-      "destinationColumn": "supplier_id",
-      "destinationTable": "act_parties",
-      "sourceColumn": "supplier_id",
-      "sourceTable": "act_suppliers"
-    },
-    {
-      "destinationColumn": "employee_id",
-      "destinationTable": "act_parties",
-      "sourceColumn": "employee_id",
-      "sourceTable": "act_employees"
-    },
-    {
       "destinationColumn": "currency_code",
       "destinationTable": "act_parties",
       "sourceColumn": "currency_code",
@@ -21674,18 +23477,21 @@ export const dataDictionaryJson = {
       "sourceTable": "act_medias"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_purchase_details",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_sale_details",
       "sourceColumn": "product_id",
       "sourceTable": "act_products"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "product_id",
       "destinationTable": "act_product_stock_details",
       "sourceColumn": "product_id",
@@ -21764,12 +23570,14 @@ export const dataDictionaryJson = {
       "sourceTable": "act_currencies"
     },
     {
+      "cascadeDeleteDestination": false,
       "destinationColumn": "ledger_account_id",
       "destinationTable": "act_ledger_account_mappings",
       "sourceColumn": "ledger_account_id",
       "sourceTable": "act_ledger_accounts"
     },
     {
+      "cascadeDeleteDestination": true,
       "destinationColumn": "accountee_id",
       "destinationTable": "act_ledger_account_mappings",
       "sourceColumn": "accountee_id",
@@ -21804,6 +23612,38 @@ export const dataDictionaryJson = {
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "payment_method_id",
       "sourceTable": "act_payment_methods"
+    },
+    {
+      "cascadeDeleteDestination": true,
+      "destinationColumn": "party_id",
+      "destinationTable": "act_party_social_medias",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
+    },
+    {
+      "cascadeDeleteDestination": true,
+      "destinationColumn": "social_media_id",
+      "destinationTable": "act_party_social_medias",
+      "sourceColumn": "social_media_id",
+      "sourceTable": "act_social_medias"
+    },
+    {
+      "destinationColumn": "party_id",
+      "destinationTable": "act_customers",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
+    },
+    {
+      "destinationColumn": "party_id",
+      "destinationTable": "act_employees",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
+    },
+    {
+      "destinationColumn": "party_id",
+      "destinationTable": "act_suppliers",
+      "sourceColumn": "party_id",
+      "sourceTable": "act_parties"
     }
   ],
   "storedProcedures": {},

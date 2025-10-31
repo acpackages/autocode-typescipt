@@ -6,6 +6,20 @@ import { AcElementBase } from "../../../core/ac-element-base";
 import { AC_MODAL_CONFIG } from "../consts/ac-modal-config.const";
 
 export class AcModal extends AcElementBase {
+  get closeOnOutsideClick() {
+    return !(this.getAttribute("close-on-outside-click") == "false")
+  }
+  set closeOnOutsideClick(value: boolean) {
+    this.setAttribute('close-on-outside-click', `${value}`);
+  }
+
+  get closeOnEscape() {
+    return !(this.getAttribute("close-on-escape") == "false")
+  }
+  set closeOnEscape(value: boolean) {
+    this.setAttribute('close-on-escape', `${value}`);
+  }
+
   private backdrop: HTMLElement | null = null;
   private isOpen: boolean = false;
   animationDuration: number = AC_MODAL_CONFIG.animationDuration; // ms
@@ -13,7 +27,7 @@ export class AcModal extends AcElementBase {
   private morphTriggerColor?: string;
   private morphModalColor?: string;
   private cloneEl?: HTMLElement;
-  private originalBodyStyleOverflow:any;
+  private originalBodyStyleOverflow: any;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -60,7 +74,7 @@ export class AcModal extends AcElementBase {
   }
 
   private handleEscape = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === "Escape" && this.closeOnEscape) {
       this.close();
     }
   };
@@ -97,7 +111,11 @@ export class AcModal extends AcElementBase {
         if (this.backdrop) this.backdrop.style.opacity = "1";
         this.style.pointerEvents = "";
       });
-      this.backdrop.addEventListener("click", () => this.close(), { once: true });
+      this.backdrop.addEventListener("click", () => {
+      if (this.closeOnOutsideClick) {
+        this.close();
+      }
+    }, { once: true });
       this.ownerDocument.addEventListener("keydown", this.handleEscape);
       this.events.execute({ event: AcEnumModalEvent.Open });
       return;
@@ -114,7 +132,11 @@ export class AcModal extends AcElementBase {
       this.events.execute({ event: AcEnumModalEvent.Open });
     }, this.animationDuration);
 
-    this.backdrop.addEventListener("click", () => this.close(), { once: true });
+    this.backdrop.addEventListener("click", () => {
+      if (this.closeOnOutsideClick) {
+        this.close();
+      }
+    }, { once: true });
     this.ownerDocument.addEventListener("keydown", this.handleEscape);
   }
 

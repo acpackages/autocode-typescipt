@@ -54,6 +54,7 @@ export default defineConfig(() => ({
       external: [
         "@autocode-ts/autocode",
         "@autocode-ts/ac-extensions",
+        "@autocode-ts/ac-icons",
         "@autocode-ts/ac-template-engine",
         "@popperjs/core"
       ],

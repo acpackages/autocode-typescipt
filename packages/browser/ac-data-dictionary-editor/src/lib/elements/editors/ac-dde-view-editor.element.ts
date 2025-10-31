@@ -8,7 +8,7 @@ import { IAcDDETableColumn } from '../../interfaces/ac-dde-table-column.inteface
 import { AcEnumDDETableColumn } from '../../enums/ac-enum-dde-storage-keys.enum';
 import { AcEnumDDEEvent } from '../../enums/ac-enum-dde-event.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
-import { AcDDEViewColumnsDatagrid, AcDDEViewsDatagrid, IAcDDEView, IAcDDEViewEditorState } from '../../_ac-data-dictionary-editor.export';
+import { AcDDEViewColumnsDatagrid, AcDDEViewsDatagrid, IAcDDEView, IAcDDEViewColumn, IAcDDEViewEditorState } from '../../_ac-data-dictionary-editor.export';
 import { AcDDEViewMaster } from '../masters/ac-dde-view-master.element';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -16,15 +16,8 @@ export class AcDDEViewEditor {
   activeView?: IAcDDEView;
   editorApi!: AcDDEApi;
 
-  columnsContainer: HTMLElement = document.createElement('div');
-  columnPropertiesContainer: HTMLElement = document.createElement('div');
   headerElement: HTMLElement = document.createElement('div');
   element: HTMLElement = document.createElement('div');
-  viewsWrapper: HTMLElement = document.createElement('div');
-  viewDetailsWrapper: HTMLElement = document.createElement('div');
-  viewDetailsContainer: HTMLElement = document.createElement('div');
-  viewsContainer: HTMLElement = document.createElement('div');
-  viewPropertiesContainer: HTMLElement = document.createElement('div');
 
   viewColumnsDatagrid!: AcDDEViewColumnsDatagrid;
   viewsDatagrid!: AcDDEViewsDatagrid;
@@ -48,6 +41,7 @@ export class AcDDEViewEditor {
           this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TableEditorActiveTableChange });
           this.activeView = this.viewsDatagrid.datagridApi!.activeDatagridRow!.data;
           this.viewColumnsDatagrid.applyFilter();
+          this.viewMaster.view = this.activeView!;
         }, 10);
       }
     });
@@ -56,23 +50,34 @@ export class AcDDEViewEditor {
         this.updateEditorState();
       }
     });
+    this.viewsDatagrid.datagridApi.on({
+      event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridStateChangeEvent) => {
+        this.viewMaster.view = this.activeView!;
+      }
+    });
 
-    this.viewMaster = new AcDDEViewMaster({editorApi});
+    this.viewMaster = new AcDDEViewMaster({ editorApi });
+    this.viewMaster.on({event:"change",callback:(args:any)=>{
+      if(this.viewsDatagrid.datagridApi.activeDatagridRow){
+        this.viewsDatagrid.datagridApi!.updateRow({rowId:this.viewsDatagrid.datagridApi.activeDatagridRow!.acRowId,data:args.view});
+      }
+    }});
 
     this.viewColumnsDatagrid = new AcDDEViewColumnsDatagrid({ editorApi: this.editorApi });
-    this.viewColumnsDatagrid.filterFunction = (row: IAcDDETableColumn) => {
-      let tableId: any = undefined;
+    this.viewColumnsDatagrid.filterFunction = (row: IAcDDEViewColumn) => {
+      let viewId: any = undefined;
       if (this.viewsDatagrid && this.viewsDatagrid.datagridApi && this.viewsDatagrid.datagridApi.activeDatagridRow) {
         const activeRow: IAcDDETable = this.viewsDatagrid.datagridApi.activeDatagridRow.data;
-        tableId = activeRow.tableId;
+        viewId = activeRow.viewId;
       }
-      return row.tableId == tableId;
+      return row.viewId == viewId;
     };
     this.viewColumnsDatagrid.datagridApi.on({
       event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         args.datagridRow.data[AcEnumDDETableColumn.TableId] = this.activeView!.viewId;
       }
     });
+
     this.viewColumnsDatagrid.datagridApi.on({
       event: AcEnumDatagridEvent.StateChange, callback: (args: IAcDatagridStateChangeEvent) => {
         this.updateEditorState();
@@ -94,60 +99,49 @@ export class AcDDEViewEditor {
     acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
     acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
-    this.element.append(this.viewsWrapper);
-    this.viewsWrapper.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETablesWrapper, element: this.viewsWrapper });
+    this.element.innerHTML = `<ac-resizable-panels class="editor-resizable-panels">
+      <ac-resizable-panel ac-dde-views-wrapper></ac-resizable-panel>
+      <ac-resizable-panel>
+        <ac-resizable-panels class="detail-resizable-panels" direction="vertical">
+          <ac-resizable-panel ac-dde-view-details-wrapper></ac-resizable-panel>
+          <ac-resizable-panel ac-dde-view-columns-wrapper></ac-resizable-panel>
+        </ac-resizable-panels>
+      </ac-resizable-panel>
+    </ac-resizable-panels>`;
+    this.editorPanels = this.element.querySelector('.editor-resizable-panels') as AcResizablePanels;
 
-    this.element.append(this.viewDetailsWrapper);
-    this.viewDetailsWrapper.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableDetailsWrapper, element: this.viewDetailsWrapper });
+    this.detailPanels = this.element.querySelector('.detail-resizable-panels') as AcResizablePanels;
+    setTimeout(() => {
+      this.editorPanels.setPanelSizes({
+        panelSizes: [
+          { size: 30, index: 0 },
+          { size: 70, index: 1 }
+        ]
+      });
+      this.detailPanels.setPanelSizes({
+        panelSizes: [
+          { size: 30, index: 0 },
+          { size: 70, index: 1 }
+        ]
+      });
+    }, 50);
 
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableDetailsContainer, element: this.viewDetailsContainer });
-    this.viewDetailsContainer.setAttribute(AcResizableAttributeName.acResizablePanels, '');
 
+    const tablesWrapper = this.element.querySelector('[ac-dde-views-wrapper]') as HTMLElement;
+    tablesWrapper.append(this.viewsDatagrid.element);
 
-    this.viewsWrapper.append(this.viewsContainer);
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETablesContainer, element: this.viewsContainer });
-    this.viewsContainer.append(this.viewsDatagrid.element);
+    const columnsWrapper = this.element.querySelector('[ac-dde-view-details-wrapper]') as HTMLElement;
+    columnsWrapper.append(this.viewMaster.element);
 
-    this.viewDetailsWrapper.append(this.viewDetailsContainer);
-    this.viewDetailsContainer.append(this.viewMaster.element);
-    this.viewDetailsContainer.append(this.columnsContainer);
-    this.columnsContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableColumnsContainer, element: this.columnsContainer });
-    this.columnsContainer.append(this.viewColumnsDatagrid.element);
+    const relationshipsWrapper = this.element.querySelector('[ac-dde-view-columns-wrapper]') as HTMLElement;
+    relationshipsWrapper.append(this.viewColumnsDatagrid.element);
 
-    // this.detailPanels = new AcResizablePanels({ element: this.viewDetailsContainer, direction: AcEnumResizePanelDirection.Vertical });
-    // this.detailPanels.setPanelSizes({
-    //   panelSizes: [
-    //     { size: 60, index: 0 },
-    //     { size: 20, index: 1 },
-    //     { size: 20, index: 1 }
-    //   ]
-    // });
-    // this.detailPanels.on({
-    //   event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
-    //     this.updateEditorState();
-    //   }
-    // });
-
-    // this.editorPanels = new AcResizablePanels({ element: this.element, direction: AcEnumResizePanelDirection.Horizontal });
-    // this.editorPanels.setPanelSizes({
-    //   panelSizes: [
-    //     { size: 20, index: 0 },
-    //     { size: 80, index: 1 }
-    //   ]
-    // });
-    // this.editorPanels.on({
-    //   event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
-    //     this.updateEditorState();
-    //   }
-    // });
     this.refreshEditorState();
     setTimeout(() => {
       this.editorInitialized = true;
     }, 500);
   }
+
 
   refreshEditorState() {
     const state = this.editorApi.editorState.viewEditorState;

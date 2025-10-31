@@ -21,25 +21,15 @@ export class AcDDETableEditor {
   activeTable?: IAcDDETable;
   editorApi!: AcDDEApi;
 
-  columnsContainer: HTMLElement = document.createElement('div');
-  columnPropertiesContainer: HTMLElement = document.createElement('div');
-  headerElement: HTMLElement = document.createElement('div');
   element: HTMLElement = document.createElement('div');
-  tablesWrapper: HTMLElement = document.createElement('div');
-  tableDetailsWrapper: HTMLElement = document.createElement('div');
-  tableDetailsContainer: HTMLElement = document.createElement('div');
-  tablesContainer: HTMLElement = document.createElement('div');
-  tablePropertiesContainer: HTMLElement = document.createElement('div');
-  tableRelationshipsContainer: HTMLElement = document.createElement('div');
-  tableTriggersContainer: HTMLElement = document.createElement('div');
 
   tableColumnsDatagrid!: AcDDETableColumnsDatagrid;
   tableRelationshipsDatagrid!: AcDDERelationshipsDatagrid;
   tablesDatagrid!: AcDDETablesDatagrid;
   tableTriggersDatagrid!: AcDDETriggersDatagrid;
 
-  editorPanels: AcResizablePanels = new AcResizablePanels();
-  detailPanels: AcResizablePanels = new AcResizablePanels();
+  editorPanels!: AcResizablePanels;
+  detailPanels!: AcResizablePanels;
 
   state: IAcDDETableEditorState = {};
 
@@ -147,68 +137,53 @@ export class AcDDETableEditor {
   }
 
   private initElement() {
-    // this.element.innerHTML =
+    this.element.innerHTML = `<ac-resizable-panels class="editor-resizable-panels">
+      <ac-resizable-panel>
+        <div ac-dde-tables-wrapper class="${AcDDECssClassName.acDDETablesContainer}"></div>
+      </ac-resizable-panel>
+      <ac-resizable-panel>
+        <ac-resizable-panels class="detail-resizable-panels" direction="vertical">
+          <ac-resizable-panel ac-dde-tables-columns-wrapper></ac-resizable-panel>
+          <ac-resizable-panel ac-dde-tables-relationships-wrapper></ac-resizable-panel>
+          <ac-resizable-panel ac-dde-tables-triggers-wrapper></ac-resizable-panel>
+        </ac-resizable-panels>
+      </ac-resizable-panel>
+    </ac-resizable-panels>`;
     acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this.element });
     acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
-    this.element.append(this.tablesWrapper);
-    this.tablesWrapper.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETablesWrapper, element: this.tablesWrapper });
+    this.editorPanels = this.element.querySelector('.editor-resizable-panels') as AcResizablePanels;
 
-    this.element.append(this.tableDetailsWrapper);
-    this.tableDetailsWrapper.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableDetailsWrapper, element: this.tableDetailsWrapper });
+    this.detailPanels = this.element.querySelector('.detail-resizable-panels') as AcResizablePanels;
+    setTimeout(() => {
+      this.editorPanels.setPanelSizes({
+      panelSizes: [
+        { size: 20, index: 0 },
+        { size: 80, index: 1 }
+      ]
+    });
+      this.detailPanels.setPanelSizes({
+      panelSizes: [
+        { size: 60, index: 0 },
+        { size: 20, index: 1 },
+        { size: 20, index: 1 }
+      ]
+    });
+    }, 50);
 
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableDetailsContainer, element: this.tableDetailsContainer });
-    this.tableDetailsContainer.setAttribute(AcResizableAttributeName.acResizablePanels, '');
 
+    const tablesWrapper = this.element.querySelector('[ac-dde-tables-wrapper]') as HTMLElement;
+    tablesWrapper.append(this.tablesDatagrid.element);
 
-    this.tablesWrapper.append(this.tablesContainer);
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETablesContainer, element: this.tablesContainer });
-    this.tablesContainer.append(this.tablesDatagrid.element);
+    const columnsWrapper = this.element.querySelector('[ac-dde-tables-columns-wrapper]') as HTMLElement;
+    columnsWrapper.append(this.tableColumnsDatagrid.element);
 
-    this.tableDetailsWrapper.append(this.tableDetailsContainer);
-    this.tableDetailsContainer.append(this.columnsContainer);
-    this.columnsContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableColumnsContainer, element: this.columnsContainer });
-    this.columnsContainer.append(this.tableColumnsDatagrid.element);
+    const relationshipsWrapper = this.element.querySelector('[ac-dde-tables-relationships-wrapper]') as HTMLElement;
+    relationshipsWrapper.append(this.tableRelationshipsDatagrid.element);
 
-    this.tableDetailsContainer.append(this.tableRelationshipsContainer);
-    this.tableRelationshipsContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableRelationshipsContainer, element: this.tableRelationshipsContainer });
-    this.tableRelationshipsContainer.append(this.tableRelationshipsDatagrid.element);
+    const triggersWrapper = this.element.querySelector('[ac-dde-tables-triggers-wrapper]') as HTMLElement;
+    triggersWrapper.append(this.tableTriggersDatagrid.element);
 
-    this.tableDetailsContainer.append(this.tableTriggersContainer);
-    this.tableTriggersContainer.setAttribute(AcResizableAttributeName.acResizablePanel, '');
-    acAddClassToElement({ class_: AcDDECssClassName.acDDETableTriggersContainer, element: this.tableTriggersContainer });
-    this.tableTriggersContainer.append(this.tableTriggersDatagrid.element);
-
-    // this.detailPanels = new AcResizablePanels({ element: this.tableDetailsContainer, direction: AcEnumResizePanelDirection.Vertical });
-    // this.detailPanels.setPanelSizes({
-    //   panelSizes: [
-    //     { size: 60, index: 0 },
-    //     { size: 20, index: 1 },
-    //     { size: 20, index: 1 }
-    //   ]
-    // });
-    // this.detailPanels.on({
-    //   event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
-    //     this.updateEditorState();
-    //   }
-    // });
-
-    // this.editorPanels = new AcResizablePanels({ element: this.element, direction: AcEnumResizePanelDirection.Horizontal });
-    // this.editorPanels.setPanelSizes({
-    //   panelSizes: [
-    //     { size: 20, index: 0 },
-    //     { size: 80, index: 1 }
-    //   ]
-    // });
-    // this.editorPanels.on({
-    //   event: AcEnumResizableEvent.resize, callback: (args: IAcResizablePanelResizeEvent) => {
-    //     this.updateEditorState();
-    //   }
-    // });
     this.refreshEditorState();
     setTimeout(() => {
       this.editorInitialized = true;

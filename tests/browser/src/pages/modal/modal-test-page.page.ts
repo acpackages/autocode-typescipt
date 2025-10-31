@@ -18,7 +18,7 @@ export class ModalTestPage extends HTMLElement {
       </div>
 
       <!-- Modal HTML -->
-      <ac-modal>
+      <ac-modal close-on-outside-click="false" close-on-escape="false">
       <div style="background:white;border-radius:10px;">
         <div class="ac-modal-header" style="padding: 1rem; border-bottom: 1px solid #ddd;">
           <h4 id="modal-title" style="margin: 0;">Modal</h4>
@@ -79,6 +79,7 @@ export class ModalTestPage extends HTMLElement {
     this.getTitle().innerText = "Simple Modal";
     this.getMessage().innerText = "This is just a basic modal without action buttons.";
     this.getFooter().style.display = "none";
+    console.dir(this.modalElement);
     this.modalElement.open();
   }
 
@@ -86,6 +87,7 @@ export class ModalTestPage extends HTMLElement {
     this.getTitle().innerText = "Confirm Action";
     this.getMessage().innerText = "Do you want to proceed?";
     this.getFooter().style.display = "block";
+    console.dir(this.modalElement);
     this.modalElement.open();
   }
 

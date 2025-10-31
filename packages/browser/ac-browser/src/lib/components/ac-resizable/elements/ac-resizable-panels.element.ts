@@ -1,25 +1,24 @@
+/* eslint-disable no-self-assign */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents } from "@autocode-ts/autocode";
-import { AcResizableAttributeName } from "../consts/ac-resizable-attribute-name.const";
 import { AcEnumResizableEvent } from "../enums/ac-enum-resizable-event.enum";
-import { IAcResizablePanel } from "../interfaces/ac-resizable-panel.interface";
 import { IAcResizablePanelResizeEvent } from "../interfaces/ac-resizable-panel-resize-event.interface";
 import { IAcResizablePanelSize } from "../interfaces/ac-resizable-panel-size.interface";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_RESIZABLE_TAG } from "../consts/ac-resizable-tag.const";
+import { AcResizablePanel } from "./ac-resizable-panel.element";
 
-export class AcResizablePanels extends AcElementBase{
-  get direction():string{
-    return this.getAttribute('direction')??'horizontal';
+export class AcResizablePanels extends AcElementBase {
+  get direction(): 'horizontal' | 'vertical' {
+    return this.getAttribute('direction') ?? 'horizontal' as any;
   }
-  set direction(value: 'horizontal'|'vertical'){
-    this.setAttribute('direction',value);
+  set direction(value: 'horizontal' | 'vertical') {
+    this.setAttribute('direction', value);
+    this.style.flexDirection = value=="horizontal"?"row":"column";
   }
-  private panels: IAcResizablePanel[] = [];
-  private resizeObserver!: ResizeObserver;
+  panels: AcResizablePanel[] = [];
   private updateTimeout: any;
-  private updateAllowed: boolean = false;
+  updateAllowed: boolean = false;
 
   get isHorizontal(): boolean {
     return this.direction == 'horizontal';
@@ -27,80 +26,61 @@ export class AcResizablePanels extends AcElementBase{
 
   constructor() {
     super();
-    this.style.display = 'contents';
-    for (const panelElement of Array.from(this.querySelectorAll(`[${AcResizableAttributeName.acResizablePanel}]`)) as HTMLElement[]) {
-      if(!panelElement.hasAttribute(AcResizableAttributeName.acResizablePanelIndex)){
-        const index: number = this.panels.length;
-        this.panels.push({ index: index, element: panelElement, size: 0 });
-        panelElement.setAttribute(AcResizableAttributeName.acResizablePanelIndex,`${index}`);
-      }
-    }
-    this.setupLayout();
-    this.setupHandles();
-    this.observePanelSizes();
+    this.style.display = 'flex';
+    this.style.height = '100%';
+    this.style.width = '100%';
+    this.style.overflow = "hidden";
+  }
+
+  override connectedCallback(): void {
+    this.direction = this.direction;
+    setTimeout(() => {
+      this.updateAllowed = true;
+    }, 500);
+    console.dir(this);
   }
 
   destroy() {
-    this.resizeObserver.disconnect();
+    //
+  }
+
+  identifyResizablePanels() {
+    this.panels = [];
+    const elements = Array.from(this.querySelectorAll(`${AC_RESIZABLE_TAG.resizablePanel}`)) as AcResizablePanel[];
+    for (const panelElement of elements) {
+      if (panelElement.resizablePanels == this) {
+        const index: number = this.panels.length;
+        panelElement.index = index;
+        panelElement.size = 100 / elements.length;
+        panelElement.isLast = index == elements.length - 1;
+        this.panels.push(panelElement);
+      }
+    }
   }
 
   getPanelSizes() {
-    const panelSizes:IAcResizablePanelSize[] = [];
-    for(const panel of this.panels){
-      panelSizes.push({index:panel.index,size:panel.size});
+    const panelSizes: IAcResizablePanelSize[] = [];
+    for (const panel of this.panels) {
+      panelSizes.push({ index: panel.index, size: panel.size });
     }
     return panelSizes;
   }
 
-  private observePanelSizes() {
-    this.resizeObserver = new ResizeObserver(() => {
-      this.updatePanelSizes();
+  registerResizablePanel(panel: AcResizablePanel) {
+    this.identifyResizablePanels();
+    panel.on({
+      event: 'panelresize', callback: (args:any) => {
+        this.updatePanelSizes();
+      }
     });
-    this.panels.forEach((panel) => {
-      this.resizeObserver.observe(panel.element);
+    panel.on({
+      event: 'resize', callback: (args:any) => {
+        // console.log(args);
+        // this.updatePanelSizes();
+      }
     });
-    setTimeout(() => {
-      this.updateAllowed = true;
-    }, 500);
   }
 
-
-  setPanelSize({ index, size }: { index: number, size: number }) {
-    this.panels[index].size = size;
-    // this.updateAllowed = false;
-    const panel = this.panels[index];
-    panel.element.style.flexGrow = "0";
-    panel.element.style.flexShrink = "0";
-    panel.element.style.transition = "flex-basis 0.3s ease";
-    panel.element.style.flexBasis = `${size}%`;
-    this.panels[index].element.setAttribute(AcResizableAttributeName.acResizableSize,`${size}`);
-    setTimeout(() => {
-      if (this.isHorizontal) {
-        this.panels[index].element.style.minWidth = `${size}%`;
-        this.panels[index].element.style.maxWidth = `${size}%`;
-        setTimeout(() => {
-          this.updateAllowed = false;
-          this.panels[index].element.style.minWidth = ``;
-          this.panels[index].element.style.maxWidth = ``;
-          setTimeout(() => {
-            this.updateAllowed = true;
-          }, 100);
-        }, 500);
-      }
-      else {
-        this.panels[index].element.style.minHeight = `${size}%`;
-        this.panels[index].element.style.maxHeight = `${size}%`;
-        setTimeout(() => {
-          this.updateAllowed = false;
-          this.panels[index].element.style.minHeight = ``;
-          this.panels[index].element.style.maxHeight = ``;
-          setTimeout(() => {
-            this.updateAllowed = true;
-          }, 100);
-        }, 100);
-      }
-    }, 300);
-  }
 
   setPanelSizes({ panelSizes }: { panelSizes: IAcResizablePanelSize[] }) {
     this.updateAllowed = false;
@@ -127,10 +107,7 @@ export class AcResizablePanels extends AcElementBase{
     }
     for (const { index, size } of newPanelSizes) {
       const panel = this.panels[index];
-      panel.element.style.flexGrow = "0";
-      panel.element.style.flexShrink = "0";
-      panel.element.style.transition = "flex-basis 0.3s ease";
-      panel.element.style.flexBasis = `${size}%`;
+      panel.size = size;
     }
 
     setTimeout(() => {
@@ -138,108 +115,26 @@ export class AcResizablePanels extends AcElementBase{
       for (const panelSize of newPanelSizes) {
         const size = panelSize.size;
         const index = panelSize.index;
-        this.panels[index].element.style.transition = "";
         this.panels[index].size = size;
-        this.panels[index].element.setAttribute(AcResizableAttributeName.acResizableSize, `${size}`);
       }
     }, 400);
+
   }
 
-  private setupHandles() {
-    for (let i = 0; i < this.panels.length - 1; i++) {
-      const handle = document.createElement('div');
-      handle.classList.add(AcResizableAttributeName.acResizeHandle);
-      handle.style.cursor = this.isHorizontal ? 'col-resize' : 'row-resize';
-      handle.style.background = '#ccc';
-      handle.style.zIndex = '10';
-      handle.style.position = 'relative';
-      if (this.isHorizontal) {
-        handle.style.width = '2px';
-        handle.style.minWidth = '2px';
-        handle.style.marginLeft = '-1px';
-        handle.style.marginRight = '-1px';
-        handle.style.height = '100%';
-      }
-      else {
-        handle.style.height = '2px';
-        handle.style.minHeight = '2px';
-        handle.style.marginTop = '-1px';
-        handle.style.marginBottom = '-1px';
-        handle.style.width = '100%';
-      }
-
-      this.panels[i].element.insertAdjacentElement('afterend', handle);
-
-      let startPos = 0;
-      let startSizes: number[] = [];
-
-      const onMouseDown = (e: MouseEvent) => {
-        startPos = this.isHorizontal ? e.clientX : e.clientY;
-        startSizes = [this.panels[i].element.getBoundingClientRect()[this.isHorizontal ? 'width' : 'height'],
-        this.panels[i + 1].element.getBoundingClientRect()[this.isHorizontal ? 'width' : 'height']];
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-        this.style.userSelect = 'none';
-      };
-
-      const onMouseMove = (e: MouseEvent) => {
-        const delta = (this.isHorizontal ? e.clientX : e.clientY) - startPos;
-        const total = startSizes[0] + startSizes[1];
-        const firstCurrentPercent = parseFloat(this.panels[i].element.getAttribute(AcResizableAttributeName.acResizableSize) || '0');
-        const secondCurrentPercent = parseFloat(this.panels[i + 1].element.getAttribute(AcResizableAttributeName.acResizableSize) || '0');
-        const currentPanelsTotal = firstCurrentPercent + secondCurrentPercent;
-        let firstNewSize = ((startSizes[0] + delta) / total) * currentPanelsTotal;
-        let secondNewSize = ((startSizes[1] - delta) / total) * currentPanelsTotal;
-        firstNewSize = Math.max(5, Math.min(95, firstNewSize));
-        secondNewSize = currentPanelsTotal - firstNewSize;
-        this.panels[i].size = firstNewSize;
-        this.panels[i + 1].size = secondNewSize;
-        this.panels[i].element.style.flexBasis = `${firstNewSize}%`;
-        this.panels[i + 1].element.style.flexBasis = `${secondNewSize}%`;
-        this.panels[i].element.setAttribute(AcResizableAttributeName.acResizableSize, `${firstNewSize}`);
-        this.panels[i + 1].element.setAttribute(AcResizableAttributeName.acResizableSize, `${secondNewSize}`);
-      };
-
-      const onMouseUp = () => {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        this.style.userSelect = ' ';
-      };
-
-      handle.addEventListener('mousedown', onMouseDown);
-    }
-  }
-
-  private setupLayout() {
-    // this.style.display = 'flex';
-    // this.style.flexDirection = this.isHorizontal ? 'row' : 'column';
-    this.panels.forEach((panel) => {
-      const size = 100 / this.panels.length;
-      panel.size = size;
-      panel.element.style.flexGrow = '1';
-      panel.element.style.flexShrink = '1';
-      panel.element.style.flexBasis = `${size}%`;
-      panel.element.style.overflow = 'auto';
-      panel.element.style.display = 'flex';
-      panel.element.setAttribute(AcResizableAttributeName.acResizableSize, `${size}`);
-    });
-  }
 
   private updatePanelSizes() {
-    if (this.updateAllowed) {
       const isHorizontal = this.direction === 'horizontal';
       const totalSize = this.panels.reduce((acc, panel) => {
-        const rect = panel.element.getBoundingClientRect();
+        const rect = panel.getBoundingClientRect();
         return acc + (isHorizontal ? rect.width : rect.height);
       }, 0);
 
       let index: number = 0;
       this.panels.forEach((panel) => {
-        const rect = panel.element.getBoundingClientRect();
+        const rect = panel.getBoundingClientRect();
         const size = isHorizontal ? rect.width : rect.height;
         const percent = (size / totalSize) * 100;
-        panel.element.style.flexBasis = `${percent}%`;
-        panel.element.setAttribute(AcResizableAttributeName.acResizableSize, `${percent}`);
+        panel.style.flexBasis = `${percent}%`;
         panel.size = percent;
         index++;
       });
@@ -250,15 +145,13 @@ export class AcResizablePanels extends AcElementBase{
         this.updateTimeout = undefined;
         const event: IAcResizablePanelResizeEvent = {
           panels: this.panels,
-          panelSizes:this.getPanelSizes(),
+          panelSizes: this.getPanelSizes(),
           resizableInstance: this
         }
         this.events.execute({ event: AcEnumResizableEvent.resize, args: event });
       }, 300);
-    }
-
   }
 
 }
 
-acRegisterCustomElement({tag:AC_RESIZABLE_TAG.resizablePanels,type:AcResizablePanels});
+acRegisterCustomElement({ tag: AC_RESIZABLE_TAG.resizablePanels, type: AcResizablePanels });

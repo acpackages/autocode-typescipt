@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { AcArrayValuesInput, AcDatagrid, AcDatagridSelectInput, AcDatetimeInput, AcForm, AcFormField, AcFormFieldErrorMessage, AcInput, AcModal, AcNumberInput, AcOptionInput, AcPagination, AcPopoutTextareaInput, AcResizable, AcSelectInput, AcTextareaInput, AcTextInput, AcTooltip } from "../components/_components.export";
+import { AcArrayValuesInput, AcDatagrid, AcDatagridSelectInput, AcDatetimeInput, AcFilePreview, AcForm, AcFormField, AcFormFieldErrorMessage, AcInput, AcModal, AcNumberInput, AcOptionInput, AcPagination, AcPopoutTextareaInput, AcResizable, AcResizablePanel, AcResizablePanels, AcSelectInput, AcTextareaInput, AcTextInput, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
 import { AcSvgIconElement } from "../components/ac-svg-icon/_ac-svg-icon.element";
@@ -56,6 +56,8 @@ AcAccordion;
 AcCollapse;
 AcDatagrid;
 
+AcFilePreview;
+
 AcForm;
 AcFormField;
 AcFormFieldErrorMessage;
@@ -73,7 +75,10 @@ AcTextInput;
 AcTextareaInput;
 // End Input Elements
 
+AcResizable;
+AcResizablePanel;
+AcResizablePanels;
+
 AcModal;
 AcPagination;
-AcResizable;
 AcSvgIconElement;

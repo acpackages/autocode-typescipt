@@ -1,0 +1,9 @@
+{
+  "name": "ac-tiptap-editor-input",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/ac-tiptap-editor-input/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-tiptap-editor-input --web",
+  "targets": {}
+}

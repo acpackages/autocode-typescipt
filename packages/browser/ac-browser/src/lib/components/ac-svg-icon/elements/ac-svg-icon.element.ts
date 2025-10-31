@@ -6,12 +6,13 @@ export class AcSvgIconElement extends AcElementBase {
   private slotEl!: HTMLSlotElement;
 
   static get observedAttributes(): string[] {
-    return ['color', 'size', 'src', 'aria-label', 'spin','svg-code'];
+    return ['color', 'size', 'src', 'aria-label', 'spin', 'svg-code'];
   }
   override connectedCallback(): void {
-    const shadow = this.attachShadow({ mode: 'open' });
+    if (!this.shadowRoot) {
+      const shadow = this.attachShadow({ mode: 'open' });
 
-    shadow.innerHTML = `
+      shadow.innerHTML = `
       <style>
         :host {
           display: inline-block;
@@ -40,8 +41,11 @@ export class AcSvgIconElement extends AcElementBase {
       </style>
       <slot id="slot"></slot>
     `;
+      this.slotEl = shadow.querySelector('#slot') as HTMLSlotElement;
+    }
 
-    this.slotEl = shadow.querySelector('#slot') as HTMLSlotElement;
+
+
     const src = this.getAttribute('src');
     if (src) this.loadFromSrc(src);
 
@@ -136,4 +140,4 @@ export class AcSvgIconElement extends AcElementBase {
   }
 }
 
-acRegisterCustomElement({tag:AC_SVG_ICON_TAG.svgIcon,type:AcSvgIconElement});
+acRegisterCustomElement({ tag: AC_SVG_ICON_TAG.svgIcon, type: AcSvgIconElement });

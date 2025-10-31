@@ -142,7 +142,6 @@ export class AcArrayValuesInput extends AcInputBase {
   }
 
   removeItem({ index }: { index: number }) {
-    console.log(index);
     if (this.items[index].element) {
       this.items[index].element.remove();
     }

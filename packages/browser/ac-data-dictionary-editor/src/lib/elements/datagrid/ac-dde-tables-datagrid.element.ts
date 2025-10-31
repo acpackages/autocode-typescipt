@@ -16,6 +16,7 @@ import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 import { AcDDEDatagridTableConstraintsInput } from "../inputs/ac-dde-datagrid-table-constraints-input.element";
 import { AcEnumDDTableProperty } from "@autocode-ts/ac-data-dictionary";
+import { AcDDEDatagridSelectViewInput } from "../../_ac-data-dictionary-editor.export";
 
 export class AcDDETablesDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -71,11 +72,17 @@ export class AcDDETablesDatagrid {
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDTableProperty.SelectSqlQuery, 'title': 'Select Query',allowFilter:true,
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+        'field': AcEnumDDETable.ViewId, 'title': 'View',allowFilter:true,
+        cellEditorElement: AcDDEDatagridSelectViewInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
+      // {
+      //   'field': AcEnumDDTableProperty.SelectSqlQuery, 'title': 'Select Query',allowFilter:true,
+      //   cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
+      //     editorApi: this.editorApi
+      //   }, useCellEditorForRenderer: true
+      // },
       // {
       //   'field': AcEnumDDTableProperty.SelectQueryColumns, 'title': 'Query Columns',allowFilter:true,
       //   cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
@@ -94,12 +101,7 @@ export class AcDDETablesDatagrid {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
-      {
-        'field': AcEnumDDETable.SqlViewName, 'title': 'View',allowFilter:true,
-        cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
-          editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
-      },
+
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
       datagridApi: this.datagridApi,

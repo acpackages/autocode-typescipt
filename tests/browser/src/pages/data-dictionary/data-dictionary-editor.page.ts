@@ -2,7 +2,7 @@
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
 import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension, AcEnumDDEHook, AcRelationshipsDetectorDDEExtension, AcSqlAnalyzerDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
-import { AcCodeGeneratorDDEExtension } from '@autocode-ts/ac-dde-code-generator'
+import { AcCodeGeneratorDDEExtension, AcDDECodeGeneratorDefaultConfig } from '@autocode-ts/ac-dde-code-generator'
 import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
@@ -27,6 +27,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
   async initDatagrid() {
     const gridDiv = document.querySelector<HTMLElement>('#editorContainer');
     if (gridDiv) {
+      AcDDECodeGeneratorDefaultConfig.viewNameColumnClassPrefix = "";
       AcDDEExtensionManager.register(AcBrowserStorageDDEExtension);
       AcDDEExtensionManager.register(AcCodeGeneratorDDEExtension);
       this.dataDictionaryEditor = new AcDataDictionaryEditor();
@@ -44,7 +45,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:unifiDataDictionary});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:ddeDataDictionary});
       console.log(this.editorApi);
-      gridDiv.append(this.dataDictionaryEditor.element);
+      gridDiv.append(this.dataDictionaryEditor);
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'accountea'});
 
 

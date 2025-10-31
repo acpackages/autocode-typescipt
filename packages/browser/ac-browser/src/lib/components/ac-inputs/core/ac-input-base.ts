@@ -2,9 +2,8 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents, AcHooks } from "@autocode-ts/autocode";
+import { AcHooks } from "@autocode-ts/autocode";
 import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
-import { IAcInputValueChangeEvent } from "../interfaces/ac-input-value-change-event.interface";
 import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acListenAllElementEvents } from "../../../utils/ac-element-functions";
@@ -222,6 +221,8 @@ export class AcInputBase extends AcElementBase {
       if (this.isConnected) {
         this.setValueToAcContext();
       }
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      this.events.execute({ event: AcEnumInputEvent.Change, args: this.value });
     }
   }
 

@@ -44,6 +44,7 @@ import { AppBrowserTestPage } from './pages/utils/app-browser-tests';
 import { AcFormTest } from './pages/inputs/form-test.page';
 import { AcStorageTestPage } from './pages/utils/ac-storage-tests';
 import { AcDataManagerTestPage } from './pages/utils/ac-data-maganer.tests';
+import { FilePreviewTestPage } from './pages/inputs/file-preview-tests.page';
 
 AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -140,7 +141,8 @@ window.addEventListener('DOMContentLoaded', () => {
     routes: [
       { label: 'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage },
       { label: 'Elements', path: '/inputs/elements', componentTag: 'input-elements', component: InputElementsPage },
-      { label: 'Form', path: '/inputs/form', componentTag: 'form-test', component: AcFormTest }
+      { label: 'Form', path: '/inputs/form', componentTag: 'form-test', component: AcFormTest },
+      { label: 'File Preview', path: '/inputs/file-preview',componentTag: 'file-preview-test',component:FilePreviewTestPage }
     ]
   });
   AcRouter.registerRouteGroup({

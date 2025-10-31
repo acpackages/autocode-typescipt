@@ -489,6 +489,9 @@ export class AcDatagridApi {
         highlightCells: highlightCells
       }
       this.hooks.execute({ hook: AcEnumDatagridHook.RowUpdate, args: updateHookArgs });
+      for(const cell of datagridRow.datagridCells){
+        cell.instance!.cellRenderer.refresh({datagridApi:this,datagridCell:cell});
+      }
       const eventArgs:IAcDatagridRowEvent = {
       datagridApi:this,
       datagridRow:datagridRow

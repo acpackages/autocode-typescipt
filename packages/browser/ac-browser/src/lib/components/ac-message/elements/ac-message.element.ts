@@ -1,21 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+
+import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
+
 // ac-message.ts
 type ToastPosition =
   | 'top-left' | 'top-center' | 'top-right'
   | 'bottom-left' | 'bottom-center' | 'bottom-right';
 
-type IconType = 'success' | 'error' | 'info' | 'warning' | 'none';
+type MessageType = 'success' | 'error' | 'info' | 'warning' | 'none';
 
 interface BaseOptions {
   title?: string;
   message?: string;
   html?: string;
-  icon?: IconType;
+  iconSvg?: string;
   timer?: number; // ms, 0 = no auto close
   toast?: boolean; // true => toast style; false => modal
   position?: ToastPosition;
   showCloseButton?: boolean;
   pauseOnHover?: boolean;
   progressBar?: boolean;
+  type?:MessageType;
   // styling/custom class
   className?: string;
   // for confirm:
@@ -82,16 +88,16 @@ export class AcMessage {
 
   // Convenience methods
   public static success(options?: Partial<BaseOptions>) {
-    return this.fire({ icon: 'success', ...options });
+    return this.fire({ type: 'success', ...options });
   }
   public static error(options?: Partial<BaseOptions>) {
-    return this.fire({ icon: 'error', ...options });
+    return this.fire({ type: 'error', ...options });
   }
   public static info( options?: Partial<BaseOptions>) {
-    return this.fire({ icon: 'info', ...options });
+    return this.fire({ type: 'info', ...options });
   }
   public static warning(options?: Partial<BaseOptions>) {
-    return this.fire({ icon: 'warning', ...options });
+    return this.fire({ type: 'warning', ...options });
   }
 
   // Generic fire method - either toast or modal depending on options
@@ -261,8 +267,30 @@ export class AcMessage {
     return `acmsg-pos-${p.replace('-', '_')}`;
   }
 
+  private static getIconHtml(opts:BaseOptions){
+    let result:string = "";
+    if(opts.type && opts.type != "none"){
+      let svgCode:string = opts.iconSvg ?? "";
+      if(svgCode == ""){
+        if(opts.type == "success"){
+          svgCode = ACI_SVG_SOLID.check;
+        }
+        else if(opts.type == "error"){
+          svgCode = ACI_SVG_SOLID.ban;
+        }
+        else if(opts.type == "warning"){
+          svgCode = ACI_SVG_SOLID.exclamation;
+        }
+        else if(opts.type == "info"){
+          svgCode = ACI_SVG_SOLID.info;
+        }
+      }
+      result = `<span class="acmsg-modal-icon acmsg-icon-${opts.type}"><ac-svg-icon class="acmsg-svg-icon">${svgCode}</ac-svg-icon></span>`
+    }
+    return result;
+  }
+
   private static buildToastInnerHTML(opts: BaseOptions) {
-    const iconHtml = opts.icon && opts.icon !== 'none' ? `<span class="acmsg-icon acmsg-icon-${opts.icon}"></span>` : '';
     const titleHtml = opts.title ? `<div class="acmsg-title">${opts.title}</div>` : '';
     const textHtml = opts.message ? `<div class="acmsg-text">${opts.message}</div>` : '';
     const htmlContent = opts.html ?? '';
@@ -272,7 +300,7 @@ export class AcMessage {
 
     return `
       <div class="acmsg-body">
-        ${iconHtml}
+        ${this.getIconHtml(opts)}
         <div class="acmsg-content">
           ${titleHtml}
           ${textHtml}
@@ -308,7 +336,7 @@ export class AcMessage {
     dialog.setAttribute('aria-modal', 'true');
 
     // build content
-    const icon = opts.icon && opts.icon !== 'none' ? `<span class="acmsg-modal-icon acmsg-icon-${opts.icon}"></span>` : '';
+
     const title = opts.title ? `<h3 class="acmsg-modal-title">${opts.title}</h3>` : '';
     const text = opts.message ? `<div class="acmsg-modal-text">${opts.message}</div>` : '';
     const html = opts.html ?? '';
@@ -324,7 +352,7 @@ export class AcMessage {
     dialog.innerHTML = `
       ${closeX}
       <div class="acmsg-modal-inner">
-        ${icon}
+        ${this.getIconHtml(opts)}
         ${title}
         ${text}
         ${html}
@@ -465,6 +493,7 @@ export class AcMessage {
 
 .acmsg-body { display:flex; gap:10px; align-items:center; }
 .acmsg-icon { width:36px; height:36px; flex: 0 0 36px; border-radius: 6px; display:block; }
+.acmsg-svg-icon{ height:100%;width:100%;padding:10px;color:white;}
 .acmsg-icon-success { background: linear-gradient(90deg,#60BF88,#3CB371); }
 .acmsg-icon-error { background: linear-gradient(90deg,#F08080,#FF6347); }
 .acmsg-icon-info { background: linear-gradient(90deg,#6FA8F9,#5B9DFE); }

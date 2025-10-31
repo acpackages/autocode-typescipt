@@ -124,8 +124,10 @@ export class AcDDEViewColumnsDatagrid {
   }
 
   setColumnsData() {
-    this.data = Object.values(this.editorApi.dataStorage.getViewColumns({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId }));
-    this.applyFilter();
+    if (this.editorApi.activeDataDictionary) {
+      this.data = Object.values(this.editorApi.dataStorage.getViewColumns({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId }));
+      this.applyFilter();
+    }
   }
 
 
