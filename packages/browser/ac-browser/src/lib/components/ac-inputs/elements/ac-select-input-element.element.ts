@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
 import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow } from "@autocode-ts/autocode";
@@ -82,6 +83,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   dataManager: AcDataManager = new AcDataManager();
+  override isInputElementValidHtmlInput: boolean = false;
   protected dropdownContainer!: HTMLDivElement;
   override inputElement: HTMLDivElement = document.createElement('div');
   protected highlightingIndex = -1;

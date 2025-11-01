@@ -59,6 +59,19 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.setDDInput();
   }
 
+  override get disabled(): boolean {
+    return super.disabled;
+  }
+  override set disabled(value: boolean) {
+    if (value) {
+      this.setAttribute('disabled', "true");
+    }
+    else {
+      this.removeAttribute('disabled');
+    }
+    this.ddInput.disabled = this.disabled;
+  }
+
   private _inputProperties: any = {};
   get inputProperties(): any {
     return this._inputProperties;
@@ -68,22 +81,57 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.setDDInput();
   }
 
+  override get readonly(): boolean {
+    return super.readonly;
+  }
+  override set readonly(value: boolean) {
+    if (value) {
+      this.setAttribute('readonly', "true");
+    }
+    else {
+      this.removeAttribute('readonly');
+    }
+    this.ddInput.readonly = value;
+  }
+
+  override get required(): boolean {
+    return super.required;
+  }
+  override set required(value: boolean) {
+    if (value) {
+      this.setAttribute('required', "true");
+    }
+    else {
+      this.removeAttribute('required');
+    }
+    this.ddInput.required = value;
+  }
+
   override get value(): any {
     return this.ddInput.value;
   }
   override set value(value: any) {
     this.ddInput.value = value;
+    super.value = value;
   }
 
-  override inputElement = document.createElement('div');
+  override get validityStateFlags(): { valid: boolean; flags: Partial<ValidityState>; message: string; } {
+    return this.ddInput.validityStateFlags;
+  }
+
+  containerElement = document.createElement('div');
   ddInput: AcDDInputElement = new AcDDInputElement();
   ddInputField: AcDDInputFieldBaseElement;
   ddTableColumn!: AcDDTableColumn;
 
   constructor() {
     super();
+    this.inputElement = this.ddInput;
     this.ddInputField = new AcDDInputManager.inputFieldElementClass();
     this.ddInputField.ddInputFieldElement = this;
+    this.ddInput.on({event:'change',callback:()=>{
+      this.value = this.ddInput.value;
+    }});
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -108,6 +156,7 @@ export class AcDDInputFieldElement extends AcInputBase {
   }
 
   override connectedCallback(): void {
+    super.connectedCallback();
     this.setDDInput();
     this.append(this.ddInputField);
     this.ddInputField.ddInput = this.ddInput;
@@ -126,6 +175,9 @@ export class AcDDInputFieldElement extends AcInputBase {
       }
       if (this.label) {
         this.ddInputField.ddInputLabel = this.label;
+      }
+      if(this.ddInput){
+        this.required = this.ddInput.required;
       }
       this.events.execute({ event: 'ddInputSet' });
       const container = this.querySelector('ac-dd-input-container');

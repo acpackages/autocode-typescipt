@@ -79,6 +79,8 @@ export class AcTagsInput extends AcInputBase {
   private scrollable!: AcScrollable;
   private highlightingIndex: number = -1;
 
+  override isInputElementValidHtmlInput = false;
+
   private setupElements() {
     Object.assign(this.inputElement.style, {
       position: 'relative',

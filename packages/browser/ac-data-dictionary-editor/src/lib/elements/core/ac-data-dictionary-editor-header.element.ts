@@ -103,19 +103,9 @@ export class AcDataDictionaryEditorHeader {
         tab: AcEnumDDETab.TableEditor
       },
       {
-        label: 'Table Columns',
-        icon:'aci-table-column',
-        tab: AcEnumDDETab.TableColumns
-      },
-      {
         label: 'Views',
         icon:'aci-union',
         tab: AcEnumDDETab.ViewEditor
-      },
-      {
-        label: 'View Columns',
-        icon:'aci-table-union',
-        tab: AcEnumDDETab.ViewColumns
       },
       {
         label: 'Triggers',
@@ -137,6 +127,16 @@ export class AcDataDictionaryEditorHeader {
         icon:'aci-function',
         tab: AcEnumDDETab.Functions
       },
+      {
+        label: 'View Columns',
+        icon:'aci-table-union',
+        tab: AcEnumDDETab.ViewColumns
+      },
+      {
+        label: 'Table Columns',
+        icon:'aci-table-column',
+        tab: AcEnumDDETab.TableColumns
+      }
     ];
     for (const tabMenu of tabs) {
       const btn: HTMLElement = document.createElement('button');

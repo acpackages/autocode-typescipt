@@ -6677,8 +6677,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_attribute_string_value": {
-          "columnName": "product_attribute_string_value",
+        "product_attribute_text_value": {
+          "columnName": "product_attribute_text_value",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -6718,6 +6718,37 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value Type"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "value": "TEXT",
+                  "label": "Text"
+                },
+                {
+                  "label": "Number",
+                  "value": "NUMBER"
+                }
+              ]
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -6730,6 +6761,107 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "product_attributes"
+        }
+      }
+    },
+    "act_product_barcode_links": {
+      "tableName": "act_product_barcode_links",
+      "tableColumns": {
+        "product_barcode_link_id": {
+          "columnName": "product_barcode_link_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Barcode"
+            }
+          }
+        },
+        "product_purchase_detail_id": {
+          "columnName": "product_purchase_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Detail"
+            }
+          }
+        },
+        "product_sale_detail_id": {
+          "columnName": "product_sale_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Detail"
+            }
+          }
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product Price"
+            }
+          }
+        },
+        "product_barcode_link_name": {
+          "columnName": "product_barcode_link_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_barcode_links"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_barcode_link"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_product_barcode_links"
         }
       }
     },
@@ -6785,6 +6917,20 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_barcode_name": {
+          "columnName": "product_barcode_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -7270,13 +7416,51 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "progit_margin": {
-          "columnName": "progit_margin",
+        "profit_margin": {
+          "columnName": "profit_margin",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "profit_margin"
+              "propertyValue": "Profit Margin%"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            }
+          }
+        },
+        "landing_cost_percentage": {
+          "columnName": "landing_cost_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Approx. Landing Cost%"
+            }
+          }
+        },
+        "product_price_name": {
+          "columnName": "product_price_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current?"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -7320,6 +7504,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -7383,11 +7571,39 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Is Current"
+              "propertyValue": "Is Current?"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            }
+          }
+        },
+        "product_purchase_detail_name": {
+          "columnName": "product_purchase_detail_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -7400,6 +7616,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "product_purchase_detail"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_product_purchase_details"
         }
       }
     },
@@ -7461,16 +7681,30 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            }
+          }
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "product_reference_url"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "product_reference_urls"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_reference_url"
         }
       }
     },
@@ -7498,6 +7732,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -7537,7 +7775,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Is Current"
+              "propertyValue": "Is Current?"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -7545,13 +7783,31 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_barcode_id": {
-          "columnName": "product_barcode_id",
-          "columnType": "UUID",
+        "product_sale_detail_name": {
+          "columnName": "product_sale_detail_name",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Barcode Id"
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         }
@@ -7564,6 +7820,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "product_sale_detail"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_product_sale_details"
         }
       }
     },
@@ -7591,6 +7851,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -7689,6 +7953,34 @@ export const dataDictionaryJson = {
               "propertyValue": "0"
             }
           }
+        },
+        "product_stock_detail_name": {
+          "columnName": "product_stock_detail_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -7699,6 +7991,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "product_stock_detail"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_product_stock_details"
         }
       }
     },
@@ -8266,6 +8562,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Brand"
+            },
+            "IS_SELECT_DISTINCT": {
+              "propertyName": "IS_SELECT_DISTINCT",
+              "propertyValue": true
             }
           }
         }
@@ -21010,6 +21310,26 @@ export const dataDictionaryJson = {
       "viewName": "act_vw_transaction_debit_entries",
       "viewColumns": {},
       "viewQuery": "SELECT SUM(entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
+    },
+    "act_vw_product_barcode_links": {
+      "viewName": "act_vw_product_barcode_links",
+      "viewColumns": {},
+      "viewQuery": "SELECT \nact_product_barcodes.product_barcode_name,act_product_barcodes.barcode_value,\nact_product_purchase_details.product_purchase_detail_name ,\nact_product_sale_details.product_sale_detail_name ,\nact_product_prices.product_price_name,act_product_prices.price_sale ,act_product_prices.price_purchase,act_product_prices.price_mrp,\nact_product_barcode_links.* FROM act_product_barcode_links LEFT JOIN act_product_barcodes ON act_product_barcode_links.product_barcode_id = act_product_barcodes.product_barcode_id LEFT JOIN act_product_purchase_details ON act_product_barcode_links.product_purchase_detail_id = act_product_purchase_details.product_purchase_detail_id LEFT JOIN act_product_sale_details ON act_product_barcode_links.product_sale_detail_id= act_product_sale_details.product_sale_detail_id LEFT JOIN act_product_prices ON act_product_barcode_links.product_price_id= act_product_prices.product_price_id"
+    },
+    "act_vw_product_purchase_details": {
+      "viewName": "act_vw_product_purchase_details",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_product_uoms.uom_name AS purchase_uom_name, order_uoms .uom_name AS minimum_order_quantity_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+    },
+    "act_vw_product_sale_details": {
+      "viewName": "act_vw_product_sale_details",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_product_uoms.uom_name AS sale_uom_name\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_sale_details.* FROM act_product_sale_details\nLEFT JOIN act_product_uoms ON act_product_sale_details.sale_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
+    },
+    "act_vw_product_stock_details": {
+      "viewName": "act_vw_product_stock_details",
+      "viewColumns": {},
+      "viewQuery": "SELECT act_product_uoms.uom_name AS stock_uom_name, \nmin_uoms.uom_name AS minimum_stock_uom_name,\nmax_uoms.uom_name AS maximum_stock_uom_name,\nreorder_uoms.uom_name AS reorder_level_uom_name,\nact_product_stock_details .* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
     }
   },
   "relationships": [
@@ -23596,12 +23916,6 @@ export const dataDictionaryJson = {
       "sourceTable": "act_tax_rates"
     },
     {
-      "destinationColumn": "product_barcode_id",
-      "destinationTable": "act_product_sale_details",
-      "sourceColumn": "product_barcode_id",
-      "sourceTable": "act_product_barcodes"
-    },
-    {
       "destinationColumn": "debit_payment_method_id",
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "payment_method_id",
@@ -23644,6 +23958,30 @@ export const dataDictionaryJson = {
       "destinationTable": "act_suppliers",
       "sourceColumn": "party_id",
       "sourceTable": "act_parties"
+    },
+    {
+      "destinationColumn": "product_barcode_id",
+      "destinationTable": "act_product_barcode_links",
+      "sourceColumn": "product_barcode_id",
+      "sourceTable": "act_product_barcodes"
+    },
+    {
+      "destinationColumn": "product_purchase_detail_id",
+      "destinationTable": "act_product_barcode_links",
+      "sourceColumn": "product_purchase_detail_id",
+      "sourceTable": "act_product_purchase_details"
+    },
+    {
+      "destinationColumn": "product_sale_detail_id",
+      "destinationTable": "act_product_barcode_links",
+      "sourceColumn": "product_sale_detail_id",
+      "sourceTable": "act_product_sale_details"
+    },
+    {
+      "destinationColumn": "product_price_id",
+      "destinationTable": "act_product_barcode_links",
+      "sourceColumn": "product_price_id",
+      "sourceTable": "act_product_prices"
     }
   ],
   "storedProcedures": {},
@@ -23902,4 +24240,4 @@ export const dataDictionaryJson = {
       "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     }
   }
-};
+}

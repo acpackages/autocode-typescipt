@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcFormFieldErrorMessage } from "./ac-form-field-error-element.element";
 
@@ -18,22 +19,32 @@ export class AcFormField extends HTMLElement {
   }
 
   private bindInput() {
-    const input = this.querySelector(
-      `[name]`
-    );
-    if (input === this.inputElement) return;
+    let foundInput:boolean = false;
+    const input = this.querySelector(`[name]`);
+    if(input){
+      if (input == this.inputElement) return;
+    }
     this.unbindInput();
     if (input) {
+      foundInput = true;
       this.inputElement = input;
       const listener = () => this.updateState();
       input.addEventListener('input', listener);
       input.addEventListener('change', listener);
       input.addEventListener('blur', listener);
       input.setAttribute('novalidate', 'true');
-      input.addEventListener('invalid', (e) => { e.preventDefault(); listener(); }, true);
+      input.addEventListener('invalid', (e) => {
+        e.preventDefault();
+        listener();
+      }, true);
       this.inputListener = listener;
 
       this.updateState();
+    }
+    if(!foundInput){
+      setTimeout(() => {
+        this.bindInput();
+      }, 50);
     }
   }
 
@@ -50,7 +61,8 @@ export class AcFormField extends HTMLElement {
   updateState() {
     if (!this.inputElement) return;
     if ((this.inputElement as any).form && this.inputElement.form.submitted) {
-      const isValid = (this.inputElement as any).validity.valid;
+      const validity = (this.inputElement as any).validity;
+      const isValid = validity.valid;
       const hasError = !isValid;
       this.setAttribute('is-valid', `${isValid}`);
       const errorMessages: AcFormFieldErrorMessage[] = Array.from(this.querySelectorAll('ac-form-field-error-message'));

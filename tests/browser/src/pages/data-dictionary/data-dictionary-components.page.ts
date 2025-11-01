@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
@@ -8,7 +9,7 @@ import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-
 // import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { AcDDDatagridElement, AcDDInputElement, AcDDInputFieldElement, AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
-import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcForm } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/autocode';
 import { ProductCategorySelectInput } from '../../components/inputs/product-category-select-input.element';
@@ -16,6 +17,7 @@ import { ProductCategorySelectInput } from '../../components/inputs/product-cate
 export class DataDictionaryComponentsPage extends HTMLElement {
   accountTargetInput!:AcDDInputFieldElement;
   dataDictionaryEditor!: AcDataDictionaryEditor;
+  private form: AcForm | null = null;
 
   datagrid!: AcDatagrid;
   ddDatagrid!: AcDDDatagridElement;
@@ -51,8 +53,11 @@ export class DataDictionaryComponentsPage extends HTMLElement {
     // console.log(AcDDInputFieldElement);
     // console.log(AcDDDatagridElement);
     this.innerHTML = `
-    <ac-dd-input-field class="account-target-input" table-name="act_ledger_accounts" column-name="reflecting_statement" value="ADJUSTMENT"></ac-dd-input-field>
-    <ac-dd-input-field class="account-target-input" table-name="act_products" column-name="product_category_id"></ac-dd-input-field>
+    <ac-form id="test-form">
+    <ac-dd-input-field class="account-target-input" table-name="act_ledger_accounts" column-name="reflecting_statement" name="reflecting_statement" value="ADJUSTMENT"></ac-dd-input-field>
+    <ac-dd-input-field class="account-target-input" table-name="act_products" column-name="product_category_id" name="product_category_id"></ac-dd-input-field>
+    <button type="submit">Submit</button>
+    </ac-form>
     <div style="height:80vh">
     <ac-dd-datagrid source-value="accounts" source-type="table"></ac-dd-datagrid>
     </div>
@@ -65,6 +70,19 @@ export class DataDictionaryComponentsPage extends HTMLElement {
       this.accountTargetInput.setAttribute('value','TRADING ACCOUNT');
       console.log("Updated Account Target");
     }, 5000);
+
+    this.form = this.querySelector('#test-form')!;
+    const object = this;
+    this.form.addEventListener('submit', (e: any) => {
+      e.preventDefault();
+      console.log(object.form?.valuesToJsonObject());
+      console.dir(object.form);
+      const output = object.querySelector('#form-output');
+      if (output) {
+        // output.textContent = JSON.stringify(e.detail.values, null, 2);
+      }
+    });
+
     this.ddDatagrid = this.querySelector('ac-dd-datagrid')!;
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
     this.datagrid = this.ddDatagrid.datagrid;

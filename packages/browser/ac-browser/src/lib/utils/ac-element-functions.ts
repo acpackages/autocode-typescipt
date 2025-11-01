@@ -362,3 +362,20 @@ export function acWrapElementWithTag({ element, wrapperTag = "div" }: { element:
   wrapper.appendChild(element);
   return wrapper;
 }
+
+export function createValidityState(flags: Partial<ValidityState> = {}): any {
+  return {
+    valueMissing: false,
+    typeMismatch: false,
+    patternMismatch: false,
+    tooLong: false,
+    tooShort: false,
+    rangeUnderflow: false,
+    rangeOverflow: false,
+    stepMismatch: false,
+    badInput: false,
+    customError: false,
+    valid: Object.keys(flags).length === 0,
+    ...flags,
+  };
+}

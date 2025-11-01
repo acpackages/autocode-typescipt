@@ -4,6 +4,7 @@ import { AcDDInputElement } from "./ac-dd-input-element.element";
 import { AcDDInputFieldElement } from "./ac-dd-input-field-element.element";
 
 export class AcDDInputFieldBaseElement extends AcElementBase {
+
   inputElement = document.createElement('div');
   private _ddInput?: AcDDInputElement;
   get ddInput():AcDDInputElement|undefined{
@@ -26,6 +27,9 @@ export class AcDDInputFieldBaseElement extends AcElementBase {
     this._ddInputLabel = value;
     const container = this.querySelector('[ac-dd-input-label-conatiner]');
     if (container) {
+      if(this.ddInput && this.ddInput.required){
+        value += `<span style="color:red;">*</span>`;
+      }
       container.innerHTML = value;
     }
   }

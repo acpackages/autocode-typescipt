@@ -17,7 +17,13 @@ interface IAcArrayValueItem {
 }
 
 export class AcArrayValuesInput extends AcInputBase {
+
+  override get isValidRequired(): boolean {
+    return this.value.length > 0;
+  }
+
   override reflectValueAttribute: boolean = false;
+  override isInputElementValidHtmlInput: boolean = false;
   itemsElement?: HTMLElement;
   itemClone?: HTMLElement;
   private items: IAcArrayValueItem[] = [];

@@ -16,12 +16,17 @@ export class AcDDInputElement extends AcInputBase {
     this.setInputElement();
   }
 
-  get tableName(): string {
-    return this.getAttribute('table-name') ?? '';
+  override get disabled(): boolean {
+    return super.disabled;
   }
-  set tableName(value: string) {
-    this.setAttribute('table-name', value);
-    this.setInputElement();
+  override set disabled(value: boolean) {
+    if (value) {
+      this.setAttribute('disabled', "true");
+    }
+    else {
+      this.removeAttribute('disabled');
+    }
+    this.inputElement.disabled = this.disabled;
   }
 
   get inputName(): string {
@@ -39,6 +44,44 @@ export class AcDDInputElement extends AcInputBase {
   set inputProperties(value: any) {
     this._inputProperties = value;
     this.setInputElement();
+  }
+
+  override get readonly(): boolean {
+    return super.readonly;
+  }
+  override set readonly(value: boolean) {
+    if (value) {
+      this.setAttribute('readonly', "true");
+    }
+    else {
+      this.removeAttribute('readonly');
+    }
+    this.inputElement.readonly = this.readonly;
+  }
+
+  override get required(): boolean {
+    return super.required;
+  }
+  override set required(value: boolean) {
+    if (value) {
+      this.setAttribute('required', "true");
+    }
+    else {
+      this.removeAttribute('required');
+    }
+    this.inputElement.required = value;
+  }
+
+  get tableName(): string {
+    return this.getAttribute('table-name') ?? '';
+  }
+  set tableName(value: string) {
+    this.setAttribute('table-name', value);
+    this.setInputElement();
+  }
+
+  override get validityStateFlags(): { valid: boolean; flags: Partial<ValidityState>; message: string; } {
+    return this.inputElement.validityStateFlags;
   }
 
   ddTableColumn?: AcDDTableColumn;
@@ -90,6 +133,11 @@ export class AcDDInputElement extends AcInputBase {
             this.inputElement[key] = inputDefinition.defaultProperties[key];
           }
         }
+        if(this.ddTableColumn){
+          if(this.ddTableColumn.isRequired()){
+            this.setAttribute('required',`true`);
+          }
+        }
         this.events.execute({event:'inputElementSet'});
         this.innerHTML = "";
         this.append(this.inputElement);
@@ -105,6 +153,8 @@ export class AcDDInputElement extends AcInputBase {
       }
     }
   }
+
+
 }
 
 acRegisterCustomElement({ tag: 'ac-dd-input', type: AcDDInputElement });
