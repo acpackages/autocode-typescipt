@@ -4,15 +4,15 @@ import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
 
 export class AcDDCondition {
   static readonly KeyDatabaseType = "databaseType";
-  static readonly KeyColumnName = "columnName";
+  static readonly KeyKey = "key";
   static readonly KeyOperator = "operator";
   static readonly KeyValue = "value";
 
   @AcBindJsonProperty({ key: AcDDCondition.KeyDatabaseType })
   databaseType: string = "";
 
-  @AcBindJsonProperty({ key: AcDDCondition.KeyColumnName })
-  columnName: string = "";
+  @AcBindJsonProperty({ key: AcDDCondition.KeyKey })
+  key: string = "";
 
   operator: string = "";
   value: any;

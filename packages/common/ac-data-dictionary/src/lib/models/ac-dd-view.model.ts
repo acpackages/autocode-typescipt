@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
@@ -18,7 +19,7 @@ export class AcDDView {
   viewQuery: string = "";
 
   @AcBindJsonProperty({ key: AcDDView.KeyViewColumns })
-  viewColumns: Record<string, AcDDViewColumn> = {};
+  viewColumns: AcDDViewColumn[] = [];
 
   static instanceFromJson({ jsonData }: { jsonData: any }): AcDDView {
     const instance = new AcDDView();
@@ -26,7 +27,7 @@ export class AcDDView {
     return instance;
   }
 
-  static getInstance({viewName,dataDictionaryName = "default"}:{viewName: string, dataDictionaryName?: string }): AcDDView {
+  static getInstance({ viewName, dataDictionaryName = "default" }: { viewName: string, dataDictionaryName?: string }): AcDDView {
     const result = new AcDDView();
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
 
@@ -37,26 +38,34 @@ export class AcDDView {
     return result;
   }
 
-  fromJson({ jsonData }: { jsonData: any }): AcDDView {
+  static getDropViewStatement({ viewName, databaseType = AcEnumSqlDatabaseType.Unknown }: { viewName: string; databaseType?: string }): string {
+    return `DROP View IF EXISTS ${viewName};`;
+  }
+
+  fromJson({ jsonData }: { jsonData: any }): this {
     const json = { ...jsonData };
-    if (json.hasOwnProperty(AcDDView.KeyViewColumns) && typeof json[AcDDView.KeyViewColumns] === 'object') {
-      const columns = json[AcDDView.KeyViewColumns] as Record<string, any>;
-      for (const columnName in columns) {
-        if (columns.hasOwnProperty(columnName)) {
-          this.viewColumns[columnName] = AcDDViewColumn.instanceFromJson({ jsonData: columns[columnName] });
-        }
+
+    if (AcDDView.KeyViewColumns in json && typeof json[AcDDView.KeyViewColumns] === "object" && !Array.isArray(json[AcDDView.KeyViewColumns])) {
+      for (const [columnName, columnData] of Object.entries(json[AcDDView.KeyViewColumns])) {
+        const column = AcDDViewColumn.instanceFromJson({ jsonData: columnData as any });
+        this.viewColumns.push(column);
       }
       delete json[AcDDView.KeyViewColumns];
     }
+
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: json });
     return this;
   }
 
-  static getDropViewStatement({viewName,databaseType=AcEnumSqlDatabaseType.Unknown}: { viewName: string; databaseType?: string }): string {
-    return `DROP View IF EXISTS ${viewName};`;
+  getColumn({ columnName }: { columnName: string }): AcDDViewColumn | undefined {
+    return this.viewColumns.find((column) => column.columnName === columnName);
   }
 
-  getCreateViewStatement({databaseType=AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
+  getColumnNames(): string[] {
+    return this.viewColumns.map((column) => column.columnName);
+  }
+
+  getCreateViewStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string } = {}): string {
     return `CREATE View ${this.viewName} AS ${this.viewQuery};`;
   }
 

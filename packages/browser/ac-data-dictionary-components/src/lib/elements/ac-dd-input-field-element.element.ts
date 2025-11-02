@@ -132,6 +132,9 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.ddInput.on({event:'change',callback:()=>{
       this.value = this.ddInput.value;
     }});
+    this.ddInput.on({event:'inputElementSet',callback:(args:any)=>{
+      this.events.execute({event:'inputElementSet',args});
+    }});
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {

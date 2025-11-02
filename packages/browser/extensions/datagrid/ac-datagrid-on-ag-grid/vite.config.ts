@@ -13,10 +13,10 @@ export default defineConfig(() => ({
     nxViteTsPaths(),
     nxCopyAssetsPlugin(['*.md',
       {
-      input: 'src/lib/css',
-      glob: '**/*.css',
-      output: 'css',
-    }]),
+        input: 'src/lib/css',
+        glob: '**/*.css',
+        output: 'css',
+      }]),
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
@@ -46,7 +46,15 @@ export default defineConfig(() => ({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [],
+      external: [
+        "@autocode-ts/autocode",
+        "@autocode-ts/ac-browser",
+        "@autocode-ts/ac-extensions",
+        "ag-charts-community",
+        "ag-charts-types",
+        "ag-grid-community",
+        "ag-grid-enterprise"
+      ],
     },
   },
   test: {

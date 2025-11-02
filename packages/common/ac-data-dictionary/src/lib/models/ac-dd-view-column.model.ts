@@ -1,7 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDDTableColumnProperty } from "../..";
+import { AcDDTableColumn, AcDDTableColumnProperty, AcEnumDDColumnProperty } from "../..";
 // import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
 
 export class AcDDViewColumn {
@@ -11,6 +11,7 @@ export class AcDDViewColumn {
   static readonly KeyColumnValue = "columnValue";
   static readonly KeyColumnSource = "columnSource";
   static readonly KeyColumnSourceName = "columnSourceName";
+  static readonly KeyColumnSourceOriginalColumn = "columnSourceOriginalColumn";
 
   @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnName })
   columnName: string = "";
@@ -30,13 +31,16 @@ export class AcDDViewColumn {
   @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnSourceName })
   columnSourceName: string = "";
 
-  static instanceFromJson({jsonData}: { jsonData: Record<string, any> }): AcDDViewColumn {
+  @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnSourceOriginalColumn })
+  columnSourceOriginalColumn: string = "";
+
+  static instanceFromJson({ jsonData }: { jsonData: Record<string, any> }): AcDDViewColumn {
     const instance = new AcDDViewColumn();
     instance.fromJson({ jsonData: jsonData });
     return instance;
   }
 
-  fromJson({jsonData}: { jsonData: Record<string, any> }): AcDDViewColumn {
+  fromJson({ jsonData }: { jsonData: Record<string, any> }): AcDDViewColumn {
     const json = { ...jsonData };
 
     if (json.hasOwnProperty(AcDDViewColumn.KeyColumnProperties)) {
@@ -51,6 +55,21 @@ export class AcDDViewColumn {
 
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: json });
     return this;
+  }
+
+  getColumnTitle(): string {
+    if (this.columnProperties[AcEnumDDColumnProperty.ColumnTitle]) {
+      return this.columnProperties[AcEnumDDColumnProperty.ColumnTitle].propertyValue ?? this.columnName;
+    }
+    else if(this.columnSource == 'table'){
+      if(this.columnSourceName && this.columnSourceOriginalColumn){
+        const ddTableColumn = AcDDTableColumn.getInstance({tableName:this.columnSourceName,columnName:this.columnSourceOriginalColumn});
+        if(ddTableColumn){
+          return ddTableColumn.getColumnTitle();
+        }
+      }
+    }
+    return this.columnName;
   }
 
   toJson(): Record<string, any> {

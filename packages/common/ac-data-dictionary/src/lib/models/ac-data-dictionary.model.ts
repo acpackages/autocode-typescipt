@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcEnumDDColumnRelationType } from "../..";
+import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnRelationType } from "../..";
 // import { AcDDFunction } from "./ac-dd-function.model";
 // import { AcDDRelationship } from "./ac-dd-relationship.model";
 // import { AcDDStoredProcedure } from "./ac-dd-stored-procedure.model";
@@ -265,6 +265,19 @@ export class AcDataDictionary {
     const acDataDictionary = this.getInstance({ dataDictionaryName });
     if (viewName in acDataDictionary.views) {
       return AcDDView.instanceFromJson({ jsonData: acDataDictionary.views[viewName] });
+    }
+    return null;
+  }
+
+  static getViewColumn({ viewName, columnName, dataDictionaryName = "default" }: {
+    viewName: string,
+    columnName: string,
+    dataDictionaryName?: string
+  }): AcDDViewColumn | null {
+    const acDataDictionary = this.getInstance({ dataDictionaryName });
+    if (viewName in acDataDictionary.views) {
+      const view = AcDDView.instanceFromJson({ jsonData: acDataDictionary.views[viewName] });
+      return view.getColumn({columnName})!;
     }
     return null;
   }

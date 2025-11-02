@@ -23,18 +23,18 @@ export class AcDDConditionGroup {
   }
 
   addCondition({
-    columnName,
+    key,
     operator,
     value,
   }: {
-    columnName: string;
+    key: string;
     operator: string;
     value: any;
   }): this {
     this.conditions.push(
       AcDDCondition.instanceFromJson({
         jsonData: {
-          [AcDDCondition.KeyColumnName]: columnName,
+          [AcDDCondition.KeyKey]: key,
           [AcDDCondition.KeyOperator]: operator,
           [AcDDCondition.KeyValue]: value,
         },
@@ -69,7 +69,7 @@ export class AcDDConditionGroup {
         if (condition && typeof condition === "object" && !Array.isArray(condition)) {
           if (condition.hasOwnProperty(AcDDConditionGroup.KeyConditions)) {
             this.conditions.push(AcDDConditionGroup.instanceFromJson({ jsonData: condition }));
-          } else if (condition.hasOwnProperty(AcDDCondition.KeyColumnName)) {
+          } else if (condition.hasOwnProperty(AcDDCondition.KeyKey)) {
             this.conditions.push(AcDDCondition.instanceFromJson({ jsonData: condition }));
           }
         } else {

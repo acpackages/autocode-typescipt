@@ -213,3 +213,7 @@ ac-option-input input{
 .ac-dde-datagrid .ag-root-wrapper{
   border-radius: 0px!important;
 }
+
+.ag-row-focus{
+  background-color: #f1f1f1!important;
+}

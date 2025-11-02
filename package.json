@@ -174,7 +174,7 @@
     "monaco-editor": "^0.52.2",
     "mysql2": "^3.14.1",
     "node-fetch": "^3.3.2",
-    "node-sql-parser": "^5.3.11",
+    "node-sql-parser": "^5.3.13",
     "overlayscrollbars": "^2.11.4",
     "path-browserify": "^1.0.1",
     "primeng": "^19.1.3",

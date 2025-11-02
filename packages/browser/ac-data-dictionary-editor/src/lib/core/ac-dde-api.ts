@@ -18,6 +18,7 @@ import { IAcDDEDataDictionary } from "../interfaces/ac-dde-data-dictionary.intef
 import { AcEnumDDETab } from "../enums/ac-enum-dde-tab.enum";
 import { IAcDDEHookArgs } from "../interfaces/hook-args/ac-dde-hook-args.interface";
 import { AcDDEEventHandler } from "./ac-dde-event-handler";
+import { AcSqlParser } from "@autocode-ts/ac-sql-parser";
 
 export class AcDDEApi {
   private _activeDataDictionary?: IAcDDEDataDictionary;
@@ -56,12 +57,21 @@ export class AcDDEApi {
   extensions: Record<string, AcDDEExtension> = {};
   hooks: AcHooks = new AcHooks();
   menus: IAcDDEMenuGroup[] = [];
+  sqlParser: AcSqlParser = new AcSqlParser();
 
   constructor({ editor }: { editor: AcDataDictionaryEditor }) {
     editor = this.editor;
     this.eventHandler = new AcDDEEventHandler({ editorApi: this });
     this.dataStorage = new AcDDEDataStorage({ editorApi: this });
     this.editorState = new AcDDEState({ editorApi: this });
+    this.sqlParser.tableColumnsGetterFun = (tableName: string) => {
+      const columns = [];
+      const tableColumns = this.dataStorage.getTableColumns({ tableName: tableName });
+      for (const col of tableColumns) {
+        columns.push(col.columnName);
+      }
+      return columns;
+    }
     AcDDEExtensionManager.registerBuiltInExtensions();
   }
 
@@ -117,7 +127,7 @@ export class AcDDEApi {
       const tables: any = {};
       for (const tableRow of this.dataStorage.getTables({ dataDictionaryId: dataDictionartRow.dataDictionaryId })) {
         const columns: any = {};
-        const properties:any = {...tableRow.tableProperties };
+        const properties: any = { ...tableRow.tableProperties };
         for (const columnRow of this.dataStorage.getTableColumns({ tableId: tableRow.tableId! })) {
           columns[columnRow.columnName!] = {
             [AcDDTableColumn.KeyColumnName]: columnRow.columnName,
@@ -126,12 +136,12 @@ export class AcDDEApi {
           };
         }
         delete properties[AcEnumDDTableProperty.SqlViewName];
-        if(tableRow.viewId){
-          const viewRows = this.dataStorage.getViews({ viewId:tableRow.viewId,dataDictionaryId: dataDictionartRow.dataDictionaryId });
-          if(viewRows.length > 0){
+        if (tableRow.viewId) {
+          const viewRows = this.dataStorage.getViews({ viewId: tableRow.viewId, dataDictionaryId: dataDictionartRow.dataDictionaryId });
+          if (viewRows.length > 0) {
             properties[AcEnumDDTableProperty.SqlViewName] = {
-              [AcDDTableProperty.KeyPropertyName] : AcEnumDDTableProperty.SqlViewName,
-              [AcDDTableProperty.KeyPropertyValue] : viewRows[0].viewName
+              [AcDDTableProperty.KeyPropertyName]: AcEnumDDTableProperty.SqlViewName,
+              [AcDDTableProperty.KeyPropertyValue]: viewRows[0].viewName
             }
           }
         }
@@ -153,6 +163,7 @@ export class AcDDEApi {
             [AcDDViewColumn.KeyColumnProperties]: columnRow.columnProperties,
             [AcDDViewColumn.KeyColumnSource]: columnRow.columnSource,
             [AcDDViewColumn.KeyColumnSourceName]: columnRow.columnSourceName,
+            [AcDDViewColumn.KeyColumnSourceOriginalColumn]: columnRow.columnSourceOriginalColumn
           };
         }
         views[viewRow.viewName!] = {
@@ -256,8 +267,21 @@ export class AcDDEApi {
           for (const columnDetails of Object.values(viewColumns) as any[]) {
             const columnName = columnDetails[AcDDViewColumn.KeyColumnName];
             const columnProperties = columnDetails[AcDDViewColumn.KeyColumnProperties];
+            const columnSource = columnDetails[AcDDViewColumn.KeyColumnSource];
+            const columnSourceName = columnDetails[AcDDViewColumn.KeyColumnSourceName];
+            const columnSourceOriginalColumn = columnDetails[AcDDViewColumn.KeyColumnSourceOriginalColumn];
             const columnType = columnDetails[AcDDViewColumn.KeyColumnType];
-            this.dataStorage.addViewColumn({ dataDictionaryId: dataDictionaryId, viewId: viewRow.viewId, columnName: columnName, columnType: columnType, columnProperties: columnProperties, columnSource: '', columnSourceName: '' });
+
+            this.dataStorage.addViewColumn({
+              dataDictionaryId: dataDictionaryId,
+              viewId: viewRow.viewId,
+              columnName: columnName,
+              columnType: columnType,
+              columnProperties: columnProperties,
+              columnSource: columnSource,
+              columnSourceName: columnSourceName,
+              columnSourceOriginalColumn: columnSourceOriginalColumn
+            });
           }
         }
 

@@ -128,6 +128,7 @@ export class AcDDInputElement extends AcInputBase {
       }
       if (inputDefinition) {
         this.inputElement = new inputDefinition.inputElement();
+        this.events.execute({ event: 'inputElementSet' });
         if (inputDefinition.defaultProperties) {
           for (const key in inputDefinition.defaultProperties) {
             this.inputElement[key] = inputDefinition.defaultProperties[key];

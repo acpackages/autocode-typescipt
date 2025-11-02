@@ -4,7 +4,9 @@ export interface IAcDDEViewColumn {
   columnProperties?:any;
   columnSource?:string;
   columnSourceName?:string;
+  columnSourceOriginalColumn?:string;
   columnType?:string;
+  columnTitle?: string;
   dataDictionaryId:string;
   viewId?:string;
   extensionsData?:any;

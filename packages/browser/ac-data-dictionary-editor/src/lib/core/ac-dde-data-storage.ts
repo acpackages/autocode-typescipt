@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-prototype-builtins */
@@ -135,8 +136,14 @@ export class AcDDEDataStorage {
   }
 
   addViewColumn(data: Omit<IAcDDEViewColumn, 'columnId'>): IAcDDEViewColumn {
-    const row: IAcDDEViewColumn = { columnId: Autocode.uuid(), ...data };
+    const row: IAcDDEViewColumn|any = { columnId: Autocode.uuid(), ...data };
     this.viewColumns[row.columnId] = row;
+    if (data.columnProperties) {
+      const properties = data.columnProperties;
+      for (const propertyKey of Object.keys(properties)) {
+        row[propertyKey] = properties[propertyKey][AcDDTableColumnProperty.KeyPropertyValue];
+      }
+    }
     return row;
   }
 
@@ -180,11 +187,12 @@ export class AcDDEDataStorage {
   }
 
   deleteTable({ tableId }: { tableId: string }): IAcDDETable|undefined {
+    let result;
     if(this.tables[tableId]){
-      const row = this.tables[tableId];
+      result = this.tables[tableId];
       delete this.tables[tableId];
-      return row;
     }
+    return result;
   }
 
   deleteTrigger({ triggerId }: { triggerId: string }): IAcDDETrigger|undefined {
@@ -197,6 +205,15 @@ export class AcDDEDataStorage {
     const row = this.viewColumns[columnId];
     delete this.viewColumns[columnId];
     return row;
+  }
+
+  deleteViewColumns({ viewId }: { viewId: string }): IAcDDEViewColumn[] {
+    const result:IAcDDEViewColumn[] = [];
+    const viewColumns = this.getViewColumns({viewId:viewId});
+    for(const column of viewColumns){
+      result.push(this.deleteViewColumn({columnId:column.columnId})!);
+    }
+    return result;
   }
 
   deleteView({ viewId }: { viewId: string }): IAcDDEView|undefined {
@@ -308,8 +325,14 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getTableColumns({ tableId, columnId ,columnName, dataDictionaryId,filter }: { tableId?: string, columnId?: string, columnName?: string, dataDictionaryId?: string,filter?:Function } = {}): IAcDDETableColumn[] {
+  getTableColumns({ tableId, columnId ,columnName,tableName, dataDictionaryId,filter }: { tableId?: string, columnId?: string, columnName?: string,tableName?:string, dataDictionaryId?: string,filter?:Function } = {}): IAcDDETableColumn[] {
     let result: IAcDDETableColumn[] = Object.values(this.tableColumns);
+    if(tableName){
+      const tables = this.getTables({tableName,dataDictionaryId});
+      if(tables.length > 0){
+        tableId = tables[0].tableId;
+      }
+    }
     if(tableId || columnName || dataDictionaryId || columnId || filter){
       result = result.filter((item) => {
         let isValid = true;
@@ -585,6 +608,30 @@ export class AcDDEDataStorage {
   }
 
   setTableColumnProperties(column:IAcDDETableColumn){
+    const properties:any = {};
+    const columnRow:any =column;
+    const setProperty:Function = (propertyName:any)=>{
+      let propertyValue = columnRow[propertyName]
+      if(propertyValue != undefined){
+        let validPropertyValue = true;
+        if(boolColumnProperties.includes(propertyName) && propertyValue!=true){
+          validPropertyValue = false;
+        }
+        if(validPropertyValue){
+          properties[propertyName] = {
+            [AcDDTableColumnProperty.KeyPropertyName]: propertyName,
+            [AcDDTableColumnProperty.KeyPropertyValue]: columnRow[propertyName]
+          };
+        }
+      }
+    };
+    for(const propertyName of Object.values(AcEnumDDColumnProperty)){
+      setProperty(propertyName);
+    }
+    column.columnProperties = properties;
+  }
+
+  setViewColumnProperties(column:IAcDDEViewColumn){
     const properties:any = {};
     const columnRow:any =column;
     const setProperty:Function = (propertyName:any)=>{

@@ -4195,6 +4195,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "ledger_account"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_ledger_accounts"
         }
       }
     },
@@ -7129,13 +7133,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_categories"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "product_category"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "product_categories"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_product_categories"
         }
       }
     },
@@ -20511,221 +20519,145 @@ export const dataDictionaryJson = {
     "act_vw_customers": {
       "viewName": "act_vw_customers",
       "viewColumns": {
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_customers",
+          "columnSourceOriginalColumn": "customer_id"
+        },
         "customer_category": {
           "columnName": "customer_category",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Category"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_customers",
+          "columnSourceOriginalColumn": "customer_category"
+        },
+        "customer_remarks": {
+          "columnName": "customer_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_customers",
+          "columnSourceOriginalColumn": "customer_remarks"
         },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "accountee_id"
         },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Is Active?"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_active"
         },
         "ledger_account_id": {
           "columnName": "ledger_account_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "ledger_account_id"
         },
         "party_details": {
           "columnName": "party_details",
           "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Details"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_details"
         },
         "party_id": {
           "columnName": "party_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_id"
         },
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_name"
         },
         "addresses": {
           "columnName": "addresses",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Addresses"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "addresses"
         },
         "email_addresses": {
           "columnName": "email_addresses",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Addresses"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "email_addresses"
         },
         "fax_numbers": {
           "columnName": "fax_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Numbers"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "fax_numbers"
         },
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Numbers"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "phone_numbers"
         },
         "websites": {
           "columnName": "websites",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Websites"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "websites"
         },
         "bank_accounts": {
           "columnName": "bank_accounts",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Accounts"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "bank_accounts"
         },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "currency_code"
         },
         "party_image_media_id": {
           "columnName": "party_image_media_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Party Image"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_image_media_id"
+        },
+        "is_customer": {
+          "columnName": "is_customer",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_customer"
+        },
+        "is_supplier": {
+          "columnName": "is_supplier",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_supplier"
+        },
+        "is_employee": {
+          "columnName": "is_employee",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_employee"
         }
       },
       "viewQuery": "SELECT act_customers.customer_id,act_customers.customer_category,act_customers.customer_remarks, act_parties.* FROM act_customers LEFT JOIN act_parties ON act_customers.party_id = act_parties.party_id"
@@ -20733,603 +20665,1964 @@ export const dataDictionaryJson = {
     "act_vw_employees": {
       "viewName": "act_vw_employees",
       "viewColumns": {
+        "employee_id": {
+          "columnName": "employee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "employee_id"
+        },
         "employee_code": {
           "columnName": "employee_code",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Code"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "employee_code"
         },
         "date_of_birth": {
           "columnName": "date_of_birth",
           "columnType": "DATE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Birth Date"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "date_of_birth"
         },
         "date_of_joining": {
           "columnName": "date_of_joining",
           "columnType": "DATE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Joining Date"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "date_of_joining"
         },
         "salary_duration": {
           "columnName": "salary_duration",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Salary Duration"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "salary_duration"
         },
         "employee_designation": {
           "columnName": "employee_designation",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Designation"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "employee_designation"
         },
         "employee_salary_amount": {
           "columnName": "employee_salary_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Salary Amount"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "employee_salary_amount"
         },
         "employee_gender": {
           "columnName": "employee_gender",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Gender"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "employee_gender"
         },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "accountee_id"
         },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Is Active?"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_active"
         },
         "ledger_account_id": {
           "columnName": "ledger_account_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "ledger_account_id"
         },
         "party_details": {
           "columnName": "party_details",
           "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Details"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_details"
         },
         "party_id": {
           "columnName": "party_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_id"
         },
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_name"
         },
         "addresses": {
           "columnName": "addresses",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Addresses"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "addresses"
         },
         "email_addresses": {
           "columnName": "email_addresses",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Addresses"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "email_addresses"
         },
         "fax_numbers": {
           "columnName": "fax_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Numbers"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "fax_numbers"
         },
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Numbers"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "phone_numbers"
         },
         "websites": {
           "columnName": "websites",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Websites"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "websites"
         },
         "bank_accounts": {
           "columnName": "bank_accounts",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Accounts"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "bank_accounts"
         },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "currency_code"
         },
         "party_image_media_id": {
           "columnName": "party_image_media_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Party Image"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_image_media_id"
+        },
+        "is_customer": {
+          "columnName": "is_customer",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_customer"
+        },
+        "is_supplier": {
+          "columnName": "is_supplier",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_supplier"
+        },
+        "is_employee": {
+          "columnName": "is_employee",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_employee"
         }
       },
       "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_salary_amount, act_employees.employee_gender, act_parties.* FROM act_employees LEFT JOIN act_parties ON act_employees.party_id = act_parties.party_id"
     },
-    "act_vw_party_addresses": {
-      "viewName": "act_vw_party_addresses",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_addresses.party_address_id,act_party_addresses.party_id,act_addresses .* FROM act_party_addresses LEFT JOIN act_addresses ON act_party_addresses.address_id = act_addresses.address_id"
-    },
-    "act_vw_party_bank_accounts": {
-      "viewName": "act_vw_party_bank_accounts",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_bank_accounts.party_bank_account_id,act_party_bank_accounts.party_id,act_bank_accounts .* FROM act_party_bank_accounts LEFT JOIN act_bank_accounts ON act_party_bank_accounts.bank_account_id = act_bank_accounts.bank_account_id"
-    },
-    "act_vw_party_contact_persons": {
-      "viewName": "act_vw_party_contact_persons",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_contact_persons.party_contact_person_id,act_party_contact_persons.party_id,act_contact_persons .* FROM act_party_contact_persons LEFT JOIN act_contact_persons ON act_party_contact_persons.contact_person_id = act_contact_persons.contact_person_id "
-    },
-    "act_vw_party_email_addresses": {
-      "viewName": "act_vw_party_email_addresses",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_email_addresses.party_email_address_id,act_party_email_addresses.party_id,act_email_addresses .* FROM act_party_email_addresses LEFT JOIN act_email_addresses ON act_party_email_addresses.email_address_id = act_email_addresses.email_address_id "
-    },
-    "act_vw_party_fax_numbers": {
-      "viewName": "act_vw_party_fax_numbers",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_fax_numbers.party_fax_number_id,act_party_fax_numbers.party_id,act_fax_numbers .* FROM act_party_fax_numbers LEFT JOIN act_fax_numbers ON act_party_fax_numbers.fax_number_id = act_fax_numbers.fax_number_id "
-    },
-    "act_vw_party_legal_documents": {
-      "viewName": "act_vw_party_legal_documents",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_legal_documents.party_legal_document_id,act_party_legal_documents.party_id,act_legal_documents .* FROM act_party_legal_documents LEFT JOIN act_legal_documents ON act_party_legal_documents.legal_document_id = act_legal_documents.legal_document_id"
-    },
-    "act_vw_party_medias": {
-      "viewName": "act_vw_party_medias",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_medias.party_media_id,act_party_medias.party_id,act_medias .* FROM act_party_medias LEFT JOIN act_medias ON act_party_medias.media_id = act_medias.media_id"
-    },
-    "act_vw_party_phone_numbers": {
-      "viewName": "act_vw_party_phone_numbers",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_phone_numbers.party_phone_number_id,act_party_phone_numbers.party_id,act_phone_numbers .* FROM act_party_phone_numbers LEFT JOIN act_phone_numbers ON act_party_phone_numbers.phone_number_id = act_phone_numbers.phone_number_id"
-    },
-    "act_vw_party_social_medias": {
-      "viewName": "act_vw_party_social_medias",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_social_medias.party_social_media_id,act_party_social_medias.party_id,act_social_medias .* FROM act_party_social_medias LEFT JOIN act_social_medias ON act_party_social_medias.social_media_id = act_social_medias.social_media_id"
-    },
-    "act_vw_party_websites": {
-      "viewName": "act_vw_party_websites",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_party_websites.party_website_id,act_party_websites.party_id,act_websites .* FROM act_party_websites LEFT JOIN act_websites ON act_party_websites.website_id = act_websites.website_id"
-    },
-    "act_vw_products": {
-      "viewName": "act_vw_products",
-      "viewColumns": {},
-      "viewQuery": "SELECT * FROM act_products"
-    },
-    "act_vw_suppliers": {
-      "viewName": "act_vw_suppliers",
+    "act_vw_ledger_accounts": {
+      "viewName": "act_vw_ledger_accounts",
       "viewColumns": {
-        "supplier_type": {
-          "columnName": "supplier_type",
+        "ledger_account_type_name": {
+          "columnName": "ledger_account_type_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Type"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "ledger_account_type_name"
         },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "is_active": {
-          "columnName": "is_active",
-          "columnType": "YES_NO",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Is Active?"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "ledger_account_id": {
-          "columnName": "ledger_account_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "party_details": {
-          "columnName": "party_details",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Details"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "party_id": {
-          "columnName": "party_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "party_name": {
-          "columnName": "party_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "addresses": {
-          "columnName": "addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Addresses"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "email_addresses": {
-          "columnName": "email_addresses",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Addresses"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "fax_numbers": {
-          "columnName": "fax_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Fax Numbers"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "phone_numbers": {
-          "columnName": "phone_numbers",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Phone Numbers"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "websites": {
-          "columnName": "websites",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Websites"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "bank_accounts": {
-          "columnName": "bank_accounts",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Bank Accounts"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Customer"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Supplier"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
-        },
-        "employee_id": {
-          "columnName": "employee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Employee"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "accountee_id"
         },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "reflecting_statement": {
+          "columnName": "reflecting_statement",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "reflecting_statement"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "ledger_account_balance": {
+          "columnName": "ledger_account_balance",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_balance"
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_id"
+        },
+        "ledger_account_name": {
+          "columnName": "ledger_account_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_name"
+        },
+        "ledger_account_type_id": {
+          "columnName": "ledger_account_type_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_type_id"
+        },
+        "ledger_account_remarks": {
+          "columnName": "ledger_account_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_remarks"
+        },
+        "is_expense": {
+          "columnName": "is_expense",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "is_expense"
+        },
+        "is_income": {
+          "columnName": "is_income",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "is_income"
+        },
+        "ledger_account_description": {
+          "columnName": "ledger_account_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_description"
+        }
+      },
+      "viewQuery": "SELECT act_ledger_account_types.ledger_account_type_name,act_ledger_accounts.* FROM act_ledger_accounts LEFT JOIN act_ledger_account_types ON act_ledger_accounts.ledger_account_type_id = act_ledger_account_types.ledger_account_type_id"
+    },
+    "act_vw_party_addresses": {
+      "viewName": "act_vw_party_addresses",
+      "viewColumns": {
+        "party_address_id": {
+          "columnName": "party_address_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_addresses",
+          "columnSourceOriginalColumn": "party_address_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_addresses",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "address_id": {
+          "columnName": "address_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_id"
+        },
+        "address_label": {
+          "columnName": "address_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_label"
+        },
+        "address_line_1": {
+          "columnName": "address_line_1",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_line_1"
+        },
+        "address_line_2": {
+          "columnName": "address_line_2",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_line_2"
+        },
+        "country_name": {
+          "columnName": "country_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "country_name"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "landmark": {
+          "columnName": "landmark",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "landmark"
+        },
+        "latitude": {
+          "columnName": "latitude",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "latitude"
+        },
+        "longitude": {
+          "columnName": "longitude",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "longitude"
+        },
+        "postal_code": {
+          "columnName": "postal_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "postal_code"
+        },
+        "state_name": {
+          "columnName": "state_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "state_name"
+        },
+        "city_name": {
+          "columnName": "city_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "city_name"
+        }
+      },
+      "viewQuery": "SELECT act_party_addresses.party_address_id,act_party_addresses.party_id,act_addresses.* FROM act_party_addresses LEFT JOIN act_addresses ON act_party_addresses.address_id = act_addresses.address_id"
+    },
+    "act_vw_party_bank_accounts": {
+      "viewName": "act_vw_party_bank_accounts",
+      "viewColumns": {
+        "party_bank_account_id": {
+          "columnName": "party_bank_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_bank_accounts",
+          "columnSourceOriginalColumn": "party_bank_account_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_bank_accounts",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "account_holder_name": {
+          "columnName": "account_holder_name",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "account_holder_name"
+        },
+        "account_number": {
+          "columnName": "account_number",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "account_number"
+        },
+        "account_type": {
+          "columnName": "account_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "account_type"
+        },
+        "bank_account_id": {
+          "columnName": "bank_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_account_id"
+        },
+        "bank_code": {
+          "columnName": "bank_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_code"
+        },
+        "bank_name": {
+          "columnName": "bank_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_name"
+        },
+        "branch_code": {
+          "columnName": "branch_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "branch_code"
+        },
+        "branch_name": {
+          "columnName": "branch_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "branch_name"
+        },
+        "country_code": {
+          "columnName": "country_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "country_code"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "iban": {
+          "columnName": "iban",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "iban"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "is_primary": {
+          "columnName": "is_primary",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "is_primary"
+        },
+        "swift_bic": {
+          "columnName": "swift_bic",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "swift_bic"
+        },
+        "bank_label": {
+          "columnName": "bank_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_label"
+        }
+      },
+      "viewQuery": "SELECT act_party_bank_accounts.party_bank_account_id,act_party_bank_accounts.party_id,act_bank_accounts.* FROM act_party_bank_accounts LEFT JOIN act_bank_accounts ON act_party_bank_accounts.bank_account_id = act_bank_accounts.bank_account_id"
+    },
+    "act_vw_party_contact_persons": {
+      "viewName": "act_vw_party_contact_persons",
+      "viewColumns": {
+        "party_contact_person_id": {
+          "columnName": "party_contact_person_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_contact_persons",
+          "columnSourceOriginalColumn": "party_contact_person_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_contact_persons",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "contact_person_id": {
+          "columnName": "contact_person_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_contact_persons",
+          "columnSourceOriginalColumn": "contact_person_id"
+        },
+        "contact_person_image_media_id": {
+          "columnName": "contact_person_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_contact_persons",
+          "columnSourceOriginalColumn": "contact_person_image_media_id"
+        },
+        "contact_person_name": {
+          "columnName": "contact_person_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_contact_persons",
+          "columnSourceOriginalColumn": "contact_person_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_contact_persons",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT act_party_contact_persons.party_contact_person_id,act_party_contact_persons.party_id,act_contact_persons.* FROM act_party_contact_persons LEFT JOIN act_contact_persons ON act_party_contact_persons.contact_person_id = act_contact_persons.contact_person_id "
+    },
+    "act_vw_party_email_addresses": {
+      "viewName": "act_vw_party_email_addresses",
+      "viewColumns": {
+        "party_email_address_id": {
+          "columnName": "party_email_address_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_email_addresses",
+          "columnSourceOriginalColumn": "party_email_address_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_email_addresses",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "email_address_id": {
+          "columnName": "email_address_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_id"
+        },
+        "email_address_label": {
+          "columnName": "email_address_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_label"
+        },
+        "email_address_value": {
+          "columnName": "email_address_value",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_value"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT act_party_email_addresses.party_email_address_id,act_party_email_addresses.party_id,act_email_addresses.* FROM act_party_email_addresses LEFT JOIN act_email_addresses ON act_party_email_addresses.email_address_id = act_email_addresses.email_address_id "
+    },
+    "act_vw_party_fax_numbers": {
+      "viewName": "act_vw_party_fax_numbers",
+      "viewColumns": {
+        "party_fax_number_id": {
+          "columnName": "party_fax_number_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_fax_numbers",
+          "columnSourceOriginalColumn": "party_fax_number_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_fax_numbers",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "fax_number_id": {
+          "columnName": "fax_number_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_id"
+        },
+        "fax_number_label": {
+          "columnName": "fax_number_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_label"
+        },
+        "fax_number_value": {
+          "columnName": "fax_number_value",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_value"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT act_party_fax_numbers.party_fax_number_id,act_party_fax_numbers.party_id,act_fax_numbers.* FROM act_party_fax_numbers LEFT JOIN act_fax_numbers ON act_party_fax_numbers.fax_number_id = act_fax_numbers.fax_number_id "
+    },
+    "act_vw_party_legal_documents": {
+      "viewName": "act_vw_party_legal_documents",
+      "viewColumns": {
+        "party_legal_document_id": {
+          "columnName": "party_legal_document_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_legal_documents",
+          "columnSourceOriginalColumn": "party_legal_document_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_legal_documents",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "expiry_date": {
+          "columnName": "expiry_date",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "expiry_date"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "is_expired": {
+          "columnName": "is_expired",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "is_expired"
+        },
+        "is_verified": {
+          "columnName": "is_verified",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "is_verified"
+        },
+        "legal_document_id": {
+          "columnName": "legal_document_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_id"
+        },
+        "legal_document_value": {
+          "columnName": "legal_document_value",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_value"
+        },
+        "legal_document_label": {
+          "columnName": "legal_document_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_label"
+        }
+      },
+      "viewQuery": "SELECT act_party_legal_documents.party_legal_document_id,act_party_legal_documents.party_id,act_legal_documents.* FROM act_party_legal_documents LEFT JOIN act_legal_documents ON act_party_legal_documents.legal_document_id = act_legal_documents.legal_document_id"
+    },
+    "act_vw_party_medias": {
+      "viewName": "act_vw_party_medias",
+      "viewColumns": {
+        "party_media_id": {
+          "columnName": "party_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_medias",
+          "columnSourceOriginalColumn": "party_media_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_medias",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "media_details": {
+          "columnName": "media_details",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_details"
+        },
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_id"
+        },
+        "media_name": {
+          "columnName": "media_name",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_name"
+        },
+        "media_path": {
+          "columnName": "media_path",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_path"
+        },
+        "media_size": {
+          "columnName": "media_size",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_size"
+        },
+        "media_type": {
+          "columnName": "media_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_type"
+        }
+      },
+      "viewQuery": "SELECT act_party_medias.party_media_id,act_party_medias.party_id,act_medias.* FROM act_party_medias LEFT JOIN act_medias ON act_party_medias.media_id = act_medias.media_id"
+    },
+    "act_vw_party_phone_numbers": {
+      "viewName": "act_vw_party_phone_numbers",
+      "viewColumns": {
+        "party_phone_number_id": {
+          "columnName": "party_phone_number_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_phone_numbers",
+          "columnSourceOriginalColumn": "party_phone_number_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_phone_numbers",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "phone_number_id": {
+          "columnName": "phone_number_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_id"
+        },
+        "phone_number_label": {
+          "columnName": "phone_number_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_label"
+        },
+        "phone_number_value": {
+          "columnName": "phone_number_value",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_value"
+        }
+      },
+      "viewQuery": "SELECT act_party_phone_numbers.party_phone_number_id,act_party_phone_numbers.party_id,act_phone_numbers.* FROM act_party_phone_numbers LEFT JOIN act_phone_numbers ON act_party_phone_numbers.phone_number_id = act_phone_numbers.phone_number_id"
+    },
+    "act_vw_party_social_medias": {
+      "viewName": "act_vw_party_social_medias",
+      "viewColumns": {
+        "party_social_media_id": {
+          "columnName": "party_social_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_social_medias",
+          "columnSourceOriginalColumn": "party_social_media_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_social_medias",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "social_media_id": {
+          "columnName": "social_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_id"
+        },
+        "social_media_type": {
+          "columnName": "social_media_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_type"
+        },
+        "social_media_value": {
+          "columnName": "social_media_value",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_value"
+        }
+      },
+      "viewQuery": "SELECT act_party_social_medias.party_social_media_id,act_party_social_medias.party_id,act_social_medias.* FROM act_party_social_medias LEFT JOIN act_social_medias ON act_party_social_medias.social_media_id = act_social_medias.social_media_id"
+    },
+    "act_vw_party_websites": {
+      "viewName": "act_vw_party_websites",
+      "viewColumns": {
+        "party_website_id": {
+          "columnName": "party_website_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_websites",
+          "columnSourceOriginalColumn": "party_website_id"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_party_websites",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "website_id": {
+          "columnName": "website_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_id"
+        },
+        "website_label": {
+          "columnName": "website_label",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_label"
+        },
+        "website_value": {
+          "columnName": "website_value",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_value"
+        }
+      },
+      "viewQuery": "SELECT act_party_websites.party_website_id,act_party_websites.party_id,act_websites.* FROM act_party_websites LEFT JOIN act_websites ON act_party_websites.website_id = act_websites.website_id"
+    },
+    "act_vw_product_barcode_links": {
+      "viewName": "act_vw_product_barcode_links",
+      "viewColumns": {
+        "product_barcode_name": {
+          "columnName": "product_barcode_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "product_barcode_name"
+        },
+        "barcode_value": {
+          "columnName": "barcode_value",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "barcode_value"
+        },
+        "product_purchase_detail_name": {
+          "columnName": "product_purchase_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_name"
+        },
+        "product_sale_detail_name": {
+          "columnName": "product_sale_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_name"
+        },
+        "product_price_name": {
+          "columnName": "product_price_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "product_price_name"
+        },
+        "price_sale": {
+          "columnName": "price_sale",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "price_sale"
+        },
+        "price_purchase": {
+          "columnName": "price_purchase",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "price_purchase"
+        },
+        "price_mrp": {
+          "columnName": "price_mrp",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "price_mrp"
+        },
+        "product_barcode_link_id": {
+          "columnName": "product_barcode_link_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_barcode_link_id"
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_barcode_id"
+        },
+        "product_purchase_detail_id": {
+          "columnName": "product_purchase_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_purchase_detail_id"
+        },
+        "product_sale_detail_id": {
+          "columnName": "product_sale_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_sale_detail_id"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_barcode_link_name": {
+          "columnName": "product_barcode_link_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_barcode_link_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT \nact_product_barcodes.product_barcode_name,act_product_barcodes.barcode_value,\nact_product_purchase_details.product_purchase_detail_name ,\nact_product_sale_details.product_sale_detail_name ,\nact_product_prices.product_price_name,act_product_prices.price_sale ,act_product_prices.price_purchase,act_product_prices.price_mrp,\nact_product_barcode_links.* FROM act_product_barcode_links LEFT JOIN act_product_barcodes ON act_product_barcode_links.product_barcode_id = act_product_barcodes.product_barcode_id LEFT JOIN act_product_purchase_details ON act_product_barcode_links.product_purchase_detail_id = act_product_purchase_details.product_purchase_detail_id LEFT JOIN act_product_sale_details ON act_product_barcode_links.product_sale_detail_id= act_product_sale_details.product_sale_detail_id LEFT JOIN act_product_prices ON act_product_barcode_links.product_price_id= act_product_prices.product_price_id"
+    },
+    "act_vw_product_categories": {
+      "viewName": "act_vw_product_categories",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "parent_product_categroy_id": {
+          "columnName": "parent_product_categroy_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "parent_product_categroy_id"
+        },
+        "product_category_full_description": {
+          "columnName": "product_category_full_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_full_description"
+        },
+        "product_category_id": {
+          "columnName": "product_category_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_id"
+        },
+        "product_category_image_media_id": {
+          "columnName": "product_category_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_image_media_id"
+        },
+        "product_category_index": {
+          "columnName": "product_category_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_index"
+        },
+        "product_category_name": {
+          "columnName": "product_category_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_name"
+        },
+        "product_category_quick_description": {
+          "columnName": "product_category_quick_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_quick_description"
+        },
+        "product_category_tree": {
+          "columnName": "product_category_tree",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_tree"
+        },
+        "purchase_tax_rate_id": {
+          "columnName": "purchase_tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "purchase_tax_rate_id"
+        },
+        "purchase_taxing_scheme_id": {
+          "columnName": "purchase_taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "purchase_taxing_scheme_id"
+        },
+        "sale_tax_rate_id": {
+          "columnName": "sale_tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "sale_tax_rate_id"
+        },
+        "sale_taxing_scheme_id": {
+          "columnName": "sale_taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "sale_taxing_scheme_id"
+        },
+        "purchase_taxing_scheme_name": {
+          "columnName": "purchase_taxing_scheme_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes ",
+          "columnSourceOriginalColumn": "taxing_scheme_name "
+        },
+        "sale_taxing_scheme_name": {
+          "columnName": "sale_taxing_scheme_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes ",
+          "columnSourceOriginalColumn": "taxing_scheme_name "
+        },
+        "purchase_tax_rate_name": {
+          "columnName": "purchase_tax_rate_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates ",
+          "columnSourceOriginalColumn": "tax_rate_name "
+        },
+        "purchase_tax_rate_percentage": {
+          "columnName": "purchase_tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates ",
+          "columnSourceOriginalColumn": "tax_rate_percentage "
+        },
+        "sale_tax_rate_name": {
+          "columnName": "sale_tax_rate_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates ",
+          "columnSourceOriginalColumn": "tax_rate_name "
+        },
+        "sale_tax_rate_percentage": {
+          "columnName": "sale_tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates ",
+          "columnSourceOriginalColumn": "tax_rate_percentage "
+        }
+      },
+      "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\nact_product_categories.* FROM act_product_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_product_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_product_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_product_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_product_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id"
+    },
+    "act_vw_product_purchase_details": {
+      "viewName": "act_vw_product_purchase_details",
+      "viewColumns": {
+        "purchase_uom_name": {
+          "columnName": "purchase_uom_name",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency"
+              "propertyValue": "Purchase UOM"
             }
           },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "taxing_scheme_name": {
+          "columnName": "taxing_scheme_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes",
+          "columnSourceOriginalColumn": "taxing_scheme_name"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "product_purchase_detail_id": {
+          "columnName": "product_purchase_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "minimum_order_quantity": {
+          "columnName": "minimum_order_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity"
+        },
+        "minimum_order_quantity_uom_id": {
+          "columnName": "minimum_order_quantity_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity_uom_id"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "purchase_uom_id": {
+          "columnName": "purchase_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "purchase_uom_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "product_purchase_detail_name": {
+          "columnName": "product_purchase_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "minimum_order_uom_name": {
+          "columnName": "minimum_order_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Min Order UOM"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        }
+      },
+      "viewQuery": "SELECT act_product_uoms.uom_name AS purchase_uom_name, order_uoms.uom_name AS minimum_order_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+    },
+    "act_vw_product_sale_details": {
+      "viewName": "act_vw_product_sale_details",
+      "viewColumns": {
+        "sale_uom_name": {
+          "columnName": "sale_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale UOM"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "taxing_scheme_name": {
+          "columnName": "taxing_scheme_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes",
+          "columnSourceOriginalColumn": "taxing_scheme_name"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "product_sale_detail_id": {
+          "columnName": "product_sale_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "sale_uom_id": {
+          "columnName": "sale_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "sale_uom_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "product_sale_detail_name": {
+          "columnName": "product_sale_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT act_product_uoms.uom_name AS sale_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_sale_details.* FROM act_product_sale_details\nLEFT JOIN act_product_uoms ON act_product_sale_details.sale_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
+    },
+    "act_vw_product_stock_details": {
+      "viewName": "act_vw_product_stock_details",
+      "viewColumns": {
+        "stock_uom_name": {
+          "columnName": "stock_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock UOM"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "product_stock_detail_id": {
+          "columnName": "product_stock_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_stock_detail_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "maximum_stock_quantity": {
+          "columnName": "maximum_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "maximum_stock_quantity"
+        },
+        "maximum_stock_uom_id": {
+          "columnName": "maximum_stock_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "maximum_stock_uom_id"
+        },
+        "minimum_stock_quantity": {
+          "columnName": "minimum_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "minimum_stock_quantity"
+        },
+        "minimum_stock_uom_id": {
+          "columnName": "minimum_stock_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "minimum_stock_uom_id"
+        },
+        "reorder_level_quantity": {
+          "columnName": "reorder_level_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "reorder_level_quantity"
+        },
+        "reorder_level_uom_id": {
+          "columnName": "reorder_level_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "reorder_level_uom_id"
+        },
+        "stock_uom_id": {
+          "columnName": "stock_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "stock_uom_id"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "product_stock_detail_name": {
+          "columnName": "product_stock_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_stock_detail_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "minimum_stock_uom_name": {
+          "columnName": "minimum_stock_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Minimum Stock UOM"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "maximum_stock_uom_name": {
+          "columnName": "maximum_stock_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Maximum Stock UOM"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "reorder_level_uom_name": {
+          "columnName": "reorder_level_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Reorder Level UOM"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        }
+      },
+      "viewQuery": "SELECT act_product_uoms.uom_name AS stock_uom_name, \nmin_uoms.uom_name AS minimum_stock_uom_name,\nmax_uoms.uom_name AS maximum_stock_uom_name,\nreorder_uoms.uom_name AS reorder_level_uom_name,\nact_product_stock_details.* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
+    },
+    "act_vw_products": {
+      "viewName": "act_vw_products",
+      "viewColumns": {
+        "product_category_name": {
+          "columnName": "product_category_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_name"
+        },
+        "product_category_tree": {
+          "columnName": "product_category_tree",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_tree"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "home_delivery_available": {
+          "columnName": "home_delivery_available",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "home_delivery_available"
+        },
+        "pickup_delivery_available": {
+          "columnName": "pickup_delivery_available",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "pickup_delivery_available"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_category_id": {
+          "columnName": "product_category_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_category_id"
+        },
+        "product_details": {
+          "columnName": "product_details",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_details"
+        },
+        "product_full_description": {
+          "columnName": "product_full_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_full_description"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_image_media_id": {
+          "columnName": "product_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_image_media_id"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_quick_description": {
+          "columnName": "product_quick_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_quick_description"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_tags": {
+          "columnName": "product_tags",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_tags"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
+        "waitlist_quantity": {
+          "columnName": "waitlist_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "waitlist_quantity"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "hsn_code"
+        },
+        "brand_name": {
+          "columnName": "brand_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "brand_name"
+        }
+      },
+      "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,act_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id"
+    },
+    "act_vw_suppliers": {
+      "viewName": "act_vw_suppliers",
+      "viewColumns": {
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_suppliers",
+          "columnSourceOriginalColumn": "supplier_id"
+        },
+        "supplier_type": {
+          "columnName": "supplier_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_suppliers",
+          "columnSourceOriginalColumn": "supplier_type"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "ledger_account_id"
+        },
+        "party_details": {
+          "columnName": "party_details",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_details"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_name"
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "addresses"
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "email_addresses"
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "fax_numbers"
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "phone_numbers"
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "websites"
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "bank_accounts"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "currency_code"
         },
         "party_image_media_id": {
           "columnName": "party_image_media_id",
           "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Party Image"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": ""
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_image_media_id"
+        },
+        "is_customer": {
+          "columnName": "is_customer",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_customer"
+        },
+        "is_supplier": {
+          "columnName": "is_supplier",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_supplier"
+        },
+        "is_employee": {
+          "columnName": "is_employee",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "is_employee"
         }
       },
       "viewQuery": "SELECT act_suppliers.supplier_id,act_suppliers.supplier_type, act_parties.* FROM act_suppliers LEFT JOIN act_parties ON act_suppliers.party_id = act_parties.party_id"
     },
     "act_vw_transaction_credit_entries": {
       "viewName": "act_vw_transaction_credit_entries",
-      "viewColumns": {},
+      "viewColumns": {
+        "credit_ledger_account_id": {
+          "columnName": "credit_ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "credit_ledger_account_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "credit_amount": {
+          "columnName": "credit_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Credit Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum"
+        }
+      },
       "viewQuery": "SELECT SUM(entry_amount) as credit_amount, credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
     },
     "act_vw_transaction_debit_entries": {
       "viewName": "act_vw_transaction_debit_entries",
-      "viewColumns": {},
+      "viewColumns": {
+        "debit_ledger_account_id": {
+          "columnName": "debit_ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "debit_ledger_account_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "debit_amount": {
+          "columnName": "debit_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Debit Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum"
+        }
+      },
       "viewQuery": "SELECT SUM(entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
-    },
-    "act_vw_product_barcode_links": {
-      "viewName": "act_vw_product_barcode_links",
-      "viewColumns": {},
-      "viewQuery": "SELECT \nact_product_barcodes.product_barcode_name,act_product_barcodes.barcode_value,\nact_product_purchase_details.product_purchase_detail_name ,\nact_product_sale_details.product_sale_detail_name ,\nact_product_prices.product_price_name,act_product_prices.price_sale ,act_product_prices.price_purchase,act_product_prices.price_mrp,\nact_product_barcode_links.* FROM act_product_barcode_links LEFT JOIN act_product_barcodes ON act_product_barcode_links.product_barcode_id = act_product_barcodes.product_barcode_id LEFT JOIN act_product_purchase_details ON act_product_barcode_links.product_purchase_detail_id = act_product_purchase_details.product_purchase_detail_id LEFT JOIN act_product_sale_details ON act_product_barcode_links.product_sale_detail_id= act_product_sale_details.product_sale_detail_id LEFT JOIN act_product_prices ON act_product_barcode_links.product_price_id= act_product_prices.product_price_id"
-    },
-    "act_vw_product_purchase_details": {
-      "viewName": "act_vw_product_purchase_details",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_product_uoms.uom_name AS purchase_uom_name, order_uoms .uom_name AS minimum_order_quantity_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
-    },
-    "act_vw_product_sale_details": {
-      "viewName": "act_vw_product_sale_details",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_product_uoms.uom_name AS sale_uom_name\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_sale_details.* FROM act_product_sale_details\nLEFT JOIN act_product_uoms ON act_product_sale_details.sale_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
-    },
-    "act_vw_product_stock_details": {
-      "viewName": "act_vw_product_stock_details",
-      "viewColumns": {},
-      "viewQuery": "SELECT act_product_uoms.uom_name AS stock_uom_name, \nmin_uoms.uom_name AS minimum_stock_uom_name,\nmax_uoms.uom_name AS maximum_stock_uom_name,\nreorder_uoms.uom_name AS reorder_level_uom_name,\nact_product_stock_details .* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
     }
   },
   "relationships": [
@@ -24240,4 +25533,4 @@ export const dataDictionaryJson = {
       "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     }
   }
-}
+};

@@ -106,8 +106,8 @@ export class AcDDSelectStatement {
     return instance;
   }
 
-  addCondition({ columnName, operator, value }: { columnName: string, operator: string, value: any }): this {
-    this.groupStack[this.groupStack.length - 1].addCondition({ columnName, operator, value });
+  addCondition({ key, operator, value }: { key: string, operator: string, value: any }): this {
+    this.groupStack[this.groupStack.length - 1].addCondition({ key, operator, value });
     return this;
   }
 
@@ -181,7 +181,7 @@ export class AcDDSelectStatement {
 
   setSqlCondition({ acDDCondition }: { acDDCondition: AcDDCondition }): this {
     let parameterName = "";
-    const colName = acDDCondition.columnName;
+    const colName = acDDCondition.key;
 
     const newParam = (value: any) => {
       const key = `@parameter${Object.keys(this.parameters).length}`;
@@ -274,11 +274,11 @@ export class AcDDSelectStatement {
   }): this {
     const tableColumn: AcDDTableColumn = AcDataDictionary.getTableColumn({
       tableName: this.tableName,
-      columnName: acDDCondition.columnName,
+      columnName: acDDCondition.key,
       dataDictionaryName: this.dataDictionaryName
     })!;
 
-    const colCheck = `LOWER(${acDDCondition.columnName})`;
+    const colCheck = `LOWER(${acDDCondition.key})`;
     const likeValue = acDDCondition.value.toLowerCase();
     const jsonCol = "value";
     const parts: string[] = [];

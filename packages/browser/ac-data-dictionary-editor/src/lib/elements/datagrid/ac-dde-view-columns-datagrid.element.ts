@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
-import { AcDDViewColumn } from "@autocode-ts/ac-data-dictionary";
+import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { AcDDViewColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-select-column-type-input.element";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
@@ -46,8 +46,13 @@ export class AcDDEViewColumnsDatagrid {
           editorApi: this.editorApi
         }, width: 50, maxWidth: 50, minWidth: 50
       },
-      { 'field': AcDDViewColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
-      { 'field': AcDDViewColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true,allowFilter:true },
+      { 'field': AcDDViewColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcDDViewColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcDDViewColumn.KeyColumnSource, 'title': 'Column Source', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcDDViewColumn.KeyColumnSourceName, 'title': 'Source Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcDDViewColumn.KeyColumnSourceOriginalColumn, 'title': 'Original Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcEnumDDColumnProperty.ColumnTitle, 'title': 'Column Title', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
+      // { 'field': AcDDViewColumn.KeyColumnSource, 'title': 'Original Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {
       datagridApi: this.datagridApi,
@@ -68,6 +73,11 @@ export class AcDDEViewColumnsDatagrid {
     this.datagridApi.on({
       event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
         this.editorApi.dataStorage.deleteViewColumn({ columnId: args.datagridRow.data[AcEnumDDEViewColumn.ColumnId] });
+      }
+    });
+    this.datagridApi.on({
+      event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
+        this.editorApi.dataStorage.setTableColumnProperties(args.datagridCell.datagridRow.data);
       }
     });
 
