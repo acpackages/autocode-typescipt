@@ -1,4 +1,4 @@
-import { AcDatagridColumn, AcEnumDatagridHook, IAcDatagridActiveRowChangeEvent, IAcDatagridCellHookArgs, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent } from "../_ac-datagrid.export";
+import { AC_DATAGRID_ATTRIBUTE, AcDatagridColumn, AcEnumDatagridHook, IAcDatagridActiveRowChangeEvent, IAcDatagridCellHookArgs, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent } from "../_ac-datagrid.export";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-event.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
@@ -15,10 +15,9 @@ export class AcDatagridEventHandler {
   }
 
   handleCellBlur({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
-    if (datagridCell.isFocused) {
-      datagridCell.isFocused = false;
-      if (datagridCell.instance) {
-        datagridCell.instance.blur();
+    if (datagridCell.isActive) {
+      if (datagridCell.element) {
+        datagridCell.element.blur();
       }
       const eventArgs: IAcDatagridCellEvent = {
         datagridApi: this.datagridApi,
@@ -66,11 +65,8 @@ export class AcDatagridEventHandler {
   }
 
   handleCellFocus({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
-    if (!datagridCell.isFocused) {
-      datagridCell.isFocused = true;
-      if (datagridCell.instance) {
-        datagridCell.instance.focus();
-      }
+    if (!datagridCell.isActive) {
+      this.datagridApi.setActiveCell({datagridCell});
       const eventArgs: IAcDatagridCellEvent = {
         datagridApi: this.datagridApi,
         datagridCell: datagridCell,
@@ -142,6 +138,15 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
+    if (datagridCell.element) {
+      datagridCell.element.setAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridCellHover, 'true');
+    }
+    if (datagridCell.datagridColumn.headerCellElement) {
+      datagridCell.datagridColumn.headerCellElement.setAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridColumnHover, 'true');
+    }
+    if (datagridCell.datagridRow.element) {
+      datagridCell.datagridRow.element.setAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridRowHover, 'true');
+    }
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellHover, args: hoverEventArgs });
   }
 
@@ -151,6 +156,15 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
+    if (datagridCell.element) {
+      datagridCell.element.removeAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridCellHover);
+    }
+    if (datagridCell.datagridColumn.headerCellElement) {
+      datagridCell.datagridColumn.headerCellElement.removeAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridColumnHover);
+    }
+    if (datagridCell.datagridRow.element) {
+      datagridCell.datagridRow.element.removeAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridRowHover);
+    }
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellMouseLeave, args: eventArgs });
   }
 
@@ -368,6 +382,7 @@ export class AcDatagridEventHandler {
       event: event
     };
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowKeyDown, args: eventArgs });
+
   }
 
   handleRowKeyPress({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
@@ -487,13 +502,13 @@ export class AcDatagridEventHandler {
   handleSortOrderChange() {
     const eventArgs: IAcDatagridSortOrderChangeEvent = {
       datagridApi: this.datagridApi,
-      sortOrder: this.datagridApi.sortOrder!,
+      sortOrder: this.datagridApi.dataManager.sortOrder!,
       event: event
     };
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.SortOrderChange, args: eventArgs });
   }
 
-  private notifyStateChange(){
+  private notifyStateChange() {
     this.datagridApi.datagridState.refresh();
     const eventArgs: IAcDatagridStateChangeEvent = {
       datagridApi: this.datagridApi,
@@ -502,5 +517,6 @@ export class AcDatagridEventHandler {
     };
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.StateChange, args: eventArgs });
   }
+
 
 }

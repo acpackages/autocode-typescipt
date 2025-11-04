@@ -7,9 +7,28 @@ import { AcDatagridDefaultColumnConfig } from "../consts/ac-datagrid-default-col
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { IAcDatagridColumnHookArgs } from "../interfaces/hook-args/ac-datagrid-column-hook-args.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_ATTRIBUTE } from "../consts/ac-datagrid-attribute.const";
 
 
 export class AcDatagridColumn {
+  private _isActive:boolean = false;
+    get isActive():boolean{
+      return this._isActive;
+    }
+    set isActive(value:boolean){
+      if(value!=this._isActive){
+        this._isActive = value;
+        if(this.headerCellElement){
+          if(value){
+            this.headerCellElement.setAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridColumnActive, 'true');
+          }
+          else{
+            this.headerCellElement.removeAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridColumnActive);
+          }
+        }
+      }
+    }
+
   acColumnId: string = Autocode.uuid();
   columnDefinition!: IAcDatagridColumnDefinition;
   datagridApi!: AcDatagridApi;
@@ -17,7 +36,7 @@ export class AcDatagridColumn {
   events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   filterGroup: AcFilterGroup = new AcFilterGroup();
-  headerCellInstance?: AcDatagridHeaderCellElement;
+  headerCellElement?: AcDatagridHeaderCellElement;
   hooks: AcHooks = new AcHooks();
   index: number = -1;
   sortOrder: AcEnumSortOrder = AcEnumSortOrder.None;
@@ -37,7 +56,15 @@ export class AcDatagridColumn {
   get columnKey(): string {
     return this.columnDefinition.field;
   }
-
+  get isFirst(): boolean {
+    return this.getPreviousColumn() == undefined;
+  }
+  get isLast(): boolean {
+    return this.getNextColumn() == undefined;
+  }
+  get isVisible(): boolean {
+    return this.columnDefinition.visible != false;
+  }
   get title(): string {
     return this.columnDefinition.title ?? this.columnDefinition.field;
   }
@@ -57,13 +84,54 @@ export class AcDatagridColumn {
 
   constructor({ columnDefinition, datagridApi, index = -1, width = AcDatagridDefaultColumnConfig.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {
     this.columnDefinition = columnDefinition;
+    this.width = width;
+    if (columnDefinition.width) {
+      this.width = columnDefinition.width;
+    }
     this.datagridApi = datagridApi;
     this.index = index;
-    this.width = width;
   }
 
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.events.subscribe({event,callback});
+  getNextColumn():AcDatagridColumn | undefined{
+    let column: AcDatagridColumn | undefined;
+    for (const col of this.datagridApi.datagridColumns) {
+      if (col.isVisible) {
+        if (column) {
+          if (col.index < column.index && col.index > this.index) {
+            column = col;
+          }
+        }
+        else {
+          if (col.index > this.index) {
+            column = col;
+          }
+        }
+      }
+    }
+    return column;
+  }
+
+  getPreviousColumn():AcDatagridColumn | undefined {
+    let column: AcDatagridColumn | undefined;
+    for (const col of this.datagridApi.datagridColumns) {
+      if (col.isVisible) {
+        if (column) {
+          if (col.index > column.index && col.index < this.index) {
+            column = col;
+          }
+        }
+        else {
+          if ((col.index < this.index) && col.isVisible) {
+            column = col;
+          }
+        }
+      }
+    }
+    return column;
+  }
+
+  on({ event, callback }: { event: string, callback: Function }): string {
+    return this.events.subscribe({ event, callback });
   }
 
 }

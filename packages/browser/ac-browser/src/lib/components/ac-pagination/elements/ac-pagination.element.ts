@@ -1,70 +1,141 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+import { AcDataManager, AcEnumDataManagerEvent } from "@autocode-ts/autocode";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AC_PAGINATION_TAG } from "../_ac-pagination.export";
+import { AC_PAGINATION_TAG, AcEnumPaginationEvent, AcPaginationDisplayedRows } from "../_ac-pagination.export";
 import { AcPaginationCssClassName } from "../consts/ac-pagination-css-class-name.const";
-import { AcPaginationApi } from "../core/ac-pagination-api";
-import { AcPageDisplayedRowsLabel } from "./ac-page-displayed-rows-label.element";
-import { AcPageNavigationButtons } from "./ac-page-navigation-buttons.element";
-import { AcPageSizeDropdown } from "./ac-page-size-dropdown.element";
+import { IAcPaginationPageChangeEvent, IAcPaginationPageSizeChangeEvent } from "../interfaces/_interfaces.export";
+import { AcPaginationNavigationButtons } from "./ac-pagination-navigation-buttons.element";
+import { AcPaginationSizeDropdown } from "./ac-pagination-size-dropdown.element";
 
-export class AcPagination extends AcElementBase{
-  get activePage():number{
-    return this.paginationApi.activePage;
+export class AcPagination extends AcElementBase {
+  private _activePage: number = 0;
+  get activePage(): number {
+    return this._activePage;
   }
-  set activePage(value:number){
-    this.paginationApi.activePage = value;
-  }
+  set activePage(value: number) {
+    if (value != this._activePage) {
+      const previousActivePage: number = this._activePage;
+      this._activePage = value;
+      this.updateDisplayedRows();
+      const eventParams: IAcPaginationPageChangeEvent = {
+        totalPages: this.totalPages,
+        activePage: this.activePage,
+        previousActivePage: previousActivePage,
+        startRow: this.startRow,
+        endRow: this.endRow,
+        pagination: this
+      };
+      this.events.execute({ event: AcEnumPaginationEvent.PageChange, args: eventParams });
+    }
 
-  get activePageSize():number{
-    return this.paginationApi.activePageSize;
-  }
-  set activePageSize(value:number){
-    this.paginationApi.activePageSize = value;
-  }
-
-  get endRow():number{
-    return this.paginationApi.endRow;
-  }
-
-  get pageSizes():number[]{
-    return this.paginationApi.pageSizes;
-  }
-
-  get startRow():number{
-    return this.paginationApi.startRow;
   }
 
-  get totalPages():number{
-    return this.paginationApi.totalPages;
+  private _activePageSize: number = 50;
+  get activePageSize(): number {
+    return this._activePageSize;
+  }
+  set activePageSize(value: number) {
+    if (value != this._activePageSize) {
+      const previousPageSize: number = this._activePageSize;
+      this._activePageSize = value;
+      const eventParams: IAcPaginationPageSizeChangeEvent = {
+        previousPageSize: previousPageSize,
+        pageSize: value,
+        pagination: this
+      };
+      this.events.execute({ event: AcEnumPaginationEvent.PageChange, args: eventParams });
+      const newPageNo = Math.ceil((this.startRow) / value);
+      if (newPageNo != this.activePage) {
+        this.activePage = newPageNo;
+      }
+      else {
+        if (this.dataManager) {
+          this.updateDisplayedRows();
+        }
+      }
+    }
   }
 
-  get totalRows():number{
-    return this.paginationApi.totalRows;
-  }
-  set totalRows(value:number){
-    this.paginationApi.totalRows = value;
-  }
-  element:HTMLElement = document.createElement('div');
-  pageDisplayedRowsLabel!:AcPageDisplayedRowsLabel;
-  pageNavigationButtons!:AcPageNavigationButtons;
-  pageSizeDropdown!:AcPageSizeDropdown;
-  paginationApi = new AcPaginationApi({pagination:this});
+  private dataManager?: AcDataManager;
 
-  override connectedCallback(){
+  private _totalRows: number = 0;
+  get totalRows(): number {
+    return this._totalRows;
+  }
+  set totalRows(value: number) {
+    if (value != this._totalRows) {
+      this._totalRows = value;
+      this.updateDisplayedRows();
+    }
+  }
+
+  element: HTMLElement = document.createElement('div');
+  displayedRows: AcPaginationDisplayedRows = new AcPaginationDisplayedRows();
+  navigationButtons: AcPaginationNavigationButtons = new AcPaginationNavigationButtons();
+  sizeDropdown: AcPaginationSizeDropdown = new AcPaginationSizeDropdown();
+
+  endRow: number = 0;
+  pageSizes: number[] = [5, 20, 50, 100];
+  startRow: number = 0;
+  totalPages: number = 1;
+
+  bindDataManager({ dataManager }: { dataManager: AcDataManager }) {
+    this.dataManager = dataManager;
+    dataManager.on({
+      event: AcEnumDataManagerEvent.TotalRowsChange, callback: () => {
+        this.totalRows = dataManager.totalRows;
+      }
+    });
+  }
+
+  override connectedCallback() {
     super.connectedCallback();
-    this.pageDisplayedRowsLabel = new AcPageDisplayedRowsLabel({paginationApi:this.paginationApi});
-    this.pageNavigationButtons = new AcPageNavigationButtons({paginationApi:this.paginationApi});
-    this.pageSizeDropdown = new AcPageSizeDropdown({paginationApi:this.paginationApi});
+    this.displayedRows.pagination = this;
+    this.navigationButtons.pagination = this;
+    this.sizeDropdown.pagination = this;
     this.initElement();
   }
 
   initElement() {
-    acAddClassToElement({class_:AcPaginationCssClassName.acPagination,element:this});
-    this.append(this.pageSizeDropdown.element);
-    this.append(this.pageDisplayedRowsLabel.element);
-    this.append(this.pageNavigationButtons.element);
+    acAddClassToElement({ class_: AcPaginationCssClassName.acPagination, element: this });
+    this.innerHTML = "";
+    this.append(this.sizeDropdown);
+    this.append(this.displayedRows);
+    this.append(this.navigationButtons);
+  }
+
+  updateDisplayedRows() {
+    const oldStart = this.startRow;
+    const oldEnd = this.endRow;
+    const oldTotal = this.totalPages;
+    if (this.totalRows > 0) {
+      if (this.activePage == 0) {
+        this._activePage = 1;
+      }
+      this.startRow = (this.activePageSize * (this.activePage - 1)) + 1;
+      this.endRow = (this.startRow + this.activePageSize) - 1;
+      if (this.endRow > this.totalRows) {
+        this.endRow = this.totalRows;
+      }
+      this.totalPages = Math.ceil(this.totalRows / this.activePageSize);
+    }
+    else {
+      this.startRow = this.endRow = this.totalPages = this._activePage = 0;
+    }
+    if (this.startRow != oldStart || this.endRow != oldEnd || this.totalPages != oldTotal) {
+      if (this.dataManager) {
+        this.dataManager.setDisplayedRows({ startIndex: this.startRow - 1, rowsCount: this.activePageSize });
+      }
+    }
+    if (this.displayedRows) {
+      this.displayedRows.render();
+    }
+    if (this.navigationButtons) {
+      this.navigationButtons.renderPageLabel();
+    }
   }
 
 }
 
-acRegisterCustomElement({tag:AC_PAGINATION_TAG.pagination,type:AcPagination});
+acRegisterCustomElement({ tag: AC_PAGINATION_TAG.pagination, type: AcPagination });

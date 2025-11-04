@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -37,6 +38,8 @@ export function acAnimateElement(
   requestAnimationFrame(step);
 }
 
+
+
 export function acCopyElementStyles({ fromElement, toElement }: { fromElement: HTMLElement, toElement: HTMLElement }) {
   const computed: any = window.getComputedStyle(fromElement);
   for (const key of computed) {
@@ -60,14 +63,30 @@ export function acElementHasParentTag({ element, tag }: { element: HTMLElement, 
   return false;
 }
 
-export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({name,event}:{name:string,event:Event})=>void }) {
+export function acLinkElementScroll({ source, destination,both = true }: { source: HTMLElement, destination: HTMLElement,both?:boolean }) {
+  source.addEventListener('wheel', e => {
+    source.scrollLeft += e.deltaX;
+    destination.scrollLeft = source.scrollLeft;
+  }, { passive: false });
+
+  source.addEventListener('scroll', () => {
+    if (destination.scrollLeft !== source.scrollLeft)
+      destination.scrollLeft = source.scrollLeft;
+  });
+
+  if(both){
+    acLinkElementScroll({source:destination,destination:source,both:false});
+  }
+}
+
+export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({ name, event }: { name: string, event: Event }) => void }) {
   const proto = HTMLElement.prototype as any;
 
   for (const key in proto) {
     if (key.startsWith("on")) {
       const eventName = key.slice(2);
       element.addEventListener(eventName, (e) => {
-        callback({name:eventName,event:e});
+        callback({ name: eventName, event: e });
       });
     }
   }
@@ -164,6 +183,52 @@ export function acRemoveClassFromElement({ class_, element }: { class_: string, 
   const classList: string[] = class_.trim().split(" ")
   for (const className of classList) {
     element.classList.remove(className);
+  }
+}
+
+export function acScrollIntoViewIfHidden({element,behavior = 'smooth'}:{element: HTMLElement, behavior?: ScrollBehavior}) {
+  // Find nearest scrollable ancestor
+  let parent = element.parentElement;
+  while (parent) {
+    const style = getComputedStyle(parent);
+    const overflowY = style.overflowY;
+    const overflowX = style.overflowX;
+    const canScrollY = overflowY === 'auto' || overflowY === 'scroll';
+    const canScrollX = overflowX === 'auto' || overflowX === 'scroll';
+
+    if (canScrollY || canScrollX) {
+      const elRect = element.getBoundingClientRect();
+      const parentRect = parent.getBoundingClientRect();
+
+      const fullyVisible =
+        elRect.top >= parentRect.top &&
+        elRect.bottom <= parentRect.bottom &&
+        elRect.left >= parentRect.left &&
+        elRect.right <= parentRect.right;
+
+      if (!fullyVisible) {
+        element.scrollIntoView({ behavior, block: 'nearest', inline: 'nearest' });
+      }
+
+      return; // Stop at the first scrollable ancestor
+    }
+
+    parent = parent.parentElement;
+  }
+
+  // No scrollable ancestor found — fallback to window
+  const rect = element.getBoundingClientRect();
+  const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+  const viewWidth = window.innerWidth || document.documentElement.clientWidth;
+
+  const fullyVisible =
+    rect.top >= 0 &&
+    rect.bottom <= viewHeight &&
+    rect.left >= 0 &&
+    rect.right <= viewWidth;
+
+  if (!fullyVisible) {
+    element.scrollIntoView({ behavior, block: 'nearest', inline: 'nearest' });
   }
 }
 

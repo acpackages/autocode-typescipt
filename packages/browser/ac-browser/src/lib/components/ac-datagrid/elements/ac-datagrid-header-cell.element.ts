@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import { AcDatagridApi } from "../core/ac-datagrid-api";
-import { acAddClassToElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcEnumSortOrder, AcFilter } from "@autocode-ts/autocode";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
@@ -13,54 +13,27 @@ import { IAcDatagridColumnSortChangeEvent } from "../interfaces/event-args/ac-da
 import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-column-position-change-event.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
 import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
+import { AcElementBase } from "../../../core/ac-element-base";
 
 
-export class AcDatagridHeaderCellElement {
-  cellContainer: HTMLElement = document.createElement('div');
-  private datagridApi: AcDatagridApi;
-  datagridColumn!: AcDatagridColumn;
-  draggablePlaceholder?: HTMLElement;
-  element: HTMLElement = document.createElement('div');
-  filterElement: HTMLElement = document.createElement('button');
-  isResizing: boolean = false;
-  leftContainer: HTMLElement = document.createElement('div');
-  resizeElement: HTMLElement = document.createElement('span');
-  rightContainer: HTMLElement = document.createElement('div');
-  sortElement: HTMLElement = document.createElement('button');
-  startWidth: number = 0;
-  startX = 0;
-  swappingColumpPosition: boolean = false;
-  titleElement: HTMLElement = document.createElement('div');
-
-  constructor({ datagridApi, datagridColumn }: { datagridApi: AcDatagridApi, datagridColumn: AcDatagridColumn }) {
-    this.datagridColumn = datagridColumn;
-    this.datagridApi = datagridApi;
-    this.datagridColumn.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnSortChange, callback: (event: IAcDatagridColumnSortChangeEvent) => {
-        this.renderSort();
-      }
-    });
-    this.datagridColumn.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnFilterChange, callback: (event: IAcDatagridColumnFilterChangeEvent) => {
-        this.renderFilter();
-      }
-    });
-    this.datagridColumn.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
-        this.setCellWidth();
-      }
-    });
-    this.datagridApi.on({
+export class AcDatagridHeaderCellElement extends AcElementBase {
+  private _datagridApi!: AcDatagridApi;
+  get datagridApi():AcDatagridApi{
+    return this._datagridApi;
+  }
+  set datagridApi(value:AcDatagridApi){
+    this._datagridApi = value;
+    value.on({
       event: AcEnumDatagridEvent.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
         if (event.datagridColumn.acColumnId == this.datagridColumn.acColumnId && !this.swappingColumpPosition) {
           let element1: HTMLElement | undefined;
           let element2: HTMLElement | undefined;
           for (const headerCell of this.datagridApi.datagrid.datagridHeader.datagridHeaderCells) {
             if (headerCell.datagridColumn.acColumnId == event.datagridColumn.acColumnId) {
-              element1 = headerCell.element;
+              element1 = headerCell;
             }
             else if (headerCell.datagridColumn.acColumnId == event.oldDatagridColumn.acColumnId) {
-              element2 = headerCell.element;
+              element2 = headerCell;
             }
           }
           if (element1 && element2) {
@@ -73,20 +46,63 @@ export class AcDatagridHeaderCellElement {
         }
       }
     });
-    this.initElement();
   }
 
-  initElement() {
-    this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
+  private _datagridColumn!: AcDatagridColumn;
+  get datagridColumn(): AcDatagridColumn {
+    return this._datagridColumn;
+  }
+  set datagridColumn(value: AcDatagridColumn) {
+    this._datagridColumn = value;
+    value.hooks.subscribe({
+      hook: AcEnumDatagridHook.ColumnSortChange, callback: (event: IAcDatagridColumnSortChangeEvent) => {
+        this.renderSort();
+      }
+    });
+    value.hooks.subscribe({
+      hook: AcEnumDatagridHook.ColumnFilterChange, callback: (event: IAcDatagridColumnFilterChangeEvent) => {
+        this.renderFilter();
+      }
+    });
+    value.hooks.subscribe({
+      hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
+        this.setCellWidth();
+      }
+    });
+  }
+
+  cellContainer: HTMLElement = document.createElement('div');
+  draggablePlaceholder?: HTMLElement;
+  filterElement: HTMLElement = document.createElement('button');
+  isResizing: boolean = false;
+  leftContainer: HTMLElement = document.createElement('div');
+  resizeElement: HTMLElement = document.createElement('span');
+  rightContainer: HTMLElement = document.createElement('div');
+  sortElement: HTMLElement = document.createElement('button');
+  startWidth: number = 0;
+  startX = 0;
+  swappingColumpPosition: boolean = false;
+  titleElement: HTMLElement = document.createElement('div');
+
+  constructor(){
+    super();
+
+    this.style.display = "flex";
+    this.registerListeners();
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellLeftContainer, element: this.leftContainer });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellRightContainer, element: this.rightContainer });
-    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCell, element: this.element });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCell, element: this });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellContainer, element: this.cellContainer });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellTitle, element: this.titleElement });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellFilter, element: this.filterElement });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellSort, element: this.sortElement });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellResize, element: this.resizeElement });
-    this.element.append(this.cellContainer);
+    this.append(this.cellContainer);
     // this.cellContainer.setAttribute('draggable', 'true');
     this.cellContainer.append(this.leftContainer);
     this.cellContainer.append(this.rightContainer);
@@ -103,7 +119,6 @@ export class AcDatagridHeaderCellElement {
     this.renderFilter();
     this.renderSort();
     this.renderTitle();
-    this.registerListeners();
     this.setCellWidth();
   }
 
@@ -190,7 +205,7 @@ export class AcDatagridHeaderCellElement {
     //   };
     //   document.addEventListener('dragend', stopDragging);
     // });
-    // this.element.addEventListener('dragover', (event: DragEvent) => {
+    // this.addEventListener('dragover', (event: DragEvent) => {
     //   event.preventDefault();
     //   if (this.datagridColumn && this.datagridApi.draggingColumn?.acColumnId !== this.datagridColumn.acColumnId && !this.swappingColumpPosition) {
     //     this.datagridApi.updateColumnPosition({ datagidColumn: this.datagridApi.draggingColumn!, oldDatagridColumn: this.datagridColumn });
@@ -224,6 +239,11 @@ export class AcDatagridHeaderCellElement {
   }
 
   setCellWidth() {
-    this.element.style.width = this.datagridColumn.width + "px";
+    const width = this.datagridColumn.width;
+    this.style.width = `${width}px`;
+    this.style.maxWidth = `${width}px`;
+    this.style.minWidth = `${width}px`;
   }
 }
+
+acRegisterCustomElement({tag:'ac-datagrid-header-cell',type:AcDatagridHeaderCellElement});

@@ -3,8 +3,6 @@ import { Autocode } from "@autocode-ts/autocode";
 import { IAcScrollableOptions } from "../interfaces/ac-scrollable-options.inteface";
 import { IAcScrollingElement } from "../interfaces/ac-scrolling-element.interface";
 import { AcScrollableAttributeName } from "../consts/ac-scrollable-attribute-name.const";
-import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AC_SCROLLABLE_TAG } from "../_ac-scrollable.export";
 
 export class AcScrollable {
   private element: HTMLElement;
@@ -256,4 +254,65 @@ export class AcScrollable {
       this.render();
     }
   }
+
+    /**
+   * Clears all elements from DOM and cache.
+   * Also unobserves everything to free memory.
+   */
+  clearAll() {
+    // Stop observers
+    if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
+
+    // Remove all elements from DOM
+    this.element.innerHTML = "";
+
+    // Clear cache
+    this.renderedElements = [];
+    this.scrollingElements = [];
+
+    this.isRendering = false;
+
+    // Reconnect observers if needed
+    this.initObservers();
+  }
+
+  /**
+   * Pauses detection of new elements and size changes.
+   * Keeps existing scrollable data intact.
+   */
+  pause() {
+    if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
+  }
+
+  /**
+   * Resumes detection of new elements and size changes.
+   * Reconnects all observers.
+   */
+  resume() {
+    this.initObservers();
+  }
+
+  /**
+   * Automatically registers any child elements
+   * that are not yet registered as scrolling elements.
+   */
+  autoRegister() {
+    const children = Array.from(this.element.children) as HTMLElement[];
+    const existingIds = new Set(this.scrollingElements.map(el => el.id));
+
+    children.forEach((el) => {
+      const id = el.getAttribute(AcScrollableAttributeName.acScrollingElementId);
+      if (!id || !existingIds.has(id)) {
+        const height = el.offsetHeight || this.elementHeightFallback;
+        this.registerScrollingElement({ element: el, height });
+      }
+    });
+
+    this.render();
+  }
+
 }

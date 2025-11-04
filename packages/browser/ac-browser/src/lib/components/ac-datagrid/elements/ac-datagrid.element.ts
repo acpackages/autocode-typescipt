@@ -4,29 +4,34 @@ import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
-import { AcDatagridBodyElement } from "./ac-datagrid-body.element";
-import { AcDatagridFooterElement } from "./ac-datagrid-footer.element";
-import { AcDatagridHeaderElement } from "./ac-datagrid-header.element";
+import { AcDatagridBody } from "./ac-datagrid-body.element";
+import { AcDatagridFooter } from "./ac-datagrid-footer.element";
+import { AcDatagridHeader } from "./ac-datagrid-header.element";
 
 export class AcDatagrid extends AcElementBase{
   containerElement:HTMLElement = document.createElement('div');
   datagridApi:AcDatagridApi = new AcDatagridApi({datagrid:this});
-  datagridBody:AcDatagridBodyElement =  new AcDatagridBodyElement({datagridApi:this.datagridApi});
-  datagridFooter:AcDatagridFooterElement =  new AcDatagridFooterElement({datagridApi:this.datagridApi});
-  datagridHeader:AcDatagridHeaderElement =  new AcDatagridHeaderElement({datagridApi:this.datagridApi});
-  element:HTMLElement = document.createElement('div');
+  datagridBody:AcDatagridBody =  new AcDatagridBody();
+  datagridFooter:AcDatagridFooter =  new AcDatagridFooter();
+  datagridHeader:AcDatagridHeader =  new AcDatagridHeader();
 
   constructor(){
     super();
+    this.datagridBody.datagridApi = this.datagridApi;
+    this.datagridFooter.datagridApi = this.datagridApi;
+    this.datagridHeader.datagridApi = this.datagridApi;
+  }
+
+  override connectedCallback(){
+    super.connectedCallback();
     this.style.display = 'contents';
-    this.append(this.element);
-    acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this.element});
+    acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this});
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
-    this.element.append(this.containerElement);
-    this.containerElement.append(this.datagridHeader.element);
-    this.containerElement.append(this.datagridBody.element);
-    this.element.append(this.datagridFooter.element);
-    this.datagridApi.dataSource.getData();
+    this.append(this.containerElement);
+    this.containerElement.append(this.datagridHeader);
+    this.containerElement.append(this.datagridBody);
+    this.append(this.datagridFooter);
+    this.datagridApi.dataManager.getData();
   }
 }
 

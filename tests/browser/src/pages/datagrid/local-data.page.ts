@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
@@ -18,16 +19,18 @@ export class DatagridLocalData extends HTMLElement {
     this.innerHTML = html;
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
+    console.log(this.datagridApi);
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowNumbers});
     // const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
     this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowDragging});
-    this.datagridApi.usePagination = true
+    this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.KeyboardActions});
+    this.datagridApi.usePagination = true;
     // this.datagridApi.allowRowSelect = true;
     this.datagridApi.dataSourceType = AcEnumDataSourceType.Offline;
-    console.log(this.getElementsByClassName("local-datagrid-container"));
-    this.getElementsByClassName("local-datagrid-container")[0].append(this.datagrid.element);
+    // console.log(this.getElementsByClassName("local-datagrid-container"));
+    this.getElementsByClassName("local-datagrid-container")[0].append(this.datagrid);
     this.datagridApi.columnDefinitions = [
-      {field:'customer_id',title:"Id"},
+      {field:'index',title:"SrNo.",width:50},
       {field:'first_name',title:"First Name"},
       {field:'last_name',title:"Last Name"},
       {field:'company',title:"Company"},
@@ -38,8 +41,18 @@ export class DatagridLocalData extends HTMLElement {
       {field:'email',title:"Email"},
       {field:'subscription_date',title:"Subscription Date"},
       {field:'website',title:"Website"},
+      {field:'customer_id',title:"Id"},
     ];
-    this.datagridApi.data = customersData;
+    const multiplier = 1;
+    const data:any[] = [];
+    let index:number = 0;
+    for(let i=0;i<multiplier;i++){
+      for(const row of customersData){
+        index++;
+        data.push({index:index,...row})
+      }
+    }
+    this.datagridApi.data = data;
 
     // setTimeout(() => {
     //   // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
@@ -54,6 +67,6 @@ export class DatagridLocalData extends HTMLElement {
     // }, 2500);
     // }, 2500);
 
-    console.log(this.datagrid);
+    // console.log(this.datagrid);
   }
 }

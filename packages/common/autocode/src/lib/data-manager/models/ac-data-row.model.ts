@@ -3,6 +3,7 @@
 import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
 import { Autocode } from "../../core/autocode";
+import { AcEnumDataManagerEvent } from "../_data-manager.export";
 import { AcDataManager } from "../core/ac-data-manager";
 
 export class AcDataRow {
@@ -45,6 +46,7 @@ export class AcDataRow {
     this.dataManager = dataManager;
     this.index = index;
     this.data = data;
+    this.dataManager.events.execute({event:AcEnumDataManagerEvent.DataRowInstanceCreate,args:{dataRow:this}});
   }
 
   off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {

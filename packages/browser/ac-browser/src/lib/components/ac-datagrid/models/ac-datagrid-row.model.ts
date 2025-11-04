@@ -1,51 +1,72 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents, AcHooks, Autocode } from "@autocode-ts/autocode";
+import { AcDataRow } from "@autocode-ts/autocode";
 import { AcDatagridRowElement } from "../elements/ac-datagrid-row.element";
 import { AcDatagridCell } from "./ac-datagrid-cell.model";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcDatagridColumn } from "./ac-datagrid-column.model";
+import { AC_DATAGRID_ATTRIBUTE } from "../consts/ac-datagrid-attribute.const";
 
-export class AcDatagridRow {
-  acRowId: string = Autocode.uuid();
-  data: any;
+export class AcDatagridRow extends AcDataRow {
+  private _isActive:boolean = false;
+    get isActive():boolean{
+      return this._isActive;
+    }
+    set isActive(value:boolean){
+      if(value!=this._isActive){
+        this._isActive = value;
+        if(this.element){
+          if(value){
+            this.element.setAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridRowActive, 'true');
+          }
+          else{
+            this.element.removeAttribute(AC_DATAGRID_ATTRIBUTE.acDatagridRowActive);
+          }
+        }
+      }
+    }
+
   datagridApi!: AcDatagridApi;
-  events: AcEvents = new AcEvents();
-  extensionData: Record<string, any> = {};
-  hooks: AcHooks = new AcHooks();
-  index: number = -1;
-  displayIndex:number = -1;
-  instance?: AcDatagridRowElement;
+  element?: AcDatagridRowElement;
   datagridCells: AcDatagridCell[] = [];
 
-  get isFirst(): boolean {
-    return this.displayIndex == 0;
+  getCellByColumnIndex({ index }: { index: number }): AcDatagridCell | undefined {
+    const cell: AcDatagridCell | undefined = this.datagridCells.find((cell) => {
+      return cell.columnIndex == index;
+    });
+    return cell;
   }
 
-  get isLast(): boolean {
-    return this.displayIndex == this.datagridApi.displayedDatagridRows.length - 1;
-  }
-
-  constructor({ data = {},datagridApi, index = -1 }: { data?: any,datagridApi:AcDatagridApi, index?: number }) {
-    this.data = data;
-    if(data['__ac_row_id__']){
-      this.acRowId = data['__ac_row_id__'];
-    }
-    this.datagridApi = datagridApi;
-    this.index = index;
-  }
-
-  getCellForColumn({datagridColumn,createIfNotFound=false}:{datagridColumn:AcDatagridColumn,createIfNotFound?:boolean}):AcDatagridCell|undefined{
-    let cell:AcDatagridCell|undefined = this.datagridCells.find((cell)=>{
+  getCellForColumn({ datagridColumn, createIfNotFound = false }: { datagridColumn: AcDatagridColumn, createIfNotFound?: boolean }): AcDatagridCell | undefined {
+    let cell: AcDatagridCell | undefined = this.datagridCells.find((cell) => {
       return cell.acColumnId == datagridColumn.acColumnId;
     });
-    if(cell == undefined && createIfNotFound){
-      cell = new AcDatagridCell({datagridApi:this.datagridApi,datagridColumn:datagridColumn,datagridRow:this});
+    if (cell == undefined && createIfNotFound) {
+      cell = new AcDatagridCell({ datagridApi: this.datagridApi, datagridColumn: datagridColumn, datagridRow: this });
       this.datagridCells.push(cell);
     }
     return cell;
   }
 
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.events.subscribe({event,callback});
+  getFirstColumn():AcDatagridColumn | undefined {
+    let result: AcDatagridColumn | undefined;
+    for (const cell of this.datagridCells) {
+      const column = cell.datagridColumn;
+      if (column.isFirst) {
+        result = column;
+      }
+    }
+    return result;
   }
+
+  getLastColumn():AcDatagridColumn | undefined {
+    let result: AcDatagridColumn | undefined;
+    for (const cell of this.datagridCells) {
+      const column = cell.datagridColumn;
+      if (column.isLast) {
+        result = column;
+      }
+    }
+    return result;
+  }
+
 }

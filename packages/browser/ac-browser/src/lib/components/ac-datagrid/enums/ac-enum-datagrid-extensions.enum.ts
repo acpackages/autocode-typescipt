@@ -4,7 +4,7 @@ export const AcEnumDatagridExtension = {
   ColumnDragging : 'COLUMN_DRAGGING',
   ColumnsCustomizer : 'COLUMNS_CUSTOMIZER',
   DataExportXlsx : 'DATA_EXPORT_XLSX',
-  KeyboardNavigation : 'KEYBOARD_NAVIGATION',
+  KeyboardActions : 'KEYBOARD_ACTIONS',
   RowNumbers : 'ROW_NUMBERS',
   RowDragging : 'ROW_DRAGGING',
   RowSelection : 'ROW_SELECTING',

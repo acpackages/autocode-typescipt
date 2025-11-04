@@ -1,4 +1,4 @@
-export * from './ac-page-displayed-rows-label.element';
-export * from './ac-page-navigation-buttons.element';
-export * from './ac-page-size-dropdown.element';
+export * from './ac-pagination-displayed-rows.element';
+export * from './ac-pagination-navigation-buttons.element';
+export * from './ac-pagination-size-dropdown.element';
 export * from './ac-pagination.element';

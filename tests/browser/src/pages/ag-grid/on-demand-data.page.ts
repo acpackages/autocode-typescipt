@@ -1,8 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs, acInit } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, acInit } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
+import { IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/autocode';
 
 export class AggridOnDemandData extends HTMLElement {
   datagrid!: AcDatagrid;
@@ -45,8 +46,8 @@ export class AggridOnDemandData extends HTMLElement {
       this.datagridApi.dataSourceType = AcEnumDataSourceType.OnDemand;
       this.dataSource = this.datagridApi.dataSource;
       this.dataSource.onDemandFunction = async (args:IAcOnDemandRequestArgs) =>{
-        const pageSize: number = args.rowsCount;
-        const pageNumber: number = (args.startIndex / pageSize) + 1;
+        const pageSize: number = args.rowsCount!;
+        const pageNumber: number = args.pageNumber!;
         const res = await fetch(`http://autocode.localhost/tests/ac-web/mvc-test/api/customers/get?page_size=${pageSize}&page_number=${pageNumber}`);
         if (res.ok) {
           const response = await res.json();

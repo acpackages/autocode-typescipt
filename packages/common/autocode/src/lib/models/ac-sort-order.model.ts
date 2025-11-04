@@ -1,3 +1,4 @@
+import { arrayRemoveByIndex } from "@autocode-ts/ac-extensions";
 import { AcBindJsonProperty } from "../annotations/ac-bind-json-property.annotation";
 import { AcEvents } from "../core/ac-events";
 import { AcEnumSortOrder } from "../enums/ac-enum-sort-order.enum";
@@ -46,6 +47,16 @@ export class AcSortOrder {
 
   on({ event, callback }: { event: string, callback: Function }): string {
     return this.events.subscribe({ event, callback });
+  }
+
+  removeSort({key}:{key:string}){
+    const index = this.sortOrders.findIndex((item:AcSort)=>{
+      return item.key == key;
+    })
+    if(index >= 0){
+      arrayRemoveByIndex(this.sortOrders,index);
+    }
+    this.events.execute({event:'change',args:{ key }});
   }
 
   toJson(): Record<string, any> {

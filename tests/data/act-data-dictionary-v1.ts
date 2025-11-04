@@ -8377,13 +8377,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "home_delivery_available": {
-          "columnName": "home_delivery_available",
+        "delivery_available": {
+          "columnName": "delivery_available",
           "columnType": "YES_NO",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Home Delivery Available"
+              "propertyValue": "Delivery Available"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -8391,8 +8391,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "pickup_delivery_available": {
-          "columnName": "pickup_delivery_available",
+        "pickup_available": {
+          "columnName": "pickup_available",
           "columnType": "YES_NO",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -22306,19 +22306,19 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "accountee_id"
         },
-        "home_delivery_available": {
-          "columnName": "home_delivery_available",
+        "delivery_available": {
+          "columnName": "delivery_available",
           "columnType": "YES_NO",
           "columnSource": "table",
           "columnSourceName": "act_products",
-          "columnSourceOriginalColumn": "home_delivery_available"
+          "columnSourceOriginalColumn": "delivery_available"
         },
-        "pickup_delivery_available": {
-          "columnName": "pickup_delivery_available",
+        "pickup_available": {
+          "columnName": "pickup_available",
           "columnType": "YES_NO",
           "columnSource": "table",
           "columnSourceName": "act_products",
-          "columnSourceOriginalColumn": "pickup_delivery_available"
+          "columnSourceOriginalColumn": "pickup_available"
         },
         "is_active": {
           "columnName": "is_active",

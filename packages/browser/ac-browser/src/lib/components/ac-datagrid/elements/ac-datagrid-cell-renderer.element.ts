@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { IAcDatagridCellRendererElement, IAcDatagridCellElementArgs } from "../_ac-datagrid.export";
+import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
 
-export class AcDatagridCellRendererElement implements IAcDatagridCellRendererElement{
+export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   private datagridApi!: AcDatagridApi;
   private datagridCell!:AcDatagridCell;
   public element: HTMLElement = document.createElement('div');

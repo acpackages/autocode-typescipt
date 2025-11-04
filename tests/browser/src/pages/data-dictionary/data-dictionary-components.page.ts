@@ -107,7 +107,7 @@ export class DataDictionaryComponentsPage extends HTMLElement {
 
     this.ddDatagrid.onDemandFunction = async (args:IAcOnDemandRequestArgs) =>{
             const pageSize: number = args.rowsCount!;
-            const pageNumber: number = (args.startIndex! / pageSize) + 1;
+            const pageNumber: number = args.pageNumber!;
             const res = await fetch(`http://localhost:8081/api/accounts/get?page_size=${pageSize}&page_number=${pageNumber}`);
             if (res.ok) {
               const response = await res.json();

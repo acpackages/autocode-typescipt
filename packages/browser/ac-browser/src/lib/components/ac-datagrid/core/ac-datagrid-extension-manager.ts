@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcAfterRowsFooterDatagridExtension, AcAutoAddNewRowDatagridExtension, AcColumnDraggingDatagridExtension, AcColumnsCustomizerDatagridExtension, AcDataExportXlsxDatagridExtension } from "../_ac-datagrid.export";
+import { AcKeyboardActionsDatagridExtension } from "../extensions/keyboard-actions/core/ac-datagrid-keyboard-actions-extension";
 import { AcRowDraggingDatagridExtension } from "../extensions/row-dragging/core/ac-datagrid-row-dragging-extension";
 import { AcRowNumberDatagridExtension } from "../extensions/row-numbers/core/ac-datagrid-row-numbers-extension";
 import { AcRowSelectionDatagridExtension } from "../extensions/row-selection/core/ac-datagrid-row-selection-extension";
@@ -35,6 +36,7 @@ export class AcDatagridExtensionManager {
       AcDatagridExtensionManager.register(AcColumnsCustomizerDatagridExtension);
       AcDatagridExtensionManager.register(AcColumnDraggingDatagridExtension);
       AcDatagridExtensionManager.register(AcDataExportXlsxDatagridExtension);
+      AcDatagridExtensionManager.register(AcKeyboardActionsDatagridExtension);
       AcDatagridExtensionManager.register(AcRowDraggingDatagridExtension);
       AcDatagridExtensionManager.register(AcRowNumberDatagridExtension);
       AcDatagridExtensionManager.register(AcRowSelectionDatagridExtension);

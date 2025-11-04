@@ -1,6 +1,6 @@
 import { IAcDatagridCellElementArgs } from "./callback-args/ac-datagrid-cell-renderer-element-args.interface";
 
-export interface IAcDatagridCellEditorElement{
+export interface IAcDatagridCellEditor{
   destroy?():void;
   focus?(): void;
   blur?(): void;

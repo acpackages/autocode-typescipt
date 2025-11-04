@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellElementArgs, AcOptionInput, acAddClassToElement, IAcDatagridCellEditorElement } from '@autocode-ts/ac-browser';
-export class AcDDEDatagridYesNoInput implements IAcDatagridCellEditorElement{
+import { IAcDatagridCellElementArgs, AcOptionInput, acAddClassToElement, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
+export class AcDDEDatagridYesNoInput implements IAcDatagridCellEditor{
   optionInput:AcOptionInput = new AcOptionInput();
   element:HTMLElement = document.createElement('div');
 

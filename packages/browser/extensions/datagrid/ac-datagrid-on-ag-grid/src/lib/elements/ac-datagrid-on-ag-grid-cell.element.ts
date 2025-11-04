@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcDatagridApi, AcDatagridCell, AcDatagridCellElement, AcDatagridColumn, AcDatagridRow, IAcDatagridCellRendererElement } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, AcDatagridCell, AcDatagridCellElement, AcDatagridColumn, AcDatagridRow, IAcDatagridCellRenderer } from "@autocode-ts/ac-browser";
 import { AgPromise, ICellRendererComp, ICellRendererParams } from "ag-grid-community";
 import { AcDatagridOnAgGridExtension } from "../core/ac-datagrid-on-ag-grid-extension";
 
@@ -9,7 +9,7 @@ export class AcDatagridOnAgGridCell implements ICellRendererComp {
   datagridColumn?: AcDatagridColumn;
   datagridRow?: AcDatagridRow;
   agGridExtension!: AcDatagridOnAgGridExtension;
-  instance!: IAcDatagridCellRendererElement;
+  instance!: IAcDatagridCellRenderer;
   params: any;
   defaultElement = document.createElement('div');
 
