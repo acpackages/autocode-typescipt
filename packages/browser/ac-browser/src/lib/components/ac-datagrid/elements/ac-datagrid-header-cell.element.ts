@@ -6,7 +6,6 @@ import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.con
 import { AcEnumSortOrder, AcFilter } from "@autocode-ts/autocode";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
-import { AcDatagridHtmlPlaceholder } from "../consts/ac-datagrid-html-placeholder.const";
 import { IAcDatagridColumnResizeEvent } from "../interfaces/event-args/ac-datagrid-column-resize-event.interface";
 import { IAcDatagridColumnFilterChangeEvent } from "../interfaces/event-args/ac-datagrid-column-filter-change-event.interface";
 import { IAcDatagridColumnSortChangeEvent } from "../interfaces/event-args/ac-datagrid-column-sort-change-event.interface";
@@ -14,14 +13,15 @@ import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/a
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
 import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
 import { AcElementBase } from "../../../core/ac-element-base";
+import { AC_DATAGRID_ICON_SVGS, AcSvgIcon } from "../../_components.export";
 
 
 export class AcDatagridHeaderCellElement extends AcElementBase {
   private _datagridApi!: AcDatagridApi;
-  get datagridApi():AcDatagridApi{
+  get datagridApi(): AcDatagridApi {
     return this._datagridApi;
   }
-  set datagridApi(value:AcDatagridApi){
+  set datagridApi(value: AcDatagridApi) {
     this._datagridApi = value;
     value.on({
       event: AcEnumDatagridEvent.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
@@ -71,23 +71,24 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     });
   }
 
-  cellContainer: HTMLElement = document.createElement('div');
+  container: HTMLElement = document.createElement('div');
   draggablePlaceholder?: HTMLElement;
-  filterElement: HTMLElement = document.createElement('button');
+  filterElement: AcSvgIcon = new AcSvgIcon();
   isResizing: boolean = false;
   leftContainer: HTMLElement = document.createElement('div');
-  resizeElement: HTMLElement = document.createElement('span');
+  resizeElement: AcSvgIcon = new AcSvgIcon();
   rightContainer: HTMLElement = document.createElement('div');
-  sortElement: HTMLElement = document.createElement('button');
+  sortElement: AcSvgIcon = new AcSvgIcon();
   startWidth: number = 0;
   startX = 0;
   swappingColumpPosition: boolean = false;
   titleElement: HTMLElement = document.createElement('div');
+  originalUserSelect: any;
 
-  constructor(){
+  constructor() {
     super();
-
     this.style.display = "flex";
+    this.style.flexDirection = "row";
     this.registerListeners();
   }
 
@@ -97,29 +98,32 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellLeftContainer, element: this.leftContainer });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellRightContainer, element: this.rightContainer });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCell, element: this });
-    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellContainer, element: this.cellContainer });
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellContainer, element: this.container });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellTitle, element: this.titleElement });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellFilter, element: this.filterElement });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellSort, element: this.sortElement });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellResize, element: this.resizeElement });
-    this.append(this.cellContainer);
-    // this.cellContainer.setAttribute('draggable', 'true');
-    this.cellContainer.append(this.leftContainer);
-    this.cellContainer.append(this.rightContainer);
+    this.append(this.container);
+    this.container.append(this.leftContainer);
+    this.container.append(this.rightContainer);
     this.leftContainer.append(this.titleElement);
     if (this.datagridColumn.allowSort == true) {
       this.leftContainer.append(this.sortElement);
     }
-    this.rightContainer.append(this.resizeElement);
     if (this.datagridColumn.allowFilter == true) {
       this.rightContainer.append(this.filterElement);
     }
-    this.resizeElement.style.height = "100%";
-    this.resizeElement.innerHTML = AcDatagridHtmlPlaceholder.resize;
+    this.resizeElement.style.width = '5px';
+    this.resizeElement.style.margin = 'auto';
+    this.resizeElement.style.userSelect = 'none';
+    this.resizeElement.style.minWidth = '5px';
+    this.resizeElement.style.cursor = 'ew-resize';
+    this.resizeElement.svgCode = AC_DATAGRID_ICON_SVGS.resize;
     this.renderFilter();
     this.renderSort();
     this.renderTitle();
     this.setCellWidth();
+    this.append(this.resizeElement);
   }
 
   registerListeners() {
@@ -139,6 +143,8 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
       this.isResizing = true;
       this.startX = event.clientX;
       this.startWidth = this.datagridColumn.width;
+      this.originalUserSelect = this.ownerDocument.body.style.userSelect;
+      this.ownerDocument.body.style.userSelect = 'none';
     });
 
     // Sorting click
@@ -153,25 +159,27 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
       this.datagridApi.setColumnSortOrder({ datagridColumn: this.datagridColumn, sortOrder: next });
     });
 
-    // Resizing mouse events
+
     document.addEventListener('mousemove', (event: MouseEvent) => {
       if (this.isResizing) {
         const newWidth = this.startWidth + (event.clientX - this.startX);
-        // this.datagridApi.setColumnWidth({ datagridColumn: this.datagridColumn, width: newWidth });
+        this.datagridColumn.width = newWidth;
       }
     });
 
     document.addEventListener('mouseup', () => {
-      if (this.isResizing) this.isResizing = false;
+      if (this.isResizing) {
+        this.isResizing = false;
+        this.ownerDocument.body.style.userSelect = this.originalUserSelect;
+        this.originalUserSelect = "";
+      }
     });
 
-    // this.registerDragEvents(); // Dragging logic extracted here
   }
 
-
   registerDragEvents() {
-    // this.cellContainer.setAttribute('draggable', 'true');
-    // this.cellContainer.addEventListener('dragstart', (event: DragEvent) => {
+    // this.container.setAttribute('draggable', 'true');
+    // this.container.addEventListener('dragstart', (event: DragEvent) => {
     //   if (this.draggablePlaceholder == undefined) {
     //     this.draggablePlaceholder = document.createElement('div');
     //     acAddClassToElement({
@@ -218,23 +226,27 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   }
 
   renderFilter() {
+    this.filterElement.style.margin = 'auto';
+    this.filterElement.style.cursor = 'pointer';
     if (this.datagridColumn.filterGroup.hasFilters()) {
-      this.filterElement.innerHTML = AcDatagridHtmlPlaceholder.appliedFilter;
+      this.filterElement.svgCode = AC_DATAGRID_ICON_SVGS.appliedFilter;
     }
     else {
-      this.filterElement.innerHTML = AcDatagridHtmlPlaceholder.filter;
+      this.filterElement.svgCode = AC_DATAGRID_ICON_SVGS.filter;
     }
   }
 
   renderSort() {
+    this.sortElement.style.margin = 'auto';
+    this.sortElement.style.cursor = 'pointer';
     if (this.datagridColumn.sortOrder == AcEnumSortOrder.Ascending) {
-      this.sortElement.innerHTML = AcDatagridHtmlPlaceholder.sortAscending;
+      this.sortElement.svgCode = AC_DATAGRID_ICON_SVGS.sortAscending;
     }
     else if (this.datagridColumn.sortOrder == AcEnumSortOrder.Descending) {
-      this.sortElement.innerHTML = AcDatagridHtmlPlaceholder.sortDescending;
+      this.sortElement.svgCode = AC_DATAGRID_ICON_SVGS.sortDescending;
     }
     else {
-      this.sortElement.innerHTML = AcDatagridHtmlPlaceholder.sort;
+      this.sortElement.svgCode = AC_DATAGRID_ICON_SVGS.sort;
     }
   }
 
@@ -246,4 +258,4 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   }
 }
 
-acRegisterCustomElement({tag:'ac-datagrid-header-cell',type:AcDatagridHeaderCellElement});
+acRegisterCustomElement({ tag: 'ac-datagrid-header-cell', type: AcDatagridHeaderCellElement });

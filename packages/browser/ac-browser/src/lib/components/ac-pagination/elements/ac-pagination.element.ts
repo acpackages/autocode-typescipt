@@ -124,7 +124,7 @@ export class AcPagination extends AcElementBase {
       this.startRow = this.endRow = this.totalPages = this._activePage = 0;
     }
     if (this.startRow != oldStart || this.endRow != oldEnd || this.totalPages != oldTotal) {
-      if (this.dataManager) {
+      if (this.dataManager && !this.dataManager.isWorking) {
         this.dataManager.setDisplayedRows({ startIndex: this.startRow - 1, rowsCount: this.activePageSize });
       }
     }

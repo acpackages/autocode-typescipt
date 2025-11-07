@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridCellElement } from "./ac-datagrid-cell.element";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
-import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
+import { AC_DATAGRID_CLASS_NAME, AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AC_DATAGRID_TAG, AcDatagridAttributeName, AcEnumDatagridHook, IAcDatagridRowHookArgs } from "../_ac-datagrid.export";
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
@@ -49,6 +49,7 @@ export class AcDatagridRowElement extends AcElementBase{
     this.style.display = 'block';
     this.style.width = 'max-content';
     this.container.style.display = 'flex';
+    this.container.classList.add(AC_DATAGRID_CLASS_NAME.acDatagridRowContainer);
     this.append(this.container);
   }
 
@@ -140,7 +141,9 @@ export class AcDatagridRowElement extends AcElementBase{
       datagridCell.datagridApi = this.datagridApi;
       datagridCell.datagridColumn = column;
       datagridCell.datagridRow = this.datagridRow;
-      this.container.append(datagridCell);
+      if(column.visible){
+        this.container.append(datagridCell);
+      }
       this.datagridCells.push(datagridCell);
     }
     this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.RowCellsCreate,args:hookArgs});

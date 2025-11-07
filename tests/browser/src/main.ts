@@ -1,5 +1,5 @@
 
-import { AcDatagridHtmlPlaceholder, AcDatagridRowDraggingHtmlPlaceholder, AcDatagridTreeTableHtmlPlaceholder, AcPaginationHtmlPlaceholder, AcTabsCssClassName } from '@autocode-ts/ac-browser';
+import { AcDatagridRowDraggingHtmlPlaceholder, AcDatagridTreeTableHtmlPlaceholder, AcTabsCssClassName } from '@autocode-ts/ac-browser';
 import { AcRouter } from './utils/ac-router';
 import { DashboardPage } from './pages/dashboard/dashboard.page';
 import { AggridLocalData } from './pages/ag-grid/local-data.page';
@@ -46,17 +46,17 @@ import { AcStorageTestPage } from './pages/utils/ac-storage-tests';
 import { AcDataManagerTestPage } from './pages/utils/ac-data-maganer.tests';
 import { FilePreviewTestPage } from './pages/inputs/file-preview-tests.page';
 
-AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
-AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
-AcPaginationHtmlPlaceholder.next = `<i class="fa-solid fa-angle-right"></i>`;
-AcPaginationHtmlPlaceholder.last = `<i class="fa-solid fa-angles-right"></i>`;
+// AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
+// AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
+// AcPaginationHtmlPlaceholder.next = `<i class="fa-solid fa-angle-right"></i>`;
+// AcPaginationHtmlPlaceholder.last = `<i class="fa-solid fa-angles-right"></i>`;
 
-AcDatagridHtmlPlaceholder.appliedFilter = `<i class="fa-solid fa-filter"></i>`;
-AcDatagridHtmlPlaceholder.filter = `<i class="fa-solid fa-align-center" style='transform: rotate(179deg);'></i>`;
-AcDatagridHtmlPlaceholder.sort = `<i class="fa-solid fa-sort"></i>`;
-AcDatagridHtmlPlaceholder.resize = `&nbsp;`;
-AcDatagridHtmlPlaceholder.sortAscending = `<i class="fa-solid fa-arrow-down-short-wide"></i>`;
-AcDatagridHtmlPlaceholder.sortDescending = `<i class="fa-solid fa-arrow-down-wide-short"></i>`;
+// AcDatagridHtmlPlaceholder.appliedFilter = `<i class="fa-solid fa-filter"></i>`;
+// AcDatagridHtmlPlaceholder.filter = `<i class="fa-solid fa-align-center" style='transform: rotate(179deg);'></i>`;
+// AcDatagridHtmlPlaceholder.sort = `<i class="fa-solid fa-sort"></i>`;
+// AcDatagridHtmlPlaceholder.resize = `&nbsp;`;
+// AcDatagridHtmlPlaceholder.sortAscending = `<i class="fa-solid fa-arrow-down-short-wide"></i>`;
+// AcDatagridHtmlPlaceholder.sortDescending = `<i class="fa-solid fa-arrow-down-wide-short"></i>`;
 
 AcDatagridRowDraggingHtmlPlaceholder.drag = `<i class="fa-solid fa-grip-lines"></i>`;
 

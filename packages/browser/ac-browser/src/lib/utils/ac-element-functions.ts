@@ -69,7 +69,7 @@ export function acLinkElementScroll({ source, destination,both = true }: { sourc
     destination.scrollLeft = source.scrollLeft;
   }, { passive: false });
 
-  source.addEventListener('scroll', () => {
+  source.addEventListener('scroll', (e) => {
     if (destination.scrollLeft !== source.scrollLeft)
       destination.scrollLeft = source.scrollLeft;
   });

@@ -57,6 +57,7 @@ export interface IAcDatagridColumnDefinition {
   }) */
   field: string,
   headerCellClass?:string;
+  index?:number;
 
   /* AcDoc({
     "description": Maximum width in pixels for the column."

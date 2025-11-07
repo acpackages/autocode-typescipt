@@ -21,8 +21,6 @@ ac-datagrid-row{
   height: 25px;
 }
 ac-datagrid-cell,ac-datagrid-header-cell{
-  padding-left: 5px;
-  padding-right: 5px;
   overflow: hidden;
 }
 ac-datagrid-row:hover{
@@ -33,6 +31,10 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
   border-top:solid 2px;
   border-left:solid 2px;
   border-width: 2px;
+}
+.ac-datagrid-header-cell-container{
+  padding-left:5px;
+  padding-right:5px;
 }
 .ac-datagrid-container{
   height:-webkit-fill-available;
@@ -134,7 +136,6 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
 
 .ac-datagrid-header-cell-resize{
   cursor: ew-resize;
-  position: absolute;
 }
 
 .ac-datagrid-cell-editor-input{

@@ -50,9 +50,9 @@ export class AcDatagridRowNumbersExtension extends AcDatagridExtension {
   handleBeforeRowCellsCreated(args: IAcDatagridRowHookArgs) {
     const datagridApi = args.datagridApi;
     const datagridRow = args.datagridRow;
-    if (datagridRow.instance) {
+    if (datagridRow.element) {
       const datagriRowNumberCell = new AcDatagridRowNumberCell({ datagridApi: datagridApi, datagridRow: datagridRow,datagridInternalColumn:this.datagridInternalColumn });
-      datagridRow.instance.element.append(datagriRowNumberCell.element);
+      datagridRow.element.append(datagriRowNumberCell.element);
     }
   }
 

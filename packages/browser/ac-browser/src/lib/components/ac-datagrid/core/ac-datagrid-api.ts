@@ -1,12 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcPagination } from "../../ac-pagination/elements/ac-pagination.element";
 import { AcDatagrid } from "../elements/ac-datagrid.element";
 import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
 import { AcDataManager, AcEnumDataManagerEvent, AcEnumSortOrder, AcEvents, AcFilter, AcFilterGroup, AcHooks, AcSortOrder } from "@autocode-ts/autocode";
-import { AcEnumPaginationEvent } from "../../ac-pagination/_ac-pagination.export";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
-import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { IAcDatagridColumnDragPlaceholderCreatorArgs } from "../interfaces/callback-args/ac-datagrid-column-drag-placeholder-creator-args.interface";
 import { IAcDatagridRowDragPlaceholderCreatorArgs } from "../interfaces/callback-args/ac-datagrid-row-drag-placeholder-creator-args.interface";
 import { IAcDatagridRowPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-row-position-change-event.interface";
@@ -16,7 +15,6 @@ import { IAcDatagridColumnFilterChangeEvent } from "../interfaces/event-args/ac-
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
 import { AcDatagridExtension } from "./ac-datagrid-extension";
 import { AcDatagridExtensionManager } from "./ac-datagrid-extension-manager";
-import { IAcPaginationPageChangeEvent } from "../../ac-pagination/interfaces/event-params/ac-page-change-event.interface";
 import { IAcDatagridColDefsChangeHookArgs } from "../interfaces/hook-args/ac-datagrid-coldefs-change-hook-args.interface";
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
@@ -34,9 +32,7 @@ import { IAcDatagridRowHookArgs } from "../interfaces/hook-args/ac-datagrid-row-
 import { IAcDatagridExtensionEnabledHookArgs } from "../interfaces/hook-args/ac-datagrid-extension-enabled-hook-args.interface";
 import { IAcDatagridRowFocusHookArgs } from "../interfaces/hook-args/ac-datagrid-row-focus-hook-args.interface";
 import { IAcDatagridState } from "../interfaces/ac-datagrid-state.interface";
-import { acAddClassToElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
 import { IAcDatagridColumnDefinitionsSetEvent } from "../interfaces/event-args/ac-datagrid-column-definitions-set-event.interface";
-import { AC_DATAGRID_ATTRIBUTE } from "../consts/ac-datagrid-attribute.const";
 
 export class AcDatagridApi {
 
@@ -53,21 +49,59 @@ export class AcDatagridApi {
     this.hooks.execute({ hook: AcEnumDatagridHook.BeforeColumnDefinitionsChange, args: hookArgs });
     this._columnDefinitions = value;
     this.datagridColumns = [];
-    let index = 0;
+
+
+    const usedIndices = new Set<number>();
+    const totalColumns = this._columnDefinitions.length;
+
+    // First pass: mark valid indices already assigned
+    for (const col of this._columnDefinitions) {
+      if (
+        typeof col.index === "number" &&
+        col.index >= 0 &&
+        col.index < totalColumns &&
+        !usedIndices.has(col.index)
+      ) {
+        usedIndices.add(col.index);
+      } else {
+        // Invalid or duplicate index will be assigned later
+        col.index = -1;
+      }
+    }
+
+    // Second pass: assign missing or invalid indices
+    let nextIndex = 0;
+    for (const col of this._columnDefinitions) {
+      while (usedIndices.has(nextIndex)) {
+        nextIndex++;
+      }
+      if (col.index === -1 || col.index! >= totalColumns) {
+        col.index = nextIndex++;
+        usedIndices.add(col.index);
+      }
+    }
+
+    this._columnDefinitions.sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
+
+    // Create AcDatagridColumn instances
     for (const column of this._columnDefinitions) {
-      const datagridColumn: AcDatagridColumn = new AcDatagridColumn({
+      const datagridColumn = new AcDatagridColumn({
         columnDefinition: column,
         datagridApi: this,
-        index: index
+        index: column.index
       });
       this.datagridColumns.push(datagridColumn);
+
       const columnCreatedArgs: IAcDatagridColumnHookArgs = {
         datagridApi: this,
-        datagridColumn: datagridColumn
+        datagridColumn
       };
-      this.hooks.execute({ hook: AcEnumDatagridHook.DatagridColumnCreate, args: columnCreatedArgs });
-      index++;
+      this.hooks.execute({
+        hook: AcEnumDatagridHook.DatagridColumnCreate,
+        args: columnCreatedArgs
+      });
     }
+
     this.hooks.execute({ hook: AcEnumDatagridHook.ColumnDefinitionsChange, args: hookArgs });
     const event: IAcDatagridColumnDefinitionsSetEvent = {
       columnDefinitions: value,
@@ -82,14 +116,6 @@ export class AcDatagridApi {
   }
   set data(value: any[]) {
     this.dataManager.data = value;
-  }
-
-  private _dataSourceType: AcEnumDataSourceType = AcEnumDataSourceType.Unknown;
-  get dataSourceType(): AcEnumDataSourceType {
-    return this._dataSourceType;
-  }
-  set dataSourceType(value: AcEnumDataSourceType) {
-    this.setDataSourceType({ dataSourceType: value });
   }
 
   get datagridRows(): AcDatagridRow[] {
@@ -173,7 +199,6 @@ export class AcDatagridApi {
     });
     this.datagridState = new AcDatagridState({ datagridApi: this });
     this.eventHandler = new AcDatagridEventHandler({ datagridApi: this });
-    this.dataSourceType = AcEnumDataSourceType.Unknown;
   }
 
   addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}) {
@@ -207,13 +232,18 @@ export class AcDatagridApi {
       if (datagridRow.element) {
         for (const datagridCell of datagridRow.element.datagridCells) {
           if (datagridCell.datagridColumn.acColumnId == datagridColumn.acColumnId) {
-            const cellWidth = datagridCell.cellContainer.offsetWidth;
+            const cellWidth = datagridCell.container.getBoundingClientRect().width;
             if (cellWidth > maxWidth) {
               maxWidth = cellWidth;
             }
           }
         }
       }
+    }
+    console.log(maxWidth);
+    if (maxWidth > 0) {
+
+      datagridColumn.width = maxWidth + 10;
     }
     // this.setColumnWidth({ datagridColumn: datagridColumn, width: maxWidth });
   }
@@ -357,8 +387,8 @@ export class AcDatagridApi {
     if (sortOrder != AcEnumSortOrder.None) {
       this.dataManager.sortOrder.addSort({ key: datagridColumn.columnDefinition.field, order: sortOrder });
     }
-    else{
-      this.dataManager.sortOrder.removeSort({key:datagridColumn.columnDefinition.field});
+    else {
+      this.dataManager.sortOrder.removeSort({ key: datagridColumn.columnDefinition.field });
     }
     const eventArgs: IAcDatagridColumnSortChangeEvent = {
       datagridColumn: datagridColumn,
@@ -378,7 +408,7 @@ export class AcDatagridApi {
 
   setActiveCell({ rowIndex, columnIndex, datagridCell }: { rowIndex?: number, columnIndex?: number, datagridCell?: AcDatagridCell }) {
     if (!datagridCell) {
-      if (rowIndex!=undefined && columnIndex!=undefined && rowIndex > -1 && columnIndex > -1) {
+      if (rowIndex != undefined && columnIndex != undefined && rowIndex > -1 && columnIndex > -1) {
         const datagridRow = this.getRowByIndex({ index: rowIndex });
         if (datagridRow) {
           datagridCell = datagridRow.getCellByColumnIndex({ index: columnIndex });
@@ -425,43 +455,16 @@ export class AcDatagridApi {
   }
 
   // PENDING
-  updateRow({ data, value, key, rowId, highlightCells = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }) {
-    const datagridRow: AcDatagridRow | undefined = this.datagridRows.find((datagridRow) => {
-      let valid: boolean = false;
-      if (rowId) {
-        valid = datagridRow.acRowId == rowId;
-      }
-      else if (key && value) {
-        valid = datagridRow.data[key] == value;
-      }
-      else if (data && key) {
-        valid = datagridRow.data[key] == data[key];
-      }
-      else if (data) {
-        valid = datagridRow.data == data;
-      }
-      return valid;
-    });
+  updateRow({ data, value, key, rowId, highlightCells = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }):AcDatagridRow|undefined {
+    const datagridRow: AcDatagridRow | undefined = this.dataManager.updateRow({ data, value, key, rowId, addIfMissing });
     if (datagridRow) {
-      datagridRow.data = data;
-      const updateHookArgs: IAcDatagridRowUpdateHookArgs = {
-        datagridApi: this,
-        datagridRow: datagridRow,
-        highlightCells: highlightCells
+      if (highlightCells) {
+        for (const cell of datagridRow.datagridCells) {
+          cell.element!.cellRenderer.refresh({ datagridApi: this, datagridCell: cell });
+        }
       }
-      this.hooks.execute({ hook: AcEnumDatagridHook.RowUpdate, args: updateHookArgs });
-      for (const cell of datagridRow.datagridCells) {
-        cell.element!.cellRenderer.refresh({ datagridApi: this, datagridCell: cell });
-      }
-      const eventArgs: IAcDatagridRowEvent = {
-        datagridApi: this,
-        datagridRow: datagridRow
-      };
-      this.events.execute({ event: AcEnumDatagridEvent.RowUpdate, args: eventArgs });
     }
-    else {
-      this.addRow({ data: data, highlightCells: highlightCells });
-    }
+    return datagridRow;
   }
 
 }

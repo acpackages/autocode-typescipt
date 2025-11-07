@@ -45,7 +45,9 @@ export class AcDatagridHeader extends AcElementBase{
       const headerCell = new AcDatagridHeaderCellElement();
       headerCell.datagridApi = this.datagridApi;
       headerCell.datagridColumn = column;
-      this.append(headerCell);
+      if(column.visible){
+        this.append(headerCell);
+      }
       this.datagridHeaderCells.push(headerCell);
     }
     this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.HeaderColumnCellsCreate,args:hookArgs});

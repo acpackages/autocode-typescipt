@@ -62,12 +62,23 @@ export class AcDatagridColumn {
   get isLast(): boolean {
     return this.getNextColumn() == undefined;
   }
-  get isVisible(): boolean {
-    return this.columnDefinition.visible != false;
-  }
   get title(): string {
     return this.columnDefinition.title ?? this.columnDefinition.field;
   }
+
+  private _visible: boolean = AcDatagridDefaultColumnConfig.visible;
+  get visible(): boolean {
+    return this._visible;
+  }
+  set visible(value: boolean) {
+    this._visible = value;
+    const hookArgs: IAcDatagridColumnHookArgs = {
+      datagridApi: this.datagridApi,
+      datagridColumn: this,
+    };
+    this.hooks.execute({ hook: AcEnumDatagridHook.ColumnVisibilityChange, args: hookArgs });
+  }
+
 
   private _width: number = AcDatagridDefaultColumnConfig.width;
   get width(): number {
@@ -88,14 +99,18 @@ export class AcDatagridColumn {
     if (columnDefinition.width) {
       this.width = columnDefinition.width;
     }
+    if (columnDefinition.visible != undefined) {
+      this.visible = columnDefinition.visible;
+    }
     this.datagridApi = datagridApi;
     this.index = index;
+    console.log(this);
   }
 
   getNextColumn():AcDatagridColumn | undefined{
     let column: AcDatagridColumn | undefined;
     for (const col of this.datagridApi.datagridColumns) {
-      if (col.isVisible) {
+      if (col.visible) {
         if (column) {
           if (col.index < column.index && col.index > this.index) {
             column = col;
@@ -114,14 +129,14 @@ export class AcDatagridColumn {
   getPreviousColumn():AcDatagridColumn | undefined {
     let column: AcDatagridColumn | undefined;
     for (const col of this.datagridApi.datagridColumns) {
-      if (col.isVisible) {
+      if (col.visible) {
         if (column) {
           if (col.index > column.index && col.index < this.index) {
             column = col;
           }
         }
         else {
-          if ((col.index < this.index) && col.isVisible) {
+          if (col.index < this.index) {
             column = col;
           }
         }

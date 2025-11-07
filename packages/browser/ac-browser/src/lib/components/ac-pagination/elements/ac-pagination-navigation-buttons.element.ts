@@ -1,6 +1,6 @@
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcEnumPaginationEvent, AcPagination, AcPaginationCssClassName, AcPaginationHtmlPlaceholder } from "../_ac-pagination.export";
+import { AcEnumPaginationEvent, AcPagination, AcPaginationCssClassName, AC_PAGINATION_SVG_ICONS } from "../_ac-pagination.export";
 import { IAcPaginationPageChangeEvent } from "../interfaces/event-params/ac-page-change-event.interface";
 
 export class AcPaginationNavigationButtons extends AcElementBase{
@@ -15,32 +15,32 @@ export class AcPaginationNavigationButtons extends AcElementBase{
     }});
   }
 
-  private previousButton:HTMLElement = document.createElement('button');
-  private firstButton:HTMLElement = document.createElement('button');
-  private lastButton:HTMLElement = document.createElement('button');
-  private nextButton:HTMLElement = document.createElement('button');
-  private pageLabel:HTMLElement = document.createElement('div');
+  private previousButton:HTMLElement;
+  private firstButton:HTMLElement;
+  private lastButton:HTMLElement;
+  private nextButton:HTMLElement;
+  private pageLabel:HTMLElement;
 
   constructor(){
     super();
     this.style.display = "flex";
+    this.innerHTML = `
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-first-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.first}</ac-svg-icon></button>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-previous-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.previous}</ac-svg-icon></button>
+      <div ac-pagination-page-label></div>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-next-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.next}</ac-svg-icon></button>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-last-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.last}</ac-svg-icon></button>
+    `;
+    this.firstButton = this.querySelector('[ac-pagination-first-button]') as HTMLButtonElement;
+    this.previousButton = this.querySelector('[ac-pagination-previous-button]') as HTMLButtonElement;
+    this.pageLabel = this.querySelector('[ac-pagination-page-label]') as HTMLElement;
+    this.nextButton = this.querySelector('[ac-pagination-next-button]') as HTMLButtonElement;
+    this.lastButton = this.querySelector('[ac-pagination-last-button]') as HTMLButtonElement;
     this.registerListeners();
   }
 
   override connectedCallback(){
-    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.firstButton});
-    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.lastButton});
-    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.previousButton});
-    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageButton,element:this.nextButton});
-    this.firstButton.innerHTML = AcPaginationHtmlPlaceholder.first;
-    this.append(this.firstButton);
-    this.previousButton.innerHTML = AcPaginationHtmlPlaceholder.previous;
-    this.append(this.previousButton);
-    this.append(this.pageLabel);
-    this.nextButton.innerHTML = AcPaginationHtmlPlaceholder.next;
-    this.append(this.nextButton);
-    this.lastButton.innerHTML = AcPaginationHtmlPlaceholder.last;
-    this.append(this.lastButton);
+
     this.validateButtons();
     this.renderPageLabel();
   }
@@ -72,18 +72,26 @@ export class AcPaginationNavigationButtons extends AcElementBase{
     if(this.pagination.activePage <= 1){
       this.firstButton.setAttribute('disabled',"true");
       this.previousButton.setAttribute('disabled',"true");
+      this.firstButton.style.opacity = '0.5';
+      this.previousButton.style.opacity = '0.5';
     }
     else{
       this.firstButton.removeAttribute('disabled');
       this.previousButton.removeAttribute('disabled');
+      this.firstButton.style.opacity = '';
+      this.previousButton.style.opacity = '';
     }
     if(this.pagination.activePage >= this.pagination.totalPages){
       this.nextButton.setAttribute('disabled',"true");
       this.lastButton.setAttribute('disabled',"true");
+      this.nextButton.style.opacity = '0.5';
+      this.lastButton.style.opacity = '0.5';
     }
     else{
       this.nextButton.removeAttribute('disabled');
       this.lastButton.removeAttribute('disabled');
+      this.nextButton.style.opacity = '';
+      this.lastButton.style.opacity = '';
     }
   }
 

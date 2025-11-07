@@ -3,5 +3,6 @@ export const AcDatagridDefaultColumnConfig = {
   allowFilter:true,
   allowResize:true,
   allowSort:true,
-  width:200
+  width:200,
+  visible:true
 }

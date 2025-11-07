@@ -1,13 +1,24 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_SVG_ICON_TAG } from "../_ac-svg-icon.element";
 
-export class AcSvgIconElement extends AcElementBase {
+export class AcSvgIcon extends AcElementBase {
   private slotEl!: HTMLSlotElement;
 
   static get observedAttributes(): string[] {
     return ['color', 'size', 'src', 'aria-label', 'spin', 'svg-code'];
   }
+
+  private _svgCode:string = '';
+  get svgCode():string{
+    return this._svgCode;
+  }
+  set svgCode(value:string){
+    this._svgCode = value;
+    this.innerHTML = value;
+  }
+
   override connectedCallback(): void {
     if (!this.shadowRoot) {
       const shadow = this.attachShadow({ mode: 'open' });
@@ -76,7 +87,7 @@ export class AcSvgIconElement extends AcElementBase {
         if (newValue) this.loadFromSrc(newValue);
         break;
       case 'svg-code':
-        this.innerHTML = newValue ?? '';
+        this.svgCode = newValue ?? '';
         break;
       case 'aria-label':
         if (newValue) this.removeAttribute('aria-hidden');
@@ -140,4 +151,4 @@ export class AcSvgIconElement extends AcElementBase {
   }
 }
 
-acRegisterCustomElement({ tag: AC_SVG_ICON_TAG.svgIcon, type: AcSvgIconElement });
+acRegisterCustomElement({ tag: AC_SVG_ICON_TAG.svgIcon, type: AcSvgIcon });

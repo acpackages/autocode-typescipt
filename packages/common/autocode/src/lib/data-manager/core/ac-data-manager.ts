@@ -22,6 +22,7 @@ import { IAcDataManagerDataChangeHookArgs } from "../interfaces/hook-args/ac-dat
 import { IAcDataManagerGetOnDemandDataSuccessCallbackHookArgs } from "../interfaces/hook-args/ac-data-manager-get-on-demand-data-success-callback-hook-args.interface";
 import { IAcDataManagerRowHookArgs } from "../interfaces/hook-args/ac-data-row-hook-args.interface";
 import { AcDataRow } from "../models/ac-data-row.model";
+import { IAcDataManagerRowEvent } from "../interfaces/event-args/ac-data-manager-row-event.interface";
 
 export class AcDataManager<T extends AcDataRow = AcDataRow> {
   private _data: any[] = [];
@@ -140,6 +141,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   lastStartIndex: number = 0;
   lastDisplayedRowsCount: number = -1;
   lastDisplayedStartIndex: number = 0;
+  isWorking:boolean = false;
 
   constructor(private DataRow: new (...args: any[]) => T = AcDataRow as any) {
     this.sortOrder = new AcSortOrder();
@@ -172,7 +174,11 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         available = true;
         for (let index = startIndex; index <= endIndex; index++) {
           if (available) {
-            if (this.rows[index].isPlaceholder) {
+            if (!this.rows[index]) {
+              available = false;
+              break;
+            }
+            else if (this.rows[index].isPlaceholder) {
               // console.warn(`Found placeholder row at index ${index}`);
               available = false;
               break;
@@ -387,13 +393,12 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
                     totalCount: response.totalCount,
                     startIndex: startIndex,
                   });
-
+                  setResultFromRows();
                   this.hooks.execute({
                     hook: AcEnumDataManagerHook.GetOnDemandDataSuccessCallback,
                     args: hookArgs,
                   });
-
-                  resolve(this.rows); // ✅ Resolve the promise when data arrives
+                  resolve(result);
                 } catch (error) {
                   reject(error);
                 }
@@ -410,6 +415,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
             else {
               requestArgs.allRows = true;
             }
+            requestArgs.searchQuery = this.searchQuery;
             const hookArgs: IAcDataManagerBeforeGetOnDemandDataHookArgs = {
               dataManager: this,
               requestArgs,
@@ -469,8 +475,8 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     if (this.type == 'offline') {
       if (filteredRows.length > 0) {
         if (this.searchQuery) {
-          const keys: any =Object.keys(filteredRows[0].data);
-          filteredRows = filteredRows.filter((row: T) => this.evaluateSearch(this.searchQuery, row,keys));
+          const keys: any = Object.keys(filteredRows[0].data);
+          filteredRows = filteredRows.filter((row: T) => this.evaluateSearch(this.searchQuery, row, keys));
         }
         if (this.filterGroup && (this.filterGroup.hasFilters() || this.filterGroup.filterGroups.length > 0)) {
           filteredRows = filteredRows.filter((row: T) => this.evaluateFilterGroup(this.filterGroup, row));
@@ -508,13 +514,16 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     }
   }
 
-  refreshRows() {
+  async refreshRows() {
     if (this.type == "offline") {
       this.processRows();
     }
     else {
+      this.isWorking =true;
       this.reset();
-      this.getRows({ rowsCount: this.lastRowsCount });
+      await this.getRows({ rowsCount: this.lastRowsCount });
+      this.setDisplayedRows({startIndex:this.lastDisplayedStartIndex,rowsCount:this.lastDisplayedRowsCount});
+      this.isWorking = false;
     }
   }
 
@@ -523,10 +532,12 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.totalRows = 0;
     this.allRows = [];
     this.displayedRows = [];
+    this.lastDisplayedStartIndex = 0;
     this.rows = [];
   }
 
   setRows({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
+    console.log(this);
     if (this.type == 'offline') {
       const hookArgs: IAcDataManagerDataChangeHookArgs = {
         data: data,
@@ -569,7 +580,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
             index: index,
             dataManager: this
           });
-          this.allRows.push(dataRow);
+          this.allRows[index] = dataRow;
         }
       }
       const hookArgs: IAcDataManagerDataChangeHookArgs = {
@@ -583,15 +594,15 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       }
       let index: number = startIndex;
       for (const row of data) {
-        this._data[index] = row;
-        this.allRows[index].isPlaceholder = false;
-        this.allRows[index].data = row;
-        const hookArgs: IAcDataManagerRowHookArgs = {
-          dataManager: this,
-          dataRow: this.allRows[index],
-        };
-        this.hooks.execute({ hook: AcEnumDataManagerHook.RowCreate, args: hookArgs });
-        index++;
+          this._data[index] = row;
+          this.allRows[index].isPlaceholder = false;
+          this.allRows[index].data = row;
+          const hookArgs: IAcDataManagerRowHookArgs = {
+            dataManager: this,
+            dataRow: this.allRows[index],
+          };
+          this.hooks.execute({ hook: AcEnumDataManagerHook.RowCreate, args: hookArgs });
+          index++;
       }
       this.hooks.execute({ hook: AcEnumDataManagerHook.DataChange, args: hookArgs });
       this.allDataAvailable = this.data.filter((item) => { return item == undefined }).length == 0;
@@ -605,6 +616,37 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.lastDisplayedStartIndex = startIndex;
     const displayedRows: T[] = await this.getRows({ startIndex, rowsCount });
     this.displayedRows = displayedRows;
+  }
+
+  updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): T|undefined {
+    let dataRow: T | undefined = this.rows.find((row) => {
+      let valid: boolean = false;
+      if (rowId) {
+        valid = row.acRowId == rowId;
+      }
+      else if (key && value) {
+        valid = row.data[key] == value;
+      }
+      else if (data && key) {
+        valid = row.data[key] == data[key];
+      }
+      else if (data) {
+        valid = row.data == data;
+      }
+      return valid;
+    });
+    if (dataRow) {
+      dataRow.data = data;
+      const eventArgs: IAcDataManagerRowEvent = {
+        dataManager: this,
+        dataRow: dataRow
+      };
+      this.events.execute({ event: AcEnumDataManagerEvent.RowUpdate, args: eventArgs });
+    }
+    else if(addIfMissing){
+      dataRow = this.addData({ data: data });
+    }
+    return dataRow;
   }
 
 }

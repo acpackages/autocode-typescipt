@@ -15,6 +15,7 @@ export const AcEnumDatagridHook = {
   CellValueChange: 'cellValueChange',
   ColumnDefinitionsChange: 'columnDefinitionsChange',
   ColumnFilterChange: 'columnFilterChange',
+  ColumnVisibilityChange: 'columnVisibilityChange',
   ColumnWidthChange: 'columnWidthChange',
   ColumnSortChange: 'columnSortChange',
   DataChange: 'dataChange',

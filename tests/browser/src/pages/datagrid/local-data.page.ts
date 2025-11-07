@@ -3,13 +3,14 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
-import { AcDatagrid, AcDatagridApi, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcEnumDatagridExtension } from '@autocode-ts/ac-browser';
 import { customersData } from './../../../../data/customers-data';
+import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 
 export class DatagridLocalData extends HTMLElement {
   public static observedAttributes = [];
   datagrid!: AcDatagrid;
-  datagridApi!:AcDatagridApi;
+  datagridApi!: AcDatagridApi;
 
   async connectedCallback() {
     const html = `
@@ -20,39 +21,30 @@ export class DatagridLocalData extends HTMLElement {
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     console.log(this.datagridApi);
-    this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowNumbers});
+    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers });
     // const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
-    this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowDragging});
-    this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.KeyboardActions});
+    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging });
+    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.KeyboardActions });
     this.datagridApi.usePagination = true;
     // this.datagridApi.allowRowSelect = true;
-    this.datagridApi.dataSourceType = AcEnumDataSourceType.Offline;
     // console.log(this.getElementsByClassName("local-datagrid-container"));
     this.getElementsByClassName("local-datagrid-container")[0].append(this.datagrid);
     this.datagridApi.columnDefinitions = [
-      {field:'index',title:"SrNo.",width:50},
-      {field:'first_name',title:"First Name"},
-      {field:'last_name',title:"Last Name"},
-      {field:'company',title:"Company"},
-      {field:'city',title:"City"},
-      {field:'country',title:"Country"},
-      {field:'phone_1',title:"Phone 1"},
-      {field:'phone_2',title:"Phone 2"},
-      {field:'email',title:"Email"},
-      {field:'subscription_date',title:"Subscription Date"},
-      {field:'website',title:"Website"},
-      {field:'customer_id',title:"Id"},
+      { field: 'index', title: "SrNo.",autoWidth:true,allowEdit:true},
+      { field: 'first_name', title: "First Name",autoWidth:true,allowEdit:true},
+      { field: 'last_name', title: "Last Name",autoWidth:true,allowEdit:true},
+      { field: 'company', title: "Company" },
+      { field: 'city', title: "City" },
+      { field: 'country', title: "Country" },
+      { field: 'phone_1', title: "Phone 1" },
+      { field: 'phone_2', title: "Phone 2" },
+      { field: 'email', title: "Email" },
+      { field: 'subscription_date', title: "Subscription Date" },
+      { field: 'website', title: "Website" },
+      { field: 'customer_id', title: "Id",index:2,visible:false },
     ];
-    const multiplier = 1;
-    const data:any[] = [];
-    let index:number = 0;
-    for(let i=0;i<multiplier;i++){
-      for(const row of customersData){
-        index++;
-        data.push({index:index,...row})
-      }
-    }
-    this.datagridApi.data = data;
+    // this.setLocalData();
+    this.setOnDemandData();
 
     // setTimeout(() => {
     //   // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
@@ -68,5 +60,54 @@ export class DatagridLocalData extends HTMLElement {
     // }, 2500);
 
     // console.log(this.datagrid);
+  }
+
+  setLocalData() {
+    const data: any[] = [];
+    const multiplier = 1;
+    let index: number = 0;
+    for (let i = 0; i < multiplier; i++) {
+      for (const row of customersData) {
+        index++;
+        data.push({ index: index, ...row })
+      }
+    }
+    this.datagridApi.data = data;
+  }
+
+  setOnDemandData() {
+    const onDemandProxyDataManager: AcDataManager = new AcDataManager();
+    const data: any[] = [];
+    const multiplier = 1;
+    let index: number = 0;
+    for (let i = 0; i < multiplier; i++) {
+      for (const row of customersData) {
+        index++;
+        data.push({ index: index, ...row })
+      }
+    }
+    onDemandProxyDataManager.data = data;
+
+    this.datagridApi.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
+      console.log("Getting on demand data");
+      console.log(args);
+      if (args.filterGroup) {
+        onDemandProxyDataManager.filterGroup = args.filterGroup;
+      }
+      if (args.sortOrder) {
+        onDemandProxyDataManager.sortOrder = args.sortOrder;
+      }
+      onDemandProxyDataManager.searchQuery = args.searchQuery ?? '';
+      onDemandProxyDataManager.processRows();
+      const totalCount = onDemandProxyDataManager.totalRows;
+      const data = await onDemandProxyDataManager.getData({ startIndex: args.startIndex, rowsCount: args.rowsCount });
+      const response = {
+        totalCount,
+        data
+      };
+      console.log(response);
+      args.successCallback(response);
+    };
+    this.datagridApi.dataManager.getRows({rowsCount:50});
   }
 }

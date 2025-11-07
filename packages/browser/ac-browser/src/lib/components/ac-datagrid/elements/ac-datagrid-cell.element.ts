@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acAddClassToElement, acRegisterCustomElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
@@ -46,7 +47,13 @@ export class AcDatagridCellElement extends AcElementBase {
     this.initCell();
   }
 
-  cellContainer: HTMLElement = document.createElement('div');
+  get containerWidth(): number {
+    let result: number = 0;
+    result = (this.container.firstChild as HTMLElement).getBoundingClientRect().width;
+    return result;
+  }
+
+  container: HTMLElement = document.createElement('div');
   cellEditor?: AcDatagridCellEditor;
   cellRenderer!: IAcDatagridCellRenderer;
   checkCellValueChangeTimeout: any;
@@ -54,7 +61,7 @@ export class AcDatagridCellElement extends AcElementBase {
   isEditing: boolean = false;
   swappingColumpPosition: boolean = false;
 
-  constructor(){
+  constructor() {
     super();
     this.style.overflow = 'hidden';
   }
@@ -71,8 +78,9 @@ export class AcDatagridCellElement extends AcElementBase {
   enterEditMode() {
     this.initEditorElement();
     if (this.cellEditor) {
-      this.cellContainer.innerHTML = "";
-      this.cellContainer.append(this.cellEditor!.getElement());
+      this.container.innerHTML = "";
+      this.container.append(this.cellEditor.getElement());
+      this.cellEditor.focus();
     }
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
     this.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
@@ -83,9 +91,9 @@ export class AcDatagridCellElement extends AcElementBase {
     this.isEditing = false;
     acRemoveClassFromElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
     if (this.cellEditor) {
-      this.cellContainer.innerHTML = "";
+      this.container.innerHTML = "";
       this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-      this.cellContainer.append(this.cellRenderer.getElement());
+      this.container.append(this.cellRenderer.getElement());
     }
   }
 
@@ -127,8 +135,13 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   override focus() {
-    if (this.cellRenderer && this.cellRenderer.focus) {
-      this.cellRenderer.focus();
+    if (this.datagridColumn.allowEdit) {
+      this.enterEditMode();
+    }
+    else {
+      if (this.cellRenderer && this.cellRenderer.focus) {
+        this.cellRenderer.focus();
+      }
     }
     this.checkCellValueChange();
   }
@@ -143,6 +156,9 @@ export class AcDatagridCellElement extends AcElementBase {
       }
       if (this.cellEditor) {
         this.cellEditor.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+        this.cellEditor.getElement().addEventListener('blur',()=>{
+          this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.cellEditor!.getValue();
+        });
         const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {
           datagridApi: this.datagridApi,
           datagridCell: this.datagridCell,
@@ -158,11 +174,11 @@ export class AcDatagridCellElement extends AcElementBase {
     this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
     this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
     this.setAttribute('tabindex', "0");
-    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.cellContainer });
-    this.append(this.cellContainer);
-    this.cellContainer.style.height = "100%";
-    this.cellContainer.style.width = "max-content";
-    this.cellContainer.append(this.cellRenderer.getElement());
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.container });
+    this.append(this.container);
+    // this.container.setAttribute('style', 'height:100%;width:max-content!important;min-width:max-content!important;max-width:max-content!important;');
+    this.container.setAttribute('style','display:contents');
+    this.container.append(this.cellRenderer.getElement());
     this.setCellWidth();
     this.registerEvents();
   }
@@ -173,7 +189,6 @@ export class AcDatagridCellElement extends AcElementBase {
     });
     this.addEventListener('focusin', (e: FocusEvent) => {
       this.datagridApi.eventHandler.handleCellFocus({ datagridCell: this.datagridCell, event: e });
-      this.focus();
     });
     this.addEventListener('keydown', (e: KeyboardEvent) => {
       this.datagridApi.eventHandler.handleCellKeyDown({ datagridCell: this.datagridCell, event: e });
@@ -268,4 +283,4 @@ export class AcDatagridCellElement extends AcElementBase {
 
 }
 
-acRegisterCustomElement({tag:'ac-datagrid-cell',type:AcDatagridCellElement});
+acRegisterCustomElement({ tag: 'ac-datagrid-cell', type: AcDatagridCellElement });

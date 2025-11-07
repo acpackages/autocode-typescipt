@@ -11,63 +11,6 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
 
   private handleCellKeyDown(event:KeyboardEvent) {
     if (event && this.datagridApi.activeCell) {
-      // const KEY_A = "A";
-      // const KEY_C = "C";
-      // const KEY_V = "V";
-      // const KEY_D = "D";
-      // const KEY_PAGE_UP = "PageUp";
-      // const KEY_PAGE_DOWN = "PageDown";
-      // const KEY_TAB = "Tab";
-      // const KEY_LEFT = "ArrowLeft";
-      // const KEY_UP = "ArrowUp";
-      // const KEY_RIGHT = "ArrowRight";
-      // const KEY_DOWN = "ArrowDown";
-      // const KEY_F2 = "F2";
-      // const KEY_BACKSPACE = "Backspace";
-      // const KEY_ESCAPE = "Escape";
-      // const KEY_SPACE = " ";
-      // const KEY_DELETE = "Delete";
-      // const KEY_PAGE_HOME = "Home";
-      // const KEY_PAGE_END = "End";
-      // const key = event.key;
-      // let keysToSuppress = [
-      //   KEY_PAGE_UP,
-      //   KEY_PAGE_DOWN,
-      //   KEY_TAB,
-      //   KEY_F2,
-      //   KEY_ESCAPE,
-      // ];
-
-      // const editingKeys = [
-      //   KEY_LEFT,
-      //   KEY_RIGHT,
-      //   KEY_UP,
-      //   KEY_DOWN,
-      //   KEY_BACKSPACE,
-      //   KEY_DELETE,
-      //   KEY_SPACE,
-      //   KEY_PAGE_HOME,
-      //   KEY_PAGE_END,
-      // ];
-
-      // if (event.ctrlKey || event.metaKey) {
-      //   keysToSuppress.push(KEY_A);
-      //   keysToSuppress.push(KEY_V);
-      //   keysToSuppress.push(KEY_C);
-      //   keysToSuppress.push(KEY_D);
-      // }
-
-      // if (this.navigate) {
-      //   keysToSuppress = keysToSuppress.concat(editingKeys);
-      // }
-
-      // const isNavigationKey = keysToSuppress.some(function (suppressedKey) {
-      //   return suppressedKey === key || key.toUpperCase() === suppressedKey;
-      // });
-
-      // if (this.navigate && !isNavigationKey) {
-      //   this.navigate = false;
-      // }
       if (this.navigate && event && event.key) {
         const datagridCell: AcDatagridCell = this.datagridApi.activeCell;
         const datagridRow: AcDatagridRow = datagridCell.datagridRow;

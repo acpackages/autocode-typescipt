@@ -2,7 +2,7 @@
 import { AcArrayValuesInput, AcDatagrid, AcDatagridSelectInput, AcDatetimeInput, AcFilePreview, AcForm, AcFormField, AcFormFieldErrorMessage, AcInput, AcModal, AcNumberInput, AcOptionInput, AcPagination, AcPopoutTextareaInput, AcResizable, AcResizablePanel, AcResizablePanels, AcSelectInput, AcTextareaInput, AcTextInput, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
-import { AcSvgIconElement } from "../components/ac-svg-icon/_ac-svg-icon.element";
+import { AcSvgIcon } from "../components/ac-svg-icon/_ac-svg-icon.element";
 
 const ATTRIBUTES_TO_LISTEN: string[] = [
   'ac-tooltip'
@@ -81,4 +81,4 @@ AcResizablePanels;
 
 AcModal;
 AcPagination;
-AcSvgIconElement;
+AcSvgIcon;
