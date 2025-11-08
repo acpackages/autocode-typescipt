@@ -53,7 +53,7 @@ export class AcDatagridCellElement extends AcElementBase {
     return result;
   }
 
-  container: HTMLElement = document.createElement('div');
+  container: HTMLElement = this.ownerDocument.createElement('div');
   cellEditor?: AcDatagridCellEditor;
   cellRenderer!: IAcDatagridCellRenderer;
   checkCellValueChangeTimeout: any;
