@@ -63,7 +63,7 @@ export function acElementHasParentTag({ element, tag }: { element: HTMLElement, 
   return false;
 }
 
-export function acLinkElementScroll({ source, destination,both = true }: { source: HTMLElement, destination: HTMLElement,both?:boolean }) {
+export function acLinkElementScroll({ source, destination, both = true }: { source: HTMLElement, destination: HTMLElement, both?: boolean }) {
   source.addEventListener('wheel', e => {
     source.scrollLeft += e.deltaX;
     destination.scrollLeft = source.scrollLeft;
@@ -74,20 +74,19 @@ export function acLinkElementScroll({ source, destination,both = true }: { sourc
       destination.scrollLeft = source.scrollLeft;
   });
 
-  if(both){
-    acLinkElementScroll({source:destination,destination:source,both:false});
+  if (both) {
+    acLinkElementScroll({ source: destination, destination: source, both: false });
   }
 }
 
 export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({ name, event }: { name: string, event: Event }) => void }) {
   const proto = HTMLElement.prototype as any;
-
   for (const key in proto) {
     if (key.startsWith("on")) {
       const eventName = key.slice(2);
       element.addEventListener(eventName, (e) => {
         callback({ name: eventName, event: e });
-      });
+      },{passive:true});
     }
   }
 }
@@ -186,7 +185,7 @@ export function acRemoveClassFromElement({ class_, element }: { class_: string, 
   }
 }
 
-export function acScrollIntoViewIfHidden({element,behavior = 'smooth'}:{element: HTMLElement, behavior?: ScrollBehavior}) {
+export function acScrollIntoViewIfHidden({ element, behavior = 'smooth' }: { element: HTMLElement, behavior?: ScrollBehavior }) {
   // Find nearest scrollable ancestor
   let parent = element.parentElement;
   while (parent) {

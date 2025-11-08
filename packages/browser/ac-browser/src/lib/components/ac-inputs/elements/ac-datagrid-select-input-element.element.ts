@@ -3,7 +3,7 @@
 import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcDatagrid, AcDatagridOnDemandDataSource } from "../../_components.export";
+import { AcDatagrid } from "../../_components.export";
 import { AcEnumDataSourceType } from "../../../enums/ac-enum-data-source-type.enum";
 import { IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
 
@@ -27,18 +27,14 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   get onDemandFunction(): any {
-    if (this.onDemandDataSource) {
-      return this.onDemandDataSource?.onDemandFunction;
+    if (this.data) {
+      return this.datagrid.datagridApi.dataManager.onDemandFunction;
     }
     return undefined;
   };
   set onDemandFunction(value: (args: IAcOnDemandRequestArgs) => void) {
-    if (this.onDemandDataSource == undefined) {
-      this.datagrid.datagridApi.dataSourceType = AcEnumDataSourceType.OnDemand;
-      this.onDemandDataSource = this.datagrid.datagridApi.dataSource;
-    }
-    this.onDemandDataSource!.onDemandFunction = value;
-    this.datagrid.datagridApi.dataSource.getData();
+    this.datagrid.datagridApi.dataManager.onDemandFunction = value;
+    this.datagrid.datagridApi.dataManager.getData();
   }
 
   get valueKey(): string {
@@ -84,7 +80,6 @@ export class AcDatagridSelectInput extends AcInputBase {
   private _filteredOptions: any[] = [];
 
   private dropdownContainer!: HTMLDivElement;
-  private onDemandDataSource?: AcDatagridOnDemandDataSource;
   override inputElement: HTMLDivElement = document.createElement('div');
   private highlightingIndex = -1;
   private textInputElement: HTMLInputElement = document.createElement("input");

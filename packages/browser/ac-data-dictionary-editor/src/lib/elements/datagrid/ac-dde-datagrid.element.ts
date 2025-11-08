@@ -24,7 +24,7 @@ export class AcDDEDatagrid {
   private rowNumbersExtension!: AcDatagridRowNumbersExtension;
   private rowSelectionExtension!: AcDatagridRowSelectionExtension;
   private rowDraggingExtension!: AcDatagridRowDraggingExtension;
-  private agGridExtension!: AcDatagridOnAgGridExtension;
+  // private agGridExtension!: AcDatagridOnAgGridExtension;
   newRowDataFunction:Function = ()=>{
     return {};
   };
@@ -33,7 +33,7 @@ export class AcDDEDatagrid {
     this.editorApi = editorApi;
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
-    this.element = this.datagrid.element;
+    this.element = this.datagrid;
     this.element.classList.add("ac-dde-datagrid")
 
     this.afterRowsExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.AfterRowsFooter }) as AcDatagridAfterRowsFooterExtension;
@@ -44,7 +44,8 @@ export class AcDDEDatagrid {
     this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
-    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
+    // this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
+    this.datagrid.querySelector('.ac-datagrid-container')?.append(this.footerElement);
     this.footerElement.innerHTML = `<button class="btn btn-primary btn-add-new" type="button">Add New</button>`;
     const addNewButton: HTMLElement = this.footerElement.querySelector('.btn-add-new')!;
     addNewButton.addEventListener('click', (event: MouseEvent) => {

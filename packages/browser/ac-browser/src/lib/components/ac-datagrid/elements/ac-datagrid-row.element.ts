@@ -48,6 +48,7 @@ export class AcDatagridRowElement extends AcElementBase{
     super();
     this.style.display = 'block';
     this.style.width = 'max-content';
+    this.style.height = 'max-content';
     this.container.style.display = 'flex';
     this.container.classList.add(AC_DATAGRID_CLASS_NAME.acDatagridRowContainer);
     this.append(this.container);

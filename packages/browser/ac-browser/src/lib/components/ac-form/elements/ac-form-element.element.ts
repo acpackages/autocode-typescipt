@@ -5,8 +5,9 @@
 
 import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
 import { acRegisterCustomElement, acWrapElementWithTag } from "../../../utils/ac-element-functions";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcForm extends HTMLElement {
+export class AcForm extends AcElementBase {
   static get observedAttributes() {
     return ['ac-context'];
   }
@@ -22,8 +23,23 @@ export class AcForm extends HTMLElement {
   }
 
   isWrapped: boolean = false;
+  formAddedManually: boolean = false;
   form!: HTMLFormElement | any;
   private inputContextListeners: Map<HTMLElement, any> = new Map();
+
+  invalidCallback: Function = () => {
+    this.form.submitted = true;
+  };
+  resetCallback: Function = (event: any) => {
+    this.dispatchEvent(new Event('reset'));
+  };
+  submitCallback: Function = (event: Event) => {
+    event.preventDefault();
+    this.form.submitted = true;
+    if (this.validateAll()) {
+      this.dispatchEvent(new Event('submit'));
+    }
+  };
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
@@ -36,10 +52,10 @@ export class AcForm extends HTMLElement {
     }
   }
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
+    super.connectedCallback();
     if (!this.isWrapped) {
       this.isWrapped = true;
-      const object = this;
       if (this.isConnected && this.parentNode) {
         const parent: HTMLElement = this.parentElement!;
         if (parent.tagName.toLowerCase() === 'form') {
@@ -48,29 +64,23 @@ export class AcForm extends HTMLElement {
       }
       if (this.form == undefined || this.form == null) {
         this.form = acWrapElementWithTag({ element: this, wrapperTag: 'form' }) as HTMLFormElement;
+        this.formAddedManually = true;
       }
       this.form.style.display = 'contents';
       this.form.submitted = false;
       this.form.noValidate = true;
-      this.form.addEventListener('submit', (event: Event) => {
-        event.preventDefault();
-        object.form.submitted = true;
-        if (this.validateAll()) {
-          object.dispatchEvent(new Event('submit'));
-        }
-      });
-      this.form.addEventListener('invalid', () => {
-        this.form.submitted = true;
-      });
-      this.form.addEventListener("reset", (event: any) => {
-        object.dispatchEvent(new Event('reset'));
-      });
+      this.form.addEventListener('submit', this.submitCallback);
+      this.form.addEventListener('invalid', this.invalidCallback);
+      this.form.addEventListener("reset", this.resetCallback);
     }
-
   }
 
-  disconnectedCallback(): void {
-    if (this.form) {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.form.removeEventListener('submit',this.submitCallback);
+    this.form.removeEventListener('invalid', this.invalidCallback);
+    this.form.removeEventListener("reset", this.resetCallback);
+    if (this.form && this.formAddedManually) {
       this.form.remove();
     }
   }

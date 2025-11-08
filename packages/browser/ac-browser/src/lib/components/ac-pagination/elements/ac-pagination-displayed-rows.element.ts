@@ -11,7 +11,7 @@ export class AcPaginationDisplayedRows extends AcElementBase{
     this._pagination = value;
   }
 
-  override connectedCallback(){
+  override init(){
     this.render();
   }
 

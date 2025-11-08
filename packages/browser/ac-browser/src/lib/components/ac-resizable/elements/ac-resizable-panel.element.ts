@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents } from "@autocode-ts/autocode";
 import { AcResizableAttributeName } from "../consts/ac-resizable-attribute-name.const";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
@@ -69,16 +68,23 @@ export class AcResizablePanel extends AcElementBase {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.notifyResizablePanels();
     this.resizeObserver = new ResizeObserver(() => {
       this.events.execute({ event: 'panelresize' });
     });
     this.resizeObserver.observe(this);
   }
 
-  destroy() {
+  override disconnectedCallback() {
+    super.disconnectedCallback();
     this.resizeObserver.disconnect();
   }
+
+  override init(): void {
+    super.init();
+    this.notifyResizablePanels();
+  }
+
+
 
   private notifyResizablePanels() {
     const resizablePanelsParent = this.closest(AC_RESIZABLE_TAG.resizablePanels);
@@ -142,7 +148,6 @@ export class AcResizablePanel extends AcElementBase {
         const firstCurrentPercent = this.size;
         const secondCurrentPercent = this.nextSiblingPanel!.size;
         const currentPanelsTotal = firstCurrentPercent + secondCurrentPercent;
-        console.log(currentPanelsTotal);
         let firstNewSize = ((startSizes[0] + delta) / total) * currentPanelsTotal;
         let secondNewSize = ((startSizes[1] - delta) / total) * currentPanelsTotal;
         firstNewSize = Math.max(5, Math.min(95, firstNewSize));

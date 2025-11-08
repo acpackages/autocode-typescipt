@@ -17,14 +17,11 @@ export class AcDatagrid extends AcElementBase{
 
   constructor(){
     super();
+    this.style.display = 'flex';
+    this.style.flexDirection = 'column';
     this.datagridBody.datagridApi = this.datagridApi;
     this.datagridFooter.datagridApi = this.datagridApi;
     this.datagridHeader.datagridApi = this.datagridApi;
-  }
-
-  override connectedCallback(){
-    super.connectedCallback();
-    this.style.display = 'contents';
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this});
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
     this.append(this.containerElement);
@@ -33,6 +30,7 @@ export class AcDatagrid extends AcElementBase{
     this.append(this.datagridFooter);
     this.datagridApi.dataManager.getData();
   }
+
 }
 
 acRegisterCustomElement({tag:'ac-datagrid',type:AcDatagrid});

@@ -34,14 +34,13 @@ export class AcFilePreview extends AcElementBase {
     }
   }
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  override init(): void {
+    super.init();
     this.style.display = "flex";
     this.style.flexDirection = "column";
     this.style.height = "100%";
     this.style.width = "100%";
     this.setPreview();
-    console.dir(this);
   }
 
   openFile() {

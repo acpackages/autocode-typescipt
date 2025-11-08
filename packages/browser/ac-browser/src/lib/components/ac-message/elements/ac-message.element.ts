@@ -26,7 +26,7 @@ interface BaseOptions {
   className?: string;
   // for confirm:
   showConfirmButton?: boolean;
-  showDenyButton?: boolean;
+  showCancelButtton?: boolean;
   confirmText?: string;
   denyText?: string;
   showInput?: boolean; // simple text input in confirm
@@ -59,7 +59,7 @@ export class AcMessage {
     pauseOnHover: true,
     progressBar: true,
     showConfirmButton: true,
-    showDenyButton: true,
+    showCancelButtton: true,
     confirmText: 'OK',
     denyText: 'Cancel',
     allowOutsideClick: false,
@@ -346,7 +346,7 @@ export class AcMessage {
 
     // buttons
     const confirmBtn = opts.showConfirmButton ? `<button class="acmsg-btn acmsg-confirm">${opts.confirmText ?? 'OK'}</button>` : '';
-    const denyBtn = opts.showDenyButton ? `<button class="acmsg-btn acmsg-deny">${opts.denyText ?? 'Cancel'}</button>` : '';
+    const denyBtn = opts.showCancelButtton ? `<button class="acmsg-btn acmsg-deny">${opts.denyText ?? 'Cancel'}</button>` : '';
     const closeX = opts.showCloseButton ? `<button class="acmsg-top-close" aria-label="close">&times;</button>` : '';
 
     dialog.innerHTML = `

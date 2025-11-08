@@ -46,7 +46,22 @@ export class AcArrayValuesInput extends AcInputBase {
     this.value = [];
   }
 
-  override connectedCallback(): void {
+  addItem({ data = {} }: { data?: any } = {}) {
+    if (this.itemsElement && this.itemClone) {
+      const arrayValueItem: IAcArrayValueItem = {
+        id: Autocode.uniqueId(),
+        item: data,
+        index: this.value.length
+      };
+      this.value.push(data);
+      this.items.push(arrayValueItem);
+      this.renderArrayValueItem({ arrayValueItem });
+      this.notifyValueChange();
+    }
+  }
+
+  override init(): void {
+    super.init();
     const itemsElement = this.querySelector('[ac-array-values-items]');
     if (itemsElement) {
       this.itemsElement = itemsElement as HTMLElement;
@@ -64,20 +79,6 @@ export class AcArrayValuesInput extends AcInputBase {
       }
     }
     this.refreshItems();
-  }
-
-  addItem({ data = {} }: { data?: any } = {}) {
-    if (this.itemsElement && this.itemClone) {
-      const arrayValueItem: IAcArrayValueItem = {
-        id: Autocode.uniqueId(),
-        item: data,
-        index: this.value.length
-      };
-      this.value.push(data);
-      this.items.push(arrayValueItem);
-      this.renderArrayValueItem({ arrayValueItem });
-      this.notifyValueChange();
-    }
   }
 
   notifyValueChange() {

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridCellElement, AcDatagridOnDemandDataSource } from '@autocode-ts/ac-browser';
+import { AcDatagridExtension, AcEnumDatagridColumnDataType, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition, AcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, AcDatagridCell, AcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridCellElement } from '@autocode-ts/ac-browser';
 import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, RowModelType, IServerSideDatasource, SuppressKeyboardEventParams, ICellRendererParams } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import { AcDatagridRowSelectionExtensionOnAgGrid } from './ac-datagrid-row-selection-extension-on-ag-grid';
@@ -33,7 +33,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   onDemandDataSource: IServerSideDatasource = {
     getRows: (params: IServerSideGetRowsParams) => {
       this.onDemandRequestParams = params;
-      this.datagridApi.dataSource.getData();
+      this.datagridApi.dataManager.getData();
     }
   };
   onDemandRequestParams?: IServerSideGetRowsParams;
@@ -449,7 +449,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.logger.log("[AcDatagridOnAgGridExtension] handleDataExportXlsx: Exported data as Excel (client-side).");
     }
     else {
-      const onDemandDataSource:AcDatagridOnDemandDataSource = this.datagridApi.dataSource;
       const getAllDataArgs:any = {...(this.lastOnDemandParams??{})};
       getAllDataArgs.successCallback = (response:IAcOnDemandResponseArgs)=>{
         if (!Array.isArray(response.data)) {
@@ -460,7 +459,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         }
         this.gridApi.applyServerSideRowData({ successParams: { rowData: response.data, rowCount: response.totalCount } });
       };
-      onDemandDataSource.onDemandFunction!(getAllDataArgs);
+      this.datagridApi.dataManager.onDemandFunction!(getAllDataArgs);
       this.gridApi.exportDataAsExcel({ fileName: args.args.fileName });
       // callbackFunction();
       this.logger.log("[AcDatagridOnAgGridExtension] handleDataExportXlsx: Server-side export logic pending implementation.");
@@ -763,11 +762,11 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   private initAgGrid(modelType: RowModelType) {
     this.logger.log(`[AcDatagridOnAgGridExtension] initAgGrid: Entering with modelType=${modelType}.`);
-    this.datagridApi.datagrid.element.innerHTML = "";
-    this.datagridApi.datagrid.element.append(this.agGridElement);
+    this.datagridApi.datagrid.innerHTML = "";
+    this.datagridApi.datagrid.append(this.agGridElement);
     this.logger.log("[AcDatagridOnAgGridExtension] initAgGrid: Cleared and appended grid element.");
     this.gridOptions['rowModelType'] = modelType;
-    this.gridApi = createGrid(this.datagridApi.datagrid.element, this.gridOptions);
+    this.gridApi = createGrid(this.datagridApi.datagrid, this.gridOptions);
     this.logger.log(`[AcDatagridOnAgGridExtension] initAgGrid: Grid API created with ${modelType} model. Exiting.`);
   }
 
@@ -793,8 +792,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.logger.log("[AcDatagridOnAgGridExtension] setAfterRowsFooter: Entering.");
     if (this.afterRowsFooterExtension) {
       let retryOperation: boolean = true;
-      if (this.datagridApi.datagrid && this.datagridApi.datagrid.element && this.afterRowsFooterExtension.footerElement) {
-        const containerElement = this.datagridApi.datagrid.element.querySelector(".ag-center-cols-viewport");
+      if (this.datagridApi.datagrid && this.datagridApi.datagrid && this.afterRowsFooterExtension.footerElement) {
+        const containerElement = this.datagridApi.datagrid.querySelector(".ag-center-cols-viewport");
         if (containerElement) {
           retryOperation = false;
           containerElement.append(this.afterRowsFooterExtension.footerElement);

@@ -16,8 +16,8 @@ export class AcWindowTabs extends AcElementBase {
   public static observedAttributes = [];
   private activeId: string | null = null;
 
-  override async connectedCallback() {
-    super.connectedCallback();
+  override async init() {
+    super.init();
     this.innerHTML = `<div class="ac-window-tabs-container"></div>`;
     // const acDraggable = new AcSortable({ element: this.querySelector('.ac-window-tabs-container')! });
     const acDraggable = new AcSortable();

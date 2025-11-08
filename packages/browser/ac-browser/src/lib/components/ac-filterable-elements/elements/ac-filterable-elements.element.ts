@@ -4,15 +4,14 @@ import { AcEvents } from "@autocode-ts/autocode";
 import { AcFilterableElementsAttributeName } from "../consts/ac-filterable-elements-attribute-name.const";
 import { acHideElement, acRegisterCustomElement, acShowElement } from "../../../utils/ac-element-functions";
 import { AC_FLITERABLE_TAG } from "../_ac-filterable-elements.export";
+import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcFilterableElements {
-  element: HTMLElement;
-  events:AcEvents = new AcEvents();
+export class AcFilterableElements extends AcElementBase{
   private filterTimeout:any;
 
-  constructor({ element }: { element: HTMLElement }) {
-    this.element = element;
-    const filterInput = element.querySelector(`[${AcFilterableElementsAttributeName.acFilterInput}]`);
+  override init() {
+    super.init();
+    const filterInput = this.querySelector(`[${AcFilterableElementsAttributeName.acFilterInput}]`);
     if(filterInput){
       this.registerInputElement({element:filterInput as HTMLInputElement});
     }
@@ -21,7 +20,7 @@ export class AcFilterableElements {
   filter({query}:{query:string}){
     query = query.toLowerCase().trim();
     const regex = new RegExp(query, "i");
-    const elements = Array.from(this.element.querySelectorAll(`[${AcFilterableElementsAttributeName.acFilterValue}]`)) as HTMLElement[];
+    const elements = Array.from(this.querySelectorAll(`[${AcFilterableElementsAttributeName.acFilterValue}]`)) as HTMLElement[];
     for(const element of elements){
       const filterValue = element.getAttribute(AcFilterableElementsAttributeName.acFilterValue)!.toLowerCase().trim();
       if(filterValue == "" || regex.test(filterValue)){
@@ -41,7 +40,7 @@ export class AcFilterableElements {
   }
 
   private filterGroups(){
-    const elementGroups = Array.from(this.element.querySelectorAll(`[${AcFilterableElementsAttributeName.acFilterElementGroup}]`)) as HTMLElement[];
+    const elementGroups = Array.from(this.querySelectorAll(`[${AcFilterableElementsAttributeName.acFilterElementGroup}]`)) as HTMLElement[];
     for(const group of elementGroups){
       const visibleElements = group.querySelectorAll(`[${AcFilterableElementsAttributeName.acFilterValue}]:not([${AcFilterableElementsAttributeName.acFilterElementHidden}])`);
       if(visibleElements.length > 0){

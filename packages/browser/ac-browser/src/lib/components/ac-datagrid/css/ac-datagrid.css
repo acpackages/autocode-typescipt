@@ -11,6 +11,15 @@ ac-datagrid{
   display: flex;
   flex-direction: column;
 }
+ac-datagrid-header{
+  position: sticky;
+  top:0px;
+  width: max-content;
+  background-color: white;
+}
+ac-datagrid-body{
+  background: white;
+}
 ac-datagrid-header,ac-datagrid-body,ac-datagrid-footer{
   border:solid 1px #b0b0b0;
 }
@@ -18,7 +27,7 @@ ac-datagrid-header-cell:last-child{
   margin-right: 25px!important;
 }
 ac-datagrid-row{
-  height: 25px;
+  height: max-content;
 }
 ac-datagrid-cell,ac-datagrid-header-cell{
   overflow: hidden;
@@ -43,7 +52,10 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
   flex-direction: column;
   overflow-x: auto;
 }
-
+.ac-datagrid-cell-container{
+  padding-left:5px;
+  padding-right:5px;
+}
 .ac-datagrid-body{
   height: -webkit-fill-available;
   width: max-content;
@@ -102,9 +114,6 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
   gap: 20px;
   border-top:solid 1px #b0b0b0;
 }
-
-
-
 .ac-datagrid-row,.ac-datagrid-header-row{
   display: flex;
   flex-direction: row;
@@ -129,10 +138,8 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
 }
 
 .ac-datagrid-row-odd{
-  background-color: rgba(0, 0, 0, 0.025);
+  background-color: rgba(0, 0, 0, 0.05);
 }
-
-
 
 .ac-datagrid-header-cell-resize{
   cursor: ew-resize;

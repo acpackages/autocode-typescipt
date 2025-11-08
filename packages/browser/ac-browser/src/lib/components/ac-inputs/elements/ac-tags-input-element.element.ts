@@ -209,7 +209,8 @@ export class AcTagsInput extends AcInputBase {
     }
   }
 
-  override connectedCallback() {
+  override init() {
+    super.init();
     this.setupElements();
     this.attachEvents();
     this.append(this.inputElement);

@@ -19,7 +19,8 @@ export class AcSvgIcon extends AcElementBase {
     this.innerHTML = value;
   }
 
-  override connectedCallback(): void {
+  override init(): void {
+    super.init();
     if (!this.shadowRoot) {
       const shadow = this.attachShadow({ mode: 'open' });
 

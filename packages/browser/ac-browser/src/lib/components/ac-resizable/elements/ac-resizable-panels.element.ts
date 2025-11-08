@@ -32,17 +32,13 @@ export class AcResizablePanels extends AcElementBase {
     this.style.overflow = "hidden";
   }
 
-  override connectedCallback(): void {
+  override init(): void {
     this.direction = this.direction;
     setTimeout(() => {
       this.updateAllowed = true;
     }, 500);
-    console.dir(this);
   }
 
-  destroy() {
-    //
-  }
 
   identifyResizablePanels() {
     this.panels = [];

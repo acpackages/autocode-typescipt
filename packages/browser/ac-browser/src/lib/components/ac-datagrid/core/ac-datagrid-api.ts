@@ -240,17 +240,17 @@ export class AcDatagridApi {
         }
       }
     }
-    console.log(maxWidth);
     if (maxWidth > 0) {
-
       datagridColumn.width = maxWidth + 10;
     }
-    // this.setColumnWidth({ datagridColumn: datagridColumn, width: maxWidth });
   }
 
   deleteRow({ data, rowId, key, value, highlightCells = false }: { data?: any, rowId?: string, key?: string, value?: any, highlightCells?: boolean }) {
     const datagridRow: AcDatagridRow | undefined = this.dataManager.deleteRow({ data, rowId, key, value });
     if (datagridRow) {
+      if(datagridRow.element){
+        datagridRow.element.remove();
+      }
       const deleteHookArgs: IAcDatagridRowDeleteHookArgs = {
         datagridApi: this,
         datagridRow: datagridRow,

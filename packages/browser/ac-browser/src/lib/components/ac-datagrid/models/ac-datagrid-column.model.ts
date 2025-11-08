@@ -104,7 +104,6 @@ export class AcDatagridColumn {
     }
     this.datagridApi = datagridApi;
     this.index = index;
-    console.log(this);
   }
 
   getNextColumn():AcDatagridColumn | undefined{

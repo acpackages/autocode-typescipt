@@ -22,11 +22,11 @@ export class AcInput extends AcInputBase {
 
   override inputElement: HTMLInputElement = document.createElement('input');
 
-  override connectedCallback() {
+  override init() {
+    super.init();
     if(!this.hasAttribute('type')){
       this.type = 'text';
     }
-    super.connectedCallback();
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {

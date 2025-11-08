@@ -26,7 +26,8 @@ export class AcDatagridFooter extends AcElementBase {
     });
   }
 
-  override connectedCallback(): void {
+  override init(): void {
+    super.init();
     this.append(this.searchContainer);
     this.append(this.paginationContainer);
     this.setPagination();

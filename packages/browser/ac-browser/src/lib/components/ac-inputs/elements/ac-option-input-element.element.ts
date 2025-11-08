@@ -114,7 +114,7 @@ export class AcOptionInput extends AcInput {
     }
   }
 
-  override connectedCallback(): void {
+  override init(): void {
     if(!this.hasAttribute('type')){
       this.type = AcEnumInputType.Checkbox;
     }
@@ -133,7 +133,7 @@ export class AcOptionInput extends AcInput {
     this.inputElement.addEventListener('change', () => {
       this.checked = this.inputElement.checked;
     });
-    super.connectedCallback();
+    super.init();
     this.refreshChecked();
   }
 

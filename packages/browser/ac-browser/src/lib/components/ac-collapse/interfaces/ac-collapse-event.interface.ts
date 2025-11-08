@@ -1,5 +1,6 @@
 import { AcCollapse } from "../elements/ac-collapse.element";
 
 export interface IAcCollapseEvent{
-  collapse:AcCollapse
+  collapse:AcCollapse,
+  target:AcCollapse
 }

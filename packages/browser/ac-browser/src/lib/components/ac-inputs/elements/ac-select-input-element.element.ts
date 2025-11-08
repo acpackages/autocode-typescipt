@@ -101,11 +101,8 @@ export class AcSelectInput extends AcInputBase {
     callback(newOption);
   };
 
-  constructor() {
-    super();
-  }
-
-  override connectedCallback() {
+  override init() {
+    super.init();
     if (!this.hasAttribute('label-key')) this.labelKey = 'label';
     if (!this.hasAttribute('value-key')) this.valueKey = 'value';
 
@@ -141,7 +138,6 @@ export class AcSelectInput extends AcInputBase {
       options: { bufferCount: 3, elementHeight: this.optionHeight }
     });
     this.attachEvents();
-    super.connectedCallback();
   }
 
   private applyHighlightStyles() {

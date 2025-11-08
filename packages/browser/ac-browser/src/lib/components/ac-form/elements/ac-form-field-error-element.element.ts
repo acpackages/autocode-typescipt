@@ -4,7 +4,8 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 export class AcFormFieldErrorMessage extends AcElementBase {
   private originalMessageHtml = "";
 
-  override connectedCallback(): void {
+  override init(): void {
+    super.init();
     this.style.display = "none";
     this.originalMessageHtml = this.innerHTML;
   }

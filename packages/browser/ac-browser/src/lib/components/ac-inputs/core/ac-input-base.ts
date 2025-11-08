@@ -163,14 +163,6 @@ export class AcInputBase extends AcElementBase {
     super();
     this.elementInternals = this.attachInternals();
     this.inputElement.formAssociated = false;
-    setTimeout(() => {
-      acListenAllElementEvents({
-        element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
-          this.events.execute({ event: name, args: event });
-        }
-      });
-    }, 1);
-
   }
 
   attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -236,13 +228,14 @@ export class AcInputBase extends AcElementBase {
     this.style.display = 'contents';
     this.handleInput = this.handleInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.appendChild(this.inputElement);
+
     this.refreshReflectedAttributes();
     this.inputElement.addEventListener('input', this.handleInput);
     this.inputElement.addEventListener('change', this.handleChange);
   }
 
-  disconnectedCallback() {
+  override disconnectedCallback() {
+    super.disconnectedCallback();
     this.inputElement.removeEventListener('input', this.handleInput);
     this.inputElement.removeEventListener('change', this.handleChange);
   }
@@ -287,7 +280,6 @@ export class AcInputBase extends AcElementBase {
     return '';
   }
 
-
   handleChange(e: Event) {
     this.setValue(this.inputElement.value);
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
@@ -298,6 +290,16 @@ export class AcInputBase extends AcElementBase {
     this.setValue(this.inputElement.value);
     this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.events.execute({ event: AcEnumInputEvent.Input, args: this.value });
+  }
+
+  override init(): void {
+    super.init();
+    this.appendChild(this.inputElement);
+    acListenAllElementEvents({
+      element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
+        this.events.execute({ event: name, args: event });
+      }
+    });
   }
 
   reportValidity() { return this.elementInternals.reportValidity(); }

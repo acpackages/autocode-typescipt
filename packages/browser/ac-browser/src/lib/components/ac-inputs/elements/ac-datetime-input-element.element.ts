@@ -66,11 +66,11 @@ export class AcDatetimeInput extends AcInput{
     }
   }
 
-  override connectedCallback(): void {
+  override init(): void {
     if(!this.hasAttribute("type")){
       this.type = AcEnumInputType.DatetimeLocal;
     }
-    super.connectedCallback();
+    super.init();
   }
 }
 

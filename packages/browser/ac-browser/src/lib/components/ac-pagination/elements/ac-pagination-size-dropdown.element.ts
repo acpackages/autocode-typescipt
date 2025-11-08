@@ -14,8 +14,8 @@ export class AcPaginationSizeDropdown extends AcElementBase{
 
   private selectInput: any = document.createElement('select');
 
-  override connectedCallback() {
-    super.connectedCallback();
+  override init() {
+    super.init();
     acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageSizeSelect,element:this.selectInput});
     this.setSelectDropdownValues();
     this.innerHTML = "";

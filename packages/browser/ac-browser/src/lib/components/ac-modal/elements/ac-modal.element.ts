@@ -29,8 +29,8 @@ export class AcModal extends AcElementBase {
   private cloneEl?: HTMLElement;
   private originalBodyStyleOverflow: any;
 
-  override connectedCallback() {
-    super.connectedCallback();
+  override init() {
+    super.init();
     Object.assign(this.style, AC_MODAL_CONFIG.closeStyle);
   }
 

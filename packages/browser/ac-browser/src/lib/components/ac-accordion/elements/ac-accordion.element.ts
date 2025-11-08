@@ -7,36 +7,34 @@ import { AC_ACCORDION_TAG } from "../consts/ac-accordion-tag.const";
 import { AC_COLLAPSE_TAG } from "../../_components.export";
 import { AcElementBase } from "../../../core/ac-element-base";
 
-export class AcAccordion extends AcElementBase{
+export class AcAccordion extends AcElementBase {
   collapses: AcCollapse[] = [];
+  private collapseOpenListener = (event: any) => {
+    const collapse = event.target;
+    this.collapses.forEach((c) => {
+      if (c !== collapse) c.close();
+    });
+  }
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.style.display = 'contents';
-    this.init();
+    const collapseElements = Array.from(this.querySelectorAll(`${AC_COLLAPSE_TAG.collapse}`)) as AcCollapse[];
+    for (const collapse of collapseElements) {
+      this.collapses.push(collapse);
+      collapse.addEventListener(AcEnumCollapseEvent.Open,this.collapseOpenListener);
+    }
   }
 
-  init() {
-    const collapseElements = Array.from(this.querySelectorAll(`${AC_COLLAPSE_TAG.collapse}`)) as AcCollapse[];
-    for(const collapse of collapseElements){
-      this.collapses.push(collapse);
-      collapse.addEventListener(AcEnumCollapseEvent.Open,() => {
-          this.collapses.forEach((c) => {
-            if (c !== collapse) c.close();
-          });
-        }
-      );
+  override disconnectedCallback(): void {
+    for (const collapse of this.collapses) {
+      collapse.removeEventListener(AcEnumCollapseEvent.Open,this.collapseOpenListener)
     }
-    // const opened = this.collapses.find(c => c.hasAttribute(AcCollapseAttributeName.acCollapseOpen));
-    // if (opened) {
-    //   this.collapses.forEach((c:AcCollapse) => {
-    //     const collapse:any = c;
-    //     if (collapse !== opened){
-    //       collapse.close();
-    //     }
-    //   });
-    // }
+  }
+
+  override init(){
+    super.init();
+    this.style.display = 'contents';
   }
 }
 
-acRegisterCustomElement({tag:AC_ACCORDION_TAG.accordion,type:AcAccordion});
+acRegisterCustomElement({ tag: AC_ACCORDION_TAG.accordion, type: AcAccordion });

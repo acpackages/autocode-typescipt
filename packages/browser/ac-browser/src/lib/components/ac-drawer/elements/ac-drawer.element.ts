@@ -36,14 +36,8 @@ export class AcDrawer extends AcElementBase{
     this.setAttribute('show-backdrop',`${value}`);
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    // this.style.display = 'contents';
-    this.init();
-  }
-
-  private init() {
-    // Apply base styles
+  override init() {
+    super.init();
     const closeButton = this.querySelector('[ac-drawer-close]');
     if(closeButton ){
       closeButton.addEventListener('click',()=>{

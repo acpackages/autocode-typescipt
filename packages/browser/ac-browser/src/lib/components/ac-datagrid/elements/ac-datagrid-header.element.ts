@@ -29,10 +29,6 @@ export class AcDatagridHeader extends AcElementBase{
     this.style.minHeight = 'max-content';
   }
 
-  override connectedCallback(){
-    super.connectedCallback();
-  }
-
   setColumns(){
     this.innerHTML = "";
     const hookArgs:IAcDatagridHeaderHookArgs = {

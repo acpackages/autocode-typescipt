@@ -39,8 +39,8 @@ export class AcPaginationNavigationButtons extends AcElementBase{
     this.registerListeners();
   }
 
-  override connectedCallback(){
-
+  override init(){
+    super.init();
     this.validateButtons();
     this.renderPageLabel();
   }

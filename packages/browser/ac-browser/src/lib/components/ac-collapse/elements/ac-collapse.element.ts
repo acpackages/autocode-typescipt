@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents } from "@autocode-ts/autocode";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcCollapseAttributeName } from "../consts/ac-collapse-attribute-name.const";
 import { AcCollapseCssClassName } from "../consts/ac-collapse-css-class-name.const";
@@ -17,22 +16,7 @@ export class AcCollapse extends AcElementBase{
   isOpen: boolean = false;
   isAnimating: boolean = false;
   direction: AcEnumCollapseDirection = AcEnumCollapseDirection.TopToBottom;
-
-  override connectedCallback() {
-    super.connectedCallback();
-    this.style.display = 'contents';
-    const directionAttr = this.getAttribute(AcCollapseAttributeName.acCollapseDirection);
-    if (directionAttr && Object.values(AcEnumCollapseDirection).includes(directionAttr as AcEnumCollapseDirection)) {
-      this.direction = directionAttr as AcEnumCollapseDirection;
-    }
-    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
-      this.setToggleElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
-    }
-    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
-      this.setContentElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
-    }
-    this.initElement();
-  }
+  mutationObserver?:MutationObserver;
 
   close({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
     if (skipAnimation) {
@@ -73,13 +57,25 @@ export class AcCollapse extends AcElementBase{
           this.isAnimating = false;
         };
 
-        const eventParams: IAcCollapseEvent = { collapse: this };
+        const eventParams: IAcCollapseEvent = { collapse: this,target:this };
         this.events.execute({ event: AcEnumCollapseEvent.Close, args: eventParams });
       }
     }
   }
 
-  private initElement() {
+  override connectedCallback() {
+    super.connectedCallback();
+    this.style.display = 'contents';
+    const directionAttr = this.getAttribute(AcCollapseAttributeName.acCollapseDirection);
+    if (directionAttr && Object.values(AcEnumCollapseDirection).includes(directionAttr as AcEnumCollapseDirection)) {
+      this.direction = directionAttr as AcEnumCollapseDirection;
+    }
+    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
+      this.setToggleElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
+    }
+    if (this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)) {
+      this.setContentElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseContent}]`)! });
+    }
     acAddClassToElement({ element: this, class_: AcCollapseCssClassName.acCollapse });
     if (this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)) {
       this.setToggleElement({ element: this.querySelector(`[${AcCollapseAttributeName.acCollapseToggle}]`)! });
@@ -89,18 +85,12 @@ export class AcCollapse extends AcElementBase{
     } else {
       this.setContentElement({ element: this });
     }
+    this.observe();
+  }
 
-    const observer = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (m.attributeName === AcCollapseAttributeName.acCollapseOpen) {
-          const shouldBeOpen = this.hasAttribute(AcCollapseAttributeName.acCollapseOpen);
-          if (shouldBeOpen && !this.isOpen) this.open();
-          else if (!shouldBeOpen && this.isOpen) this.close();
-        }
-      }
-    });
-
-    observer.observe(this, { attributes: true });
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.unobserve();
   }
 
   open({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
@@ -136,7 +126,7 @@ export class AcCollapse extends AcElementBase{
         };
       }
 
-      const eventParams: IAcCollapseEvent = { collapse: this };
+      const eventParams: IAcCollapseEvent = { collapse: this,target:this };
       this.events.execute({ event: AcEnumCollapseEvent.Open, args: eventParams });
     }
   }
@@ -187,6 +177,20 @@ export class AcCollapse extends AcElementBase{
     return [];
   }
 
+  private observe(){
+    this.mutationObserver = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.attributeName === AcCollapseAttributeName.acCollapseOpen) {
+          const shouldBeOpen = this.hasAttribute(AcCollapseAttributeName.acCollapseOpen);
+          if (shouldBeOpen && !this.isOpen) this.open();
+          else if (!shouldBeOpen && this.isOpen) this.close();
+        }
+      }
+    });
+
+    this.mutationObserver.observe(this, { attributes: true });
+  }
+
   setContentElement({ element }: { element: HTMLElement }) {
     this.contentElement = element;
     acAddClassToElement({
@@ -223,8 +227,14 @@ export class AcCollapse extends AcElementBase{
     } else {
       this.open({ skipAnimation: !this.useAnimation });
     }
-    const eventParams: IAcCollapseEvent = { collapse: this };
+    const eventParams: IAcCollapseEvent = { collapse: this,target:this };
     this.events.execute({ event: AcEnumCollapseEvent.Toggle, args: eventParams });
+  }
+
+  unobserve(){
+    if(this.mutationObserver){
+      this.mutationObserver.disconnect();
+    }
   }
 }
 

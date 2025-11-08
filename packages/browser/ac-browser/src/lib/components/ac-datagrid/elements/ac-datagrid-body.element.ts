@@ -24,42 +24,45 @@ export class AcDatagridBody extends AcElementBase {
       }
     });
   }
-  scrollable!: AcScrollable;
+  scrollable: AcScrollable = new AcScrollable({ element: this, options: { bufferCount: 10 } });
 
   constructor() {
     super();
-    this.style.height = '100%';
+
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    this.scrollable = new AcScrollable({ element: this, options: { bufferCount: 30 } });
+  override init() {
+    super.init();
+    this.registerListeners();
+    this.setDisplayRows();
     const hookArgs: IAcDatagridBodyHookArgs = {
       datagridApi: this.datagridApi,
       datagridBody: this
     };
     this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyCreate, args: hookArgs });
-    this.registerListeners();
   }
 
 
   registerListeners() {
-    const datagrid = this.datagridApi?.datagrid;
-    const header = datagrid?.datagridHeader;
-    acLinkElementScroll({ source: this, destination: header });
+    // const datagrid = this.datagridApi?.datagrid;
+    // const header = datagrid?.datagridHeader;
+    // acLinkElementScroll({ source: this, destination: header });
   }
 
   setDisplayRows() {
-    this.scrollable.pause();
-    this.scrollable.clearAll();
-    for (const row of this.datagridApi.displayedDatagridRows) {
-      const datagridRow = new AcDatagridRowElement();
-      datagridRow.datagridApi = this.datagridApi;
-      datagridRow.datagridRow = row;
-      this.append(datagridRow);
+    if (this.datagridApi) {
+      this.innerHTML = "";
+      this.scrollable.pause();
+      this.scrollable.clearAll();
+      for (const row of this.datagridApi.displayedDatagridRows) {
+        const datagridRow = new AcDatagridRowElement();
+        datagridRow.datagridApi = this.datagridApi;
+        datagridRow.datagridRow = row;
+        this.append(datagridRow);
+      }
+      this.scrollable.resume();
+      this.scrollable.autoRegister();
     }
-    this.scrollable.resume();
-    this.scrollable.autoRegister();
   }
 }
 

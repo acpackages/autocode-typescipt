@@ -24,7 +24,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
 
   override inputElement: HTMLInputElement = document.createElement('input');
 
-  override connectedCallback() {
+  override init() {
     const options:any = {};
     this.opts = {
       triggerOnFocus: options.triggerOnFocus ?? true,
@@ -60,7 +60,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
       this.inputElement.addEventListener("dblclick", () => this.open());
     }
     this.setupIntersectionObserver();
-    super.connectedCallback();
+    super.init();
   }
 
   private applyBaseStyles() {
@@ -185,7 +185,8 @@ export class AcPopoutTextareaInput extends AcInputBase {
     }, duration);
   }
 
-  destroy() {
+  override destroy() {
+    super.destroy();
     this.close("api");
     this.io?.disconnect();
     this.inputElement.replaceWith(this.inputElement);

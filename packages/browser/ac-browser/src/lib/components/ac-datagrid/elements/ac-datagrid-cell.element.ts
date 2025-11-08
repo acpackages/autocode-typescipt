@@ -71,10 +71,6 @@ export class AcDatagridCellElement extends AcElementBase {
     this.checkCellValueChange(false);
   }
 
-  destroy() {
-    //
-  }
-
   enterEditMode() {
     this.initEditorElement();
     if (this.cellEditor) {

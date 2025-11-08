@@ -56,7 +56,6 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       this._filterGroup = value;
       value.on({
         event: 'change', callback: () => {
-          // console.log("Filters change");
           this.refreshRows();
         }
       });
@@ -94,7 +93,6 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     if (value != this._sortOrder) {
       value.on({
         event: 'change', callback: () => {
-          // console.log("Sort change");
           this.refreshRows();
         }
       });
@@ -169,7 +167,6 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         rowsCount = this.totalRows;
       }
       const endIndex = startIndex + (rowsCount - 1);
-      // console.info(`Getting rows between index ${startIndex} and ${endIndex}`);
       if (startIndex < this.totalRows && endIndex < this.totalRows) {
         available = true;
         for (let index = startIndex; index <= endIndex; index++) {
@@ -179,7 +176,6 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
               break;
             }
             else if (this.rows[index].isPlaceholder) {
-              // console.warn(`Found placeholder row at index ${index}`);
               available = false;
               break;
             }
@@ -187,13 +183,12 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         }
       }
       else {
-        // console.warn(`Index range is > total rows >>>>>>>> start index : ${startIndex}, end index : ${endIndex}`);
+        //
       }
     }
     else {
-      // console.warn("Total rows is 0");
+      //
     }
-    // console.log(`Available on demand row : ${available}`)
     return available;
   }
 
@@ -537,7 +532,6 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   }
 
   setRows({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
-    console.log(this);
     if (this.type == 'offline') {
       const hookArgs: IAcDataManagerDataChangeHookArgs = {
         data: data,

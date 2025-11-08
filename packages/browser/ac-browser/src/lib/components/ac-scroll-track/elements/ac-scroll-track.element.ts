@@ -9,9 +9,6 @@ export class AcScrollTrack extends AcElementBase{
     // private callback: ScrollTrackCallback;
     private observer?: IntersectionObserver;
 
-    constructor() {
-      super();
-    }
 
     /**
      * Registers the sections to be tracked by selector or direct HTMLElements

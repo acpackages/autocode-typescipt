@@ -60,8 +60,12 @@ export class AcDropdown extends AcElementBase {
 
   private chosenPosition: "auto" | "bottom" | "left" | "right" | "top" | string = "auto";
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
+  }
+
+  override init() {
+    super.init();
     this.style.display = "contents";
     this.setAttribute(AcDropdownAttributeName.acDropdownId, this.id);
     this.setAttribute(AcDropdownAttributeName.acDropdown, "");
@@ -74,10 +78,6 @@ export class AcDropdown extends AcElementBase {
     window.addEventListener("scroll", this.scrollHandler, true);
     window.addEventListener("resize", this.resizeHandler);
 
-    this.initElements();
-  }
-
-  private initElements() {
     this.querySelectorAll(`[${AcDropdownAttributeName.acDropdownTarget}]`).forEach((el) => {
       this.setTargetElement({ element: el as HTMLElement });
     });
@@ -130,7 +130,8 @@ export class AcDropdown extends AcElementBase {
     this.isOpen ? this.close() : this.open();
   }
 
-  destroy(): void {
+  override destroy(): void {
+    super.destroy();
     window.removeEventListener("scroll", this.scrollHandler, true);
     window.removeEventListener("resize", this.resizeHandler);
 

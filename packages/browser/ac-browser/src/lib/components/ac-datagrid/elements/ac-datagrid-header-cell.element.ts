@@ -69,6 +69,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
         this.setCellWidth();
       }
     });
+    this.initHeaderCell();
   }
 
   container: HTMLElement = document.createElement('div');
@@ -92,8 +93,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     this.registerListeners();
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
+  initHeaderCell(){
     this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellLeftContainer, element: this.leftContainer });
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellRightContainer, element: this.rightContainer });

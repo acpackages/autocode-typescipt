@@ -14,7 +14,6 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor{
   blur() {
     this.element.blur();
     this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
-    console.log(this);
   }
 
   destroy(): void {

@@ -89,15 +89,11 @@ export class AcPagination extends AcElementBase {
     });
   }
 
-  override connectedCallback() {
-    super.connectedCallback();
+  override init() {
+    super.init();
     this.displayedRows.pagination = this;
     this.navigationButtons.pagination = this;
     this.sizeDropdown.pagination = this;
-    this.initElement();
-  }
-
-  initElement() {
     acAddClassToElement({ class_: AcPaginationCssClassName.acPagination, element: this });
     this.innerHTML = "";
     this.append(this.sizeDropdown);

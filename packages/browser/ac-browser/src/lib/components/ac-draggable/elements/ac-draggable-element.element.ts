@@ -40,7 +40,6 @@ export class AcDraggableElement {
   constructor({ draggableApi, element }: { draggableApi: AcDraggableApi, element: HTMLElement }) {
     this.draggableApi = draggableApi;
     this.element = element;
-    this.initElement();
   }
 
   initElement(): void {

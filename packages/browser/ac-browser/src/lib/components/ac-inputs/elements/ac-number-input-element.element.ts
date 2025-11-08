@@ -70,11 +70,11 @@ export class AcNumberInput extends AcInput {
     }
   }
 
-  override connectedCallback() {
+  override init() {
     if(!this.hasAttribute('type')){
       this.type = 'number';
     }
-    super.connectedCallback();
+    super.init();
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {

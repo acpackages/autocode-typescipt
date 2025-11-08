@@ -16,18 +16,23 @@ export class AcDraggable extends AcElementBase {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.observeDOM();
-    this.initElement();
+    this.observe();
   }
 
-  private observeDOM(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.unobserve();
+  }
+
+  private observe(): void {
     this.mutationObserver = new MutationObserver(() => {
-      this.initElement();
+      this.init();
     });
     this.mutationObserver.observe(this, { childList: true, subtree: true });
   }
 
-  private initElement(): void {
+  override init(): void {
+    super.init();
     const draggables = this.querySelectorAll(`[${AcDraggableAttributeName.acDraggableElement}]`);
     const targets = this.querySelectorAll(`[${AcDraggableAttributeName.acDraggableTarget}]`);
     draggables.forEach((el) => {
@@ -46,7 +51,7 @@ export class AcDraggable extends AcElementBase {
     this.groups.delete(name);
   }
 
-  public destroy(): void {
+  public unobserve(): void {
     this.mutationObserver.disconnect();
   }
 }

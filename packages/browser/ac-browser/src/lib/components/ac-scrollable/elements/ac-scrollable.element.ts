@@ -16,6 +16,7 @@ export class AcScrollable {
   private scrollingElements: IAcScrollingElement[] = [];
   private scrollTop = 0;
   private isRendering: boolean = false;
+  private isWorking: boolean = true;
 
   constructor({ element, options = {} }: { element: HTMLElement, options?: IAcScrollableOptions }) {
     this.element = element;
@@ -67,8 +68,10 @@ export class AcScrollable {
   }
 
   private handleScroll() {
-    this.scrollTop = this.element.scrollTop;
-    this.render();
+    if (this.isWorking) {
+      this.scrollTop = this.element.scrollTop;
+      this.render();
+    }
   }
 
   private initObservers() {
@@ -140,7 +143,7 @@ export class AcScrollable {
     });
   }
 
-  moveElement({fromIndex,toIndex}:{fromIndex: number, toIndex: number}) {
+  moveElement({ fromIndex, toIndex }: { fromIndex: number, toIndex: number }) {
     if (
       fromIndex < 0 || fromIndex >= this.scrollingElements.length ||
       toIndex < 0 || toIndex >= this.scrollingElements.length
@@ -152,21 +155,24 @@ export class AcScrollable {
   }
 
   private registerScrollingElement(data: Partial<IAcScrollingElement> & Pick<IAcScrollingElement, 'element' | 'height'>) {
-    const id: string = Autocode.uuid();
-    data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
-    if (data.index == undefined) {
-      data.index = this.scrollingElements.length;
+    if (!data.element.hasAttribute(AcScrollableAttributeName.acScrollingElementId)) {
+      const id: string = Autocode.uuid();
+      data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
+      if (data.index == undefined) {
+        data.index = this.scrollingElements.length;
+      }
+      const scrollingElement: IAcScrollingElement = {
+        element: data.element,
+        id: id,
+        index: data.index,
+        height: data.height
+      };
+      this.scrollingElements.push(scrollingElement);
+      if (this.resizeObserver) {
+        this.resizeObserver.observe(data.element);
+      }
     }
-    const scrollingElement: IAcScrollingElement = {
-      element: data.element,
-      id: id,
-      index: data.index,
-      height: data.height
-    };
-    this.scrollingElements.push(scrollingElement);
-    if (this.resizeObserver) {
-      this.resizeObserver.observe(data.element);
-    }
+
   }
 
   registerExistingElements() {
@@ -186,7 +192,7 @@ export class AcScrollable {
     });
   }
 
-  removeElement({ element, id, index }: { index?: number, id?:string, element?: HTMLElement }){
+  removeElement({ element, id, index }: { index?: number, id?: string, element?: HTMLElement }) {
     if (index == undefined && element) {
       index = this.scrollingElements.findIndex(se => se.element === element);
     }
@@ -228,8 +234,8 @@ export class AcScrollable {
     }, 10);
   }
 
-  replaceElementAt({index,newElement}:{index: number, newElement: HTMLElement}) {
-  if (index < 0 || index >= this.scrollingElements.length) return;
+  replaceElementAt({ index, newElement }: { index: number, newElement: HTMLElement }) {
+    if (index < 0 || index >= this.scrollingElements.length) return;
     const old = this.scrollingElements[index];
     this.resizeObserver.unobserve(old.element);
     const height = newElement.offsetHeight || this.elementHeightFallback;
@@ -238,7 +244,7 @@ export class AcScrollable {
       element: newElement,
       height
     };
-    newElement.setAttribute(AcScrollableAttributeName.acScrollingElementId,this.scrollingElements[index].id);
+    newElement.setAttribute(AcScrollableAttributeName.acScrollingElementId, this.scrollingElements[index].id);
     this.resizeObserver.observe(newElement);
     this.render();
   }
@@ -255,10 +261,10 @@ export class AcScrollable {
     }
   }
 
-    /**
-   * Clears all elements from DOM and cache.
-   * Also unobserves everything to free memory.
-   */
+  /**
+ * Clears all elements from DOM and cache.
+ * Also unobserves everything to free memory.
+ */
   clearAll() {
     // Stop observers
     if (this.mutationObserver) this.mutationObserver.disconnect();
@@ -283,6 +289,7 @@ export class AcScrollable {
    * Keeps existing scrollable data intact.
    */
   pause() {
+    this.isWorking = false;
     if (this.mutationObserver) this.mutationObserver.disconnect();
     if (this.resizeObserver) this.resizeObserver.disconnect();
     if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
@@ -293,6 +300,7 @@ export class AcScrollable {
    * Reconnects all observers.
    */
   resume() {
+    this.isWorking = true;
     this.initObservers();
   }
 

@@ -1,20 +1,24 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcFormFieldErrorMessage } from "./ac-form-field-error-element.element";
 
-export class AcFormField extends HTMLElement {
+export class AcFormField extends AcElementBase {
   private inputElement?: HTMLInputElement | any;
   private mutationObserver!: MutationObserver;
   private inputListener: (() => void) | null = null;
 
-  connectedCallback(): void {
+  override connectedCallback(): void {
+    super.connectedCallback();
     this.style.display = 'contents';
     this.mutationObserver = new MutationObserver(() => this.bindInput());
     this.bindInput();
     this.mutationObserver.observe(this, { childList: true, subtree: true });
   }
 
-  disconnectedCallback(): void {
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.unbindInput();
     this.mutationObserver.disconnect();
   }
 

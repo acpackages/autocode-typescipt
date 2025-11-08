@@ -37,8 +37,8 @@ export class AcTabs extends AcElementBase{
   private boundClick?: (e: Event) => void;
   private boundKeydown?: (e: KeyboardEvent) => void;
 
-  override connectedCallback() {
-    super.connectedCallback();
+  override init() {
+    super.init();
     this.style.display = "contents";
     if (!this.hasAttribute('role')) this.setAttribute('role', 'tablist');
     const tabs = Array.from(this.querySelectorAll(`.${AcTabsCssClassName.acTab}, [${AcTabsAttributeName.acTab}]`));
@@ -101,7 +101,8 @@ export class AcTabs extends AcElementBase{
     this.events.execute({ event: AcTabsEvent.TabChange, args: { index, tab: newTab, pane: newPane } });
   }
 
-  public destroy() {
+  override destroy() {
+    super.destroy();
     if (this.boundClick) this.removeEventListener('click', this.boundClick);
     if (this.boundKeydown)
       this.removeEventListener('keydown', this.boundKeydown);
