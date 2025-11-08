@@ -80,7 +80,7 @@ export class AcDrawer extends AcElementBase{
     placements[this.placement]();
 
     if (this.showBackdrop) {
-      this.backdropEl = document.createElement('div');
+      this.backdropEl = this.ownerDocument.createElement('div');
       this.backdropEl.style.position = 'fixed';
       this.backdropEl.style.top = '0';
       this.backdropEl.style.left = '0';

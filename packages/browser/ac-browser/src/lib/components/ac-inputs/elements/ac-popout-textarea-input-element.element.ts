@@ -22,7 +22,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
   private boundDocMouseDown!: (e: MouseEvent) => void;
   private boundKeydown!: (e: KeyboardEvent) => void;
 
-  override inputElement: HTMLInputElement = document.createElement('input');
+  override inputElement: HTMLInputElement = this.ownerDocument.createElement('input');
 
   override init() {
     const options:any = {};
@@ -180,8 +180,8 @@ export class AcPopoutTextareaInput extends AcInputBase {
       this.isOpen = false;
       window.removeEventListener("scroll", this.boundScroll, true);
       window.removeEventListener("resize", this.boundResize, true);
-      document.removeEventListener("mousedown", this.boundDocMouseDown, true);
-      document.removeEventListener("keydown", this.boundKeydown, true);
+      this.ownerDocument.removeEventListener("mousedown", this.boundDocMouseDown, true);
+      this.ownerDocument.removeEventListener("keydown", this.boundKeydown, true);
     }, duration);
   }
 
@@ -200,7 +200,7 @@ export class AcPopoutTextareaInput extends AcInputBase {
 
   private ensureTextarea() {
     if (this.textarea) return;
-    const ta = document.createElement("textarea");
+    const ta = this.ownerDocument.createElement("textarea");
     this.textarea = ta;
     this.ownerDocument.body.appendChild(ta);
     ta.addEventListener("input", () => {
@@ -270,8 +270,8 @@ export class AcPopoutTextareaInput extends AcInputBase {
     this.queueRaf();
     window.addEventListener("scroll", this.boundScroll, true);
     window.addEventListener("resize", this.boundResize, true);
-    document.addEventListener("mousedown", this.boundDocMouseDown, true);
-    document.addEventListener("keydown", this.boundKeydown, true);
+    this.ownerDocument.addEventListener("mousedown", this.boundDocMouseDown, true);
+    this.ownerDocument.addEventListener("keydown", this.boundKeydown, true);
     requestAnimationFrame(() => {
       if (!this.textarea) return;
       const rect = this.inputElement.getBoundingClientRect();

@@ -18,7 +18,7 @@ export class AcResizable extends AcElementBase{
     const directions: any[] = Object.values(AcEnumResizeDirection);
 
     directions.forEach((dir) => {
-      const handle = document.createElement('div');
+      const handle = this.ownerDocument.createElement('div');
       handle.classList.add('ac-resize-handle', `ac-resize-${dir}`);
       this.styleHandle(handle, dir);
       handle.addEventListener('mousedown', (e) => this.startResize(e, dir));
@@ -140,12 +140,12 @@ export class AcResizable extends AcElementBase{
     };
 
     const onMouseUp = () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+      this.ownerDocument.removeEventListener('mousemove', onMouseMove);
+      this.ownerDocument.removeEventListener('mouseup', onMouseUp);
     };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    this.ownerDocument.addEventListener('mousemove', onMouseMove);
+    this.ownerDocument.addEventListener('mouseup', onMouseUp);
   }
 }
 

@@ -12,7 +12,7 @@ export class AcPaginationSizeDropdown extends AcElementBase{
     this._pagination = value;
   }
 
-  private selectInput: any = document.createElement('select');
+  private selectInput: any = this.ownerDocument.createElement('select');
 
   override init() {
     super.init();

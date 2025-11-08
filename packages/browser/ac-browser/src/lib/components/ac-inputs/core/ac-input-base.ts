@@ -155,7 +155,7 @@ export class AcInputBase extends AcElementBase {
 
   elementInternals: ElementInternals;
   hooks: AcHooks = new AcHooks();
-  inputElement: HTMLElement | any = document.createElement('input');
+  inputElement: HTMLElement | any = this.ownerDocument.createElement('input');
   isInputElementValidHtmlInput: boolean = true;
   reflectValueAttribute: boolean = true;
 

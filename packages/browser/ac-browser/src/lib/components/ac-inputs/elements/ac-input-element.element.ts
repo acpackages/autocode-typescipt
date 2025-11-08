@@ -20,7 +20,7 @@ export class AcInput extends AcInputBase {
     this.inputElement.setAttribute('type', value);
   }
 
-  override inputElement: HTMLInputElement = document.createElement('input');
+  override inputElement: HTMLInputElement = this.ownerDocument.createElement('input');
 
   override init() {
     super.init();

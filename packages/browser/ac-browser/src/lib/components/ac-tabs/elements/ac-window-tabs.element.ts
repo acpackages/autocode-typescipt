@@ -55,7 +55,7 @@ export class AcWindowTabs extends AcElementBase {
   public addTab({ tab}: {tab:AcWindowTab}): void {
     const tabContainer = this.querySelector('.ac-window-tabs-container');
     if (tabContainer) {
-      const tabElement = document.createElement('div');
+      const tabElement = this.ownerDocument.createElement('div');
       tabElement.className = `ac-window-tab-item`;
       tabElement.setAttribute('ac-draggable-lock-x-axis','');
       tabElement.setAttribute('ac-draggable-element', '');

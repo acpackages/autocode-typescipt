@@ -85,9 +85,9 @@ export class AcSelectInput extends AcInputBase {
   dataManager: AcDataManager = new AcDataManager();
   override isInputElementValidHtmlInput: boolean = false;
   protected dropdownContainer!: HTMLDivElement;
-  override inputElement: HTMLDivElement = document.createElement('div');
+  override inputElement: HTMLDivElement = this.ownerDocument.createElement('div');
   protected highlightingIndex = -1;
-  protected textInputElement: HTMLInputElement = document.createElement("input");
+  protected textInputElement: HTMLInputElement = this.ownerDocument.createElement("input");
   protected isDropdownOpen = false;
   protected listEl!: HTMLDivElement;
   protected maxDropdownHeight = 300;
@@ -119,7 +119,7 @@ export class AcSelectInput extends AcInputBase {
     });
     this.inputElement.appendChild(this.textInputElement);
 
-    this.dropdownContainer = document.createElement("div");
+    this.dropdownContainer = this.ownerDocument.createElement("div");
     Object.assign(this.dropdownContainer.style, {
       position: "fixed",
       display: "none",
@@ -131,7 +131,7 @@ export class AcSelectInput extends AcInputBase {
       boxSizing: "border-box",
     });
 
-    this.listEl = document.createElement("div");
+    this.listEl = this.ownerDocument.createElement("div");
     this.dropdownContainer.appendChild(this.listEl);
     this.scrollable = new AcScrollable({
       element: this.listEl,
@@ -246,7 +246,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private buildOptionElement(row: AcDataRow): HTMLElement {
-    const el = document.createElement("div");
+    const el = this.ownerDocument.createElement("div");
     el.dataset["optionIndex"] = String(row.index);
     el.style.padding = "4px 8px";
     el.style.cursor = "pointer";
@@ -266,7 +266,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private buildAddOptionElement(label: string): HTMLElement {
-    const el = document.createElement("div");
+    const el = this.ownerDocument.createElement("div");
     el.dataset["optionIndex"] = String(this.loadedCount);
     el.style.padding = "4px 8px";
     el.style.cursor = "pointer";

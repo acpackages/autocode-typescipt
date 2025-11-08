@@ -72,18 +72,18 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     this.initHeaderCell();
   }
 
-  container: HTMLElement = document.createElement('div');
+  container: HTMLElement = this.ownerDocument.createElement('div');
   draggablePlaceholder?: HTMLElement;
   filterElement: AcSvgIcon = new AcSvgIcon();
   isResizing: boolean = false;
-  leftContainer: HTMLElement = document.createElement('div');
+  leftContainer: HTMLElement = this.ownerDocument.createElement('div');
   resizeElement: AcSvgIcon = new AcSvgIcon();
-  rightContainer: HTMLElement = document.createElement('div');
+  rightContainer: HTMLElement = this.ownerDocument.createElement('div');
   sortElement: AcSvgIcon = new AcSvgIcon();
   startWidth: number = 0;
   startX = 0;
   swappingColumpPosition: boolean = false;
-  titleElement: HTMLElement = document.createElement('div');
+  titleElement: HTMLElement = this.ownerDocument.createElement('div');
   originalUserSelect: any;
 
   constructor() {
@@ -181,7 +181,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     // this.container.setAttribute('draggable', 'true');
     // this.container.addEventListener('dragstart', (event: DragEvent) => {
     //   if (this.draggablePlaceholder == undefined) {
-    //     this.draggablePlaceholder = document.createElement('div');
+    //     this.draggablePlaceholder = this.ownerDocument.createElement('div');
     //     acAddClassToElement({
     //       class_: AcDatagridCssClassName.acDatagridColumnDraggingPlaceholder,
     //       element: this.draggablePlaceholder

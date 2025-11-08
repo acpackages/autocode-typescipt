@@ -69,9 +69,9 @@ export class AcTagsInput extends AcInputBase {
 
   private _filteredOptions: any[] = [];
   private dropdownContainer!: HTMLDivElement;
-  override inputElement: HTMLDivElement = document.createElement('div');
-  private textInputElement: HTMLInputElement = document.createElement('input');
-  private tagsContainer: HTMLDivElement = document.createElement('div');
+  override inputElement: HTMLDivElement = this.ownerDocument.createElement('div');
+  private textInputElement: HTMLInputElement = this.ownerDocument.createElement('input');
+  private tagsContainer: HTMLDivElement = this.ownerDocument.createElement('div');
   private isDropdownOpen: boolean = false;
   private listEl!: HTMLDivElement;
   private maxDropdownHeight: number = 300;
@@ -112,7 +112,7 @@ export class AcTagsInput extends AcInputBase {
     });
     this.inputElement.appendChild(this.textInputElement);
 
-    this.dropdownContainer = document.createElement('div');
+    this.dropdownContainer = this.ownerDocument.createElement('div');
     Object.assign(this.dropdownContainer.style, {
       position: 'fixed',
       display: 'none',
@@ -124,7 +124,7 @@ export class AcTagsInput extends AcInputBase {
       boxSizing: 'border-box',
     });
 
-    this.listEl = document.createElement('div');
+    this.listEl = this.ownerDocument.createElement('div');
     this.dropdownContainer.appendChild(this.listEl);
     this.scrollable = new AcScrollable({
       element: this.listEl,
@@ -231,7 +231,7 @@ export class AcTagsInput extends AcInputBase {
     this.tagsContainer.innerHTML = '';
     const values = this.value.split(this.separator).map(v => v.trim()).filter(v => v);
     values.forEach(value => {
-      const tagEl = document.createElement('span');
+      const tagEl = this.ownerDocument.createElement('span');
       tagEl.classList.add('ac-tag-value');
       const labelObj = this._tagOptions.find(opt => opt[this.valueKey] === value);
       tagEl.textContent = labelObj ? labelObj[this.labelKey] : value;
@@ -245,7 +245,7 @@ export class AcTagsInput extends AcInputBase {
         alignItems: 'center',
       });
 
-      const removeBtn = document.createElement('span');
+      const removeBtn = this.ownerDocument.createElement('span');
       removeBtn.textContent = '×';
       removeBtn.style.cursor = 'pointer';
       removeBtn.style.marginLeft = '8px';
@@ -278,7 +278,7 @@ export class AcTagsInput extends AcInputBase {
   }
 
   private buildOptionElement(option: any, index: number): HTMLElement {
-    const el = document.createElement('div');
+    const el = this.ownerDocument.createElement('div');
     el.dataset['optionIndex'] = String(index);
     el.style.padding = '4px 8px';
     el.style.cursor = 'pointer';

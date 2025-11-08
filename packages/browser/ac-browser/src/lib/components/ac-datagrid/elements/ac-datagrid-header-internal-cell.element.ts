@@ -1,20 +1,20 @@
 
 export class AcDatagridHeaderInternalCellElement {
-  // cellContainer: HTMLElement = document.createElement('div');
+  // cellContainer: HTMLElement = this.ownerDocument.createElement('div');
   // private datagridApi: AcDatagridApi;
   // datagridColumn!: AcDatagridColumn;
   // draggablePlaceholder?: HTMLElement;
-  // element: HTMLElement = document.createElement('div');
-  // filterElement: HTMLElement = document.createElement('button');
+  // element: HTMLElement = this.ownerDocument.createElement('div');
+  // filterElement: HTMLElement = this.ownerDocument.createElement('button');
   // isResizing: boolean = false;
-  // leftContainer: HTMLElement = document.createElement('div');
-  // resizeElement: HTMLElement = document.createElement('span');
-  // rightContainer: HTMLElement = document.createElement('div');
-  // sortElement: HTMLElement = document.createElement('button');
+  // leftContainer: HTMLElement = this.ownerDocument.createElement('div');
+  // resizeElement: HTMLElement = this.ownerDocument.createElement('span');
+  // rightContainer: HTMLElement = this.ownerDocument.createElement('div');
+  // sortElement: HTMLElement = this.ownerDocument.createElement('button');
   // startWidth: number = 0;
   // startX = 0;
   // swappingColumpPosition: boolean = false;
-  // titleElement: HTMLElement = document.createElement('div');
+  // titleElement: HTMLElement = this.ownerDocument.createElement('div');
 
   // constructor({ datagridApi, datagridColumn }: { datagridApi: AcDatagridApi, datagridColumn: AcDatagridColumn }) {
   //   this.datagridColumn = datagridColumn;
@@ -113,14 +113,14 @@ export class AcDatagridHeaderInternalCellElement {
   //   });
 
   //   // Resizing mouse events
-  //   document.addEventListener('mousemove', (event: MouseEvent) => {
+  //   this.ownerDocument.addEventListener('mousemove', (event: MouseEvent) => {
   //     if (this.isResizing) {
   //       const newWidth = this.startWidth + (event.clientX - this.startX);
   //       this.datagridApi.setColumnWidth({ datagridColumn: this.datagridColumn, width: newWidth });
   //     }
   //   });
 
-  //   document.addEventListener('mouseup', () => {
+  //   this.ownerDocument.addEventListener('mouseup', () => {
   //     if (this.isResizing) this.isResizing = false;
   //   });
 
@@ -132,7 +132,7 @@ export class AcDatagridHeaderInternalCellElement {
   // //   this.cellContainer.setAttribute('draggable', 'true');
   // //   this.cellContainer.addEventListener('dragstart', (event: DragEvent) => {
   // //     if (this.draggablePlaceholder == undefined) {
-  // //       this.draggablePlaceholder = document.createElement('div');
+  // //       this.draggablePlaceholder = this.ownerDocument.createElement('div');
   // //       acAddClassToElement({
   // //         class_: AcDatagridCssClassName.acDatagridColumnDraggingPlaceholder,
   // //         element: this.draggablePlaceholder
@@ -149,12 +149,12 @@ export class AcDatagridHeaderInternalCellElement {
   // //       this.draggablePlaceholder.style.pointerEvents = 'none';
   // //       this.draggablePlaceholder.style.zIndex = '9999';
   // //     }
-  // //     document.body.appendChild(this.draggablePlaceholder);
+  // //     this.ownerDocument.body.appendChild(this.draggablePlaceholder);
   // //     event.dataTransfer?.setDragImage(this.draggablePlaceholder, 0, 0);
   // //     this.datagridApi.draggingColumn = this.datagridColumn;
   // //     this.datagridApi.datagrid.element.style.userSelect = 'none';
   // //     const stopDragging = () => {
-  // //       document.removeEventListener('dragend', stopDragging);
+  // //       this.ownerDocument.removeEventListener('dragend', stopDragging);
   // //       if (this.draggablePlaceholder) {
   // //         this.draggablePlaceholder.remove();
   // //         this.draggablePlaceholder = undefined;
@@ -162,7 +162,7 @@ export class AcDatagridHeaderInternalCellElement {
   // //       this.datagridApi.draggingColumn = undefined;
   // //       this.datagridApi.datagrid.element.style.userSelect = '';
   // //     };
-  // //     document.addEventListener('dragend', stopDragging);
+  // //     this.ownerDocument.addEventListener('dragend', stopDragging);
   // //   });
   // //   this.element.addEventListener('dragover', (event: DragEvent) => {
   // //     event.preventDefault();

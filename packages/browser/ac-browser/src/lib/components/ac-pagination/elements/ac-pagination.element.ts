@@ -70,7 +70,7 @@ export class AcPagination extends AcElementBase {
     }
   }
 
-  element: HTMLElement = document.createElement('div');
+  element: HTMLElement = this.ownerDocument.createElement('div');
   displayedRows: AcPaginationDisplayedRows = new AcPaginationDisplayedRows();
   navigationButtons: AcPaginationNavigationButtons = new AcPaginationNavigationButtons();
   sizeDropdown: AcPaginationSizeDropdown = new AcPaginationSizeDropdown();

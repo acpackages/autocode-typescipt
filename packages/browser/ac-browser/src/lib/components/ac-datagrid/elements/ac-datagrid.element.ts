@@ -9,7 +9,7 @@ import { AcDatagridFooter } from "./ac-datagrid-footer.element";
 import { AcDatagridHeader } from "./ac-datagrid-header.element";
 
 export class AcDatagrid extends AcElementBase{
-  containerElement:HTMLElement = document.createElement('div');
+  containerElement:HTMLElement = this.ownerDocument.createElement('div');
   datagridApi:AcDatagridApi = new AcDatagridApi({datagrid:this});
   datagridBody:AcDatagridBody =  new AcDatagridBody();
   datagridFooter:AcDatagridFooter =  new AcDatagridFooter();

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 export class AcDatagridInternalCellElement {
-  // cellContainer: HTMLElement = document.createElement('div');
+  // cellContainer: HTMLElement = this.ownerDocument.createElement('div');
   // datagridApi: AcDatagridApi;
   // datagridInternalCell!: AcDatagridInternalCell;
   // datagridInternalColumn!: AcDatagridInternalColumn;
   // datagridRow!: AcDatagridRow;
-  // element: HTMLElement = document.createElement('div');
+  // element: HTMLElement = this.ownerDocument.createElement('div');
   // isEditing: boolean = false;
   // swappingColumpPosition: boolean = false;
 

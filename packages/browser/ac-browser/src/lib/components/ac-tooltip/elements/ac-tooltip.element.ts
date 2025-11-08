@@ -28,7 +28,7 @@ export class AcTooltip {
       delay: 1,
       ...options
     };
-    this.tooltipEl = document.createElement('div');
+    this.tooltipEl = this.anchor.ownerDocument.createElement('div');
     this.tooltipEl.className = `ac-tooltip ${this.options.className || ''}`;
     this.tooltipEl.setAttribute('style', `background: rgba(23, 23, 23, 1);
           color: #fff;

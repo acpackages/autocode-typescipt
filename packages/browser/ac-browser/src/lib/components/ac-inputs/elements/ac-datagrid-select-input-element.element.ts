@@ -80,9 +80,9 @@ export class AcDatagridSelectInput extends AcInputBase {
   private _filteredOptions: any[] = [];
 
   private dropdownContainer!: HTMLDivElement;
-  override inputElement: HTMLDivElement = document.createElement('div');
+  override inputElement: HTMLDivElement = this.ownerDocument.createElement('div');
   private highlightingIndex = -1;
-  private textInputElement: HTMLInputElement = document.createElement("input");
+  private textInputElement: HTMLInputElement = this.ownerDocument.createElement("input");
   private isDropdownOpen = false;
   private dropdownHeight = 600;
   private dropdownWidth = 1200;
@@ -106,7 +106,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.inputElement.appendChild(this.textInputElement);
 
     // Floating dropdown container
-    this.dropdownContainer = document.createElement("div");
+    this.dropdownContainer = this.ownerDocument.createElement("div");
     Object.assign(this.dropdownContainer.style, {
       position: "fixed",
       resizable:true,
