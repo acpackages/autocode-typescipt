@@ -77,12 +77,15 @@ export class AcForm extends AcElementBase {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.form.removeEventListener('submit',this.submitCallback);
-    this.form.removeEventListener('invalid', this.invalidCallback);
-    this.form.removeEventListener("reset", this.resetCallback);
-    if (this.form && this.formAddedManually) {
-      this.form.remove();
+    if (this.form) {
+      this.form.removeEventListener('submit', this.submitCallback);
+      this.form.removeEventListener('invalid', this.invalidCallback);
+      this.form.removeEventListener("reset", this.resetCallback);
+      if (this.formAddedManually) {
+        this.form.remove();
+      }
     }
+
   }
 
   private getInputElements(): any[] {

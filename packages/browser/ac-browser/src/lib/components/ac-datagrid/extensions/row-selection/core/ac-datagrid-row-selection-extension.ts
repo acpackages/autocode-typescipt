@@ -87,15 +87,15 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     const datagridApi = args.datagridApi;
     const datagridHeader = args.datagridHeader;
     const datagriRowNumberCell = new AcDatagridRowSelectionHeaderCell({ datagridApi: datagridApi, datagridInternalColumn: this.datagridInternalColumn });
-    datagridHeader.headerRowElement.append(datagriRowNumberCell.element);
+    datagridHeader.append(datagriRowNumberCell.element);
   }
 
   private handleBeforeRowCellsCreated(args: IAcDatagridRowHookArgs) {
     const datagridApi = args.datagridApi;
     const datagridRow = args.datagridRow;
-    if (datagridRow.instance) {
+    if (datagridRow.element) {
       const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
-      datagridRow.instance.element.append(datagriRowNumberCell.element);
+      datagridRow.element.append(datagriRowNumberCell.element);
     }
   }
 
@@ -106,9 +106,9 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
       isSelected: false
     };
     datagridRow.extensionData[AcEnumDatagridExtension.RowSelection] = rowExtensionData;
-    if (datagridRow.instance) {
+    if (datagridRow.element) {
       const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
-      datagridRow.instance.element.append(datagriRowNumberCell.element);
+      datagridRow.element.append(datagriRowNumberCell.element);
     }
   }
 

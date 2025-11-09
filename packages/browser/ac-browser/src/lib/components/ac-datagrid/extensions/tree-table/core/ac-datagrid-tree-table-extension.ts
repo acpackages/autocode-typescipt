@@ -114,16 +114,16 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
     const datagridApi = args.datagridApi;
     const datagridHeader = args.datagridHeader;
     const datagriRowNumberCell = new AcDatagridTreeTableChildrenToggleHeaderCell({ datagridApi: datagridApi, datagridInternalColumn: this.datagridInternalColumn });
-    datagridHeader.headerRowElement.append(datagriRowNumberCell.element);
+    datagridHeader.append(datagriRowNumberCell.element);
   }
 
   handleBeforeRowCellsCreated(args: IAcDatagridRowHookArgs) {
     const datagridApi = args.datagridApi;
     const datagridRow = args.datagridRow;
 
-    if (datagridRow.instance) {
+    if (datagridRow.element) {
       const datagridCell = new AcDatagridTreeTableChildrenToggleCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn, extension: this });
-      datagridRow.instance.element.append(datagridCell.element);
+      datagridRow.element.append(datagridCell.element);
     }
   }
 

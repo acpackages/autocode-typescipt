@@ -23,7 +23,7 @@ export class AcDatagridTreeTableChildrenToggleCell {
     this.datagridApi = datagridApi;
     this.datagridInternalColumn = datagridInternalColumn;
     // this.extension = extension;
-    if (this.datagridRow.instance) {
+    if (this.datagridRow.element) {
       // if (this.datagridRow.instance.datagridTree) {
       //   this.datagridTree = datagridRow.instance!.datagridTree!;
       // }

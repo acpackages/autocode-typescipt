@@ -39,7 +39,7 @@ export class AcDatagridTree {
       if(this.collapse){
         this.isOpen = this.collapse.isOpen;
       }
-      if(this.datagridRow.instance){
+      if(this.datagridRow.element){
         // if(this.datagridRow.instance.datagridTreeChildrenToggle){
         //   this.datagridRow.instance.datagridTreeChildrenToggle.render();
         // }

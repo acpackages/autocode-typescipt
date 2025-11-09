@@ -31,7 +31,7 @@ export class AcRepeater{
   }
 
   init(){
-    this.repeaterApi.dataSource.getData();
+    this.repeaterApi.dataManager.getData();
   }
 
   private initElement(){
