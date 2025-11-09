@@ -654,6 +654,63 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_accountee_social_medias": {
+      "tableName": "act_accountee_social_medias",
+      "tableColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "social_media_id": {
+          "columnName": "social_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Social Media"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "accountee_social_meida_id": {
+          "columnName": "accountee_social_meida_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_social_medias"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "accountee_social_media"
+        }
+      }
+    },
     "act_accountee_websites": {
       "tableName": "act_accountee_websites",
       "tableColumns": {
@@ -7105,7 +7162,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Tax Rate"
+              "propertyValue": "Default Purchase Tax Rate"
             }
           }
         },
@@ -7115,7 +7172,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Taxing Scheme"
+              "propertyValue": "Default Purchase Taxing Scheme"
             }
           }
         },
@@ -7125,7 +7182,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale Tax Rate"
+              "propertyValue": "Default Sale Tax Rate"
             }
           }
         },
@@ -7135,7 +7192,17 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale Taxing Scheme"
+              "propertyValue": "Default Sale Taxing Scheme"
+            }
+          }
+        },
+        "default_uom_name": {
+          "columnName": "default_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Default UOM"
             }
           }
         }
@@ -21917,7 +21984,7 @@ export const dataDictionaryJson = {
           "columnSourceName": "json_object"
         }
       },
-      "viewQuery": "SELECT act_ledger_accounts.ledger_account_name,act_ledger_accounts.reflecting_statement,act_ledger_accounts.ledger_account_balance,json_object('media_path', media_path,'media_details', media_details) AS .payment_method_image_media,act_payment_methods.* FROM act_payment_methods LEFT JOIN act_ledger_accounts ON act_payment_methods.ledger_account_id = act_ledger_accounts.ledger_account_id LEFT JOIN act_medias ON act_payment_methods.payment_method_image_media_id = act_medias.media_id"
+      "viewQuery": "SELECT act_ledger_accounts.ledger_account_name,act_ledger_accounts.reflecting_statement,act_ledger_accounts.ledger_account_balance,json_object('media_path', media_path,'media_details', media_details) AS payment_method_image_media,act_payment_methods.* FROM act_payment_methods LEFT JOIN act_ledger_accounts ON act_payment_methods.ledger_account_id = act_ledger_accounts.ledger_account_id LEFT JOIN act_medias ON act_payment_methods.payment_method_image_media_id = act_medias.media_id"
     },
     "act_vw_product_barcode_links": {
       "viewName": "act_vw_product_barcode_links",
@@ -22197,6 +22264,14 @@ export const dataDictionaryJson = {
           },
           "columnSource": "function",
           "columnSourceName": "json_object"
+        },
+        "default_uom_name": {
+          "columnName": "default_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "default_uom_name"
         }
       },
       "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\njson_object('media_path', media_path,'media_details', media_details) AS product_category_image_media,\nact_product_categories.* FROM act_product_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_product_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_product_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_product_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_product_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id \nLEFT JOIN act_medias ON act_product_categories.product_category_image_media_id = act_medias.media_id"
@@ -23317,6 +23392,20 @@ export const dataDictionaryJson = {
       "destinationTable": "act_accountee_settings",
       "sourceColumn": "accountee_id",
       "sourceTable": "act_accountees"
+    },
+    {
+      "cascadeDeleteDestination": true,
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_social_medias",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "cascadeDeleteDestination": true,
+      "destinationColumn": "social_media_id",
+      "destinationTable": "act_accountee_social_medias",
+      "sourceColumn": "social_media_id",
+      "sourceTable": "act_social_medias"
     },
     {
       "cascadeDeleteDestination": true,

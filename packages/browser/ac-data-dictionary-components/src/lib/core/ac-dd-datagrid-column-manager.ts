@@ -177,7 +177,7 @@ export class AcDDDatagridColumnManager {
     return result;
   }
 
-  static registerColumnTypeInput({ columnType, columnDefinition }: { columnType: AcEnumDDColumnType, columnDefinition: IAcDatagridColumnDefinition }) {
+  static registerColumnTypeDefinition({ columnType, columnDefinition }: { columnType: AcEnumDDColumnType, columnDefinition: IAcDatagridColumnDefinition }) {
     AcDDDatagridColumnManager.typeColumnDefinition[columnType] = columnDefinition;
   }
 }
