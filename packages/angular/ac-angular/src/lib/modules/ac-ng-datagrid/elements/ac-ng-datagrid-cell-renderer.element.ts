@@ -8,100 +8,40 @@ import {
   TemplateRef,
   Type,
 } from '@angular/core';
-import { IAcDatagridCellRenderer, AcDatagridApi, AcDatagridCell, IAcDatagridCellElementArgs, AcDatagridAttributeName, acAddClassToElement, AcDatagridCssClassName, AcDatagridColumn } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellRenderer, AcDatagridCell, IAcDatagridCellElementArgs, AcDatagridAttributeName, acAddClassToElement, AcDatagridCssClassName, AcDatagridColumn, AcDatagridRow, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
+import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
 /**
  * Angular Datagrid Cell Renderer
  * Supports both TemplateRef and Component renderers.
  */
 export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
-  private datagridApi!: AcDatagridApi;
   private datagridCell!: AcDatagridCell;
-  private datagridRow!: AcDatagridCell;
   private datagridColumn!: AcDatagridColumn;
+  private datagridRow!: AcDatagridRow|any;
+  private columnDefinition:IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 
-  private injector: Injector;
+  private runtimeService!:AcRuntimeService;
   private appRef: ApplicationRef;
   private viewRef?: EmbeddedViewRef<any>;
   private componentRef?: ComponentRef<IAcDatagridCellRenderer>;
 
-  init(args: IAcDatagridCellElementArgs): void {
-    this.datagridApi = args.datagridApi;
-    this.datagridCell = args.datagridCell;
-    this.datagridColumn = args.datagridCell.datagridColumn;
-    this.appRef = this.datagridColumn.columnDefinition.cellRendererElementParams['___appRef___'];
-    this.injector = this.datagridColumn.columnDefinition.cellRendererElementParams['___injector___'];
-
-    this.initElement();
-
-    const colDef = this.datagridCell.datagridColumn.columnDefinition;
-
-    if (colDef.cellRendererTemplateRef) {
-      this.renderTemplate(colDef.cellRendererTemplateRef);
-    } else if (colDef.cellRendererComponent) {
-      const initArgs = {...args};
-      delete initArgs['___appRef___'];
-      delete initArgs['___injector___'];
-      this.renderComponent(colDef.cellRendererComponent,initArgs);
-    } else {
-      this.renderDefault();
+   blur() {
+    let continueOperation:boolean = true;
+    if(this.componentRef){
+      if(this.componentRef.instance.blur){
+        continueOperation = false;
+        this.componentRef.instance.blur();
+      }
+    }
+    if(continueOperation){
+      const firstChild = this.element.children[0] as HTMLElement;
+      firstChild.blur();
     }
   }
 
-  /** Initialize base element */
-  private initElement() {
-    acAddClassToElement({
-      class_: AcDatagridCssClassName.acDatagridCellRenderer,
-      element: this.element,
-    });
-
-    this.element.style.height = '100%';
-    this.element.style.width = '100%';
-  }
-
-  /** Render Angular TemplateRef */
-  private renderTemplate(template: TemplateRef<any>) {
-    this.clear();
-    const context = {
-      $implicit: (this.datagridCell.datagridRow as any).data,
-      datagridCell:this.datagridCell,
-      datagridRow: this.datagridCell.datagridRow,
-      datagridColumn: this.datagridCell.datagridColumn,
-      value:(this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field],
-    }
-    this.viewRef = template.createEmbeddedView(context);
-    this.appRef?.attachView(this.viewRef);
-
-    for (const node of this.viewRef.rootNodes) {
-      this.element.appendChild(node);
-    }
-  }
-
-  /** Render Angular Component dynamically */
-  private renderComponent(componentType: Type<IAcDatagridCellRenderer>,args: IAcDatagridCellElementArgs) {
-    this.clear();
-
-    this.componentRef = createComponent(componentType, {
-      environmentInjector: this.injector as any,
-    });
-
-
-    const instance = this.componentRef.instance;
-    instance.init(args);
-
-    this.element.appendChild(this.componentRef.location.nativeElement);
-  }
-
-  /** Fallback plain text renderer */
-  private renderDefault() {
-    this.element.innerText =
-      (this.datagridCell.datagridRow as any).data[
-        this.datagridCell.datagridColumn.columnDefinition.field
-      ] ?? '';
-  }
-
-  /** Clears view/component */
   private clear() {
     if (this.viewRef) {
       this.viewRef.destroy();
@@ -114,17 +54,30 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     this.element.innerHTML = '';
   }
 
-  /** Called when grid refreshes */
-  refresh(args: IAcDatagridCellElementArgs): void {
-    this.datagridCell = args.datagridCell;
-    const colDef = this.datagridCell.datagridColumn.columnDefinition;
+  destroy(): void {
+    if (this.viewRef) {
+      this.viewRef.destroy();
+    }
+    if (this.componentRef) {
+      if(this.componentRef.instance.destroy){
+        this.componentRef.instance.destroy();
+      }
+      this.componentRef.destroy();
+    }
+    this.element.remove();
+  }
 
-    if (colDef.cellRendererTemplateRef) {
-      this.renderTemplate(colDef.cellRendererTemplateRef);
-    } else if (colDef.cellRendererComponent) {
-      this.renderComponent(colDef.cellRendererComponent,args);
-    } else {
-      this.renderDefault();
+  focus(): void {
+    let continueOperation:boolean = true;
+    if(this.componentRef){
+      if(this.componentRef.instance.focus){
+        continueOperation = false;
+        this.componentRef.instance.focus();
+      }
+    }
+    if(continueOperation){
+      const firstChild = this.element.children[0] as HTMLElement;
+      firstChild.focus();
     }
   }
 
@@ -132,8 +85,76 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     return this.element;
   }
 
-  destroy(): void {
-    this.clear();
-    this.element.remove();
+  init(args: IAcDatagridCellElementArgs): void {
+    this.datagridCell = args.datagridCell;
+    this.datagridColumn = args.datagridCell.datagridColumn;
+    this.datagridRow = args.datagridCell.datagridRow;
+    this.columnDefinition = this.datagridColumn.columnDefinition;
+    this.appRef = this.datagridColumn.columnDefinition.cellRendererElementParams['___appRef___'];
+    this.runtimeService = this.datagridColumn.columnDefinition.cellRendererElementParams['___runtimeService___'];
+
+    this.element.style.display = 'contents';
+
+    if (this.columnDefinition.cellRendererTemplateRef) {
+      this.renderTemplate(this.columnDefinition.cellRendererTemplateRef);
+    } else if (this.columnDefinition.cellRendererComponent) {
+      const initArgs = {...args};
+      delete initArgs['___appRef___'];
+      delete initArgs['___runtimeService___'];
+      this.renderComponent(this.columnDefinition.cellRendererComponent,initArgs);
+    } else {
+      this.renderDefault();
+    }
   }
+
+  refresh(args: IAcDatagridCellElementArgs): void {
+    this.datagridCell = args.datagridCell;
+    const colDef = this.datagridCell.datagridColumn.columnDefinition;
+
+    if(this.componentRef){
+      this.componentRef.instance.refresh(args);
+    }
+    else if (colDef.cellRendererTemplateRef) {
+      this.renderTemplate(colDef.cellRendererTemplateRef);
+    } else {
+      this.renderDefault();
+    }
+  }
+
+  private renderComponent(componentType: Type<IAcDatagridCellRenderer>,args: IAcDatagridCellElementArgs) {
+    this.clear();
+    const properties = this.columnDefinition.cellRendererComponentProperties ? this.columnDefinition.cellRendererComponentProperties : {};
+    this.componentRef = this.runtimeService.createComponent(componentType,properties);
+    const instance = this.componentRef.instance;
+    if(instance.init){
+      instance.init(args);
+    }
+
+    this.element.appendChild(this.componentRef.location.nativeElement);
+  }
+
+  private renderDefault() {
+    this.element.innerText =
+      this.datagridRow.data[
+        this.datagridCell.datagridColumn.columnDefinition.field
+      ] ?? '';
+  }
+
+  private renderTemplate(template: TemplateRef<any>) {
+    this.clear();
+    const context = {
+      $implicit: this.datagridRow.data,
+      datagridCell:this.datagridCell,
+      datagridRow: this.datagridCell.datagridRow,
+      datagridColumn: this.datagridCell.datagridColumn,
+      value:this.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field],
+    }
+    this.viewRef = template.createEmbeddedView(context);
+    this.appRef?.attachView(this.viewRef);
+
+    for (const node of this.viewRef.rootNodes) {
+      this.element.appendChild(node);
+    }
+  }
+
 }

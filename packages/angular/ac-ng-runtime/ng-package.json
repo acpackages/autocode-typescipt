@@ -6,7 +6,6 @@
   },
   "allowedNonPeerDependencies": [
     "@autocode-ts/autocode",
-    "@autocode-ts/ac-angular",
     "@autocode-ts/ac-extensions",
     "typescript",
     "tslib"

@@ -3,8 +3,7 @@
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { AcBase, AutocodeService } from 'packages/angular/ac-angular/src/index';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { AcRuntimeService } from '../../services/ac-runtime.service';
 
 @Component({
@@ -13,25 +12,21 @@ import { AcRuntimeService } from '../../services/ac-runtime.service';
     styleUrl: './ac-runtime.component.css',
     standalone: false
 })
-export class AcBuilderRuntimeComponent extends AcBase{
+export class AcBuilderRuntimeComponent{
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
   @Input() component:any;
   @Input() componentProperties:any = {};
   @Output() onComponentCreated: EventEmitter<any> = new EventEmitter<any>();
-  override commentElementTag: boolean = true;
   componentInstance:any;
   componentRef:any;
 
   constructor(
-    public acRuntimeService:AcRuntimeService,
-    autocodeService:AutocodeService,
-    elementRef:ElementRef
+    public acRuntimeService:AcRuntimeService
   ) {
-    super(elementRef,autocodeService);
   }
 
-  override ngOnInit() {
+  ngOnInit() {
     this.component = this.acRuntimeService.getComponentRef(this.component);
     this.container.clear();
     this.componentRef = this.container.createComponent(this.component);

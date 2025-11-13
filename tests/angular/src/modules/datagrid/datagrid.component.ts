@@ -8,12 +8,14 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, Out
 import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRow, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
-import { AcNgDatagridComponent, AcNgDatagridModule } from '@autocode-ts/ac-angular';
+import { AcNgDatagridComponent, AcNgDatagridModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../data/customers-data';
+import { ActionColumnComponent } from '../../components/action-column/action-column.component';
+import { ComponentsModule } from '../../components/components.module';
 
 @Component({
   selector: 'app-datagrid',
-  imports: [CommonModule, AcNgDatagridModule],
+  imports: [CommonModule, AcNgDatagridModule,ComponentsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './datagrid.component.html',
   styleUrl: './datagrid.component.scss',
@@ -24,7 +26,8 @@ export class DatagridComponent {
   @ViewChild('idTemplate', { static: true }) idTemplateRef!: TemplateRef<any>;
   data?: any;
 
-  columnDefinitions:IAcDatagridColumnDefinition[] = [
+  columnDefinitions:IAcNgDatagridColumnDefinition[] = [
+    { field: 'action', title: "Action", autoWidth: true, allowEdit: false,cellEditorComponent: ActionColumnComponent,cellEditorComponentProperties:{showEdit:false},useCellEditorForRenderer:true},
     { field: 'index', title: "SrNo.", autoWidth: true, allowEdit: false,cellRendererTemplateRef: this.idTemplateRef},
     { field: 'first_name', title: "First Name", autoWidth: true, allowEdit: true },
     { field: 'last_name', title: "Last Name", autoWidth: true, allowEdit: true },
@@ -42,7 +45,18 @@ export class DatagridComponent {
 
   constructor(private elementRef: ElementRef) {
     console.log(this);
-    this.setLocalData();
+    this.setOnDemandData();
+  }
+
+  handleDatagridInit(){
+    const button = document.createElement('button');
+    button.setAttribute('class','btn btn-primary');
+    button.setAttribute('type','button');
+    button.innerHTML='Add Row';
+    button.addEventListener('click',()=>{
+      this.datagrid.datagridApi.addRow();
+    });
+    this.datagrid.datagrid.datagridFooter.append(button);
   }
 
   setLocalData() {
@@ -52,7 +66,7 @@ export class DatagridComponent {
     for (let i = 0; i < multiplier; i++) {
       for (const row of customersData) {
         index++;
-        data.push({ index: index, ...row })
+        data.push({ index: index, ...row });
       }
     }
     this.data = data;
@@ -65,7 +79,6 @@ export class DatagridComponent {
     let index: number = 0;
     for (let i = 0; i < multiplier; i++) {
       for (const row of customersData) {
-        console.log(row);
         index++;
         data.push({ index: index, ...row })
       }

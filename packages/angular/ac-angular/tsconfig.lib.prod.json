@@ -1,23 +1,20 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "module": "es2015",
-    "declarationMap": false,
-    "strict":false,
-    "skipLibCheck":true,
-    "skipDefaultLibCheck": true,
-    "noImplicitAny": false,
+    // "declarationMap": false,
+    // "sourceMap": false,
+    "declaration": true,  // Ensures .d.ts emissions include augmentations
+    "declarationMap": true,
+    "skipLibCheck": true,
     "paths": {
       "@autocode-ts/autocode": ["dist/packages/common/autocode"],
       "@autocode-ts/ac-browser": ["dist/packages/browser/ac-browser"],
       "@autocode-ts/ac-extensions": ["dist/packages/common/ac-extensions"],
+      "@autocode-ts/ac-ng-runtime": ["dist/packages/angular/ac-ng-runtime"],
       "@autocode-ts/ac-template-engine": ["dist/packages/browser/ac-template-engine"]
     }
   },
-
-  "angularCompilerOptions": {
-    "compilationMode": "partial",
-    "sourceMap": false,
-    "typeChecking": false
-  }
+  "include": [
+    "src/**/*.d.ts",
+  ]
 }

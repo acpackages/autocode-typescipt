@@ -1,9 +1,9 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
-import { AcBase, AutocodeService } from 'packages/angular/ac-angular/src/index';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'ac-repeater',
@@ -11,19 +11,17 @@ import { AcBase, AutocodeService } from 'packages/angular/ac-angular/src/index';
     styleUrl: './ac-iframe-content.component.css',
     standalone: false
 })
-export class AcIframeContentComponent extends AcBase{
+export class AcIframeContentComponent implements AfterViewInit,OnDestroy{
   @ViewChild('iframeElement') iframeElement!: ElementRef;
   @ViewChild('contentContainer') contentContainer!: ElementRef;
   @Input() stylesheetUrls: string[] = [];
   @Input() scriptUrls: string[] = [];
   private mutationObserver!: MutationObserver;
 
-  constructor(autocodeService:AutocodeService,elementRef:ElementRef,private changeDetectorRef: ChangeDetectorRef, private renderer: Renderer2) {
-    super(elementRef,autocodeService);
+  constructor(elementRef:ElementRef,private changeDetectorRef: ChangeDetectorRef, private renderer: Renderer2) {
   }
 
-  override ngAfterViewInit() {
-    super.ngAfterViewInit();
+  ngAfterViewInit() {
     this.updateIframeContent();
     this.mutationObserver = new MutationObserver(() => this.updateIframeContent());
     this.mutationObserver.observe(this.contentContainer.nativeElement, {
@@ -59,8 +57,7 @@ export class AcIframeContentComponent extends AcBase{
     iframeDoc.close();
   }
 
-  override ngOnDestroy() {
-    super.ngOnDestroy();
+  ngOnDestroy() {
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
     }

@@ -9,6 +9,7 @@
     "@angular/cdk": "^20.0.4",
     "@autocode-ts/ac-browser": "^0.0.1",
     "@autocode-ts/ac-extensions": "^0.0.6",
+    "@autocode-ts/ac-ng-runtime": "^0.0.1",
     "@autocode-ts/ac-template-engine": "^0.0.1",
     "@autocode-ts/autocode": "^0.0.6",
     "@primeng/themes": "^19.0.7",

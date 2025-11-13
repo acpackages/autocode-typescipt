@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'action-column',
@@ -10,6 +11,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
     standalone: false
 })
 export class ActionColumnComponent {
+  @Input() showDelete:boolean = true;
+  @Input() showEdit:boolean = true;
+
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
 

@@ -2,8 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { CommonModule } from '@angular/common';
-import { Injectable, Injector, NgModuleRef, Type, StaticProvider, ComponentFactoryResolver, ApplicationRef, ComponentRef, Compiler, Component, NgModule, EventEmitter, Input, Output, ViewContainerRef, ChangeDetectorRef, Directive, ElementRef, Inject } from '@angular/core';
-import { AutocodeService } from 'packages/angular/ac-angular/src';
+import { Injectable, Injector, NgModuleRef, Type, StaticProvider, ComponentFactoryResolver, ApplicationRef, ComponentRef, Compiler, Component, EventEmitter, Input, Output, ViewContainerRef, ChangeDetectorRef, ElementRef } from '@angular/core';
 import * as ts from 'typescript';
 
 @Injectable({ providedIn: 'root' })
@@ -30,7 +29,6 @@ export class AcRuntimeService {
     private appRef: ApplicationRef,
     private injector: Injector,
     private compiler: Compiler,
-    private autocodeService:AutocodeService
 
   ) { }
 
@@ -235,11 +233,6 @@ export class AcRuntimeService {
       'SimpleRuntimeComponentBaseClass',
       `return (${transpiledCode})`
     )(ChangeDetectorRef, ElementRef, EventEmitter, Input, Output, AcRuntimeComponentBaseClass);
-    Object.defineProperty(componentClass.prototype, 'simplify', {
-      value: this.autocodeService,
-      enumerable: true,
-      configurable: true,
-    });
     // const componentClass = new Function(transpiledCode)()
     if (inputs) {
       for (const inputName in inputs) {

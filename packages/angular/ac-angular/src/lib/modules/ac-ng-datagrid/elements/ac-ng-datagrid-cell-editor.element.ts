@@ -1,31 +1,41 @@
-import {
-  ApplicationRef,
-  ComponentRef,
-  createComponent,
-  EmbeddedViewRef,
-  Injector,
-  TemplateRef,
-  Type,
-} from '@angular/core';
-import { AcDatagridApi, AcDatagridCell, AcDatagridColumn, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from '@autocode-ts/ac-browser';
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ApplicationRef,ComponentRef,EmbeddedViewRef,Injector,TemplateRef,Type } from '@angular/core';
+import { AcDatagridCell, AcDatagridColumn, AcDatagridRow, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from '@autocode-ts/ac-browser';
+import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
+import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
 /**
  * Angular-compatible Datagrid Cell Editor.
  * Supports both TemplateRef and Component-based editors.
  */
 export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
-  private datagridApi!: AcDatagridApi;
   private datagridCell!: AcDatagridCell;
   private datagridColumn!: AcDatagridColumn;
-  private datagridRow!: AcDatagridColumn;
+  private datagridRow!: AcDatagridRow|any;
+  private columnDefinition:IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 
-  private injector: Injector;
   private appRef: ApplicationRef;
   private viewRef?: EmbeddedViewRef<any>;
   private componentRef?: ComponentRef<IAcDatagridCellEditor>;
+  private runtimeService!:AcRuntimeService;
 
-   private clear() {
+  blur() {
+    let continueOperation:boolean = true;
+    if(this.componentRef){
+      if(this.componentRef.instance.blur){
+        continueOperation = false;
+        this.componentRef.instance.blur();
+      }
+    }
+    if(continueOperation){
+      const firstChild = this.element.children[0] as HTMLElement;
+      firstChild.blur();
+    }
+  }
+
+  private clear() {
     if (this.viewRef) {
       this.viewRef.destroy();
       this.viewRef = undefined;
@@ -37,79 +47,31 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     this.element.innerHTML = '';
   }
 
-  init(args: IAcDatagridCellElementArgs): void {
-    this.datagridApi = args.datagridApi;
-    this.datagridCell = args.datagridCell;
-    this.datagridColumn = args.datagridCell.datagridColumn;
-    this.appRef = this.datagridColumn.columnDefinition.cellRendererElementParams['___appRef___'];
-    this.injector = this.datagridColumn.columnDefinition.cellRendererElementParams['___injector___'];
-
-    const colDef = this.datagridCell.datagridColumn.columnDefinition;
-
-    // this.element.classList.add(AcDatagridCssClassName.acDatagridCellEditor);
-    this.element.style.height = '100%';
-    this.element.style.width = '100%';
-
-    // Decide which to render
-    if (colDef.cellEditorTemplateRef) {
-      this.renderTemplate(colDef.cellEditorTemplateRef);
-    } else if (colDef.cellEditorComponent) {
-      const initArgs = {...args};
-      delete initArgs['___appRef___'];
-      delete initArgs['___injector___'];
-      this.renderComponent(colDef.cellEditorComponent,initArgs);
-    } else {
-      this.renderDefault();
+  destroy(): void {
+    if (this.viewRef) {
+      this.viewRef.destroy();
     }
+    if (this.componentRef) {
+      if(this.componentRef.instance.destroy){
+        this.componentRef.instance.destroy();
+      }
+      this.componentRef.destroy();
+    }
+    this.element.remove();
   }
 
-  /** Render Angular TemplateRef */
-  private renderTemplate(template: TemplateRef<any>) {
-    this.clear();
-    const context = {
-      $implicit: (this.datagridCell.datagridRow as any).data,
-      datagridCell:this.datagridCell,
-      datagridRow: this.datagridCell.datagridRow,
-      datagridColumn: this.datagridCell.datagridColumn,
-      value:(this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field],
+  focus() {
+    let continueOperation:boolean = true;
+    if(this.componentRef){
+      if(this.componentRef.instance.focus){
+        continueOperation = false;
+        this.componentRef.instance.focus();
+      }
     }
-    this.viewRef = template.createEmbeddedView(context);
-    this.appRef?.attachView(this.viewRef);
-
-    for (const node of this.viewRef.rootNodes) {
-      this.element.appendChild(node);
+    if(continueOperation){
+      const firstChild = this.element.children[0] as HTMLElement;
+      firstChild.focus();
     }
-  }
-
-  /** Render Angular Component dynamically */
-  private renderComponent(componentType: Type<IAcDatagridCellEditor>,args: IAcDatagridCellElementArgs) {
-    this.clear();
-
-    this.componentRef = createComponent(componentType, {
-      environmentInjector: this.injector as any,
-    });
-
-
-    const instance = this.componentRef.instance;
-    instance.init(args);
-
-    this.element.appendChild(this.componentRef.location.nativeElement);
-  }
-
-  /** Fallback default editor (plain input) */
-  private renderDefault() {
-    const input = document.createElement('input');
-    input.style.width = '100%';
-    input.value =
-      (this.datagridCell.datagridRow as any).data[
-        this.datagridCell.datagridColumn.columnDefinition.field
-      ];
-    input.addEventListener('input', () => {
-      (this.datagridCell.datagridRow as any).data[
-        this.datagridCell.datagridColumn.columnDefinition.field
-      ] = input.value;
-    });
-    this.element.appendChild(input);
   }
 
   getElement(): HTMLElement {
@@ -117,33 +79,86 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
   }
 
   getValue(): any {
-    return (this.datagridCell.datagridRow as any).data[
-      this.datagridCell.datagridColumn.columnDefinition.field
-    ];
+    if(this.componentRef){
+      return this.componentRef.instance.getValue();
+    }
+    return this.datagridRow.data[this.datagridCell.columnKey];
   }
 
-  focus() {
-    const input = this.element.querySelector('input, textarea') as HTMLElement;
-    if (input) input.focus();
-  }
-
-  blur() {
-    const input = this.element.querySelector('input, textarea') as HTMLInputElement;
-    if (input) {
-      (this.datagridCell.datagridRow as any).data[
-        this.datagridCell.datagridColumn.columnDefinition.field
-      ] = input.value;
+  init(args: IAcDatagridCellElementArgs): void {
+    this.datagridCell = args.datagridCell;
+    this.datagridColumn = args.datagridCell.datagridColumn;
+    this.datagridRow = args.datagridCell.datagridRow;
+    this.columnDefinition = this.datagridColumn.columnDefinition;
+    this.appRef = this.columnDefinition.cellEditorElementParams['___appRef___'];
+    this.runtimeService = this.columnDefinition.cellEditorElementParams['___runtimeService___'];
+    const colDef = this.datagridCell.datagridColumn.columnDefinition;
+    this.element.style.height = '100%';
+    this.element.style.width = '100%';
+    if (colDef.cellEditorTemplateRef) {
+      this.renderTemplate(colDef.cellEditorTemplateRef);
+    } else if (colDef.cellEditorComponent) {
+      const initArgs = {...args};
+      delete initArgs['___appRef___'];
+      delete initArgs['___runtimeService___'];
+      this.renderComponent(colDef.cellEditorComponent,initArgs);
+    } else {
+      this.renderDefault();
     }
   }
 
+
   refresh(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;
-    if (this.viewRef) this.viewRef.context.row = this.datagridCell.datagridRow;
+    if (this.viewRef){
+      this.viewRef.context.row = this.datagridCell.datagridRow;
+    }
+    else if(this.componentRef){
+      this.componentRef.instance.refresh(args);
+    }
   }
 
-  destroy(): void {
-    if (this.viewRef) this.viewRef.destroy();
-    if (this.componentRef) this.componentRef.destroy();
-    this.element.remove();
+  private renderComponent(componentType: Type<IAcDatagridCellEditor>,args: IAcDatagridCellElementArgs) {
+    this.clear();
+    const properties = this.columnDefinition.cellEditorComponentProperties ? this.columnDefinition.cellEditorComponentProperties : {};
+    this.componentRef = this.runtimeService.createComponent(componentType,properties);
+    const instance = this.componentRef.instance;
+    if(instance.init){
+      instance.init(args);
+    }
+
+    this.element.appendChild(this.componentRef.location.nativeElement);
+  }
+
+  private renderDefault() {
+    const input = document.createElement('input');
+    input.style.width = '100%';
+    input.value =
+      this.datagridRow.data[
+        this.datagridCell.datagridColumn.columnDefinition.field
+      ];
+    input.addEventListener('input', () => {
+      this.datagridRow.data[
+        this.datagridCell.datagridColumn.columnDefinition.field
+      ] = input.value;
+    });
+    this.element.appendChild(input);
+  }
+
+  private renderTemplate(template: TemplateRef<any>) {
+    this.clear();
+    const context = {
+      $implicit: this.datagridRow.data,
+      datagridCell:this.datagridCell,
+      datagridRow: this.datagridCell.datagridRow,
+      datagridColumn: this.datagridCell.datagridColumn,
+      value:this.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field],
+    }
+    this.viewRef = template.createEmbeddedView(context);
+    this.appRef?.attachView(this.viewRef);
+
+    for (const node of this.viewRef.rootNodes) {
+      this.element.appendChild(node);
+    }
   }
 }

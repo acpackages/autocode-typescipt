@@ -227,7 +227,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       }
     }
     else {
-      available = true;
+      // available = true;
       this.logger.log("No total rows, all available");
     }
     this.logger.log("On-demand rows availability check complete", { available });

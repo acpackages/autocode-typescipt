@@ -1,2 +1,2 @@
-<button type="button" class="btn btn-secondary" (click)="handleEdit($event)">Edit</button>
-<button type="button" class="btn btn-danger" (click)="handleDelete($event)">Delete</button>
+<button type="button" class="btn btn-secondary" (click)="handleEdit($event)" *ngIf="showEdit">Edit</button>
+<button type="button" class="btn btn-danger" (click)="handleDelete($event)" *ngIf="showDelete">Delete</button>

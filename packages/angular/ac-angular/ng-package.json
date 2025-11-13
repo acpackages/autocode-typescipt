@@ -8,9 +8,11 @@
     "@angular/cdk",
     "@autocode-ts/ac-browser",
     "@autocode-ts/ac-extensions",
+    "@autocode-ts/ac-ng-runtime",
     "@autocode-ts/ac-template-engine",
     "@autocode-ts/autocode",
     "@primeng/themes",
     "tslib"
-  ]
+  ],
+  "deleteDestPath": true
 }
