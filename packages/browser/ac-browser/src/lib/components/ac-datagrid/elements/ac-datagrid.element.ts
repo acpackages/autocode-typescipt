@@ -17,11 +17,14 @@ export class AcDatagrid extends AcElementBase{
 
   constructor(){
     super();
-    this.style.display = 'flex';
-    this.style.flexDirection = 'column';
     this.datagridBody.datagridApi = this.datagridApi;
     this.datagridFooter.datagridApi = this.datagridApi;
     this.datagridHeader.datagridApi = this.datagridApi;
+  }
+
+  override init(): void {
+    this.style.display = 'flex';
+    this.style.flexDirection = 'column';
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagrid,element:this});
     acAddClassToElement({class_:AcDatagridCssClassName.acDatagridContainer,element:this.containerElement});
     this.append(this.containerElement);

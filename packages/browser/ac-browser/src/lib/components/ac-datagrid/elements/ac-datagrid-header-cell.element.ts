@@ -111,7 +111,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
       this.leftContainer.append(this.sortElement);
     }
     if (this.datagridColumn.allowFilter == true) {
-      this.rightContainer.append(this.filterElement);
+      // this.rightContainer.append(this.filterElement);
     }
     this.resizeElement.style.width = '5px';
     this.resizeElement.style.margin = 'auto';

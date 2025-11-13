@@ -44,7 +44,7 @@ export class AcDDEViewColumnsDatagrid {
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }, width: 50, maxWidth: 50, minWidth: 50
+        }, width: 35, allowEdit:false,allowFocus:false,allowFilter:false,allowSort:false
       },
       { 'field': AcDDViewColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
       { 'field': AcDDViewColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true, allowFilter: true },

@@ -1,4 +1,10 @@
 
+
+
+@use "./../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css";
+@use "./../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css";
+
+
 .ag-side-buttons {
   display: none !important;
 }

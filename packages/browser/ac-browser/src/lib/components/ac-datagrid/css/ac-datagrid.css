@@ -17,6 +17,12 @@ ac-datagrid-header{
   width: max-content;
   background-color: white;
 }
+ac-datagrid-footer{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden;
+}
 ac-datagrid-body{
   background: white;
 }
@@ -28,6 +34,7 @@ ac-datagrid-header-cell:last-child{
 }
 ac-datagrid-row{
   height: max-content;
+  border-bottom:solid 0.5px #cfcfcf99
 }
 ac-datagrid-cell,ac-datagrid-header-cell{
   overflow: hidden;
@@ -154,12 +161,6 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
   padding:0px;
 }
 
-.ac-datagrid-footer-pagination-container{
-  float: right;
-}
-
-
-
 .ac-datagrid-tree-toggle{
   background: transparent;
   border: none;
@@ -199,4 +200,9 @@ ac-datagrid-cell[ac-datagrid-cell-active]{
 
 .ac-datagrid-row-before-drop-area:hover{
   background: blue;
+}
+.ac-datagrid-search-input{
+  padding:2px 10px;
+  border-radius: 7px;
+  border:solid #999 1px;
 }

@@ -9,6 +9,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:ng-packagr",
       "outputs": ["{options.outputPath}"],
+      "outputModule": "commonjs",
       "options": {
         "project": "packages/angular/ac-ng-input-on-quill/ng-package.json"
       },

@@ -1,6 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
+import './../../../../../node_modules/tom-select/dist/css/tom-select.bootstrap5.css';
 import { AcDataDictionaryEditor, AcDDEApi, AcDDEExtensionManager, AcEnumDDEExtension, AcEnumDDEHook, AcRelationshipsDetectorDDEExtension, AcSqlAnalyzerDDEExtension } from '@autocode-ts/ac-data-dictionary-editor';
 import { AcCodeGeneratorDDEExtension, AcDDECodeGeneratorDefaultConfig } from '@autocode-ts/ac-dde-code-generator'
 import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';

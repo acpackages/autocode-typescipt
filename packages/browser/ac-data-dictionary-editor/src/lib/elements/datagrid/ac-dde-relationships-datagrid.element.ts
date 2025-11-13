@@ -54,7 +54,7 @@ export class AcDDERelationshipsDatagrid {
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }, width: 50, maxWidth: 50, minWidth: 50
+        }, width: 35, allowEdit:false,allowFocus:false,allowFilter:false,allowSort:false
       },
       {
         'field': AcEnumDDERelationship.DestinationTableId, 'title': 'Foreign Key Table',
@@ -139,8 +139,8 @@ export class AcDDERelationshipsDatagrid {
               const sourceColumnCell = datagridRow.datagridCells.find((cell) => {
                 return cell.columnKey == AcEnumDDERelationship.SourceColumnId;
               });
-              if (sourceColumnCell && sourceColumnCell.instance && sourceColumnCell.instance.cellEditor) {
-                const selectColumnInput: AcDDEDatagridSelectTableColumnInput = sourceColumnCell.instance.cellEditor as any;
+              if (sourceColumnCell && sourceColumnCell.element && sourceColumnCell.element.cellEditor) {
+                const selectColumnInput: AcDDEDatagridSelectTableColumnInput = sourceColumnCell.element.cellEditor as any;
                 selectColumnInput.setOptions();
               }
             }
@@ -153,8 +153,8 @@ export class AcDDERelationshipsDatagrid {
               const destinationColumnCell = datagridRow.datagridCells.find((cell) => {
                 return cell.columnKey == AcEnumDDERelationship.DestinationColumnId;
               });
-              if (destinationColumnCell && destinationColumnCell.instance && destinationColumnCell.instance.cellEditor) {
-                const selectColumnInput: AcDDEDatagridSelectTableColumnInput = destinationColumnCell.instance.cellEditor as any;
+              if (destinationColumnCell && destinationColumnCell.element && destinationColumnCell.element.cellEditor) {
+                const selectColumnInput: AcDDEDatagridSelectTableColumnInput = destinationColumnCell.element.cellEditor as any;
                 selectColumnInput.setOptions();
               }
             }

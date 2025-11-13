@@ -41,8 +41,7 @@ export class AcDDEViewMaster{
         console.log(result);
         if(result){
           const columns = result.columns;
-          console.log(this.editorApi.dataStorage.getViewColumns({viewId:this.view.viewId}));
-          this.editorApi.dataStorage.deleteViewColumns({viewId:this.view.viewId});
+          const currentColumns = this.editorApi.dataStorage.getViewColumns({viewId:this.view.viewId});
           for(const col of columns){
             const columnDetails:IAcDDEViewColumn|any = {
               dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId,
@@ -63,13 +62,34 @@ export class AcDDEViewMaster{
                   columnDetails.columnType = tableColumnDetails.columnType;
                 }
               }
+              else{
+                const views = this.editorApi.dataStorage.getViews({viewName:tableName,dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId});
+              if(views && views.length>0){
+                const view = views[0];
+                columnDetails.columnSourceName = view.viewName;
+                columnDetails.columnSource = 'view';
+                columnDetails.viewId = this.view.viewId;
+                const viewColumns = this.editorApi.dataStorage.getViewColumns({viewName:view.viewName,columnName:col.tableFieldName!,dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId});
+                if(viewColumns.length > 0){
+                  const tableColumnDetails = viewColumns[0];
+                  columnDetails.columnSourceOriginalColumn = tableColumnDetails.columnName;
+                  columnDetails.columnType = tableColumnDetails.columnType;
+                }
+              }
+              }
             }
+            this.editorApi.dataStorage.deleteViewColumn({viewId:this.view.viewId,columnName:columnDetails.columnName});
+            console.log(columnDetails);
             this.editorApi.dataStorage.addViewColumn(columnDetails);
           }
+          // for(const col of currentColumns){
+          //   if(col.columnSource != 'table'){
+          //     this.editorApi.dataStorage.addViewColumn({...col});
+          //   }
+          // }
           this.events.execute({event:'viewColumnsChange'});
           console.log(this.editorApi.dataStorage.getViewColumns({viewId:this.view.viewId}));
         }
-        console.log(result);
       }
     });
 

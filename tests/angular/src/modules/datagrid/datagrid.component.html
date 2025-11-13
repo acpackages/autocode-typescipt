@@ -1,0 +1,4 @@
+<ac-ng-datagrid #datagrid [columnDefinitions]="columnDefinitions" [data]="data" [columnRendererTemplates]="{'index':idTemplate}" />
+<ng-template #idTemplate let-value="value" let-datagridRow="datagridRow">
+  Id:{{value}} <button type="button" class="btn" (click)="handleDatagridRowUpdate(datagridRow)"> Update</button>
+</ng-template>

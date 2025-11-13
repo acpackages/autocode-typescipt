@@ -246,6 +246,7 @@ export class AcDatagridEventHandler {
     };
     datagridCell.events.execute({ event: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
+    this.notifyRowDataChange();
   }
 
   handleColumnHeaderClick({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
@@ -508,6 +509,14 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.SortOrderChange, args: eventArgs });
   }
 
+  private notifyRowDataChange(){
+    const eventArgs: IAcDatagridRowEvent = {
+      datagridApi: this.datagridApi,
+      datagridRow: this.datagridApi.activeDatagridRow!,
+    };
+    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDataChange, args: eventArgs });
+  }
+
   private notifyStateChange() {
     this.datagridApi.datagridState.refresh();
     const eventArgs: IAcDatagridStateChangeEvent = {
@@ -517,6 +526,4 @@ export class AcDatagridEventHandler {
     };
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.StateChange, args: eventArgs });
   }
-
-
 }

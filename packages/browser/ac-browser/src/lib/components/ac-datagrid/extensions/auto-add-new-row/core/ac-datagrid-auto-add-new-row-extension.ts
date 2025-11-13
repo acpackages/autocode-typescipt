@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { stringEqualsIgnoreCase } from "@autocode-ts/ac-extensions";
 import { AcDatagridCell, AcDatagridRow, AcEnumDatagridHook } from "../../../_ac-datagrid.export";
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
 import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
@@ -23,7 +24,7 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if(this.autoAddNewRow) {
-      if(hook == AcEnumDatagridHook.CellValueChange){
+      if(stringEqualsIgnoreCase(hook,AcEnumDatagridHook.CellValueChange)){
         const datagridCell:AcDatagridCell = args.datagridCell;
         const datagridRow:AcDatagridRow = datagridCell.datagridRow;
         if(datagridRow.isLast){

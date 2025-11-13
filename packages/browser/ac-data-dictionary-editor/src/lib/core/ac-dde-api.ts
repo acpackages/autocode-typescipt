@@ -64,11 +64,19 @@ export class AcDDEApi {
     this.eventHandler = new AcDDEEventHandler({ editorApi: this });
     this.dataStorage = new AcDDEDataStorage({ editorApi: this });
     this.editorState = new AcDDEState({ editorApi: this });
-    this.sqlParser.tableColumnsGetterFun = (tableName: string) => {
+    this.sqlParser.columnsGetterFun = ({entityName}:{entityName: string}) => {
       const columns = [];
-      const tableColumns = this.dataStorage.getTableColumns({ tableName: tableName });
-      for (const col of tableColumns) {
-        columns.push(col.columnName);
+      if(this.dataStorage.hasTable({tableName:entityName,dataDictionaryId:this.activeDataDictionary?.dataDictionaryId})){
+        const tableColumns = this.dataStorage.getTableColumns({ tableName: entityName ,dataDictionaryId:this.activeDataDictionary?.dataDictionaryId});
+        for (const col of tableColumns) {
+          columns.push(col.columnName);
+        }
+      }
+      else if(this.dataStorage.hasView({viewName:entityName,dataDictionaryId:this.activeDataDictionary?.dataDictionaryId})){
+        const viewColumns = this.dataStorage.getViewColumns({ viewName: entityName,dataDictionaryId:this.activeDataDictionary?.dataDictionaryId });
+        for (const col of viewColumns) {
+          columns.push(col.columnName);
+        }
       }
       return columns;
     }

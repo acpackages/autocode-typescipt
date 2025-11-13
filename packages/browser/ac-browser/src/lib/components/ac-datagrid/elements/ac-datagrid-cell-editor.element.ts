@@ -13,7 +13,7 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor{
 
   blur() {
     this.element.blur();
-    this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
+    (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
   }
 
   destroy(): void {
@@ -54,12 +54,12 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor{
   }
 
   render() {
-    this.element.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field];
+    this.element.value = (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field];
     this.element.addEventListener('input', (e: any) => {
-      this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
+      (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
     });
     this.element.addEventListener('change', (e: any) => {
-      this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
+      (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
     });
   }
 

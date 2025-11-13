@@ -96,9 +96,10 @@ export class AcPagination extends AcElementBase {
     this.sizeDropdown.pagination = this;
     acAddClassToElement({ class_: AcPaginationCssClassName.acPagination, element: this });
     this.innerHTML = "";
-    this.append(this.sizeDropdown);
-    this.append(this.displayedRows);
+
     this.append(this.navigationButtons);
+    this.append(this.displayedRows);
+    this.append(this.sizeDropdown);
   }
 
   updateDisplayedRows() {

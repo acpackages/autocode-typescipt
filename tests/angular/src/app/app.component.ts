@@ -1,6 +1,6 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { Component } from '@angular/core';
-// import { AcDataGrid } from 'packages/angular/ac-angular/src';
+import { acInit } from '@autocode-ts/ac-browser';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +12,7 @@ export class AppComponent {
 
   constructor(){
     this.setDataGridConfig();
+    acInit();
   }
 
   setDataGridConfig(){

@@ -1,16 +1,32 @@
 {
   "name": "ac-angular",
+  "implicitDependencies": [
+    "autocode",
+    "ac-extensions",
+    "ac-template-engine",
+    "autocode"
+  ],
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/angular/ac-angular/src",
-  "prefix": "lib",
+  "prefix": "ac",
   "projectType": "library",
+  "release": {
+    "version": {
+      "manifestRootsToUpdate": ["dist/{projectRoot}"],
+      "currentVersionResolver": "git-tag",
+      "fallbackCurrentVersionResolver": "disk"
+    }
+  },
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "packages/angular/ac-angular/ng-package.json"
+        "project": "packages/angular/ac-angular/ng-package.json",
+        "tsConfig": {
+          "skipTypeChecking": true
+        }
       },
       "configurations": {
         "production": {
@@ -21,6 +37,11 @@
         }
       },
       "defaultConfiguration": "production"
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",

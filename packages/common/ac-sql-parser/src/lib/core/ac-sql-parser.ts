@@ -11,7 +11,7 @@ import { IAcOutputColumn } from '../interfaces/ac-output-column.interface';
 
 export class AcSqlParser {
   events: AcEvents = new AcEvents();
-  tableColumnsGetterFun: Function = (tableName: string) => {
+  columnsGetterFun: Function = ({entityName}:{entityName: string}) => {
     return [];
   }
 
@@ -147,10 +147,10 @@ export class AcSqlParser {
     if (!t) return undefined;
     if (t.projectedColumns && t.projectedColumns.length > 0) return t.projectedColumns;
     if (t.originalName) {
-      return this.tableColumnsGetterFun(t.originalName);
+      return this.columnsGetterFun({entityName:t.originalName});
     }
     if (t.alias) {
-      return this.tableColumnsGetterFun(t.alias);
+      return this.columnsGetterFun({entityName:t.alias});
     }
     return undefined;
   }
@@ -432,7 +432,7 @@ export class AcSqlParser {
         const tableAlias = tStar[1];
         // find matching tableRef by alias or originalName
         const tref = tablesUsed.find(t => (t.alias === tableAlias) || (t.originalName === tableAlias));
-        const colsFor = tref ? this.getColumnsForIAcTableReference(tref) : this.tableColumnsGetterFun(tableAlias);
+        const colsFor = tref ? this.getColumnsForIAcTableReference(tref) : this.columnsGetterFun({entityName:tableAlias});
         if (!colsFor || colsFor.length === 0) {
           const placeholder: IAcOutputColumn = {
             columnIndex: outIndex++,

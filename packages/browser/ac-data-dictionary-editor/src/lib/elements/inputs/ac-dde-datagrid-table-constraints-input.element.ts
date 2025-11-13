@@ -119,7 +119,7 @@ export class AcDDEDatagridTableConstraintsInput implements IAcDatagridCellEditor
 
   getTableColumns() {
     const options: any[] = [];
-    for (const row of Object.values(this.editorApi.dataStorage.getTableColumns({ tableId:this.datagridCell.datagridRow.data['tableId'] }))) {
+    for (const row of Object.values(this.editorApi.dataStorage.getTableColumns({ tableId:(this.datagridCell.datagridRow as any).data['tableId'] }))) {
       options.push({ 'label': row.columnName, 'value': row.columnName });
     }
     return options;

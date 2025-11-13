@@ -201,10 +201,19 @@ export class AcDDEDataStorage {
     return row;
   }
 
-  deleteViewColumn({ columnId }: { columnId: string }): IAcDDEViewColumn|undefined {
-    const row = this.viewColumns[columnId];
-    delete this.viewColumns[columnId];
-    return row;
+  deleteViewColumn({ columnId,viewId,columnName }: { columnId?: string,viewId?:string, columnName?:string }): IAcDDEViewColumn|undefined {
+    let result:any;
+    if(columnId == undefined && viewId && columnName){
+      const columns = this.getViewColumns({viewId,columnName});
+      if(columns.length>0){
+        columnId = columns[0].columnId;
+      }
+    }
+    if(columnId){
+      result = this.viewColumns[columnId];
+      delete this.viewColumns[columnId];
+    }
+    return result;
   }
 
   deleteViewColumns({ viewId }: { viewId: string }): IAcDDEViewColumn[] {
@@ -400,9 +409,15 @@ export class AcDDEDataStorage {
     return result;
   }
 
-  getViewColumns({ columnId,dataDictionaryId,viewId,filter }: { columnId?: string,dataDictionaryId?: string,viewId?:string,filter?:Function  } = {}): IAcDDEViewColumn[] {
+  getViewColumns({ columnId,columnName,dataDictionaryId,viewId,viewName,filter }: { columnId?: string,columnName?: string, dataDictionaryId?: string,viewId?:string,viewName?:string,filter?:Function  } = {}): IAcDDEViewColumn[] {
     let result: IAcDDEViewColumn[] = Object.values(this.viewColumns);
     if(dataDictionaryId || viewId || filter){
+      if(viewName && !viewId){
+        const views = this.getViews({viewName,dataDictionaryId});
+        if(views.length>0){
+          viewId = views[0].viewId;
+        }
+      }
       result = result.filter((item) => {
          let isValid = true;
         if(dataDictionaryId && isValid){
@@ -410,6 +425,9 @@ export class AcDDEDataStorage {
         }
         if(viewId && isValid){
           isValid = isValid && item.viewId == viewId;
+        }
+        if(columnName && isValid){
+          isValid = isValid && item.columnName == columnName;
         }
         if(columnId && isValid){
           isValid = isValid && item.columnId == columnId;
@@ -439,6 +457,10 @@ export class AcDDEDataStorage {
     return this.storedProcedures[storedProcedureId] != undefined;
   }
 
+  hasTable({ tableId, tableName, dataDictionaryId,filter }: { tableId?:string, tableName?: string, dataDictionaryId?: string,filter?:Function }): boolean {
+    return this.getTables({tableId,tableName,dataDictionaryId,filter}).length > 0;
+  }
+
   hasTableWithId(tableId:string): boolean {
     return this.tables[tableId] != undefined;
   }
@@ -449,6 +471,10 @@ export class AcDDEDataStorage {
 
   hasTriggerWithId(triggerId:string): boolean {
     return this.triggers[triggerId] != undefined;
+  }
+
+  hasView({ dataDictionaryId,viewId,viewName,filter }: { dataDictionaryId?: string,viewId?:string,viewName?:string,filter?:Function }): boolean {
+    return this.getViews({ dataDictionaryId,viewId,viewName,filter }).length > 0;
   }
 
   hasViewWithId(viewId:string): boolean {

@@ -21,7 +21,6 @@ import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
 import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
 import { IAcDatagridRowAddHookArgs } from "../interfaces/hook-args/ac-datagrid-row-add-hook-args.interface";
 import { IAcDatagridRowDeleteHookArgs } from "../interfaces/hook-args/ac-datagrid-row-delete-hook-args.interface";
-import { IAcDatagridRowUpdateHookArgs } from "../interfaces/hook-args/ac-datagrid-row-update-hook-args.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { AcDatagridEventHandler } from "./ac-datagrid-event-handler";
 import { AcEnumDataSourceType } from "../../../enums/ac-enum-data-source-type.enum";
@@ -33,6 +32,7 @@ import { IAcDatagridExtensionEnabledHookArgs } from "../interfaces/hook-args/ac-
 import { IAcDatagridRowFocusHookArgs } from "../interfaces/hook-args/ac-datagrid-row-focus-hook-args.interface";
 import { IAcDatagridState } from "../interfaces/ac-datagrid-state.interface";
 import { IAcDatagridColumnDefinitionsSetEvent } from "../interfaces/event-args/ac-datagrid-column-definitions-set-event.interface";
+import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../_ac-datagrid.export";
 
 export class AcDatagridApi {
 
@@ -84,7 +84,8 @@ export class AcDatagridApi {
     this._columnDefinitions.sort((a, b) => (a.index ?? 0) - (b.index ?? 0));
 
     // Create AcDatagridColumn instances
-    for (const column of this._columnDefinitions) {
+    for (const colDef of this._columnDefinitions) {
+      const column = {...AC_DATAGRID_DEFAULT_COLUMN_DEFINITION,...colDef};
       const datagridColumn = new AcDatagridColumn({
         columnDefinition: column,
         datagridApi: this,
@@ -178,6 +179,7 @@ export class AcDatagridApi {
   hoverRowId?: string;
   lastColumnIndex: number = 0;
   pagination?: AcPagination;
+  rowValueChangeTimeoutDuration = 250;
 
   constructor({ datagrid }: { datagrid: AcDatagrid }) {
     this.datagrid = datagrid;

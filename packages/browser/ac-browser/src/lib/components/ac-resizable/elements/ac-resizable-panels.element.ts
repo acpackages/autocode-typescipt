@@ -71,7 +71,6 @@ export class AcResizablePanels extends AcElementBase {
     });
     panel.on({
       event: 'resize', callback: (args:any) => {
-        // console.log(args);
         // this.updatePanelSizes();
       }
     });

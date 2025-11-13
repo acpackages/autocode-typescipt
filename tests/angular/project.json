@@ -21,7 +21,7 @@
             "input": "tests/angular/public"
           }
         ],
-        "styles": ["tests/angular/src/styles.css"],
+        "styles": ["tests/angular/src/styles.scss"],
         "scripts": []
       },
       "configurations": {

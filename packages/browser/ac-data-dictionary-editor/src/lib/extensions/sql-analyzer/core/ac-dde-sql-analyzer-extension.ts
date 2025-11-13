@@ -41,7 +41,7 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
   handleCellRendererInit(args: IAcDDEDatagridCellInitHookArgs) {
     if (args.datagridCell.columnKey == 'action') {
       setTimeout(() => {
-        const instance = args.datagridCell.instance;
+        const instance = args.datagridCell.element;
         const actionElement: AcDDEDatagridRowAction = instance!.cellRenderer as AcDDEDatagridRowAction;
         const analyzeButton = document.createElement('button');
         acAddClassToElement({ class_: 'btn btn-info btn-sm ms-1', element: analyzeButton });

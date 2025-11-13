@@ -49,12 +49,12 @@ export class AcDDETableColumnsDatagrid {
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }, width: 50, maxWidth: 50, minWidth: 50
+        }, width: 35, allowEdit:false,allowFocus:false,allowFilter:false,allowSort:false
       },
 
       { 'field': AcDDTableColumn.KeyColumnName, 'title': 'Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcDDTableColumn.KeyColumnType, 'title': 'Column Type', cellEditorElement: AcDDEDatagridSelectColumnTypeInput, useCellEditorForRenderer: true,allowFilter:true },
-      { 'field': AcEnumDDColumnProperty.PrimaryKey, 'title': 'Primary Key', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
+      { 'field': AcEnumDDColumnProperty.PrimaryKey, 'title': 'Primary Key', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true,allowFocus:false },
       { 'field': AcEnumDDColumnProperty.ColumnTitle, 'title': 'Column Title', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.Required, 'title': 'Required', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true,allowFilter:true },
       { 'field': AcEnumDDColumnProperty.ValueOptions, 'title': 'Values', useCellEditorForRenderer: true, cellEditorElement: AcDDEDatagridValueOptionsInput,allowFilter:true },

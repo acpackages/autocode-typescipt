@@ -2360,6 +2360,278 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_chargeable_service_categories": {
+      "tableName": "act_chargeable_service_categories",
+      "tableColumns": {
+        "chargeable_service_category_id": {
+          "columnName": "chargeable_service_category_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_category_name": {
+          "columnName": "chargeable_service_category_name",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "default_uom_name": {
+          "columnName": "default_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Default UOM"
+            }
+          }
+        },
+        "purchase_taxing_scheme_id": {
+          "columnName": "purchase_taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Taxing Scheme"
+            }
+          }
+        },
+        "purchase_tax_rate_id": {
+          "columnName": "purchase_tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Tax Rate"
+            }
+          }
+        },
+        "sale_taxing_scheme_id": {
+          "columnName": "sale_taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Taxing Scheme"
+            }
+          }
+        },
+        "sale_tax_rate_id": {
+          "columnName": "sale_tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Tax Rate"
+            }
+          }
+        },
+        "chargeable_service_image_media_id": {
+          "columnName": "chargeable_service_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          }
+        },
+        "chargeable_service_quick_description": {
+          "columnName": "chargeable_service_quick_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Quick Description"
+            }
+          }
+        },
+        "chargeable_service_full_description": {
+          "columnName": "chargeable_service_full_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Full Description"
+            }
+          }
+        },
+        "parent_chargeable_service_category_id": {
+          "columnName": "parent_chargeable_service_category_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Parent Category"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "chargeable_service_categories"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "chargeable_service_category"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_chargeable_service_categories"
+        }
+      }
+    },
+    "act_chargeable_service_charges": {
+      "tableName": "act_chargeable_service_charges",
+      "tableColumns": {
+        "chargeable_service_charge_id": {
+          "columnName": "chargeable_service_charge_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_charge_name": {
+          "columnName": "chargeable_service_charge_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "charge_purchase": {
+          "columnName": "charge_purchase",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Charge"
+            }
+          }
+        },
+        "charge_sale": {
+          "columnName": "charge_sale",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Charge"
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current?"
+            }
+          }
+        },
+        "profit_margin": {
+          "columnName": "profit_margin",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Profit Margin%"
+            }
+          }
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Chargeable Service"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "chargeable_service_charges"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "chargeable_service_charge"
+        }
+      }
+    },
     "act_chargeable_service_medias": {
       "tableName": "act_chargeable_service_medias",
       "tableColumns": {
@@ -2406,6 +2678,208 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "chargeable_service_medias"
+        }
+      }
+    },
+    "act_chargeable_service_purchase_details": {
+      "tableName": "act_chargeable_service_purchase_details",
+      "tableColumns": {
+        "chargeable_service_purchase_detail_id": {
+          "columnName": "chargeable_service_purchase_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_purchase_detail_name": {
+          "columnName": "chargeable_service_purchase_detail_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_uom_id": {
+          "columnName": "chargeable_service_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "UOM"
+            }
+          }
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Chargeable Service"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current?"
+            }
+          }
+        },
+        "chargeable_service_charge_id": {
+          "columnName": "chargeable_service_charge_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Price"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "chargeable_service_purchase_details"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "chargeable_service_purchase_detail"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_chargeable_service_purchase_details"
+        }
+      }
+    },
+    "act_chargeable_service_sale_details": {
+      "tableName": "act_chargeable_service_sale_details",
+      "tableColumns": {
+        "chargeable_service_sale_detail_id": {
+          "columnName": "chargeable_service_sale_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_sale_detail_name": {
+          "columnName": "chargeable_service_sale_detail_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Chargeable Service"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "chargeable_service_uom_id": {
+          "columnName": "chargeable_service_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "UOM"
+            }
+          }
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Active?"
+            }
+          }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current?"
+            }
+          }
+        },
+        "chargeable_service_charge_id": {
+          "columnName": "chargeable_service_charge_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Price"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "chargeable_service_sale_details"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "chargeable_service_sale_detail"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_chargeable_service_sale_details"
         }
       }
     },
@@ -2670,16 +3144,30 @@ export const dataDictionaryJson = {
               "propertyValue": "SAC Code"
             }
           }
+        },
+        "chargeable_service_category_id": {
+          "columnName": "chargeable_service_category_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Category"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "chargeable_services"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "chargeable_service"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "chargeable_services"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_chargeable_services"
         }
       }
     },
@@ -7689,6 +8177,16 @@ export const dataDictionaryJson = {
               "propertyValue": "1"
             }
           }
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Price"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -7891,6 +8389,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Price"
             }
           }
         }
@@ -8900,16 +9408,40 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax%"
+            }
+          }
+        },
+        "chargeable_service_amount": {
+          "columnName": "chargeable_service_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "purchase_invoice_chargeable_services"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "purchase_invoice_chargeable_service"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "purchase_invoice_chargeable_services"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_purchase_invoice_chargeable_services"
         }
       }
     },
@@ -9511,16 +10043,40 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax%"
+            }
+          }
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "purchase_invoice_products"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "purchase_invoice_product"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "purchase_invoice_products"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_purchase_invoice_products"
         }
       }
     },
@@ -12284,8 +12840,8 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_sale_invoice_chargable_services": {
-      "tableName": "act_sale_invoice_chargable_services",
+    "act_sale_invoice_chargeable_services": {
+      "tableName": "act_sale_invoice_chargeable_services",
       "tableColumns": {
         "chargeable_service_charge_actual": {
           "columnName": "chargeable_service_charge_actual",
@@ -12335,7 +12891,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Service Description"
+              "propertyValue": "Description"
             }
           }
         },
@@ -12496,16 +13052,40 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax%"
+            }
+          }
+        },
+        "chargeable_service_amount": {
+          "columnName": "chargeable_service_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "sale_invoice_chargeable_services"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "sale_invoice_chargeable_service"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "sale_invoice_chargeable_services"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_sale_invoice_chargeable_services"
         }
       }
     },
@@ -12902,7 +13482,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Product Description"
+              "propertyValue": "Description"
             }
           }
         },
@@ -13049,16 +13629,40 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax%"
+            }
+          }
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "AMount"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "sale_invoice_products"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "sale_invoice_product"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "sale_invoice_products"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_sale_invoice_products"
         }
       }
     },
@@ -20603,6 +21207,397 @@ export const dataDictionaryJson = {
     }
   },
   "views": {
+    "act_vw_chargeable_service_categories": {
+      "viewName": "act_vw_chargeable_service_categories",
+      "viewColumns": {
+        "chargeable_service_category_id": {
+          "columnName": "chargeable_service_category_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_category_id"
+        },
+        "chargeable_service_category_name": {
+          "columnName": "chargeable_service_category_name",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_category_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "default_uom_name": {
+          "columnName": "default_uom_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "default_uom_name"
+        },
+        "purchase_taxing_scheme_id": {
+          "columnName": "purchase_taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "purchase_taxing_scheme_id"
+        },
+        "purchase_tax_rate_id": {
+          "columnName": "purchase_tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "purchase_tax_rate_id"
+        },
+        "sale_taxing_scheme_id": {
+          "columnName": "sale_taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "sale_taxing_scheme_id"
+        },
+        "sale_tax_rate_id": {
+          "columnName": "sale_tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "sale_tax_rate_id"
+        },
+        "chargeable_service_image_media_id": {
+          "columnName": "chargeable_service_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_image_media_id"
+        },
+        "chargeable_service_quick_description": {
+          "columnName": "chargeable_service_quick_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_quick_description"
+        },
+        "chargeable_service_full_description": {
+          "columnName": "chargeable_service_full_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_full_description"
+        },
+        "parent_chargeable_service_category_id": {
+          "columnName": "parent_chargeable_service_category_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "parent_chargeable_service_category_id"
+        },
+        "chargeable_service_category_image_media": {
+          "columnName": "chargeable_service_category_image_media",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "json_object"
+        }
+      },
+      "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\njson_object('media_path', media_path,'media_details', media_details) AS chargeable_service_category_image_media,\nact_chargeable_service_categories.* FROM act_chargeable_service_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_chargeable_service_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_chargeable_service_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_chargeable_service_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_chargeable_service_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id \nLEFT JOIN act_medias ON act_chargeable_service_categories.product_category_image_media_id = act_medias.media_id"
+    },
+    "act_vw_chargeable_service_purchase_details": {
+      "viewName": "act_vw_chargeable_service_purchase_details",
+      "viewColumns": {
+        "uom_name": {
+          "columnName": "uom_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "taxing_scheme_name": {
+          "columnName": "taxing_scheme_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes",
+          "columnSourceOriginalColumn": "taxing_scheme_name"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "chargeable_service_purchase_detail_id": {
+          "columnName": "chargeable_service_purchase_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "chargeable_service_purchase_detail_id"
+        },
+        "chargeable_service_purchase_detail_name": {
+          "columnName": "chargeable_service_purchase_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "chargeable_service_purchase_detail_name"
+        },
+        "chargeable_service_uom_id": {
+          "columnName": "chargeable_service_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "chargeable_service_uom_id"
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "chargeable_service_id"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "chargeable_service_charge_id": {
+          "columnName": "chargeable_service_charge_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "chargeable_service_charge_id"
+        }
+      },
+      "viewQuery": "SELECT act_chargeable_service_uoms.uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_purchase_details.* FROM act_chargeable_service_purchase_details \nLEFT JOIN act_product_uoms ON act_chargeable_service_purchase_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+    },
+    "act_vw_chargeable_service_sale_details": {
+      "viewName": "act_vw_chargeable_service_sale_details",
+      "viewColumns": {
+        "uom_name": {
+          "columnName": "uom_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_uoms",
+          "columnSourceOriginalColumn": "uom_name"
+        },
+        "taxing_scheme_name": {
+          "columnName": "taxing_scheme_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes",
+          "columnSourceOriginalColumn": "taxing_scheme_name"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "chargeable_service_sale_detail_id": {
+          "columnName": "chargeable_service_sale_detail_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "chargeable_service_sale_detail_id"
+        },
+        "chargeable_service_sale_detail_name": {
+          "columnName": "chargeable_service_sale_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "chargeable_service_sale_detail_name"
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "chargeable_service_id"
+        },
+        "chargeable_service_uom_id": {
+          "columnName": "chargeable_service_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "chargeable_service_uom_id"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "chargeable_service_charge_id": {
+          "columnName": "chargeable_service_charge_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "chargeable_service_charge_id"
+        }
+      },
+      "viewQuery": "SELECT act_chargeable_service_uoms.uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_sale_details.* FROM act_chargeable_service_sale_details \nLEFT JOIN act_product_uoms ON act_chargeable_servicesale_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
+    },
+    "act_vw_chargeable_services": {
+      "viewName": "act_vw_chargeable_services",
+      "viewColumns": {
+        "chargeable_service_category_name": {
+          "columnName": "chargeable_service_category_name",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_category_name"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "chargeable_service_charge": {
+          "columnName": "chargeable_service_charge",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge"
+        },
+        "chargeable_service_code": {
+          "columnName": "chargeable_service_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_code"
+        },
+        "chargeable_service_full_description": {
+          "columnName": "chargeable_service_full_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_full_description"
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_id"
+        },
+        "chargeable_service_image_media_id": {
+          "columnName": "chargeable_service_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_image_media_id"
+        },
+        "chargeable_service_name": {
+          "columnName": "chargeable_service_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_name"
+        },
+        "chargeable_service_quick_description": {
+          "columnName": "chargeable_service_quick_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_quick_description"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "parent_chargeable_service_id": {
+          "columnName": "parent_chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "parent_chargeable_service_id"
+        },
+        "chargeable_service_remarks": {
+          "columnName": "chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_remarks"
+        },
+        "sac_code": {
+          "columnName": "sac_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "sac_code"
+        },
+        "chargeable_service_category_id": {
+          "columnName": "chargeable_service_category_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_category_id"
+        },
+        "chargeable_service_image_media": {
+          "columnName": "chargeable_service_image_media",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "json_object"
+        }
+      },
+      "viewQuery": "SELECT act_chargeable_service_categories.chargeable_service_category_name,\njson_object('media_path', media_path,'media_details', media_details) AS chargeable_service_image_media,\nact_chargeable_services.* FROM act_chargeable_services LEFT JOIN act_chargeable_service_categories ON act_chargeable_services.chargeable_service_category_id = act_chargeable_service_categories.chargeable_service_category_id\nLEFT JOIN act_medias ON act_chargeable_services.chargeable_service_image_media_id = act_medias.media_id"
+    },
     "act_vw_customers": {
       "viewName": "act_vw_customers",
       "viewColumns": {
@@ -22788,15 +23783,315 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,\njson_object('media_path', media_path,'media_details', media_details) AS product_image_media,\nact_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id\nLEFT JOIN act_medias ON act_products.product_image_media_id = act_medias.media_id"
     },
+    "act_vw_purchase_invoice_chargeable_services": {
+      "viewName": "act_vw_purchase_invoice_chargeable_services",
+      "viewColumns": {
+        "chargeable_service_charge_actual": {
+          "columnName": "chargeable_service_charge_actual",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge_actual"
+        },
+        "chargeable_service_charge_gross": {
+          "columnName": "chargeable_service_charge_gross",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge_gross"
+        },
+        "chargeable_service_charge_net": {
+          "columnName": "chargeable_service_charge_net",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge_net"
+        },
+        "chargeable_service_description": {
+          "columnName": "chargeable_service_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_description"
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_id"
+        },
+        "chargeable_service_quantity": {
+          "columnName": "chargeable_service_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_quantity"
+        },
+        "chargeable_service_uom_id": {
+          "columnName": "chargeable_service_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_uom_id"
+        },
+        "chargeable_service_uom_quantity": {
+          "columnName": "chargeable_service_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_uom_quantity"
+        },
+        "discount_cash_percentage": {
+          "columnName": "discount_cash_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "discount_cash_percentage"
+        },
+        "discount_rebate_percentage": {
+          "columnName": "discount_rebate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "discount_rebate_percentage"
+        },
+        "discount_trade_percentage": {
+          "columnName": "discount_trade_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "discount_trade_percentage"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "purchase_invoice_chargeable_service_id": {
+          "columnName": "purchase_invoice_chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "purchase_invoice_chargeable_service_id"
+        },
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "chargeable_service_status": {
+          "columnName": "chargeable_service_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_status"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "chargeable_service_amount": {
+          "columnName": "chargeable_service_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_amount"
+        }
+      },
+      "viewQuery": "SELECT act_purchase_invoice_chargeable_services.* FROM act_purchase_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_purchase_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
+    },
+    "act_vw_purchase_invoice_products": {
+      "viewName": "act_vw_purchase_invoice_products",
+      "viewColumns": {
+        "discount_cash_percentage": {
+          "columnName": "discount_cash_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "discount_cash_percentage"
+        },
+        "discount_rebate_percentage": {
+          "columnName": "discount_rebate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "discount_rebate_percentage"
+        },
+        "discount_trade_percentage": {
+          "columnName": "discount_trade_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "discount_trade_percentage"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "product_description": {
+          "columnName": "product_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_description"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_price_actual": {
+          "columnName": "product_price_actual",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_price_actual"
+        },
+        "product_price_gross": {
+          "columnName": "product_price_gross",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_price_gross"
+        },
+        "product_price_net": {
+          "columnName": "product_price_net",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_price_net"
+        },
+        "product_quantity": {
+          "columnName": "product_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_quantity"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        },
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "purchase_invoice_product_id": {
+          "columnName": "purchase_invoice_product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_product_id"
+        },
+        "product_status": {
+          "columnName": "product_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_status"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_amount"
+        }
+      },
+      "viewQuery": "SELECT act_purchase_invoice_products.* FROM act_purchase_invoice_products LEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id"
+    },
     "act_vw_purchase_invoices": {
       "viewName": "act_vw_purchase_invoices",
       "viewColumns": {
         "supplier_type": {
           "columnName": "supplier_type",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_suppliers",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_suppliers",
           "columnSourceOriginalColumn": "supplier_type"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_suppliers",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_suppliers",
+          "columnSourceOriginalColumn": "party_name"
         },
         "accountee_id": {
           "columnName": "accountee_id",
@@ -22925,7 +24220,292 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "user_id"
         }
       },
-      "viewQuery": "SELECT act_suppliers.supplier_type,act_purchase_invoices.* FROM act_purchase_invoices LEFT JOIN act_suppliers ON act_purchase_invoices.supplier_id = act_suppliers.supplier_id"
+      "viewQuery": "SELECT act_vw_suppliers.supplier_type,act_vw_suppliers.party_id,act_vw_suppliers.party_name,act_purchase_invoices.* FROM act_purchase_invoices LEFT JOIN act_vw_suppliers ON act_purchase_invoices.supplier_id = act_vw_suppliers.supplier_id"
+    },
+    "act_vw_sale_invoice_chargeable_services": {
+      "viewName": "act_vw_sale_invoice_chargeable_services",
+      "viewColumns": {
+        "chargeable_service_charge_actual": {
+          "columnName": "chargeable_service_charge_actual",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge_actual"
+        },
+        "chargeable_service_charge_gross": {
+          "columnName": "chargeable_service_charge_gross",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge_gross"
+        },
+        "chargeable_service_charge_net": {
+          "columnName": "chargeable_service_charge_net",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge_net"
+        },
+        "chargeable_service_description": {
+          "columnName": "chargeable_service_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_description"
+        },
+        "chargeable_service_id": {
+          "columnName": "chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_id"
+        },
+        "chargeable_service_quantity": {
+          "columnName": "chargeable_service_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_quantity"
+        },
+        "chargeable_service_uom_id": {
+          "columnName": "chargeable_service_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_uom_id"
+        },
+        "chargeable_service_uom_quantity": {
+          "columnName": "chargeable_service_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_uom_quantity"
+        },
+        "discount_cash_percentage": {
+          "columnName": "discount_cash_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "discount_cash_percentage"
+        },
+        "discount_rebate_percentage": {
+          "columnName": "discount_rebate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "discount_rebate_percentage"
+        },
+        "discount_trade_percentage": {
+          "columnName": "discount_trade_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "discount_trade_percentage"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "sale_invoice_chargeable_service_id": {
+          "columnName": "sale_invoice_chargeable_service_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "sale_invoice_chargeable_service_id"
+        },
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "chargeable_service_status": {
+          "columnName": "chargeable_service_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_status"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "chargeable_service_amount": {
+          "columnName": "chargeable_service_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_amount"
+        }
+      },
+      "viewQuery": "SELECT act_sale_invoice_chargeable_services.* FROM act_sale_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_sale_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
+    },
+    "act_vw_sale_invoice_products": {
+      "viewName": "act_vw_sale_invoice_products",
+      "viewColumns": {
+        "discount_cash_percentage": {
+          "columnName": "discount_cash_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "discount_cash_percentage"
+        },
+        "discount_rebate_percentage": {
+          "columnName": "discount_rebate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "discount_rebate_percentage"
+        },
+        "discount_trade_percentage": {
+          "columnName": "discount_trade_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "discount_trade_percentage"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "product_description": {
+          "columnName": "product_description",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_description"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_price_actual": {
+          "columnName": "product_price_actual",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_price_actual"
+        },
+        "product_price_gross": {
+          "columnName": "product_price_gross",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_price_gross"
+        },
+        "product_price_net": {
+          "columnName": "product_price_net",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_price_net"
+        },
+        "product_quantity": {
+          "columnName": "product_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_quantity"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        },
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "sale_invoice_product_id": {
+          "columnName": "sale_invoice_product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_product_id"
+        },
+        "product_status": {
+          "columnName": "product_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_status"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_amount"
+        }
+      },
+      "viewQuery": "SELECT act_sale_invoice_products.* FROM act_sale_invoice_products LEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id"
     },
     "act_vw_sale_invoices": {
       "viewName": "act_vw_sale_invoices",
@@ -22933,9 +24513,23 @@ export const dataDictionaryJson = {
         "customer_category": {
           "columnName": "customer_category",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_customers",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_customers",
           "columnSourceOriginalColumn": "customer_category"
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_customers",
+          "columnSourceOriginalColumn": "party_name"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_customers",
+          "columnSourceOriginalColumn": "party_id"
         },
         "accountee_id": {
           "columnName": "accountee_id",
@@ -23057,7 +24651,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "user_id"
         }
       },
-      "viewQuery": "SELECT act_customers.customer_category,customers.party_id,act_sale_invoices.* FROM act_sale_invoices LEFT JOIN act_customers ON act_sale_invoices.customer_id = act_customers.customer_id"
+      "viewQuery": "SELECT act_vw_customers.customer_category,act_vw_customers.party_name,act_vw_customers.party_id,act_sale_invoices.* FROM act_sale_invoices LEFT JOIN act_vw_customers ON act_sale_invoices.customer_id = act_vw_customers.customer_id"
     },
     "act_vw_suppliers": {
       "viewName": "act_vw_suppliers",
@@ -23685,7 +25279,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "chargeable_service_uom_id",
-      "destinationTable": "act_sale_invoice_chargable_services",
+      "destinationTable": "act_sale_invoice_chargeable_services",
       "sourceColumn": "chargeable_service_uom_id",
       "sourceTable": "act_chargeable_service_uoms"
     },
@@ -23741,7 +25335,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "chargeable_service_id",
-      "destinationTable": "act_sale_invoice_chargable_services",
+      "destinationTable": "act_sale_invoice_chargeable_services",
       "sourceColumn": "chargeable_service_id",
       "sourceTable": "act_chargeable_services"
     },
@@ -24816,7 +26410,7 @@ export const dataDictionaryJson = {
     {
       "cascadeDeleteDestination": true,
       "destinationColumn": "sale_invoice_id",
-      "destinationTable": "act_sale_invoice_chargable_services",
+      "destinationTable": "act_sale_invoice_chargeable_services",
       "sourceColumn": "sale_invoice_id",
       "sourceTable": "act_sale_invoices"
     },
@@ -25146,7 +26740,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "tax_rate_id",
-      "destinationTable": "act_sale_invoice_chargable_services",
+      "destinationTable": "act_sale_invoice_chargeable_services",
       "sourceColumn": "tax_rate_id",
       "sourceTable": "act_tax_rates"
     },
@@ -25249,7 +26843,7 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "taxing_scheme_id",
-      "destinationTable": "act_sale_invoice_chargable_services",
+      "destinationTable": "act_sale_invoice_chargeable_services",
       "sourceColumn": "taxing_scheme_id",
       "sourceTable": "act_taxing_schemes"
     },
@@ -25987,6 +27581,102 @@ export const dataDictionaryJson = {
       "destinationTable": "act_product_barcode_links",
       "sourceColumn": "product_price_id",
       "sourceTable": "act_product_prices"
+    },
+    {
+      "destinationColumn": "purchase_taxing_scheme_id",
+      "destinationTable": "act_chargeable_service_categories",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "purchase_tax_rate_id",
+      "destinationTable": "act_chargeable_service_categories",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "sale_taxing_scheme_id",
+      "destinationTable": "act_chargeable_service_categories",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "sale_tax_rate_id",
+      "destinationTable": "act_chargeable_service_categories",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "chargeable_service_image_media_id",
+      "destinationTable": "act_chargeable_service_categories",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_chargeable_service_purchase_details",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_chargeable_service_purchase_details",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_chargeable_service_sale_details",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_uom_id",
+      "destinationTable": "act_chargeable_service_sale_details",
+      "sourceColumn": "chargeable_service_uom_id",
+      "sourceTable": "act_chargeable_service_uoms"
+    },
+    {
+      "destinationColumn": "chargeable_service_charge_id",
+      "destinationTable": "act_chargeable_service_sale_details",
+      "sourceColumn": "chargeable_service_charge_id",
+      "sourceTable": "act_chargeable_service_charges"
+    },
+    {
+      "destinationColumn": "product_price_id",
+      "destinationTable": "act_product_sale_details",
+      "sourceColumn": "product_price_id",
+      "sourceTable": "act_product_prices"
+    },
+    {
+      "destinationColumn": "product_price_id",
+      "destinationTable": "act_product_purchase_details",
+      "sourceColumn": "product_price_id",
+      "sourceTable": "act_product_prices"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_chargeable_service_charges",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "chargeable_service_id",
+      "destinationTable": "act_chargeable_service_charges",
+      "sourceColumn": "chargeable_service_id",
+      "sourceTable": "act_chargeable_services"
+    },
+    {
+      "destinationColumn": "chargeable_service_charge_id",
+      "destinationTable": "act_chargeable_service_purchase_details",
+      "sourceColumn": "chargeable_service_charge_id",
+      "sourceTable": "act_chargeable_service_charges"
+    },
+    {
+      "destinationColumn": "chargeable_service_category_id",
+      "destinationTable": "act_chargeable_services",
+      "sourceColumn": "chargeable_service_category_id",
+      "sourceTable": "act_chargeable_service_categories"
     }
   ],
   "storedProcedures": {},
@@ -26118,6 +27808,27 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_set_accountee_websites_on_update",
       "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
     },
+    "act_trg_set_led_bal_on_trns_entry_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_set_led_bal_on_trns_entry_delete",
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;"
+    },
+    "act_trg_set_led_bal_on_trns_entry_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_set_led_bal_on_trns_entry_insert",
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;"
+    },
+    "act_trg_set_led_bal_on_trns_entry_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_set_led_bal_on_trns_entry_update",
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;"
+    },
     "act_trg_set_party_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -26243,6 +27954,90 @@ export const dataDictionaryJson = {
       "tableName": "act_party_websites",
       "triggerName": "act_trg_set_party_websites_on_update",
       "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_pur_amt_on_prod_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_purchase_invoice_products",
+      "triggerName": "act_trg_set_pur_amt_on_prod_delete",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
+    },
+    "act_trg_set_pur_amt_on_prod_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_purchase_invoice_products",
+      "triggerName": "act_trg_set_pur_amt_on_prod_insert",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+    },
+    "act_trg_set_pur_amt_on_prod_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_purchase_invoice_products",
+      "triggerName": "act_trg_set_pur_amt_on_prod_update",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+    },
+    "act_trg_set_pur_amt_on_ser_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_purchase_invoice_chargeable_services",
+      "triggerName": "act_trg_set_pur_amt_on_ser_delete",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
+    },
+    "act_trg_set_pur_amt_on_ser_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_purchase_invoice_chargeable_services",
+      "triggerName": "act_trg_set_pur_amt_on_ser_insert",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+    },
+    "act_trg_set_pur_amt_on_ser_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_purchase_invoice_chargeable_services",
+      "triggerName": "act_trg_set_pur_amt_on_ser_update",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+    },
+    "act_trg_set_sale_amt_on_prod_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_sale_invoice_products",
+      "triggerName": "act_trg_set_sale_amt_on_prod_delete",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;"
+    },
+    "act_trg_set_sale_amt_on_prod_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_sale_invoice_products",
+      "triggerName": "act_trg_set_sale_amt_on_prod_insert",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_set_sale_amt_on_prod_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_sale_invoice_products",
+      "triggerName": "act_trg_set_sale_amt_on_prod_update",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_set_sale_amt_on_ser_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_sale_invoice_chargeable_services",
+      "triggerName": "act_trg_set_sale_amt_on_ser_delete",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;"
+    },
+    "act_trg_set_sale_amt_on_ser_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_sale_invoice_chargeable_services",
+      "triggerName": "act_trg_set_sale_amt_on_ser_insert",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_set_sale_amt_on_ser_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_sale_invoice_chargeable_services",
+      "triggerName": "act_trg_set_sale_amt_on_ser_update",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     }
   }
 };

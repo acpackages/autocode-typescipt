@@ -186,7 +186,7 @@ export function acRemoveClassFromElement({ class_, element }: { class_: string, 
 }
 
 export function acScrollIntoViewIfHidden({ element, behavior = 'smooth' }: { element: HTMLElement, behavior?: ScrollBehavior }) {
-  // Find nearest scrollable ancestor
+  console.log(element);
   let parent = element.parentElement;
   while (parent) {
     const style = getComputedStyle(parent);

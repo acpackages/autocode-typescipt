@@ -13,7 +13,8 @@
     "@autocode-ts/ac-extensions": "^0.0.4",
     "@autocode-ts/ac-icons": "^0.0.1",
     "@autocode-ts/ac-sql-parser": "^0.0.1",
-    "@autocode-ts/ac-template-engine": "^0.0.1"
+    "@autocode-ts/ac-template-engine": "^0.0.1",
+    "@autocode-ts/ac-tom-select": "^0.0.1"
   },
   "exports": {
     "./css/ac-data-dictionary-editor.css": {

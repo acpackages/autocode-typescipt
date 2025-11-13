@@ -4,6 +4,7 @@ export interface IAcDatagridColumnDefinition {
     "default_value": false
   }) */
   allowFilter?: boolean;
+  allowFocus?: boolean;
 
   /* AcDoc({
     "description": "Set to `true` to have the grid allow sorting on this column."
@@ -24,8 +25,6 @@ export interface IAcDatagridColumnDefinition {
   }) */
   autoWidth?: boolean;
   cellClass?:string;
-
-
 
   cellEditorElement?:any;
   cellEditorElementParams?:any;

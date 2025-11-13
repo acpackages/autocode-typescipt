@@ -240,6 +240,10 @@ export class AcInputBase extends AcElementBase {
     this.inputElement.removeEventListener('change', this.handleChange);
   }
 
+  override focus(options?: FocusOptions): void {
+    this.inputElement.focus();
+  }
+
   getValidationMessageFromValidityState(
     validity: ValidityState,
     customMessage?: string

@@ -29,6 +29,11 @@ export class AcDatagridHeader extends AcElementBase{
     this.style.minHeight = 'max-content';
   }
 
+  override init(): void {
+    super.init();
+    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.HeaderInit});
+  }
+
   setColumns(){
     this.innerHTML = "";
     const hookArgs:IAcDatagridHeaderHookArgs = {

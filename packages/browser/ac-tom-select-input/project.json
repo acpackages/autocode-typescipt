@@ -1,0 +1,9 @@
+{
+  "name": "ac-tom-select-input",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/ac-tom-select-input/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-tom-select-input --web",
+  "targets": {}
+}

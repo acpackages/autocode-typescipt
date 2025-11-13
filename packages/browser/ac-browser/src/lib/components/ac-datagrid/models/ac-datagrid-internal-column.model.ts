@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
-import { AcDatagridDefaultColumnConfig } from "../consts/ac-datagrid-default-column-config.const";
+import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../consts/ac-datagrid-default-column-config.const";
 
 export class AcDatagridInternalColumn {
   acColumnId: string = Autocode.uuid();
@@ -14,7 +14,7 @@ export class AcDatagridInternalColumn {
   sortOrder: AcEnumSortOrder = AcEnumSortOrder.None;
   width: number = 200;
 
-  constructor({ index = -1, width = AcDatagridDefaultColumnConfig.width }: { index?: number, width?: number }) {
+  constructor({ index = -1, width = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width }: { index?: number, width?: number }) {
     this.index = index;
     this.width = width;
   }

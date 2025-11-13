@@ -31,6 +31,11 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@nx/angular:package": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "plugins": [
@@ -84,7 +89,8 @@
   "generators": {
     "@nx/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "strict": false
     },
     "@nx/angular:component": {
       "style": "css"
@@ -116,6 +122,11 @@
       "linter": "eslint",
       "unitTestRunner": "vitest",
       "e2eTestRunner": "none"
+    }
+  },
+  "release": {
+    "version": {
+      "preVersionCommand": "npx nx run-many -t build"
     }
   }
 }

@@ -6,7 +6,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": true,
-    "emitDeclarationOnly": true,
+    // "emitDeclarationOnly": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -86,6 +86,9 @@
       "@autocode-ts/ac-tiptap-editor-input": [
         "packages/browser/ac-tiptap-editor-input/src/index.ts"
       ],
+      "@autocode-ts/ac-tom-select-input": [
+        "packages/browser/ac-tom-select-input/src/index.ts"
+      ],
       "@autocode-ts/ac-vue": ["packages/vue/ac-vue/index.ts"],
       "@autocode-ts/ac-web": ["packages/node/ac-web/index.ts"],
       "@autocode-ts/ac-web-on-express": [
@@ -94,5 +97,5 @@
       "@autocode-ts/autocode": ["packages/common/autocode/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules"]
 }

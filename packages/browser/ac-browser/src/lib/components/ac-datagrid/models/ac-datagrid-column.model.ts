@@ -3,7 +3,7 @@ import { AcEnumSortOrder, AcEvents, AcFilterGroup, AcHooks, Autocode } from "@au
 import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
 import { AcEnumDatagridColumnDataType } from "../enums/ac-enum-datagrid-column-data-type.enum";
 import { AcDatagridHeaderCellElement } from "../elements/ac-datagrid-header-cell.element";
-import { AcDatagridDefaultColumnConfig } from "../consts/ac-datagrid-default-column-config.const";
+import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../consts/ac-datagrid-default-column-config.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { IAcDatagridColumnHookArgs } from "../interfaces/hook-args/ac-datagrid-column-hook-args.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
@@ -47,6 +47,9 @@ export class AcDatagridColumn {
   get allowFilter(): boolean {
     return this.columnDefinition.allowFilter == true;
   }
+  get allowFocus(): boolean {
+    return this.columnDefinition.allowFocus != false;
+  }
   get allowResize(): boolean {
     return this.columnDefinition.allowResize == true;
   }
@@ -66,7 +69,7 @@ export class AcDatagridColumn {
     return this.columnDefinition.title ?? this.columnDefinition.field;
   }
 
-  private _visible: boolean = AcDatagridDefaultColumnConfig.visible;
+  private _visible: boolean = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.visible;
   get visible(): boolean {
     return this._visible;
   }
@@ -80,7 +83,7 @@ export class AcDatagridColumn {
   }
 
 
-  private _width: number = AcDatagridDefaultColumnConfig.width;
+  private _width: number = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width;
   get width(): number {
     return this._width;
   }
@@ -93,7 +96,7 @@ export class AcDatagridColumn {
     this.hooks.execute({ hook: AcEnumDatagridHook.ColumnWidthChange, args: hookArgs });
   }
 
-  constructor({ columnDefinition, datagridApi, index = -1, width = AcDatagridDefaultColumnConfig.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {
+  constructor({ columnDefinition, datagridApi, index = -1, width = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {
     this.columnDefinition = columnDefinition;
     this.width = width;
     if (columnDefinition.width) {
@@ -106,10 +109,16 @@ export class AcDatagridColumn {
     this.index = index;
   }
 
-  getNextColumn():AcDatagridColumn | undefined{
+  getNextColumn({focusable}:{focusable?:boolean} = {}):AcDatagridColumn | undefined{
     let column: AcDatagridColumn | undefined;
     for (const col of this.datagridApi.datagridColumns) {
-      if (col.visible) {
+      let isValid:boolean = col.visible;
+      if(isValid){
+        if(focusable && !col.allowFocus){
+          isValid = false;
+        }
+      }
+      if (isValid) {
         if (column) {
           if (col.index < column.index && col.index > this.index) {
             column = col;
@@ -125,10 +134,16 @@ export class AcDatagridColumn {
     return column;
   }
 
-  getPreviousColumn():AcDatagridColumn | undefined {
+  getPreviousColumn({focusable}:{focusable?:boolean} = {}):AcDatagridColumn | undefined {
     let column: AcDatagridColumn | undefined;
     for (const col of this.datagridApi.datagridColumns) {
-      if (col.visible) {
+      let isValid:boolean = col.visible;
+      if(isValid){
+        if(focusable && !col.allowFocus){
+          isValid = false;
+        }
+      }
+      if (isValid) {
         if (column) {
           if (col.index > column.index && col.index < this.index) {
             column = col;

@@ -28,7 +28,7 @@ export class AcDatagridBody extends AcElementBase {
 
   constructor() {
     super();
-
+    this.style.height = '-webkit-fill-available';
   }
 
   override init() {
@@ -39,14 +39,14 @@ export class AcDatagridBody extends AcElementBase {
       datagridApi: this.datagridApi,
       datagridBody: this
     };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyCreate, args: hookArgs });
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyInit, args: hookArgs });
   }
 
 
   registerListeners() {
-    // const datagrid = this.datagridApi?.datagrid;
-    // const header = datagrid?.datagridHeader;
-    // acLinkElementScroll({ source: this, destination: header });
+    const datagrid = this.datagridApi?.datagrid;
+    const header = datagrid?.datagridHeader;
+    acLinkElementScroll({ source: this, destination: header });
   }
 
   setDisplayRows() {

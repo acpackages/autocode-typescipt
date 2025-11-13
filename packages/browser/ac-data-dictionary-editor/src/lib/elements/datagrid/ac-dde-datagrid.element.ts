@@ -1,4 +1,4 @@
-import { AcDatagrid, AcDatagridAfterRowsFooterExtension, AcDatagridApi, AcDatagridAutoAddNewRowExtension, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, IAcDatagridColumnDefinition } from "@autocode-ts/ac-browser";
+import { AcDatagrid, AcDatagridAfterRowsFooterExtension, AcDatagridApi, AcDatagridAutoAddNewRowExtension, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDDEApi } from "../../core/ac-dde-api";
 
@@ -25,7 +25,7 @@ export class AcDDEDatagrid {
   private rowSelectionExtension!: AcDatagridRowSelectionExtension;
   private rowDraggingExtension!: AcDatagridRowDraggingExtension;
   // private agGridExtension!: AcDatagridOnAgGridExtension;
-  newRowDataFunction:Function = ()=>{
+  newRowDataFunction: Function = () => {
     return {};
   };
 
@@ -33,6 +33,22 @@ export class AcDDEDatagrid {
     this.editorApi = editorApi;
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
+    this.datagridApi.hooks.subscribe({
+      hook: AcEnumDatagridHook.FooterInit, callback: () => {
+        const addNewButton: HTMLElement = this.datagrid.ownerDocument.createElement('button');
+        addNewButton.setAttribute('class', 'btn btn-primary btn-add-new py-0');
+        addNewButton.setAttribute('type', 'button');
+        addNewButton.setAttribute('style', 'height:28px;');
+        addNewButton.innerHTML = 'Add New';
+        this.datagrid.datagridFooter.append(addNewButton);
+        addNewButton.addEventListener('click', (event: MouseEvent) => {
+          this.datagridApi.addRow({ data: this.newRowDataFunction() });
+        });
+      }
+    });
+    this.datagridApi.on({event:AcEnumDatagridEvent.RowDataChange,callback:(args:any)=>{
+      console.log(`Row data change`,args);
+    }})
     this.element = this.datagrid;
     this.element.classList.add("ac-dde-datagrid")
 
@@ -44,18 +60,21 @@ export class AcDDEDatagrid {
     this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
+    this.autoAddNewRowExtension.autoAddNewRow = false;
     // this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
-    this.datagrid.querySelector('.ac-datagrid-container')?.append(this.footerElement);
-    this.footerElement.innerHTML = `<button class="btn btn-primary btn-add-new" type="button">Add New</button>`;
-    const addNewButton: HTMLElement = this.footerElement.querySelector('.btn-add-new')!;
-    addNewButton.addEventListener('click', (event: MouseEvent) => {
-      this.datagridApi.addRow({data:this.newRowDataFunction()});
-    });
-    this.afterRowsExtension.footerElement = this.footerElement;
-    this.datagridApi.on({event: AcEnumDatagridEvent.StateChange, callback: (args: any) => {
-        //
-      }
-    })
+    setTimeout(() => {
+
+      this.afterRowsExtension.footerElement = this.footerElement;
+      this.datagridApi.on({
+        event: AcEnumDatagridEvent.StateChange, callback: (args: any) => {
+          //
+        }
+      })
+    }, 500);
+
+    //
   }
+
+
 
 }

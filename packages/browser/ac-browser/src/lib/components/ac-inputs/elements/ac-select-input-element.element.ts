@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
 import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow } from "@autocode-ts/autocode";
+import { createPopper } from '@popperjs/core';
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcScrollable } from "../../_components.export";
 import { AcInputBase, AC_INPUT_TAG } from "../_ac-inputs.export";
@@ -12,7 +13,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   get addOption(): boolean {
-    return this.getAttribute('add-option') ? this.getAttribute('add-option') == 'true':true;
+    return this.getAttribute('add-option') ? this.getAttribute('add-option') == 'true' : true;
   }
   set addOption(value: boolean) {
     this.setAttribute('add-option', `${value}`);
@@ -69,23 +70,27 @@ export class AcSelectInput extends AcInputBase {
 
   override get value() { return super.value; }
   override set value(val: any) {
-    super.value = val;
-    const matchRow = this.dataManager.getRow({ key: this.valueKey, value: this.value });
-    if(matchRow){
-      this.textInputElement.value = matchRow.data[this.labelKey];
+    if (this._value != val) {
+      this.previousValue = val;
+      super.value = val;
+      const matchRow = this.dataManager.getRow({ key: this.valueKey, value: this.value });
+      if (matchRow) {
+        this.textInputElement.value = matchRow.data[this.labelKey];
+      }
+
+      if (this.dataManager.rows.length === 0 && super.value !== undefined) {
+        this.dataManager.data = [{
+          [this.labelKey]: super.value, [this.valueKey]: super.value
+        }];
+      }
     }
 
-    if (this.dataManager.rows.length === 0 && super.value !== undefined) {
-      this.dataManager.data = [{
-        [this.labelKey]: super.value, [this.valueKey]: super.value
-      }];
-    }
   }
 
   dataManager: AcDataManager = new AcDataManager();
   override isInputElementValidHtmlInput: boolean = false;
   protected dropdownContainer!: HTMLDivElement;
-  override inputElement: HTMLDivElement = this.ownerDocument.createElement('div');
+  selectContainer: HTMLDivElement = this.ownerDocument.createElement('div');
   protected highlightingIndex = -1;
   protected textInputElement: HTMLInputElement = this.ownerDocument.createElement("input");
   protected isDropdownOpen = false;
@@ -96,49 +101,13 @@ export class AcSelectInput extends AcInputBase {
   protected batchSize = 20;
   protected loadedCount = 0;
   protected addOptionText = "";
-  addOptionCallback:Function = ({query,callback}:{query:string,callback:Function}):void=>{
+  private previousValue: any;
+  private previousSearchTerm:string = '';
+  private popper?: ReturnType<typeof createPopper>;
+  addOptionCallback: Function = ({ query, callback }: { query: string, callback: Function }): void => {
     const newOption = { [this.labelKey]: query, [this.valueKey]: query };
     callback(newOption);
   };
-
-  override init() {
-    super.init();
-    if (!this.hasAttribute('label-key')) this.labelKey = 'label';
-    if (!this.hasAttribute('value-key')) this.valueKey = 'value';
-
-    this.inputElement.style.position = "relative";
-    this.textInputElement.type = "text";
-    this.textInputElement.autocomplete = "off";
-    Object.assign(this.textInputElement.style, {
-      width: "100%",
-      height: "100%",
-      border: "none",
-      outline: "none",
-      boxSizing: "border-box",
-      background: 'transparent'
-    });
-    this.inputElement.appendChild(this.textInputElement);
-
-    this.dropdownContainer = this.ownerDocument.createElement("div");
-    Object.assign(this.dropdownContainer.style, {
-      position: "fixed",
-      display: "none",
-      zIndex: "9999",
-      minWidth: "max-content",
-      maxHeight: `${this.maxDropdownHeight}px`,
-      border: "1px solid #ccc",
-      background: "#fff",
-      boxSizing: "border-box",
-    });
-
-    this.listEl = this.ownerDocument.createElement("div");
-    this.dropdownContainer.appendChild(this.listEl);
-    this.scrollable = new AcScrollable({
-      element: this.listEl,
-      options: { bufferCount: 3, elementHeight: this.optionHeight }
-    });
-    this.attachEvents();
-  }
 
   private applyHighlightStyles() {
     const all = this.dropdownContainer.querySelectorAll<HTMLElement>('[data-option-index]');
@@ -152,6 +121,10 @@ export class AcSelectInput extends AcInputBase {
   private attachEvents() {
     this.textInputElement.addEventListener("input", async () => {
       const term = this.textInputElement.value.trim().toLowerCase();
+      if(this.value && term!= this.previousSearchTerm){
+        this.value = null;
+      }
+      this.previousSearchTerm = term;
       this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
       this.openDropdown();
 
@@ -162,6 +135,8 @@ export class AcSelectInput extends AcInputBase {
     });
 
     this.textInputElement.addEventListener("focus", async () => {
+      const term = this.textInputElement.value.trim().toLowerCase();
+      this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
       this.openDropdown();
       const idx = this.dataManager.getRowIndex({ key: this.labelKey, value: this.value });
       this.highlightingIndex = idx >= 0 ? idx : -1;
@@ -177,8 +152,15 @@ export class AcSelectInput extends AcInputBase {
     });
 
     this.textInputElement.addEventListener("keydown", async (e) => {
-      if (!this.isDropdownOpen) return;
-
+      if (!this.isDropdownOpen) {
+        if (e.key === "F2") {
+          e.preventDefault();
+          const term = this.textInputElement.value.trim().toLowerCase();
+          this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
+          this.openDropdown();
+        }
+        return;
+      }
       if (e.key === "ArrowDown") {
         e.preventDefault();
         const maxIndex = this.loadedCount - 1 + (this.addOption ? 1 : 0);
@@ -206,33 +188,8 @@ export class AcSelectInput extends AcInputBase {
     });
 
     this.listEl.addEventListener("scroll", this.handleScroll.bind(this), { passive: true });
-    window.addEventListener("scroll", () => { if (this.isDropdownOpen) this.positionDropdown(); }, true);
-    window.addEventListener("resize", () => { if (this.isDropdownOpen) this.positionDropdown(); });
-  }
-
-  private handleScroll() {
-    if (this.dataManager.type !== 'ondemand') return;
-    const { scrollTop, scrollHeight, clientHeight } = this.listEl;
-    if (scrollTop + clientHeight >= scrollHeight - (this.optionHeight * 3)) this.loadMore();
-  }
-
-  private async loadMoreUntil(targetIndex: number) {
-    while (this.loadedCount <= targetIndex && !this.dataManager.allDataAvailable && this.loadedCount < this.dataManager.totalRows) {
-      await this.loadMore();
-    }
-  }
-
-  private async loadMore() {
-    if (this.dataManager.type !== 'ondemand' || this.dataManager.allDataAvailable || this.loadedCount >= this.dataManager.totalRows) return;
-    const startIndex = this.loadedCount;
-    const newRows = await this.dataManager.getRows({ startIndex, rowsCount: this.batchSize });
-    if (newRows.length === 0) return;
-    for (const row of newRows) {
-      const rowElement = this.buildOptionElement(row);
-      this.listEl.appendChild(rowElement);
-    }
-    this.loadedCount += newRows.length;
-    this.scrollable.registerExistingElements();
+    window.addEventListener("scroll", () => { if (this.isDropdownOpen) this.popper?.update(); }, true);
+    window.addEventListener("resize", () => { if (this.isDropdownOpen) this.popper?.update(); });
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -247,7 +204,7 @@ export class AcSelectInput extends AcInputBase {
 
   private buildOptionElement(row: AcDataRow): HTMLElement {
     const el = this.ownerDocument.createElement("div");
-    el.dataset["optionIndex"] = String(row.index);
+    el.dataset["optionIndex"] = String(row.displayIndex);
     el.style.padding = "4px 8px";
     el.style.cursor = "pointer";
     el.style.boxSizing = "border-box";
@@ -285,14 +242,23 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private addNewOption(label: string) {
-    this.addOptionCallback({query:label,callback:(option:any)=>{
-      this.dataManager.addData({data:option});
-      this.selectOption(option);
-    }});
+    this.addOptionCallback({
+      query: label, callback: (option: any) => {
+        this.dataManager.addData({ data: option });
+        this.selectOption(option);
+      }
+    });
   }
 
   closeDropdown() {
-    if (this.dropdownContainer.parentNode) this.dropdownContainer.remove();
+    if (this.popper) {
+      this.popper.destroy();
+      this.popper = undefined;
+    }
+    this.dropdownContainer.style.display = "none";
+    if (this.dropdownContainer.parentNode) {
+      this.dropdownContainer.remove();
+    }
     this.isDropdownOpen = false;
   }
 
@@ -306,34 +272,116 @@ export class AcSelectInput extends AcInputBase {
     this.textInputElement.focus();
   }
 
+  private handleScroll() {
+    if (this.dataManager.type !== 'ondemand') return;
+    const { scrollTop, scrollHeight, clientHeight } = this.listEl;
+    if (scrollTop + clientHeight >= scrollHeight - (this.optionHeight * 3)) this.loadMore();
+  }
+
+  override init() {
+    super.init();
+    this.innerHTML = '';
+    this.append(this.selectContainer);
+    if (!this.hasAttribute('label-key')) this.labelKey = 'label';
+    if (!this.hasAttribute('value-key')) this.valueKey = 'value';
+
+    this.selectContainer.style.display = "flex";
+    this.selectContainer.style.height = "-webkit-fill-available";
+    this.selectContainer.style.width = "-webkit-fill-available";
+    this.textInputElement.type = "text";
+    this.textInputElement.autocomplete = "off";
+    Object.assign(this.textInputElement.style, {
+      width: "100%",
+      height: "100%",
+      border: "none",
+      outline: "none",
+      boxSizing: "border-box",
+      background: 'transparent',
+      paddingLeft:'5px',
+      paddingRight:'3px'
+    });
+    this.selectContainer.appendChild(this.textInputElement);
+
+    this.dropdownContainer = this.ownerDocument.createElement("div");
+    Object.assign(this.dropdownContainer.style, {
+      position: "fixed",
+      display: "none",
+      zIndex: "9999",
+      minWidth: "max-content",
+      maxHeight: `${this.maxDropdownHeight}px`,
+      border: "1px solid #ccc",
+      background: "#fff",
+      boxSizing: "border-box",
+      overflow: 'auto'
+    });
+
+    this.listEl = this.ownerDocument.createElement("div");
+    this.dropdownContainer.appendChild(this.listEl);
+    this.scrollable = new AcScrollable({
+      element: this.listEl,
+      options: { bufferCount: 3, elementHeight: this.optionHeight }
+    });
+    this.attachEvents();
+  }
+
+  private async loadMore() {
+    if (this.dataManager.type !== 'ondemand' || this.dataManager.allDataAvailable || this.loadedCount >= this.dataManager.totalRows) return;
+    const startIndex = this.loadedCount;
+    const newRows = await this.dataManager.getRows({ startIndex, rowsCount: this.batchSize });
+    if (newRows.length === 0) return;
+    for (const row of newRows) {
+      const rowElement = this.buildOptionElement(row);
+      this.listEl.appendChild(rowElement);
+    }
+    this.loadedCount += newRows.length;
+    this.scrollable.registerExistingElements();
+    this.popper?.update();
+  }
+
+  private async loadMoreUntil(targetIndex: number) {
+    while (this.loadedCount <= targetIndex && !this.dataManager.allDataAvailable && this.loadedCount < this.dataManager.totalRows) {
+      await this.loadMore();
+    }
+  }
+
   openDropdown() {
     if (!this.isDropdownOpen) {
       this.ownerDocument.body.appendChild(this.dropdownContainer);
       this.isDropdownOpen = true;
-      this.dropdownContainer.style.display = "block";
-    }
-    this.positionDropdown();
-  }
 
-  private positionDropdown() {
-    setTimeout(() => {
-      const rect = this.inputElement.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const spaceBelow = viewportHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      const dropdownHeight = this.dropdownContainer.getBoundingClientRect().height;
-      const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
-      this.dropdownContainer.style.width = rect.width + "px";
-      this.dropdownContainer.style.left = rect.left + "px";
-      this.dropdownContainer.style.top = showAbove ? (rect.top - dropdownHeight) + "px" : rect.bottom + "px";
-      this.dropdownContainer.style.overflowY = "auto";
-      this.dropdownContainer.style.border = "1px solid #ccc";
-      this.dropdownContainer.style.background = "#fff";
-    }, 10);
+      const rect = this.selectContainer.getBoundingClientRect();
+      this.dropdownContainer.style.width = `${rect.width}px`;
+
+      this.popper = createPopper(this.selectContainer, this.dropdownContainer, {
+        strategy: 'fixed',
+        placement: 'bottom-start',
+        modifiers: [
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['top-start'],
+            },
+          },
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 4],
+            },
+          },
+        ],
+      });
+
+      this.dropdownContainer.style.display = "block";
+      setTimeout(() => {
+        this.renderVirtualList();
+      }, 1);
+    }
   }
 
   private async renderVirtualList() {
     this.listEl.innerHTML = "";
+    this.scrollable.pause();
+    this.scrollable.clearAll();
     let rows: AcDataRow[] = [];
     const startIndex = 0;
     let rowsCount = -1;
@@ -358,8 +406,10 @@ export class AcSelectInput extends AcInputBase {
       this.addOptionText = term;
       this.listEl.appendChild(this.buildAddOptionElement(term));
     }
-
+    this.scrollable.resume();
     this.scrollable.registerExistingElements();
+
+    this.popper?.update();
 
     setTimeout(() => this.applyHighlightStyles(), 0);
   }

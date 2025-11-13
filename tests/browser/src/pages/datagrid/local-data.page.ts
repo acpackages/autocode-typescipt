@@ -1,16 +1,20 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
-import { AcDatagrid, AcDatagridApi, AcEnumDatagridExtension } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcEnumDatagridExtension, AcEnumDatagridHook } from '@autocode-ts/ac-browser';
 import { customersData } from './../../../../data/customers-data';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 
 export class DatagridLocalData extends HTMLElement {
   public static observedAttributes = [];
   datagrid!: AcDatagrid;
   datagridApi!: AcDatagridApi;
+  addNewButton: HTMLElement = document.createElement('button');
 
   async connectedCallback() {
     const html = `
@@ -20,6 +24,19 @@ export class DatagridLocalData extends HTMLElement {
     this.innerHTML = html;
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
+    this.datagridApi.hooks.subscribe({
+      hook: AcEnumDatagridHook.FooterInit, callback: () => {
+        this.addNewButton.setAttribute('class', 'btn btn-dark btn-add-new py-0 ms-1');
+        this.addNewButton.setAttribute('type', 'button');
+        this.addNewButton.setAttribute('style', 'height:28px;');
+        this.addNewButton.innerHTML = `<ac-svg-icon>${ACI_SVG_SOLID.plus}</ac-svg-icon> Add Row`;
+        this.datagrid.datagridFooter.append(this.addNewButton);
+        this.addNewButton.addEventListener('click', (event: MouseEvent) => {
+          this.datagridApi.addRow({data:{index:this.datagridApi.dataManager.totalRows}});
+          console.log("Add clicked",this.datagridApi.dataManager);
+        });
+      }
+    });
     console.log(this.datagridApi);
     this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers });
     // const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
@@ -61,6 +78,9 @@ export class DatagridLocalData extends HTMLElement {
 
     // console.log(this.datagrid);
   }
+
+  // setAddButton(){
+  // }
 
   setLocalData() {
     const data: any[] = [];

@@ -9,6 +9,7 @@ export class AcDDEDatagridTextInput implements IAcDatagridCellEditor{
 
   focus(): void {
     this.textInput.focus();
+    console.log("Input focus");
   }
 
   getElement(): HTMLElement {

@@ -45,7 +45,7 @@ export class AcDDEViewsDatagrid {
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }, width: 50, maxWidth: 50, minWidth: 50
+        }, width: 35, allowEdit:false,allowFocus:false,allowFilter:false,allowSort:false
       },
       {
         'field': AcDDView.KeyViewName, 'title': 'View Name',
