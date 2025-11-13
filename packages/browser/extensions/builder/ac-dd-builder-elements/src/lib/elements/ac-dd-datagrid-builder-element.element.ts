@@ -239,7 +239,7 @@ export const AC_BUILDER_DD_DATAGRID_ELEMENT: IAcBuilderElement = {
   properties: [
     {
       name: 'sourceType', 'category': 'Data Dictionary', title: 'Source Type', type: 'select', inputProperties: {
-        'selectOptions': [
+        'options': [
           { label: 'Sql', value: 'SQL' },
           { label: 'Table', value: 'TABLE' },
           { label: 'View', value: 'VIEW' }

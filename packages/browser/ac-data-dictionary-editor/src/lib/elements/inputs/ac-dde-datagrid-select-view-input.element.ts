@@ -42,7 +42,7 @@ export class AcDDEDatagridSelectViewInput implements IAcDatagridCellEditor{
     for(const row of Object.values(this.editorApi.dataStorage.getViews({filter:this.filter}))){
       options.push({'label':row.viewName,'value':row.viewId});
     }
-    this.selectInput.selectOptions = options;
+    this.selectInput.options = options;
     this.selectInput.value = this.value;
   }
 

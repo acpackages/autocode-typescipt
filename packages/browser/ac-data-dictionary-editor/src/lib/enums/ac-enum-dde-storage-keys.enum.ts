@@ -52,7 +52,7 @@ export enum AcEnumDDETableColumn {
 	PrimaryKey = "primaryKey",
 	Remarks = "remarks",
 	Required = "required",
-	SelectOptions = "selectOptions",
+	SelectOptions = "options",
 	SetNullBeforeDelete = "setNullBeforeDelete",
 	Size = "size",
 	TableId = "tableId",

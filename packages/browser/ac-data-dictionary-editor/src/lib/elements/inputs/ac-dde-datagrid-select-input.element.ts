@@ -3,11 +3,11 @@ import { AcDatagridCell, AcSelectInput, IAcDatagridCellEditor, IAcDatagridCellEl
 export class AcDDEDatagridSelectInput implements IAcDatagridCellEditor{
   datagridCell!:AcDatagridCell;
   selectInput:AcSelectInput = new AcSelectInput();
-  get selectOptions():any[]{
-    return this.selectInput.selectOptions;
+  get options():any[]{
+    return this.selectInput.options;
   }
-  set selectOptions(value:any[]){
-    this.selectInput.selectOptions = value;
+  set options(value:any[]){
+    this.selectInput.options = value;
   }
 
   destroy(): void {
@@ -38,8 +38,8 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditor{
 
   init(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;
-    if(this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.selectOptions){
-      this.selectOptions = this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.selectOptions;
+    if(this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.options){
+      this.options = this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.options;
     }
     this.selectInput.value = this.datagridCell.cellValue;
   }

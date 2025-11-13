@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApplicationRef,ComponentRef,EmbeddedViewRef,Injector,TemplateRef,Type } from '@angular/core';
+import { ApplicationRef,ComponentRef,EmbeddedViewRef,TemplateRef,Type } from '@angular/core';
 import { AcDatagridCell, AcDatagridColumn, AcDatagridRow, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
@@ -92,7 +92,7 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     this.columnDefinition = this.datagridColumn.columnDefinition;
     this.appRef = this.columnDefinition.cellEditorElementParams['___appRef___'];
     this.runtimeService = this.columnDefinition.cellEditorElementParams['___runtimeService___'];
-    const colDef = this.datagridCell.datagridColumn.columnDefinition;
+    const colDef = this.columnDefinition;
     this.element.style.height = '100%';
     this.element.style.width = '100%';
     if (colDef.cellEditorTemplateRef) {
@@ -122,6 +122,10 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     this.clear();
     const properties = this.columnDefinition.cellEditorComponentProperties ? this.columnDefinition.cellEditorComponentProperties : {};
     this.componentRef = this.runtimeService.createComponent(componentType,properties);
+    if(!this.datagridRow.editorComponentRefs){
+      this.datagridRow.editorComponentRefs = {};
+    }
+    this.datagridRow.editorComponentRefs[this.datagridColumn.columnKey] = this.componentRef;
     const instance = this.componentRef.instance;
     if(instance.init){
       instance.init(args);

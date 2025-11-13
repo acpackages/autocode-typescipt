@@ -4,7 +4,6 @@ import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcDatagrid } from "../../_components.export";
-import { AcEnumDataSourceType } from "../../../enums/ac-enum-data-source-type.enum";
 import { IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
 
 export class AcDatagridSelectInput extends AcInputBase {
@@ -71,7 +70,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     // }
 
     // if(this._selectOptions.length == 0 && super.value != undefined){
-    //   this.selectOptions = [{
+    //   this.options = [{
     //     [this.labelKey]:super.value,[this.valueKey]:super.value
     //   }];
     // }

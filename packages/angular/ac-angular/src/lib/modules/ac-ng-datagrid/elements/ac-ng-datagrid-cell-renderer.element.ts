@@ -2,13 +2,11 @@
 import {
   ApplicationRef,
   ComponentRef,
-  createComponent,
   EmbeddedViewRef,
-  Injector,
   TemplateRef,
   Type,
 } from '@angular/core';
-import { IAcDatagridCellRenderer, AcDatagridCell, IAcDatagridCellElementArgs, AcDatagridAttributeName, acAddClassToElement, AcDatagridCssClassName, AcDatagridColumn, AcDatagridRow, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellRenderer, AcDatagridCell, IAcDatagridCellElementArgs, AcDatagridColumn, AcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
@@ -109,7 +107,7 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
 
   refresh(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;
-    const colDef = this.datagridCell.datagridColumn.columnDefinition;
+    const colDef = this.columnDefinition;
 
     if(this.componentRef){
       this.componentRef.instance.refresh(args);
@@ -125,6 +123,10 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     this.clear();
     const properties = this.columnDefinition.cellRendererComponentProperties ? this.columnDefinition.cellRendererComponentProperties : {};
     this.componentRef = this.runtimeService.createComponent(componentType,properties);
+    if(!this.datagridRow.rendererComponentRefs){
+      this.datagridRow.rendererComponentRefs = {};
+    }
+    this.datagridRow.rendererComponentRefs[this.datagridColumn.columnKey] = this.componentRef;
     const instance = this.componentRef.instance;
     if(instance.init){
       instance.init(args);

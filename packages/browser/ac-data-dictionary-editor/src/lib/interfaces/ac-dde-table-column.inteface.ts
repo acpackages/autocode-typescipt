@@ -20,7 +20,7 @@ export interface IAcDDETableColumn {
   primaryKey?: boolean;
   remarks?: string;
   required?: boolean;
-  selectOptions?: any;
+  options?: any;
   setNullBefore_delete?: boolean;
   size?: number;
   tableId?: string;

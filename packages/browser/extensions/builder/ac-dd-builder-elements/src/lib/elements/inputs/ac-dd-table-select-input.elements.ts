@@ -17,7 +17,7 @@ export class AcDDTableSelectInput extends AcBuilderPropertySelectInput{
     for(const table of Object.values(tables)){
       options.push({'label':table.tableName,'value':table.tableName});
     }
-    this.selectOptions = options;
+    this.options = options;
   }
 
 }

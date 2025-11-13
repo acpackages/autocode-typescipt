@@ -61,10 +61,10 @@ export class AcDDInputManager {
           }
         }
         else {
-          const selectOptions: any[] = ddTableColumn.getValueOptions();
-          if (selectOptions.length > 0) {
+          const options: any[] = ddTableColumn.getValueOptions();
+          if (options.length > 0) {
             result.inputElement = AcSelectInput;
-            result.defaultProperties['selectOptions'] = selectOptions;
+            result.defaultProperties['options'] = options;
           }
         }
 

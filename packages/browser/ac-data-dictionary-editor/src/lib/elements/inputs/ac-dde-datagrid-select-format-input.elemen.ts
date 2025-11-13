@@ -21,7 +21,7 @@ export class AcDDEDatagridSelectFormatInput implements IAcDatagridCellEditor {
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.selectOptions = [
+    this.selectInput.options = [
       { label: 'Lowercase', value: AcEnumDDColumnFormat.Lowercase },
       { label: 'Uppercase', value: AcEnumDDColumnFormat.Uppercase },
     ];

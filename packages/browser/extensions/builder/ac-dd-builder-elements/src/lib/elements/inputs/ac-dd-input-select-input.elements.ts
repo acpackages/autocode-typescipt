@@ -16,7 +16,7 @@ export class AcDDInputSelectInput extends AcBuilderPropertySelectInput{
     for(const name of AcDDInputManager.getInputNames()){
       options.push({'label':name,'value':name});
     }
-    this.selectOptions = options;
+    this.options = options;
   }
 
 }

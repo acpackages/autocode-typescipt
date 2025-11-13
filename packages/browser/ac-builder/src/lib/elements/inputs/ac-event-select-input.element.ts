@@ -26,7 +26,7 @@ export class AcEventSelectInput extends AcInputBase{
   async setOptions(){
     if(this.builderApi.scriptEditor && this.builderApi.component.className){
       const functions = await this.builderApi.scriptEditor.helper.getFunctionsInClass({className:this.builderApi.component.className});
-      this.inputElement.selectOptions = functions;
+      this.inputElement.options = functions;
     }
   }
 

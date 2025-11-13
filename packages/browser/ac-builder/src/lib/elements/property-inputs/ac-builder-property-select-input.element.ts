@@ -22,9 +22,9 @@ export class AcBuilderPropertySelectInput extends AcBuilderPropertyInput {
     this.inputElement.valueKey = value;
   }
 
-  get selectOptions(): any[] { return this.inputElement.selectOptions; }
-  set selectOptions(value: any[]) {
-    this.inputElement.selectOptions = value;
+  get options(): any[] { return this.inputElement.options; }
+  set options(value: any[]) {
+    this.inputElement.options = value;
   }
 
   override get value() { return this.inputElement.value; }
@@ -45,10 +45,10 @@ export class AcBuilderPropertySelectInput extends AcBuilderPropertyInput {
     }
     else if (name == 'select-options') {
       if (stringIsJson(newValue)) {
-        this.selectOptions = newValue;
+        this.options = newValue;
       }
       else {
-        this.selectOptions = newValue.split(",");
+        this.options = newValue.split(",");
       }
     }
     else {

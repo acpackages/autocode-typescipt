@@ -59,7 +59,7 @@ export const AC_BUILDER_LINK_ELEMENT: IAcBuilderElement = {
     { name: "href", type: "string", title: "Href", category: "Navigation", htmlAttributeName: 'href' },
     {
       name: "target", type: "select", title: "Target", category: "Navigation", htmlAttributeName: 'href', inputProperties: {
-        'selectOptions': [
+        'options': [
           { "label": "Blank", "value": "_blank" },
           { "label": "Self", "value": "_self" },
           { "label": "Parent", "value": "_parent" },
@@ -73,7 +73,7 @@ export const AC_BUILDER_LINK_ELEMENT: IAcBuilderElement = {
     AC_LINK_ANCHOR_PROPERTIES.type as IAcBuilderElementProperty,
     AC_LINK_ANCHOR_PROPERTIES.ping as IAcBuilderElementProperty,
     AC_LINK_ANCHOR_PROPERTIES.referrerpolicy as IAcBuilderElementProperty,
-    ...basicProperty, 
+    ...basicProperty,
     ...ariaProperties,
   ],
   mediaSvg: AC_BUILDER_ICON_SVGS.link,

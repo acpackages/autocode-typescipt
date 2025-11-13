@@ -50,8 +50,8 @@ export class AcSelectInput extends AcInputBase {
     else this.textInputElement.removeAttribute('placeholder');
   }
 
-  get selectOptions(): any[] { return this.dataManager.data; }
-  set selectOptions(value: any[]) {
+  get options(): any[] { return this.dataManager.data; }
+  set options(value: any[]) {
     this.dataManager.type = 'offline';
     let valueOptions: any[] = [];
     if (value.length > 0) {
@@ -85,6 +85,16 @@ export class AcSelectInput extends AcInputBase {
       }
     }
 
+  }
+
+  get selectedOptions():any[]{
+    const result:any[] = [];
+    for(const option of this.options){
+      if(option[this.valueKey] == this.value){
+        result.push(option);
+      }
+    }
+    return result;
   }
 
   dataManager: AcDataManager = new AcDataManager();
@@ -197,8 +207,8 @@ export class AcSelectInput extends AcInputBase {
     if (name === 'label-key') this.labelKey = newValue;
     else if (name === 'value-key') this.valueKey = newValue;
     else if (name === 'select-options') {
-      if (stringIsJson(newValue)) this.selectOptions = JSON.parse(newValue);
-      else this.selectOptions = newValue.split(",");
+      if (stringIsJson(newValue)) this.options = JSON.parse(newValue);
+      else this.options = newValue.split(",");
     } else super.attributeChangedCallback(name, oldValue, newValue);
   }
 

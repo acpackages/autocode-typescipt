@@ -37,7 +37,7 @@ export class AcBuilderPropertyInputsManager {
       this.register({input:{inputElement:AcBuilderPropertyNumberInput,type:'number'}});
       this.register({input:{inputElement:AcBuilderPropertySelectInput,type:'select'}});
       this.register({input:{inputElement:AcBuilderPropertyKeyValueInput,type:'keyValue'}});
-      this.register({input:{inputElement:AcBuilderPropertySelectInput,type:'boolean',properties:{selectOptions:[{'label':'True','value':true},{'label':'False','value':false}]}}});
+      this.register({input:{inputElement:AcBuilderPropertySelectInput,type:'boolean',properties:{options:[{'label':'True','value':true},{'label':'False','value':false}]}}});
       this.register({input:{inputElement:AcClassPropertySelectInput,type:'classProperty'}});
       this.builtInInputsRegistered = true;
     }

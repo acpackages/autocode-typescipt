@@ -40,7 +40,7 @@ export class AcDDSelectDatagridSourceValueInput extends AcBuilderPropertySelectI
         }
       }
     }
-    this.selectOptions = options;
+    this.options = options;
   }
 
 }

@@ -19,7 +19,7 @@ export class AcDDESelectDataDictionaryInput{
     for(const row of Object.values(this.editorApi.dataStorage.getDataDictionaries({filter:filter}))){
       options.push({'label':row.dataDictionaryName,'value':row.dataDictionaryId});
     }
-    this.selectInput.selectOptions = options;
+    this.selectInput.options = options;
   }
 
 }

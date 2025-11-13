@@ -82,7 +82,7 @@ export class AcDDETriggersDatagrid {
       {
         'field': AcDDTrigger.KeyTriggerExecution, 'title': 'Execution',
         cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
-          editorApi: this.editorApi, selectOptions: [
+          editorApi: this.editorApi, options: [
             { label: 'After', value: 'AFTER' },
             { label: 'Before', value: 'BEFORE' }
           ]
@@ -92,7 +92,7 @@ export class AcDDETriggersDatagrid {
         'field': AcDDTrigger.KeyRowOperation, 'title': 'Operation',
         cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
           editorApi: this.editorApi,
-          selectOptions: [
+          options: [
             { label: 'Insert', value: AcEnumDDRowOperation.Insert },
             { label: 'Update', value: AcEnumDDRowOperation.Update },
             { label: 'Delete', value: AcEnumDDRowOperation.Delete }

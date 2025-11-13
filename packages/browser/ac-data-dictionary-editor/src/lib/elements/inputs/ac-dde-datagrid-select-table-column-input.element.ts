@@ -47,7 +47,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
     for (const row of Object.values(this.editorApi.dataStorage.getTableColumns({filter:this.filter}))) {
       options.push({ 'label': row.columnName, 'value': row.columnId });
     }
-    this.selectInput.selectOptions = options;
+    this.selectInput.options = options;
     this.selectInput.value = this.datagridCell.cellValue;
   }
 

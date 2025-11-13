@@ -35,7 +35,7 @@ export class AcDDTableColumnSelectInput extends AcBuilderPropertySelectInput{
           }
         }
       }
-      this.selectOptions = options;
+      this.options = options;
     }
     else if(retry){
       setTimeout(() => {

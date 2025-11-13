@@ -38,7 +38,7 @@ export class AcClassPropertySelectInput extends AcBuilderPropertyInput{
   async setOptions(){
     if(this.builderApi!.scriptEditor && this.builderApi!.component.className){
       const functions = await this.builderApi!.scriptEditor.helper.getPropertiesInClass({className:this.builderApi!.component.className});
-      this.inputElement.selectOptions = functions;
+      this.inputElement.options = functions;
     }
   }
 

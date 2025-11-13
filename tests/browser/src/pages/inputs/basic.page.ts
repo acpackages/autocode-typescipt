@@ -325,7 +325,7 @@ export class InputBasicPage extends HTMLElement {
     select.acContextKey = 'preferred_framework';
     select.name = 'preferred_framework';
     select.acContext = this.context;
-    select.selectOptions = ['Angular', 'React', 'Vue.js', 'Svelte'];
+    select.options = ['Angular', 'React', 'Vue.js', 'Svelte'];
     select.className = 'form-select';
     select.addOption = true;
     select.addOptionCallback = ({ query, callback }: { query: string, callback: Function }) => {

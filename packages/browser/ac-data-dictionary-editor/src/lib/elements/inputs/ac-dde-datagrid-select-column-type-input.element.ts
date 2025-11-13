@@ -21,7 +21,7 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditor
 
   init(args: IAcDatagridCellElementArgs): void {
     this.selectInput.placeholder = "Select Type";
-    this.selectInput.selectOptions = [
+    this.selectInput.options = [
       {label:'Auto Increment',value:AcEnumDDColumnType.AutoIncrement},
       {label:'Auto Index',value:AcEnumDDColumnType.AutoIndex},
       {label:'Auto Number',value:AcEnumDDColumnType.AutoNumber},
