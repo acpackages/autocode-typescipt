@@ -1,6 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-builder/src/lib/css/ac-builder.css';
-import { AcLogger } from '@autocode-ts/autocode';
+import { AcLogger,AcContext } from '@autocode-ts/autocode';
 import { AcBuilder, AcBuilderApi, AcBuilderRuntimeComponent, IAcBuilderComponent, AcBuilderElementsManager } from '@autocode-ts/ac-builder';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
@@ -8,7 +8,6 @@ import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-
 import { acRegisterDataDictionaryBuilderElements } from '@autocode-ts/ac-dd-builder-elements';
 import { AcModal } from '@autocode-ts/ac-browser';
 import { acRegisterBootstrapBuilderElements } from '@autocode-ts/ac-bootstrap-builder-elements';
-import { AcContext } from '@autocode-ts/ac-template-engine';
 
 export class RuntimeComponentPage extends HTMLElement {
   builder!: AcBuilder;

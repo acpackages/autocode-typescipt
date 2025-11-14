@@ -29,16 +29,23 @@ export class AcDatagridRow extends AcDataRow {
   element?: AcDatagridRowElement;
   datagridCells: AcDatagridCell[] = [];
 
-  getCellByColumnIndex({ index }: { index: number }): AcDatagridCell | undefined {
+  getColumnCell({ index,key }: { index?: number,key?:string }): AcDatagridCell | undefined {
     const cell: AcDatagridCell | undefined = this.datagridCells.find((cell) => {
-      return cell.columnIndex == index;
+      let result:boolean  = false;
+      if(index!=undefined){
+        result = cell.columnIndex == index;
+      }
+      else if(key !=undefined){
+        result = cell.columnKey == key;
+      }
+      return result;
     });
     return cell;
   }
 
   getCellForColumn({ datagridColumn, createIfNotFound = false }: { datagridColumn: AcDatagridColumn, createIfNotFound?: boolean }): AcDatagridCell | undefined {
     let cell: AcDatagridCell | undefined = this.datagridCells.find((cell) => {
-      return cell.acColumnId == datagridColumn.acColumnId;
+      return cell.columnId == datagridColumn.columnId;
     });
     if (cell == undefined && createIfNotFound) {
       cell = new AcDatagridCell({ datagridApi: this.datagridApi, datagridColumn: datagridColumn, datagridRow: this });

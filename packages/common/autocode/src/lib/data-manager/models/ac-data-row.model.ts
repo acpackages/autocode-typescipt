@@ -1,26 +1,48 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
+import { AcContext } from "../../core/ac-context";
 import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
 import { Autocode } from "../../core/autocode";
+import { AcEnumContextEvent } from "../../enums/ac-enum-context-event.enum";
+import { acSingleTimeout } from "../../utils/ac-utility-functions";
 import { AcEnumDataManagerEvent } from "../_data-manager.export";
 import { AcDataManager } from "../core/ac-data-manager";
 
 export class AcDataRow {
-  acRowId: string = Autocode.uuid();
+  rowId: string = Autocode.uuid();
 
+  private dataChangeCallback:Function = (args:any)=>{
+    this.notifyRowDataChange();
+  };
   private _data: any;
-  get data():any{
+  get data(): any {
     return this._data;
   }
-  set data(value:any){
-    this._data = value;
-    if(this.dataManager.autoSetUniqueIdToData){
-      if(value['__ac_row_id__']){
-        this.acRowId = value['__ac_row_id__'];
+  set data(value: any) {
+    const object:any = this;
+    if (value != this._data) {
+      if (value['__acContextName__']) {
+        this._data = value;
+        this._data.off({event:AcEnumContextEvent.Change,callback:this.dataChangeCallback});
+        this._data.on({event:AcEnumContextEvent.Change,callback:(args:any)=>{
+    object.notifyRowDataChange();
+  }});
       }
-      else{
-        value['__ac_row_id__'] = this.acRowId;
+      else {
+        if (this.dataManager.autoSetUniqueIdToData) {
+          if (value['__ac_row_id__']) {
+            this.rowId = value['__ac_row_id__'];
+          }
+          else {
+            value['__ac_row_id__'] = this.rowId;
+          }
+        }
+        this._data = new AcContext({ value });
+        this._data.on({event:AcEnumContextEvent.Change,callback:(args:any)=>{
+    object.notifyRowDataChange();
+  }});
       }
     }
   }
@@ -30,8 +52,8 @@ export class AcDataRow {
   extensionData: Record<string, any> = {};
   hooks: AcHooks = new AcHooks();
   index: number = -1;
-  isPlaceholder:boolean = false;
-  displayIndex:number = -1;
+  isPlaceholder: boolean = false;
+  displayIndex: number = -1;
 
   get isFirst(): boolean {
     return this.displayIndex == 0;
@@ -41,19 +63,27 @@ export class AcDataRow {
     return this.displayIndex == this.dataManager.displayedRows.length - 1;
   }
 
-  constructor({ data = {},dataManager, index = -1,isPlaceholder = false }: { data?: any,dataManager:AcDataManager, index?: number,isPlaceholder?:boolean }) {
+  constructor({ data = {}, dataManager, index = -1, isPlaceholder = false }: { data?: any, dataManager: AcDataManager, index?: number, isPlaceholder?: boolean }) {
     this.isPlaceholder = isPlaceholder;
     this.dataManager = dataManager;
     this.index = index;
     this.data = data;
-    this.dataManager.events.execute({event:AcEnumDataManagerEvent.DataRowInstanceCreate,args:{dataRow:this}});
+    this.dataManager.events.execute({ event: AcEnumDataManagerEvent.DataRowInstanceCreate, args: { dataRow: this } });
+  }
+
+  notifyRowDataChange(){
+    acSingleTimeout({callback:() => {
+      this.hooks.execute({hook:AcEnumDataManagerEvent.DataChange});
+    },duration:10,key:this.rowId});
   }
 
   off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {
-    this.events.unsubscribe({ event, callback,subscriptionId });
+    this.events.unsubscribe({ event, callback, subscriptionId });
   }
 
   on({ event, callback }: { event: string, callback: Function }): string {
     return this.events.subscribe({ event, callback });
   }
+
+
 }

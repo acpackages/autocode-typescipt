@@ -55,7 +55,7 @@ export class AcDDETriggersDatagrid {
     this.triggerMaster.on({
       event: "change", callback: (args: any) => {
         if (this.ddeDatagrid.datagridApi.activeDatagridRow) {
-          this.ddeDatagrid.datagridApi!.updateRow({ rowId: this.ddeDatagrid.datagridApi.activeDatagridRow!.acRowId, data: args.trigger });
+          this.ddeDatagrid.datagridApi!.updateRow({ rowId: this.ddeDatagrid.datagridApi.activeDatagridRow!.rowId, data: args.trigger });
         }
       }
     });

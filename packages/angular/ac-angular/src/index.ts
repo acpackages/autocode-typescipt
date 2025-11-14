@@ -1,7 +1,6 @@
 /*
  * Public API Surface of ac-angular
  */
-/// <reference types="./lib/typings/ac-datagrid-row" />
 export * from "./lib/ac-angular.module";
 
 export * from "./lib/_base/ac-base.component";

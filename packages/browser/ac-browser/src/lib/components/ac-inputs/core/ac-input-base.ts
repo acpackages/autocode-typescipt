@@ -3,9 +3,8 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcHooks } from "@autocode-ts/autocode";
+import { AcHooks,AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/autocode";
 import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
-import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acListenAllElementEvents } from "../../../utils/ac-element-functions";
 
@@ -330,11 +329,11 @@ export class AcInputBase extends AcElementBase {
   protected setValueFromAcContext() {
     if (this.acContextKey && this.acContext) {
       this.value = this.acContext[this.acContextKey];
-      this.acContext.on(AcEnumContextEvent.Change, (args: any) => {
+      this.acContext.on({event:AcEnumContextEvent.Change, callback:(args: any) => {
         if (args.property == this.acContextKey) {
           this.setValue(args.value);
         }
-      });
+      }});
     }
   }
 

@@ -6,6 +6,7 @@ import { AC_DATAGRID_TAG, AcDatagridAttributeName, AcEnumDatagridHook, IAcDatagr
 import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcElementBase } from "../../../core/ac-element-base";
+import { AcEnumDataManagerHook } from "@autocode-ts/autocode";
 
 export class AcDatagridRowElement extends AcElementBase{
   private _datagridApi!: AcDatagridApi;
@@ -17,7 +18,7 @@ export class AcDatagridRowElement extends AcElementBase{
     this.initRow();
     // value.on({
     //   event: AcEnumDatagridEvent.RowPositionChange, callback: (event: IAcDatagridRowPositionChangeEvent) => {
-    //     if (event.datagridRow.acRowId == this.datagridRow.acRowId && !this.swappingRowPosition) {
+    //     if (event.datagridRow.rowId == this.datagridRow.rowId && !this.swappingRowPosition) {
     //       if (event.datagridRow.instance && event.oldDatagridRow.instance) {
     //         this.swappingRowPosition = true;
     //         acSwapElementsWithAnimation({ element1: event.datagridRow.instance.rowWrapper, element2: event.oldDatagridRow.instance.rowWrapper, duration: 300 });
@@ -44,8 +45,8 @@ export class AcDatagridRowElement extends AcElementBase{
   swappingRowPosition: boolean = false;
   container:HTMLElement = this.ownerDocument.createElement('div');
 
-  constructor(){
-    super();
+  override init(){
+    super.init();
     this.style.display = 'block';
     this.style.width = 'max-content';
     this.style.height = 'max-content';
@@ -57,11 +58,14 @@ export class AcDatagridRowElement extends AcElementBase{
   initRow(){
     if(this.datagridApi && this.datagridRow){
       this.initElement();
+      this.datagridRow.hooks.subscribe({hook:AcEnumDataManagerHook.DataChange,callback:(args:any)=>{
+        this.refreshCells();
+      }});
     }
   }
 
   initElement() {
-    this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
+    this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
     if (this.datagridRow.index == 0 || this.datagridRow.index % 2 == 0) {
       acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowEven, element: this });
     }
@@ -70,6 +74,12 @@ export class AcDatagridRowElement extends AcElementBase{
     }
     this.registerListeners();
     this.render();
+  }
+
+  refreshCells(){
+    for(const cell of this.datagridCells){
+      cell.refresh();
+    }
   }
 
   registerListeners() {

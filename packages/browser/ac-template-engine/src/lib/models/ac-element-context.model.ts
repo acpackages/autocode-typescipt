@@ -1,5 +1,4 @@
-import { AcEvents } from "@autocode-ts/autocode";
-import { AcContext } from "./ac-context.model";
+import { AcEvents,AcContext } from "@autocode-ts/autocode";
 
 export class AcElementContext {
   private events: AcEvents = new AcEvents();
@@ -7,9 +6,9 @@ export class AcElementContext {
 
   addValueObjectToContext(value:{value: any}) {
     const valueProxy = new AcContext(value);
-    valueProxy.on('change', (params: any) => {
+    valueProxy.on({event:'change',callback:(params: any) => {
       this.events.execute({ event: "change", args: params })
-    });
+    }});
     this.contexts.push(valueProxy);
   }
 

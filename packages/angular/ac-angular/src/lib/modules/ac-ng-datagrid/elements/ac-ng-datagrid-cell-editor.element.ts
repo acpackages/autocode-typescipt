@@ -12,7 +12,7 @@ import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-
 export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
   private datagridCell!: AcDatagridCell;
   private datagridColumn!: AcDatagridColumn;
-  private datagridRow!: AcDatagridRow|any;
+  private datagridRow!: AcDatagridRow;
   private columnDefinition:IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 
@@ -122,10 +122,13 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     this.clear();
     const properties = this.columnDefinition.cellEditorComponentProperties ? this.columnDefinition.cellEditorComponentProperties : {};
     this.componentRef = this.runtimeService.createComponent(componentType,properties);
-    if(!this.datagridRow.editorComponentRefs){
-      this.datagridRow.editorComponentRefs = {};
+    if(!this.datagridRow.extensionData){
+      this.datagridRow.extensionData = {};
     }
-    this.datagridRow.editorComponentRefs[this.datagridColumn.columnKey] = this.componentRef;
+    if(!this.datagridRow.extensionData['editorComponentRefs']){
+      this.datagridRow.extensionData['editorComponentRefs'] = {};
+    }
+    this.datagridRow.extensionData['editorComponentRefs'][this.datagridColumn.columnKey] = this.componentRef;
     const instance = this.componentRef.instance;
     if(instance.init){
       instance.init(args);

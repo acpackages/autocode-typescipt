@@ -162,7 +162,7 @@ export class AcDatagridApi {
   };
   rowDragPlaceholderElementCreator: Function = (args: IAcDatagridRowDragPlaceholderCreatorArgs): HTMLElement => {
     const element = document.createElement('span');
-    element.innerHTML = args.datagridRow.acRowId;
+    element.innerHTML = args.datagridRow.rowId;
     return element;
   };
   activeCell?: AcDatagridCell;
@@ -233,7 +233,7 @@ export class AcDatagridApi {
     for (const datagridRow of this.datagridRows) {
       if (datagridRow.element) {
         for (const datagridCell of datagridRow.element.datagridCells) {
-          if (datagridCell.datagridColumn.acColumnId == datagridColumn.acColumnId) {
+          if (datagridCell.datagridColumn.columnId == datagridColumn.columnId) {
             const cellWidth = datagridCell.container.getBoundingClientRect().width;
             if (cellWidth > maxWidth) {
               maxWidth = cellWidth;
@@ -327,7 +327,7 @@ export class AcDatagridApi {
   getRowById({ rowId }: { rowId: string }): AcDatagridRow | undefined {
     let result: AcDatagridRow | undefined;
     for (const row of this.datagridRows) {
-      if (row.acRowId == rowId) {
+      if (row.rowId == rowId) {
         result = row;
         break;
       }
@@ -413,7 +413,7 @@ export class AcDatagridApi {
       if (rowIndex != undefined && columnIndex != undefined && rowIndex > -1 && columnIndex > -1) {
         const datagridRow = this.getRowByIndex({ index: rowIndex });
         if (datagridRow) {
-          datagridCell = datagridRow.getCellByColumnIndex({ index: columnIndex });
+          datagridCell = datagridRow.getColumnCell({ index: columnIndex });
         }
       }
     }
@@ -462,7 +462,7 @@ export class AcDatagridApi {
     if (datagridRow) {
       if (highlightCells) {
         for (const cell of datagridRow.datagridCells) {
-          cell.element!.cellRenderer.refresh({ datagridApi: this, datagridCell: cell });
+          cell.element!.refresh();
         }
       }
     }

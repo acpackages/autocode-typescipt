@@ -7,7 +7,7 @@ export class AcHooks {
   private hooks: Record<string, Record<string, Function>> = {};
   private allHookCallbacks: Record<string, Function> = {};
 
-  clearSubscriptions(){
+  clearSubscriptions() {
     this.hooks = {};
     this.allHookCallbacks = {};
   }
@@ -45,25 +45,25 @@ export class AcHooks {
       }
 
       for (const [functionId, fun] of Object.entries(this.allHookCallbacks)) {
-          if (!continueOperation) break;
-          try {
-            const functionResult = fun(name, args);
+        if (!continueOperation) break;
+        try {
+          const functionResult = fun(name, args);
 
-            if (functionResult) {
-              functionResults[functionId] = functionResult;
+          if (functionResult) {
+            functionResults[functionId] = functionResult;
 
-              if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
-                continueOperation = false;
-              }
-
-              if (functionResult.continueOperation !== true) {
-                result.continueOperation = false;
-              }
+            if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
+              continueOperation = false;
             }
-          } catch (ex) {
-            console.error(ex);
+
+            if (functionResult.continueOperation !== true) {
+              result.continueOperation = false;
+            }
           }
+        } catch (ex) {
+          console.error(ex);
         }
+      }
 
       if (Object.keys(functionResults).length > 0) {
         result.hasResults = true;
@@ -118,15 +118,18 @@ export class AcHooks {
       const removeFunction = (hookName: string): boolean => {
         let found: boolean = false;
         const hookFunctions = this.hooks[hookName];
-        for (const subscriptionId of Object.keys(hookFunctions)) {
-          if (!found) {
-            if (hookFunctions[subscriptionId] == callback) {
-              delete hookFunctions[subscriptionId];
-              found = true;
-              break;
+        if (hookFunctions) {
+          for (const subscriptionId of Object.keys(hookFunctions)) {
+            if (!found) {
+              if (hookFunctions[subscriptionId] == callback) {
+                delete hookFunctions[subscriptionId];
+                found = true;
+                break;
+              }
             }
           }
         }
+
         return found;
       };
       if (hook) {

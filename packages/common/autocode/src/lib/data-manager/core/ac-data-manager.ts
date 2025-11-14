@@ -190,7 +190,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.totalRows++;
     dataRow.displayIndex = this.displayedRows.length;
     this.displayedRows.push(dataRow);
-    this.logger.log("Data added successfully", { rowId: dataRow.acRowId, index });
+    this.logger.log("Data added successfully", { rowId: dataRow.rowId, index });
     return dataRow;
   }
 
@@ -239,7 +239,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     const dataRow: T | undefined = this.rows.find((dataRow: T) => {
       let valid: boolean = false;
       if (rowId) {
-        valid = dataRow.acRowId == rowId;
+        valid = dataRow.rowId == rowId;
       }
       else if (key && value) {
         valid = dataRow.data[key] == value;
@@ -253,12 +253,12 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       return valid;
     });
     if (dataRow) {
-      arrayRemoveByKey(this.allRows, 'acRowId', dataRow.acRowId);
-      arrayRemoveByKey(this.rows, 'acRowId', dataRow.acRowId);
-      arrayRemoveByKey(this._displayedRows, 'acRowId', dataRow.acRowId);
+      arrayRemoveByKey(this.allRows, 'rowId', dataRow.rowId);
+      arrayRemoveByKey(this.rows, 'rowId', dataRow.rowId);
+      arrayRemoveByKey(this._displayedRows, 'rowId', dataRow.rowId);
       this.totalRows--;
       this.setDisplayedRowIndexes();
-      this.logger.log("Row deleted successfully", { rowId: dataRow.acRowId });
+      this.logger.log("Row deleted successfully", { rowId: dataRow.rowId });
     } else {
       this.logger.log("Row not found for deletion");
     }
@@ -787,7 +787,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     let dataRow: T | undefined = this.rows.find((row) => {
       let valid: boolean = false;
       if (rowId) {
-        valid = row.acRowId == rowId;
+        valid = row.rowId == rowId;
       }
       else if (key && value) {
         valid = row.data[key] == value;
@@ -807,7 +807,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         dataRow: dataRow
       };
       this.events.execute({ event: AcEnumDataManagerEvent.RowUpdate, args: eventArgs });
-      this.logger.log("Row updated successfully", { rowId: dataRow.acRowId });
+      this.logger.log("Row updated successfully", { rowId: dataRow.rowId });
     }
     else if (addIfMissing) {
       this.logger.log("Row not found, adding new row");

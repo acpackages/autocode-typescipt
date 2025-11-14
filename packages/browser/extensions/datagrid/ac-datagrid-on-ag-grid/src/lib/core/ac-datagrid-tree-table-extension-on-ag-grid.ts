@@ -160,8 +160,8 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
         for (const datagridRow of this.datagridApi.datagridRows) {
           const rowData = datagridRow.data;
           if (rowData[this.treeDataParentKey] == data[this.treeDataChildKey]) {
-            data[this.agGridExtension.rowParentKey] = datagridRow.acRowId;
-            this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleRowAdd: Set rowParentKey to ${datagridRow.acRowId}.`);
+            data[this.agGridExtension.rowParentKey] = datagridRow.rowId;
+            this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleRowAdd: Set rowParentKey to ${datagridRow.rowId}.`);
             break;
           }
         }
@@ -184,8 +184,8 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
         for (const datagridRow of this.datagridApi.datagridRows) {
           const rowData = datagridRow.data;
           if (rowData[this.treeDataParentKey] == data[this.treeDataChildKey]) {
-            data[this.agGridExtension.rowParentKey] = datagridRow.acRowId;
-            this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleRowUpdate: Set rowParentKey to ${datagridRow.acRowId}.`);
+            data[this.agGridExtension.rowParentKey] = datagridRow.rowId;
+            this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleRowUpdate: Set rowParentKey to ${datagridRow.rowId}.`);
             break;
           }
         }

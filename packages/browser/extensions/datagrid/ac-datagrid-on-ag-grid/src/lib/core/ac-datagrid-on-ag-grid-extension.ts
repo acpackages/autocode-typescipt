@@ -422,7 +422,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     const data: any[] = [];
     for (const datagridRow of this.datagridApi.datagridRows) {
       const rowData: any = datagridRow.data;
-      rowData[this.rowKey] = datagridRow.acRowId;
+      rowData[this.rowKey] = datagridRow.rowId;
       data.push(rowData);
     }
     this.logger.log(`[AcDatagridOnAgGridExtension] handleDataChange: Prepared data array with ${data.length} rows.`);
@@ -623,7 +623,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.logger.log(`[AcDatagridOnAgGridExtension] handleRowAdd: Entering with append=${args.append}, highlightCells=${args.highlightCells}.`);
     const data: any = args.datagridRow.data;
     if (this.isClientSideData) {
-      data[this.rowKey] = args.datagridRow.acRowId;
+      data[this.rowKey] = args.datagridRow.rowId;
       const hookArgs: IAcDatagriOnAgGridRowAddHookArgs = {
         data: data
       };
@@ -657,7 +657,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   private handleRowDelete(args: IAcDatagridRowDeleteHookArgs) {
-    this.logger.log(`[AcDatagridOnAgGridExtension] handleRowDelete: Entering with rowId=${args.datagridRow.acRowId}.`);
+    this.logger.log(`[AcDatagridOnAgGridExtension] handleRowDelete: Entering with rowId=${args.datagridRow.rowId}.`);
     if (this.isClientSideData) {
       this.gridApi.applyTransaction({ remove: [args.datagridRow.data] });
       this.logger.log("[AcDatagridOnAgGridExtension] handleRowDelete: Applied client-side transaction to remove row.");
@@ -698,7 +698,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   private handleRowUpdate(args: IAcDatagridRowUpdateHookArgs) {
-    this.logger.log(`[AcDatagridOnAgGridExtension] handleRowUpdate: Entering with rowId=${args.datagridRow.acRowId}, highlightCells=${args.highlightCells}.`);
+    this.logger.log(`[AcDatagridOnAgGridExtension] handleRowUpdate: Entering with rowId=${args.datagridRow.rowId}, highlightCells=${args.highlightCells}.`);
     const data = args.datagridRow.data;
     const hookArgs: IAcDatagriOnAgGridRowUpdateHookArgs = {
       data: data
@@ -707,7 +707,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.logger.log("[AcDatagridOnAgGridExtension] handleRowUpdate: Executed BeforeRowUpdate hook.");
     let rowNode: any;
     this.gridApi.forEachNode((node: IRowNode, index: number) => {
-      if (node.data[this.rowKey] == args.datagridRow.acRowId) {
+      if (node.data[this.rowKey] == args.datagridRow.rowId) {
         rowNode = node;
       }
     });
@@ -717,7 +717,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         this.logger.log("[AcDatagridOnAgGridExtension] handleRowUpdate: Updated client-side row data.");
       }
       else {
-        data[this.rowKey] = args.datagridRow.acRowId;
+        data[this.rowKey] = args.datagridRow.rowId;
         this.gridApi.applyServerSideTransaction({ update: [data] });
         rowNode.setData(data);
         this.logger.log("[AcDatagridOnAgGridExtension] handleRowUpdate: Applied server-side transaction and updated row data.");
@@ -729,7 +729,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         this.logger.log("[AcDatagridOnAgGridExtension] handleRowUpdate: Flashed cells for highlight.");
       }
     } else {
-      this.logger.log(`[AcDatagridOnAgGridExtension] handleRowUpdate: No rowNode found for rowId=${args.datagridRow.acRowId}, skipped update.`);
+      this.logger.log(`[AcDatagridOnAgGridExtension] handleRowUpdate: No rowNode found for rowId=${args.datagridRow.rowId}, skipped update.`);
     }
     this.logger.log("[AcDatagridOnAgGridExtension] handleRowUpdate: Exiting.");
   }

@@ -64,7 +64,6 @@ export class AcDatagridCellElement extends AcElementBase {
 
   constructor() {
     super();
-    this.style.overflow = 'hidden';
   }
 
 
@@ -93,6 +92,10 @@ export class AcDatagridCellElement extends AcElementBase {
       this.activeComponent = this.cellRenderer;
       this.container.append(this.cellRenderer.getElement());
     }
+  }
+
+  override init(): void {
+    this.style.overflow = 'hidden';
   }
 
   private initCell() {
@@ -167,9 +170,9 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   initElement() {
-    this.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.acCellId);
-    this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.acColumnId);
-    this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
+    this.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.cellId);
+    this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.columnId);
+    this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
     this.setAttribute('tabindex', "0");
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.container });
     this.append(this.container);
@@ -178,6 +181,13 @@ export class AcDatagridCellElement extends AcElementBase {
     this.setCellWidth();
     this.setCellFocusable();
     this.registerEvents();
+  }
+
+  refresh(){
+    this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+    if(this.cellEditor){
+      this.cellEditor.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+    }
   }
 
   registerEvents() {
@@ -211,13 +221,13 @@ export class AcDatagridCellElement extends AcElementBase {
     });
     this.addEventListener('mouseenter', (e: MouseEvent) => {
       this.datagridApi.eventHandler.handleCellMouseEnter({ datagridCell: this.datagridCell, event: e });
-      this.datagridApi.hoverCellId = this.datagridCell.acCellId;
-      this.datagridApi.hoverColumnId = this.datagridCell.acColumnId;
-      this.datagridApi.hoverRowId = this.datagridCell.acRowId;
+      this.datagridApi.hoverCellId = this.datagridCell.cellId;
+      this.datagridApi.hoverColumnId = this.datagridCell.columnId;
+      this.datagridApi.hoverRowId = this.datagridCell.rowId;
     });
     this.addEventListener('mouseleave', (e: MouseEvent) => {
       this.datagridApi.eventHandler.handleCellMouseLeave({ datagridCell: this.datagridCell, event: e });
-      if (this.datagridApi.hoverCellId == this.datagridCell.acCellId) {
+      if (this.datagridApi.hoverCellId == this.datagridCell.cellId) {
         this.datagridApi.hoverCellId = undefined;
         this.datagridApi.hoverColumnId = undefined;
         this.datagridApi.hoverRowId = undefined;

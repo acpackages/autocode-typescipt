@@ -27,7 +27,8 @@ export class DatagridComponent {
   data?: any;
 
   columnDefinitions:IAcNgDatagridColumnDefinition[] = [
-    { field: 'action', title: "Action", autoWidth: true, allowEdit: false,cellEditorComponent: ActionColumnComponent,cellEditorComponentProperties:{showEdit:false},useCellEditorForRenderer:true},
+    // { field: 'action', title: "Action", autoWidth: true, allowEdit: false,cellEditorComponent: ActionColumnComponent,cellEditorComponentProperties:{showEdit:false},useCellEditorForRenderer:true},
+    { field: 'action', title: "Action", autoWidth: true, allowEdit: false},
     { field: 'index', title: "SrNo.", autoWidth: true, allowEdit: false,cellRendererTemplateRef: this.idTemplateRef},
     { field: 'first_name', title: "First Name", autoWidth: true, allowEdit: true },
     { field: 'last_name', title: "Last Name", autoWidth: true, allowEdit: true },
@@ -57,6 +58,11 @@ export class DatagridComponent {
       this.datagrid.datagridApi.addRow();
     });
     this.datagrid.datagrid.datagridFooter.append(button);
+  }
+
+  handleEdit(datagridRow:AcDatagridRow){
+    datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
+    console.log(datagridRow);
   }
 
   setLocalData() {
@@ -111,6 +117,6 @@ export class DatagridComponent {
     const datagridApi = datagridRow.datagridApi;
     const data = {...datagridRow.data};
     data['index']++;
-    this.datagrid.datagridApi.updateRow({data:data,rowId:datagridRow.acRowId})
+    this.datagrid.datagridApi.updateRow({data:data,rowId:datagridRow.rowId})
   }
 }

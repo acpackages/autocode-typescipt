@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcBindJsonProperty, AcHooks, AcJsonUtils, Autocode } from "@autocode-ts/autocode";
+import { AcBindJsonProperty, AcHooks, AcJsonUtils, Autocode, AcContext } from "@autocode-ts/autocode";
 import { AcDDTableColumnProperty, AcDDTableProperty, AcEnumDDColumnProperty, AcEnumDDTableProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEApi } from "./ac-dde-api";
 import { IAcDDEDataDictionary } from "../interfaces/ac-dde-data-dictionary.inteface";
@@ -17,7 +17,6 @@ import { IAcDDEViewColumn } from "../interfaces/ac-dde-view-column.inteface";
 import { IAcDDEView } from "../interfaces/ac-dde-view.inteface";
 import { AcEnumDDEEntity } from "../enums/ac-enum-dde-entity.enum";
 import { boolColumnProperties } from "../consts/ac-dde-column-property-groups.const";
-import { AcContext } from "@autocode-ts/ac-template-engine";
 
 export class AcDDEDataStorage {
   static readonly KeyDataDictionaries = "data_dictionaries";
@@ -516,7 +515,7 @@ export class AcDDEDataStorage {
         proxy = this._viewColumnsReactiveProxy;
         break;
     }
-    return proxy.on(event, callback);
+    return proxy.on({event, callback});
   }
 
   saveDataDictionary(data: Partial<IAcDDEDataDictionary>): IAcDDEDataDictionary {

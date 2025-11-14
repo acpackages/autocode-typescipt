@@ -29,7 +29,7 @@ export class AcDatagridColumn {
       }
     }
 
-  acColumnId: string = Autocode.uuid();
+  columnId: string = Autocode.uuid();
   columnDefinition!: IAcDatagridColumnDefinition;
   datagridApi!: AcDatagridApi;
   dataType: AcEnumDatagridColumnDataType = AcEnumDatagridColumnDataType.String;

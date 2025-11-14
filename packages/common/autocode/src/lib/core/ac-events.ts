@@ -89,21 +89,23 @@ export class AcEvents {
           removed = true;
         }
       }
-
     }
     else if (callback) {
       const removeFunction = (eventName: string): boolean => {
         let found: boolean = false;
         const eventFunctions = this.events[eventName];
-        for (const subscriptionId of Object.keys(eventFunctions)) {
-          if (!found) {
-            if (eventFunctions[subscriptionId] == callback) {
-              delete eventFunctions[subscriptionId];
-              found = true;
-              break;
+        if (eventFunctions) {
+          for (const subscriptionId of Object.keys(eventFunctions)) {
+            if (!found) {
+              if (eventFunctions[subscriptionId] == callback) {
+                delete eventFunctions[subscriptionId];
+                found = true;
+                break;
+              }
             }
           }
         }
+
         return found;
       };
       if (event) {

@@ -154,7 +154,7 @@ export class AggridLocalData extends HTMLElement {
           instance.editButton.addEventListener('click',(event:any)=>{
             const updatedData:any = {...instance.datagridCell.datagridRow.data};
             updatedData['first_name'] = `Modified - ${updatedData['first_name']}`;
-            this.datagridApi.updateRow({data:updatedData,rowId:instance.datagridCell.acRowId});
+            this.datagridApi.updateRow({data:updatedData,rowId:instance.datagridCell.rowId});
             // this.datagridApi.addRow({data:updatedData});
           });
         }

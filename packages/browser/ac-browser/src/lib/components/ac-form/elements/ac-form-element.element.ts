@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/ac-template-engine";
+import { AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/autocode";
 import { acRegisterCustomElement, acWrapElementWithTag } from "../../../utils/ac-element-functions";
 import { AcElementBase } from "../../../core/ac-element-base";
 
@@ -125,7 +125,7 @@ export class AcForm extends AcElementBase {
         const listener = (args: any) => {
           if (args.property === name) (input as any).value = args.value;
         };
-        this._acContext.on(AcEnumContextEvent.Change, listener);
+        this._acContext.on({event:AcEnumContextEvent.Change, callback:listener});
         this.inputContextListeners.set(input, listener);
       }
     }

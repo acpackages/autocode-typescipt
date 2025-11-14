@@ -3,7 +3,7 @@ import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/
 import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../consts/ac-datagrid-default-column-config.const";
 
 export class AcDatagridInternalColumn {
-  acColumnId: string = Autocode.uuid();
+  columnId: string = Autocode.uuid();
   allowFilter: boolean = false;
   allowResize: boolean = false;
   allowSort: boolean = false;

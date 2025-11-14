@@ -18,7 +18,7 @@ export class AcRepeaterRowElement {
     this.repeaterApi = repeaterApi;
     // this.repeaterApi.on({
     //   event: AcEnumRepeaterEvent.RowPositionChange, callback: (event: IAcRepeaterRowPositionChangeEvent) => {
-    //     if (event.repeaterRow.acRowId == this.repeaterRow.acRowId && !this.swappingRowPosition) {
+    //     if (event.repeaterRow.rowId == this.repeaterRow.rowId && !this.swappingRowPosition) {
     //       if (event.repeaterRow.instance && event.oldRepeaterRow.instance) {
     //         this.swappingRowPosition = true;
     //         acSwapElementsWithAnimation({ element1: event.repeaterRow.instance.rowWrapper, element2: event.oldRepeaterRow.instance.rowWrapper, duration: 300 });
@@ -33,7 +33,7 @@ export class AcRepeaterRowElement {
   }
 
   initElement() {
-    this.element.setAttribute(AcRepeaterAttributeName.acRepeaterRowId, this.repeaterRow.acRowId);
+    this.element.setAttribute(AcRepeaterAttributeName.acRepeaterRowId, this.repeaterRow.rowId);
     acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRowWrapper, element: this.rowWrapper });
     this.rowWrapper.appendChild(this.element);
     acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterRow, element: this.element });

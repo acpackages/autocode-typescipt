@@ -75,7 +75,7 @@ export class AcDatagridEventHandler {
       this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.CellFocus, args: eventArgs });
       this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellFocus, args: eventArgs });
       const datagridRow = datagridCell.datagridRow;
-      if (this.datagridApi.activeDatagridRow == undefined || this.datagridApi.activeDatagridRow.acRowId != datagridRow.acRowId) {
+      if (this.datagridApi.activeDatagridRow == undefined || this.datagridApi.activeDatagridRow.rowId != datagridRow.rowId) {
         const activeEventParams: IAcDatagridActiveRowChangeEvent = {
           oldActiveDatagridRow: this.datagridApi.activeDatagridRow,
           activeDatagridRow: datagridRow,
@@ -269,17 +269,17 @@ export class AcDatagridEventHandler {
   }
 
   handleColumnResize({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
-    if (this.columnResizeTimeouts[datagridColumn.acColumnId]) {
-      clearTimeout(this.columnResizeTimeouts[datagridColumn.acColumnId]);
+    if (this.columnResizeTimeouts[datagridColumn.columnId]) {
+      clearTimeout(this.columnResizeTimeouts[datagridColumn.columnId]);
     }
-    this.columnResizeTimeouts[datagridColumn.acColumnId] = setTimeout(() => {
+    this.columnResizeTimeouts[datagridColumn.columnId] = setTimeout(() => {
       const eventArgs: IAcDatagridColumnEvent = {
         datagridApi: this.datagridApi,
         datagridColumn: datagridColumn,
         event: event
       };
       this.datagridApi.events.execute({ event: AcEnumDatagridEvent.ColumnResize, args: eventArgs });
-      delete this.columnResizeTimeouts[datagridColumn.acColumnId];
+      delete this.columnResizeTimeouts[datagridColumn.columnId];
       this.notifyStateChange();
     }, 300);
 

@@ -15,9 +15,9 @@ export class AcDatagridInternalCellElement {
   //   this.datagridInternalColumn = datagridInternalColumn;
   //   this.datagridApi = datagridApi;
   //   this.datagridInternalCell = {
-  //     acCellId: Autocode.uuid(),
-  //     acRowId: this.datagridRow.acRowId,
-  //     acColumnId: this.datagridInternalColumn.acColumnId,
+  //     cellId: Autocode.uuid(),
+  //     rowId: this.datagridRow.rowId,
+  //     columnId: this.datagridInternalColumn.columnId,
   //     datagridInternalColumn: datagridInternalColumn,
   //     datagridRow: datagridRow,
   //     instance: this
@@ -25,21 +25,21 @@ export class AcDatagridInternalCellElement {
   //   // this.cellRenderer = new AcDatagridCellRendererElement({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
   //   // this.datagridApi.on({
   //   //   event: AcEnumDatagridEvent.ColumnResize, callback: (event: IAcDatagridColumnResizeEvent) => {
-  //   //     if (event.datagridColumn.acColumnId == this.datagridColumn.acColumnId) {
+  //   //     if (event.datagridColumn.columnId == this.datagridColumn.columnId) {
   //   //       this.setCellWidth();
   //   //     }
   //   //   }
   //   // });
   //   // this.datagridApi.on({
   //   //   event: AcEnumDatagridEvent.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
-  //   //     if (event.datagridColumn.acColumnId == this.datagridColumn.acColumnId && !this.swappingColumpPosition && this.datagridRow.instance && this.datagridRow.instance.datagridCells) {
+  //   //     if (event.datagridColumn.columnId == this.datagridColumn.columnId && !this.swappingColumpPosition && this.datagridRow.instance && this.datagridRow.instance.datagridCells) {
   //   //       let element1: HTMLElement | undefined;
   //   //       let element2: HTMLElement | undefined;
   //   //       for (const datagridCell of this.datagridRow.instance.datagridCells) {
-  //   //         if (datagridCell.datagridColumn.acColumnId == event.datagridColumn.acColumnId) {
+  //   //         if (datagridCell.datagridColumn.columnId == event.datagridColumn.columnId) {
   //   //           element1 = datagridCell.element;
   //   //         }
-  //   //         else if (datagridCell.datagridColumn.acColumnId == event.oldDatagridColumn.acColumnId) {
+  //   //         else if (datagridCell.datagridColumn.columnId == event.oldDatagridColumn.columnId) {
   //   //           element2 = datagridCell.element;
   //   //         }
   //   //       }
@@ -58,9 +58,9 @@ export class AcDatagridInternalCellElement {
 
 
   // initElement() {
-  //   this.element.setAttribute(AcDatagridAttributeName.acDatagridInternalCellId, this.datagridInternalCell.acCellId);
-  //   this.element.setAttribute(AcDatagridAttributeName.acDatagridInternalColumnId, this.datagridInternalColumn.acColumnId);
-  //   this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.acRowId);
+  //   this.element.setAttribute(AcDatagridAttributeName.acDatagridInternalCellId, this.datagridInternalCell.cellId);
+  //   this.element.setAttribute(AcDatagridAttributeName.acDatagridInternalColumnId, this.datagridInternalColumn.columnId);
+  //   this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
   //   acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCell, element: this.element });
   //   this.element.setAttribute('tabindex', "0");
   //   this.element.append(this.cellContainer);

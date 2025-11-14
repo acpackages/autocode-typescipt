@@ -5,9 +5,8 @@ import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
 import { AcInput } from "./ac-input-element.element";
-import { AcEnumContextEvent, IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemove } from "@autocode-ts/ac-extensions";
-import { Autocode } from "@autocode-ts/autocode";
+import { Autocode,AcEnumContextEvent, IAcContextEvent } from "@autocode-ts/autocode";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 
 export class AcOptionInput extends AcInput {

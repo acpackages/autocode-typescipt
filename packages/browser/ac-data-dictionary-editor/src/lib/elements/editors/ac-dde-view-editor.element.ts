@@ -59,7 +59,7 @@ export class AcDDEViewEditor {
     this.viewMaster.editorApi = this.editorApi;
     this.viewMaster.on({event:"change",callback:(args:any)=>{
       if(this.viewsDatagrid.datagridApi.activeDatagridRow){
-        this.viewsDatagrid.datagridApi!.updateRow({rowId:this.viewsDatagrid.datagridApi.activeDatagridRow!.acRowId,data:args.view});
+        this.viewsDatagrid.datagridApi!.updateRow({rowId:this.viewsDatagrid.datagridApi.activeDatagridRow!.rowId,data:args.view});
       }
     }});
     this.viewMaster.on({event:"viewColumnsChange",callback:(args:any)=>{

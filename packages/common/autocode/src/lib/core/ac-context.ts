@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { AcEvents, Autocode } from "@autocode-ts/autocode";
-import { IAcContextEvent } from "../interfaces/ac-context-event.interface";
+
+import { AcEvents } from "../core/ac-events";
+import { Autocode } from "../core/autocode";
 import { AcEnumContextEvent } from "../enums/ac-enum-context-event.enum";
+import { IAcContextEvent } from "../interfaces/ac-context-event.interface";
 
 /* eslint-disable @typescript-eslint/no-this-alias */
 type AcContextListener = (
@@ -55,7 +57,8 @@ export class AcContext {
     this.proxy = this.makeReactive(value);
     Object.defineProperties(this.proxy, {
       __acContextName__: { value: this.__acContextName__, enumerable: false },
-      on: { value: (event: string, callback: Function) => this.on(event, callback), enumerable: false },
+      off: { value: ({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }) => this.off({event, callback,subscriptionId}), enumerable: false },
+      on: { value: ({event,callback}:{event: string, callback: Function}) => this.on({event, callback}), enumerable: false },
       toJson:{ value: ()=>{
         const result:any = {};
         for(const key of Object.keys(this.value)){
@@ -74,7 +77,11 @@ export class AcContext {
     return this.proxy;
   }
 
-  on(event: string, callback: Function) {
+  off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {
+    this.__events__.unsubscribe({ event, callback, subscriptionId });
+  }
+
+  on({event,callback}:{event: string, callback: Function}) {
     return this.__events__.subscribe({ event: event, callback: callback });
   }
 

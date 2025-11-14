@@ -36,7 +36,7 @@ export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
     this.deleteButton.innerHTML = `<i class="fa fa-trash"></i>`;
     this.deleteButton.addEventListener('click',()=>{
       // alert('Row Delete Clicked');
-      this.datagridApi.deleteRow({rowId:this.datagridCell.acRowId});
+      this.datagridApi.deleteRow({rowId:this.datagridCell.rowId});
     })
 
   }

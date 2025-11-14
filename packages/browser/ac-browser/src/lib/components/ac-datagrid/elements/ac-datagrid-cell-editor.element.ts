@@ -44,9 +44,9 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor{
   }
 
   initElement() {
-    this.element.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.acCellId);
-    this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridCell.datagridColumn.acColumnId);
-    this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridCell.datagridRow.acRowId);
+    this.element.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.cellId);
+    this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridCell.datagridColumn.columnId);
+    this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridCell.datagridRow.rowId);
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditorInput, element: this.element });
     this.element.style.height = "100%";
     this.element.style.width = "max-content";

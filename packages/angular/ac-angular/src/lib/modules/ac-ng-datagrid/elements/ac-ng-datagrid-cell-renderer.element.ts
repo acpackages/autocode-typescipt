@@ -123,10 +123,13 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     this.clear();
     const properties = this.columnDefinition.cellRendererComponentProperties ? this.columnDefinition.cellRendererComponentProperties : {};
     this.componentRef = this.runtimeService.createComponent(componentType,properties);
-    if(!this.datagridRow.rendererComponentRefs){
-      this.datagridRow.rendererComponentRefs = {};
+    if(!this.datagridRow.extensionData){
+      this.datagridRow.extensionData = {};
     }
-    this.datagridRow.rendererComponentRefs[this.datagridColumn.columnKey] = this.componentRef;
+    if(!this.datagridRow.extensionData['rendererComponentRefs']){
+      this.datagridRow.extensionData['rendererComponentRefs'] = {};
+    }
+    this.datagridRow.extensionData['rendererComponentRefs'][this.datagridColumn.columnKey] = this.componentRef;
     const instance = this.componentRef.instance;
     if(instance.init){
       instance.init(args);

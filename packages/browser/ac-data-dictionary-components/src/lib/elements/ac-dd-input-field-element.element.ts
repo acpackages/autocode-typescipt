@@ -4,7 +4,7 @@ import { AcDDInputElement } from "./ac-dd-input-element.element";
 import { AcDDInputFieldBaseElement } from "./ac-dd-input-field-base-element.element";
 import { AcDDInputManager } from "../core/ac-dd-input-manager";
 import { AcDDTableColumn } from "@autocode-ts/ac-data-dictionary";
-import { AcContext } from "@autocode-ts/ac-template-engine";
+import { AcContext } from "@autocode-ts/autocode";
 
 export class AcDDInputFieldElement extends AcInputBase {
   static override get observedAttributes() {

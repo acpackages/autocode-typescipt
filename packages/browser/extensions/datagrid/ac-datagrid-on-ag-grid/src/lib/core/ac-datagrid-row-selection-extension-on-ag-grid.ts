@@ -96,12 +96,12 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
     this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Entering with isSelected=${args.isSelected}, rowsCount=${args.datagridRows.length}.`);
     const nodes:IRowNode[] = [];
     for(const datagridRow of args.datagridRows){
-      const rowNode = this.gridApi.getRowNode(datagridRow.acRowId);
+      const rowNode = this.gridApi.getRowNode(datagridRow.rowId);
       if (rowNode) {
         nodes.push(rowNode);
-        this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Added node for rowId=${datagridRow.acRowId}.`);
+        this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Added node for rowId=${datagridRow.rowId}.`);
       } else {
-        this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: No node found for rowId=${datagridRow.acRowId}.`);
+        this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: No node found for rowId=${datagridRow.rowId}.`);
       }
     }
     if (nodes.length > 0) {
@@ -114,13 +114,13 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
   }
 
   private handleRowSelectionChange(args: IAcDatagridRowSelectionChangeEvent) {
-    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Entering with rowId=${args.datagridRow.acRowId}, isSelected=${args.isSelected}.`);
-    const rowNode = this.gridApi.getRowNode(args.datagridRow.acRowId);
+    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Entering with rowId=${args.datagridRow.rowId}, isSelected=${args.isSelected}.`);
+    const rowNode = this.gridApi.getRowNode(args.datagridRow.rowId);
     if (rowNode) {
       this.gridApi.setNodesSelected({ newValue: args.isSelected, nodes: [rowNode] });
       this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Set selection for row node.");
     } else {
-      this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: No rowNode found for rowId=${args.datagridRow.acRowId}, skipping.`);
+      this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: No rowNode found for rowId=${args.datagridRow.rowId}, skipping.`);
     }
     this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Exiting.");
   }

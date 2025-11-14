@@ -26,7 +26,7 @@ export class AcDatagridCell {
     }
   }
 
-  acCellId: string = Autocode.uuid();
+  cellId: string = Autocode.uuid();
   datagridApi!: AcDatagridApi;
   datagridRow!: AcDatagridRow;
   datagridColumn!: AcDatagridColumn;
@@ -39,14 +39,14 @@ export class AcDatagridCell {
   rowIndex: number = -1;
   columnIndex: number = -1;
 
-  get acColumnId(): string {
-    return this.datagridColumn.acColumnId;
+  get columnId(): string {
+    return this.datagridColumn.columnId;
   }
   get columnKey(): string {
     return this.datagridColumn.columnKey;
   }
-  get acRowId(): string {
-    return this.datagridRow.acRowId;
+  get rowId(): string {
+    return this.datagridRow.rowId;
   }
 
   get cellValue(): any {
@@ -57,6 +57,9 @@ export class AcDatagridCell {
     if (oldValue != value) {
       this.datagridRow.data[this.columnKey] = value;
       this.datagridApi.eventHandler.handleCellValueChange({ datagridCell: this });
+      if(this.element){
+        this.element.refresh();
+      }
     }
   }
 

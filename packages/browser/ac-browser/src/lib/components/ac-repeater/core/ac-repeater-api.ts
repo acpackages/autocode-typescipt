@@ -115,7 +115,7 @@ export class AcRepeaterApi{
     // const repeaterRow: AcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
     //   let valid: boolean = false;
     //   if (rowId) {
-    //     valid = repeaterRow.acRowId == rowId;
+    //     valid = repeaterRow.rowId == rowId;
     //   }
     //   else if (key && value) {
     //     valid = repeaterRow.data[key] == value;
@@ -129,7 +129,7 @@ export class AcRepeaterApi{
     //   return valid;
     // });
     // if (repeaterRow) {
-    //   arrayRemoveByKey(this.dataSource.repeaterRows,'acRowId',repeaterRow.acRowId);
+    //   arrayRemoveByKey(this.dataSource.repeaterRows,'rowId',repeaterRow.rowId);
     //   const deleteHookArgs: IAcRepeaterRowDeleteHookArgs = {
     //     repeaterApi: this,
     //     repeaterRow: repeaterRow,
@@ -194,7 +194,7 @@ export class AcRepeaterApi{
   getRowById({ rowId }: { rowId: string }): AcRepeaterRow | undefined {
     let result: AcRepeaterRow | undefined;
     for (const row of this.repeaterRows) {
-      if (row.acRowId == rowId) {
+      if (row.rowId == rowId) {
         result = row;
         break;
       }
@@ -251,7 +251,7 @@ export class AcRepeaterApi{
     const repeaterRow: AcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
       let valid: boolean = false;
       if (rowId) {
-        valid = repeaterRow.acRowId == rowId;
+        valid = repeaterRow.rowId == rowId;
       }
       else if (key && value) {
         valid = repeaterRow.data[key] == value;
