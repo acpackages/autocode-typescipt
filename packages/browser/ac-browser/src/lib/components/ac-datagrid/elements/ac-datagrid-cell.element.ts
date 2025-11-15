@@ -61,6 +61,7 @@ export class AcDatagridCellElement extends AcElementBase {
   datagridCell!: AcDatagridCell;
   isEditing: boolean = false;
   swappingColumpPosition: boolean = false;
+  initialized:boolean = false;
 
   constructor() {
     super();
@@ -99,7 +100,8 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   private initCell() {
-    if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi) {
+    if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi && !this.initialized) {
+      this.initialized = true;
       this.datagridCell = new AcDatagridCell({
         datagridColumn: this.datagridColumn,
         datagridRow: this.datagridRow,

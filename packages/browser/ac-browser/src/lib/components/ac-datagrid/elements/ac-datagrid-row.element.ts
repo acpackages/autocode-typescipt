@@ -44,6 +44,7 @@ export class AcDatagridRowElement extends AcElementBase{
   datagridCells: AcDatagridCellElement[] = [];
   swappingRowPosition: boolean = false;
   container:HTMLElement = this.ownerDocument.createElement('div');
+  initialized:boolean = false;
 
   override init(){
     super.init();
@@ -53,26 +54,28 @@ export class AcDatagridRowElement extends AcElementBase{
     this.container.style.display = 'flex';
     this.container.classList.add(AC_DATAGRID_CLASS_NAME.acDatagridRowContainer);
     this.append(this.container);
-  }
-
-  initRow(){
-    if(this.datagridApi && this.datagridRow){
-      this.initElement();
-      this.datagridRow.hooks.subscribe({hook:AcEnumDataManagerHook.DataChange,callback:(args:any)=>{
-        this.refreshCells();
-      }});
-    }
-  }
-
-  initElement() {
+    this.registerListeners();
     this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
-    if (this.datagridRow.index == 0 || this.datagridRow.index % 2 == 0) {
+    if (this.datagridRow.displayIndex == 0 || this.datagridRow.displayIndex % 2 == 0) {
       acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowEven, element: this });
     }
     else {
       acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowOdd, element: this });
     }
-    this.registerListeners();
+  }
+
+  initRow(){
+    if(this.datagridApi && this.datagridRow && !this.initialized){
+      this.initialized = true;
+      this.initElement();
+      this.datagridRow.hooks.subscribe({hook:AcEnumDataManagerHook.DataChange,callback:(args:any)=>{
+        // this.refreshCells();
+      }});
+    }
+  }
+
+  initElement() {
+
     this.render();
   }
 

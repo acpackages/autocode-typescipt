@@ -31,9 +31,11 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     return this._data;
   }
   set data(value: any[]) {
-    this.logger.log("Setting data", { valueLength: value.length });
-    this.setRows({ data: value });
-    this.logger.log("Data set complete");
+    if (this._data != value) {
+      this.logger.log("Setting data", { valueLength: value.length });
+      this.setRows({ data: value });
+      this.logger.log("Data set complete");
+    }
   }
 
   private _displayedRows: T[] = [];
@@ -165,8 +167,8 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   lastStartIndex: number = 0;
   lastDisplayedRowsCount: number = -1;
   lastDisplayedStartIndex: number = 0;
-  logger:AcLogger = new AcLogger({logMessages:false});
-  private refreshRowsTimeout:any;
+  logger: AcLogger = new AcLogger({ logMessages: false });
+  private refreshRowsTimeout: any;
   refreshRowsTimeoutDuration = 100;
 
   constructor(private DataRow: new (...args: any[]) => T = AcDataRow as any) {
@@ -176,7 +178,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.logger.log("Initialized AcDataManager");
   }
 
-  addData({ data = {}}: { data?: any } = {}): T {
+  addData({ data = {} }: { data?: any } = {}): T {
     this.logger.log("Adding data", { dataKeys: Object.keys(data) });
     this._data.push(data);
     const index: number = this._data.length - 1;
@@ -202,9 +204,10 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         rowsCount = this.totalRows;
       }
       let endIndex = startIndex + (rowsCount - 1);
-      if(endIndex > (this.totalRows-1)){
+      if (endIndex > (this.totalRows - 1)) {
         endIndex = this.totalRows - 1;
       }
+      this.logger.log(`Checking rows availble from start index ${startIndex} to end index ${endIndex} in total rows ${this.totalRows}`);
       if (startIndex < this.totalRows && endIndex < this.totalRows) {
         available = true;
         for (let index = startIndex; index <= endIndex; index++) {
@@ -227,7 +230,6 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       }
     }
     else {
-      // available = true;
       this.logger.log("No total rows, all available");
     }
     this.logger.log("On-demand rows availability check complete", { available });
@@ -633,6 +635,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     }
     else {
       this.rows = filteredRows;
+      this.totalRows = this.rows.length;
       this.logger.log("On-demand mode, rows set without full processing");
     }
     this.logger.log("Rows processing complete", { rowsLength: this.rows.length, totalRows: this.totalRows });
@@ -640,7 +643,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
 
   async refreshRows() {
     this.logger.log("Refreshing rows", { type: this.type, timeoutDuration: this.refreshRowsTimeoutDuration });
-    if(this.refreshRowsTimeout){
+    if (this.refreshRowsTimeout) {
       clearTimeout(this.refreshRowsTimeout);
       this.logger.log("Cleared existing refresh timeout");
     }
@@ -759,6 +762,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.lastDisplayedRowsCount = rowsCount;
     this.lastDisplayedStartIndex = startIndex;
     const displayedRows: T[] = await this.getRows({ startIndex, rowsCount });
+    this.logger.log("Setting displayed rows display index");
     let displayIndex: number = startIndex - 1;
     for (const row of displayedRows) {
       displayIndex++;

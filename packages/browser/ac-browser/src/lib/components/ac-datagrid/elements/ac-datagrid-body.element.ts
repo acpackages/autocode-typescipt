@@ -20,7 +20,9 @@ export class AcDatagridBody extends AcElementBase {
     this.datagridApi.hooks.subscribe({
       hook: AcEnumDatagridHook.DisplayedRowsChange,
       callback: (event: IAcDatagridDisplayedRowsChangeEvent) => {
-        this.setDisplayRows();
+        setTimeout(() => {
+          this.setDisplayRows();
+        }, 1);
       }
     });
   }

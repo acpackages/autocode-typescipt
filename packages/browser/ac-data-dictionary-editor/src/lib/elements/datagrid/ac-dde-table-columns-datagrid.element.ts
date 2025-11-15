@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
-import { AcDDTable, AcDDTableColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
+import { AcDDTableColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-select-column-type-input.element";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
@@ -9,11 +9,10 @@ import { AcDDEDatagridNumberInput } from "../inputs/ac-dde-datagrid-number-input
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridSelectFormatInput } from "../inputs/ac-dde-datagrid-select-format-input.elemen";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
-import { AcEnumDDETable, AcEnumDDETableColumn } from "../../enums/ac-enum-dde-storage-keys.enum";
+import { AcEnumDDETableColumn } from "../../enums/ac-enum-dde-storage-keys.enum";
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETableColumn } from "../../interfaces/ac-dde-table-column.inteface";
@@ -21,6 +20,7 @@ import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 import { AcDDEDatagridValueOptionsInput } from "../inputs/ac-dde-datagrid-values-options-input.element";
 import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
+import { IAcContextEvent } from "@autocode-ts/autocode";
 
 export class AcDDETableColumnsDatagrid {
   data: any[] = [];
@@ -44,7 +44,7 @@ export class AcDDETableColumnsDatagrid {
 
   initDatagrid() {
     this.datagridApi = this.ddeDatagrid.datagridApi;
-
+    this.datagridApi.dataManager.logger.logMessages = true;
     const columnDefinitions: IAcDatagridColumnDefinition[] = [
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {

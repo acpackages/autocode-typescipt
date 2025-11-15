@@ -6,7 +6,7 @@ import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-se
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
+import { IAcContextEvent } from "@autocode-ts/autocode";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";

@@ -60,8 +60,8 @@ export class DatagridLocalData extends HTMLElement {
       { field: 'website', title: "Website" },
       { field: 'customer_id', title: "Id",index:2,visible:false },
     ];
-    // this.setLocalData();
-    this.setOnDemandData();
+    this.setLocalData();
+    // this.setOnDemandData();
 
     // setTimeout(() => {
     //   // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});
@@ -97,6 +97,7 @@ export class DatagridLocalData extends HTMLElement {
 
   setOnDemandData() {
     const onDemandProxyDataManager: AcDataManager = new AcDataManager();
+    onDemandProxyDataManager.logger.logMessages = false;
     const data: any[] = [];
     const multiplier = 1;
     let index: number = 0;
@@ -111,6 +112,7 @@ export class DatagridLocalData extends HTMLElement {
     this.datagridApi.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
       console.log("Getting on demand data");
       console.log(args);
+      console.trace();
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }
@@ -128,6 +130,6 @@ export class DatagridLocalData extends HTMLElement {
       console.log(response);
       args.successCallback(response);
     };
-    this.datagridApi.dataManager.getRows({rowsCount:50});
+    // this.datagridApi.dataManager.getRows({rowsCount:50});
   }
 }
