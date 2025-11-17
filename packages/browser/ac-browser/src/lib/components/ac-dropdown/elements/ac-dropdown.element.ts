@@ -60,10 +60,6 @@ export class AcDropdown extends AcElementBase {
 
   private chosenPosition: "auto" | "bottom" | "left" | "right" | "top" | string = "auto";
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-  }
-
   override init() {
     super.init();
     this.style.display = "contents";

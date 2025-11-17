@@ -13,45 +13,28 @@ export function acInit({ element, observe = true }: { element?: HTMLElement, obs
   if (element == undefined) {
     element = document.querySelector('body') as HTMLElement;
   }
-
   const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
-      if (mutation.type == 'attributes') {
-        const element = mutation.target as HTMLElement;
-        const attrName: string = mutation.attributeName!;
-        if (attrName in ATTRIBUTES_TO_LISTEN) {
-          acInit({ element });
-        }
-      }
-      else if (mutation.type == "childList" && mutation.addedNodes.length > 0) {
+      if (mutation.type == "childList" && mutation.addedNodes.length > 0) {
         mutation.addedNodes.forEach((element) => {
           if (element instanceof HTMLElement) {
-            acInit({ element });
+            if (element.hasAttribute('ac-tooltip')) {
+              acInitTooltip({ element });
+            }
           }
         });
       }
     });
   });
-  observer.observe(element as HTMLElement, {
-    attributes: true,
-    childList: true,
-    subtree: true
-  });
-  for (const attribute of ATTRIBUTES_TO_LISTEN) {
-    const elements = element.querySelectorAll(`[${attribute}]`);
-    if (elements) {
-      for (const child of Array.from(elements) as HTMLElement[]) {
-        acInit({ element: child, observe: false });
-      }
-    }
-  }
-
   if (element.hasAttribute('ac-tooltip')) {
-    new AcTooltip({ element });
+    acInitTooltip({ element });
   }
   return instances;
 }
 
+export function acInitTooltip({ element }: { element: HTMLElement }) {
+  new AcTooltip({element:element});
+}
 AcAccordion;
 AcCollapse;
 AcDatagrid;

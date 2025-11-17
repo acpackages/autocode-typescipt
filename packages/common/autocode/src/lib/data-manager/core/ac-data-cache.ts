@@ -29,7 +29,6 @@ export class AcDataCache {
   hooks: AcHooks = new AcHooks();
   logger: AcLogger = new AcLogger();
 
-
   addRow({ collection, data }: { collection: string, data: any }): any {
     this.logger.log('Adding row to collection', { collection, dataProvided: !!data });
     const cacheCollection = this.collections.get(collection);
@@ -122,7 +121,7 @@ export class AcDataCache {
     this.logger.log('Collection refresh complete', { collection });
   }
 
-  registerCollection({ collection, uniqueRowKey }: { collection: string, uniqueRowKey: string }) {
+  registerCollection({ collection, uniqueRowKey,data }: { collection: string, uniqueRowKey: string,data?:any[] }) {
     this.logger.log('Registering collection', { collection, uniqueRowKey });
     if (this.collections.has(collection)) {
       this.logger.log('Error: Collection already exists', { collection });
@@ -132,7 +131,12 @@ export class AcDataCache {
     const cacheCollection:AcDataCacheCollection = new AcDataCacheCollection({dataCache:this,name:collection,uniqueRowKey:uniqueRowKey});
     this.collections.set(collection, cacheCollection);
     this.logger.log('Collection registered in map', { collection });
-    this.refreshCollection({collection:collection});
+    if(data!=undefined){
+      cacheCollection.data = data;
+    }
+    else{
+      this.refreshCollection({collection:collection});
+    }
     this.logger.log('Collection registration complete');
     return cacheCollection;
   }

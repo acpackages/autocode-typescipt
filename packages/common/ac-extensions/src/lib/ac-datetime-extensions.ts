@@ -1,13 +1,163 @@
 // src/app/utils/date-utils.ts (or your preferred path)
 
 import { DateTime, DurationLike } from 'luxon';
+// ---------------------------------------------------------
+// CLEAN INPUT (remove ordinals like 1st, 2nd, 3rd, 4th)
+// ---------------------------------------------------------
+function normalizeInput(str: string): string {
+  return str
+    .trim()
+    .replace(/\b(\d+)(st|nd|rd|th)\b/gi, "$1") // 5th → 5
+    .replace(/[,]/g, "");                     // remove commas
+}
 
-/**
- * Utility functions for Date and DateTime manipulation using Luxon.
- * Prefer using Luxon's DateTime objects directly when possible for immutability and powerful API.
- * These utilities bridge to native Date objects when necessary.
- */
+// ---------------------------------------------------------
+// HELPERS
+// ---------------------------------------------------------
 
+function tryISO(str: string): DateTime | null {
+  const iso = DateTime.fromISO(str);
+  return iso.isValid ? iso : null;
+}
+
+function tryRFC(str: string): DateTime | null {
+  const r = DateTime.fromRFC2822(str);
+  return r.isValid ? r : null;
+}
+
+function tryUnix(str: string): DateTime | null {
+  if (/^\d{10}$/.test(str)) {
+    return DateTime.fromSeconds(parseInt(str));
+  }
+  if (/^\d{13}$/.test(str)) {
+    return DateTime.fromMillis(parseInt(str));
+  }
+  return null;
+}
+
+function tryFormats(str: string, formats: string[]): DateTime | null {
+  for (const f of formats) {
+    const dt = DateTime.fromFormat(str, f);
+    if (dt.isValid) return dt;
+  }
+  return null;
+}
+
+// ---------------------------------------------------------
+// ALL DATE FORMATS
+// ---------------------------------------------------------
+
+const DATE_FORMATS = [
+  // DMY
+  "dd-MM-yyyy", "d-M-yyyy",
+  "dd/MM/yyyy", "d/M/yyyy",
+  "dd.MM.yyyy", "d.M.yyyy",
+
+  "dd-MM-yy", "d-M-yy",
+  "dd/MM/yy", "d/M/yy",
+  "dd.MM.yy", "d.M.yy",
+
+  // MDY
+  "MM-dd-yyyy", "M-d-yyyy",
+  "MM/dd/yyyy", "M/d/yyyy",
+  "MM.dd.yyyy", "M.d.yyyy",
+
+  "MM-dd-yy", "M-d-yy",
+  "MM/dd/yy", "M/d/yy",
+  "MM.dd.yy", "M.d.yy",
+
+  // YMD
+  "yyyy-MM-dd",
+  "yyyy/MM/dd",
+  "yyyy.MM.dd",
+
+  "yy-MM-dd",
+  "yy/MM/dd",
+  "yy.MM.dd",
+
+  // Textual dates
+  "dd MMM yyyy", "d MMM yyyy",
+  "dd MMMM yyyy", "d MMMM yyyy",
+
+  "MMM dd yyyy", "MMMM dd yyyy",
+  "MMM d yyyy", "MMMM d yyyy",
+
+  "dd MMM yy", "d MMM yy",
+  "dd MMMM yy", "d MMMM yy",
+
+  "MMM dd yy", "MMMM dd yy",
+  "MMM d yy", "MMMM d yy",
+];
+
+// ---------------------------------------------------------
+// DATETIME FORMATS (auto-generated)
+// ---------------------------------------------------------
+
+const DATETIME_FORMATS = [
+  ...DATE_FORMATS.map(f => f + " HH:mm"),
+  ...DATE_FORMATS.map(f => f + " HH:mm:ss"),
+  ...DATE_FORMATS.map(f => f + " HH:mm:ss.SSS"),
+
+  ...DATE_FORMATS.map(f => f + " hh:mm a"),
+  ...DATE_FORMATS.map(f => f + " hh:mm:ss a"),
+
+  // With timezone offsets
+  ...DATE_FORMATS.map(f => f + " HH:mm Z"),
+];
+
+// ---------------------------------------------------------
+// PUBLIC FUNCTIONS
+// ---------------------------------------------------------
+
+export function isValidDateString(str: string): boolean {
+  str = normalizeInput(str);
+
+  if (tryUnix(str)) return true;
+  if (tryISO(str)) return true;
+  if (tryRFC(str)) return true;
+
+  return tryFormats(str, DATE_FORMATS) !== null;
+}
+
+export function isValidDateTimeString(str: string): boolean {
+  str = normalizeInput(str);
+
+  if (tryUnix(str)) return true;
+  if (tryISO(str)) return true;
+  if (tryRFC(str)) return true;
+
+  return (
+    tryFormats(str, DATETIME_FORMATS) !== null ||
+    tryFormats(str, DATE_FORMATS) !== null
+  );
+}
+
+export function parseDateTimeString(str: string): DateTime | null {
+  str = normalizeInput(str);
+
+  // 1. Unix timestamp
+  let dt = tryUnix(str);
+  if (dt) return dt;
+
+  // 2. ISO (covers most common)
+  dt = tryISO(str);
+  if (dt) return dt;
+
+  // 3. RFC 2822
+  dt = tryRFC(str);
+  if (dt) return dt;
+
+  // 4. Datetime formats
+  dt = tryFormats(str, DATETIME_FORMATS);
+  if (dt) return dt;
+
+  // 5. Date formats
+  dt = tryFormats(str, DATE_FORMATS);
+  if (dt) return dt;
+
+  // 6. Nothing matched
+  return null;
+}
 /**
  * Parses a date string into a native JavaScript Date object using Luxon.
  * If format is provided, uses DateTime.fromFormat. Otherwise, attempts to parse as ISO.

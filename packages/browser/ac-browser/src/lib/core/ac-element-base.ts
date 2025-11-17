@@ -18,7 +18,7 @@ export class AcElementBase extends HTMLElement {
     super();
     const originalDispatch = this.dispatchEvent;
     this.dispatchEvent = (event: Event): boolean => {
-       this.events.execute({event:event.type,args:event});
+      this.events.execute({event:event.type,args:event});
       return originalDispatch.call(this, event);
     };
   }

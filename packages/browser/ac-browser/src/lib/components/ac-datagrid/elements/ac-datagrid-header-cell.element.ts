@@ -113,11 +113,13 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     if (this.datagridColumn.allowFilter == true) {
       // this.rightContainer.append(this.filterElement);
     }
-    this.resizeElement.style.width = '5px';
+    this.resizeElement.style.width = '3px';
     this.resizeElement.style.margin = 'auto';
     this.resizeElement.style.userSelect = 'none';
-    this.resizeElement.style.minWidth = '5px';
+    this.resizeElement.style.minWidth = '3px';
     this.resizeElement.style.cursor = 'ew-resize';
+    this.resizeElement.style.position = 'sticky';
+    this.resizeElement.style.right = '0px';
     this.resizeElement.svgCode = AC_DATAGRID_ICON_SVGS.resize;
     this.renderFilter();
     this.renderSort();

@@ -169,7 +169,7 @@ export class AcDDETableEditor {
         { size: 20, index: 1 }
       ]
     });
-    }, 50);
+    }, 5);
 
 
     const tablesWrapper = this.element.querySelector('[ac-dde-tables-wrapper]') as HTMLElement;
@@ -187,7 +187,7 @@ export class AcDDETableEditor {
     this.refreshEditorState();
     setTimeout(() => {
       this.editorInitialized = true;
-    }, 500);
+    }, 50);
   }
 
   refreshEditorState() {

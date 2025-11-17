@@ -44,7 +44,6 @@ export class AcDDETableColumnsDatagrid {
 
   initDatagrid() {
     this.datagridApi = this.ddeDatagrid.datagridApi;
-    this.datagridApi.dataManager.logger.logMessages = true;
     const columnDefinitions: IAcDatagridColumnDefinition[] = [
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {

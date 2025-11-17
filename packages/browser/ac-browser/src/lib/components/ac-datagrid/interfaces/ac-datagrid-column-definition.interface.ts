@@ -29,11 +29,13 @@ export interface IAcDatagridColumnDefinition {
   cellEditorElement?:any;
   cellEditorElementParams?:any;
 
-  cellDataType?: string;
+  cellInputElement?:any;
+  cellInputElementAttrs?:any;
 
   cellRendererElement?:any;
   cellRendererElementParams?:any;
 
+  dataType?: "BOOLEAN"|"CUSTOM"|"DATE"|"DATETIME"|"NUMBER"|"OBJECT"|"STRING"|"UNKNOWN";
   /* AcDoc({
     "description": "The unique ID to give the column. This is optional. If missing, the ID will default to the field.
       If both field and colId are missing, a unique ID will be generated.

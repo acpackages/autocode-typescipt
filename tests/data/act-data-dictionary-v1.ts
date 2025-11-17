@@ -9179,20 +9179,6 @@ export const dataDictionaryJson = {
     "act_purchase_invoice_chargeable_services": {
       "tableName": "act_purchase_invoice_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -9207,13 +9193,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -9902,24 +9888,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -9934,13 +9902,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -10338,24 +10306,6 @@ export const dataDictionaryJson = {
     "act_purchase_order_chargeable_services": {
       "tableName": "act_purchase_order_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -10370,13 +10320,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -11041,20 +10991,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -11069,13 +11005,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -11373,20 +11309,6 @@ export const dataDictionaryJson = {
     "act_purchase_return_chargeable_services": {
       "tableName": "act_purchase_return_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -11401,13 +11323,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -12002,20 +11924,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -12030,13 +11938,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -12843,20 +12751,6 @@ export const dataDictionaryJson = {
     "act_sale_invoice_chargeable_services": {
       "tableName": "act_sale_invoice_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -12871,13 +12765,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -13496,20 +13390,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -13524,13 +13404,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -13646,7 +13526,17 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "AMount"
+              "propertyValue": "Amount"
+            }
+          }
+        },
+        "product_price_mrp": {
+          "columnName": "product_price_mrp",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "MRP"
             }
           }
         }
@@ -13886,20 +13776,6 @@ export const dataDictionaryJson = {
     "act_sale_maintenance_chargeable_services": {
       "tableName": "act_sale_maintenance_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -13914,13 +13790,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -14515,20 +14391,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -14543,13 +14405,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -15380,20 +15242,6 @@ export const dataDictionaryJson = {
     "act_sale_quotation_chargeable_services": {
       "tableName": "act_sale_quotation_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -15408,13 +15256,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -15840,20 +15688,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -15868,13 +15702,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -16196,20 +16030,6 @@ export const dataDictionaryJson = {
     "act_sale_return_chargeable_services": {
       "tableName": "act_sale_return_chargeable_services",
       "tableColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -16224,13 +16044,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Charge"
+              "propertyValue": "Charge"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -16825,20 +16645,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Actual Price"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            }
-          }
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -16853,13 +16659,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Net Price"
+              "propertyValue": "Price"
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
@@ -23786,13 +23592,6 @@ export const dataDictionaryJson = {
     "act_vw_purchase_invoice_chargeable_services": {
       "viewName": "act_vw_purchase_invoice_chargeable_services",
       "viewColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_invoice_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_charge_actual"
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -23800,12 +23599,12 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_charge_gross"
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_charge_net"
+          "columnSourceOriginalColumn": "chargeable_service_charge_final"
         },
         "chargeable_service_description": {
           "columnName": "chargeable_service_description",
@@ -23915,7 +23714,6 @@ export const dataDictionaryJson = {
         "chargeable_service_amount": {
           "columnName": "chargeable_service_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_amount"
@@ -23975,13 +23773,6 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "product_id"
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_invoice_products",
-          "columnSourceOriginalColumn": "product_price_actual"
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -23989,12 +23780,12 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "product_price_gross"
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_products",
-          "columnSourceOriginalColumn": "product_price_net"
+          "columnSourceOriginalColumn": "product_price_final"
         },
         "product_quantity": {
           "columnName": "product_quantity",
@@ -24225,13 +24016,6 @@ export const dataDictionaryJson = {
     "act_vw_sale_invoice_chargeable_services": {
       "viewName": "act_vw_sale_invoice_chargeable_services",
       "viewColumns": {
-        "chargeable_service_charge_actual": {
-          "columnName": "chargeable_service_charge_actual",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_invoice_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_charge_actual"
-        },
         "chargeable_service_charge_gross": {
           "columnName": "chargeable_service_charge_gross",
           "columnType": "DOUBLE",
@@ -24239,12 +24023,12 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_charge_gross"
         },
-        "chargeable_service_charge_net": {
-          "columnName": "chargeable_service_charge_net",
+        "chargeable_service_charge_final": {
+          "columnName": "chargeable_service_charge_final",
           "columnType": "DOUBLE",
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_charge_net"
+          "columnSourceOriginalColumn": "chargeable_service_charge_final"
         },
         "chargeable_service_description": {
           "columnName": "chargeable_service_description",
@@ -24413,13 +24197,6 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "product_id"
         },
-        "product_price_actual": {
-          "columnName": "product_price_actual",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_invoice_products",
-          "columnSourceOriginalColumn": "product_price_actual"
-        },
         "product_price_gross": {
           "columnName": "product_price_gross",
           "columnType": "DOUBLE",
@@ -24427,12 +24204,12 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "product_price_gross"
         },
-        "product_price_net": {
-          "columnName": "product_price_net",
+        "product_price_final": {
+          "columnName": "product_price_final",
           "columnType": "DOUBLE",
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
-          "columnSourceOriginalColumn": "product_price_net"
+          "columnSourceOriginalColumn": "product_price_final"
         },
         "product_quantity": {
           "columnName": "product_quantity",
@@ -24503,9 +24280,82 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "product_amount"
+        },
+        "product_price_mrp": {
+          "columnName": "product_price_mrp",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "product_price_mrp"
+        },
+        "gross_amount": {
+          "columnName": "gross_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "discount_trade_amount": {
+          "columnName": "discount_trade_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "TD Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "discount_cash_amount": {
+          "columnName": "discount_cash_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "CD Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "discount_rebate_amount": {
+          "columnName": "discount_rebate_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rebate Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function"
         }
       },
-      "viewQuery": "SELECT act_sale_invoice_products.* FROM act_sale_invoice_products LEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id"
+      "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,act_sale_invoice_products.* FROM act_sale_invoice_products LEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id"
     },
     "act_vw_sale_invoices": {
       "viewName": "act_vw_sale_invoices",
@@ -28009,14 +27859,14 @@ export const dataDictionaryJson = {
       "rowOperation": "INSERT",
       "tableName": "act_sale_invoice_products",
       "triggerName": "act_trg_set_sale_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_prod_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_sale_invoice_products",
       "triggerName": "act_trg_set_sale_amt_on_prod_update",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_ser_delete": {
       "triggerExecution": "AFTER",
@@ -28030,14 +27880,14 @@ export const dataDictionaryJson = {
       "rowOperation": "INSERT",
       "tableName": "act_sale_invoice_chargeable_services",
       "triggerName": "act_trg_set_sale_amt_on_ser_insert",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_ser_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_sale_invoice_chargeable_services",
       "triggerName": "act_trg_set_sale_amt_on_ser_update",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     }
   }
 };

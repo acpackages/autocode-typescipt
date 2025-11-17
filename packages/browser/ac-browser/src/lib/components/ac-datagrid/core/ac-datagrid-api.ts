@@ -1,10 +1,11 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcPagination } from "../../ac-pagination/elements/ac-pagination.element";
 import { AcDatagrid } from "../elements/ac-datagrid.element";
 import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
-import { AcDataManager, AcEnumDataManagerEvent, AcEnumSortOrder, AcEvents, AcFilter, AcFilterGroup, AcHooks, AcLogger, AcSortOrder } from "@autocode-ts/autocode";
+import { AcDataManager, AcEnumDataManagerEvent, AcEnumSortOrder, AcEvents, AcFilter, AcFilterGroup, AcHooks, AcLogger, AcSortOrder, IAcDataManagerDataEvent } from "@autocode-ts/autocode";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { IAcDatagridColumnDragPlaceholderCreatorArgs } from "../interfaces/callback-args/ac-datagrid-column-drag-placeholder-creator-args.interface";
 import { IAcDatagridRowDragPlaceholderCreatorArgs } from "../interfaces/callback-args/ac-datagrid-row-drag-placeholder-creator-args.interface";
@@ -33,6 +34,7 @@ import { IAcDatagridRowFocusHookArgs } from "../interfaces/hook-args/ac-datagrid
 import { IAcDatagridState } from "../interfaces/ac-datagrid-state.interface";
 import { IAcDatagridColumnDefinitionsSetEvent } from "../interfaces/event-args/ac-datagrid-column-definitions-set-event.interface";
 import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../_ac-datagrid.export";
+import { isValidDateString, isValidDateTimeString } from "@autocode-ts/ac-extensions";
 
 export class AcDatagridApi {
 
@@ -88,7 +90,7 @@ export class AcDatagridApi {
     this.logger.log('Sorted column definitions by index');
 
     for (const colDef of this._columnDefinitions) {
-      const column = {...AC_DATAGRID_DEFAULT_COLUMN_DEFINITION,...colDef};
+      const column = { ...AC_DATAGRID_DEFAULT_COLUMN_DEFINITION, ...colDef };
       const datagridColumn = new AcDatagridColumn({
         columnDefinition: column,
         datagridApi: this,
@@ -187,6 +189,7 @@ export class AcDatagridApi {
     return element;
   };
   activeCell?: AcDatagridCell;
+  dataTypeIdentified: boolean = false;
   datagrid!: AcDatagrid;
   datagridColumns: AcDatagridColumn[] = [];
   datagridState: AcDatagridState;
@@ -199,7 +202,7 @@ export class AcDatagridApi {
   hoverColumnId?: string;
   hoverRowId?: string;
   lastColumnIndex: number = 0;
-  logger:AcLogger = new AcLogger({logMessages:false});
+  logger: AcLogger = new AcLogger({ logMessages: false });
   pagination?: AcPagination;
   rowValueChangeTimeoutDuration = 250;
 
@@ -214,6 +217,68 @@ export class AcDatagridApi {
     this.dataManager.events = this.events;
     this.dataManager.hooks = this.hooks;
     this.logger.log('Assigned events and hooks to dataManager');
+    this.dataManager.on({
+      event: AcEnumDataManagerEvent.DataFoundForFirstTime, callback: (args: IAcDataManagerDataEvent) => {
+        const data: any = args.data;
+        const pendingColumnTypes:any[] = [];
+        for (const datagridColumn of this.datagridColumns) {
+          const column = datagridColumn.columnDefinition;
+          if (!column.dataType) {
+            pendingColumnTypes.push(column.field);
+            let typeSet = false;
+            let inferredType: "BOOLEAN" | "CUSTOM" | "DATE" | "DATETIME" | "NUMBER" | "OBJECT" | "STRING" | "UNKNOWN" = "UNKNOWN";
+            for (const row of data) {
+              const value = row[column.field];
+              if (value !== undefined && value !== null) {
+                switch (typeof value) {
+                  case 'boolean':
+                    inferredType = 'BOOLEAN';
+                    break;
+                  case 'number':
+                  case 'bigint':
+                    inferredType = 'NUMBER';
+                    break;
+                  case 'string':
+                    inferredType = 'STRING';
+                    const trimmedValue = value.trim();
+                    if (trimmedValue === '') {
+                      inferredType = 'STRING';
+                    } else {
+                      if(isValidDateString(trimmedValue)){
+                        inferredType = 'DATE';
+                      }
+                      else  if(isValidDateTimeString(trimmedValue)){
+                        inferredType = 'DATETIME';
+                      }
+                    }
+                    break;
+                  case 'object':
+                    if (Array.isArray(value)) {
+                      inferredType = 'OBJECT';
+                    } else {
+                      inferredType = 'OBJECT';
+                    }
+                    break;
+                  default:
+                    inferredType = 'UNKNOWN';
+                    break;
+                }
+                if (inferredType !== 'UNKNOWN') {
+                  column.dataType = inferredType;
+                  typeSet = true;
+                  break;
+                }
+              }
+            }
+            if (!typeSet) {
+              column.dataType = 'UNKNOWN';
+            }
+            console.log(`Column ${column.field} type is ${column.dataType}`);
+          }
+
+        }
+      }
+    });
     this.dataManager.on({
       event: AcEnumDataManagerEvent.DataRowInstanceCreate, callback: ({ dataRow }: { dataRow: AcDatagridRow }) => {
         dataRow.datagridApi = this;
@@ -297,7 +362,7 @@ export class AcDatagridApi {
     const datagridRow: AcDatagridRow | undefined = this.dataManager.deleteRow({ data, rowId, key, value });
     if (datagridRow) {
       this.logger.log('Row deleted from dataManager', { rowId: datagridRow.rowId });
-      if(datagridRow.element){
+      if (datagridRow.element) {
         datagridRow.element.remove();
         this.logger.log('Removed row element from DOM');
       }
@@ -588,7 +653,7 @@ export class AcDatagridApi {
   }
 
   // PENDING
-  updateRow({ data, value, key, rowId, highlightCells = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }):AcDatagridRow|undefined {
+  updateRow({ data, value, key, rowId, highlightCells = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): AcDatagridRow | undefined {
     this.logger.log('Updating row', { rowId, key, addIfMissing, highlightCells, dataProvided: !!data, valueProvided: !!value });
     const datagridRow: AcDatagridRow | undefined = this.dataManager.updateRow({ data, value, key, rowId, addIfMissing });
     if (datagridRow) {

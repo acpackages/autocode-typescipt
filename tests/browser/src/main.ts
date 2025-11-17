@@ -46,6 +46,7 @@ import { AcStorageTestPage } from './pages/utils/ac-storage-tests';
 import { AcDataManagerTestPage } from './pages/utils/ac-data-maganer.tests';
 import { FilePreviewTestPage } from './pages/inputs/file-preview-tests.page';
 import { AcDataCacheTestPage } from './pages/utils/ac-data-cache.tests';
+import { BasicReportPage } from './pages/reports/basic-report';
 
 // AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 // AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -171,6 +172,12 @@ window.addEventListener('DOMContentLoaded', () => {
     routes: [
       { label: 'Basic', path: '/resizable/basic', componentTag: 'resizable-basic', component: ResizableTestPage },
       { label: 'Resizable Panels', path: '/resizable/panels', componentTag: 'resizable-panels', component: ResizablePanelsTestPage }
+    ]
+  });
+  AcRouter.registerRouteGroup({
+    label: 'Reports',
+    routes: [
+      { label: 'Basic', path: '/reports/basic', componentTag: 'reports-basic', component: BasicReportPage },
     ]
   });
   AcRouter.registerRouteGroup({

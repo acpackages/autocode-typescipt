@@ -56,7 +56,7 @@ export class DatagridLocalData extends HTMLElement {
       { field: 'phone_1', title: "Phone 1" },
       { field: 'phone_2', title: "Phone 2" },
       { field: 'email', title: "Email" },
-      { field: 'subscription_date', title: "Subscription Date" },
+      { field: 'subscription_date', title: "Subscription Date",allowEdit:false },
       { field: 'website', title: "Website" },
       { field: 'customer_id', title: "Id",index:2,visible:false },
     ];

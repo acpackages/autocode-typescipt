@@ -32,6 +32,7 @@ export class InputBasicPage extends HTMLElement {
       user_password: 'Secret123!',
       age: 29,
       favorite_color: '#007bff',
+      customer_id: '97667fd4-fbd2-48ea-a42f-6391505370e7',
       birth_date: '1996-05-12',
       preferred_time: '09:30',
       meeting_datetime: '2025-08-15T14:30',
@@ -144,10 +145,13 @@ export class InputBasicPage extends HTMLElement {
     onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control" placeholder="Select Customer"></ac-select-input>';
     allInputsGroup.appendChild(onDemandSelectContainer);
     const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
-    onDemandSelectInput.labelKey = 'first_name'
+    onDemandSelectInput.labelKey = 'first_name';
+    onDemandSelectInput.valueKey = 'customer_id';
+    onDemandSelectInput.acContextKey = 'customer_id';
+    onDemandSelectInput.acContext = this.context;
     onDemandSelectInput.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      console.log("Getting on demand data");
-      console.log(args);
+      // console.log("Getting on demand data");
+      // console.log(args);
       if (args.filterGroup && args.filterGroup.filters && args.filterGroup.filters.length > 0) {
         this.offlineDataManager.filterGroup = args.filterGroup;
         this.offlineDataManager.processRows();
@@ -162,6 +166,8 @@ export class InputBasicPage extends HTMLElement {
       console.log(response);
       args.successCallback(response);
     };
+
+    console.dir(onDemandSelectInput);
 
     const tiptapEditorContainer = document.createElement('div');
     tiptapEditorContainer.style.height = "300px";
@@ -357,7 +363,9 @@ export class InputBasicPage extends HTMLElement {
         }
       ]
     });
-
+    setTimeout(() => {
+      this.setExampleValues()
+    }, 5000);
     // let value:any = {'hello':'world'};
     // value['hello']='new world';
     // value['new-property']='hello world';
@@ -408,7 +416,8 @@ export class InputBasicPage extends HTMLElement {
       contact_preference: 'Phone',
       interested_fruits: ['Banana', 'Orange'],
       preferred_framework: 'React',
-      languages: 'Telgu,English,Hindi,Sanskrit'
+      languages: 'Telgu,English,Hindi,Sanskrit',
+      customer_id:'fa51d247-f53c-4f25-8436-9de299bb9160'
     });
   }
 }

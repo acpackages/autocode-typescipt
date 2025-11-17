@@ -24,6 +24,7 @@ import { IAcDataManagerRowHookArgs } from "../interfaces/hook-args/ac-data-row-h
 import { AcDataRow } from "../models/ac-data-row.model";
 import { IAcDataManagerRowEvent } from "../interfaces/event-args/ac-data-manager-row-event.interface";
 import { AcLogger } from "../../core/ac-logger";
+import { IAcDataManagerDataEvent } from "../_data-manager.export";
 
 export class AcDataManager<T extends AcDataRow = AcDataRow> {
   private _data: any[] = [];
@@ -159,6 +160,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   allDataAvailable: boolean = true;
   allRows: T[] = [];
   autoSetUniqueIdToData: boolean = false;
+  firstDataNotified:boolean = false;
   rows: T[] = [];
   events: AcEvents = new AcEvents();
   hooks: AcHooks = new AcHooks();
@@ -678,6 +680,14 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
 
   setRows({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
     this.logger.log("Setting rows", { dataLength: data.length, startIndex, totalCount, type: this.type });
+    if(!this.firstDataNotified && data.length>0){
+      this.firstDataNotified = true;
+      const eventArgs: IAcDataManagerDataEvent = {
+        data: data,
+        dataManager: this
+      }
+      this.events.execute({ event: AcEnumDataManagerEvent.DataFoundForFirstTime, args: eventArgs });
+    }
     if (this.type == 'offline') {
       const hookArgs: IAcDataManagerDataChangeHookArgs = {
         data: data,

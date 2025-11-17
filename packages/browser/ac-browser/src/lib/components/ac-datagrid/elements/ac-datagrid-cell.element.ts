@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acAddClassToElement, acRegisterCustomElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
+import { acAddClassToElement, acCloneEvent, acListenElementEvents, acRegisterCustomElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
@@ -56,12 +56,13 @@ export class AcDatagridCellElement extends AcElementBase {
   container: HTMLElement = this.ownerDocument.createElement('div');
   cellEditor?: AcDatagridCellEditor;
   cellRenderer!: IAcDatagridCellRenderer;
-  activeComponent?:IAcDatagridCellRenderer|IAcDatagridCellEditor;
+  activeComponent?: IAcDatagridCellRenderer | IAcDatagridCellEditor;
   checkCellValueChangeTimeout: any;
   datagridCell!: AcDatagridCell;
   isEditing: boolean = false;
   swappingColumpPosition: boolean = false;
-  initialized:boolean = false;
+  initialized: boolean = false;
+  previousValue:any;
 
   constructor() {
     super();
@@ -81,6 +82,7 @@ export class AcDatagridCellElement extends AcElementBase {
     }
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
     this.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
+    this.previousValue = this.datagridCell.cellValue;
     this.isEditing = true;
   }
 
@@ -143,7 +145,7 @@ export class AcDatagridCellElement extends AcElementBase {
       this.enterEditMode();
     }
     this.checkCellValueChange();
-    if(this.activeComponent && this.activeComponent.focus){
+    if (this.activeComponent && this.activeComponent.focus) {
       this.activeComponent.focus();
     }
   }
@@ -158,8 +160,17 @@ export class AcDatagridCellElement extends AcElementBase {
       }
       if (this.cellEditor) {
         this.cellEditor.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-        this.cellEditor.getElement().addEventListener('blur',()=>{
-          (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] = this.cellEditor!.getValue();
+        const inputElement = this.cellEditor.getElement();
+        acListenElementEvents({
+          element: inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
+            this.dispatchEvent(acCloneEvent(event));
+          }, mouse: true, keyboard: true, pointer: true, focus: true, form: true, touch: true, viewport: true
+        });
+        inputElement.addEventListener('change',()=>{
+          this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
+        });
+        inputElement.addEventListener('input',()=>{
+          this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
         });
         const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {
           datagridApi: this.datagridApi,
@@ -178,16 +189,16 @@ export class AcDatagridCellElement extends AcElementBase {
     this.setAttribute('tabindex', "0");
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.container });
     this.append(this.container);
-    this.container.setAttribute('style','display:contents');
+    this.container.setAttribute('style', 'display:contents');
     this.container.append(this.cellRenderer.getElement());
     this.setCellWidth();
     this.setCellFocusable();
     this.registerEvents();
   }
 
-  refresh(){
+  refresh() {
     this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-    if(this.cellEditor){
+    if (this.cellEditor) {
       this.cellEditor.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
     }
   }
@@ -272,18 +283,18 @@ export class AcDatagridCellElement extends AcElementBase {
     this.style.minWidth = `${width}px`;
   }
 
-  setCellFocusable(){
-    if(this.datagridColumn.allowFocus){
+  setCellFocusable() {
+    if (this.datagridColumn.allowFocus) {
       this.setAttribute('tabindex', "0");
     }
-    else{
+    else {
       this.removeAttribute('tabindex');
     }
   }
 
   private checkCellValueChange(delayCheck: boolean = true) {
     const checkFunction: Function = () => {
-      if (this.cellEditor && this.datagridCell.cellValue != this.cellEditor.getValue()) {
+      if (this.cellEditor && this.cellEditor.getValue() != this.previousValue) {
         this.datagridCell.cellValue = this.cellEditor.getValue();
       }
     };

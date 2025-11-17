@@ -8,12 +8,12 @@ import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AcEnumDataManagerHook } from "@autocode-ts/autocode";
 
-export class AcDatagridRowElement extends AcElementBase{
+export class AcDatagridRowElement extends AcElementBase {
   private _datagridApi!: AcDatagridApi;
-  get datagridApi():AcDatagridApi{
+  get datagridApi(): AcDatagridApi {
     return this._datagridApi;
   }
-  set datagridApi(value:AcDatagridApi){
+  set datagridApi(value: AcDatagridApi) {
     this._datagridApi = value;
     this.initRow();
     // value.on({
@@ -32,10 +32,10 @@ export class AcDatagridRowElement extends AcElementBase{
   }
 
   private _datagridRow!: AcDatagridRow;
-  get datagridRow():AcDatagridRow{
+  get datagridRow(): AcDatagridRow {
     return this._datagridRow;
   }
-  set datagridRow(value:AcDatagridRow){
+  set datagridRow(value: AcDatagridRow) {
     value.element = this;
     this._datagridRow = value;
     this.initRow();
@@ -43,10 +43,11 @@ export class AcDatagridRowElement extends AcElementBase{
 
   datagridCells: AcDatagridCellElement[] = [];
   swappingRowPosition: boolean = false;
-  container:HTMLElement = this.ownerDocument.createElement('div');
-  initialized:boolean = false;
+  container: HTMLElement = this.ownerDocument.createElement('div');
+  initialized: boolean = false;
+  isRendering:boolean = false;
 
-  override init(){
+  override init() {
     super.init();
     this.style.display = 'block';
     this.style.width = 'max-content';
@@ -54,6 +55,7 @@ export class AcDatagridRowElement extends AcElementBase{
     this.container.style.display = 'flex';
     this.container.classList.add(AC_DATAGRID_CLASS_NAME.acDatagridRowContainer);
     this.append(this.container);
+
     this.registerListeners();
     this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
     if (this.datagridRow.displayIndex == 0 || this.datagridRow.displayIndex % 2 == 0) {
@@ -64,23 +66,33 @@ export class AcDatagridRowElement extends AcElementBase{
     }
   }
 
-  initRow(){
-    if(this.datagridApi && this.datagridRow && !this.initialized){
+  initRow() {
+    if (this.datagridApi && this.datagridRow && !this.initialized) {
       this.initialized = true;
-      this.initElement();
-      this.datagridRow.hooks.subscribe({hook:AcEnumDataManagerHook.DataChange,callback:(args:any)=>{
-        // this.refreshCells();
-      }});
+      this.datagridCells = [];
+      const hookArgs: IAcDatagridRowHookArgs = {
+        datagridRow: this.datagridRow,
+        datagridApi: this.datagridApi
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BeforeRowCellsCreate, args: hookArgs });
+      for (const column of this.datagridApi.datagridColumns) {
+        const datagridCell = new AcDatagridCellElement();
+        datagridCell.datagridApi = this.datagridApi;
+        datagridCell.datagridColumn = column;
+        datagridCell.datagridRow = this.datagridRow;
+        this.datagridCells.push(datagridCell);
+      }
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.RowCellsCreate, args: hookArgs });
+      this.render();
+      this.datagridRow.hooks.subscribe({hook: AcEnumDataManagerHook.DataChange, callback: (args: any) => {
+          this.refreshCells();
+        }
+      });
     }
   }
 
-  initElement() {
-
-    this.render();
-  }
-
-  refreshCells(){
-    for(const cell of this.datagridCells){
+  refreshCells() {
+    for (const cell of this.datagridCells) {
       cell.refresh();
     }
   }
@@ -143,25 +155,18 @@ export class AcDatagridRowElement extends AcElementBase{
   }
 
   render() {
-    this.container.innerHTML = "";
-    this.datagridCells = [];
-    const hookArgs:IAcDatagridRowHookArgs = {
-      datagridRow:this.datagridRow,
-      datagridApi:this.datagridApi
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.BeforeRowCellsCreate,args:hookArgs});
-    for (const column of this.datagridApi.datagridColumns) {
-      const datagridCell = new AcDatagridCellElement();
-      datagridCell.datagridApi = this.datagridApi;
-      datagridCell.datagridColumn = column;
-      datagridCell.datagridRow = this.datagridRow;
-      if(column.visible){
-        this.container.append(datagridCell);
+    if(!this.isRendering){
+      this.isRendering = true;
+      this.container.innerHTML = "";
+    for(const cell of this.datagridCells){
+      if(cell.datagridColumn.visible){
+        this.container.append(cell);
       }
-      this.datagridCells.push(datagridCell);
     }
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.RowCellsCreate,args:hookArgs});
+    this.isRendering = false;
+    }
+
   }
 }
 
-acRegisterCustomElement({tag:AC_DATAGRID_TAG.datagridRow,type:AcDatagridRowElement});
+acRegisterCustomElement({ tag: AC_DATAGRID_TAG.datagridRow, type: AcDatagridRowElement });

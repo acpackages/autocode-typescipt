@@ -155,7 +155,7 @@ export class AcScrollable {
   }
 
   private registerScrollingElement(data: Partial<IAcScrollingElement> & Pick<IAcScrollingElement, 'element' | 'height'>) {
-    if (!data.element.hasAttribute(AcScrollableAttributeName.acScrollingElementId)) {
+    if (this.scrollingElements.findIndex((item:any)=>{return item.element == data.element;}) == -1) {
       const id: string = Autocode.uuid();
       data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
       if (data.index == undefined) {
@@ -244,7 +244,7 @@ export class AcScrollable {
       element: newElement,
       height
     };
-    newElement.setAttribute(AcScrollableAttributeName.acScrollingElementId, this.scrollingElements[index].id);
+    // newElement.setAttribute(AcScrollableAttributeName.acScrollingElementId, this.scrollingElements[index].id);
     this.resizeObserver.observe(newElement);
     this.render();
   }

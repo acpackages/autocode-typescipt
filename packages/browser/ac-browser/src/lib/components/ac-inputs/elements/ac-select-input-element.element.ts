@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
-import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow } from "@autocode-ts/autocode";
+import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow, AcEnumDataManagerHook } from "@autocode-ts/autocode";
 import { createPopper } from '@popperjs/core';
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcScrollable } from "../../_components.export";
@@ -73,24 +73,14 @@ export class AcSelectInput extends AcInputBase {
     if (this._value != val) {
       this.previousValue = val;
       super.value = val;
-      const matchRow = this.dataManager.getRow({ key: this.valueKey, value: this.value });
-      if (matchRow) {
-        this.textInputElement.value = matchRow.data[this.labelKey];
-      }
-
-      if (this.dataManager.rows.length === 0 && super.value !== undefined) {
-        this.dataManager.data = [{
-          [this.labelKey]: super.value, [this.valueKey]: super.value
-        }];
-      }
+      this.setValueLabel();
     }
-
   }
 
-  get selectedOptions():any[]{
-    const result:any[] = [];
-    for(const option of this.options){
-      if(option[this.valueKey] == this.value){
+  get selectedOptions(): any[] {
+    const result: any[] = [];
+    for (const option of this.options) {
+      if (option[this.valueKey] == this.value) {
         result.push(option);
       }
     }
@@ -112,12 +102,21 @@ export class AcSelectInput extends AcInputBase {
   protected loadedCount = 0;
   protected addOptionText = "";
   private previousValue: any;
-  private previousSearchTerm:string = '';
+  private previousSearchTerm: string = '';
   private popper?: ReturnType<typeof createPopper>;
   addOptionCallback: Function = ({ query, callback }: { query: string, callback: Function }): void => {
     const newOption = { [this.labelKey]: query, [this.valueKey]: query };
     callback(newOption);
   };
+
+  constructor() {
+    super();
+    this.dataManager.hooks.subscribe({
+      hook: AcEnumDataManagerHook.DataChange, callback: () => {
+        this.setValueLabel();
+      }
+    });
+  }
 
   private applyHighlightStyles() {
     const all = this.dropdownContainer.querySelectorAll<HTMLElement>('[data-option-index]');
@@ -131,7 +130,7 @@ export class AcSelectInput extends AcInputBase {
   private attachEvents() {
     this.textInputElement.addEventListener("input", async () => {
       const term = this.textInputElement.value.trim().toLowerCase();
-      if(this.value && term!= this.previousSearchTerm){
+      if (this.value && term != this.previousSearchTerm) {
         this.value = null;
       }
       this.previousSearchTerm = term;
@@ -307,8 +306,8 @@ export class AcSelectInput extends AcInputBase {
       outline: "none",
       boxSizing: "border-box",
       background: 'transparent',
-      paddingLeft:'5px',
-      paddingRight:'3px'
+      paddingLeft: '5px',
+      paddingRight: '3px'
     });
     this.selectContainer.appendChild(this.textInputElement);
 
@@ -422,6 +421,20 @@ export class AcSelectInput extends AcInputBase {
     this.popper?.update();
 
     setTimeout(() => this.applyHighlightStyles(), 0);
+  }
+
+  setValueLabel() {
+    if (this.value) {
+      const matchRow = this.dataManager.getRow({ key: this.valueKey, value: this.value });
+      if (matchRow) {
+        this.textInputElement.value = matchRow.data[this.labelKey];
+      }
+      else {
+        this.dataManager.data = [{
+          [this.labelKey]: super.value, [this.valueKey]: super.value
+        }];
+      }
+    }
   }
 
   private scrollToIndex(index: number) {

@@ -1,6 +1,6 @@
 export interface IAcScrollingElement{
   element:HTMLElement,
   height:number,
-  id:string,
+  id?:string,
   index:number,
 }

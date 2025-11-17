@@ -3,10 +3,10 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcHooks,AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/autocode";
+import { AcHooks, AcContext, AcContextRegistry, AcEnumContextEvent } from "@autocode-ts/autocode";
 import { AcEnumInputEvent } from "../enums/ac-enum-input-event.enum";
 import { AcElementBase } from "../../../core/ac-element-base";
-import { acListenAllElementEvents } from "../../../utils/ac-element-functions";
+import { acListenElementEvents } from "../../../utils/ac-element-functions";
 
 export class AcInputBase extends AcElementBase {
   static formAssociated = true;
@@ -208,33 +208,8 @@ export class AcInputBase extends AcElementBase {
 
   checkValidity() { return this.elementInternals.checkValidity(); }
 
-  override connectedCallback() {
-    super.connectedCallback();
-    if (this.hasAttribute('required')) {
-      this.required = true;
-    }
-    if (this.hasAttribute('disabled')) {
-      this.disabled = true;
-    }
-    if (this.hasAttribute('readonly')) {
-      this.readonly = true;
-    }
-    if (this.elementInternals.form) {
-      this.elementInternals.form.addEventListener('submit', () => {
-        this.validate();
-      });
-    }
-    this.style.display = 'contents';
-    this.handleInput = this.handleInput.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
-    this.refreshReflectedAttributes();
-    this.inputElement.addEventListener('input', this.handleInput);
-    this.inputElement.addEventListener('change', this.handleChange);
-  }
-
-  override disconnectedCallback() {
-    super.disconnectedCallback();
+  override destroy() {
+    super.destroy();
     this.inputElement.removeEventListener('input', this.handleInput);
     this.inputElement.removeEventListener('change', this.handleChange);
   }
@@ -297,11 +272,31 @@ export class AcInputBase extends AcElementBase {
 
   override init(): void {
     super.init();
+    if (this.hasAttribute('required')) {
+      this.required = true;
+    }
+    if (this.hasAttribute('disabled')) {
+      this.disabled = true;
+    }
+    if (this.hasAttribute('readonly')) {
+      this.readonly = true;
+    }
+    if (this.elementInternals.form) {
+      this.elementInternals.form.addEventListener('submit', () => {
+        this.validate();
+      });
+    }
+    this.style.display = 'contents';
+    this.handleInput = this.handleInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
+    this.refreshReflectedAttributes();
+    this.inputElement.addEventListener('input', this.handleInput);
+    this.inputElement.addEventListener('change', this.handleChange);
     this.appendChild(this.inputElement);
-    acListenAllElementEvents({
-      element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
-        this.events.execute({ event: name, args: event });
-      }
+    acListenElementEvents({element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
+        this.dispatchEvent(event);
+      },mouse:true,keyboard:true,pointer:true,focus:true,form:true,touch:true,viewport:true
     });
   }
 
@@ -329,11 +324,13 @@ export class AcInputBase extends AcElementBase {
   protected setValueFromAcContext() {
     if (this.acContextKey && this.acContext) {
       this.value = this.acContext[this.acContextKey];
-      this.acContext.on({event:AcEnumContextEvent.Change, callback:(args: any) => {
-        if (args.property == this.acContextKey) {
-          this.setValue(args.value);
+      this.acContext.on({
+        event: AcEnumContextEvent.Change, callback: (args: any) => {
+          if (args.property == this.acContextKey) {
+            this.setValue(args.value);
+          }
         }
-      }});
+      });
     }
   }
 

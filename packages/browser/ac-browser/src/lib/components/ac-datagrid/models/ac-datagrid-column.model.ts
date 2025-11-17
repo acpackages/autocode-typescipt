@@ -48,7 +48,7 @@ export class AcDatagridColumn {
     return this.columnDefinition.allowFilter == true;
   }
   get allowFocus(): boolean {
-    return this.columnDefinition.allowFocus != false;
+    return this.columnDefinition.allowFocus != false || this.allowEdit;
   }
   get allowResize(): boolean {
     return this.columnDefinition.allowResize == true;
@@ -109,7 +109,7 @@ export class AcDatagridColumn {
     this.index = index;
   }
 
-  getNextColumn({focusable}:{focusable?:boolean} = {}):AcDatagridColumn | undefined{
+  getNextColumn({focusable = true}:{focusable?:boolean} = {}):AcDatagridColumn | undefined{
     let column: AcDatagridColumn | undefined;
     for (const col of this.datagridApi.datagridColumns) {
       let isValid:boolean = col.visible;
@@ -134,7 +134,7 @@ export class AcDatagridColumn {
     return column;
   }
 
-  getPreviousColumn({focusable}:{focusable?:boolean} = {}):AcDatagridColumn | undefined {
+  getPreviousColumn({focusable = true}:{focusable?:boolean} = {}):AcDatagridColumn | undefined {
     let column: AcDatagridColumn | undefined;
     for (const col of this.datagridApi.datagridColumns) {
       let isValid:boolean = col.visible;

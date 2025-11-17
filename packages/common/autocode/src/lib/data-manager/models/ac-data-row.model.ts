@@ -13,7 +13,7 @@ import { AcDataManager } from "../core/ac-data-manager";
 export class AcDataRow {
   rowId: string = Autocode.uuid();
 
-  private dataChangeCallback:Function = (args:any)=>{
+  private dataChangeCallback: Function = (args: any) => {
     this.notifyRowDataChange();
   };
   private _data: any;
@@ -21,14 +21,16 @@ export class AcDataRow {
     return this._data;
   }
   set data(value: any) {
-    const object:any = this;
+    const object: any = this;
     if (value != this._data) {
       if (value['__acContextName__']) {
         this._data = value;
-        this._data.off({event:AcEnumContextEvent.Change,callback:this.dataChangeCallback});
-        this._data.on({event:AcEnumContextEvent.Change,callback:(args:any)=>{
-    object.notifyRowDataChange();
-  }});
+        this._data.off({ event: AcEnumContextEvent.Change, callback: this.dataChangeCallback });
+        this._data.on({
+          event: AcEnumContextEvent.Change, callback: (args: any) => {
+            object.notifyRowDataChange();
+          }
+        });
       }
       else {
         if (this.dataManager.autoSetUniqueIdToData) {
@@ -40,10 +42,32 @@ export class AcDataRow {
           }
         }
         this._data = new AcContext({ value });
-        this._data.on({event:AcEnumContextEvent.Change,callback:(args:any)=>{
-    object.notifyRowDataChange();
-  }});
+        this._data.on({
+          event: AcEnumContextEvent.Change, callback: (args: any) => {
+            object.notifyRowDataChange();
+          }
+        });
       }
+    }
+  }
+
+  private _displayIndex: number = -1;
+  get displayIndex(): number {
+    return this._displayIndex;
+  }
+  set displayIndex(value: number) {
+    if (this._displayIndex != value) {
+      this._displayIndex = value;
+    }
+  }
+
+  private _index: number = -1;
+  get index(): number {
+    return this._index;
+  }
+  set index(value: number) {
+    if (this._index != value) {
+      this._index = value;
     }
   }
 
@@ -51,9 +75,7 @@ export class AcDataRow {
   events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   hooks: AcHooks = new AcHooks();
-  index: number = -1;
   isPlaceholder: boolean = false;
-  displayIndex: number = -1;
 
   get isFirst(): boolean {
     return this.displayIndex == 0;
@@ -71,10 +93,12 @@ export class AcDataRow {
     this.dataManager.events.execute({ event: AcEnumDataManagerEvent.DataRowInstanceCreate, args: { dataRow: this } });
   }
 
-  notifyRowDataChange(){
-    acSingleTimeout({callback:() => {
-      this.hooks.execute({hook:AcEnumDataManagerEvent.DataChange});
-    },duration:10,key:this.rowId});
+  notifyRowDataChange() {
+    acSingleTimeout({
+      callback: () => {
+        this.hooks.execute({ hook: AcEnumDataManagerEvent.DataChange });
+      }, duration: 10, key: this.rowId
+    });
   }
 
   off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {

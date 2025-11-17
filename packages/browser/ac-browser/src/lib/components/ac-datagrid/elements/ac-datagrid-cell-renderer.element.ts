@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { dateFormat, dateFromFormatted } from "@autocode-ts/ac-extensions";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs } from "../_ac-datagrid.export";
+import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs, AcDatagridColumn, AcEnumDatagridHook } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
@@ -9,6 +10,7 @@ import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
 export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   private datagridApi!: AcDatagridApi;
   private datagridCell!:AcDatagridCell;
+  private datagridColumn!:AcDatagridColumn;
   public element: HTMLElement = document.createElement('div');
 
   destroy?(): void {
@@ -22,6 +24,7 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   init(args: IAcDatagridCellElementArgs): void {
     this.datagridApi = args.datagridApi;
     this.datagridCell = args.datagridCell;
+    this.datagridColumn = this.datagridCell.datagridColumn;
     this.initElement();
   }
 
@@ -36,11 +39,29 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
+    console.log(`New renderer element value ${args.datagridCell.cellValue}`);
     this.render();
+    if(this.datagridApi){
+      this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.CellRendererRefresh,args:this});
+    }
   }
 
   render() {
-    this.element.innerHTML = (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] ?? '';
+    const value = this.datagridCell.cellValue;
+    if(value){
+      if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'DATE'){
+        this.element.innerHTML = dateFormat(dateFromFormatted(value),'dd-MM-yyyy');
+      }
+      else if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'DATETIME'){
+        this.element.innerHTML = dateFormat(dateFromFormatted(value),'dd-MM-yyyy HH:mm A');
+      }
+      else{
+        this.element.innerHTML = value;
+      }
+    }
+    else{
+      this.element.innerHTML = '';
+    }
   }
 
 }

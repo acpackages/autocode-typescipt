@@ -2,6 +2,10 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+
+import { arrayRemove } from "@autocode-ts/ac-extensions";
+import { AC_DOM_EVENT_TYPES } from "../consts/ac-dom-event-typess.const";
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export function acAddClassToElement({ class_, element }: { class_: string, element: Element }) {
   const classList: string[] = class_.trim().split(" ")
@@ -38,7 +42,24 @@ export function acAnimateElement(
   requestAnimationFrame(step);
 }
 
+export function acCloneEvent(oldEvent: Event): Event {
+  const newEvent = new (oldEvent.constructor as any)(oldEvent.type, {
+    bubbles: oldEvent.bubbles,
+    cancelable: oldEvent.cancelable,
+    composed: oldEvent.composed,
+  });
 
+  // Copy standard properties
+  for (const key of Object.keys(oldEvent)) {
+    try {
+      (newEvent as any)[key] = (oldEvent as any)[key];
+    } catch {
+      //
+    }
+  }
+
+  return newEvent;
+}
 
 export function acCopyElementStyles({ fromElement, toElement }: { fromElement: HTMLElement, toElement: HTMLElement }) {
   const computed: any = window.getComputedStyle(fromElement);
@@ -79,17 +100,93 @@ export function acLinkElementScroll({ source, destination, both = true }: { sour
   }
 }
 
-export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({ name, event }: { name: string, event: Event }) => void }) {
-  const proto = HTMLElement.prototype as any;
-  for (const key in proto) {
-    if (key.startsWith("on")) {
-      const eventName = key.slice(2);
-      element.addEventListener(eventName, (e) => {
-        callback({ name: eventName, event: e });
-      },{passive:true});
+export function acListenElementEvents(options: {
+  element: HTMLElement;
+  callback: ({ name, event }: { name: string, event: Event }) => void;
+
+  // category booleans
+  mouse?: boolean;
+  pointer?: boolean;
+  touch?: boolean;
+  keyboard?: boolean;
+  focus?: boolean;
+  form?: boolean;
+  clipboard?: boolean;
+  drag?: boolean;
+  media?: boolean;
+  animation?: boolean;
+  viewport?: boolean;
+  window?: boolean;
+  network?: boolean;
+  fullscreen?: boolean;
+  history?: boolean;
+  websocket?: boolean;
+  serviceWorker?: boolean;
+  worker?: boolean;
+  mutationDeprecated?: boolean;
+  exclude?:string[]
+}) {
+  const { element, callback, ...flags } = options;
+
+  const categories = Object.keys(AC_DOM_EVENT_TYPES) as (keyof typeof AC_DOM_EVENT_TYPES)[];
+
+  // check if user enabled any category
+  const anySelected = categories.some(c => flags[c] === true);
+
+  // build final list of events
+  let events: string[] = [];
+
+  for (const category of categories) {
+    if (anySelected) {
+      // only include selected categories
+      if (flags[category]) {
+        events.push(...AC_DOM_EVENT_TYPES[category]);
+      }
+    } else {
+      // none selected => include all categories
+      events.push(...AC_DOM_EVENT_TYPES[category]);
     }
   }
+
+  if(options.exclude){
+    for(const event of options.exclude){
+      if(events.includes(event)){
+        events = arrayRemove(events,event);
+      }
+    }
+  }
+
+  // attach listeners
+  const handlers: { [event: string]: (ev: Event) => void } = {};
+
+  for (const eventName of events) {
+    const handler = (ev: Event) => callback({name:eventName,event: ev});
+    handlers[eventName] = handler;
+    element.addEventListener(eventName, handler);
+  }
+
+  // return unsubscribe function
+  return () => {
+    for (const eventName of events) {
+      element.removeEventListener(eventName, handlers[eventName]);
+    }
+  };
 }
+
+// export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({ name, event }: { name: string, event: Event }) => void }) {
+
+//   const proto = HTMLElement.prototype as any;
+//   for (const key in proto) {
+//     if (key.startsWith("on")) {
+//       const eventName = key.slice(2);
+//       element.addEventListener(eventName, (e) => {
+//         setTimeout(() => {
+//           callback({ name: eventName, event: e });
+//         }, 1);
+//       },{passive:true});
+//     }
+//   }
+// }
 
 export function acMorphElement({ source, destination, sourceColor, destinationColor, duration = 300 }: { source: HTMLElement, destination: HTMLElement, sourceColor?: string; destinationColor?: string; duration?: number }): void {
   // Get bounding client rectangles

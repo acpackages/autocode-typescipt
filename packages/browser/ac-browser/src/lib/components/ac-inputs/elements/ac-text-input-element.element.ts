@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { acListenAllElementEvents, acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { AcInput } from "./ac-input-element.element";

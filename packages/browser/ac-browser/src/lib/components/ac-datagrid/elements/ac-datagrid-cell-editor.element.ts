@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { IAcDatagridCellEditor, IAcDatagridCellElementArgs } from "../_ac-datagrid.export";
+import { AcDatagridApi, AcDatagridColumn, AcDatagridRow, AcEnumDatagridHook, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridColumnDefinition } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
-import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
 
-export class AcDatagridCellEditor implements IAcDatagridCellEditor{
+export class AcDatagridCellEditor implements IAcDatagridCellEditor {
   private datagridApi!: AcDatagridApi;
   private datagridCell!: AcDatagridCell;
-  public element: HTMLInputElement = document.createElement('input');
+  private datagridColumn!: AcDatagridColumn;
+  private datagridRow!: AcDatagridRow;
+  private columnDefinition!: IAcDatagridColumnDefinition;
+  public element!: HTMLInputElement | any;
 
   blur() {
     this.element.blur();
@@ -29,38 +32,65 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor{
   }
 
   getValue() {
+    if (this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'BOOLEAN') {
+      return this.element.value == 'true' || this.element.value == true;
+    }
     return this.element.value;
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.datagridCell = args.datagridCell;
     this.datagridApi = args.datagridApi;
-    this.element.classList.add(AcDatagridCssClassName.acDatagridCellEditorInput);
+    this.datagridCell = args.datagridCell;
+    this.datagridColumn = this.datagridCell.datagridColumn;
+    this.datagridRow = this.datagridCell.datagridRow;
+    this.columnDefinition = this.datagridColumn.columnDefinition;
+    if (this.columnDefinition.cellInputElement) {
+      this.element = this.datagridCell.element!.ownerDocument.createElement(this.columnDefinition.cellInputElement);
+    }
+    else {
+      if (this.datagridColumn.columnDefinition.dataType == 'BOOLEAN') {
+        this.element = this.datagridCell.element!.ownerDocument.createElement('select');
+        this.element.innerHTML('<option value="true">true</option>');
+        this.element.innerHTML('<option value="false">false</option>')
+      }
+      else {
+        this.element = this.datagridCell.element!.ownerDocument.createElement('input');
+        if (this.datagridColumn.columnDefinition.dataType == 'NUMBER') {
+          this.element.setAttribute('type', 'number');
+        }
+        else if (this.datagridColumn.columnDefinition.dataType == 'DATE') {
+          this.element.setAttribute('type', 'date');
+          this.element.type = 'date';
+        }
+        else if (this.datagridColumn.columnDefinition.dataType == 'DATETIME') {
+          this.element.setAttribute('type', 'datetime-local');
+        }
+      }
+    }
+    if (this.columnDefinition.cellInputElementAttrs) {
+      for(const key of Object.keys(this.columnDefinition.cellInputElementAttrs)){
+        this.element[key] = this.columnDefinition.cellInputElementAttrs[key];
+      }
+    }
     this.initElement();
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.element.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnDefinition.field];
+    this.element.value = args.datagridCell.cellValue;
+    if(this.datagridApi){
+      this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.CellEditorRefresh,args:this});
+    }
   }
 
   initElement() {
+    this.element.classList.add(AcDatagridCssClassName.acDatagridCellEditorInput);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.cellId);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridCell.datagridColumn.columnId);
     this.element.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridCell.datagridRow.rowId);
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditorInput, element: this.element });
     this.element.style.height = "100%";
-    this.element.style.width = "max-content";
-    this.render();
-  }
-
-  render() {
-    this.element.value = (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field];
-    this.element.addEventListener('input', (e: any) => {
-      (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
-    });
-    this.element.addEventListener('change', (e: any) => {
-      (this.datagridCell.datagridRow as any).data[this.datagridCell.datagridColumn.columnDefinition.field] = this.element.value;
-    });
+    this.element.style.width = "100%";
+    this.element.value = this.datagridCell.cellValue;
   }
 
 }

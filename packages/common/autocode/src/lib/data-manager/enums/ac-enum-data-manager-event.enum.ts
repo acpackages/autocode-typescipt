@@ -3,6 +3,7 @@ export enum AcEnumDataManagerEvent {
   BeforeDataChange = 'beforeDataChange',
   BeforeGetOnDemandData = 'beforeGetOnDemandData',
   DataChange = 'dataChange',
+  DataFoundForFirstTime = 'dataFoundForFirstTime',
   DataRowInstanceCreate = 'dataSourceInstanceCreate',
   DisplayedRowsChange = 'displayedRowsChange',
   GetOnDemandDataSuccessCallback = 'getOnDemandDataSuccessCallback',

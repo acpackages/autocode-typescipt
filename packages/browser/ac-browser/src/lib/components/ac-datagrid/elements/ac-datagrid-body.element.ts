@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -20,13 +21,16 @@ export class AcDatagridBody extends AcElementBase {
     this.datagridApi.hooks.subscribe({
       hook: AcEnumDatagridHook.DisplayedRowsChange,
       callback: (event: IAcDatagridDisplayedRowsChangeEvent) => {
-        setTimeout(() => {
-          this.setDisplayRows();
-        }, 1);
+        if(!this.isRendering){
+          setTimeout(() => {
+            this.setDisplayRows();
+          }, 1);
+        }
       }
     });
   }
   scrollable: AcScrollable = new AcScrollable({ element: this, options: { bufferCount: 10 } });
+  isRendering: boolean = false;
 
   constructor() {
     super();
@@ -52,18 +56,24 @@ export class AcDatagridBody extends AcElementBase {
   }
 
   setDisplayRows() {
-    if (this.datagridApi) {
-      this.innerHTML = "";
-      this.scrollable.pause();
-      this.scrollable.clearAll();
-      for (const row of this.datagridApi.displayedDatagridRows) {
-        const datagridRow = new AcDatagridRowElement();
-        datagridRow.datagridApi = this.datagridApi;
-        datagridRow.datagridRow = row;
-        this.append(datagridRow);
+    if (!this.isRendering) {
+      if (this.datagridApi) {
+        this.isRendering = true;
+        this.innerHTML = "";
+        this.scrollable.pause();
+        this.scrollable.clearAll();
+        for (const row of this.datagridApi.displayedDatagridRows) {
+          if (!row.element) {
+            const datagridRow = new AcDatagridRowElement();
+            datagridRow.datagridApi = this.datagridApi;
+            datagridRow.datagridRow = row;
+          }
+          this.append(row.element!);
+        }
+        this.scrollable.resume();
+        this.scrollable.autoRegister();
+        this.isRendering = false;
       }
-      this.scrollable.resume();
-      this.scrollable.autoRegister();
     }
   }
 }

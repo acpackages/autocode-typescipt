@@ -6,4 +6,5 @@ export enum AcEnumDatagridColumnDataType{
   Number = "NUMBER",
   Object = "OBJECT",
   String = "STRING",
+  Unknown = "UNKNOWN"
 }
