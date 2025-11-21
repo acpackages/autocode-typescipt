@@ -2256,6 +2256,16 @@ export const dataDictionaryJson = {
             }
           }
         },
+        "branch_address": {
+          "columnName": "branch_address",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Branch Address"
+            }
+          }
+        },
         "country_code": {
           "columnName": "country_code",
           "columnType": "STRING",
@@ -2287,6 +2297,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "IBAN"
+            }
+          }
+        },
+        "ifsc": {
+          "columnName": "ifsc",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "IFSC"
             }
           }
         },
@@ -6047,6 +6067,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            }
+          }
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "GST No"
             }
           }
         }
@@ -9913,6 +9943,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            }
+          }
+        },
+        "product_price_mrp": {
+          "columnName": "product_price_mrp",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "MRP"
             }
           }
         },

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEvents, Autocode } from "@autocode-ts/autocode";
-import { acRegisterCustomElement } from "../utils/ac-element-functions";
+import { acCloneEvent, acRegisterCustomElement } from "../utils/ac-element-functions";
 
 export class AcElementBase extends HTMLElement {
   private _isInitialized:boolean = false;
@@ -18,8 +18,9 @@ export class AcElementBase extends HTMLElement {
     super();
     const originalDispatch = this.dispatchEvent;
     this.dispatchEvent = (event: Event): boolean => {
+      const e = acCloneEvent(event);
       this.events.execute({event:event.type,args:event});
-      return originalDispatch.call(this, event);
+      return originalDispatch.call(this, e);
     };
   }
 
