@@ -4,22 +4,22 @@ import { AcDDEApi } from "../../core/ac-dde-api";
 import { IAcDDEView, IAcDDEViewColumn } from "../../_ac-data-dictionary-editor.export";
 import { AcEvents } from "@autocode-ts/autocode";
 
-export class AcDDEViewMaster{
-  private _view:IAcDDEView|any;
-  get view():IAcDDEView{
+export class AcDDEViewMaster {
+  private _view: IAcDDEView | any;
+  get view(): IAcDDEView {
     return this._view;
   }
-  set view(value:IAcDDEView){
+  set view(value: IAcDDEView) {
     this._view = value;
     this.queryInput.value = value.viewQuery ? value.viewQuery : '';
   }
 
-  editorApi!:AcDDEApi;
-  element:HTMLElement = document.createElement('div');
-  queryInput:AcTextareaInput;
-  btnSetColumns!:HTMLButtonElement;
-  events:AcEvents = new AcEvents();
-  changeTimeout:any;
+  editorApi!: AcDDEApi;
+  element: HTMLElement = document.createElement('div');
+  queryInput: AcTextareaInput;
+  btnSetColumns!: HTMLButtonElement;
+  events: AcEvents = new AcEvents();
+  changeTimeout: any;
 
   constructor() {
     this.element.style.display = 'contents';
@@ -35,51 +35,51 @@ export class AcDDEViewMaster{
 
 
     this.btnSetColumns = this.element.querySelector('[btn-set-view-columns') as HTMLButtonElement;
-    this.btnSetColumns.addEventListener('click',()=>{
-      if(this.view && this.view.viewQuery){
-        const result = this.editorApi.sqlParser.parse({sql:this.view.viewQuery});
+    this.btnSetColumns.addEventListener('click', () => {
+      if (this.view && this.view.viewQuery) {
+        const result = this.editorApi.sqlParser.parse({ sql: this.view.viewQuery });
         console.log(result);
-        if(result){
+        if (result) {
           const columns = result.columns;
-          const currentColumns = this.editorApi.dataStorage.getViewColumns({viewId:this.view.viewId});
-          for(const col of columns){
-            const columnDetails:IAcDDEViewColumn|any = {
-              dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId,
-              columnName:col.queryFieldName
+          const currentColumns = this.editorApi.dataStorage.getViewColumns({ viewId: this.view.viewId });
+          for (const col of columns) {
+            const columnDetails: IAcDDEViewColumn | any = {
+              dataDictionaryId: this.editorApi.activeDataDictionary!.dataDictionaryId,
+              columnName: col.queryFieldName
             };
-            if(col.source == "table"){
+            if (col.source == "table") {
               columnDetails.columnSource = 'table';
-              const tableName:any = col.originalTable ?? col.tableAlias;
-              const tables = this.editorApi.dataStorage.getTables({tableName:tableName,dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId});
-              if(tables && tables.length>0){
+              const tableName: any = col.originalTable ?? col.tableAlias;
+              const tables = this.editorApi.dataStorage.getTables({ tableName: tableName, dataDictionaryId: this.editorApi.activeDataDictionary!.dataDictionaryId });
+              if (tables && tables.length > 0) {
                 const table = tables[0];
                 columnDetails.columnSourceName = table.tableName;
                 columnDetails.viewId = this.view.viewId;
-                const tableColumns = this.editorApi.dataStorage.getTableColumns({tableId:table.tableId,columnName:col.tableFieldName!});
-                if(tableColumns.length > 0){
+                const tableColumns = this.editorApi.dataStorage.getTableColumns({ tableId: table.tableId, columnName: col.tableFieldName! });
+                if (tableColumns.length > 0) {
                   const tableColumnDetails = tableColumns[0];
                   columnDetails.columnSourceOriginalColumn = tableColumnDetails.columnName;
                   columnDetails.columnType = tableColumnDetails.columnType;
                 }
               }
-              else{
-                const views = this.editorApi.dataStorage.getViews({viewName:tableName,dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId});
-              if(views && views.length>0){
-                const view = views[0];
-                columnDetails.columnSourceName = view.viewName;
-                columnDetails.columnSource = 'view';
-                columnDetails.viewId = this.view.viewId;
-                const viewColumns = this.editorApi.dataStorage.getViewColumns({viewName:view.viewName,columnName:col.tableFieldName!,dataDictionaryId:this.editorApi.activeDataDictionary!.dataDictionaryId});
-                if(viewColumns.length > 0){
-                  const tableColumnDetails = viewColumns[0];
-                  columnDetails.columnSourceOriginalColumn = tableColumnDetails.columnName;
-                  columnDetails.columnType = tableColumnDetails.columnType;
+              else {
+                const views = this.editorApi.dataStorage.getViews({ viewName: tableName, dataDictionaryId: this.editorApi.activeDataDictionary!.dataDictionaryId });
+                if (views && views.length > 0) {
+                  const view = views[0];
+                  columnDetails.columnSourceName = view.viewName;
+                  columnDetails.columnSource = 'view';
+                  columnDetails.viewId = this.view.viewId;
+                  const viewColumns = this.editorApi.dataStorage.getViewColumns({ viewName: view.viewName, columnName: col.tableFieldName!, dataDictionaryId: this.editorApi.activeDataDictionary!.dataDictionaryId });
+                  if (viewColumns.length > 0) {
+                    const tableColumnDetails = viewColumns[0];
+                    columnDetails.columnSourceOriginalColumn = tableColumnDetails.columnName;
+                    columnDetails.columnType = tableColumnDetails.columnType;
+                  }
                 }
               }
-              }
+              this.editorApi.dataStorage.deleteViewColumn({ viewId: this.view.viewId, columnName: columnDetails.columnName });
             }
-            this.editorApi.dataStorage.deleteViewColumn({viewId:this.view.viewId,columnName:columnDetails.columnName});
-            console.log(columnDetails);
+            // console.log(columnDetails);
             this.editorApi.dataStorage.addViewColumn(columnDetails);
           }
           // for(const col of currentColumns){
@@ -87,33 +87,37 @@ export class AcDDEViewMaster{
           //     this.editorApi.dataStorage.addViewColumn({...col});
           //   }
           // }
-          this.events.execute({event:'viewColumnsChange'});
-          console.log(this.editorApi.dataStorage.getViewColumns({viewId:this.view.viewId}));
+          this.events.execute({ event: 'viewColumnsChange' });
+          console.log(this.editorApi.dataStorage.getViewColumns({ viewId: this.view.viewId }));
         }
       }
     });
 
     this.queryInput = this.element.querySelector('.query-input') as AcTextareaInput;
-    this.queryInput.on({event:'change',callback:()=>{
-      this.notifyChange();
-    }});
-    this.queryInput.on({event:'input',callback:()=>{
-      this.notifyChange();
-    }});
+    this.queryInput.on({
+      event: 'change', callback: () => {
+        this.notifyChange();
+      }
+    });
+    this.queryInput.on({
+      event: 'input', callback: () => {
+        this.notifyChange();
+      }
+    });
   }
 
-  notifyChange(){
-    if(this.changeTimeout){
+  notifyChange() {
+    if (this.changeTimeout) {
       clearTimeout(this.changeTimeout);
     }
     setTimeout(() => {
       this.view.viewQuery = this.queryInput.value;
-      this.events.execute({event:'change',args:{view:this.view}});
+      this.events.execute({ event: 'change', args: { view: this.view } });
     }, 300);
   }
 
-  on({event,callback}:{event:string,callback:Function}){
-    this.events.subscribe({event,callback});
+  on({ event, callback }: { event: string, callback: Function }) {
+    this.events.subscribe({ event, callback });
   }
 
 
