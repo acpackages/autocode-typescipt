@@ -21468,127 +21468,141 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_customers",
           "columnSourceOriginalColumn": "customer_remarks"
         },
+        "party_image_media ": {
+          "columnName": "party_image_media ",
+          "columnType": "JSON",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "party_image_media "
+        },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "accountee_id"
         },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_active"
         },
         "ledger_account_id": {
           "columnName": "ledger_account_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "ledger_account_id"
         },
         "party_details": {
           "columnName": "party_details",
           "columnType": "JSON",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_details"
         },
         "party_id": {
           "columnName": "party_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_id"
         },
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
         },
         "addresses": {
           "columnName": "addresses",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "addresses"
         },
         "email_addresses": {
           "columnName": "email_addresses",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "email_addresses"
         },
         "fax_numbers": {
           "columnName": "fax_numbers",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "fax_numbers"
         },
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
         },
         "websites": {
           "columnName": "websites",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "websites"
         },
         "bank_accounts": {
           "columnName": "bank_accounts",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "bank_accounts"
         },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "currency_code"
         },
         "party_image_media_id": {
           "columnName": "party_image_media_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_image_media_id"
         },
         "is_customer": {
           "columnName": "is_customer",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_customer"
         },
         "is_supplier": {
           "columnName": "is_supplier",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_supplier"
         },
         "is_employee": {
           "columnName": "is_employee",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_employee"
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "legal_identifier"
         }
       },
-      "viewQuery": "SELECT act_customers.customer_id,act_customers.customer_category,act_customers.customer_remarks, act_parties.* FROM act_customers LEFT JOIN act_parties ON act_customers.party_id = act_parties.party_id"
+      "viewQuery": "SELECT act_customers.customer_id,act_customers.customer_category,act_customers.customer_remarks, act_vw_parties.* FROM act_customers LEFT JOIN act_vw_parties ON act_customers.party_id = act_vw_parties.party_id"
     },
     "act_vw_employees": {
       "viewName": "act_vw_employees",
@@ -21649,127 +21663,141 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_employees",
           "columnSourceOriginalColumn": "employee_gender"
         },
+        "party_image_media ": {
+          "columnName": "party_image_media ",
+          "columnType": "JSON",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "party_image_media "
+        },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "accountee_id"
         },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_active"
         },
         "ledger_account_id": {
           "columnName": "ledger_account_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "ledger_account_id"
         },
         "party_details": {
           "columnName": "party_details",
           "columnType": "JSON",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_details"
         },
         "party_id": {
           "columnName": "party_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_id"
         },
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
         },
         "addresses": {
           "columnName": "addresses",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "addresses"
         },
         "email_addresses": {
           "columnName": "email_addresses",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "email_addresses"
         },
         "fax_numbers": {
           "columnName": "fax_numbers",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "fax_numbers"
         },
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
         },
         "websites": {
           "columnName": "websites",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "websites"
         },
         "bank_accounts": {
           "columnName": "bank_accounts",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "bank_accounts"
         },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "currency_code"
         },
         "party_image_media_id": {
           "columnName": "party_image_media_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_image_media_id"
         },
         "is_customer": {
           "columnName": "is_customer",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_customer"
         },
         "is_supplier": {
           "columnName": "is_supplier",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_supplier"
         },
         "is_employee": {
           "columnName": "is_employee",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_employee"
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "legal_identifier"
         }
       },
-      "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_salary_amount, act_employees.employee_gender, act_parties.* FROM act_employees LEFT JOIN act_parties ON act_employees.party_id = act_parties.party_id"
+      "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_salary_amount, act_employees.employee_gender, act_vw_parties.* FROM act_employees LEFT JOIN act_vw_parties ON act_employees.party_id = act_vw_parties.party_id"
     },
     "act_vw_ledger_accounts": {
       "viewName": "act_vw_ledger_accounts",
@@ -21871,6 +21899,13 @@ export const dataDictionaryJson = {
     "act_vw_parties": {
       "viewName": "act_vw_parties",
       "viewColumns": {
+        "party_image_media ": {
+          "columnName": "party_image_media ",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "json_object"
+        },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
@@ -21990,12 +22025,12 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "is_employee"
         },
-        "party_image_media ": {
-          "columnName": "party_image_media ",
-          "columnType": "JSON",
-          "columnProperties": {},
-          "columnSource": "function",
-          "columnSourceName": "json_object"
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "legal_identifier"
         }
       },
       "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS party_image_media ,act_parties.* FROM act_parties LEFT JOIN act_medias ON act_parties.party_image_media_id = act_medias.media_id"
@@ -24188,6 +24223,72 @@ export const dataDictionaryJson = {
     "act_vw_sale_invoice_products": {
       "viewName": "act_vw_sale_invoice_products",
       "viewColumns": {
+        "gross_amount": {
+          "columnName": "gross_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "discount_trade_amount": {
+          "columnName": "discount_trade_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "TD Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "discount_cash_amount": {
+          "columnName": "discount_cash_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "CD Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "discount_rebate_amount": {
+          "columnName": "discount_rebate_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rebate Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function"
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function"
+        },
         "discount_cash_percentage": {
           "columnName": "discount_cash_percentage",
           "columnType": "DOUBLE",
@@ -24327,72 +24428,6 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "product_price_mrp"
-        },
-        "gross_amount": {
-          "columnName": "gross_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Gross Amount"
-            }
-          },
-          "columnSource": "function"
-        },
-        "discount_trade_amount": {
-          "columnName": "discount_trade_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "TD Amount"
-            }
-          },
-          "columnSource": "function"
-        },
-        "discount_cash_amount": {
-          "columnName": "discount_cash_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "CD Amount"
-            }
-          },
-          "columnSource": "function"
-        },
-        "discount_rebate_amount": {
-          "columnName": "discount_rebate_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Rebate Amount"
-            }
-          },
-          "columnSource": "function"
-        },
-        "taxable_amount": {
-          "columnName": "taxable_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Taxable Amount"
-            }
-          },
-          "columnSource": "function"
-        },
-        "tax_amount": {
-          "columnName": "tax_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Tax Amount"
-            }
-          },
-          "columnSource": "function"
         }
       },
       "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,act_sale_invoice_products.* FROM act_sale_invoice_products LEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id"
@@ -24560,127 +24595,141 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_suppliers",
           "columnSourceOriginalColumn": "supplier_type"
         },
+        "party_image_media ": {
+          "columnName": "party_image_media ",
+          "columnType": "JSON",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "party_image_media "
+        },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "accountee_id"
         },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_active"
         },
         "ledger_account_id": {
           "columnName": "ledger_account_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "ledger_account_id"
         },
         "party_details": {
           "columnName": "party_details",
           "columnType": "JSON",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_details"
         },
         "party_id": {
           "columnName": "party_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_id"
         },
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
         },
         "addresses": {
           "columnName": "addresses",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "addresses"
         },
         "email_addresses": {
           "columnName": "email_addresses",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "email_addresses"
         },
         "fax_numbers": {
           "columnName": "fax_numbers",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "fax_numbers"
         },
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
         },
         "websites": {
           "columnName": "websites",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "websites"
         },
         "bank_accounts": {
           "columnName": "bank_accounts",
           "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "bank_accounts"
         },
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "currency_code"
         },
         "party_image_media_id": {
           "columnName": "party_image_media_id",
           "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_image_media_id"
         },
         "is_customer": {
           "columnName": "is_customer",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_customer"
         },
         "is_supplier": {
           "columnName": "is_supplier",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_supplier"
         },
         "is_employee": {
           "columnName": "is_employee",
           "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_parties",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "is_employee"
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "legal_identifier"
         }
       },
-      "viewQuery": "SELECT act_suppliers.supplier_id,act_suppliers.supplier_type, act_parties.* FROM act_suppliers LEFT JOIN act_parties ON act_suppliers.party_id = act_parties.party_id"
+      "viewQuery": "SELECT act_suppliers.supplier_id,act_suppliers.supplier_type, act_vw_parties.* FROM act_suppliers LEFT JOIN act_vw_parties ON act_suppliers.party_id = act_vw_parties.party_id"
     },
     "act_vw_taxing_schemes": {
       "viewName": "act_vw_taxing_schemes",
