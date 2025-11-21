@@ -158,7 +158,6 @@ export class AcDDEHeader extends AcDDEBase {
       this.querySelector('.btn-tabs-group')?.append(btn);
       new AcTooltip({ element: btn });
     }
-    this.setActiveTab({ tab: AcEnumDDETab.Views });
   }
 
   private setDataDictionaryDropdown() {

@@ -24,7 +24,7 @@ export class AcSelectInput extends AcInputBase {
   }
   set labelKey(value: string) {
     this.setAttribute('label-key', value);
-    if (this._value) this.value = this._value;
+    this.setValueLabel();
   }
 
   get valueKey(): string {
@@ -32,7 +32,7 @@ export class AcSelectInput extends AcInputBase {
   }
   set valueKey(value: string) {
     this.setAttribute('value-key', value);
-    if (this._value) this.value = this._value;
+    this.setValueLabel();
   }
 
   get onDemandFunction(): ((args: IAcOnDemandRequestArgs) => void) | undefined {
@@ -65,7 +65,7 @@ export class AcSelectInput extends AcInputBase {
     }
     this.dataManager.data = valueOptions;
     if (this.isDropdownOpen) this.renderVirtualList();
-    if (this._value) this.value = this._value;
+    this.setValueLabel();
   }
 
   override get value() { return super.value; }
@@ -128,7 +128,7 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private attachEvents() {
-    this.textInputElement.addEventListener("input", async () => {
+    this.textInputElement.addEventListener("keyup", async () => {
       const term = this.textInputElement.value.trim().toLowerCase();
       if (this.value && term != this.previousSearchTerm) {
         this.value = null;
@@ -430,9 +430,9 @@ export class AcSelectInput extends AcInputBase {
         this.textInputElement.value = matchRow.data[this.labelKey];
       }
       else {
-        this.dataManager.data = [{
-          [this.labelKey]: super.value, [this.valueKey]: super.value
-        }];
+        // this.dataManager.data = [{
+        //   [this.labelKey]: super.value, [this.valueKey]: super.value
+        // }];
       }
     }
   }
