@@ -32,10 +32,10 @@ export class AcDDETablesDatagrid {
     this.initElement();
     this.initDatagrid();
     this.editorApi.hooks.subscribe({
-          hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
-            this.setTablesData();
-          }
-        });
+      hook: AcEnumDDEHook.ActiveDataDictionaryChange, callback: (args: IAcDDEActiveDataDictionaryChangeHookArgs) => {
+        this.setTablesData();
+      }
+    });
   }
 
   initDatagrid() {
@@ -44,34 +44,34 @@ export class AcDDETablesDatagrid {
       {
         'field': 'action', 'title': '', cellRendererElement: AcDDEDatagridRowAction, cellRendererElementParams: {
           editorApi: this.editorApi
-        }, width: 35, allowEdit:false,allowFocus:false,allowFilter:false,allowSort:false
+        }, width: 35, allowEdit: false, allowFocus: false, allowFilter: false, allowSort: false
       },
       {
-        'field': AcEnumDDETable.TableName, 'title': 'Table Name',allowFilter:true,
+        'field': AcEnumDDETable.TableName, 'title': 'Table Name', allowFilter: true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDTableProperty.SingularName, 'title': 'Singular Name',allowFilter:true,
+        'field': AcEnumDDTableProperty.SingularName, 'title': 'Singular Name', allowFilter: true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDTableProperty.PluralName, 'title': 'Plural Name',allowFilter:true,
+        'field': AcEnumDDTableProperty.PluralName, 'title': 'Plural Name', allowFilter: true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDTableProperty.Constraints, 'title': 'Constraints',allowFilter:true,
+        'field': AcEnumDDTableProperty.Constraints, 'title': 'Constraints', allowFilter: true,
         cellEditorElement: AcDDEDatagridTableConstraintsInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
       },
       {
-        'field': AcEnumDDETable.ViewId, 'title': 'View',allowFilter:true,
+        'field': AcEnumDDETable.ViewId, 'title': 'View', allowFilter: true,
         cellEditorElement: AcDDEDatagridSelectViewInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
@@ -95,7 +95,7 @@ export class AcDDETablesDatagrid {
       //   }, useCellEditorForRenderer: true
       // },
       {
-        'field': AcEnumDDTableProperty.OrderBy, 'title': 'Order By',allowFilter:true,
+        'field': AcEnumDDTableProperty.OrderBy, 'title': 'Order By', allowFilter: true,
         cellEditorElement: AcDDEDatagridTextInput, cellEditorElementParams: {
           editorApi: this.editorApi
         }, useCellEditorForRenderer: true
@@ -112,11 +112,10 @@ export class AcDDETablesDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-          event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
-            this.editorApi.dataStorage.setTableProperties(args.datagridCell.datagridRow.data);
-            console.log(args.datagridCell.datagridRow);
-          }
-        });
+      event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
+        this.editorApi.dataStorage.setTableProperties(args.datagridCell.datagridRow.data);
+      }
+    });
     this.datagridApi.on({
       event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         const row = this.editorApi.dataStorage.addTable({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });

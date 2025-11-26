@@ -1,9 +1,9 @@
-import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditor, AcDatagridCell } from '@autocode-ts/ac-browser';
 import { AcDDEApi, AcEnumDDEHook } from '../../_ac-data-dictionary-editor.export';
 export class AcDDEDatagridSelectViewInput implements IAcDatagridCellEditor{
   selectInput:AcSelectInput = new AcSelectInput();
   editorApi!:AcDDEApi;
-  value:any;
+  datagridCell!:AcDatagridCell;
   filter:Function|undefined;
 
   destroy(): void {
@@ -23,6 +23,7 @@ export class AcDDEDatagridSelectViewInput implements IAcDatagridCellEditor{
   }
 
   init(args: IAcDatagridCellElementArgs): void {
+    this.datagridCell = args.datagridCell;
     if(args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']){
       this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];
       this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.DataDictionarySet,callback:()=>{
@@ -43,7 +44,7 @@ export class AcDDEDatagridSelectViewInput implements IAcDatagridCellEditor{
       options.push({'label':row.viewName,'value':row.viewId});
     }
     this.selectInput.options = options;
-    this.selectInput.value = this.value;
+    this.selectInput.value = this.datagridCell.cellValue;
   }
 
 }

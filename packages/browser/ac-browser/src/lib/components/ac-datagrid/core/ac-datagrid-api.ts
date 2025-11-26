@@ -273,7 +273,6 @@ export class AcDatagridApi {
             if (!typeSet) {
               column.dataType = 'UNKNOWN';
             }
-            console.log(`Column ${column.field} type is ${column.dataType}`);
           }
 
         }

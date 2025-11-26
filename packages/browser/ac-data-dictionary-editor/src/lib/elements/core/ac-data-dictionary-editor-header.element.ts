@@ -152,7 +152,7 @@ export class AcDataDictionaryEditorHeader {
       this.element.querySelector('.btn-tabs-group')?.append(btn);
       new AcTooltip({element:btn});
     }
-    this.setActiveTab({tab:AcEnumDDETab.StoredProcedures});
+    this.setActiveTab({tab:AcEnumDDETab.TableEditor});
   }
 
   private setDataDictionaryDropdown(){

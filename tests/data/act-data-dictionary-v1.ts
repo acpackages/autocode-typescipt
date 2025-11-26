@@ -7222,8 +7222,8 @@ export const dataDictionaryJson = {
     "act_product_attributes": {
       "tableName": "act_product_attributes",
       "tableColumns": {
-        "product_attibute_numeric_value": {
-          "columnName": "product_attibute_numeric_value",
+        "product_attribute_numeric_value": {
+          "columnName": "product_attribute_numeric_value",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10326,6 +10326,18 @@ export const dataDictionaryJson = {
               "propertyValue": "User"
             }
           }
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER"
+        },
+        "paid_amount": {
+          "columnName": "paid_amount",
+          "columnType": "DOUBLE"
+        },
+        "chargeable_services_count": {
+          "columnName": "chargeable_services_count",
+          "columnType": "INTEGER"
         }
       },
       "tableProperties": {
@@ -13796,6 +13808,18 @@ export const dataDictionaryJson = {
               "propertyValue": "User"
             }
           }
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER"
+        },
+        "paid_amount": {
+          "columnName": "paid_amount",
+          "columnType": "DOUBLE"
+        },
+        "chargeable_services_count": {
+          "columnName": "chargeable_services_count",
+          "columnType": "INTEGER"
         }
       },
       "tableProperties": {
@@ -20177,6 +20201,10 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "additional_flag": {
+          "columnName": "additional_flag",
+          "columnProperties": {}
         }
       },
       "tableProperties": {
@@ -20411,6 +20439,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Credit Payment Method"
             }
           }
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID"
         }
       },
       "tableProperties": {
@@ -20637,26 +20673,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
-            }
-          }
-        },
-        "taxing_scheme_id": {
-          "columnName": "taxing_scheme_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Taxing Scheme"
-            }
-          }
-        },
-        "tax_rate_id": {
-          "columnName": "tax_rate_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Tax Rate"
             }
           }
         }
@@ -24084,6 +24100,27 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoices",
           "columnSourceOriginalColumn": "user_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoices",
+          "columnSourceOriginalColumn": "products_count"
+        },
+        "paid_amount": {
+          "columnName": "paid_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoices",
+          "columnSourceOriginalColumn": "paid_amount"
+        },
+        "chargeable_services_count": {
+          "columnName": "chargeable_services_count",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoices",
+          "columnSourceOriginalColumn": "chargeable_services_count"
         }
       },
       "viewQuery": "SELECT act_vw_suppliers.supplier_type,act_vw_suppliers.party_id,act_vw_suppliers.party_name,act_purchase_invoices.* FROM act_purchase_invoices LEFT JOIN act_vw_suppliers ON act_purchase_invoices.supplier_id = act_vw_suppliers.supplier_id"
@@ -24574,6 +24611,27 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "user_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "products_count"
+        },
+        "paid_amount": {
+          "columnName": "paid_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "paid_amount"
+        },
+        "chargeable_services_count": {
+          "columnName": "chargeable_services_count",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "chargeable_services_count"
         }
       },
       "viewQuery": "SELECT act_vw_customers.customer_category,act_vw_customers.party_name,act_vw_customers.party_id,act_sale_invoices.* FROM act_sale_invoices LEFT JOIN act_vw_customers ON act_sale_invoices.customer_id = act_vw_customers.customer_id"
@@ -27442,18 +27500,6 @@ export const dataDictionaryJson = {
       "sourceTable": "act_accountees"
     },
     {
-      "destinationColumn": "taxing_scheme_id",
-      "destinationTable": "act_transactions",
-      "sourceColumn": "taxing_scheme_id",
-      "sourceTable": "act_taxing_schemes"
-    },
-    {
-      "destinationColumn": "tax_rate_id",
-      "destinationTable": "act_transactions",
-      "sourceColumn": "tax_rate_id",
-      "sourceTable": "act_tax_rates"
-    },
-    {
       "destinationColumn": "debit_payment_method_id",
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "payment_method_id",
@@ -27616,6 +27662,18 @@ export const dataDictionaryJson = {
       "destinationTable": "act_chargeable_services",
       "sourceColumn": "chargeable_service_category_id",
       "sourceTable": "act_chargeable_service_categories"
+    },
+    {
+      "destinationColumn": "tax_rate_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "tax_rate_id",
+      "sourceTable": "act_tax_rates"
+    },
+    {
+      "destinationColumn": "taxing_scheme_id",
+      "destinationTable": "act_transaction_entries",
+      "sourceColumn": "taxing_scheme_id",
+      "sourceTable": "act_taxing_schemes"
     }
   ],
   "storedProcedures": {},
@@ -27752,21 +27810,21 @@ export const dataDictionaryJson = {
       "rowOperation": "DELETE",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_delete",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;"
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE transaction_id = OLD.transaction_id ;"
     },
     "act_trg_set_led_bal_on_trns_entry_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_insert",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;"
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE transaction_id = OLD.transaction_id ;"
     },
     "act_trg_set_led_bal_on_trns_entry_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_update",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;"
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE transaction_id = OLD.transaction_id ;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE transaction_id = NEW.transaction_id ;"
     },
     "act_trg_set_party_addresses_on_delete": {
       "triggerExecution": "AFTER",
@@ -27899,14 +27957,14 @@ export const dataDictionaryJson = {
       "rowOperation": "DELETE",
       "tableName": "act_purchase_invoice_products",
       "triggerName": "act_trg_set_pur_amt_on_prod_delete",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0), products_count = IFNULL(products_count,0) - 1  WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
     },
     "act_trg_set_pur_amt_on_prod_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_purchase_invoice_products",
       "triggerName": "act_trg_set_pur_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0), products_count = IFNULL(products_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
     },
     "act_trg_set_pur_amt_on_prod_update": {
       "triggerExecution": "AFTER",
@@ -27920,14 +27978,14 @@ export const dataDictionaryJson = {
       "rowOperation": "DELETE",
       "tableName": "act_purchase_invoice_chargeable_services",
       "triggerName": "act_trg_set_pur_amt_on_ser_delete",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) - 1 WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
     },
     "act_trg_set_pur_amt_on_ser_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_purchase_invoice_chargeable_services",
       "triggerName": "act_trg_set_pur_amt_on_ser_insert",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
     },
     "act_trg_set_pur_amt_on_ser_update": {
       "triggerExecution": "AFTER",
@@ -27941,14 +27999,14 @@ export const dataDictionaryJson = {
       "rowOperation": "DELETE",
       "tableName": "act_sale_invoice_products",
       "triggerName": "act_trg_set_sale_amt_on_prod_delete",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0),products_count = IFNULL(products_count,0) - 1 WHERE sale_invoice_id = OLD.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_prod_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_sale_invoice_products",
       "triggerName": "act_trg_set_sale_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0),products_count = IFNULL(products_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_prod_update": {
       "triggerExecution": "AFTER",
@@ -27962,14 +28020,14 @@ export const dataDictionaryJson = {
       "rowOperation": "DELETE",
       "tableName": "act_sale_invoice_chargeable_services",
       "triggerName": "act_trg_set_sale_amt_on_ser_delete",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0),chargeable_services_count = IFNULL(chargeable_services_count,0) - 1 WHERE sale_invoice_id = OLD.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_ser_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_sale_invoice_chargeable_services",
       "triggerName": "act_trg_set_sale_amt_on_ser_insert",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     },
     "act_trg_set_sale_amt_on_ser_update": {
       "triggerExecution": "AFTER",
@@ -27979,4 +28037,4 @@ export const dataDictionaryJson = {
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     }
   }
-};
+}

@@ -1,9 +1,9 @@
-import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditor, AcDatagridCell } from '@autocode-ts/ac-browser';
 import { AcDDEApi, AcEnumDDEHook } from '../../_ac-data-dictionary-editor.export';
 export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditor{
   selectInput:AcSelectInput = new AcSelectInput();
   editorApi!:AcDDEApi;
-  value:any;
+  datagridCell!:AcDatagridCell;
   filter:Function|undefined;
 
   destroy(): void {
@@ -19,10 +19,14 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditor{
   }
 
   getValue() {
+    console.log(this.selectInput.value);
+    console.dir(this.selectInput);
     return this.selectInput.value;
   }
 
   init(args: IAcDatagridCellElementArgs): void {
+    this.datagridCell = args.datagridCell;
+    this.selectInput.value = args.datagridCell.cellValue;
     if(args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi']){
       this.editorApi = args.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams['editorApi'];
       this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.DataDictionarySet,callback:()=>{
@@ -30,20 +34,21 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditor{
       }});
       this.setOptions();
     }
-    this.selectInput.value = args.datagridCell.cellValue;
+
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
+    console.log("Setting value in refresh")
     this.selectInput.value = args.datagridCell.cellValue;
   }
 
   setOptions(){
     const options:any[] = [];
+    this.selectInput.value =this.datagridCell.cellValue;
     for(const row of Object.values(this.editorApi.dataStorage.getTables({filter:this.filter}))){
       options.push({'label':row.tableName,'value':row.tableId});
     }
     this.selectInput.options = options;
-    this.selectInput.value = this.value;
   }
 
 }

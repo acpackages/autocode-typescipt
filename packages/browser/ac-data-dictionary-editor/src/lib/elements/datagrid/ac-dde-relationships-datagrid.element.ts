@@ -7,7 +7,6 @@ import { AcDDEDatagridSelectTableColumnInput } from "../inputs/ac-dde-datagrid-s
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcContextEvent } from "@autocode-ts/ac-template-engine";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { IAcDDERelationship } from "../../interfaces/ac-dde-relationship.inteface";
@@ -18,6 +17,7 @@ import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dd
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { IAcContextEvent } from "@autocode-ts/autocode";
 
 export class AcDDERelationshipsDatagrid {
   data: any[] = [];
