@@ -1,0 +1,40 @@
+<!-- <ac-ng-scrollable
+  [items]="data"
+  [key]="'data'"
+  [options]="{ enableCdk: true, bufferCount: 3 }">
+
+  <ng-template let-row let-index="index">
+    <div class="item fixed-height" style="padding: 10px;">
+      {{ row.first_name }} {{ row.last_name }} (Fixed: {{ index }})
+    </div>
+  </ng-template>
+
+</ac-ng-scrollable> -->
+<div class="scrollable-container"  ac-ng-scrollable
+  [items]="data"
+  [options]="{ bufferCount: 3 }">
+<table class="table table-striped"  >
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+  </thead>
+    <tr>
+      <td ac-ng-scrollable-top-spacer colspan="2"></td>
+    </tr>
+  <tbody ac-ng-scrollable-body>
+  <ng-template acNgScrollableTemplate="item" let-row let-index="index">
+    <tr>
+      <td>{{ row.first_name }}</td>
+      <td>{{ row.last_name }}</td>
+    </tr>
+  </ng-template>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td ac-ng-scrollable-bottom-spacer colspan="2"></td>
+    </tr>
+  </tfoot>
+</table>
+</div>

@@ -5,6 +5,8 @@ export * from "./lib/ac-angular.module";
 
 export * from "./lib/_base/ac-base.component";
 
+// export * from "./lib/components/_components.export";
+
 export * from "./lib/modules/_modules.export";
 
 export * from "./lib/directives/_directives.export";

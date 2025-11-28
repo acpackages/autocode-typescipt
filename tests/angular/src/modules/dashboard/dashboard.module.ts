@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DatagridComponent } from '../datagrid/datagrid.component';
+import { ScrollableComponent } from '../scrollable/scrollable.component';
 
 export const routes: Routes = [
   {
@@ -10,6 +11,9 @@ export const routes: Routes = [
   },
   {
     path: 'datagrid', component: DatagridComponent
+  },
+  {
+    path: 'scrollable', component: ScrollableComponent
   }
 ];
 

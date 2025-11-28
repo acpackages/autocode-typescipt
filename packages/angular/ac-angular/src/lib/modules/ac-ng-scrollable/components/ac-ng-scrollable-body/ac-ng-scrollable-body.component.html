@@ -1,0 +1,5 @@
+<ng-container *ngFor="let i of visibleIndices; trackBy: trackByVisibleIndex">
+  <ng-container [ngTemplateOutlet]="itemTemplate"
+    [ngTemplateOutletContext]="{ $implicit: items[i], index: i }">
+  </ng-container>
+</ng-container>

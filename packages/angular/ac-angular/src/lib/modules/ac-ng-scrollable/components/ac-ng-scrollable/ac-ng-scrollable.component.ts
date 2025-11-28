@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-wrapper-object-types */
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/component-selector */
@@ -14,17 +15,23 @@ import {
   ViewContainerRef,
   ElementRef,
   AfterViewInit,
+  AfterContentInit,
   OnChanges,
   OnDestroy,
   SimpleChanges,
   ChangeDetectorRef,
   Renderer2,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
+  HostBinding,
+  HostListener,
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { TrackByFunction } from '@angular/core';
-import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { AcNgScrollableBodyComponent } from '../ac-ng-scrollable-body/ac-ng-scrollable-body.component';
+import { AcNgScrollableTopSpacerComponent } from '../ac-ng-scrollable-top-spacer/ac-ng-scrollable-top-spacer.component';
+import { AcNgScrollableBottomSpacerComponent } from '../ac-ng-scrollable-bottom-spacer/ac-ng-scrollable-bottom-spacer.component';
 
 export interface IAcNgScrollableOptions {
   bufferCount?: number;
@@ -40,34 +47,59 @@ interface ScrollEvent {
 }
 
 @Component({
-  selector: 'ac-ng-scrollable',
-  standalone: true,
-  imports: [CommonModule, ScrollingModule],
+  selector: 'ac-ng-scrollable,[ac-ng-scrollable]',
+  standalone: false,
   templateUrl: `./ac-ng-scrollable.component.html`,
-  styles: [`
-    .top-spacer, .bottom-spacer {
-      flex-shrink: 0;
-      pointer-events: none;
-    }
-    .viewport {
-      height: 100%;
-      width: 100%;
-    }
-  `],
+  styles: [``],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnDestroy {
-  @Input() items: T[] = [];
+export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
+  @Input() items: any[] = [];
   @Input() options?: IAcNgScrollableOptions;
-  @Input() trackBy: TrackByFunction<T> = (index: number, item: T) => index;
+  @Input() trackBy: TrackByFunction<any> = (index: number, item: any) => index;
   @Input() itemHeightFallback: number = 50;
+  @ContentChild(AcNgScrollableBodyComponent) bodyComponent!: AcNgScrollableBodyComponent;
+  @ContentChild(AcNgScrollableTopSpacerComponent) topSpacerComponent!: AcNgScrollableTopSpacerComponent;
+  @ContentChild(AcNgScrollableBottomSpacerComponent) bottomSpacerComponent!: AcNgScrollableBottomSpacerComponent;
 
-  @ContentChild(TemplateRef) itemTemplate!: TemplateRef<{ $implicit: T; index: number }>;
-
-  @ViewChild('scrollContainer') scrollContainer!: ElementRef<HTMLDivElement>;
-  @ViewChild(CdkVirtualScrollViewport) viewport?: CdkVirtualScrollViewport;
   @ViewChild('measurer', { read: ViewContainerRef, static: true }) measurerVc!: ViewContainerRef;
 
   @Output() onScroll = new EventEmitter<ScrollEvent>();
+
+  private _visibleIndices: number[] = [];
+  get visibleIndices(): number[] {
+    return this._visibleIndices;
+  }
+  set visibleIndices(value: number[]) {
+    this._visibleIndices = value;
+    if (this.bodyComponent) {
+      this.bodyComponent.visibleIndices = this._visibleIndices;
+    }
+  }
+
+  private _topSpacerHeight: number = 0;
+  get topSpacerHeight(): number {
+    return this._topSpacerHeight;
+  }
+  set topSpacerHeight(value: number) {
+    this._topSpacerHeight = value;
+    if (this.topSpacerComponent) {
+      this.topSpacerComponent.height = this._topSpacerHeight;
+    }
+  }
+
+
+  private _bottomSpacerHeight: number = 0;
+  get bottomSpacerHeight(): number {
+    return this._bottomSpacerHeight;
+  }
+  set bottomSpacerHeight(value: number) {
+    this._bottomSpacerHeight = value;
+    if (this.bottomSpacerComponent) {
+      this.bottomSpacerComponent.height = this._bottomSpacerHeight;
+    }
+  }
+
 
   private scrollTop = 0;
   private elementHeight = 0;
@@ -75,14 +107,20 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
   private heightCache = new Map<string, number>();
   private startIndex = 0;
   private endIndex = 0;
-  topSpacerHeight = 0;
-  bottomSpacerHeight = 0;
-  visibleIndices: number[] = [];
+  hasBottomSpacerTemplate: boolean = false;
+  hasTopSpacerTemplate: boolean = false;
   private resizeObserver?: ResizeObserver;
   private rafId?: number;
 
-  get useCdk(): boolean {
-    return !!this.options?.enableCdk && !!this.options?.itemSize;
+
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2,
+    private elementRef: ElementRef<HTMLElement>,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    console.log(this);
   }
 
   get itemSizeForCdk(): number {
@@ -93,18 +131,46 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
     return (this.options?.bufferCount ?? 2) * this.itemSizeForCdk;
   }
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private renderer: Renderer2,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  private get scrollableElement(): HTMLElement {
+    return this.elementRef.nativeElement;
+  }
+
+  @HostBinding('style.overflowY')
+  get hostOverflowY(): string {
+    return 'auto';
+  }
+
+  private templateMap = new Map<string, TemplateRef<any>>();
+
+  @HostListener('scroll')
+  onHostScroll() {
+    this.handleScroll();
+  }
+
+  ngAfterContentInit() {
+    if (this.bodyComponent) {
+      this.bodyComponent.scrollable = this;
+      this.bodyComponent.items = this.items;
+      this.bodyComponent.trackByVisibleIndex = this.trackByVisibleIndex;
+      this.bodyComponent.visibleIndices = this.visibleIndices;
+    }
+    if (this.topSpacerComponent) {
+      this.topSpacerComponent.height = this.topSpacerHeight;
+    }
+    if (this.bottomSpacerComponent) {
+      this.bottomSpacerComponent.height = this.bottomSpacerHeight;
+    }
+    this.cdr.detectChanges();
+  }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.elementHeight = this.scrollContainer?.nativeElement.clientHeight || 0;
-      this.initResizeObserver();
-      this.onItemsChange(); // Initial setup
-      this.cdr.markForCheck();
+      setTimeout(() => {
+        this.elementHeight = this.scrollableElement.clientHeight || 400;
+        this.initResizeObserver();
+        this.onItemsChange();
+        this.cdr.detectChanges(); // Force render after init
+      }, 0);
     }
   }
 
@@ -127,9 +193,12 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
     }
   }
 
+  getTemplate(name: string): TemplateRef<any> | null {
+    return this.templateMap.get(name) ?? null;
+  }
+
   handleScroll() {
-    if (this.useCdk || !this.scrollContainer) return;
-    this.scrollTop = this.scrollContainer.nativeElement.scrollTop;
+    this.scrollTop = this.elementRef.nativeElement.scrollTop;
     if (this.rafId) cancelAnimationFrame(this.rafId);
     this.rafId = requestAnimationFrame(() => {
       this.updateVisibleRange();
@@ -137,32 +206,14 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
         scrollTop: this.scrollTop,
         visibleRange: { startIndex: this.startIndex, endIndex: this.endIndex }
       });
-      this.cdr.markForCheck();
+      this.cdr.detectChanges(); // Force update for custom mode
     });
-  }
-
-  handleCdkScroll(event: { start: number; end: number }|any) {
-    this.startIndex = event.start;
-    this.endIndex = event.end;
-    if (this.viewport) {
-      this.scrollTop = this.viewport.getElementRef().nativeElement.scrollTop;
-    }
-    this.onScroll.emit({
-      scrollTop: this.scrollTop,
-      visibleRange: { startIndex: this.startIndex, endIndex: this.endIndex }
-    });
-    // No markForCheck needed; CDK manages rendering
   }
 
   scrollTo({ index }: { index: number }) {
     if (index < 0 || index >= this.items.length) return;
-    if (this.useCdk && this.viewport) {
-      this.viewport.scrollToIndex(index, 'auto');
-      return;
-    }
-    if (!this.scrollContainer) return;
     const scrollY = this.heights.slice(0, index).reduce((sum, h) => sum + h, 0);
-    this.scrollContainer.nativeElement.scrollTop = scrollY;
+    this.elementRef.nativeElement.scrollTop = scrollY;
     this.handleScroll();
   }
 
@@ -180,29 +231,22 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
     this.onItemsChange();
   }
 
-  replaceElementAt({ index, newItem }: { index: number; newItem: T }) {
+  replaceElementAt({ index, newItem }: { index: number; newItem: any }) {
     if (index < 0 || index >= this.items.length) return;
     const oldItem = this.items[index];
     const oldKey = this.getTrackByKey(index, oldItem);
     this.items[index] = newItem;
-    if (!this.useCdk) {
-      this.heightCache.delete(oldKey);
-    }
     this.onItemsChange();
   }
 
   private onItemsChange() {
-    if (this.useCdk) {
-      this.cdr.markForCheck();
-      return;
-    }
-    if (isPlatformBrowser(this.platformId) && this.itemTemplate && this.scrollContainer) {
+    if (isPlatformBrowser(this.platformId) && this.getTemplate('item')) {
       this.updateHeights();
     } else {
-      this.heights = new Array(this.items.length).fill(this.fallbackHeight);
+      this.heights = new Array(this.items.length || 0).fill(this.fallbackHeight);
     }
     this.updateVisibleRange();
-    this.cdr.markForCheck();
+    this.cdr.detectChanges(); // Force render for custom mode
   }
 
   private get bufferCount(): number {
@@ -218,32 +262,31 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
   }
 
   private initResizeObserver() {
-    if (!this.scrollContainer?.nativeElement) return;
-    const target = this.useCdk && this.viewport ? this.viewport.getElementRef().nativeElement : this.scrollContainer.nativeElement;
+    const target = this.scrollableElement;
+    if (!target) return;
     this.resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
       const newHeight = entry.contentRect.height;
       if (Math.abs(newHeight - this.elementHeight) > 1) {
         this.elementHeight = newHeight;
-        if (!this.useCdk) {
-          this.updateVisibleRange();
-          this.cdr.markForCheck();
-        }
       }
     });
     this.resizeObserver.observe(target);
   }
 
   private updateHeights() {
-    if (this.useCdk) return;
     if (this.useFixedHeight && this.options?.itemSize) {
-      this.heights = new Array(this.items.length).fill(this.options.itemSize);
+      this.heights = new Array(this.items.length || 0).fill(this.options.itemSize);
+      return;
+    }
+    if (!this.items || this.items.length === 0) {
+      this.heights = [];
       return;
     }
     this.heights = this.items.map((item, index) => this.getItemHeight(item, index));
   }
 
-  private getItemHeight(item: T, index: number): number {
+  private getItemHeight(item: any, index: number): number {
     const key = this.getTrackByKey(index, item);
     if (this.heightCache.has(key)) {
       return this.heightCache.get(key)!;
@@ -253,24 +296,25 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
     return height;
   }
 
-  private getTrackByKey(index: number, item: T): string {
+  private getTrackByKey(index: number, item: any): string {
     const trackByValue = this.trackBy(index, item);
     return typeof trackByValue === 'string' ? trackByValue : `${index}-${JSON.stringify(item)}`;
   }
 
-  private measureItemHeight(item: T, index: number): number {
-    if (!this.itemTemplate || !this.scrollContainer || !isPlatformBrowser(this.platformId)) {
+  private measureItemHeight(item: any, index: number): number {
+    if (!this.getTemplate('item') || !isPlatformBrowser(this.platformId)) {
       return this.fallbackHeight;
     }
 
     const context = { $implicit: item, index };
-    const viewRef = this.measurerVc.createEmbeddedView(this.itemTemplate, context);
+    const viewRef = this.measurerVc.createEmbeddedView(this.getTemplate('item'), context);
 
+    const width = this.scrollableElement.clientWidth || 300; // Fallback width if 0
     const tempDiv = this.renderer.createElement('div');
     this.renderer.setStyle(tempDiv, 'position', 'absolute');
     this.renderer.setStyle(tempDiv, 'top', '-10000px');
     this.renderer.setStyle(tempDiv, 'left', '-10000px');
-    this.renderer.setStyle(tempDiv, 'width', `${this.scrollContainer.nativeElement.clientWidth}px`);
+    this.renderer.setStyle(tempDiv, 'width', `${width}px`);
     this.renderer.setStyle(tempDiv, 'visibility', 'hidden');
     this.renderer.appendChild(document.body, tempDiv);
 
@@ -295,7 +339,7 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
   }
 
   private updateVisibleRange() {
-    if (this.useCdk || this.heights.length === 0 || this.elementHeight === 0) {
+    if (this.heights.length === 0 || this.elementHeight === 0) {
       this.resetVisibleRange();
       return;
     }
@@ -345,28 +389,19 @@ export class AcNgScrollableComponent<T> implements AfterViewInit, OnChanges, OnD
 
   clearAll() {
     this.items = [];
-    if (!this.useCdk) {
-      this.heights = [];
-      this.heightCache.clear();
-      this.updateVisibleRange();
-    }
-    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
 
   pause() {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
-    if (this.scrollContainer) {
-      this.scrollContainer.nativeElement.style.overflowY = 'hidden';
-    }
+    this.elementRef.nativeElement.style.overflowY = 'hidden';
   }
 
   resume() {
-    if (this.scrollContainer) {
-      this.scrollContainer.nativeElement.style.overflowY = this.useCdk ? 'hidden' : 'auto';
-    }
-    if (this.scrollContainer && isPlatformBrowser(this.platformId)) {
+    this.elementRef.nativeElement.style.overflowY = 'auto';
+    if (isPlatformBrowser(this.platformId)) {
       this.initResizeObserver();
     }
   }

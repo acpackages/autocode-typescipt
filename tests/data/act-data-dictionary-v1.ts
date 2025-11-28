@@ -1,4 +1,4 @@
-export const dataDictionaryJson = {
+export const dataDictionaryJson ={
   "name": "Accountea - Pro",
   "version": 1,
   "tables": {
@@ -3009,24 +3009,6 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_charge": {
-          "columnName": "chargeable_service_charge",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Charge"
-            },
-            "DEFAULT_VALUE": {
-              "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            }
-          }
-        },
         "chargeable_service_code": {
           "columnName": "chargeable_service_code",
           "columnType": "STRING",
@@ -3104,20 +3086,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quick Description"
-            }
-          }
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Currency"
-            },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
             }
           }
         },
@@ -9444,6 +9412,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Amount"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -10071,6 +10047,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Amount"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -10581,6 +10565,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -11162,6 +11154,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -11556,6 +11556,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -12095,6 +12103,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -13018,6 +13034,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Amount"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -13591,6 +13615,14 @@ export const dataDictionaryJson = {
               "propertyValue": "MRP"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -14035,6 +14067,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -14574,6 +14614,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
         }
       },
       "tableProperties": {
@@ -15501,6 +15549,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -15871,6 +15927,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -16289,6 +16353,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -16828,6 +16900,14 @@ export const dataDictionaryJson = {
               "propertyValue": "Taxing Scheme"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -20447,6 +20527,10 @@ export const dataDictionaryJson = {
         "taxing_scheme_id": {
           "columnName": "taxing_scheme_id",
           "columnType": "UUID"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE"
         }
       },
       "tableProperties": {
@@ -25387,12 +25471,6 @@ export const dataDictionaryJson = {
     },
     {
       "destinationColumn": "currency_code",
-      "destinationTable": "act_chargeable_services",
-      "sourceColumn": "currency_code",
-      "sourceTable": "act_currencies"
-    },
-    {
-      "destinationColumn": "currency_code",
       "destinationTable": "act_ledger_accounts",
       "sourceColumn": "currency_code",
       "sourceTable": "act_currencies"
@@ -27674,6 +27752,90 @@ export const dataDictionaryJson = {
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "taxing_scheme_id",
       "sourceTable": "act_taxing_schemes"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_invoice_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_invoice_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_order_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_order_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_return_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_purchase_return_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_invoice_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_invoice_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_maintenance_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_maintenance_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_quotation_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_quotation_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_return_chargeable_services",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_sale_return_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
     }
   ],
   "storedProcedures": {},
@@ -28037,4 +28199,4 @@ export const dataDictionaryJson = {
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     }
   }
-}
+};

@@ -6,6 +6,7 @@
   <button [class]="'btn m-2 '+(activeMenu === 'forms'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'forms'">Forms</button>
   <button [class]="'btn m-2 '+(activeMenu === 'node_editor'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'node_editor'">Node Editor</button>
   <button [class]="'btn m-2 '+(activeMenu === 'pagination'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'pagination'">Pagination</button>
+  <button [class]="'btn m-2 '+(activeMenu === 'scrollable'?'btn-danger':'btn-secondary')" type="button" (click)="activeMenu = 'scrollable'">Scrollable</button>
   <div class="row">
     <div class="col">
       <ng-container *ngIf="activeMenu==='aggrid'">
@@ -52,6 +53,12 @@
         <div class="card card-body">
           <h5>Pagination</h5>
           <a routerLink="/pagination">Pagination</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="activeMenu==='scrollable'">
+        <div class="card card-body">
+          <h5>Scrollable</h5>
+          <a routerLink="/scrollable">Scrollable</a>
         </div>
       </ng-container>
     </div>
