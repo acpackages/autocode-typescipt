@@ -1,0 +1,12 @@
+{
+  "name": "@autocode-ts/ac-data-bridge",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "comlink": "^4.4.2",
+    "xlsx": "^0.18.5"
+  }
+}

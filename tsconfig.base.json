@@ -24,6 +24,9 @@
       ],
       "@autocode-ts/ac-browser": ["packages/browser/ac-browser/src/index.ts"],
       "@autocode-ts/ac-builder": ["packages/browser/ac-builder/src/index.ts"],
+      "@autocode-ts/ac-data-bridge": [
+        "packages/common/ac-data-bridge/src/index.ts"
+      ],
       "@autocode-ts/ac-data-dictionary": [
         "packages/common/ac-data-dictionary/src/index.ts"
       ],

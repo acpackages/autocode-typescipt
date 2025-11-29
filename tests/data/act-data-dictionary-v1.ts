@@ -1,4 +1,4 @@
-export const dataDictionaryJson ={
+export const dataDictionaryJson = {
   "name": "Accountea - Pro",
   "version": 1,
   "tables": {
@@ -20282,8 +20282,9 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "additional_flag": {
-          "columnName": "additional_flag",
+        "tax_rate_flags": {
+          "columnName": "tax_rate_flags",
+          "columnType": "TEXT",
           "columnProperties": {}
         }
       },
@@ -20396,8 +20397,8 @@ export const dataDictionaryJson ={
     "act_transaction_entries": {
       "tableName": "act_transaction_entries",
       "tableColumns": {
-        "entry_amount": {
-          "columnName": "entry_amount",
+        "transaction_entry_amount": {
+          "columnName": "transaction_entry_amount",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -21156,6 +21157,18 @@ export const dataDictionaryJson ={
     "act_vw_chargeable_service_categories": {
       "viewName": "act_vw_chargeable_service_categories",
       "viewColumns": {
+        "chargeable_service_category_image_media": {
+          "columnName": "chargeable_service_category_image_media",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "json_object"
+        },
         "chargeable_service_category_id": {
           "columnName": "chargeable_service_category_id",
           "columnType": "UUID",
@@ -21239,18 +21252,6 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_categories",
           "columnSourceOriginalColumn": "parent_chargeable_service_category_id"
-        },
-        "chargeable_service_category_image_media": {
-          "columnName": "chargeable_service_category_image_media",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Image"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "json_object"
         }
       },
       "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\njson_object('media_path', media_path,'media_details', media_details) AS chargeable_service_category_image_media,\nact_chargeable_service_categories.* FROM act_chargeable_service_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_chargeable_service_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_chargeable_service_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_chargeable_service_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_chargeable_service_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id \nLEFT JOIN act_medias ON act_chargeable_service_categories.product_category_image_media_id = act_medias.media_id"
@@ -23616,6 +23617,18 @@ export const dataDictionaryJson ={
     "act_vw_products": {
       "viewName": "act_vw_products",
       "viewColumns": {
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "json_object"
+        },
         "product_category_name": {
           "columnName": "product_category_name",
           "columnType": "STRING",
@@ -23748,18 +23761,6 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "brand_name"
-        },
-        "product_image_media": {
-          "columnName": "product_image_media",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Image"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "json_object"
         }
       },
       "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,\njson_object('media_path', media_path,'media_details', media_details) AS product_image_media,\nact_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id\nLEFT JOIN act_medias ON act_products.product_image_media_id = act_medias.media_id"
@@ -23892,6 +23893,20 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_amount"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "exchange_rate"
         }
       },
       "viewQuery": "SELECT act_purchase_invoice_chargeable_services.* FROM act_purchase_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_purchase_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
@@ -23962,6 +23977,13 @@ export const dataDictionaryJson ={
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "product_price_final"
         },
+        "product_price_mrp": {
+          "columnName": "product_price_mrp",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "product_price_mrp"
+        },
         "product_quantity": {
           "columnName": "product_quantity",
           "columnType": "DOUBLE",
@@ -24031,6 +24053,20 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "product_amount"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "exchange_rate"
         }
       },
       "viewQuery": "SELECT act_purchase_invoice_products.* FROM act_purchase_invoice_products LEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id"
@@ -24337,6 +24373,20 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_amount"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "exchange_rate"
         }
       },
       "viewQuery": "SELECT act_sale_invoice_chargeable_services.* FROM act_sale_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_sale_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
@@ -24549,6 +24599,20 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "product_price_mrp"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "exchange_rate"
         }
       },
       "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,act_sale_invoice_products.* FROM act_sale_invoice_products LEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id"
@@ -24936,6 +25000,18 @@ export const dataDictionaryJson ={
     "act_vw_transaction_credit_entries": {
       "viewName": "act_vw_transaction_credit_entries",
       "viewColumns": {
+        "credit_amount": {
+          "columnName": "credit_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Credit Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum"
+        },
         "credit_ledger_account_id": {
           "columnName": "credit_ledger_account_id",
           "columnType": "UUID",
@@ -24949,25 +25025,25 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_id"
-        },
-        "credit_amount": {
-          "columnName": "credit_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Credit Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum"
         }
       },
-      "viewQuery": "SELECT SUM(entry_amount) as credit_amount, credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
+      "viewQuery": "SELECT SUM(transaction_entry_amount) as credit_amount, credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
     },
     "act_vw_transaction_debit_entries": {
       "viewName": "act_vw_transaction_debit_entries",
       "viewColumns": {
+        "debit_amount": {
+          "columnName": "debit_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Debit Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum"
+        },
         "debit_ledger_account_id": {
           "columnName": "debit_ledger_account_id",
           "columnType": "UUID",
@@ -24981,21 +25057,9 @@ export const dataDictionaryJson ={
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_id"
-        },
-        "debit_amount": {
-          "columnName": "debit_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Debit Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum"
         }
       },
-      "viewQuery": "SELECT SUM(entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
+      "viewQuery": "SELECT SUM(transaction_entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
     }
   },
   "relationships": [
@@ -27979,7 +28043,7 @@ export const dataDictionaryJson ={
       "rowOperation": "INSERT",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_insert",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE transaction_id = OLD.transaction_id ;"
+      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE transaction_id = NEW.transaction_id;"
     },
     "act_trg_set_led_bal_on_trns_entry_update": {
       "triggerExecution": "AFTER",
