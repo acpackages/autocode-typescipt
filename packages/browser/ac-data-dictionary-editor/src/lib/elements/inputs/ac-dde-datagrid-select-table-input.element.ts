@@ -19,8 +19,6 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditor{
   }
 
   getValue() {
-    console.log(this.selectInput.value);
-    console.dir(this.selectInput);
     return this.selectInput.value;
   }
 
@@ -38,7 +36,6 @@ export class AcDDEDatagridSelectTableInput implements IAcDatagridCellEditor{
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    console.log("Setting value in refresh")
     this.selectInput.value = args.datagridCell.cellValue;
   }
 

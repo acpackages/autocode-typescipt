@@ -213,8 +213,13 @@ export function dateSubtractTime(date: Date, duration: DurationLike): Date {
  * @param format The Luxon format string (e.g., 'dd/MM/yyyy', 'MMMM dd, yyyy h:mm a').
  * @returns The formatted date string.
  */
-export function dateFormat(date: Date, format: string): string {
+export function dateFormat(date: Date|DateTime, format: string): string {
+  if(date instanceof DateTime){
+    return DateTime.fromJSDate(date.toJSDate()).toFormat(format);
+  }
+  else{
     return DateTime.fromJSDate(date).toFormat(format);
+  }
 }
 
 /**

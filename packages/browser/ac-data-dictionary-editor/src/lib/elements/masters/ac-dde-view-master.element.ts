@@ -38,7 +38,6 @@ export class AcDDEViewMaster {
     this.btnSetColumns.addEventListener('click', () => {
       if (this.view && this.view.viewQuery) {
         const result = this.editorApi.sqlParser.parse({ sql: this.view.viewQuery });
-        console.log(result);
         if (result) {
           const columns = result.columns;
           const currentColumns = this.editorApi.dataStorage.getViewColumns({ viewId: this.view.viewId });
@@ -79,7 +78,6 @@ export class AcDDEViewMaster {
               }
               this.editorApi.dataStorage.deleteViewColumn({ viewId: this.view.viewId, columnName: columnDetails.columnName });
             }
-            // console.log(columnDetails);
             this.editorApi.dataStorage.addViewColumn(columnDetails);
           }
           // for(const col of currentColumns){
@@ -88,7 +86,6 @@ export class AcDDEViewMaster {
           //   }
           // }
           this.events.execute({ event: 'viewColumnsChange' });
-          console.log(this.editorApi.dataStorage.getViewColumns({ viewId: this.view.viewId }));
         }
       }
     });

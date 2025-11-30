@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { dateFormat, dateFromFormatted } from "@autocode-ts/ac-extensions";
+import { dateFormat, parseDateTimeString } from "@autocode-ts/ac-extensions";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs, AcDatagridColumn, AcEnumDatagridHook } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
@@ -39,7 +39,6 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    console.log(`New renderer element value ${args.datagridCell.cellValue}`);
     this.render();
     if(this.datagridApi){
       this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.CellRendererRefresh,args:this});
@@ -50,10 +49,16 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
     const value = this.datagridCell.cellValue;
     if(value){
       if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'DATE'){
-        this.element.innerHTML = dateFormat(dateFromFormatted(value),'dd-MM-yyyy');
+        const parseValue = parseDateTimeString(value);
+        if(parseValue){
+          this.element.innerHTML = dateFormat(parseValue,'dd-MM-yyyy');
+        }
       }
       else if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'DATETIME'){
-        this.element.innerHTML = dateFormat(dateFromFormatted(value),'dd-MM-yyyy HH:mm A');
+        const parseValue = parseDateTimeString(value);
+        if(parseValue){
+          this.element.innerHTML = dateFormat(parseValue,'dd-MM-yyyy HH:mm a');
+        }
       }
       else{
         this.element.innerHTML = value;

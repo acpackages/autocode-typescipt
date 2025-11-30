@@ -63,7 +63,6 @@ export class AcDDEViewEditor {
       }
     }});
     this.viewMaster.on({event:"viewColumnsChange",callback:(args:any)=>{
-      console.log('viewColumnsChange',this);
       this.viewColumnsDatagrid.setColumnsData();
     }});
 

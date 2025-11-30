@@ -23,8 +23,8 @@ export class AcContextRegistry {
     this.contexts.set(name, context);
   }
 
-  static exists({name}:{name:string}):boolean{
-    return this.getInstance({name}) != undefined;
+  static exists({ name }: { name: string }): boolean {
+    return this.getInstance({ name }) != undefined;
   }
 
   static get({ name }: { name: string }): AcContext | undefined {
@@ -47,8 +47,8 @@ export class AcContextRegistry {
 export class AcContext {
   __acContextName__!: string;
   __events__: AcEvents = new AcEvents();
-  proxy:any;
-  value:any = {};
+  proxy: any;
+  value: any = {};
 
   constructor({ value = {}, name }: { value?: any, name?: string } = {}) {
     const instance: any = this;
@@ -57,17 +57,19 @@ export class AcContext {
     this.proxy = this.makeReactive(value);
     Object.defineProperties(this.proxy, {
       __acContextName__: { value: this.__acContextName__, enumerable: false },
-      off: { value: ({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }) => this.off({event, callback,subscriptionId}), enumerable: false },
-      on: { value: ({event,callback}:{event: string, callback: Function}) => this.on({event, callback}), enumerable: false },
-      toJson:{ value: ()=>{
-        const result:any = {};
-        for(const key of Object.keys(this.value)){
-          if(!['__acContextName__','on','toJson'].includes(key)){
-            result[key] = value[key];
+      off: { value: ({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }) => this.off({ event, callback, subscriptionId }), enumerable: false },
+      on: { value: ({ event, callback }: { event: string, callback: Function }) => this.on({ event, callback }), enumerable: false },
+      toJson: {
+        value: () => {
+          const result: any = {};
+          for (const key of Object.keys(this.value)) {
+            if (!['__acContextName__', 'on', 'toJson'].includes(key)) {
+              result[key] = value[key];
+            }
           }
+          return result;
         }
-        return  result;
-      }}
+      }
     });
 
     if (instance.__acContextName__) {
@@ -81,7 +83,7 @@ export class AcContext {
     this.__events__.unsubscribe({ event, callback, subscriptionId });
   }
 
-  on({event,callback}:{event: string, callback: Function}) {
+  on({ event, callback }: { event: string, callback: Function }) {
     return this.__events__.subscribe({ event: event, callback: callback });
   }
 
@@ -116,23 +118,25 @@ export class AcContext {
       set: (target, prop, value) => {
         const oldValue = target[prop];
         target[prop] = value;
-        const eventArgs: IAcContextEvent = {
-          event: 'set',
-          target: target,
-          property: prop,
-          value: value,
-          oldValue: oldValue
+        if (oldValue != value) {
+          const eventArgs: IAcContextEvent = {
+            event: 'set',
+            target: target,
+            property: prop,
+            value: value,
+            oldValue: oldValue
+          }
+          this.__events__.execute({ event: AcEnumContextEvent.Set, args: eventArgs });
+          if (oldValue != undefined) {
+            eventArgs.event = 'update';
+            this.__events__.execute({ event: AcEnumContextEvent.Update, args: eventArgs });
+          }
+          else {
+            eventArgs.event = 'add';
+            this.__events__.execute({ event: AcEnumContextEvent.Add, args: eventArgs });
+          }
+          this.__events__.execute({ event: AcEnumContextEvent.Change, args: eventArgs });
         }
-        this.__events__.execute({ event: AcEnumContextEvent.Set, args: eventArgs });
-        if (oldValue != undefined) {
-          eventArgs.event = 'update';
-          this.__events__.execute({ event: AcEnumContextEvent.Update, args: eventArgs });
-        }
-        else {
-          eventArgs.event = 'add';
-          this.__events__.execute({ event: AcEnumContextEvent.Add, args: eventArgs });
-        }
-        this.__events__.execute({ event: AcEnumContextEvent.Change, args: eventArgs });
         return true;
       }
     });

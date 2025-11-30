@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDataDictionary, AcDDTable, AcDDTableColumn, AcDDView, AcDDViewColumn, AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
-import { IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { AcEnumDatagridColumnDataType, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { objectCopyTo } from '@autocode-ts/ac-extensions';
 import { IAcDDColumnDefinition } from '../interfaces/ac-dd-column-definition.interface'
 
@@ -25,19 +25,19 @@ export class AcDDDatagridColumnManager {
     const ddTable: AcDDTable | null = AcDataDictionary.getTable({ tableName,dataDictionaryName });
     if (ddTable) {
       for (const column of ddTable.tableColumns) {
-        let continuOperation: boolean = true;
+        let continueOperation: boolean = true;
         if (excludeColumns && excludeColumns.length > 0 && excludeColumns.includes(column.columnName)) {
-          continuOperation = false;
+          continueOperation = false;
         }
-        if (continuOperation && includeColumns && includeColumns.length > 0 && !includeColumns.includes(column.columnName)) {
-          continuOperation = false;
+        if (continueOperation && includeColumns && includeColumns.length > 0 && !includeColumns.includes(column.columnName)) {
+          continueOperation = false;
         }
-        if (continuOperation && result.findIndex((col) => { return col.field == column.columnName }) >= 0) {
-          continuOperation = false;
+        if (continueOperation && result.findIndex((col) => { return col.field == column.columnName }) >= 0) {
+          continueOperation = false;
         }
         const existingIndex:number = columnDefinitions.findIndex((col) => { return col.field == column.columnName });
-        if (continuOperation &&  existingIndex>= 0) {
-          continuOperation = false;
+        if (continueOperation &&  existingIndex>= 0) {
+          continueOperation = false;
           const colDef:any = columnDefinitions[existingIndex];
           for(const key of Object.keys(defaultValues)){
             if(colDef[key] == undefined){
@@ -45,7 +45,7 @@ export class AcDDDatagridColumnManager {
             }
           }
         }
-        if (continuOperation) {
+        if (continueOperation) {
           const columnDefinition: IAcDatagridColumnDefinition | undefined = this.getTableColumn({ tableName: ddTable.tableName, columnName: column.columnName,defaultValues:defaultValues });
           if (columnDefinition) {
             if (visibleColumns && visibleColumns.length > 0) {
@@ -83,6 +83,29 @@ export class AcDDDatagridColumnManager {
       }
       if (resolvedDefinition == undefined) {
         result.title = ddTableColumn.getColumnTitle();
+        result.dataType = AcEnumDatagridColumnDataType.String;
+        switch(ddTableColumn.columnType){
+          case AcEnumDDColumnType.Date:
+            result.dataType = AcEnumDatagridColumnDataType.Date;
+            break;
+          case AcEnumDDColumnType.Datetime:
+          case AcEnumDDColumnType.Timestamp:
+          case AcEnumDDColumnType.Time:
+            result.dataType = AcEnumDatagridColumnDataType.Datetime;
+            break
+          case AcEnumDDColumnType.Double:
+          case AcEnumDDColumnType.Integer:
+          case AcEnumDDColumnType.AutoIncrement:
+          case AcEnumDDColumnType.AutoIndex:
+            result.dataType = AcEnumDatagridColumnDataType.Number;
+            break;
+          case AcEnumDDColumnType.YesNo:
+            result.dataType = AcEnumDatagridColumnDataType.Boolean;
+            break;
+          case AcEnumDDColumnType.Json:
+            result.dataType = AcEnumDatagridColumnDataType.Object;
+            break;
+        }
         if (this.typeColumnDefinition[ddTableColumn.columnType]) {
           const typeDefinition: any = AcDDDatagridColumnManager.typeColumnDefinition[ddTableColumn.columnType];
           const keys: string[] = Object.keys(typeDefinition);
@@ -112,19 +135,19 @@ export class AcDDDatagridColumnManager {
     const ddView: AcDDView | null = AcDataDictionary.getView({ viewName,dataDictionaryName });
     if (ddView) {
       for (const column of ddView.viewColumns) {
-        let continuOperation: boolean = true;
+        let continueOperation: boolean = true;
         if (excludeColumns && excludeColumns.length > 0 && excludeColumns.includes(column.columnName)) {
-          continuOperation = false;
+          continueOperation = false;
         }
-        if (continuOperation && includeColumns && includeColumns.length > 0 && !includeColumns.includes(column.columnName)) {
-          continuOperation = false;
+        if (continueOperation && includeColumns && includeColumns.length > 0 && !includeColumns.includes(column.columnName)) {
+          continueOperation = false;
         }
-        if (continuOperation && result.findIndex((col) => { return col.field == column.columnName }) >= 0) {
-          continuOperation = false;
+        if (continueOperation && result.findIndex((col) => { return col.field == column.columnName }) >= 0) {
+          continueOperation = false;
         }
         const existingIndex:number = columnDefinitions.findIndex((col) => { return col.field == column.columnName });
-        if (continuOperation && existingIndex >= 0) {
-          continuOperation = false;
+        if (continueOperation && existingIndex >= 0) {
+          continueOperation = false;
           const colDef:any = columnDefinitions[existingIndex];
           for(const key of Object.keys(defaultValues)){
             if(colDef[key] == undefined){
@@ -132,7 +155,7 @@ export class AcDDDatagridColumnManager {
             }
           }
         }
-        if (continuOperation) {
+        if (continueOperation) {
           const columnDefinition: IAcDatagridColumnDefinition | undefined = this.getViewColumn({ viewName: ddView.viewName, columnName: column.columnName,defaultValues:defaultValues });
           if (columnDefinition) {
             if (visibleColumns && visibleColumns.length > 0) {
@@ -170,6 +193,29 @@ export class AcDDDatagridColumnManager {
       }
       if (resolvedDefinition == undefined) {
         result.title = ddViewColumn.getColumnTitle();
+        result.dataType = AcEnumDatagridColumnDataType.String;
+        switch(ddViewColumn.columnType){
+          case AcEnumDDColumnType.Date:
+            result.dataType = AcEnumDatagridColumnDataType.Date;
+            break;
+          case AcEnumDDColumnType.Datetime:
+          case AcEnumDDColumnType.Timestamp:
+          case AcEnumDDColumnType.Time:
+            result.dataType = AcEnumDatagridColumnDataType.Datetime;
+            break
+          case AcEnumDDColumnType.Double:
+          case AcEnumDDColumnType.Integer:
+          case AcEnumDDColumnType.AutoIncrement:
+          case AcEnumDDColumnType.AutoIndex:
+            result.dataType = AcEnumDatagridColumnDataType.Number;
+            break;
+          case AcEnumDDColumnType.YesNo:
+            result.dataType = AcEnumDatagridColumnDataType.Boolean;
+            break;
+          case AcEnumDDColumnType.Json:
+            result.dataType = AcEnumDatagridColumnDataType.Object;
+            break;
+        }
         if (this.typeColumnDefinition[ddViewColumn.columnType]) {
           const typeDefinition: any = AcDDDatagridColumnManager.typeColumnDefinition[ddViewColumn.columnType];
           const keys: string[] = Object.keys(typeDefinition);

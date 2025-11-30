@@ -108,7 +108,6 @@ export class AcDataCache {
       cacheCollection.data = [];
       const requestArgs: IAcOnDemandRequestArgs = {
         successCallback: (response: IAcOnDemandResponseArgs) => {
-          console.log(response);
           cacheCollection.data = response.data;
           this.logger.log('Data refreshed via onDemandFunction', { collection, newDataCount: response.data.length });
         }

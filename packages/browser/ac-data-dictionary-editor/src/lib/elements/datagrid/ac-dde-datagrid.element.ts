@@ -46,7 +46,7 @@ export class AcDDEDatagrid {
       }
     });
     this.datagridApi.on({event:AcEnumDatagridEvent.RowDataChange,callback:(args:any)=>{
-      console.log(`Row data change`,args);
+      // console.log(`Row data change`,args);
     }})
     this.element = this.datagrid;
     this.element.classList.add("ac-dde-datagrid")

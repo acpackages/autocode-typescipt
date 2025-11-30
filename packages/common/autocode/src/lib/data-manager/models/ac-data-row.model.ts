@@ -6,7 +6,6 @@ import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
 import { Autocode } from "../../core/autocode";
 import { AcEnumContextEvent } from "../../enums/ac-enum-context-event.enum";
-import { acSingleTimeout } from "../../utils/ac-utility-functions";
 import { AcEnumDataManagerEvent } from "../_data-manager.export";
 import { AcDataManager } from "../core/ac-data-manager";
 
@@ -94,11 +93,9 @@ export class AcDataRow {
   }
 
   notifyRowDataChange() {
-    acSingleTimeout({
-      callback: () => {
-        this.hooks.execute({ hook: AcEnumDataManagerEvent.DataChange });
-      }, duration: 10, key: this.rowId
-    });
+    if(this.hooks){
+      // this.hooks.execute({ hook: AcEnumDataManagerEvent.DataChange });
+    }
   }
 
   off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {

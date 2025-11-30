@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acAddClassToElement, acCloneEvent, acListenElementEvents, acRegisterCustomElement, acRemoveClassFromElement } from "../../../utils/ac-element-functions";
@@ -63,14 +64,145 @@ export class AcDatagridCellElement extends AcElementBase {
   swappingColumpPosition: boolean = false;
   initialized: boolean = false;
   previousValue:any;
+  private _eventHandlers: Map<string, any> = new Map();
 
   constructor() {
     super();
   }
 
-
   override blur() {
     this.checkCellValueChange(false);
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    const handleFocusOut = (e: FocusEvent) => {
+      this.datagridApi.eventHandler.handleCellBlur({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('focusout', handleFocusOut);
+    this._eventHandlers.set('focusout', handleFocusOut);
+
+    const handleFocusIn = (e: FocusEvent) => {
+      this.datagridApi.eventHandler.handleCellFocus({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('focusin', handleFocusIn);
+    this._eventHandlers.set('focusin', handleFocusIn);
+
+    // Keyboard events
+    const handleKeyDown = (e: KeyboardEvent) => {
+      this.datagridApi.eventHandler.handleCellKeyDown({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('keydown', handleKeyDown);
+    this._eventHandlers.set('keydown', handleKeyDown);
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      this.datagridApi.eventHandler.handleCellKeyPress({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('keypress', handleKeyPress);
+    this._eventHandlers.set('keypress', handleKeyPress);
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      this.datagridApi.eventHandler.handleCellKeyUp({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
+    };
+    this.addEventListener('keyup', handleKeyUp);
+    this._eventHandlers.set('keyup', handleKeyUp);
+
+    // Mouse events
+    const handleClick = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellClick({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
+    };
+    this.addEventListener('click', handleClick);
+    this._eventHandlers.set('click', handleClick);
+
+    const handleDoubleClick = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellDoubleClick({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
+    };
+    this.addEventListener('dblclick', handleDoubleClick);
+    this._eventHandlers.set('dblclick', handleDoubleClick);
+
+    const handleMouseDown = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellMouseDown({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('mousedown', handleMouseDown);
+    this._eventHandlers.set('mousedown', handleMouseDown);
+
+    const handleMouseEnter = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellMouseEnter({ datagridCell: this.datagridCell, event: e });
+      this.datagridApi.hoverCellId = this.datagridCell.cellId;
+      this.datagridApi.hoverColumnId = this.datagridCell.columnId;
+      this.datagridApi.hoverRowId = this.datagridCell.rowId;
+    };
+    this.addEventListener('mouseenter', handleMouseEnter);
+    this._eventHandlers.set('mouseenter', handleMouseEnter);
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellMouseLeave({ datagridCell: this.datagridCell, event: e });
+      if (this.datagridApi.hoverCellId == this.datagridCell.cellId) {
+        this.datagridApi.hoverCellId = undefined;
+        this.datagridApi.hoverColumnId = undefined;
+        this.datagridApi.hoverRowId = undefined;
+      }
+    };
+    this.addEventListener('mouseleave', handleMouseLeave);
+    this._eventHandlers.set('mouseleave', handleMouseLeave);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellMouseMove({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('mousemove', handleMouseMove);
+    this._eventHandlers.set('mousemove', handleMouseMove);
+
+    const handleMouseOver = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellMouseOver({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('mouseover', handleMouseOver);
+    this._eventHandlers.set('mouseover', handleMouseOver);
+
+    const handleMouseUp = (e: MouseEvent) => {
+      this.datagridApi.eventHandler.handleCellMouseUp({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
+    };
+    this.addEventListener('mouseup', handleMouseUp);
+    this._eventHandlers.set('mouseup', handleMouseUp);
+
+    // Touch events
+    const handleTouchCancel = (e: TouchEvent) => {
+      this.datagridApi.eventHandler.handleCellTouchCancel({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('touchcancel', handleTouchCancel, { passive: true });
+    this._eventHandlers.set('touchcancel', handleTouchCancel);
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      this.datagridApi.eventHandler.handleCellTouchEnd({ datagridCell: this.datagridCell, event: e });
+      this.checkCellValueChange();
+    };
+    this.addEventListener('touchend', handleTouchEnd, { passive: true });
+    this._eventHandlers.set('touchend', handleTouchEnd);
+
+    const handleTouchMove = (e: TouchEvent) => {
+      this.datagridApi.eventHandler.handleCellTouchMove({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('touchmove', handleTouchMove, { passive: true });
+    this._eventHandlers.set('touchmove', handleTouchMove);
+
+    const handleTouchStart = (e: TouchEvent) => {
+      this.datagridApi.eventHandler.handleCellTouchStart({ datagridCell: this.datagridCell, event: e });
+    };
+    this.addEventListener('touchstart', handleTouchStart, { passive: true });
+    this._eventHandlers.set('touchstart', handleTouchStart);
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    if (this._eventHandlers) {
+      for (const [event, handler] of this._eventHandlers) {
+        this.removeEventListener(event, handler);
+      }
+      this._eventHandlers.clear();
+    }
   }
 
   enterEditMode() {
@@ -98,11 +230,13 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   override init(): void {
+    super.init();
+    this.initCell();
     this.style.overflow = 'hidden';
   }
 
   private initCell() {
-    if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi && !this.initialized) {
+    if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi && !this.initialized && this.isConnected) {
       this.initialized = true;
       this.datagridCell = new AcDatagridCell({
         datagridColumn: this.datagridColumn,
@@ -193,7 +327,6 @@ export class AcDatagridCellElement extends AcElementBase {
     this.container.append(this.cellRenderer.getElement());
     this.setCellWidth();
     this.setCellFocusable();
-    this.registerEvents();
   }
 
   refresh() {
@@ -201,76 +334,6 @@ export class AcDatagridCellElement extends AcElementBase {
     if (this.cellEditor) {
       this.cellEditor.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
     }
-  }
-
-  registerEvents() {
-    this.addEventListener('focusout', (e: FocusEvent) => {
-      this.datagridApi.eventHandler.handleCellBlur({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('focusin', (e: FocusEvent) => {
-      this.datagridApi.eventHandler.handleCellFocus({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('keydown', (e: KeyboardEvent) => {
-      this.datagridApi.eventHandler.handleCellKeyDown({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('keypress', (e: KeyboardEvent) => {
-      this.datagridApi.eventHandler.handleCellKeyPress({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('keyup', (e: KeyboardEvent) => {
-      this.datagridApi.eventHandler.handleCellKeyUp({ datagridCell: this.datagridCell, event: e });
-      this.checkCellValueChange();
-    });
-
-    this.addEventListener('click', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellClick({ datagridCell: this.datagridCell, event: e });
-      this.checkCellValueChange();
-    });
-    this.addEventListener('dblclick', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellDoubleClick({ datagridCell: this.datagridCell, event: e });
-      this.checkCellValueChange();
-    });
-    this.addEventListener('mousedown', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellMouseDown({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('mouseenter', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellMouseEnter({ datagridCell: this.datagridCell, event: e });
-      this.datagridApi.hoverCellId = this.datagridCell.cellId;
-      this.datagridApi.hoverColumnId = this.datagridCell.columnId;
-      this.datagridApi.hoverRowId = this.datagridCell.rowId;
-    });
-    this.addEventListener('mouseleave', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellMouseLeave({ datagridCell: this.datagridCell, event: e });
-      if (this.datagridApi.hoverCellId == this.datagridCell.cellId) {
-        this.datagridApi.hoverCellId = undefined;
-        this.datagridApi.hoverColumnId = undefined;
-        this.datagridApi.hoverRowId = undefined;
-      }
-    });
-    this.addEventListener('mousemove', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellMouseMove({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('mouseover', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellMouseOver({ datagridCell: this.datagridCell, event: e });
-    });
-    this.addEventListener('mouseup', (e: MouseEvent) => {
-      this.datagridApi.eventHandler.handleCellMouseUp({ datagridCell: this.datagridCell, event: e });
-      this.checkCellValueChange();
-    });
-
-    this.addEventListener('touchcancel', (e: TouchEvent) => {
-      this.datagridApi.eventHandler.handleCellTouchCancel({ datagridCell: this.datagridCell, event: e });
-    }, { passive: true });
-    this.addEventListener('touchend', (e: TouchEvent) => {
-      this.datagridApi.eventHandler.handleCellTouchEnd({ datagridCell: this.datagridCell, event: e });
-      this.checkCellValueChange();
-    }, { passive: true });
-    this.addEventListener('touchmove', (e: TouchEvent) => {
-      this.datagridApi.eventHandler.handleCellTouchMove({ datagridCell: this.datagridCell, event: e });
-    }, { passive: true });
-    this.addEventListener('touchstart', (e: TouchEvent) => {
-      this.datagridApi.eventHandler.handleCellTouchStart({ datagridCell: this.datagridCell, event: e });
-    }, { passive: true });
-
   }
 
   setCellWidth() {

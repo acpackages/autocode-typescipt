@@ -149,7 +149,6 @@ export class AcDDETableColumnsDatagrid {
     if (this.filterFunction != undefined) {
       data = data.filter((item: IAcDDETableColumn) => this.filterFunction!(item));
     }
-    console.log(data,this);
     this.datagridApi.data = data;
   }
 
