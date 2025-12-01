@@ -5,13 +5,14 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRow, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRow, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcNgDatagridComponent, AcNgDatagridModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../data/customers-data';
 import { ActionColumnComponent } from '../../components/action-column/action-column.component';
 import { ComponentsModule } from '../../components/components.module';
+import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 
 @Component({
   selector: 'app-datagrid',
@@ -45,11 +46,14 @@ export class DatagridComponent {
   onDemandFunction?:any;
 
   constructor(private elementRef: ElementRef) {
-    console.log(this);
+    // console.log(this);
     this.setOnDemandData();
   }
 
   handleDatagridInit(){
+    // AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
+
+    // this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
     const button = document.createElement('button');
     button.setAttribute('class','btn btn-primary');
     button.setAttribute('type','button');
@@ -62,7 +66,7 @@ export class DatagridComponent {
 
   handleEdit(datagridRow:AcDatagridRow){
     datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
-    console.log(datagridRow);
+    // console.log(datagridRow);
   }
 
   setLocalData() {
@@ -92,8 +96,6 @@ export class DatagridComponent {
     onDemandProxyDataManager.data = data;
 
     this.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      console.log("Getting on demand data");
-      console.log(args);
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }
@@ -108,7 +110,6 @@ export class DatagridComponent {
         totalCount,
         data
       };
-      console.log(response);
       args.successCallback(response);
     };
   }

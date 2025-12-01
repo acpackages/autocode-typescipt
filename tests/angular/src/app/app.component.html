@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<ac-window-tabs #windowTabs></ac-window-tabs>
+<div class="body">
+  <ac-ng-multi-router #router
+  (onActiveChange)="handleOnActiveRouterChange($event)"
+  (onAdd)="handleOnAddRouter($event)"
+  (onRemove)="handleOnRemoveRouter($event)"></ac-ng-multi-router>
+</div>

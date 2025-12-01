@@ -42,11 +42,12 @@ export function acAnimateElement(
   requestAnimationFrame(step);
 }
 
-export function acCloneEvent(oldEvent: Event): Event {
+export function acCloneEvent(oldEvent: Event|any): Event|any {
   const newEvent = new (oldEvent.constructor as any)(oldEvent.type, {
     bubbles: oldEvent.bubbles,
     cancelable: oldEvent.cancelable,
     composed: oldEvent.composed,
+    detail:oldEvent.detail
   });
 
   // Copy standard properties
@@ -88,11 +89,13 @@ export function acLinkElementScroll({ source, destination, both = true }: { sour
   source.addEventListener('wheel', e => {
     source.scrollLeft += e.deltaX;
     destination.scrollLeft = source.scrollLeft;
-  }, { passive: false });
+  }, { passive: true });
 
   source.addEventListener('scroll', (e) => {
-    if (destination.scrollLeft !== source.scrollLeft)
+    e.preventDefault();
+    if (destination.scrollLeft !== source.scrollLeft){
       destination.scrollLeft = source.scrollLeft;
+    }
   });
 
   if (both) {

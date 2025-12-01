@@ -1,0 +1,3 @@
+<ng-container *ngFor="let router of routers">
+  <div [attr.style]="router.isActive?'display:contents;':'display:none'"><router-outlet [attr.name]="router.id"></router-outlet></div>
+</ng-container>

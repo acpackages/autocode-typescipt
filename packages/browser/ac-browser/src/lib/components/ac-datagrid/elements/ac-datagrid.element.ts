@@ -31,7 +31,9 @@ export class AcDatagrid extends AcElementBase{
     this.containerElement.append(this.datagridHeader);
     this.containerElement.append(this.datagridBody);
     this.append(this.datagridFooter);
-    this.datagridApi.dataManager.getData();
+    setTimeout(() => {
+      this.datagridApi.dataManager.getData();
+    }, 50);
   }
 
 }

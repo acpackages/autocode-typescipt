@@ -5,7 +5,7 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { ApplicationRef, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-editor.element';
@@ -17,7 +17,8 @@ import { IAcNgDatagridColumnDefinition } from '../../interfaces/ac-datagrid-colu
   selector: 'ac-ng-datagrid',
   templateUrl: './ac-ng-datagrid.component.html',
   styleUrl: './ac-ng-datagrid.component.scss',
-  standalone: false
+  standalone: false,
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class AcNgDatagridComponent implements OnInit {
   @ViewChild('acDatagrid') acDatagridRef: ElementRef<AcDatagrid>;
@@ -146,7 +147,6 @@ export class AcNgDatagridComponent implements OnInit {
   rowSelectionExtension!: AcDatagridRowSelectionExtension;
 
   constructor(private runtimeService: AcRuntimeService, private appRef: ApplicationRef ) {
-    console.log(this);
   }
 
   ngOnInit(): void {
@@ -163,13 +163,6 @@ export class AcNgDatagridComponent implements OnInit {
       }
       this.setColumnDefinitions();
       this.datagridApi.usePagination = this.usePagination;
-      if (this.data) {
-        this.dataManager.data = this.data;
-      }
-      if (this.onDemandFunction) {
-        this.dataManager.onDemandFunction = this.onDemandFunction;
-      }
-
       this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
       this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
       this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
@@ -183,8 +176,13 @@ export class AcNgDatagridComponent implements OnInit {
           this.onCellRendererElementInit.emit(args);
         }
       });
+      if (this.data) {
+        this.dataManager.data = this.data;
+      }
+      if (this.onDemandFunction) {
+        this.dataManager.onDemandFunction = this.onDemandFunction;
+      }
       this.onDatagridInit.emit();
-      console.log(await this.dataManager.getRows({ rowsCount: 50 }));
     }
     else {
       setTimeout(() => {
@@ -527,7 +525,5 @@ export class AcNgDatagridComponent implements OnInit {
       columns.push(colDef);
     }
     this.datagridApi.columnDefinitions = columns;
-    console.log("Getting data");
-
   }
 }

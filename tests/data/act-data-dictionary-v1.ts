@@ -1,4 +1,4 @@
-export const dataDictionaryJson = {
+export const dataDictionaryJson =  {
   "name": "Accountea - Pro",
   "version": 1,
   "tables": {
@@ -20542,6 +20542,10 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "transaction_entries"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_transaction_entries"
         }
       }
     },
@@ -25025,9 +25029,15 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_id"
+        },
+        "transaction_entries_count": {
+          "columnName": "transaction_entries_count",
+          "columnType": "INTEGER",
+          "columnSource": "function",
+          "columnSourceName": "count"
         }
       },
-      "viewQuery": "SELECT SUM(transaction_entry_amount) as credit_amount, credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
+      "viewQuery": "SELECT SUM(transaction_entry_amount) as credit_amount,count(credit_ledger_account_id) AS entries_count,credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
     },
     "act_vw_transaction_debit_entries": {
       "viewName": "act_vw_transaction_debit_entries",
@@ -25057,9 +25067,196 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_id"
+        },
+        "entries_count": {
+          "columnName": "entries_count",
+          "columnType": "INTEGER",
+          "columnSource": "function",
+          "columnSourceName": "count"
         }
       },
-      "viewQuery": "SELECT SUM(transaction_entry_amount) as debit_amount, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
+      "viewQuery": "SELECT SUM(transaction_entry_amount) as debit_amount,count(debit_ledger_account_id) AS entries_count, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
+    },
+    "act_vw_transaction_entries": {
+      "viewName": "act_vw_transaction_entries",
+      "viewColumns": {
+        "transaction_entry_amount": {
+          "columnName": "transaction_entry_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_amount"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "debit_ledger_account_id": {
+          "columnName": "debit_ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "debit_ledger_account_id"
+        },
+        "reference_number": {
+          "columnName": "reference_number",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "reference_number"
+        },
+        "transaction_entry_id": {
+          "columnName": "transaction_entry_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "credit_ledger_account_id": {
+          "columnName": "credit_ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "credit_ledger_account_id"
+        },
+        "debit_payment_method_id": {
+          "columnName": "debit_payment_method_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "debit_payment_method_id"
+        },
+        "credit_payment_method_id": {
+          "columnName": "credit_payment_method_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "credit_payment_method_id"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "debit_ledger_account_name": {
+          "columnName": "debit_ledger_account_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_name "
+        },
+        "debit_ledger_account_balance": {
+          "columnName": "debit_ledger_account_balance",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_balance "
+        },
+        "debit_ledger_account_type_name": {
+          "columnName": "debit_ledger_account_type_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_type_name "
+        },
+        "debit_reflecting_statement": {
+          "columnName": "debit_reflecting_statement",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "reflecting_statement "
+        },
+        "credit_ledger_account_name": {
+          "columnName": "credit_ledger_account_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_name "
+        },
+        "credit_ledger_account_balance": {
+          "columnName": "credit_ledger_account_balance",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_balance "
+        },
+        "credit_ledger_account_type_name": {
+          "columnName": "credit_ledger_account_type_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_type_name "
+        },
+        "credit_reflecting_statement": {
+          "columnName": "credit_reflecting_statement",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "reflecting_statement "
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "transaction_narration": {
+          "columnName": "transaction_narration",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_narration"
+        },
+        "transaction_time": {
+          "columnName": "transaction_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_time"
+        },
+        "transaction_type": {
+          "columnName": "transaction_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_type"
+        }
+      },
+      "viewQuery": "SELECT \ndebit_ledger_accounts.ledger_account_name as debit_ledger_account_name,\ndebit_ledger_accounts.ledger_account_balance as debit_ledger_account_balance,\ndebit_ledger_accounts.ledger_account_type_name as debit_ledger_account_type_name,\ndebit_ledger_accounts.reflecting_statement as debit_reflecting_statement,\ncredit_ledger_accounts.ledger_account_name as credit_ledger_account_name,\ncredit_ledger_accounts.ledger_account_balance as credit_ledger_account_balance,\ncredit_ledger_accounts.ledger_account_type_name as credit_ledger_account_type_name,\ncredit_ledger_accounts.reflecting_statement as credit_reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts as debit_ledger_accounts ON act_transaction_entries.debit_ledger_account_id = debit_ledger_accounts.ledger_account_id \nLEFT JOIN act_vw_ledger_accounts as credit_ledger_accounts ON act_transaction_entries.credit_ledger_account_id = credit_ledger_accounts.ledger_account_id"
     }
   },
   "relationships": [

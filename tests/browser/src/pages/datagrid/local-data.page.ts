@@ -60,8 +60,8 @@ export class DatagridLocalData extends HTMLElement {
       { field: 'website', title: "Website" },
       { field: 'customer_id', title: "Id",index:2,visible:false },
     ];
-    this.setLocalData();
-    // this.setOnDemandData();
+    // this.setLocalData();
+    this.setOnDemandData();
 
     // setTimeout(() => {
     //   // this.datagrid.datagridApi.setRowSelection({key:"customer_id",value:'fa51d247-f53c-4f25-8436-9de299bb9160',isSelected:true});

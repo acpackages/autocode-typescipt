@@ -48,6 +48,15 @@ export class AcDatagridBody extends AcElementBase {
     this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyInit, args: hookArgs });
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.scrollable.resume();
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.scrollable.pause();
+  }
 
   registerListeners() {
     const datagrid = this.datagridApi?.datagrid;

@@ -58,7 +58,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.logger.log("DisplayedRows set complete");
   }
 
-  private _filterGroup!: AcFilterGroup;
+  private _filterGroup: AcFilterGroup = new AcFilterGroup();
   get filterGroup(): AcFilterGroup {
     return this._filterGroup;
   }
@@ -104,7 +104,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.logger.log("SearchQuery set complete");
   }
 
-  private _sortOrder!: AcSortOrder;
+  private _sortOrder: AcSortOrder = new AcSortOrder();
   get sortOrder(): AcSortOrder {
     return this._sortOrder;
   }
@@ -172,11 +172,10 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   logger: AcLogger = new AcLogger({ logMessages: false });
   private refreshRowsTimeout: any;
   refreshRowsTimeoutDuration = 100;
+  private initialized:boolean = false;
 
   constructor(private DataRow: new (...args: any[]) => T = AcDataRow as any) {
     this.logger.log("Initializing AcDataManager");
-    this.sortOrder = new AcSortOrder();
-    this.filterGroup = new AcFilterGroup();
     this.logger.log("Initialized AcDataManager");
   }
 
@@ -511,7 +510,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
               requestArgs.startIndex = startIndex;
             }
             else {
-              requestArgs.allRows = true;
+              // requestArgs.allRows = true;
             }
             requestArgs.searchQuery = this.searchQuery;
             const hookArgs: IAcDataManagerBeforeGetOnDemandDataHookArgs = {

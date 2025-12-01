@@ -5,7 +5,7 @@ import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcDatagridApi, AcDatagridC
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { customersData } from './../../../../data/customers-data';
 import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
-import { AcDatagridOnAgGridExtension, AcDatagridOnAgGridExtensionName, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
+import { AcDatagridOnAgGridExtension, AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataManager, IAcOnDemandRequestArgs,AcContext } from "@autocode-ts/autocode";
 import { acInitTipTapEditor, AcTiptapEditorInput } from "@autocode-ts/ac-tiptap-editor-input";
 import { AcQuillEditorInput, acInitQuillEditor } from "@autocode-ts/ac-quill-editor-input";
@@ -113,7 +113,7 @@ export class InputBasicPage extends HTMLElement {
     this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
-    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AcDatagridOnAgGridExtensionName }) as AcDatagridOnAgGridExtension;
+    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
 
     this.datagridApi.usePagination = true;
 

@@ -58,6 +58,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.gridOptions.getRowId = (params: GetRowIdParams) => {
       return params.data[this.rowKey];
     };
+    this.gridOptions['rowModelType'] = 'serverSide';
+    this.gridOptions['serverSideDatasource'] = this.onDemandDataSource;
     this.logger.log("[AcDatagridOnAgGridExtension] Constructor: Row ID getter configured. Exiting constructor.");
   }
 
@@ -967,10 +969,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
 }
 
-export const AcDatagridOnAgGridExtensionName = 'agGridOnAcDatagrid';
+export const AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME = 'agGridOnAcDatagrid';
 
 export const AgGridOnAcDatagrid: IAcDatagridExtension = {
-  extensionName: AcDatagridOnAgGridExtensionName,
+  extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME,
   extensionClass: AcDatagridOnAgGridExtension
 }
 

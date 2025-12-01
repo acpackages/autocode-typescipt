@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
-import { AcContext } from "../../core/ac-context";
 import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
 import { Autocode } from "../../core/autocode";
-import { AcEnumContextEvent } from "../../enums/ac-enum-context-event.enum";
+import { acSingleTimeout } from "../../utils/ac-utility-functions";
 import { AcEnumDataManagerEvent } from "../_data-manager.export";
 import { AcDataManager } from "../core/ac-data-manager";
 
@@ -13,6 +12,7 @@ export class AcDataRow {
   rowId: string = Autocode.uuid();
 
   private dataChangeCallback: Function = (args: any) => {
+    console.log(args);
     this.notifyRowDataChange();
   };
   private _data: any;
@@ -20,33 +20,8 @@ export class AcDataRow {
     return this._data;
   }
   set data(value: any) {
-    const object: any = this;
     if (value != this._data) {
-      if (value['__acContextName__']) {
-        this._data = value;
-        this._data.off({ event: AcEnumContextEvent.Change, callback: this.dataChangeCallback });
-        this._data.on({
-          event: AcEnumContextEvent.Change, callback: (args: any) => {
-            object.notifyRowDataChange();
-          }
-        });
-      }
-      else {
-        if (this.dataManager.autoSetUniqueIdToData) {
-          if (value['__ac_row_id__']) {
-            this.rowId = value['__ac_row_id__'];
-          }
-          else {
-            value['__ac_row_id__'] = this.rowId;
-          }
-        }
-        this._data = new AcContext({ value });
-        this._data.on({
-          event: AcEnumContextEvent.Change, callback: (args: any) => {
-            object.notifyRowDataChange();
-          }
-        });
-      }
+      this._data = value;
     }
   }
 
@@ -93,9 +68,11 @@ export class AcDataRow {
   }
 
   notifyRowDataChange() {
-    if(this.hooks){
-      // this.hooks.execute({ hook: AcEnumDataManagerEvent.DataChange });
-    }
+    acSingleTimeout({
+      callback: () => {
+        this.hooks.execute({ hook: AcEnumDataManagerEvent.DataChange });
+      }, duration: 10, key: this.rowId
+    });
   }
 
   off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {

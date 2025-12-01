@@ -409,7 +409,7 @@ export class AcDatagridOnAgGridEventHandler {
         } else {
           this.logger.log(`[AcDatagridOnAgGridEventHandler] sortChanged: Unknown sort ${column.sort}, defaulting to None.`);
         }
-        this.datagridApi.sortOrder.addSort({ key: column.colDef.field!, order: order });
+        this.datagridApi.dataManager.sortOrder.addSort({ key: column.colDef.field!, order: order });
         this.logger.log(`[AcDatagridOnAgGridEventHandler] sortChanged: Added sort for field=${column.colDef.field!}, order=${order}.`);
         this.datagridApi.eventHandler.handleSortOrderChange();
         this.logger.log("[AcDatagridOnAgGridEventHandler] sortChanged: Handled sort order change.");

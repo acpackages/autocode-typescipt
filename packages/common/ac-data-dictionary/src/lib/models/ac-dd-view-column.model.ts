@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDDTableColumn, AcDDTableColumnProperty, AcEnumDDColumnProperty } from "../..";
+import { AcDataDictionary, AcDDTableColumn, AcDDTableColumnProperty, AcEnumDDColumnProperty } from "../..";
 // import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
 
 export class AcDDViewColumn {
@@ -33,6 +34,10 @@ export class AcDDViewColumn {
 
   @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnSourceOriginalColumn })
   columnSourceOriginalColumn: string = "";
+
+  static getInstance({ viewName, columnName, dataDictionaryName = "default" }: { viewName: string; columnName: string; dataDictionaryName?: string }): AcDDViewColumn {
+    return AcDataDictionary.getViewColumn({ viewName, columnName, dataDictionaryName })!;
+  }
 
   static instanceFromJson({ jsonData }: { jsonData: Record<string, any> }): AcDDViewColumn {
     const instance = new AcDDViewColumn();
@@ -66,6 +71,14 @@ export class AcDDViewColumn {
         const ddTableColumn = AcDDTableColumn.getInstance({tableName:this.columnSourceName,columnName:this.columnSourceOriginalColumn});
         if(ddTableColumn){
           return ddTableColumn.getColumnTitle();
+        }
+      }
+    }
+    else if(this.columnSource == 'view'){
+      if(this.columnSourceName && this.columnSourceOriginalColumn){
+        const ddViewColumn = AcDDViewColumn.getInstance({viewName:this.columnSourceName,columnName:this.columnSourceOriginalColumn});
+        if(ddViewColumn){
+          return ddViewColumn.getColumnTitle();
         }
       }
     }

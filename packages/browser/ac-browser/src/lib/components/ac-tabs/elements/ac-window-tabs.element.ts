@@ -18,7 +18,11 @@ export class AcWindowTabs extends AcElementBase {
 
   override async init() {
     super.init();
-    this.innerHTML = `<div class="ac-window-tabs-container"></div>`;
+    this.innerHTML = `<div class="ac-window-tabs-container"></div><button type="button" class="ac-window-tab-add-button">+</button>`;
+    const addButton = this.querySelector('.ac-window-tab-add-button');
+    addButton?.addEventListener('click',()=>{
+      this.dispatchEvent(new CustomEvent('addNewClick'));
+    });
     // const acDraggable = new AcSortable({ element: this.querySelector('.ac-window-tabs-container')! });
     const acDraggable = new AcSortable();
     const draggableApi: AcDraggableApi = acDraggable.draggableApi;
@@ -52,6 +56,7 @@ export class AcWindowTabs extends AcElementBase {
       }
     });
   }
+
   public addTab({ tab}: {tab:AcWindowTab}): void {
     const tabContainer = this.querySelector('.ac-window-tabs-container');
     if (tabContainer) {
@@ -72,6 +77,7 @@ export class AcWindowTabs extends AcElementBase {
           this.selectTab({id:tab.id});
         }
       });
+      console.log(tabElement);;
     }
   }
 
@@ -84,7 +90,8 @@ export class AcWindowTabs extends AcElementBase {
       });
       this.activeId = tabs[0]?.id || null;
       if (tabs[0]) {
-        this.dispatchEvent(new CustomEvent('tab-change', { detail: { id: tabs[0].id } }));
+        const event =new CustomEvent('activeChange',{detail:{id:tabs[0].id }});
+        this.dispatchEvent(event);
       }
     }
   }
@@ -106,6 +113,7 @@ export class AcWindowTabs extends AcElementBase {
     if (tab) {
       const wasActive = tab.classList.contains('active');
       tab.remove();
+      this.dispatchEvent(new CustomEvent('remove', { detail: { id: id } }));
       if (wasActive) {
         const remainingTabs = this.querySelectorAll('.ac-window-tab-item');
         if (remainingTabs.length > 0) {
@@ -113,7 +121,7 @@ export class AcWindowTabs extends AcElementBase {
           this.selectTab({id:newActiveId});
         } else {
           this.activeId = null;
-          this.dispatchEvent(new CustomEvent('ac-window-tab-change', { detail: { id: null } }));
+
         }
       }
     }
@@ -125,7 +133,8 @@ export class AcWindowTabs extends AcElementBase {
     if (tab) {
       tab.classList.add('active');
       this.activeId = id;
-      this.dispatchEvent(new CustomEvent('ac-window-tab-change', { detail: { id } }));
+      const event =new CustomEvent('activeChange',{detail:{id:id }});
+      this.dispatchEvent(event);
     }
   }
 

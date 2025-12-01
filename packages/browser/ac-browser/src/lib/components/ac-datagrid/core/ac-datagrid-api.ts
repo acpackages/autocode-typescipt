@@ -149,7 +149,7 @@ export class AcDatagridApi {
     return result;
   }
 
-  private _usePagination: boolean = false;
+  private _usePagination: boolean = true;
   get usePagination(): boolean {
     this.logger.log('Getting usePagination', { value: this._usePagination });
     return this._usePagination;
