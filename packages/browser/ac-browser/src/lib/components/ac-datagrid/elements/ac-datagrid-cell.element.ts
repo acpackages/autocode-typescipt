@@ -63,7 +63,7 @@ export class AcDatagridCellElement extends AcElementBase {
   isEditing: boolean = false;
   swappingColumpPosition: boolean = false;
   initialized: boolean = false;
-  previousValue:any;
+  previousValue: any;
   private _eventHandlers: Map<string, any> = new Map();
 
   constructor() {
@@ -195,6 +195,42 @@ export class AcDatagridCellElement extends AcElementBase {
     this._eventHandlers.set('touchstart', handleTouchStart);
   }
 
+  override destroy(): void {
+    super.destroy();
+    if (this.checkCellValueChangeTimeout) {
+      clearTimeout(this.checkCellValueChangeTimeout);
+      this.checkCellValueChangeTimeout = null;
+    }
+    if (this.cellRenderer && this.cellRenderer.destroy) {
+      this.cellRenderer.destroy();
+    }
+    (this.cellRenderer as any) = null;
+    if (this.cellEditor && this.cellEditor.destroy) {
+      this.cellEditor.destroy();
+    }
+    (this.cellEditor as any) = null;
+    this.activeComponent = undefined;
+    if (this._datagridColumn?.hooks) {
+      this._datagridColumn.hooks.unsubscribe({
+        hook: AcEnumDatagridHook.ColumnWidthChange,
+        callback: this.setCellWidth.bind(this)
+      });
+    }
+    if (this.container) {
+      this.container.innerHTML = '';
+      if (this.container.parentNode) {
+        this.container.remove();
+      }
+      this.container = null!;
+    }
+    this._datagridApi = null!;
+    this._datagridColumn = null!;
+    this._datagridRow = null!;
+    this.datagridCell = null!;
+    this.previousValue = null;
+    Object.freeze(this);
+  }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     if (this._eventHandlers) {
@@ -226,6 +262,16 @@ export class AcDatagridCellElement extends AcElementBase {
       this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
       this.activeComponent = this.cellRenderer;
       this.container.append(this.cellRenderer.getElement());
+    }
+  }
+
+  override focus() {
+    if (this.datagridColumn.allowEdit) {
+      this.enterEditMode();
+    }
+    this.checkCellValueChange();
+    if (this.activeComponent && this.activeComponent.focus) {
+      this.activeComponent.focus();
     }
   }
 
@@ -274,16 +320,6 @@ export class AcDatagridCellElement extends AcElementBase {
 
   }
 
-  override focus() {
-    if (this.datagridColumn.allowEdit) {
-      this.enterEditMode();
-    }
-    this.checkCellValueChange();
-    if (this.activeComponent && this.activeComponent.focus) {
-      this.activeComponent.focus();
-    }
-  }
-
   initEditorElement() {
     if (this.cellEditor == undefined) {
       if (this.datagridColumn.columnDefinition.cellEditorElement) {
@@ -300,10 +336,10 @@ export class AcDatagridCellElement extends AcElementBase {
             this.dispatchEvent(acCloneEvent(event));
           }, mouse: true, keyboard: true, pointer: true, focus: true, form: true, touch: true, viewport: true
         });
-        inputElement.addEventListener('change',()=>{
+        inputElement.addEventListener('change', () => {
           this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
         });
-        inputElement.addEventListener('input',()=>{
+        inputElement.addEventListener('input', () => {
           this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
         });
         const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {

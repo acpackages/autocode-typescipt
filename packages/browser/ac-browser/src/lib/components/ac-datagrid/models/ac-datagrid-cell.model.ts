@@ -34,7 +34,6 @@ export class AcDatagridCell {
   extensionData: Record<string, any> = {};
   isPinnedLeft: boolean = false;
   isPinnedRight: boolean = false;
-  hooks: AcHooks = new AcHooks();
   element?: AcDatagridCellElement;
   rowIndex: number = -1;
   columnIndex: number = -1;

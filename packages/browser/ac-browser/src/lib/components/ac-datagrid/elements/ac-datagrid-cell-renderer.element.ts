@@ -15,6 +15,7 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
 
   destroy?(): void {
     this.element.remove();
+    Object.freeze(this);
   }
 
   getElement(): HTMLElement {

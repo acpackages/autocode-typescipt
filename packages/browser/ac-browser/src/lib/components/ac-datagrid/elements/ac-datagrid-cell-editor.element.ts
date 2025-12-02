@@ -21,6 +21,7 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor {
 
   destroy(): void {
     this.element.remove();
+    Object.freeze(this);
   }
 
   focus() {

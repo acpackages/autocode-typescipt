@@ -33,6 +33,7 @@ export class AcElementBase extends HTMLElement {
 
   destroy(){
     this.events.clearSubscriptions();
+    (this.events as any) = null;
   }
 
   disconnectedCallback(){

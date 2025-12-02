@@ -21,7 +21,7 @@ export class AcDatagridBody extends AcElementBase {
     this.datagridApi.hooks.subscribe({
       hook: AcEnumDatagridHook.DisplayedRowsChange,
       callback: (event: IAcDatagridDisplayedRowsChangeEvent) => {
-        if(!this.isRendering){
+        if (!this.isRendering) {
           setTimeout(() => {
             this.setDisplayRows();
           }, 1);
@@ -53,6 +53,35 @@ export class AcDatagridBody extends AcElementBase {
     this.scrollable.resume();
   }
 
+  override destroy(): void {
+    this.isRendering = true;
+    if (this._datagridApi?.hooks) {
+      this._datagridApi.hooks.unsubscribe({
+        hook: AcEnumDatagridHook.DisplayedRowsChange,
+        callback: this.setDisplayRows.bind(this)
+      });
+    }
+    if (this.scrollable) {
+      this.scrollable.pause();
+      this.scrollable.clearAll();
+      this.scrollable = null!;
+    }
+    const header = this.datagridApi?.datagrid?.datagridHeader;
+    if (header && this.isConnected) {
+      // Remove scroll listener from header (reverse of acLinkElementScroll)
+      const handler = (this as any)._acScrollLinkHandler;
+      if (handler) {
+        this.removeEventListener('scroll', handler);
+        header.removeEventListener('scroll', handler);
+        delete (this as any)._acScrollLinkHandler;
+      }
+    }
+    this._datagridApi = null!;
+    if (this.parentNode) {
+      this.remove();
+    }
+    Object.freeze(this);
+  }
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.scrollable.pause();

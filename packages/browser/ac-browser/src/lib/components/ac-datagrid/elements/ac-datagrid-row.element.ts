@@ -66,8 +66,19 @@ export class AcDatagridRowElement extends AcElementBase {
     }
   }
 
+  clearDatagridCells(){
+    for(let cell of (this.datagridCells) as any[]){
+      cell.destroy();
+      cell = null;
+    }
+    this.datagridCells.length = 0; // Truncate array
+    this.datagridCells = [];
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
+
+    this.setDatagridCells();
 
     // Focus events
     const handleBlur = (e: FocusEvent) => {
@@ -176,8 +187,16 @@ export class AcDatagridRowElement extends AcElementBase {
     this._eventHandlers.set('touchstart', handleTouchStart);
   }
 
+  override destroy(): void {
+    super.destroy();
+    this.clearDatagridCells();
+    (this._datagridApi as any) = null;
+    (this._datagridRow as any) = null;
+  }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+    this.clearDatagridCells();
     if (this._eventHandlers) {
       for (const [event, handler] of this._eventHandlers) {
         this.removeEventListener(event, handler);
@@ -189,26 +208,7 @@ export class AcDatagridRowElement extends AcElementBase {
   initRow() {
     if (this.datagridApi && this.datagridRow && !this.initialized && this.isConnected) {
       this.initialized = true;
-      this.datagridCells = [];
-      const hookArgs: IAcDatagridRowHookArgs = {
-        datagridRow: this.datagridRow,
-        datagridApi: this.datagridApi
-      };
-      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BeforeRowCellsCreate, args: hookArgs });
-      for (const column of this.datagridApi.datagridColumns) {
-        const datagridCell = new AcDatagridCellElement();
-        datagridCell.datagridApi = this.datagridApi;
-        datagridCell.datagridColumn = column;
-        datagridCell.datagridRow = this.datagridRow;
-        this.datagridCells.push(datagridCell);
-      }
-      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.RowCellsCreate, args: hookArgs });
-      this.render();
-      this.datagridRow.hooks.subscribe({
-        hook: AcEnumDataManagerHook.DataChange, callback: (args: any) => {
-          this.refreshCells();
-        }
-      });
+
     }
   }
 
@@ -229,6 +229,29 @@ export class AcDatagridRowElement extends AcElementBase {
       }
       this.isRendering = false;
     }
+  }
+
+  setDatagridCells(){
+    this.datagridCells = [];
+      const hookArgs: IAcDatagridRowHookArgs = {
+        datagridRow: this.datagridRow,
+        datagridApi: this.datagridApi
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BeforeRowCellsCreate, args: hookArgs });
+      for (const column of this.datagridApi.datagridColumns) {
+        const datagridCell = new AcDatagridCellElement();
+        datagridCell.datagridApi = this.datagridApi;
+        datagridCell.datagridColumn = column;
+        datagridCell.datagridRow = this.datagridRow;
+        this.datagridCells.push(datagridCell);
+      }
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.RowCellsCreate, args: hookArgs });
+      this.render();
+      this.datagridRow.hooks.subscribe({
+        hook: AcEnumDataManagerHook.DataChange, callback: (args: any) => {
+          this.refreshCells();
+        }
+      });
   }
 }
 

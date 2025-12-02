@@ -237,7 +237,6 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
-    datagridCell.hooks.execute({ hook: AcEnumDatagridHook.CellValueChange, args: hookArgs });
     this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.CellValueChange, args: hookArgs });
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
