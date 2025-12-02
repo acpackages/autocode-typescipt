@@ -37,17 +37,6 @@ export class AcDatagridBody extends AcElementBase {
     this.style.height = '-webkit-fill-available';
   }
 
-  override init() {
-    super.init();
-    this.registerListeners();
-    this.setDisplayRows();
-    const hookArgs: IAcDatagridBodyHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridBody: this
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyInit, args: hookArgs });
-  }
-
   override connectedCallback(): void {
     super.connectedCallback();
     this.scrollable.resume();
@@ -82,9 +71,22 @@ export class AcDatagridBody extends AcElementBase {
     }
     Object.freeze(this);
   }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.scrollable.pause();
+  }
+
+  override init() {
+    super.init();
+    this.registerListeners();
+    this.setDisplayRows();
+    const hookArgs: IAcDatagridBodyHookArgs = {
+      datagridApi: this.datagridApi,
+      datagridBody: this
+    };
+    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyInit, args: hookArgs });
+    this.datagridApi.bodyWidth = this.getBoundingClientRect().width;
   }
 
   registerListeners() {

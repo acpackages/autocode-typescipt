@@ -57,6 +57,7 @@ export interface IAcDatagridColumnDefinition {
     "description": "The field of the row object to get the cell's data from."
   }) */
   field: string,
+  flexSize?:number;
   headerCellClass?:string;
   index?:number;
 

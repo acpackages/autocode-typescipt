@@ -37,6 +37,13 @@ import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../_ac-datagrid.export";
 import { isValidDateString, isValidDateTimeString } from "@autocode-ts/ac-extensions";
 
 export class AcDatagridApi {
+  private _bodyWidth:number = 0;
+  get bodyWidth(): number {
+    return this._bodyWidth;
+  }
+  set bodyWidth(value: number) {
+    this._bodyWidth = value;
+  }
 
   private _columnDefinitions: IAcDatagridColumnDefinition[] = [];
   get columnDefinitions(): IAcDatagridColumnDefinition[] {
@@ -339,7 +346,7 @@ export class AcDatagridApi {
       if (datagridRow.element) {
         for (const datagridCell of datagridRow.element.datagridCells) {
           if (datagridCell.datagridColumn.columnId == datagridColumn.columnId) {
-            const cellWidth = datagridCell.container.getBoundingClientRect().width;
+            const cellWidth = datagridCell.containerWidth;
             if (cellWidth > maxWidth) {
               maxWidth = cellWidth;
               this.logger.log('Updated maxWidth for cell', { rowId: datagridRow.rowId, width: maxWidth });

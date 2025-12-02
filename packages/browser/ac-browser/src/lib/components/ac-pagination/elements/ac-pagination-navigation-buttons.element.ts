@@ -1,5 +1,5 @@
 import { AcElementBase } from "../../../core/ac-element-base";
-import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcEnumPaginationEvent, AcPagination, AcPaginationCssClassName, AC_PAGINATION_SVG_ICONS } from "../_ac-pagination.export";
 import { IAcPaginationPageChangeEvent } from "../interfaces/event-params/ac-page-change-event.interface";
 

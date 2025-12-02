@@ -50,7 +50,12 @@ export class AcDatagridCellElement extends AcElementBase {
 
   get containerWidth(): number {
     let result: number = 0;
-    result = (this.container.firstChild as HTMLElement).getBoundingClientRect().width;
+    if (this.container) {
+      const firstChild = this.container.firstChild;
+      if (firstChild) {
+        result = (firstChild as HTMLElement).getBoundingClientRect().width;
+      }
+    }
     return result;
   }
 
@@ -228,7 +233,6 @@ export class AcDatagridCellElement extends AcElementBase {
     this._datagridRow = null!;
     this.datagridCell = null!;
     this.previousValue = null;
-    Object.freeze(this);
   }
 
   override disconnectedCallback(): void {
@@ -373,13 +377,16 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   setCellWidth() {
-    const width = this.datagridColumn.width;
-    // if (this.datagridApi.isTreeData && this.datagridColumn.index == 0) {
-    //   // width = width - (AcDatagridDefaultRowConfig.treeChildPadding * this.datagridRow.treeDepth);
-    // }
-    this.style.width = `${width}px`;
-    this.style.maxWidth = `${width}px`;
-    this.style.minWidth = `${width}px`;
+    if (this.datagridColumn) {
+      const width = this.datagridColumn.width;
+      // if (this.datagridApi.isTreeData && this.datagridColumn.index == 0) {
+      //   // width = width - (AcDatagridDefaultRowConfig.treeChildPadding * this.datagridRow.treeDepth);
+      // }
+      this.style.width = `${width}px`;
+      this.style.maxWidth = `${width}px`;
+      this.style.minWidth = `${width}px`;
+    }
+
   }
 
   setCellFocusable() {

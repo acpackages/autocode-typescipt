@@ -68,8 +68,6 @@ export class AcWindowTabs extends AcElementBase {
       tabElement.setAttribute('data-id', tab.id);
       tabElement.innerHTML = `${tab.icon ? `<div class="ac-window-tab-icon">${tab.icon}</div>` : ''}<div class="ac-window-tab-title">${tab.title}</div>${tab.closeable ? '<div class="ac-window-tab-close">×</div>' : ''}`;
       tabContainer.appendChild(tabElement);
-
-      // Add click handler for the new tab
       tabElement.addEventListener('click', (e) => {
         if ((e.target as HTMLElement).classList.contains('ac-window-tab-close')) {
           this.removeTab({ id: tab.id });
@@ -77,7 +75,6 @@ export class AcWindowTabs extends AcElementBase {
           this.selectTab({ id: tab.id });
         }
       });
-      console.log(tabElement);;
     }
   }
 

@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AcDatagridColumn } from "../_ac-datagrid.export";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
@@ -57,6 +60,28 @@ export class AcDatagridHeader extends AcElementBase{
       this.datagridHeaderCells.push(headerCell);
     }
     this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.HeaderColumnCellsCreate,args:hookArgs});
+    this.setFlexColumnWidth();
+  }
+
+  setFlexColumnWidth(){
+    const flexColumns:AcDatagridColumn[] = [];
+    let currentTotalWidth:number = 0;
+    for(const column of this.datagridApi.datagridColumns){
+      if(column.visible){
+        if(column.columnDefinition.flexSize != undefined){
+          flexColumns.push(column);
+        }
+        else{
+          currentTotalWidth+=column.width;
+        }
+      }
+    }
+    const fillWidth = this.datagridApi.bodyWidth - currentTotalWidth - 20;
+    if(fillWidth > 0){
+      for(const column of flexColumns){
+        column.width = fillWidth * column.columnDefinition.flexSize!;
+      }
+    }
   }
 }
 
