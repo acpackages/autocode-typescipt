@@ -27,7 +27,7 @@ export class AcSort {
     return result;
   }
 
-  cloneInstance():AcSort{
+  clone():AcSort{
     return new AcSort().fromJson({jsonData:this.toJson()});
   }
 

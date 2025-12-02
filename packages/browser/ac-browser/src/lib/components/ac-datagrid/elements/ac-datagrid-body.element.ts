@@ -29,17 +29,31 @@ export class AcDatagridBody extends AcElementBase {
       }
     });
   }
-  scrollable: AcScrollable = new AcScrollable({ element: this, options: { bufferCount: 10 } });
+  scrollable?: AcScrollable;
   isRendering: boolean = false;
+  datagridRows: AcDatagridRowElement[] = [];
 
   constructor() {
     super();
     this.style.height = '-webkit-fill-available';
   }
 
+  clearDatagridRows() {
+    for (let row of (this.datagridRows) as any[]) {
+      row.destroy();
+      row = null;
+    }
+    this.innerHTML = "";
+    this.datagridRows.length = 0; // Truncate array
+    this.datagridRows = [];
+  }
+
   override connectedCallback(): void {
     super.connectedCallback();
-    this.scrollable.resume();
+    if (this.datagridApi.useVirtualScrolling && this.scrollable) {
+      this.scrollable.resume();
+    }
+    this.setDisplayRows();
   }
 
   override destroy(): void {
@@ -50,10 +64,12 @@ export class AcDatagridBody extends AcElementBase {
         callback: this.setDisplayRows.bind(this)
       });
     }
-    if (this.scrollable) {
-      this.scrollable.pause();
-      this.scrollable.clearAll();
-      this.scrollable = null!;
+    if (this.datagridApi.useVirtualScrolling) {
+      if (this.scrollable) {
+        this.scrollable.pause();
+        this.scrollable.clearAll();
+        this.scrollable = null!;
+      }
     }
     const header = this.datagridApi?.datagrid?.datagridHeader;
     if (header && this.isConnected) {
@@ -74,7 +90,10 @@ export class AcDatagridBody extends AcElementBase {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.scrollable.pause();
+    if (this.datagridApi.useVirtualScrolling && this.scrollable) {
+      this.scrollable.pause();
+    }
+    this.clearDatagridRows();
   }
 
   override init() {
@@ -99,21 +118,30 @@ export class AcDatagridBody extends AcElementBase {
     if (!this.isRendering) {
       if (this.datagridApi) {
         this.isRendering = true;
-        this.innerHTML = "";
-        this.scrollable.pause();
-        this.scrollable.clearAll();
+        this.clearDatagridRows();
+        if (this.datagridApi.useVirtualScrolling && this.scrollable) {
+          this.scrollable.pause();
+          this.scrollable.clearAll();
+        }
         for (const row of this.datagridApi.displayedDatagridRows) {
-          if (!row.element) {
-            const datagridRow = new AcDatagridRowElement();
-            datagridRow.datagridApi = this.datagridApi;
-            datagridRow.datagridRow = row;
-          }
+          const datagridRow = new AcDatagridRowElement();
+          datagridRow.datagridApi = this.datagridApi;
+          datagridRow.datagridRow = row;
+          this.datagridRows.push(datagridRow);
           this.append(row.element!);
         }
-        this.scrollable.resume();
-        this.scrollable.autoRegister();
+        if (this.datagridApi.useVirtualScrolling && this.scrollable) {
+          this.scrollable.resume();
+          this.scrollable.autoRegister();
+        }
         this.isRendering = false;
       }
+    }
+  }
+
+  setVirtualScrolling() {
+    if (this.datagridApi.useVirtualScrolling) {
+      this.scrollable = new AcScrollable({ element: this, options: { bufferCount: 10 } });
     }
   }
 }

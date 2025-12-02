@@ -182,6 +182,14 @@ export class AcDatagridApi {
     this.logger.log('Updated datagrid footer pagination');
   }
 
+  private _useVirtualScrolling: boolean = false;
+  get useVirtualScrolling(): boolean {
+    return this._useVirtualScrolling;
+  }
+  set useVirtualScrolling(value: boolean) {
+    this._useVirtualScrolling = value;
+  }
+
   activeDatagridRow: AcDatagridRow | undefined;
   columnDragPlaceholderElementCreator: Function = (args: IAcDatagridColumnDragPlaceholderCreatorArgs): HTMLElement => {
     const element = document.createElement('span');
@@ -539,7 +547,7 @@ export class AcDatagridApi {
 
   setColumnFilter({ datagridColumn, filter }: { datagridColumn: AcDatagridColumn, filter: AcFilter }) {
     this.logger.log('Setting column filter', { field: datagridColumn.columnDefinition.field, filter: filter });
-    const oldFilterGroup: AcFilterGroup = datagridColumn.filterGroup.cloneInstance();;
+    const oldFilterGroup: AcFilterGroup = datagridColumn.filterGroup.clone();;
     datagridColumn.filterGroup.addFilterModel({ filter: filter });
     this.logger.log('Added filter to column filterGroup');
     const eventArgs: IAcDatagridColumnFilterChangeEvent = {

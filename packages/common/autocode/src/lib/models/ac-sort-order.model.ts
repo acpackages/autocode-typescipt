@@ -29,7 +29,7 @@ export class AcSortOrder {
     this.events.execute({event:'change',args:{ key,order,removeIfExist }});
   }
 
-  cloneInstance():AcSortOrder{
+  clone():AcSortOrder{
     return new AcSortOrder().fromJson({jsonData:this.toJson()});
   }
 

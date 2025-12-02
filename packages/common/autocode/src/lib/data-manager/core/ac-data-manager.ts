@@ -472,8 +472,8 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
           this.logger.log("Fetching on-demand data");
           return new Promise<T[]>((resolve, reject) => {
             const requestArgs: IAcOnDemandRequestArgs = {
-              filterGroup: this.filterGroup,
-              sortOrder: this.sortOrder,
+              filterGroup: this.filterGroup.clone(),
+              sortOrder: this.sortOrder.clone(),
               successCallback: (response: IAcOnDemandResponseArgs) => {
                 try {
                   const hookArgs: IAcDataManagerGetOnDemandDataSuccessCallbackHookArgs = {

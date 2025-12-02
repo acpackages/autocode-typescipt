@@ -67,7 +67,7 @@ export class AcFilterGroup {
     this.events.execute({event:'change',args:{  }});
   }
 
-  cloneInstance(): AcFilterGroup {
+  clone(): AcFilterGroup {
     return new AcFilterGroup().fromJson({ jsonData: this.toJson() });
   }
 

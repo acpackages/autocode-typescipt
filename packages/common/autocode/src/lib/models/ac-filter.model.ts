@@ -32,7 +32,7 @@ export class AcFilter {
     return result;
   }
 
-  cloneInstance():AcFilter{
+  clone():AcFilter{
     return new AcFilter().fromJson({jsonData:this.toJson()});
   }
 

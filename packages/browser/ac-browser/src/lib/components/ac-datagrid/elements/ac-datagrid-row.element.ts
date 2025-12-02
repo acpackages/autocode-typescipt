@@ -232,7 +232,8 @@ export class AcDatagridRowElement extends AcElementBase {
   }
 
   setDatagridCells(){
-    this.datagridCells = [];
+    if (this.datagridApi && this.datagridRow && this.initialized && this.isConnected) {
+this.datagridCells = [];
       const hookArgs: IAcDatagridRowHookArgs = {
         datagridRow: this.datagridRow,
         datagridApi: this.datagridApi
@@ -252,6 +253,8 @@ export class AcDatagridRowElement extends AcElementBase {
           this.refreshCells();
         }
       });
+    }
+
   }
 }
 
