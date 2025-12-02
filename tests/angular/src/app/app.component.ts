@@ -36,6 +36,7 @@ export class AppComponent implements AfterViewInit{
   }
 
   handleOnActiveRouterChange(event:IAcNgRouterOutlet){
+    this.windowsTabs.selectTab({id:event.id});
     // this.windowsTabs.addTab({ tab:{id: event.id, title: event.title, closeable: true, icon: '📘' }})
   }
 
