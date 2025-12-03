@@ -11,7 +11,7 @@ import { IAcDatagridColumnFilterChangeEvent } from "../interfaces/event-args/ac-
 import { IAcDatagridColumnSortChangeEvent } from "../interfaces/event-args/ac-datagrid-column-sort-change-event.interface";
 import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-column-position-change-event.interface";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
-import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
+import { IAcDatagridColumn } from "../interfaces/ac-datagrid-column.interface";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AC_DATAGRID_ICON_SVGS, AcSvgIcon } from "../../_components.export";
 
@@ -48,27 +48,27 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     });
   }
 
-  private _datagridColumn!: AcDatagridColumn;
-  get datagridColumn(): AcDatagridColumn {
+  private _datagridColumn!: IAcDatagridColumn;
+  get datagridColumn(): IAcDatagridColumn {
     return this._datagridColumn;
   }
-  set datagridColumn(value: AcDatagridColumn) {
+  set datagridColumn(value: IAcDatagridColumn) {
     this._datagridColumn = value;
-    value.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnSortChange, callback: (event: IAcDatagridColumnSortChangeEvent) => {
-        this.renderSort();
-      }
-    });
-    value.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnFilterChange, callback: (event: IAcDatagridColumnFilterChangeEvent) => {
-        this.renderFilter();
-      }
-    });
-    value.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
-        this.setCellWidth();
-      }
-    });
+    // value.hooks.subscribe({
+    //   hook: AcEnumDatagridHook.ColumnSortChange, callback: (event: IAcDatagridColumnSortChangeEvent) => {
+    //     this.renderSort();
+    //   }
+    // });
+    // value.hooks.subscribe({
+    //   hook: AcEnumDatagridHook.ColumnFilterChange, callback: (event: IAcDatagridColumnFilterChangeEvent) => {
+    //     this.renderFilter();
+    //   }
+    // });
+    // value.hooks.subscribe({
+    //   hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
+    //     this.setCellWidth();
+    //   }
+    // });
     this.initHeaderCell();
   }
 
@@ -236,7 +236,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   renderFilter() {
     this.filterElement.style.margin = 'auto';
     this.filterElement.style.cursor = 'pointer';
-    if (this.datagridColumn.filterGroup.hasFilters()) {
+    if (this.datagridColumn.filterGroup!.hasFilters()) {
       this.filterElement.svgCode = AC_DATAGRID_ICON_SVGS.appliedFilter;
     }
     else {

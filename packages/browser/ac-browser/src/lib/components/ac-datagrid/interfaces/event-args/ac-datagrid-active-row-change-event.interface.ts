@@ -1,9 +1,9 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
-import { AcDatagridRow } from "../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../../interfaces/ac-datagrid-row.interface";
 
 export interface IAcDatagridActiveRowChangeEvent{
-  oldActiveDatagridRow:AcDatagridRow|undefined,
-  activeDatagridRow:AcDatagridRow,
+  oldActiveDatagridRow:IAcDatagridRow|undefined,
+  activeDatagridRow:IAcDatagridRow,
   datagridApi:AcDatagridApi,
   event:any
 }

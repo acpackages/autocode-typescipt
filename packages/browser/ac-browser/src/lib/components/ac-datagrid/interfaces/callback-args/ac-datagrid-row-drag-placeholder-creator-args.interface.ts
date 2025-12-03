@@ -1,7 +1,7 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
-import { AcDatagridRow } from "../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../../interfaces/ac-datagrid-row.interface";
 
 export interface IAcDatagridRowDragPlaceholderCreatorArgs{
-  datagridRow:AcDatagridRow,
+  datagridRow:IAcDatagridRow,
   datagridApi:AcDatagridApi
 }

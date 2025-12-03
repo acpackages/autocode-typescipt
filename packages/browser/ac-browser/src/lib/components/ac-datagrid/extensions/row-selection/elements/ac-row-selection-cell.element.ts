@@ -4,8 +4,8 @@ import { acAddClassToElement } from "../../../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../../../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../../../core/ac-datagrid-api";
 import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 import { AcDatagridInternalColumn } from "../../../models/ac-datagrid-internal-column.model";
-import { AcDatagridRow } from "../../../models/ac-datagrid-row.model";
 import { AcDatagridRowSelectionCssClassName } from "../consts/ac-datagrid-row-selection-css-class-name.const";
 import { AcEnumDatagridRowSelectionHook } from "../enums/ac-enum-datagrid-row-selection-hook.enum";
 import { IAcDatagridRowSelectionChangeEvent } from "../interfaces/ac-datagrid-row-selection-change-event.interface";
@@ -13,19 +13,19 @@ import { IAcDatagridRowSelectionChangeEvent } from "../interfaces/ac-datagrid-ro
 export class AcDatagridRowSelectionCell {
   datagridApi: AcDatagridApi;
   datagridInternalColumn: AcDatagridInternalColumn;
-  datagridRow!: AcDatagridRow;
+  datagridRow!: IAcDatagridRow;
   element: HTMLElement = document.createElement('div');
   input: HTMLInputElement = document.createElement('input');
   selected:boolean = false;
 
-  constructor({ datagridApi, datagridRow, datagridInternalColumn }: { datagridApi: AcDatagridApi, datagridRow: AcDatagridRow, datagridInternalColumn: AcDatagridInternalColumn }) {
+  constructor({ datagridApi, datagridRow, datagridInternalColumn }: { datagridApi: AcDatagridApi, datagridRow: IAcDatagridRow, datagridInternalColumn: AcDatagridInternalColumn }) {
     this.datagridRow = datagridRow;
     this.datagridApi = datagridApi;
-    this.datagridRow.hooks.subscribe({
-      hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, callback: (event: IAcDatagridRowSelectionChangeEvent) => {
-        this.setSelectionFromInstance();
-      }
-    })
+    // this.datagridRow.hooks.subscribe({
+    //   hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, callback: (event: IAcDatagridRowSelectionChangeEvent) => {
+    //     this.setSelectionFromInstance();
+    //   }
+    // })
     this.datagridInternalColumn = datagridInternalColumn;
     this.initElement();
   }
@@ -46,8 +46,8 @@ export class AcDatagridRowSelectionCell {
   }
 
   setSelectionFromInstance(){
-    if(this.input && this.input.checked != this.datagridRow.extensionData[AcEnumDatagridExtension.RowSelection]){
-      this.input.checked = this.datagridRow.extensionData[AcEnumDatagridExtension.RowSelection];
+    if(this.input && this.input.checked != this.datagridRow.extensionData![AcEnumDatagridExtension.RowSelection]){
+      this.input.checked = this.datagridRow.extensionData![AcEnumDatagridExtension.RowSelection];
     }
   }
 

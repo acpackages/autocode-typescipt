@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { dateFormat, parseDateTimeString } from "@autocode-ts/ac-extensions";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs, AcDatagridColumn, AcEnumDatagridHook } from "../_ac-datagrid.export";
+import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs, IAcDatagridColumn, AcEnumDatagridHook, IAcDatagridCell } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
-import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
 
 export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   private datagridApi!: AcDatagridApi;
-  private datagridCell!:AcDatagridCell;
-  private datagridColumn!:AcDatagridColumn;
+  private datagridCell!:IAcDatagridCell;
+  private datagridColumn!:IAcDatagridColumn;
   public element: HTMLElement = document.createElement('div');
 
   destroy?(): void {

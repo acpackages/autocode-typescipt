@@ -1,10 +1,9 @@
-import { AC_DATAGRID_ATTRIBUTE, AcDatagridColumn, AcEnumDatagridHook, IAcDatagridActiveRowChangeEvent, IAcDatagridCellHookArgs, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent } from "../_ac-datagrid.export";
+import { AC_DATAGRID_ATTRIBUTE, IAcDatagridColumn, AcEnumDatagridHook, IAcDatagridActiveRowChangeEvent, IAcDatagridCellHookArgs, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent, IAcDatagridCell } from "../_ac-datagrid.export";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
+import { IAcDatagridRow } from "../interfaces/ac-datagrid-row.interface";
 import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-event.interface";
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { IAcDatagridStateChangeEvent } from "../interfaces/event-args/ac-datagrid-state-change-event.interface";
-import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
-import { AcDatagridRow } from "../models/ac-datagrid-row.model";
 import { AcDatagridApi } from "./ac-datagrid-api";
 
 export class AcDatagridEventHandler {
@@ -14,7 +13,7 @@ export class AcDatagridEventHandler {
     this.datagridApi = datagridApi;
   }
 
-  handleCellBlur({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellBlur({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     if (datagridCell.isActive) {
       if (datagridCell.element) {
         datagridCell.element.blur();
@@ -28,7 +27,7 @@ export class AcDatagridEventHandler {
     }
   }
 
-  handleCellClick({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellClick({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -37,7 +36,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellClick, args: eventArgs });
   }
 
-  handleCellDoubleClick({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellDoubleClick({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -46,7 +45,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellDoubleClick, args: eventArgs });
   }
 
-  handleCellEditingStart({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellEditingStart({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -55,7 +54,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellEditingStart, args: eventArgs });
   }
 
-  handleCellEditingStop({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellEditingStop({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -64,7 +63,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellEditingStop, args: eventArgs });
   }
 
-  handleCellFocus({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellFocus({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     if (!datagridCell.isActive) {
       this.datagridApi.setActiveCell({datagridCell});
       const eventArgs: IAcDatagridCellEvent = {
@@ -88,7 +87,7 @@ export class AcDatagridEventHandler {
     }
   }
 
-  handleCellKeyDown({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellKeyDown({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -98,7 +97,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellKeyDown, args: eventArgs });
   }
 
-  handleCellKeyPress({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellKeyPress({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -108,7 +107,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellKeyPress, args: eventArgs });
   }
 
-  handleCellKeyUp({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellKeyUp({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -117,7 +116,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellKeyUp, args: eventArgs });
   }
 
-  handleCellMouseDown({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellMouseDown({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -126,7 +125,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellMouseDown, args: eventArgs });
   }
 
-  handleCellMouseEnter({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellMouseEnter({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -150,7 +149,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellHover, args: hoverEventArgs });
   }
 
-  handleCellMouseLeave({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellMouseLeave({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -168,7 +167,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellMouseLeave, args: eventArgs });
   }
 
-  handleCellMouseMove({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellMouseMove({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -177,7 +176,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellMouseMove, args: eventArgs });
   }
 
-  handleCellMouseOver({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellMouseOver({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -186,7 +185,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellMouseOver, args: eventArgs });
   }
 
-  handleCellMouseUp({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellMouseUp({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -195,7 +194,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellMouseUp, args: eventArgs });
   }
 
-  handleCellTouchCancel({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellTouchCancel({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -204,7 +203,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellTouchCancel, args: eventArgs });
   }
 
-  handleCellTouchEnd({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellTouchEnd({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -213,7 +212,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellTouchEnd, args: eventArgs });
   }
 
-  handleCellTouchMove({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellTouchMove({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -222,7 +221,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellTouchMove, args: eventArgs });
   }
 
-  handleCellTouchStart({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellTouchStart({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const eventArgs: IAcDatagridCellEvent = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -231,7 +230,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellTouchStart, args: eventArgs });
   }
 
-  handleCellValueChange({ datagridCell, event }: { datagridCell: AcDatagridCell, event?: any }) {
+  handleCellValueChange({ datagridCell, event }: { datagridCell: IAcDatagridCell, event?: any }) {
     const hookArgs: IAcDatagridCellHookArgs = {
       datagridApi: this.datagridApi,
       datagridCell: datagridCell,
@@ -243,12 +242,12 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
-    datagridCell.events.execute({ event: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
+    // datagridCell.events.execute({ event: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellValueChange, args: eventArgs });
     this.notifyRowDataChange();
   }
 
-  handleColumnHeaderClick({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
+  handleColumnHeaderClick({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {
     const eventArgs: IAcDatagridColumnEvent = {
       datagridApi: this.datagridApi,
       datagridColumn: datagridColumn,
@@ -257,7 +256,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.ColumnHeaderClick, args: eventArgs });
   }
 
-  handleColumnPositionChange({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
+  handleColumnPositionChange({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {
     const eventArgs: IAcDatagridColumnEvent = {
       datagridApi: this.datagridApi,
       datagridColumn: datagridColumn,
@@ -267,7 +266,7 @@ export class AcDatagridEventHandler {
     this.notifyStateChange();
   }
 
-  handleColumnResize({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
+  handleColumnResize({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {
     if (this.columnResizeTimeouts[datagridColumn.columnId]) {
       clearTimeout(this.columnResizeTimeouts[datagridColumn.columnId]);
     }
@@ -284,7 +283,7 @@ export class AcDatagridEventHandler {
 
   }
 
-  handleColumnDataChange({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
+  handleColumnDataChange({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {
     const eventArgs: IAcDatagridColumnEvent = {
       datagridApi: this.datagridApi,
       datagridColumn: datagridColumn,
@@ -293,7 +292,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.ColumnDataChange, args: eventArgs });
   }
 
-  handleColumnVisibilityChange({ datagridColumn, event }: { datagridColumn: AcDatagridColumn, event?: any }) {
+  handleColumnVisibilityChange({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {
     const eventArgs: IAcDatagridColumnEvent = {
       datagridApi: this.datagridApi,
       datagridColumn: datagridColumn,
@@ -312,7 +311,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.PaginationChange, args: eventArgs });
   }
 
-  handleRowBlur({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowBlur({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -321,7 +320,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowBlur, args: eventArgs });
   }
 
-  handleRowClick({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowClick({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -330,7 +329,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowClick, args: eventArgs });
   }
 
-  handleRowDataChange({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDataChange({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -339,7 +338,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDataChange, args: eventArgs });
   }
 
-  handleRowDoubleClick({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDoubleClick({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -348,7 +347,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDoubleClick, args: eventArgs });
   }
 
-  handleRowEditingStart({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowEditingStart({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -357,7 +356,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowEditingStart, args: eventArgs });
   }
 
-  handleRowEditingStop({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowEditingStop({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -366,7 +365,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowEditingStop, args: eventArgs });
   }
 
-  handleRowFocus({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowFocus({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -375,7 +374,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowFocus, args: eventArgs });
   }
 
-  handleRowKeyDown({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowKeyDown({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -385,7 +384,7 @@ export class AcDatagridEventHandler {
 
   }
 
-  handleRowKeyPress({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowKeyPress({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -394,7 +393,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowKeyPress, args: eventArgs });
   }
 
-  handleRowMouseDown({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowMouseDown({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -403,7 +402,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowMouseDown, args: eventArgs });
   }
 
-  handleRowMouseEnter({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowMouseEnter({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -418,7 +417,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowHover, args: hoverEventArgs });
   }
 
-  handleRowMouseLeave({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowMouseLeave({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -427,7 +426,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowMouseLeave, args: eventArgs });
   }
 
-  handleRowMouseMove({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowMouseMove({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -436,7 +435,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowMouseMove, args: eventArgs });
   }
 
-  handleRowMouseOver({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowMouseOver({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -445,7 +444,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowMouseOver, args: eventArgs });
   }
 
-  handleRowMouseUp({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowMouseUp({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -454,7 +453,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowMouseUp, args: eventArgs });
   }
 
-  handleRowSelectionChange({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowSelectionChange({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -463,7 +462,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowSelectionChange, args: eventArgs });
   }
 
-  handleRowTouchCancel({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowTouchCancel({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -472,7 +471,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowTouchCancel, args: eventArgs });
   }
 
-  handleRowTouchEnd({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowTouchEnd({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -481,7 +480,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowTouchEnd, args: eventArgs });
   }
 
-  handleRowTouchMove({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowTouchMove({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -490,7 +489,7 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowTouchMove, args: eventArgs });
   }
 
-  handleRowTouchStart({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowTouchStart({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,

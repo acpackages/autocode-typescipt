@@ -51,9 +51,9 @@ export class DatagridComponent {
   }
 
   handleDatagridInit(){
-    // AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
+    AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
 
-    // this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
+    this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
     const button = document.createElement('button');
     button.setAttribute('class','btn btn-primary');
     button.setAttribute('type','button');

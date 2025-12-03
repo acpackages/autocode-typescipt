@@ -1,8 +1,8 @@
-import { acAddClassToElement, AcDatagridApi, AcDatagridCell, IAcDatagridCellRendererElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, IAcDatagridCell, IAcDatagridCellRendererElement, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class ActionsDatagridColumn implements IAcDatagridCellRendererElement{
   datagridApi!:AcDatagridApi;
-  datagridCell!:AcDatagridCell;
+  datagridCell!:IAcDatagridCell;
   element:HTMLDivElement = document.createElement('div');
   deleteButton:HTMLButtonElement = document.createElement('button');
   editButton:HTMLButtonElement = document.createElement('button');

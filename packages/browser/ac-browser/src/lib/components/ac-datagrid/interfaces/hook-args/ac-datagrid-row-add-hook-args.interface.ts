@@ -1,9 +1,9 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
-import { AcDatagridRow } from "../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../../interfaces/ac-datagrid-row.interface";
 
 export interface IAcDatagridRowAddHookArgs{
   datagridApi:AcDatagridApi,
-  datagridRow:AcDatagridRow,
+  datagridRow:IAcDatagridRow,
   append:boolean,
   highlightCells:boolean
 }

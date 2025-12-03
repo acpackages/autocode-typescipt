@@ -5,20 +5,20 @@ import { AcCollapse } from "../../../../ac-collapse/elements/ac-collapse.element
 import { acAddClassToElement } from "../../../../../utils/ac-element-functions";
 import { AcDatagridApi } from "../../../core/ac-datagrid-api";
 import { AcDatagridRowElement } from "../../../elements/ac-datagrid-row.element";
-import { AcDatagridRow } from "../../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 import { AcDatagridTreeTableCssClassName } from "../consts/ac-datagrid-tree-table-css-class-name.const";
 import { AcDatagridTreeTableDefaultConfig } from "../consts/ac-datagrid-tree-table-default-config.const";
 
 export class AcDatagridTree {
   collapse?:AcCollapse;
   datagridApi: AcDatagridApi;
-  datagridRow!: AcDatagridRow;
+  datagridRow!: IAcDatagridRow;
   element: HTMLElement = document.createElement('div');
   hasChildren:boolean = false;
   isOpen:boolean = false;
   treeDatagridContainer: HTMLElement = document.createElement('div');
 
-  constructor({ datagridApi, datagridRow }: { datagridApi: AcDatagridApi, datagridRow: AcDatagridRow }) {
+  constructor({ datagridApi, datagridRow }: { datagridApi: AcDatagridApi, datagridRow: IAcDatagridRow }) {
     this.datagridRow = datagridRow;
     this.datagridApi = datagridApi;
     this.initElement();

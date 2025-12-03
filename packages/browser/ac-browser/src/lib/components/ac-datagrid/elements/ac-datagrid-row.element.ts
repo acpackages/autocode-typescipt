@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridCellElement } from "./ac-datagrid-cell.element";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AC_DATAGRID_CLASS_NAME, AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
-import { AC_DATAGRID_TAG, AcDatagridAttributeName, AcEnumDatagridHook, IAcDatagridRowHookArgs } from "../_ac-datagrid.export";
-import { AcDatagridRow } from "../models/ac-datagrid-row.model";
+import { AC_DATAGRID_TAG, AcDatagridAttributeName, AcEnumDatagridHook, IAcDatagridRow, IAcDatagridRowHookArgs } from "../_ac-datagrid.export";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AcEnumDataManagerHook } from "@autocode-ts/autocode";
@@ -31,11 +31,11 @@ export class AcDatagridRowElement extends AcElementBase {
     // });
   }
 
-  private _datagridRow!: AcDatagridRow;
-  get datagridRow(): AcDatagridRow {
+  private _datagridRow!: IAcDatagridRow;
+  get datagridRow(): IAcDatagridRow {
     return this._datagridRow;
   }
-  set datagridRow(value: AcDatagridRow) {
+  set datagridRow(value: IAcDatagridRow) {
     value.element = this;
     this._datagridRow = value;
     this.initRow();
@@ -58,7 +58,7 @@ export class AcDatagridRowElement extends AcElementBase {
     this.container.classList.add(AC_DATAGRID_CLASS_NAME.acDatagridRowContainer);
     this.append(this.container);
     this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
-    if (this.datagridRow.displayIndex == 0 || this.datagridRow.displayIndex % 2 == 0) {
+    if (this.datagridRow.displayIndex == 0 || this.datagridRow.displayIndex! % 2 == 0) {
       acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridRowEven, element: this });
     }
     else {
@@ -248,11 +248,11 @@ this.datagridCells = [];
       }
       this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.RowCellsCreate, args: hookArgs });
       this.render();
-      this.datagridRow.hooks.subscribe({
-        hook: AcEnumDataManagerHook.DataChange, callback: (args: any) => {
-          this.refreshCells();
-        }
-      });
+      // this.datagridRow.hooks.subscribe({
+      //   hook: AcEnumDataManagerHook.DataChange, callback: (args: any) => {
+      //     this.refreshCells();
+      //   }
+      // });
     }
 
   }

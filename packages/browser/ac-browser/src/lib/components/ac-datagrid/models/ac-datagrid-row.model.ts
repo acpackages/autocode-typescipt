@@ -55,7 +55,7 @@ export class AcDatagridRow extends AcDataRow {
   }
 
   getFirstColumn():AcDatagridColumn | undefined {
-    let result: AcDatagridColumn | undefined;
+    let result:AcDatagridColumn | undefined;
     for (const cell of this.datagridCells) {
       const column = cell.datagridColumn;
       if (column.isFirst) {

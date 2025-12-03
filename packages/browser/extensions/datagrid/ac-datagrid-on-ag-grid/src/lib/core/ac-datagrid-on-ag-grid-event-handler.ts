@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridApi, AcDatagridCell, AcDatagridColumn } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { CellClickedEvent, GridApi, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, FullWidthCellKeyDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, PaginationChangedEvent, ComponentStateChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEndEvent, RowDragEnterEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowSelectedEvent, RowValueChangedEvent, SortChangedEvent, ModelUpdatedEvent } from "ag-grid-community";
 import { AcEnumSortOrder, AcLogger } from "@autocode-ts/autocode";
@@ -9,7 +9,7 @@ export class AcDatagridOnAgGridEventHandler {
   agGridExtension!: AcDatagridOnAgGridExtension;
   datagridApi!: AcDatagridApi;
   gridApi!: GridApi;
-  focusedDatagridCell?: AcDatagridCell;
+  focusedDatagridCell?: IAcDatagridCell;
   ignoreEvents:boolean = false;
   logger!:AcLogger;
 
@@ -217,7 +217,7 @@ export class AcDatagridOnAgGridEventHandler {
       this.logger.log("[AcDatagridOnAgGridEventHandler] columnResized: Event triggered.");
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
         this.logger.log("[AcDatagridOnAgGridEventHandler] columnResized: Event valid and not ignored.");
-        const datagridColumn: AcDatagridColumn = this.agGridExtension.getDatagridColumnFromEvent({ event: event });
+        const datagridColumn: IAcDatagridColumn = this.agGridExtension.getDatagridColumnFromEvent({ event: event });
         datagridColumn.width = event.column!.getActualWidth();
         this.logger.log(`[AcDatagridOnAgGridEventHandler] columnResized: Updated width to ${datagridColumn.width}, handling resize.`);
         this.datagridApi.eventHandler.handleColumnResize({ datagridColumn: datagridColumn });

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcDatagridColumn } from "../_ac-datagrid.export";
+import { IAcDatagridColumn } from "../_ac-datagrid.export";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
 import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
@@ -64,7 +64,7 @@ export class AcDatagridHeader extends AcElementBase{
   }
 
   setFlexColumnWidth(){
-    const flexColumns:AcDatagridColumn[] = [];
+    const flexColumns:IAcDatagridColumn[] = [];
     let currentTotalWidth:number = 0;
     for(const column of this.datagridApi.datagridColumns){
       if(column.visible){

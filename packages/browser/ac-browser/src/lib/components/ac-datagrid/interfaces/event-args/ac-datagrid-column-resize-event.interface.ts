@@ -1,9 +1,9 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
-import { AcDatagridColumn } from "../../models/ac-datagrid-column.model";
+import { IAcDatagridColumn } from "../../interfaces/ac-datagrid-column.interface";
 
 export interface IAcDatagridColumnResizeEvent{
   oldWidth:number,
   width:number,
-  datagridColumn:AcDatagridColumn,
+  datagridColumn:IAcDatagridColumn,
   datagridApi:AcDatagridApi
 }

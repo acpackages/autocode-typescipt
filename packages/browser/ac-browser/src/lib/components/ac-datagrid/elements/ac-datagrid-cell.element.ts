@@ -9,11 +9,10 @@ import { AcDatagridCellEditor } from "./ac-datagrid-cell-editor.element";
 import { AcDatagridCellRendererElement } from "./ac-datagrid-cell-renderer.element";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { IAcDatagridColumnResizeEvent } from "../interfaces/event-args/ac-datagrid-column-resize-event.interface";
-import { AcEnumDatagridHook, IAcDatagridCellEditor, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellHookArgs, IAcDatagridCellRenderer, IAcDatagridCellRendererElementInitEvent } from "../_ac-datagrid.export";
-import { AcDatagridColumn } from "../models/ac-datagrid-column.model";
-import { AcDatagridCell } from "../models/ac-datagrid-cell.model";
-import { AcDatagridRow } from "../models/ac-datagrid-row.model";
+import { AcEnumDatagridHook, IAcDatagridCell, IAcDatagridCellEditor, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellHookArgs, IAcDatagridCellRenderer, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumn } from "../_ac-datagrid.export";
 import { AcElementBase } from "../../../core/ac-element-base";
+import { IAcDatagridRow } from "../interfaces/ac-datagrid-row.interface";
+import { Autocode } from "@autocode-ts/autocode";
 
 export class AcDatagridCellElement extends AcElementBase {
   private _datagridApi!: AcDatagridApi;
@@ -25,25 +24,25 @@ export class AcDatagridCellElement extends AcElementBase {
     this.initCell();
   }
 
-  private _datagridColumn!: AcDatagridColumn;
-  get datagridColumn(): AcDatagridColumn {
+  private _datagridColumn!: IAcDatagridColumn;
+  get datagridColumn(): IAcDatagridColumn {
     return this._datagridColumn;
   }
-  set datagridColumn(value: AcDatagridColumn) {
+  set datagridColumn(value: IAcDatagridColumn) {
     this._datagridColumn = value;
-    value.hooks.subscribe({
-      hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
-        this.setCellWidth();
-      }
-    });
+    // value.hooks.subscribe({
+    //   hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
+    //     this.setCellWidth();
+    //   }
+    // });
     this.initCell();
   }
 
-  private _datagridRow!: AcDatagridRow;
-  get datagridRow(): AcDatagridRow {
+  private _datagridRow!: IAcDatagridRow;
+  get datagridRow(): IAcDatagridRow {
     return this._datagridRow;
   }
-  set datagridRow(value: AcDatagridRow) {
+  set datagridRow(value: IAcDatagridRow) {
     this._datagridRow = value;
     this.initCell();
   }
@@ -64,7 +63,7 @@ export class AcDatagridCellElement extends AcElementBase {
   cellRenderer!: IAcDatagridCellRenderer;
   activeComponent?: IAcDatagridCellRenderer | IAcDatagridCellEditor;
   checkCellValueChangeTimeout: any;
-  datagridCell!: AcDatagridCell;
+  datagridCell!: IAcDatagridCell;
   isEditing: boolean = false;
   swappingColumpPosition: boolean = false;
   initialized: boolean = false;
@@ -81,6 +80,188 @@ export class AcDatagridCellElement extends AcElementBase {
 
   override connectedCallback(): void {
     super.connectedCallback();
+
+  }
+
+  override destroy(): void {
+    super.destroy();
+    if (this.checkCellValueChangeTimeout) {
+      clearTimeout(this.checkCellValueChangeTimeout);
+      this.checkCellValueChangeTimeout = null;
+    }
+    if (this.cellRenderer && this.cellRenderer.destroy) {
+      this.cellRenderer.destroy();
+    }
+    (this.cellRenderer as any) = null;
+    if (this.cellEditor && this.cellEditor.destroy) {
+      this.cellEditor.destroy();
+    }
+    (this.cellEditor as any) = null;
+    this.activeComponent = undefined;
+    // if (this._datagridColumn?.hooks) {
+    //   this._datagridColumn.hooks.unsubscribe({
+    //     hook: AcEnumDatagridHook.ColumnWidthChange,
+    //     callback: this.setCellWidth.bind(this)
+    //   });
+    // }
+    if (this.container) {
+      this.container.innerHTML = '';
+      if (this.container.parentNode) {
+        this.container.remove();
+      }
+      this.container = null!;
+    }
+    this._datagridApi = null!;
+    this._datagridColumn = null!;
+    this._datagridRow = null!;
+    this.datagridCell = null!;
+    this.previousValue = null;
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    if (this._eventHandlers) {
+      for (const [event, handler] of this._eventHandlers) {
+        this.removeEventListener(event, handler);
+      }
+      this._eventHandlers.clear();
+    }
+  }
+
+  enterEditMode() {
+    this.initEditorElement();
+    if (this.cellEditor) {
+      this.container.innerHTML = "";
+      this.container.append(this.cellEditor.getElement());
+      this.activeComponent = this.cellEditor;
+    }
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
+    this.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
+    this.previousValue = this.datagridCell.cellValue;
+    this.isEditing = true;
+  }
+
+  exitEditMode() {
+    this.isEditing = false;
+    acRemoveClassFromElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
+    if (this.cellEditor) {
+      this.container.innerHTML = "";
+      this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+      this.activeComponent = this.cellRenderer;
+      this.container.append(this.cellRenderer.getElement());
+    }
+  }
+
+  override focus() {
+    if (this.datagridColumn.allowEdit) {
+      this.enterEditMode();
+    }
+    this.checkCellValueChange();
+    if (this.activeComponent && this.activeComponent.focus) {
+      this.activeComponent.focus();
+    }
+  }
+
+  override init(): void {
+    super.init();
+    this.initCell();
+    this.style.overflow = 'hidden';
+  }
+
+  private initCell() {
+    if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi && !this.initialized) {
+      this.initialized = true;
+      this.datagridCell = {
+        datagridColumn: this.datagridColumn,
+        datagridRow: this.datagridRow,
+        element: this,
+        cellId:Autocode.uuid(),
+        isActive:false,
+
+      };
+      if (this.datagridColumn.columnDefinition.cellRendererElement) {
+        this.cellRenderer = new this.datagridColumn.columnDefinition.cellRendererElement();
+        const elementInitEventArgs: IAcDatagridCellRendererElementInitEvent = {
+          datagridApi: this.datagridApi,
+          datagridCell: this.datagridCell,
+          cellRendererElementInstance: this.cellRenderer,
+        }
+        this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellRendererElementInit, args: elementInitEventArgs });
+      }
+      else if (this.datagridColumn.columnDefinition.cellEditorElement && this.datagridColumn.columnDefinition.useCellEditorForRenderer == true) {
+        this.initEditorElement();
+        if (this.cellEditor) {
+          this.cellRenderer = this.cellEditor;
+        }
+      }
+      else {
+        this.cellRenderer = new AcDatagridCellRendererElement();
+      }
+      this.cellRenderer.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+      this.activeComponent = this.cellRenderer;
+      const cellCreatedHookArgs: IAcDatagridCellHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridCell: this.datagridCell,
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DatagridCellCreate, args: cellCreatedHookArgs });
+      this.initElement()
+    }
+
+  }
+
+  initEditorElement() {
+    if (this.cellEditor == undefined) {
+      if (this.datagridColumn.columnDefinition.cellEditorElement) {
+        this.cellEditor = new this.datagridColumn.columnDefinition.cellEditorElement();
+      }
+      else {
+        this.cellEditor = new AcDatagridCellEditor();
+      }
+      if (this.cellEditor) {
+        this.cellEditor.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+        const inputElement = this.cellEditor.getElement();
+        acListenElementEvents({
+          element: inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
+            this.dispatchEvent(acCloneEvent(event));
+          }, mouse: true, keyboard: true, pointer: true, focus: true, form: true, touch: true, viewport: true
+        });
+        inputElement.addEventListener('change', () => {
+          this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
+        });
+        inputElement.addEventListener('input', () => {
+          this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
+        });
+        const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {
+          datagridApi: this.datagridApi,
+          datagridCell: this.datagridCell,
+          cellEditorElementInstance: this.cellEditor,
+        }
+        this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellEditorElementInit, args: editorInitEventArgs });
+      }
+    }
+  }
+
+  initElement() {
+    this.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.cellId);
+    this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.columnId);
+    this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
+    this.setAttribute('tabindex', "0");
+    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.container });
+    this.append(this.container);
+    this.container.setAttribute('style', 'display:contents');
+    this.container.append(this.cellRenderer.getElement());
+    this.setCellWidth();
+    this.setCellFocusable();
+  }
+
+  refresh() {
+    this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+    if (this.cellEditor) {
+      this.cellEditor.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
+    }
+  }
+
+  registerEventListeners(){
     const handleFocusOut = (e: FocusEvent) => {
       this.datagridApi.eventHandler.handleCellBlur({ datagridCell: this.datagridCell, event: e });
     };
@@ -198,182 +379,6 @@ export class AcDatagridCellElement extends AcElementBase {
     };
     this.addEventListener('touchstart', handleTouchStart, { passive: true });
     this._eventHandlers.set('touchstart', handleTouchStart);
-  }
-
-  override destroy(): void {
-    super.destroy();
-    if (this.checkCellValueChangeTimeout) {
-      clearTimeout(this.checkCellValueChangeTimeout);
-      this.checkCellValueChangeTimeout = null;
-    }
-    if (this.cellRenderer && this.cellRenderer.destroy) {
-      this.cellRenderer.destroy();
-    }
-    (this.cellRenderer as any) = null;
-    if (this.cellEditor && this.cellEditor.destroy) {
-      this.cellEditor.destroy();
-    }
-    (this.cellEditor as any) = null;
-    this.activeComponent = undefined;
-    if (this._datagridColumn?.hooks) {
-      this._datagridColumn.hooks.unsubscribe({
-        hook: AcEnumDatagridHook.ColumnWidthChange,
-        callback: this.setCellWidth.bind(this)
-      });
-    }
-    if (this.container) {
-      this.container.innerHTML = '';
-      if (this.container.parentNode) {
-        this.container.remove();
-      }
-      this.container = null!;
-    }
-    this._datagridApi = null!;
-    this._datagridColumn = null!;
-    this._datagridRow = null!;
-    this.datagridCell = null!;
-    this.previousValue = null;
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    if (this._eventHandlers) {
-      for (const [event, handler] of this._eventHandlers) {
-        this.removeEventListener(event, handler);
-      }
-      this._eventHandlers.clear();
-    }
-  }
-
-  enterEditMode() {
-    this.initEditorElement();
-    if (this.cellEditor) {
-      this.container.innerHTML = "";
-      this.container.append(this.cellEditor.getElement());
-      this.activeComponent = this.cellEditor;
-    }
-    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
-    this.classList.add(AcDatagridCssClassName.acDatagridCellEditing);
-    this.previousValue = this.datagridCell.cellValue;
-    this.isEditing = true;
-  }
-
-  exitEditMode() {
-    this.isEditing = false;
-    acRemoveClassFromElement({ class_: AcDatagridCssClassName.acDatagridCellEditing, element: this });
-    if (this.cellEditor) {
-      this.container.innerHTML = "";
-      this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-      this.activeComponent = this.cellRenderer;
-      this.container.append(this.cellRenderer.getElement());
-    }
-  }
-
-  override focus() {
-    if (this.datagridColumn.allowEdit) {
-      this.enterEditMode();
-    }
-    this.checkCellValueChange();
-    if (this.activeComponent && this.activeComponent.focus) {
-      this.activeComponent.focus();
-    }
-  }
-
-  override init(): void {
-    super.init();
-    this.initCell();
-    this.style.overflow = 'hidden';
-  }
-
-  private initCell() {
-    if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi && !this.initialized && this.isConnected) {
-      this.initialized = true;
-      this.datagridCell = new AcDatagridCell({
-        datagridColumn: this.datagridColumn,
-        datagridRow: this.datagridRow,
-        datagridApi: this.datagridApi,
-        element: this
-      });
-      if (this.datagridColumn.columnDefinition.cellRendererElement) {
-        this.cellRenderer = new this.datagridColumn.columnDefinition.cellRendererElement();
-        const elementInitEventArgs: IAcDatagridCellRendererElementInitEvent = {
-          datagridApi: this.datagridApi,
-          datagridCell: this.datagridCell,
-          cellRendererElementInstance: this.cellRenderer,
-        }
-        this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellRendererElementInit, args: elementInitEventArgs });
-      }
-      else if (this.datagridColumn.columnDefinition.cellEditorElement && this.datagridColumn.columnDefinition.useCellEditorForRenderer == true) {
-        this.initEditorElement();
-        if (this.cellEditor) {
-          this.cellRenderer = this.cellEditor;
-        }
-      }
-      else {
-        this.cellRenderer = new AcDatagridCellRendererElement();
-      }
-      this.cellRenderer.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-      this.activeComponent = this.cellRenderer;
-      const cellCreatedHookArgs: IAcDatagridCellHookArgs = {
-        datagridApi: this.datagridApi,
-        datagridCell: this.datagridCell,
-      };
-      this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.DatagridCellCreate, args: cellCreatedHookArgs });
-      this.initElement()
-    }
-
-  }
-
-  initEditorElement() {
-    if (this.cellEditor == undefined) {
-      if (this.datagridColumn.columnDefinition.cellEditorElement) {
-        this.cellEditor = new this.datagridColumn.columnDefinition.cellEditorElement();
-      }
-      else {
-        this.cellEditor = new AcDatagridCellEditor();
-      }
-      if (this.cellEditor) {
-        this.cellEditor.init({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-        const inputElement = this.cellEditor.getElement();
-        acListenElementEvents({
-          element: inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
-            this.dispatchEvent(acCloneEvent(event));
-          }, mouse: true, keyboard: true, pointer: true, focus: true, form: true, touch: true, viewport: true
-        });
-        inputElement.addEventListener('change', () => {
-          this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
-        });
-        inputElement.addEventListener('input', () => {
-          this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor?.getValue();
-        });
-        const editorInitEventArgs: IAcDatagridCellEditorElementInitEvent = {
-          datagridApi: this.datagridApi,
-          datagridCell: this.datagridCell,
-          cellEditorElementInstance: this.cellEditor,
-        }
-        this.datagridApi.events.execute({ event: AcEnumDatagridEvent.CellEditorElementInit, args: editorInitEventArgs });
-      }
-    }
-  }
-
-  initElement() {
-    this.setAttribute(AcDatagridAttributeName.acDatagridCellId, this.datagridCell.cellId);
-    this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.columnId);
-    this.setAttribute(AcDatagridAttributeName.acDatagridRowId, this.datagridRow.rowId);
-    this.setAttribute('tabindex', "0");
-    acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellContainer, element: this.container });
-    this.append(this.container);
-    this.container.setAttribute('style', 'display:contents');
-    this.container.append(this.cellRenderer.getElement());
-    this.setCellWidth();
-    this.setCellFocusable();
-  }
-
-  refresh() {
-    this.cellRenderer.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-    if (this.cellEditor) {
-      this.cellEditor.refresh({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
-    }
   }
 
   setCellWidth() {

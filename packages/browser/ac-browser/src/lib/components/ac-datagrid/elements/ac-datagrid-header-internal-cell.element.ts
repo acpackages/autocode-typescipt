@@ -2,7 +2,7 @@
 export class AcDatagridHeaderInternalCellElement {
   // cellContainer: HTMLElement = this.ownerDocument.createElement('div');
   // private datagridApi: AcDatagridApi;
-  // datagridColumn!: AcDatagridColumn;
+  // datagridColumn!: IAcDatagridColumn;
   // draggablePlaceholder?: HTMLElement;
   // element: HTMLElement = this.ownerDocument.createElement('div');
   // filterElement: HTMLElement = this.ownerDocument.createElement('button');
@@ -16,7 +16,7 @@ export class AcDatagridHeaderInternalCellElement {
   // swappingColumpPosition: boolean = false;
   // titleElement: HTMLElement = this.ownerDocument.createElement('div');
 
-  // constructor({ datagridApi, datagridColumn }: { datagridApi: AcDatagridApi, datagridColumn: AcDatagridColumn }) {
+  // constructor({ datagridApi, datagridColumn }: { datagridApi: AcDatagridApi, datagridColumn: IAcDatagridColumn }) {
   //   this.datagridColumn = datagridColumn;
   //   this.datagridApi = datagridApi;
   //   this.datagridApi.on({

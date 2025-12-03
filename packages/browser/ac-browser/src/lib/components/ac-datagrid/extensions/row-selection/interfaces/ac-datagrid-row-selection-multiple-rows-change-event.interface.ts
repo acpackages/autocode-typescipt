@@ -1,8 +1,8 @@
-import { AcDatagridApi, AcDatagridRow, AcDatagridRowSelectionExtension } from "../../../_ac-datagrid.export";
+import { AcDatagridApi, IAcDatagridRow, AcDatagridRowSelectionExtension } from "../../../_ac-datagrid.export";
 
 export interface IAcDatagridSelectionMultipleRowsChangeEvent{
   datagridApi:AcDatagridApi,
-  datagridRows:AcDatagridRow[],
+  datagridRows:IAcDatagridRow[],
   datagridRowSelectionExtension:AcDatagridRowSelectionExtension,
   isSelected:boolean;
 }

@@ -59,13 +59,13 @@ export class AcDatagridState {
       if (state[AcDatagridState.KeyColumns]) {
         this.columns = state[AcDatagridState.KeyColumns];
         for (const column of this.columns) {
-          const datagridColumn: AcDatagridColumn | undefined = this.datagridApi.datagridColumns.find((col) => {
-            return col.columnDefinition.field == column.field;
-          });
-          if (datagridColumn) {
-            datagridColumn.width = column.width;
-            datagridColumn.index = column.index;
-          }
+          // const datagridColumn: AcDatagridColumn | undefined = this.datagridApi.datagridColumns.find((col) => {
+          //   return col.columnDefinition.field == column.field;
+          // });
+          // if (datagridColumn) {
+          //   datagridColumn.width = column.width;
+          //   datagridColumn.index = column.index;
+          // }
         }
       }
       if (state[AcDatagridState.KeyExtensionStates]) {

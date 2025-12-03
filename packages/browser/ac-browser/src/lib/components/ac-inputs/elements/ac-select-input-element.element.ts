@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
-import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, AcDataRow, AcEnumDataManagerHook } from "@autocode-ts/autocode";
+import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, IAcDataRow, AcEnumDataManagerHook } from "@autocode-ts/autocode";
 import { createPopper } from '@popperjs/core';
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcScrollable } from "../../_components.export";
@@ -211,7 +211,7 @@ export class AcSelectInput extends AcInputBase {
     } else super.attributeChangedCallback(name, oldValue, newValue);
   }
 
-  private buildOptionElement(row: AcDataRow): HTMLElement {
+  private buildOptionElement(row: IAcDataRow): HTMLElement {
     const el = this.ownerDocument.createElement("div");
     el.dataset["optionIndex"] = String(row.displayIndex);
     el.style.padding = "4px 8px";
@@ -391,7 +391,7 @@ export class AcSelectInput extends AcInputBase {
     this.listEl.innerHTML = "";
     this.scrollable.pause();
     this.scrollable.clearAll();
-    let rows: AcDataRow[] = [];
+    let rows: IAcDataRow[] = [];
     const startIndex = 0;
     let rowsCount = -1;
     if (this.dataManager.type === 'ondemand') rowsCount = this.batchSize;

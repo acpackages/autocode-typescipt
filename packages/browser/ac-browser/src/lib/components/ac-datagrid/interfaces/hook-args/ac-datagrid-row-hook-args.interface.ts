@@ -1,8 +1,8 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
-import { AcDatagridRow } from "../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../ac-datagrid-row.interface";
 
 export interface IAcDatagridRowHookArgs{
   datagridApi:AcDatagridApi,
-  datagridRow:AcDatagridRow,
+  datagridRow:IAcDatagridRow,
   event?:any
 }

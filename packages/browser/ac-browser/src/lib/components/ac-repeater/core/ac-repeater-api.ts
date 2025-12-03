@@ -37,13 +37,13 @@ export class AcRepeaterApi{
   get repeaterRows(): AcRepeaterRow[] {
     let result: AcRepeaterRow[] = [];
     if (this.dataManager) {
-      result = this.dataManager.rows;
+      result = this.dataManager.rows as AcRepeaterRow[];
     }
     return result;
   }
 
   get displayedRepeaterRows(): AcRepeaterRow[] {
-    return this.dataManager.displayedRows;
+    return this.dataManager.displayedRows as AcRepeaterRow[];
   }
 
   private _usePagination: boolean = false;
@@ -66,7 +66,7 @@ export class AcRepeaterApi{
   activeRepeaterRow:AcRepeaterRow | undefined;
   repeater!: AcRepeater;
   repeaterState:AcRepeaterState;
-  dataManager: AcDataManager<AcRepeaterRow> = new AcDataManager(AcRepeaterRow);
+  dataManager: AcDataManager = new AcDataManager();
   eventHandler!:AcRepeaterEventHandler;
   events: AcEvents = new AcEvents();
   extensions: Record<string, AcRepeaterExtension> = {};

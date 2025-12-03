@@ -1,9 +1,9 @@
 import { AcDatagridApi } from "../../core/ac-datagrid-api";
-import { AcDatagridRow } from "../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../ac-datagrid-row.interface";
 
 export interface IAcDatagridRowFocusHookArgs{
   datagridApi:AcDatagridApi,
-  datagridRow:AcDatagridRow,
+  datagridRow:IAcDatagridRow,
   highlightCells:boolean;
   index:number
 }

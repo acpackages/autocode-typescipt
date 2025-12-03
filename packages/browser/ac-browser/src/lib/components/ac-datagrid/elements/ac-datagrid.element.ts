@@ -15,8 +15,8 @@ export class AcDatagrid extends AcElementBase {
   datagridFooter: AcDatagridFooter = new AcDatagridFooter();
   datagridHeader: AcDatagridHeader = new AcDatagridHeader();
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
     this.datagridBody.datagridApi = this.datagridApi;
     this.datagridFooter.datagridApi = this.datagridApi;
     this.datagridHeader.datagridApi = this.datagridApi;
@@ -28,6 +28,11 @@ export class AcDatagrid extends AcElementBase {
     this.datagridBody.destroy();
     this.datagridHeader.destroy();
     (this.datagridApi as any)= null;
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.destroy();
   }
 
   override init(): void {

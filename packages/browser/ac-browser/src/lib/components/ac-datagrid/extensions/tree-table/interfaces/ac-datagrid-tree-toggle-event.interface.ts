@@ -1,9 +1,9 @@
 import { AcDatagridApi } from "../../../core/ac-datagrid-api";
-import { AcDatagridRow } from "../../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 import { AcDatagridTree } from "../elements/ac-datagrid-tree.element";
 
 export interface IAcDatagridTreeToggleEvent{
-  datagridRow:AcDatagridRow,
+  datagridRow:IAcDatagridRow,
   datagridTree:AcDatagridTree,
   datagridApi:AcDatagridApi
 }

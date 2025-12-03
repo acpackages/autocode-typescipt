@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcArrayValuesInput, AcDatagridCell, AcEnumModalEvent, AcModal, AcTextInput, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcArrayValuesInput, IAcDatagridCell, AcEnumModalEvent, AcModal, AcTextInput, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditor {
-  datagridCell!: AcDatagridCell;
+  datagridCell!: IAcDatagridCell;
   textInput: AcTextInput = new AcTextInput();
   isModalOpen: boolean = false;
 

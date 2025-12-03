@@ -33,11 +33,9 @@ export class AcDatagridColumn {
   columnDefinition!: IAcDatagridColumnDefinition;
   datagridApi!: AcDatagridApi;
   dataType: AcEnumDatagridColumnDataType = AcEnumDatagridColumnDataType.String;
-  events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   filterGroup: AcFilterGroup = new AcFilterGroup();
   headerCellElement?: AcDatagridHeaderCellElement;
-  hooks: AcHooks = new AcHooks();
   index: number = -1;
   sortOrder: AcEnumSortOrder = AcEnumSortOrder.None;
 
@@ -75,11 +73,11 @@ export class AcDatagridColumn {
   }
   set visible(value: boolean) {
     this._visible = value;
-    const hookArgs: IAcDatagridColumnHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridColumn: this,
-    };
-    this.hooks.execute({ hook: AcEnumDatagridHook.ColumnVisibilityChange, args: hookArgs });
+    // const hookArgs: IAcDatagridColumnHookArgs = {
+    //   datagridApi: this.datagridApi,
+    //   datagridColumn: this,
+    // };
+    // this.hooks.execute({ hook: AcEnumDatagridHook.ColumnVisibilityChange, args: hookArgs });
   }
 
 
@@ -93,7 +91,7 @@ export class AcDatagridColumn {
       datagridApi: this.datagridApi,
       datagridColumn: this,
     };
-    this.hooks.execute({ hook: AcEnumDatagridHook.ColumnWidthChange, args: hookArgs });
+    // this.hooks.execute({ hook: AcEnumDatagridHook.ColumnWidthChange, args: hookArgs });
   }
 
   constructor({ columnDefinition, datagridApi, index = -1, width = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {
@@ -121,12 +119,12 @@ export class AcDatagridColumn {
       if (isValid) {
         if (column) {
           if (col.index < column.index && col.index > this.index) {
-            column = col;
+            // column = col;1
           }
         }
         else {
           if (col.index > this.index) {
-            column = col;
+            // column = col;
           }
         }
       }
@@ -146,21 +144,17 @@ export class AcDatagridColumn {
       if (isValid) {
         if (column) {
           if (col.index > column.index && col.index < this.index) {
-            column = col;
+            // column = col;
           }
         }
         else {
           if (col.index < this.index) {
-            column = col;
+            // column = col;
           }
         }
       }
     }
     return column;
-  }
-
-  on({ event, callback }: { event: string, callback: Function }): string {
-    return this.events.subscribe({ event, callback });
   }
 
 }

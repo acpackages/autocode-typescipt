@@ -5,12 +5,12 @@ export class AcDatagridInternalCellElement {
   // datagridApi: AcDatagridApi;
   // datagridInternalCell!: AcDatagridInternalCell;
   // datagridInternalColumn!: AcDatagridInternalColumn;
-  // datagridRow!: AcDatagridRow;
+  // datagridRow!: IAcDatagridRow;
   // element: HTMLElement = this.ownerDocument.createElement('div');
   // isEditing: boolean = false;
   // swappingColumpPosition: boolean = false;
 
-  // constructor({ datagridApi, datagridRow, datagridInternalColumn }: { datagridApi: AcDatagridApi, datagridRow: AcDatagridRow, datagridInternalColumn: AcDatagridInternalColumn }) {
+  // constructor({ datagridApi, datagridRow, datagridInternalColumn }: { datagridApi: AcDatagridApi, datagridRow: IAcDatagridRow, datagridInternalColumn: AcDatagridInternalColumn }) {
   //   this.datagridRow = datagridRow;
   //   this.datagridInternalColumn = datagridInternalColumn;
   //   this.datagridApi = datagridApi;

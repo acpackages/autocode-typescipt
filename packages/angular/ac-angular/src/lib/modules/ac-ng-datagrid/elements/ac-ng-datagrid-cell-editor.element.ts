@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApplicationRef,ComponentRef,EmbeddedViewRef,TemplateRef,Type } from '@angular/core';
-import { AcDatagridCell, AcDatagridColumn, AcDatagridRow, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from '@autocode-ts/ac-browser';
+import { IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
@@ -10,9 +10,9 @@ import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-
  * Supports both TemplateRef and Component-based editors.
  */
 export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
-  private datagridCell!: AcDatagridCell;
-  private datagridColumn!: AcDatagridColumn;
-  private datagridRow!: AcDatagridRow;
+  private datagridCell!: IAcDatagridCell;
+  private datagridColumn!: IAcDatagridColumn;
+  private datagridRow!: IAcDatagridRow;
   private columnDefinition:IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 

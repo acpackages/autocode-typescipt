@@ -1,4 +1,4 @@
-export const dataDictionaryJson =  {
+export const dataDictionaryJson ={
   "name": "Accountea - Pro",
   "version": 1,
   "tables": {
@@ -33,6 +33,10 @@ export const dataDictionaryJson =  {
             },
             "UNIQUE_KEY": {
               "propertyName": "UNIQUE_KEY",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -124,6 +128,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -605,6 +613,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -805,6 +817,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -1020,6 +1036,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Address Line 1"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -1108,6 +1128,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Postal Code"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -1171,6 +1195,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -1185,6 +1213,10 @@ export const dataDictionaryJson =  {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -1198,6 +1230,10 @@ export const dataDictionaryJson =  {
             },
             "is_select_distinct": {
               "propertyName": "is_select_distinct",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -1675,6 +1711,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -1998,6 +2038,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -2136,6 +2180,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -2175,6 +2223,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -2188,6 +2240,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -2408,6 +2464,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -2558,6 +2618,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -2729,6 +2793,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -2829,6 +2897,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -2948,8 +3020,8 @@ export const dataDictionaryJson =  {
             }
           }
         },
-        "uom_name": {
-          "columnName": "uom_name",
+        "chargeable_service_uom_name": {
+          "columnName": "chargeable_service_uom_name",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -2959,11 +3031,15 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
-        "uom_quantity": {
-          "columnName": "uom_quantity",
+        "chargeable_service_uom_quantity": {
+          "columnName": "chargeable_service_uom_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -3028,6 +3104,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -3075,6 +3155,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -3197,6 +3281,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -3253,6 +3341,10 @@ export const dataDictionaryJson =  {
             },
             "PRIMARY_KEY": {
               "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -3446,6 +3538,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -3560,6 +3656,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -3751,6 +3851,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Number"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -3885,6 +3989,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -4046,6 +4154,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -4364,6 +4476,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -4467,6 +4583,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -4644,6 +4764,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -4886,6 +5010,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -4896,6 +5024,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Label"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }
@@ -5376,6 +5508,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -5572,6 +5708,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -5668,6 +5808,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -5909,6 +6053,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -6045,6 +6193,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "GST No"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }
@@ -6897,6 +7049,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }
@@ -7079,6 +7235,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -7097,6 +7257,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Number"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -7201,6 +7365,10 @@ export const dataDictionaryJson =  {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -7229,6 +7397,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -7239,6 +7411,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -7434,6 +7610,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -7618,6 +7798,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -8020,6 +8204,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -8159,6 +8347,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -8229,6 +8421,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -8372,6 +8568,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -8554,6 +8754,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -8727,8 +8931,8 @@ export const dataDictionaryJson =  {
             }
           }
         },
-        "uom_name": {
-          "columnName": "uom_name",
+        "product_uom_name": {
+          "columnName": "product_uom_name",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8738,11 +8942,15 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
-        "uom_quantity": {
-          "columnName": "uom_quantity",
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8840,6 +9048,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -9069,6 +9281,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -9092,6 +9308,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -9215,6 +9435,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -9877,6 +10101,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -10216,6 +10444,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -10380,6 +10612,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -11022,6 +11258,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -11283,6 +11523,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Order#"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -11396,6 +11640,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Service Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -11971,6 +12219,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -12268,6 +12520,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Note#"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -12440,6 +12696,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -12547,6 +12807,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Coupon Identifier"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -12713,6 +12977,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Code"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -12854,6 +13122,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -13453,6 +13725,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -13778,6 +14054,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Invoice#"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -13907,6 +14187,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Service Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -14482,6 +14766,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -14799,6 +15087,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Maintenance#"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -15271,6 +15563,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -15389,6 +15685,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Service Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -15795,6 +16095,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -16090,6 +16394,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quotation#"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -16193,6 +16501,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Service Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -16768,6 +17080,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product Description"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -17085,6 +17401,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Note#"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -17247,6 +17567,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -17407,6 +17731,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -17417,6 +17745,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }
@@ -17945,6 +18277,10 @@ export const dataDictionaryJson =  {
               "propertyValue": [
                 "UPPERCASE"
               ]
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -18109,6 +18445,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Packing Name"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -19035,6 +19375,10 @@ export const dataDictionaryJson =  {
               "propertyValue": [
                 "UPPERCASE"
               ]
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -19454,6 +19798,10 @@ export const dataDictionaryJson =  {
               "propertyValue": [
                 "UPPERCASE"
               ]
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -19614,6 +19962,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -19662,6 +20014,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -19682,6 +20038,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Unique Identifier"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }
@@ -19815,6 +20175,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Service Code"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -19983,13 +20347,17 @@ export const dataDictionaryJson =  {
             }
           }
         },
-        "supplier_product_code": {
-          "columnName": "supplier_product_code",
+        "supplier_product_sku": {
+          "columnName": "supplier_product_sku",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Product Code"
+              "propertyValue": "Product SKU"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -20247,6 +20615,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -20364,6 +20736,10 @@ export const dataDictionaryJson =  {
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
             }
           }
@@ -21064,6 +21440,10 @@ export const dataDictionaryJson =  {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }
@@ -21141,6 +21521,10 @@ export const dataDictionaryJson =  {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         }

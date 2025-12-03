@@ -7,18 +7,18 @@ import { acAddClassToElement, acRemoveClassFromElement } from "../../../../../ut
 import { AcDatagridTreeTableCssClassName } from "../consts/ac-datagrid-tree-table-css-class-name.const";
 import { AcDatagridTreeTableHtmlPlaceholder } from "../consts/ac-datagrid-tree-table-html-placeholder.const";
 import { AcDatagridInternalColumn } from "../../../models/ac-datagrid-internal-column.model";
-import { AcDatagridRow } from "../../../models/ac-datagrid-row.model";
+import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 
 export class AcDatagridTreeTableChildrenToggleCell {
   datagridApi: AcDatagridApi;
   datagridInternalColumn: AcDatagridInternalColumn;
-  datagridRow!: AcDatagridRow;
+  datagridRow!: IAcDatagridRow;
   datagridTree!: AcDatagridTree;
   element: HTMLElement = document.createElement('button');
   extension!:AcDatagridRowDraggingExtension;
   isOpen: boolean = false;
 
-  constructor({ datagridApi,datagridInternalColumn , datagridRow, extension }: { datagridApi: AcDatagridApi, datagridRow: AcDatagridRow,datagridInternalColumn: AcDatagridInternalColumn,extension:AcDatagridTreeTableExtension }) {
+  constructor({ datagridApi,datagridInternalColumn , datagridRow, extension }: { datagridApi: AcDatagridApi, datagridRow: IAcDatagridRow,datagridInternalColumn: AcDatagridInternalColumn,extension:AcDatagridTreeTableExtension }) {
     this.datagridRow = datagridRow;
     this.datagridApi = datagridApi;
     this.datagridInternalColumn = datagridInternalColumn;

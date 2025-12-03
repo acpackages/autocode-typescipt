@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents, AcHooks, Autocode } from "@autocode-ts/autocode";
+import { Autocode } from "@autocode-ts/autocode";
 import { AcDatagridCellElement } from "../elements/ac-datagrid-cell.element";
 import { AcDatagridRow } from "./ac-datagrid-row.model";
 import { AcDatagridColumn } from "./ac-datagrid-column.model";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { AC_DATAGRID_ATTRIBUTE } from "../consts/ac-datagrid-attribute.const";
+import { IAcDatagridRow } from "../interfaces/ac-datagrid-row.interface";
 
 export class AcDatagridCell {
   private _isActive: boolean = false;
@@ -28,9 +29,8 @@ export class AcDatagridCell {
 
   cellId: string = Autocode.uuid();
   datagridApi!: AcDatagridApi;
-  datagridRow!: AcDatagridRow;
+  datagridRow!: IAcDatagridRow;
   datagridColumn!: AcDatagridColumn;
-  events: AcEvents = new AcEvents();
   extensionData: Record<string, any> = {};
   isPinnedLeft: boolean = false;
   isPinnedRight: boolean = false;
@@ -63,17 +63,17 @@ export class AcDatagridCell {
   }
 
   constructor({ datagridApi, datagridColumn, datagridRow, element }:
-    { datagridApi: AcDatagridApi, datagridColumn: AcDatagridColumn, datagridRow: AcDatagridRow, element?: AcDatagridCellElement }) {
+    { datagridApi: AcDatagridApi, datagridColumn: AcDatagridColumn, datagridRow: IAcDatagridRow, element?: AcDatagridCellElement }) {
     this.datagridApi = datagridApi;
     this.datagridColumn = datagridColumn;
     this.datagridRow = datagridRow;
     this.columnIndex = datagridColumn.index;
     this.rowIndex = datagridRow.index;
+    if(this.datagridRow.datagridCells == undefined){
+      this.datagridRow.datagridCells = [];
+    }
     this.datagridRow.datagridCells.push(this);
     this.element = element;
   }
 
-  on({ event, callback }: { event: string, callback: Function }): string {
-    return this.events.subscribe({ event, callback });
-  }
 }

@@ -6,7 +6,7 @@ import {
   TemplateRef,
   Type,
 } from '@angular/core';
-import { IAcDatagridCellRenderer, AcDatagridCell, IAcDatagridCellElementArgs, AcDatagridColumn, AcDatagridRow } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellRenderer, IAcDatagridCell, IAcDatagridCellElementArgs, IAcDatagridColumn, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
@@ -15,9 +15,9 @@ import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-
  * Supports both TemplateRef and Component renderers.
  */
 export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
-  private datagridCell!: AcDatagridCell;
-  private datagridColumn!: AcDatagridColumn;
-  private datagridRow!: AcDatagridRow|any;
+  private datagridCell!: IAcDatagridCell;
+  private datagridColumn!: IAcDatagridColumn;
+  private datagridRow!: IAcDatagridRow|any;
   private columnDefinition:IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 

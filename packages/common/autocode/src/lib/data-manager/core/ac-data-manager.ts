@@ -21,12 +21,13 @@ import { IAcDataManagerBeforeGetOnDemandDataHookArgs } from "../interfaces/hook-
 import { IAcDataManagerDataChangeHookArgs } from "../interfaces/hook-args/ac-data-manager-data-change-hook-args.interface";
 import { IAcDataManagerGetOnDemandDataSuccessCallbackHookArgs } from "../interfaces/hook-args/ac-data-manager-get-on-demand-data-success-callback-hook-args.interface";
 import { IAcDataManagerRowHookArgs } from "../interfaces/hook-args/ac-data-row-hook-args.interface";
-import { AcDataRow } from "../models/ac-data-row.model";
 import { IAcDataManagerRowEvent } from "../interfaces/event-args/ac-data-manager-row-event.interface";
 import { AcLogger } from "../../core/ac-logger";
 import { IAcDataManagerDataEvent } from "../_data-manager.export";
+import { IAcDataRow } from "../interfaces/ac-data-row.interface";
+import { Autocode } from "../../core/autocode";
 
-export class AcDataManager<T extends AcDataRow = AcDataRow> {
+export class AcDataManager {
   private _data: any[] = [];
   get data(): any[] {
     return this._data;
@@ -39,11 +40,11 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     }
   }
 
-  private _displayedRows: T[] = [];
-  get displayedRows(): T[] {
+  private _displayedRows: IAcDataRow[] = [];
+  get displayedRows(): IAcDataRow[] {
     return this._displayedRows;
   }
-  set displayedRows(value: T[]) {
+  set displayedRows(value: IAcDataRow[]) {
     this.logger.log("Setting displayedRows", { oldLength: this._displayedRows.length, newLength: value.length });
     if (value != this._displayedRows) {
       this._displayedRows = value;
@@ -158,10 +159,10 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   }
 
   allDataAvailable: boolean = true;
-  allRows: T[] = [];
+  allRows: IAcDataRow[] = [];
   autoSetUniqueIdToData: boolean = false;
   firstDataNotified:boolean = false;
-  rows: T[] = [];
+  rows: IAcDataRow[] = [];
   events: AcEvents = new AcEvents();
   hooks: AcHooks = new AcHooks();
   isWorking: boolean = false;
@@ -174,20 +175,23 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
   refreshRowsTimeoutDuration = 100;
   private initialized:boolean = false;
 
-  constructor(private DataRow: new (...args: any[]) => T = AcDataRow as any) {
+  constructor() {
     this.logger.log("Initializing AcDataManager");
     this.logger.log("Initialized AcDataManager");
   }
 
-  addData({ data = {} }: { data?: any } = {}): T {
+  addData({ data = {} }: { data?: any } = {}): IAcDataRow {
     this.logger.log("Adding data", { dataKeys: Object.keys(data) });
     this._data.push(data);
     const index: number = this._data.length - 1;
-    const dataRow: T = new this.DataRow({
+    const dataRow: IAcDataRow = {
       data: data,
       index: index,
-      dataManager: this
-    });
+      displayIndex:-1,
+      extensionData:{},
+      isPlaceholder:false,
+      rowId:Autocode.uuid()
+    };
     this.allRows.push(dataRow);
     this.rows.push(dataRow);
     this.totalRows++;
@@ -237,9 +241,9 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     return available;
   }
 
-  deleteRow({ data, rowId, key, value }: { data?: any, rowId?: string, key?: string, value?: any }): T | undefined {
+  deleteRow({ data, rowId, key, value }: { data?: any, rowId?: string, key?: string, value?: any }): IAcDataRow | undefined {
     this.logger.log("Deleting row", { rowId, key, value });
-    const dataRow: T | undefined = this.rows.find((dataRow: T) => {
+    const dataRow: IAcDataRow | undefined = this.rows.find((dataRow: IAcDataRow) => {
       let valid: boolean = false;
       if (rowId) {
         valid = dataRow.rowId == rowId;
@@ -268,7 +272,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     return dataRow;
   }
 
-  private evaluateFilter(filter: AcFilter, row: T): boolean {
+  private evaluateFilter(filter: AcFilter, row: IAcDataRow): boolean {
     this.logger.log("Evaluating filter", { key: filter.key, operator: filter.operator, value: filter.value });
     const field = filter.key;
     if (!field) {
@@ -388,7 +392,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     return result;
   }
 
-  private evaluateFilterGroup(group: AcFilterGroup, row: T): boolean {
+  private evaluateFilterGroup(group: AcFilterGroup, row: IAcDataRow): boolean {
     this.logger.log("Evaluating filter group", { operator: group.operator, filtersCount: group.filters.length, subGroupsCount: group.filterGroups.length });
     const results: boolean[] = [];
 
@@ -415,7 +419,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     return combinedResult;
   }
 
-  private evaluateSearch(searchQuery: string, row: T, searchKeys: string[]): boolean {
+  private evaluateSearch(searchQuery: string, row: IAcDataRow, searchKeys: string[]): boolean {
     this.logger.log("Evaluating search", { query: searchQuery, searchKeysLength: searchKeys.length, rowIndex: row.index });
     let isValid: boolean = true;
     if (searchQuery) {
@@ -438,7 +442,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
 
   async getData({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): Promise<any[]> {
     this.logger.log("Getting data", { startIndex, rowsCount });
-    const allRows: T[] = await this.getRows({ startIndex, rowsCount });
+    const allRows: IAcDataRow[] = await this.getRows({ startIndex, rowsCount });
     const result: any[] = [];
     for (const row of allRows) {
       result.push(row.data);
@@ -447,7 +451,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     return result;
   }
 
-  async getRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): Promise<T[]> {
+  async getRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): Promise<IAcDataRow[]> {
     this.logger.log("Getting rows", { startIndex, rowsCount, type: this.type });
     this.lastStartIndex = startIndex;
     this.lastRowsCount = rowsCount;
@@ -461,7 +465,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       }
       this.logger.log("Rows set from existing data", { fromIndex, toIndex, fetchedCount: result.length });
     };
-    const result: T[] = [];
+    const result: IAcDataRow[] = [];
     if (this.type === "ondemand") {
       if (this.onDemandFunction) {
         if (this.checkOnDemandRowsAvailable({ startIndex, rowsCount })) {
@@ -470,7 +474,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         }
         else {
           this.logger.log("Fetching on-demand data");
-          return new Promise<T[]>((resolve, reject) => {
+          return new Promise<IAcDataRow[]>((resolve, reject) => {
             const requestArgs: IAcOnDemandRequestArgs = {
               filterGroup: this.filterGroup.clone(),
               sortOrder: this.sortOrder.clone(),
@@ -549,25 +553,25 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
 
   getRowIndex({ key, value }: { key: string, value: any }): number {
     this.logger.log("Getting row index", { key, value });
-    const index = this.allRows.findIndex((row: T) => {
+    const index = this.allRows.findIndex((row: IAcDataRow) => {
       return row.data[key] == value;
     });
     this.logger.log("Row index retrieval complete", { index });
     return index;
   }
 
-  getRowAtIndex({ index }: { index: number }): T | undefined {
+  getRowAtIndex({ index }: { index: number }): IAcDataRow | undefined {
     this.logger.log("Getting row at index", { index });
-    const row = this.allRows.find((row: T) => {
+    const row = this.allRows.find((row: IAcDataRow) => {
       return row.index == index;
     });
     this.logger.log("Row at index retrieval complete", { index, found: !!row });
     return row;
   }
 
-  getRow({ key, value }: { key: string, value: any }): T | undefined {
+  getRow({ key, value }: { key: string, value: any }): IAcDataRow | undefined {
     this.logger.log("Getting row", { key, value });
-    const row = this.allRows.find((row: T) => {
+    const row = this.allRows.find((row: IAcDataRow) => {
       return row.data[key] == value;
     });
     this.logger.log("Row retrieval complete", { key, found: !!row });
@@ -595,19 +599,19 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         if (this.searchQuery) {
           const keys: any = Object.keys(filteredRows[0].data);
           this.logger.log("Applying search filter", { query: this.searchQuery, keysLength: keys.length });
-          filteredRows = filteredRows.filter((row: T) => this.evaluateSearch(this.searchQuery, row, keys));
+          filteredRows = filteredRows.filter((row: IAcDataRow) => this.evaluateSearch(this.searchQuery, row, keys));
           this.logger.log("Search filter applied", { filteredLength: filteredRows.length });
         }
         if (this.filterGroup && (this.filterGroup.hasFilters() || this.filterGroup.filterGroups.length > 0)) {
           this.logger.log("Applying filter group");
-          filteredRows = filteredRows.filter((row: T) => this.evaluateFilterGroup(this.filterGroup, row));
+          filteredRows = filteredRows.filter((row: IAcDataRow) => this.evaluateFilterGroup(this.filterGroup, row));
           this.logger.log("Filter group applied", { filteredLength: filteredRows.length });
         }
       }
       this.rows = filteredRows;
       if (this.sortOrder.sortOrders.length > 0) {
         this.logger.log("Applying sort orders");
-        this.rows.sort((a: T, b: T): number => {
+        this.rows.sort((a: IAcDataRow, b: IAcDataRow): number => {
           let index = 0;
           for (const sort of this.sortOrder.sortOrders) {
             const field = sort.key;
@@ -699,11 +703,12 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
       let index = 0;
       this.allRows = [];
       for (const row of this._data) {
-        const dataRow: T = new this.DataRow({
+        const dataRow: IAcDataRow = {
+          rowId:Autocode.uuid(),
           data: row,
           index: index,
-          dataManager: this
-        });
+          displayIndex:-1,
+        };
         this.allRows.push(dataRow);
         const hookArgs: IAcDataManagerRowHookArgs = {
           dataManager: this,
@@ -726,12 +731,12 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
         this._data = new Array(totalCount).fill(undefined);
         this.allRows = [];
         for (let index = 0; index < totalCount; index++) {
-          const dataRow: T = new this.DataRow({
+          const dataRow: IAcDataRow = {
+            rowId:Autocode.uuid(),
             data: {},
             isPlaceholder: true,
             index: index,
-            dataManager: this
-          });
+          };
           this.allRows[index] = dataRow;
         }
       }
@@ -770,7 +775,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.logger.log("Setting displayed rows", { startIndex, rowsCount });
     this.lastDisplayedRowsCount = rowsCount;
     this.lastDisplayedStartIndex = startIndex;
-    const displayedRows: T[] = await this.getRows({ startIndex, rowsCount });
+    const displayedRows: IAcDataRow[] = await this.getRows({ startIndex, rowsCount });
     this.logger.log("Setting displayed rows display index");
     let displayIndex: number = startIndex - 1;
     for (const row of displayedRows) {
@@ -781,7 +786,7 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.logger.log("Displayed rows set complete", { length: displayedRows.length });
   }
 
-  async setDisplayedRowIndexes({ startIndex = 0, displayedRows }: { startIndex?: number; displayedRows?: T[]; } = {}) {
+  async setDisplayedRowIndexes({ startIndex = 0, displayedRows }: { startIndex?: number; displayedRows?: IAcDataRow[]; } = {}) {
     this.logger.log("Setting displayed row indexes", { startIndex });
     if (displayedRows == undefined) {
       displayedRows = this._displayedRows;
@@ -795,9 +800,9 @@ export class AcDataManager<T extends AcDataRow = AcDataRow> {
     this.logger.log("Displayed row indexes set complete", { length: displayedRows.length });
   }
 
-  updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): T | undefined {
+  updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDataRow | undefined {
     this.logger.log("Updating row", { rowId, key, value, dataKeys: Object.keys(data), addIfMissing });
-    let dataRow: T | undefined = this.rows.find((row) => {
+    let dataRow: IAcDataRow | undefined = this.rows.find((row) => {
       let valid: boolean = false;
       if (rowId) {
         valid = row.rowId == rowId;

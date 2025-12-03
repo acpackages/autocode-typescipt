@@ -1,4 +1,4 @@
-import { AcDatagridApi, AcDatagridRow, AcEnumDatagridEvent, IAcDatagridRowEvent } from "../../../_ac-datagrid.export";
+import { AcDatagridApi, IAcDatagridRow, AcEnumDatagridEvent, IAcDatagridRowEvent } from "../../../_ac-datagrid.export";
 import { AcDatagridRowDraggingExtension } from "./_core.export";
 
 export class AcDatagridRowDraggingEventHandler {
@@ -9,7 +9,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi = rowDraggingExtension.datagridApi;
   }
 
-  handleRowDrag({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDrag({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -18,7 +18,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDrag, args: eventArgs });
   }
 
-   handleRowDragCancel({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+   handleRowDragCancel({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -27,7 +27,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnd, args: eventArgs });
   }
 
-  handleRowDragDrop({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDragDrop({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -36,7 +36,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragDrop, args: eventArgs });
   }
 
-  handleRowDragEnd({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDragEnd({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -45,7 +45,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnd, args: eventArgs });
   }
 
-  handleRowDragEnter({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDragEnter({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -54,7 +54,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnter, args: eventArgs });
   }
 
-  handleRowDragLeave({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDragLeave({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -63,7 +63,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragLeave, args: eventArgs });
   }
 
-  handleRowDragOver({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDragOver({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,
@@ -72,7 +72,7 @@ export class AcDatagridRowDraggingEventHandler {
     this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragOver, args: eventArgs });
   }
 
-  handleRowDragStart({ datagridRow, event }: { datagridRow: AcDatagridRow, event?: any }) {
+  handleRowDragStart({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     const eventArgs: IAcDatagridRowEvent = {
       datagridApi: this.datagridApi,
       datagridRow: datagridRow,

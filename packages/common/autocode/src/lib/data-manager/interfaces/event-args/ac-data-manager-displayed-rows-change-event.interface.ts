@@ -1,7 +1,7 @@
 import { AcDataManager } from "../../core/ac-data-manager";
-import { AcDataRow } from "../../models/ac-data-row.model";
+import { IAcDataRow } from "../ac-data-row.interface";
 
-export interface IAcDataManagerDisplayedRowsChangeEvent<T extends AcDataRow = AcDataRow>{
+export interface IAcDataManagerDisplayedRowsChangeEvent<T extends IAcDataRow = IAcDataRow>{
   displayedRows:T[],
   dataManager:AcDataManager,
 }

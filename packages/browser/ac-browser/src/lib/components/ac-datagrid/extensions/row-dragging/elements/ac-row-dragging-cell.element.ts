@@ -6,22 +6,22 @@ import { acAddClassToElement } from "../../../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../../../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../../../core/ac-datagrid-api";
 import { AcDatagridInternalColumn } from "../../../models/ac-datagrid-internal-column.model";
-import { AcDatagridRow } from "../../../models/ac-datagrid-row.model";
 import { AcDatagridRowDraggingCssClassName } from "../consts/ac-datagrid-row-dragging-css-class-name.const";
 import { AcDatagridRowDraggingHtmlPlaceholder } from "../consts/ac-datagrid-row-dragging-html-placeholder.const";
 import { AcDatagridRowDraggingExtension } from "../core/ac-datagrid-row-dragging-extension";
+import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 
 export class AcDatagridRowDraggingCell {
   datagridApi: AcDatagridApi;
   datagridInternalColumn: AcDatagridInternalColumn;
-  datagridRow!: AcDatagridRow;
+  datagridRow!: IAcDatagridRow;
   element: HTMLElement = document.createElement('div');
   extension!:AcDatagridRowDraggingExtension;
   draggableSortInstance?:AcDraggableSortElement;
   dragHandle: HTMLElement = document.createElement('div');
   selected:boolean = false;
 
-  constructor({ datagridApi, datagridRow, datagridInternalColumn,extension }: { datagridApi: AcDatagridApi, datagridRow: AcDatagridRow, datagridInternalColumn: AcDatagridInternalColumn,extension:AcDatagridRowDraggingExtension }) {
+  constructor({ datagridApi, datagridRow, datagridInternalColumn,extension }: { datagridApi: AcDatagridApi, datagridRow: IAcDatagridRow, datagridInternalColumn: AcDatagridInternalColumn,extension:AcDatagridRowDraggingExtension }) {
     this.datagridRow = datagridRow;
     this.datagridApi = datagridApi;
     this.datagridInternalColumn = datagridInternalColumn;

@@ -1,10 +1,10 @@
-import { AcDatagridApi, AcDatagridCell } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, IAcDatagridCell } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 
 export interface IAcDDEDatagridCellInitHookArgs{
   editorApi:AcDDEApi,
   datagridApi:AcDatagridApi,
-  datagridCell:AcDatagridCell,
+  datagridCell:IAcDatagridCell,
   eventArgs:any
   instance:any
 }

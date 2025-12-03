@@ -3,10 +3,10 @@ import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
 import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
 import { AcEnumDatagridHook } from "../../../enums/ac-enum-datagrid-hooks.enum";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
+import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 import { IAcDatagridHeaderHookArgs } from "../../../interfaces/hook-args/ac-datagrid-header-hook-args.interface";
 import { IAcDatagridRowHookArgs } from "../../../interfaces/hook-args/ac-datagrid-row-hook-args.interface";
 import { AcDatagridInternalColumn } from "../../../models/ac-datagrid-internal-column.model";
-import { AcDatagridRow } from "../../../models/ac-datagrid-row.model";
 import { AcDatagridRowSelectionCell } from "../elements/ac-row-selection-cell.element";
 import { AcDatagridRowSelectionHeaderCell } from "../elements/ac-row-selection-header-cell.element";
 import { AcEnumDatagridRowSelectionEvent } from "../enums/ac-enum-datagrid-row-selection-event.enum";
@@ -53,10 +53,10 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     this.setAllRowsSelection({isSelected:false});
   }
 
-  getSelectedRows(): AcDatagridRow[] {
-    const selectedRows: AcDatagridRow[] = [];
+  getSelectedRows(): IAcDatagridRow[] {
+    const selectedRows: IAcDatagridRow[] = [];
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData[AcEnumDatagridExtension.RowSelection].isSelected) {
+      if (row.extensionData![AcEnumDatagridExtension.RowSelection].isSelected) {
         selectedRows.push(row);
       }
     }
@@ -66,7 +66,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   getSelectedRowsData(): any[] {
     const selectedData: any[] = [];
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData[AcEnumDatagridExtension.RowSelection].isSelected) {
+      if (row.extensionData![AcEnumDatagridExtension.RowSelection].isSelected) {
         selectedData.push(row.data);
       }
     }
@@ -76,7 +76,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   getSelectedRowsDataKeyValues({ key }: { key: string }): any[] {
     const selectedKeyValues: any[] = [];
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData[AcEnumDatagridExtension.RowSelection] && row.data[key] != undefined) {
+      if (row.extensionData![AcEnumDatagridExtension.RowSelection] && row.data[key] != undefined) {
         selectedKeyValues.push(row.data[key]);
       }
     }
@@ -105,7 +105,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     const rowExtensionData: IAcDatagridRowSelectionData = {
       isSelected: false
     };
-    datagridRow.extensionData[AcEnumDatagridExtension.RowSelection] = rowExtensionData;
+    datagridRow.extensionData![AcEnumDatagridExtension.RowSelection] = rowExtensionData;
     if (datagridRow.element) {
       const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
       datagridRow.element.append(datagriRowNumberCell.element);
@@ -126,14 +126,14 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
 
   setAllRowsSelection({ isSelected }: { isSelected: boolean }) {
     for (const datagridRow of this.datagridApi.datagridRows) {
-      datagridRow.extensionData[AcEnumDatagridExtension.RowSelection].isSelected = isSelected;
+      datagridRow.extensionData![AcEnumDatagridExtension.RowSelection].isSelected = isSelected;
       const rowEventArgs: IAcDatagridRowSelectionChangeEvent = {
         datagridApi: this.datagridApi,
         datagridRow: datagridRow,
         isSelected: isSelected,
         datagridRowSelectionExtension: this
       };
-      datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: rowEventArgs });
+      // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: rowEventArgs });
     }
     const eventArgs: IAcDatagridSelectionMultipleRowsChangeEvent = {
       datagridApi: this.datagridApi,
@@ -144,7 +144,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange, args: eventArgs });
   }
 
-  setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: AcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
+  setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: IAcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
     if (datagridRow == undefined && rowId) {
       datagridRow = this.datagridApi.getRowById({ rowId: rowId });
     }
@@ -152,7 +152,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
       datagridRow = this.datagridApi.getRowByKeyValue({ key: key, value: value });
     }
     if (datagridRow) {
-      datagridRow.extensionData[AcEnumDatagridExtension.RowSelection].isSelected = isSelected;
+      datagridRow.extensionData![AcEnumDatagridExtension.RowSelection].isSelected = isSelected;
       const eventArgs: IAcDatagridRowSelectionChangeEvent = {
         datagridApi: this.datagridApi,
         datagridRow: datagridRow,
@@ -160,7 +160,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
         datagridRowSelectionExtension: this
       };
       this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
-      datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
+      // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
       this.datagridApi.events.execute({ event: AcEnumDatagridRowSelectionEvent.RowSelectionChange, args: eventArgs });
     }
   }

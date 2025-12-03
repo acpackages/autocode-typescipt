@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringEqualsIgnoreCase } from "@autocode-ts/ac-extensions";
-import { AcDatagridCell, AcDatagridRow, AcEnumDatagridHook } from "../../../_ac-datagrid.export";
+import { IAcDatagridCell, IAcDatagridRow, AcEnumDatagridHook } from "../../../_ac-datagrid.export";
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
 import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
@@ -25,8 +25,8 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if(this.autoAddNewRow) {
       if(stringEqualsIgnoreCase(hook,AcEnumDatagridHook.CellValueChange)){
-        const datagridCell:AcDatagridCell = args.datagridCell;
-        const datagridRow:AcDatagridRow = datagridCell.datagridRow;
+        const datagridCell:IAcDatagridCell = args.datagridCell;
+        const datagridRow:IAcDatagridRow = datagridCell.datagridRow;
         if(datagridRow.isLast){
           this.datagridApi.addRow();
         }
