@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { AcEnumDatagridDataExportXlsxHook } from "../enums/ac-enum-datagrid-data-export-xlsx-hook.enum";
 import { IAcDatagridDataExportXlsxExportCallArgs } from "../interfaces/ac-datagrid-data-export-xlsx-export-call-args.interface";
@@ -33,6 +33,6 @@ export class AcDatagridDataExportXlsxExtension extends AcDatagridExtension {
 }
 
 export const AcDataExportXlsxDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.DataExportXlsx,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.DataExportXlsx,
   extensionClass: AcDatagridDataExportXlsxExtension
 }

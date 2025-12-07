@@ -1,67 +1,82 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
+
 import { AcHookExecutionResult } from "../models/ac-hook-execution-result.model";
 import { Autocode } from "./autocode";
 
 export class AcHooks {
-  private hooks: Record<string, Record<string, Function>> = {};
-  private allHookCallbacks: Record<string, Function> = {};
+  // Map<lowercaseHookName, Map<subscriptionId, callback>>
+  private hooks = new Map<string, Map<string, Function>>();
 
+  // Global ("all hooks") listeners: subscriptionId → callback
+  private allHookCallbacks = new Map<string, Function>();
+
+  /** Clear all hook subscriptions (e.g. hot reload, tests, cleanup) */
   clearSubscriptions() {
-    this.hooks = {};
-    this.allHookCallbacks = {};
+    this.hooks.clear();
+    this.allHookCallbacks.clear();
   }
 
-  execute({ hook, args = [] }: { hook: string; args?: any; }): AcHookExecutionResult {
+  /**
+   * Execute a hook with arguments
+   * Hook handlers can return AcHookExecutionResult or any value
+   * If any handler sets .continueOperation = false → execution stops early
+   */
+  execute({ hook, args = [] }: { hook: string; args?: any }): AcHookExecutionResult {
     const result = new AcHookExecutionResult();
+    const name = hook.toLowerCase();
+    const functionResults: Record<string, any> = {};
+    let continueOperation = true;
+
     try {
-      const name = hook.toLowerCase();
-      const functionResults: Record<string, any> = {};
-      let continueOperation = true;
-
-      if (this.hooks[name]) {
-        const functionsToExecute = this.hooks[name];
-
-        for (const [functionId, fun] of Object.entries(functionsToExecute)) {
+      // Execute specific hook listeners
+      const hookListeners = this.hooks.get(name);
+      if (hookListeners) {
+        for (const [subId, callback] of hookListeners.entries()) {
           if (!continueOperation) break;
+
           try {
-            const functionResult = fun(args);
+            const res = callback(args);
 
-            if (functionResult) {
-              functionResults[functionId] = functionResult;
+            if (res !== undefined && res !== null) {
+              functionResults[subId] = res;
 
-              if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
+              // Support both AcHookExecutionResult and plain objects
+              const isFailure = typeof (res as any).isFailure === "function" && (res as any).isFailure();
+              const shouldStop = (res as any).continueOperation === false;
+
+              if (isFailure || shouldStop) {
                 continueOperation = false;
-              }
-
-              if (functionResult.continueOperation !== true) {
                 result.continueOperation = false;
               }
             }
-          } catch (ex) {
-            console.error(ex);
+          } catch (ex: any) {
+            console.error(`Hook handler failed [${name}] (id: ${subId}):`, ex);
           }
         }
       }
 
-      for (const [functionId, fun] of Object.entries(this.allHookCallbacks)) {
+      // Execute global ("all hooks") listeners
+      for (const [subId, callback] of this.allHookCallbacks.entries()) {
         if (!continueOperation) break;
+
         try {
-          const functionResult = fun(name, args);
+          const res = callback(name, args);
 
-          if (functionResult) {
-            functionResults[functionId] = functionResult;
+          if (res !== undefined && res !== null) {
+            functionResults[subId] = res;
 
-            if (typeof functionResult.isFailure === 'function' && functionResult.isFailure()) {
+            const isFailure = typeof (res as any).isFailure === "function" && (res as any).isFailure();
+            const shouldStop = (res as any).continueOperation === false;
+
+            if (isFailure || shouldStop) {
               continueOperation = false;
-            }
-
-            if (functionResult.continueOperation !== true) {
               result.continueOperation = false;
             }
           }
-        } catch (ex) {
-          console.error(ex);
+        } catch (ex: any) {
+          console.error(`Global hook handler failed (id: ${subId}):`, ex);
         }
       }
 
@@ -71,106 +86,112 @@ export class AcHooks {
       }
 
       result.setSuccess();
-    } catch (ex) {
+    } catch (ex: any) {
       result.setException({ exception: ex });
-      console.error(ex);
+      console.error("Critical error in AcHooks.execute():", ex);
     }
-
+    (args as any) = null;
     return result;
   }
 
-  subscribe({
-    hook,
-    callback,
-  }: {
-    hook: string;
-    callback: Function;
-  }): string {
+  /**
+   * Subscribe to a specific hook
+   * @returns subscriptionId — save this to unsubscribe later!
+   */
+  subscribe({ hook, callback }: { hook: string; callback: Function }): string {
     const name = hook.toLowerCase();
-    if (!this.hooks[name]) {
-      this.hooks[name] = {};
+
+    let hookMap = this.hooks.get(name);
+    if (!hookMap) {
+      hookMap = new Map<string, Function>();
+      this.hooks.set(name, hookMap);
     }
+
     const subscriptionId = Autocode.uniqueId();
-    this.hooks[name][subscriptionId] = callback;
+    hookMap.set(subscriptionId, callback);
     return subscriptionId;
   }
 
+  /**
+   * Subscribe to ALL hooks (receives hook name + args)
+   */
   subscribeAllHooks({ callback }: { callback: Function }): string {
     const subscriptionId = Autocode.uniqueId();
-    this.allHookCallbacks[subscriptionId] = callback;
+    this.allHookCallbacks.set(subscriptionId, callback);
     return subscriptionId;
   }
 
-
-  unsubscribe({ hook, callback, subscriptionId }: { hook?: string; callback?: Function, subscriptionId?: string }): boolean {
-    let removed: boolean = false;
-    if (subscriptionId) {
-      for (const hook in this.hooks) {
-        const hookFunctions = this.hooks[hook];
-        if (hookFunctions[subscriptionId]) {
-          delete hookFunctions[subscriptionId];
-          removed = true;
-        }
-      }
-
-    }
-    else if (callback) {
-      const removeFunction = (hookName: string): boolean => {
-        let found: boolean = false;
-        const hookFunctions = this.hooks[hookName];
-        if (hookFunctions) {
-          for (const subscriptionId of Object.keys(hookFunctions)) {
-            if (!found) {
-              if (hookFunctions[subscriptionId] == callback) {
-                delete hookFunctions[subscriptionId];
-                found = true;
-                break;
-              }
-            }
-          }
-        }
-
-        return found;
-      };
-      if (hook) {
-        removed = removeFunction(hook);
-      }
-      else {
-        for (const hookName of Object.keys(this.hooks)) {
-          if (!removed) {
-            const found = removeFunction(hookName);
-            if (found) {
-              removed = true;
-              break;
-            }
-          }
-        }
-      }
-    }
-    return removed;
-  }
-
-  unsubscribeAllHooks({ callback, subscriptionId }: { callback?: Function, subscriptionId?: string }): boolean {
-    let removed: boolean = false;
-    if (subscriptionId) {
-      if (this.allHookCallbacks[subscriptionId]) {
-        delete this.allHookCallbacks[subscriptionId];
-      }
-    }
-    else {
-      for (const subscriptionId of Object.keys(this.allHookCallbacks)) {
-        if (!removed) {
-          if (this.allHookCallbacks[subscriptionId] == callback) {
-            delete this.allHookCallbacks[subscriptionId];
-            removed = true;
+  /**
+   * Unsubscribe using subscriptionId (only reliable way)
+   */
+  unsubscribe({ hook,callback,subscriptionId }: { hook?:string,callback?: Function,subscriptionId?: string }): boolean {
+    if(event && callback){
+      for (const name of Object.keys(this.hooks)) {
+        if (name == hook) {
+          for (const id of Object.keys(this.hooks.get(name)!)) {
+            subscriptionId = id;
             break;
           }
+          break;
         }
       }
     }
+    if (!subscriptionId) return false;
+
+    let removed = false;
+
+    // Remove from specific events
+    for (const eventMap of this.hooks.values()) {
+      if (eventMap.delete(subscriptionId)) {
+        removed = true;
+      }
+    }
+
     return removed;
   }
 
+  unsubscribeAllEvents({ callback,subscriptionId }: { callback?:Function,subscriptionId?: string }): boolean {
+    if(callback){
+      for (const id of Object.keys(this.allHookCallbacks)) {
+        if (this.allHookCallbacks.get(id) == callback) {
+            subscriptionId = id;
+          }
+      }
+    }
+    if (!subscriptionId) return false;
+    return this.allHookCallbacks.delete(subscriptionId);
+  }
+
+  /**
+   * Remove an entire hook and all its listeners
+   */
+  removeHook({ hook }: { hook: string }): void {
+    this.hooks.delete(hook.toLowerCase());
+  }
+
+  /**
+   * Debug: Get subscription stats
+   */
+  getSubscriptionCount(): {
+    total: number;
+    perHook: Record<string, number>;
+    allHooks: number;
+  } {
+    const perHook: Record<string, number> = {};
+    let total = 0;
+
+    for (const [hookName, map] of this.hooks.entries()) {
+      perHook[hookName] = map.size;
+      total += map.size;
+    }
+
+    return {
+      total: total + this.allHookCallbacks.size,
+      perHook,
+      allHooks: this.allHookCallbacks.size,
+    };
+  }
 }
 
+/** Global singleton — safe now */
 export const acHooks = new AcHooks();

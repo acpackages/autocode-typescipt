@@ -3,7 +3,7 @@
 import { acAddClassToElement } from "../../../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../../../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../../../core/ac-datagrid-api";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 import { AcDatagridInternalColumn } from "../../../models/ac-datagrid-internal-column.model";
 import { AcDatagridRowSelectionCssClassName } from "../consts/ac-datagrid-row-selection-css-class-name.const";
@@ -46,8 +46,8 @@ export class AcDatagridRowSelectionCell {
   }
 
   setSelectionFromInstance(){
-    if(this.input && this.input.checked != this.datagridRow.extensionData![AcEnumDatagridExtension.RowSelection]){
-      this.input.checked = this.datagridRow.extensionData![AcEnumDatagridExtension.RowSelection];
+    if(this.input && this.input.checked != this.datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection]){
+      this.input.checked = this.datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection];
     }
   }
 

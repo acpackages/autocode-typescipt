@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { AcDatagridApi, IAcDatagridColumn, IAcDatagridRow, AcEnumDatagridHook, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridColumnDefinition } from "../_ac-datagrid.export";
+import { AcDatagridApi, IAcDatagridColumn, IAcDatagridRow, AC_DATAGRID_HOOK, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridColumnDefinition } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { IAcDatagridCell } from "../interfaces/ac-datagrid-cell.interface";
@@ -77,9 +77,9 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor {
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.element.value = args.datagridCell.cellValue;
+    this.element.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
     if(this.datagridApi){
-      this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.CellEditorRefresh,args:this});
+      this.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.CellEditorRefresh,args:this});
     }
   }
 
@@ -91,7 +91,7 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor {
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridCellEditorInput, element: this.element });
     this.element.style.height = "100%";
     this.element.style.width = "100%";
-    this.element.value = this.datagridCell.cellValue;
+    this.element.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
   }
 
 }

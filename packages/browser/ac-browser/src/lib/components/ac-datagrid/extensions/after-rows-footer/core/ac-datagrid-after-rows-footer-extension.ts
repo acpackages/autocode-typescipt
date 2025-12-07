@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { AcEnumDatagridAfterRowsFooterHook } from "../enums/ac-enum-datagrid-after-rows-footer-hook.enum";
 import { IAcDatagridAfterRowsFooterHookArgs } from "../interfaces/ac-datagrid-after-rows-footer-hook-args.interface";
@@ -22,6 +22,6 @@ export class AcDatagridAfterRowsFooterExtension extends AcDatagridExtension {
 }
 
 export const AcAfterRowsFooterDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.AfterRowsFooter,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.AfterRowsFooter,
   extensionClass: AcDatagridAfterRowsFooterExtension
 }

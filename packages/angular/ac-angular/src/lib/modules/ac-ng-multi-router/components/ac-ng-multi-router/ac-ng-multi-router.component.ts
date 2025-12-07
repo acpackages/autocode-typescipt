@@ -4,22 +4,26 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, ComponentRef, ElementRef } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { IAcNgRouterOutlet } from '../../_ac-ng-mutli-router.export';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { Autocode } from '@autocode-ts/autocode';
+import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
+import { AcNgRouterComponent } from '../ac-ng-router/ac-ng-router.component';
 
 @Component({
   selector: 'ac-ng-multi-router',
   standalone: false,
-  templateUrl: `./ac-ng-multi-router.component.html`,
+  template: `<ng-container #panels></ng-container>`,
   styles: [``]
 })
 export class AcNgMultiRouterComponent implements OnInit{
-  routers: IAcNgRouterOutlet[] = [];
+  routerOutlets: IAcNgRouterOutlet[] = [];
   activeRouterOutlet: IAcNgRouterOutlet | null = null;
   private sub = new Subscription();
+  private routers:Map<string,AcNgRouterComponent> = new Map();
 
   @Output() onActiveChange:EventEmitter<any> = new EventEmitter();
   @Output() onAdd:EventEmitter<any> = new EventEmitter();
@@ -27,7 +31,7 @@ export class AcNgMultiRouterComponent implements OnInit{
 
   @ViewChild('panels', { read: ViewContainerRef }) panels!: ViewContainerRef;
 
-  constructor(private router: Router) {}
+  constructor(private elementRef:ElementRef,private router: Router,private runtimeService:AcRuntimeService) {}
 
   ngOnInit() {
     this.sub.add(this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe(() => this.loadCurrentRoute()));
@@ -35,7 +39,7 @@ export class AcNgMultiRouterComponent implements OnInit{
   }
 
   private loadCurrentRoute() {
-    if (this.routers.length > 0) return;
+    if (this.routerOutlets.length > 0) return;
 
     const urlTree = this.router.parseUrl(this.router.url);
     const primary = urlTree.root.children['primary'];
@@ -49,11 +53,14 @@ export class AcNgMultiRouterComponent implements OnInit{
 
   add({route,title = 'New Tab'}:{route: any[], title?: string}) {
     const id = Autocode.uuid();
-    const newRouter: IAcNgRouterOutlet = { id, title,route,isActive: true };
-    this.routers = this.routers.map(t => ({ ...t, isActive: false }));
-    this.routers.push(newRouter);
 
+    const newRouter: IAcNgRouterOutlet = { id, title,route,isActive: false };
+    // this.routerOutlets = this.routerOutlets.map(t => ({ ...t, isActive: false }));
+    this.routerOutlets.push(newRouter);
     this.onAdd.emit(newRouter);
+    const componentRef:ComponentRef<AcNgRouterComponent> = this.panels.createComponent(AcNgRouterComponent);
+    componentRef.instance.id = id;
+    this.routers.set(id,componentRef.instance);
 
     this.setActive({id});
     this.router.navigate(route);
@@ -61,24 +68,29 @@ export class AcNgMultiRouterComponent implements OnInit{
   }
 
   setActive({id}:{id:string}) {
+    const targetRouter = this.routerOutlets.find((router:IAcNgRouterOutlet) => router.id === id);
+    if (!targetRouter || targetRouter.isActive) return;
+
+
     if(this.activeRouterOutlet){
+      this.routers.get(this.activeRouterOutlet.id).visible = false;
       this.activeRouterOutlet.isActive = false;
     }
-    this.activeRouterOutlet = this.routers.find((router:IAcNgRouterOutlet)=>{
-      return router.id == id;
-    });
-    this.activeRouterOutlet.isActive =true;
-    this.onActiveChange.emit(this.activeRouterOutlet);
+    this.activeRouterOutlet = targetRouter;
+    targetRouter.isActive = true;
+    this.routers.get(this.activeRouterOutlet.id).visible = true;
+    this.onActiveChange.emit(targetRouter);
   }
 
   remove({id}:{id:string}) {
+    const removedRouter = this.routerOutlets.find(t => t.id === id);
+    if (!removedRouter) return;
 
-    const removedRouter = this.routers.find(t => t.id !== id);
     this.router.navigate([{ outlets: { [id]: null } }]);
 
-    this.routers = this.routers.filter(t => t.id !== id);
-    if (this.activeRouterOutlet?.id === id && this.routers.length > 0) {
-      const last = this.routers[this.routers.length - 1];
+    this.routerOutlets = this.routerOutlets.filter(t => t.id !== id);
+    if (this.activeRouterOutlet?.id === id && this.routerOutlets.length > 0) {
+      const last = this.routerOutlets[this.routerOutlets.length - 1];
       this.setActive({id:last.id});
     }
     this.onRemove.emit(removedRouter);

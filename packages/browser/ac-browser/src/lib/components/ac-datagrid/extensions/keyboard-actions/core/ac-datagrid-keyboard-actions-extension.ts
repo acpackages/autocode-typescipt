@@ -4,7 +4,7 @@
 import { acScrollIntoViewIfHidden } from "../../../../../utils/ac-element-functions";
 import { IAcDatagridCell, IAcDatagridColumn, IAcDatagridRow } from "../../../_ac-datagrid.export";
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 
 export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
@@ -16,8 +16,8 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
         const datagridCell: IAcDatagridCell = this.datagridApi.activeCell;
         const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
         const datagridColumn: IAcDatagridColumn = datagridCell.datagridColumn;
-        let newColumnIndex = datagridCell.columnIndex;
-        let newRowIndex = datagridCell.rowIndex;
+        let newColumnIndex = datagridColumn.index;
+        let newRowIndex = datagridRow.index;
         // switch (event.key) {
         //   case 'ArrowUp':
         //     if (datagridCell.rowIndex > 0) {
@@ -55,7 +55,7 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
         //   default:
         //     return; // Allow other keys (e.g., typing in editable cells)
         // }
-        if(newColumnIndex != datagridCell.columnIndex || newRowIndex != datagridCell.rowIndex){
+        if(newColumnIndex != datagridColumn.index || newRowIndex != datagridRow.index){
           event.preventDefault();
           this.datagridApi.setActiveCell({rowIndex:newRowIndex,columnIndex:newColumnIndex});
           if(this.datagridApi.activeCell.element){
@@ -67,10 +67,10 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
   }
 
   // override handleHook({ hook, args }: { hook: string; args: any; }): void {
-  //   if (stringEqualsIgnoreCase(hook, AcEnumDatagridHook.CellKeyDown)) {
+  //   if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.CellKeyDown)) {
   //     this.handleCellKeyUp(args);
   //   }
-  //   else if (hook == AcEnumDatagridHook.CellFocus) {
+  //   else if (hook == AC_DATAGRID_HOOK.CellFocus) {
   //     this.navigate = true;
   //   }
   // }
@@ -93,6 +93,6 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
 }
 
 export const AcKeyboardActionsDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.KeyboardActions,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.KeyboardActions,
   extensionClass: AcDatagridKeyboardActionsExtension
 }

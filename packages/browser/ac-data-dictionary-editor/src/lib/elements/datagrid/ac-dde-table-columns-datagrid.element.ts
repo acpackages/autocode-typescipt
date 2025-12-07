@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDTableColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-select-column-type-input.element";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
@@ -89,7 +89,7 @@ export class AcDDETableColumnsDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         args.datagridRow.data[AcEnumDDETableColumn.DataDictionaryId] = this.editorApi.activeDataDictionary?.dataDictionaryId;
         const row = this.editorApi.dataStorage.addTableColumn(args.datagridRow.data);
         args.datagridRow.data = row;
@@ -97,17 +97,17 @@ export class AcDDETableColumnsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowDelete, callback: (args: IAcDatagridRowEvent) => {
         this.editorApi.dataStorage.deleteTableColumn({ columnId: args.datagridRow.data[AcEnumDDETableColumn.ColumnId] });
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
+      event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
         this.editorApi.dataStorage.setTableColumnProperties(args.datagridCell.datagridRow.data);
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -119,7 +119,7 @@ export class AcDDETableColumnsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,

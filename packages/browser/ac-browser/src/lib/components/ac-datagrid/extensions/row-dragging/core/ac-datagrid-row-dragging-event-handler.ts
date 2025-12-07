@@ -1,4 +1,4 @@
-import { AcDatagridApi, IAcDatagridRow, AcEnumDatagridEvent, IAcDatagridRowEvent } from "../../../_ac-datagrid.export";
+import { AcDatagridApi, IAcDatagridRow, AC_DATAGRID_EVENT, IAcDatagridRowEvent } from "../../../_ac-datagrid.export";
 import { AcDatagridRowDraggingExtension } from "./_core.export";
 
 export class AcDatagridRowDraggingEventHandler {
@@ -15,7 +15,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDrag, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDrag, args: eventArgs });
   }
 
    handleRowDragCancel({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -24,7 +24,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnd, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragEnd, args: eventArgs });
   }
 
   handleRowDragDrop({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -33,7 +33,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragDrop, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragDrop, args: eventArgs });
   }
 
   handleRowDragEnd({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -42,7 +42,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnd, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragEnd, args: eventArgs });
   }
 
   handleRowDragEnter({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -51,7 +51,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragEnter, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragEnter, args: eventArgs });
   }
 
   handleRowDragLeave({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -60,7 +60,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragLeave, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragLeave, args: eventArgs });
   }
 
   handleRowDragOver({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -69,7 +69,7 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragOver, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragOver, args: eventArgs });
   }
 
   handleRowDragStart({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -78,6 +78,6 @@ export class AcDatagridRowDraggingEventHandler {
       datagridRow: datagridRow,
       event: event
     };
-    this.datagridApi.events.execute({ event: AcEnumDatagridEvent.RowDragStart, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragStart, args: eventArgs });
   }
 }

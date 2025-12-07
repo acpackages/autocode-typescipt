@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
 import { AcDDEDatagridSelectTableColumnInput } from "../inputs/ac-dde-datagrid-select-table-column-input.element";
 import { AcDDEDatagridYesNoInput } from "../inputs/ac-dde-datagrid-yes-no-input.element";
@@ -103,19 +103,19 @@ export class AcDDERelationshipsDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         const row = this.editorApi.dataStorage.addRelationship({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
         args.datagridRow.data = row;
         this.data.push(row);
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowDelete, callback: (args: IAcDatagridRowEvent) => {
         this.editorApi.dataStorage.deleteRelationship({ relationshipId: args.datagridRow.data[AcEnumDDERelationship.RelationshipId] });
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const datagridRow = args.datagridCell.datagridRow;
         if (args.datagridCell.columnKey == AcEnumDDERelationship.DestinationColumnId) {
           const selectColumnInput: AcDDEDatagridSelectTableColumnInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableColumnInput;
@@ -135,7 +135,7 @@ export class AcDDERelationshipsDatagrid {
         else if (args.datagridCell.columnKey == AcEnumDDERelationship.SourceTableId) {
           const selectTableInput: AcDDEDatagridSelectTableInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableInput;
           args.datagridCell.on({
-            event: AcEnumDatagridEvent.CellValueChange, callback: (args: any) => {
+            event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: any) => {
               const sourceColumnCell = datagridRow.datagridCells.find((cell) => {
                 return cell.columnKey == AcEnumDDERelationship.SourceColumnId;
               });
@@ -149,7 +149,7 @@ export class AcDDERelationshipsDatagrid {
         else if (args.datagridCell.columnKey == AcEnumDDERelationship.DestinationTableId) {
           const selectTableInput: AcDDEDatagridSelectTableInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableInput;
           args.datagridCell.on({
-            event: AcEnumDatagridEvent.CellValueChange, callback: (args: any) => {
+            event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: any) => {
               const destinationColumnCell = datagridRow.datagridCells.find((cell) => {
                 return cell.columnKey == AcEnumDDERelationship.DestinationColumnId;
               });
@@ -171,7 +171,7 @@ export class AcDDERelationshipsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,

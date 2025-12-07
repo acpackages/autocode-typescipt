@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import { Autocode } from "../../core/autocode";
-import { AcEnumDataManagerEvent } from "../_data-manager.export";
+import { AC_DATA_MANAGER_EVENT } from "../_data-manager.export";
 import { AcDataManager } from "../core/ac-data-manager";
 
 export class AcDataRow {

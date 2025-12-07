@@ -20,12 +20,12 @@ export class AcDatagridHeaderInternalCellElement {
   //   this.datagridColumn = datagridColumn;
   //   this.datagridApi = datagridApi;
   //   this.datagridApi.on({
-  //     event: AcEnumDatagridEvent.ColumnResize, callback: (event: IAcDatagridColumnResizeEvent) => {
+  //     event: AC_DATAGRID_EVENT.ColumnResize, callback: (event: IAcDatagridColumnResizeEvent) => {
   //       this.setCellWidth();
   //     }
   //   });
   //   this.datagridApi.on({
-  //     event: AcEnumDatagridEvent.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
+  //     event: AC_DATAGRID_EVENT.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
   //       if (event.datagridColumn.columnId == this.datagridColumn.columnId && !this.swappingColumpPosition) {
   //         let element1: HTMLElement | undefined;
   //         let element2: HTMLElement | undefined;

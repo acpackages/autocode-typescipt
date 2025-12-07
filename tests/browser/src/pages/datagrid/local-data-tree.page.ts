@@ -1,7 +1,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
-import { AcDatagrid, AcDatagridApi, AcEnumDatagridEvent, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AC_DATAGRID_EVENT, AcEnumDataSourceType } from '@autocode-ts/ac-browser';
 
 export class DatagridLocalDataTree extends HTMLElement {
   public static observedAttributes = [];
@@ -18,15 +18,15 @@ export class DatagridLocalDataTree extends HTMLElement {
     this.datagridApi = this.datagrid.datagridApi;
     this.datagridApi.events.subscribeAllEvents({callback:(eventName:string,eventArgs:any)=>{
       const rowEvents:any[]  = [
-        // AcEnumDatagridEvent.RowDrag,
-        AcEnumDatagridEvent.RowDragDrop,
-        // AcEnumDatagridEvent.RowDragEnd,
-        // AcEnumDatagridEvent.RowDragEnter,
-        // AcEnumDatagridEvent.RowDragLeave,
-        AcEnumDatagridEvent.RowDragOver,
-        // AcEnumDatagridEvent.RowDragStart,
-        // AcEnumDatagridEvent.RowMouseEnter,
-        // AcEnumDatagridEvent.RowMouseLeave,
+        // AC_DATAGRID_EVENT.RowDrag,
+        AC_DATAGRID_EVENT.RowDragDrop,
+        // AC_DATAGRID_EVENT.RowDragEnd,
+        // AC_DATAGRID_EVENT.RowDragEnter,
+        // AC_DATAGRID_EVENT.RowDragLeave,
+        AC_DATAGRID_EVENT.RowDragOver,
+        // AC_DATAGRID_EVENT.RowDragStart,
+        // AC_DATAGRID_EVENT.RowMouseEnter,
+        // AC_DATAGRID_EVENT.RowMouseLeave,
       ];
       if(rowEvents.includes(eventName)){
           console.log(`Event triggered => ${eventName} on ${eventArgs.datagridRow.data.name}`);

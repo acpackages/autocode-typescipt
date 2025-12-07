@@ -5,5 +5,5 @@ export interface IAcDatagridActiveRowChangeEvent{
   oldActiveDatagridRow:IAcDatagridRow|undefined,
   activeDatagridRow:IAcDatagridRow,
   datagridApi:AcDatagridApi,
-  event:any
+  event?:any
 }

@@ -4,8 +4,8 @@ import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { IAcDatagridColumn } from "../_ac-datagrid.export";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
-import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
-import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_EVENT } from "../consts/ac-datagrid-event.const";
+import { AC_DATAGRID_HOOK } from "../consts/ac-datagrid-hook.const";
 import { IAcDatagridHeaderHookArgs } from "../interfaces/hook-args/ac-datagrid-header-hook-args.interface";
 import { AcDatagridHeaderCellElement } from "./ac-datagrid-header-cell.element";
 
@@ -17,7 +17,7 @@ export class AcDatagridHeader extends AcElementBase{
   }
   set datagridApi(value:AcDatagridApi){
     this._datagridApi = value;
-    value.on({event:AcEnumDatagridEvent.ColumnDefinitionsSet,callback:()=>{
+    value.on({event:AC_DATAGRID_EVENT.ColumnDefinitionsSet,callback:()=>{
       this.setColumns();
     }});
   }
@@ -39,7 +39,9 @@ export class AcDatagridHeader extends AcElementBase{
 
   override init(): void {
     super.init();
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.HeaderInit});
+    if(this.datagridApi){
+      this.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.HeaderInit});
+    }
   }
 
   setColumns(){
@@ -49,7 +51,7 @@ export class AcDatagridHeader extends AcElementBase{
       datagridApi:this.datagridApi
     };
     this.datagridHeaderCells = [];
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.BeforeHeaderColumnCellsCreate,args:hookArgs});
+    this.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate,args:hookArgs});
     for(const column of this.datagridApi.datagridColumns){
       const headerCell = new AcDatagridHeaderCellElement();
       headerCell.datagridApi = this.datagridApi;
@@ -59,7 +61,7 @@ export class AcDatagridHeader extends AcElementBase{
       }
       this.datagridHeaderCells.push(headerCell);
     }
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.HeaderColumnCellsCreate,args:hookArgs});
+    this.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.HeaderColumnCellsCreate,args:hookArgs});
     this.setFlexColumnWidth();
   }
 

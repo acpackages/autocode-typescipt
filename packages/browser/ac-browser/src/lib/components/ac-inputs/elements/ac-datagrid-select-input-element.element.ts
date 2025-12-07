@@ -3,8 +3,9 @@
 import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcDatagrid } from "../../_components.export";
-import { IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
+import { AC_DATAGRID_EVENT, AcDatagrid, IAcDatagridCell } from "../../_components.export";
+import { AcEnumConditionOperator, IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
+import { createPopper, Instance as PopperInstance, Placement } from '@popperjs/core';
 
 export class AcDatagridSelectInput extends AcInputBase {
   static override get observedAttributes() {
@@ -23,6 +24,16 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
   set data(value: any[]) {
     this.datagrid.datagridApi.data = value;
+  }
+
+  get labelKey(): string {
+    return this.getAttribute('label-key')!;
+  }
+  set labelKey(value: string) {
+    this.setAttribute('label-key', value);
+    if (this._value) {
+      this.value = this._value;
+    }
   }
 
   get onDemandFunction(): any {
@@ -61,125 +72,109 @@ export class AcDatagridSelectInput extends AcInputBase {
   override get value() { return super.value; }
   override set value(val: any) {
     super.value = val;
-    // const match = this._selectOptions.find(option => {
-    //   const optVal = typeof option === "object" ? option[this.valueKey] : option;
-    //   return optVal == val;
-    // });
-    // if (match && !this.isDropdownOpen) {
-    //   this.textInputElement.value = (typeof match === "object" ? match[this.labelKey] : match)??'';
-    // }
-
-    // if(this._selectOptions.length == 0 && super.value != undefined){
-    //   this.options = [{
-    //     [this.labelKey]:super.value,[this.valueKey]:super.value
-    //   }];
-    // }
+    this.setSelectedRowsFromValue();
   }
 
-  private _filteredOptions: any[] = [];
+  private _searchQuery: string = '';
+  get searchQuery(): string { return this._searchQuery; }
+  set searchQuery(val: string) {
+    this._searchQuery = val;
+    if (this.datagrid) {
+      this.datagrid.datagridApi.dataManager.searchQuery = val;
+      const event:CustomEvent = new CustomEvent('searchQueryChange',{detail:{searchQuery:this.searchQuery}});
+      this.dispatchEvent(event);
+      setTimeout(() => {
+        this.highlightRow();
+      }, 100);
+    }
+  }
 
   private dropdownContainer!: HTMLDivElement;
-  override inputElement: HTMLDivElement = this.ownerDocument.createElement('div');
-  private highlightingIndex = -1;
-  private textInputElement: HTMLInputElement = this.ownerDocument.createElement("input");
   private isDropdownOpen = false;
   private dropdownHeight = 600;
   private dropdownWidth = 1200;
+  private popper!: PopperInstance | null;
+  textInputElement: HTMLInputElement = this.ownerDocument.createElement('input');
   datagrid: AcDatagrid = new AcDatagrid();
+  private clickOutsideListener?: any = (event: Event) => {
+    const target = event.target as HTMLElement;
 
-  override connectedCallback() {
+    if (
+      !this.textInputElement.contains(target) &&
+      !this.dropdownContainer.contains(target)
+    ) {
+      this.closeDropdown();
+    }
+  };
+  private visibilityObserver?: IntersectionObserver | null;
+  private resizeObserver?: ResizeObserver | null;
+  selectedRows:any[] = [];
+  dropdownSize: { height: number, width: number } = { height: 0, width: 0 };
+
+  override init() {
+    super.init();
+    if (!this.hasAttribute('label-key')) {
+      this.labelKey = 'label';
+    }
     if (!this.hasAttribute('value-key')) {
       this.valueKey = 'value';
     }
-    this.inputElement.style.position = "relative";
+    this.innerHTML = '';
+    this.append(this.textInputElement);
     this.textInputElement.type = "text";
     this.textInputElement.autocomplete = "off";
-    Object.assign(this.textInputElement.style, {
-      width: "100%",
-      height: "100%",
-      border: "none",
-      outline: "none",
-      boxSizing: "border-box",
-      background: 'transparent'
-    });
-    this.inputElement.appendChild(this.textInputElement);
-
-    // Floating dropdown container
-    this.dropdownContainer = this.ownerDocument.createElement("div");
-    Object.assign(this.dropdownContainer.style, {
-      position: "fixed",
-      resizable:true,
-      display: "none",
-      zIndex: "9999",
-      maxHeight: `${this.dropdownHeight}px`,
-      border: "1px solid #ccc",
-      background: "#fff",
-      boxSizing: "border-box",
-    });
     this.attachEvents();
-    this.dropdownContainer.append(this.datagrid);
-    super.connectedCallback();
+
   }
 
   private attachEvents() {
-    // Filter on input
     this.textInputElement.addEventListener("input", () => {
       const term = this.textInputElement.value.toLowerCase();
-      // this._filteredOptions = this._selectOptions.filter(option => {
-      //   const label = String(typeof option === "object" ? option[this.labelKey] : option);
-      //   return label.toLowerCase().includes(term);
-      // });
+      if (term != this.searchQuery) {
+        this.searchQuery = term;
+      }
       this.openDropdown();
-      // auto-highlight first match for quick Enter
-      this.highlightingIndex = this._filteredOptions.length ? 0 : -1;
-      // this.ensureHighlightInView();
     });
-
     this.textInputElement.addEventListener("focus", () => {
-      // this._filteredOptions = [...this._selectOptions];
       this.openDropdown();
-      // // default to selected value
-      // const idx = this.indexOfValueInFiltered(this.value);
-      // this.highlightingIndex = idx >= 0 ? idx : -1;
-      // this.renderVirtualList();
-      // this.scrollToIndex(this.highlightingIndex);
-      // this.applyHighlightStyles();
     });
-
-    // Delay closing to allow mousedown on options
-    this.textInputElement.addEventListener("blur", () => {
-      setTimeout(() => this.closeDropdown(), 150);
+    this.textInputElement.addEventListener("click", () => {
+      setTimeout(() => this.openDropdown(), 150);
     });
-
-    // Keyboard navigation
-    this.textInputElement.addEventListener("keydown", (e) => {
+    this.textInputElement.addEventListener("keydown", (e: any) => {
       if (!this.isDropdownOpen) return;
-
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        if (this._filteredOptions.length === 0) return;
-        this.highlightingIndex = Math.min(
-          (this.highlightingIndex < 0 ? 0 : this.highlightingIndex + 1),
-          this._filteredOptions.length - 1
-        );
+        let rowIndex: number = 0;
+        const activeCell = this.datagrid.datagridApi.activeCell;
+        if (activeCell) {
+          rowIndex = activeCell.datagridRow.index + 1;
+        }
+        this.highlightRow({ rowIndex });
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        if (this._filteredOptions.length === 0) return;
-        this.highlightingIndex = Math.max(
-          (this.highlightingIndex < 0 ? 0 : this.highlightingIndex - 1),
-          0
-        );
-      } else if (e.key === "Enter") {
-        e.preventDefault();
-        if (this.highlightingIndex >= 0) {
-          // this.selectOption(this._filteredOptions[this.highlightingIndex]);
+        let rowIndex: number = 0;
+        const activeCell = this.datagrid.datagridApi.activeCell;
+        if (activeCell) {
+          rowIndex = activeCell.datagridRow.index - 1;
         }
+        this.highlightRow({ rowIndex });
+      }
+      else if (e.key === "Enter") {
+        e.preventDefault();
+        this.setValueFromDatagridData();
+        this.closeDropdown();
       } else if (e.key === "Escape") {
         this.closeDropdown();
       }
     });
-    window.addEventListener("scroll", () => { if (this.isDropdownOpen) this.positionDropdown(); }, true);
-    window.addEventListener("resize", () => { if (this.isDropdownOpen) this.positionDropdown(); });
+    this.datagrid.datagridApi.on({event:AC_DATAGRID_EVENT.CellClick,callback:(args:any)=>{
+      const datagridCell:IAcDatagridCell = args['datagridCell'];
+      if(datagridCell){
+        this.setSelectedRows({rows:[datagridCell.datagridRow.data]});
+        this.closeDropdown();
+      }
+    }});
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -187,52 +182,168 @@ export class AcDatagridSelectInput extends AcInputBase {
     if (name == 'value-key') {
       this.valueKey = newValue;
     }
+    if (name == 'class') {
+      this.textInputElement.setAttribute('class', newValue);
+    }
     else {
       super.attributeChangedCallback(name, oldValue, newValue);
     }
   }
 
-
   closeDropdown() {
-    // this.dropdownContainer.remove();
-    // this.isDropdownOpen = false;
+    this.dropdownContainer.remove();
+    this.isDropdownOpen = false;
+    this.popper?.destroy();
+    this.popper = null;
+    if (this.resizeObserver) {
+      this.resizeObserver?.disconnect();
+      this.resizeObserver = null;
+    }
+    if (this.visibilityObserver) {
+      this.visibilityObserver?.disconnect();
+      this.visibilityObserver = null;
+    }
+    this.ownerDocument.body.removeEventListener('click', this.clickOutsideListener);
+    const event:CustomEvent = new CustomEvent('dropdownClose',{});
+      this.dispatchEvent(event);
   }
 
   override focus(): void {
     this.textInputElement.focus();
   }
 
-  openDropdown() {
-    if (!this.isDropdownOpen) {
-      this.ownerDocument.body.appendChild(this.dropdownContainer);
-      this.isDropdownOpen = true;
-      this.dropdownContainer.style.display = "block";
+  highlightRow({ rowIndex = 0, focusInput = true }: { rowIndex?: number, focusInput?: boolean } = {}) {
+    this.datagrid.datagridApi.setActiveCell({ rowIndex: rowIndex, key: this.labelKey });
+    if (focusInput) {
+      this.textInputElement.focus();
     }
-    this.positionDropdown();
   }
 
-  private positionDropdown() {
-    setTimeout(() => {
-      const rect = this.inputElement.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const spaceBelow = viewportHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      const dropdownHeight = this.dropdownHeight;
-      const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
-      this.dropdownContainer.style.height = `${this.dropdownHeight}px`;
-      this.dropdownContainer.style.width = `${this.dropdownWidth}px`;
-      this.dropdownContainer.style.maxWidth = `${this.dropdownWidth}px`;
-      this.dropdownContainer.style.left = rect.left + "px";
-      if (showAbove) {
-        this.dropdownContainer.style.top = (rect.top - dropdownHeight) + "px";
-      } else {
-        this.dropdownContainer.style.top = rect.bottom + "px";
-      }
-      this.dropdownContainer.style.overflow = "hidden";
-      this.dropdownContainer.style.border = "1px solid #ccc";
-      this.dropdownContainer.style.background = "#fff";
-    }, 10);
+  openDropdown() {
+    if (this.isDropdownOpen) return;
+    this.isDropdownOpen = true;
+    this.dropdownContainer = this.ownerDocument.createElement("div");
+    this.dropdownContainer.innerHTML = `
+      <div class="dropdown-header" style=""></div>
+      <div class="dropdown-body" style="flex-grow:1;overflow:auto"></div>
+      <div class="dropdown-footer" style=""></div>
+    `;
+    const createEvent:CustomEvent = new CustomEvent('dropdownCreate',{detail:{dropdownContainer:this.dropdownContainer}});
+    this.dispatchEvent(createEvent);
+    (this.dropdownContainer.querySelector('.dropdown-body') as HTMLElement).append(this.datagrid);
+    this.ownerDocument.body.append(this.dropdownContainer);
+    Object.assign(this.dropdownContainer.style, {
+      height: `${this.dropdownHeight}px`,
+      width: `${this.dropdownWidth}px`,
+      border: "1px solid #ccc",
+      background: "#fff",
+      boxSizing: "border-box",
+      resize: 'both',
+      display: 'flex',
+      flexDirection: 'column',
+      overflow:'hidden'
+    });
+    this.popper = createPopper(this.textInputElement, this.dropdownContainer, {
+      placement: 'bottom-start' as Placement,
+      strategy: 'fixed',
+      modifiers: [
+        { name: 'offset', options: { offset: [0, 8] } },
+        { name: 'flip', options: { fallbackPlacements: ['top-start', 'bottom-start'] } },
+        { name: 'preventOverflow', options: { boundary: 'clippingParents' } },
+      ],
+    });
 
+    setTimeout(() => this.popper?.update(), 0);
+
+    this.resizeObserver = new ResizeObserver(entries => {
+      const rect = (entries[0].target as HTMLElement).getBoundingClientRect();
+      setTimeout(() => {
+        this.dropdownSize.width = rect.width;
+        this.dropdownSize.height = rect.height;
+        const resizeEvent:CustomEvent = new CustomEvent('dropdownResize',{detail:{dropdownSize:this.dropdownSize}});
+        this.dispatchEvent(resizeEvent);
+        this.popper?.update();
+      }, 500);
+    });
+
+    this.resizeObserver.observe(this.dropdownContainer);
+    setTimeout(() => {
+      this.ownerDocument.addEventListener('click', this.clickOutsideListener);
+    }, 350);
+
+    this.visibilityObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting && this.isDropdownOpen) this.closeDropdown();
+    });
+    this.visibilityObserver.observe(this.textInputElement);
+    this.popper?.update();
+    this.datagrid.datagridApi.dataManager.getData();
+    const event:CustomEvent = new CustomEvent('dropdownOpen',{});
+      this.dispatchEvent(event);
+  }
+
+  private setSelectedRows({rows}:{rows:any[]}){
+    this.selectedRows = rows;
+    if(rows.length > 0){
+      this.textInputElement.value = rows[0][this.labelKey];
+    }
+    else{
+      if(this.value){
+        this.textInputElement.value = this.value;
+      }
+      else{
+        this.textInputElement.value = '';
+      }
+    }
+  }
+
+  private async setSelectedRowsFromValue(){
+    if(this.value){
+      let continueOperation = true;
+      if(this.selectedRows.length > 0){
+        if(this.selectedRows[0][this.valueKey] == this.value){
+          continueOperation = false;
+        }
+      }
+      if(continueOperation && this.datagrid){
+        const valueRow = this.datagrid.datagridApi.dataManager.allRows.find((row)=>{
+          return row.data[this.valueKey] == this.value;
+        });
+        if(valueRow){
+          this.setSelectedRows({rows:[valueRow.data]});
+          continueOperation = false;
+        }
+        else{
+          this.datagrid.datagridApi.dataManager.filterGroup.addFilter({
+            key:this.valueKey,
+            operator:AcEnumConditionOperator.EqualTo,
+            value:this.value
+          });
+          const values = await this.datagrid.datagridApi.dataManager.getData();
+          if(values.length > 0){
+            this.setSelectedRows({rows:[values[0]]});
+            continueOperation = false;
+          }
+        }
+      }
+      if(continueOperation){
+        this.setSelectedRows({rows:[]});
+      }
+      else{
+        this.datagrid.datagridApi.setActiveCell({ key: this.valueKey, value: this.value });
+      }
+    }
+  }
+
+  setValueFromDatagridData() {
+    const activeCell = this.datagrid.datagridApi.activeCell;
+    if (activeCell) {
+      this.setSelectedRows({rows:[activeCell.datagridRow.data]});
+      this.value = activeCell.datagridRow.data[this.valueKey];
+    }
+    else {
+      this.setSelectedRows({rows:[]});
+      this.value = null;
+    }
   }
 
   toggleDropdown() {

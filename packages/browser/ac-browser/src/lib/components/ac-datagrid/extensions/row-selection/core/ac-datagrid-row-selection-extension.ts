@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
-import { AcEnumDatagridHook } from "../../../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
+import { AC_DATAGRID_HOOK } from "../../../consts/ac-datagrid-hook.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { IAcDatagridRow } from "../../../interfaces/ac-datagrid-row.interface";
 import { IAcDatagridHeaderHookArgs } from "../../../interfaces/hook-args/ac-datagrid-header-hook-args.interface";
@@ -56,7 +56,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   getSelectedRows(): IAcDatagridRow[] {
     const selectedRows: IAcDatagridRow[] = [];
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData![AcEnumDatagridExtension.RowSelection].isSelected) {
+      if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
         selectedRows.push(row);
       }
     }
@@ -66,7 +66,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   getSelectedRowsData(): any[] {
     const selectedData: any[] = [];
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData![AcEnumDatagridExtension.RowSelection].isSelected) {
+      if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
         selectedData.push(row.data);
       }
     }
@@ -76,7 +76,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   getSelectedRowsDataKeyValues({ key }: { key: string }): any[] {
     const selectedKeyValues: any[] = [];
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData![AcEnumDatagridExtension.RowSelection] && row.data[key] != undefined) {
+      if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection] && row.data[key] != undefined) {
         selectedKeyValues.push(row.data[key]);
       }
     }
@@ -105,7 +105,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     const rowExtensionData: IAcDatagridRowSelectionData = {
       isSelected: false
     };
-    datagridRow.extensionData![AcEnumDatagridExtension.RowSelection] = rowExtensionData;
+    datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection] = rowExtensionData;
     if (datagridRow.element) {
       const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
       datagridRow.element.append(datagriRowNumberCell.element);
@@ -113,20 +113,20 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (hook == AcEnumDatagridHook.BeforeRowCellsCreate) {
+    if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
       this.handleBeforeRowCellsCreated(args);
     }
-    else if (hook == AcEnumDatagridHook.BeforeHeaderColumnCellsCreate) {
+    else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
       this.handleBeforeHeaderColumnCellsCreated(args);
     }
-    else if (hook == AcEnumDatagridHook.DatagridRowCreate) {
+    else if (hook == AC_DATAGRID_HOOK.DatagridRowCreate) {
       this.handleDatagridRowCreated(args);
     }
   }
 
   setAllRowsSelection({ isSelected }: { isSelected: boolean }) {
     for (const datagridRow of this.datagridApi.datagridRows) {
-      datagridRow.extensionData![AcEnumDatagridExtension.RowSelection].isSelected = isSelected;
+      datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
       const rowEventArgs: IAcDatagridRowSelectionChangeEvent = {
         datagridApi: this.datagridApi,
         datagridRow: datagridRow,
@@ -146,13 +146,13 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
 
   setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: IAcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
     if (datagridRow == undefined && rowId) {
-      datagridRow = this.datagridApi.getRowById({ rowId: rowId });
+      datagridRow = this.datagridApi.getRow({ rowId: rowId });
     }
     else if (datagridRow == undefined && key && value) {
-      datagridRow = this.datagridApi.getRowByKeyValue({ key: key, value: value });
+      datagridRow = this.datagridApi.getRow({ key: key, value: value });
     }
     if (datagridRow) {
-      datagridRow.extensionData![AcEnumDatagridExtension.RowSelection].isSelected = isSelected;
+      datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
       const eventArgs: IAcDatagridRowSelectionChangeEvent = {
         datagridApi: this.datagridApi,
         datagridRow: datagridRow,
@@ -168,6 +168,6 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
 }
 
 export const AcRowSelectionDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.RowSelection,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection,
   extensionClass: AcDatagridRowSelectionExtension
 }

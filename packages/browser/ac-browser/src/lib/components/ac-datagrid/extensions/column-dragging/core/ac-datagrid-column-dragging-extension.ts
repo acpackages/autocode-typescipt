@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { AcEnumDatagridColumnDraggingHook } from "../enums/ac-enum-datagrid-column-dragging-hook.enum";
 import { IAcDatagridColumnDraggingHookArgs } from "../interfaces/ac-datagrid-column-dragging-hook-args.interface";
@@ -23,6 +23,6 @@ export class AcDatagridColumnDraggingExtension extends AcDatagridExtension {
 }
 
 export const AcColumnDraggingDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.ColumnDragging,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnDragging,
   extensionClass: AcDatagridColumnDraggingExtension
 }

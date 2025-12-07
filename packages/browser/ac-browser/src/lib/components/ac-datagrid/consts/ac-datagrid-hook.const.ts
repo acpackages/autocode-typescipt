@@ -1,4 +1,7 @@
-export const AcEnumDatagridHook = {
+import { AC_DATAGRID_EVENT } from "./ac-datagrid-event.const";
+
+export const AC_DATAGRID_HOOK = {
+  ...AC_DATAGRID_EVENT,
   ApplyFilter: 'applyFilter',
   BeforeColumnDefinitionsChange: 'beforeColumnDefinitionsChange',
   BeforeDataChange: 'beforeDataChange',
@@ -23,6 +26,7 @@ export const AcEnumDatagridHook = {
   DataChange: 'dataChange',
   DatagridCellCreate: 'datagridCellCreate',
   DatagridColumnCreate: 'datagridColumnCreate',
+  DatagridInit: 'datagridInit',
   DatagridRowCreate: 'datagridRowCreate',
   DataSourceTypeChange: 'datagridSourceTypeChange',
   DisplayedRowsChange: 'displayedRowsChange',

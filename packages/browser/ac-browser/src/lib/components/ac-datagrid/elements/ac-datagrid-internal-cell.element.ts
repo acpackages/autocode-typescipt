@@ -24,14 +24,14 @@ export class AcDatagridInternalCellElement {
   //   };
   //   // this.cellRenderer = new AcDatagridCellRendererElement({ datagridApi: this.datagridApi, datagridCell: this.datagridCell });
   //   // this.datagridApi.on({
-  //   //   event: AcEnumDatagridEvent.ColumnResize, callback: (event: IAcDatagridColumnResizeEvent) => {
+  //   //   event: AC_DATAGRID_EVENT.ColumnResize, callback: (event: IAcDatagridColumnResizeEvent) => {
   //   //     if (event.datagridColumn.columnId == this.datagridColumn.columnId) {
   //   //       this.setCellWidth();
   //   //     }
   //   //   }
   //   // });
   //   // this.datagridApi.on({
-  //   //   event: AcEnumDatagridEvent.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
+  //   //   event: AC_DATAGRID_EVENT.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
   //   //     if (event.datagridColumn.columnId == this.datagridColumn.columnId && !this.swappingColumpPosition && this.datagridRow.instance && this.datagridRow.instance.datagridCells) {
   //   //       let element1: HTMLElement | undefined;
   //   //       let element2: HTMLElement | undefined;

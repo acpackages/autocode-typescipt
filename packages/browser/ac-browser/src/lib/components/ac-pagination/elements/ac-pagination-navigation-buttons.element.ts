@@ -4,13 +4,13 @@ import { AcEnumPaginationEvent, AcPagination, AcPaginationCssClassName, AC_PAGIN
 import { IAcPaginationPageChangeEvent } from "../interfaces/event-params/ac-page-change-event.interface";
 
 export class AcPaginationNavigationButtons extends AcElementBase{
-  private _pagination!: AcPagination;
-  get pagination():AcPagination{
+  private _pagination?: AcPagination;
+  get pagination():AcPagination|undefined{
     return this._pagination;
   }
   set pagination(value:AcPagination){
     this._pagination = value;
-    this.pagination.on({event:AcEnumPaginationEvent.PageChange,callback:(event:IAcPaginationPageChangeEvent)=>{
+    value.on({event:AcEnumPaginationEvent.PageChange,callback:(event:IAcPaginationPageChangeEvent)=>{
       this.handlePageChanged(event);
     }});
   }
@@ -51,25 +51,35 @@ export class AcPaginationNavigationButtons extends AcElementBase{
 
   registerListeners(){
     this.firstButton.addEventListener('click',(event:Event)=>{
+      if (this.pagination) {
       this.pagination.activePage = 1;
+      }
     });
     this.previousButton.addEventListener('click',(event:Event)=>{
+      if (this.pagination) {
       this.pagination.activePage = this.pagination.activePage - 1;
+      }
     });
     this.nextButton.addEventListener('click',(event:Event)=>{
+      if (this.pagination) {
       this.pagination.activePage = this.pagination.activePage + 1;
+      }
     });
     this.lastButton.addEventListener('click',(event:Event)=>{
+      if (this.pagination) {
       this.pagination.activePage = this.pagination.totalPages;
+      }
     });
   }
 
   renderPageLabel(){
+    if (this.pagination) {
     this.pageLabel.innerHTML = `Page <b>${this.pagination.activePage}</b> of <b>${this.pagination.totalPages}</b>`;
+    }
   }
 
   validateButtons(){
-    if(this.pagination.activePage <= 1){
+    if(this.pagination && this.pagination.activePage <= 1){
       this.firstButton.setAttribute('disabled',"true");
       this.previousButton.setAttribute('disabled',"true");
       this.firstButton.style.opacity = '0.5';
@@ -81,7 +91,7 @@ export class AcPaginationNavigationButtons extends AcElementBase{
       this.firstButton.style.opacity = '';
       this.previousButton.style.opacity = '';
     }
-    if(this.pagination.activePage >= this.pagination.totalPages){
+    if(this.pagination && this.pagination.activePage >= this.pagination.totalPages){
       this.nextButton.setAttribute('disabled',"true");
       this.lastButton.setAttribute('disabled',"true");
       this.nextButton.style.opacity = '0.5';

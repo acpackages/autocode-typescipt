@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
-import { AcEnumDatagridHook } from "../../../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
+import { AC_DATAGRID_HOOK } from "../../../consts/ac-datagrid-hook.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { IAcDatagridHeaderHookArgs } from "../../../interfaces/hook-args/ac-datagrid-header-hook-args.interface";
 import { IAcDatagridRowHookArgs } from "../../../interfaces/hook-args/ac-datagrid-row-hook-args.interface";
@@ -31,10 +31,10 @@ export class AcDatagridRowNumbersExtension extends AcDatagridExtension {
   });
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (hook == AcEnumDatagridHook.BeforeRowCellsCreate) {
+    if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
       this.handleBeforeRowCellsCreated(args);
     }
-    else if (hook == AcEnumDatagridHook.BeforeHeaderColumnCellsCreate) {
+    else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
       this.handleBeforeHeaderColumnCellsCreated(args);
     }
   }
@@ -59,6 +59,6 @@ export class AcDatagridRowNumbersExtension extends AcDatagridExtension {
 }
 
 export const AcRowNumberDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.RowNumbers,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.RowNumbers,
   extensionClass: AcDatagridRowNumbersExtension
 }

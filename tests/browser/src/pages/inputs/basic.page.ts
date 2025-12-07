@@ -1,18 +1,17 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-tiptap-editor-input/src/lib/css/ac-tiptap-editor-simple-editor.css';
 import "./../../../../../node_modules/quill/dist/quill.snow.css";
-import { AC_INPUT_ATTRIBUTE_NAME, AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AcEnumDatagridExtension, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AC_DATAGRID_EXTENSION_NAME, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { customersData } from './../../../../data/customers-data';
 import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
 import { AcDatagridOnAgGridExtension, AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
 import { AcDataManager, IAcOnDemandRequestArgs,AcContext } from "@autocode-ts/autocode";
-import { acInitTipTapEditor, AcTiptapEditorInput } from "@autocode-ts/ac-tiptap-editor-input";
+import { acInitTipTapEditor } from "@autocode-ts/ac-tiptap-editor-input";
 import { AcQuillEditorInput, acInitQuillEditor } from "@autocode-ts/ac-quill-editor-input";
 
 export class InputBasicPage extends HTMLElement {
-  offlineDataManager: AcDataManager = new AcDataManager();
-
   datagridApi!: AcDatagridApi;
   pageHeader: PageHeader = new PageHeader();
   agGridExtension!: AcDatagridOnAgGridExtension;
@@ -64,6 +63,29 @@ export class InputBasicPage extends HTMLElement {
         <buton type="submit" class="btn btn-primary my-2">Submit</buton>
       </div>
     </ac-form>`;
+    setTimeout(() => {
+      console.log("Setting log values")
+      this.setExampleValues();
+    }, 5000);
+
+
+    this.pageHeader.addMenuItem({
+      label: 'Record',
+      children: [
+        {
+          label: 'Log',
+          callback: () => {
+            console.log(this.context);
+            console.log(JSON.stringify(this.context));
+
+          }
+        },
+        {
+          label: 'Set Value',
+          callback: () => this.setExampleValues()
+        }
+      ]
+    });
     this.form = this.querySelector('ac-form') as AcForm;
     this.form.addEventListener('submit', () => {
       console.log(this.form.valuesToJsonObject());
@@ -98,24 +120,28 @@ export class InputBasicPage extends HTMLElement {
 
     const allInputsGroup = createCard('Real-Life Inputs', 'real-inputs');
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
-    this.offlineDataManager.autoSetUniqueIdToData = true;
-    this.offlineDataManager.data = customersData;
 
     const datagridSelectContainer = document.createElement('div');
     datagridSelectContainer.className = 'mb-3';
     datagridSelectContainer.innerHTML = '<label>Linked Customer</label><ac-datagrid-select-input class="form-control"></ac-datagrid-select-input>';
-    // allInputsGroup.appendChild(datagridSelectContainer);
+    allInputsGroup.appendChild(datagridSelectContainer);
     const datagridSelectInput: AcDatagridSelectInput = datagridSelectContainer.querySelector('ac-datagrid-select-input') as AcDatagridSelectInput;
+    datagridSelectInput.labelKey = 'first_name';
+    datagridSelectInput.valueKey = 'customer_id';
     this.datagridApi = datagridSelectInput.datagrid.datagridApi;
-    this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
-    this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
-    this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
-    this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
-    this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
-    this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
+    this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnDragging }) as AcDatagridColumnDraggingExtension;
+    this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
+    this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
+    this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowNumbers }) as AcDatagridRowNumbersExtension;
+    this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
+    this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
     this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
 
+    this.setOnDemandData(this.datagridApi);
     this.datagridApi.usePagination = true;
+    datagridSelectInput.acContextKey = 'customer_id';
+    datagridSelectInput.acContext = this.context;
+
 
     this.columnsCustomizerExtension.showColumnCustomizerPanel = true;
 
@@ -140,34 +166,21 @@ export class InputBasicPage extends HTMLElement {
 
     datagridSelectInput.data = customersData;
 
-    const onDemandSelectContainer = document.createElement('div');
-    onDemandSelectContainer.className = 'mb-3';
-    onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control" placeholder="Select Customer"></ac-select-input>';
-    allInputsGroup.appendChild(onDemandSelectContainer);
-    const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
-    onDemandSelectInput.labelKey = 'first_name';
-    onDemandSelectInput.valueKey = 'customer_id';
-    onDemandSelectInput.acContextKey = 'customer_id';
-    onDemandSelectInput.acContext = this.context;
-    onDemandSelectInput.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      // console.log("Getting on demand data");
-      // console.log(args);
-      if (args.filterGroup && args.filterGroup.filters && args.filterGroup.filters.length > 0) {
-        this.offlineDataManager.filterGroup = args.filterGroup;
-        this.offlineDataManager.processRows();
-      }
 
-      const totalCount = this.offlineDataManager.totalRows;
-      const data = await this.offlineDataManager.getData({ startIndex: args.startIndex, rowsCount: args.rowsCount });
-      const response = {
-        totalCount,
-        data
-      };
-      console.log(response);
-      args.successCallback(response);
-    };
+    // const onDemandSelectContainer = document.createElement('div');
+    // onDemandSelectContainer.className = 'mb-3';
+    // onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control" placeholder="Select Customer"></ac-select-input>';
+    // // allInputsGroup.appendChild(onDemandSelectContainer);
+    // const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
+    // onDemandSelectInput.labelKey = 'first_name';
+    // onDemandSelectInput.valueKey = 'customer_id';
+    // onDemandSelectInput.acContextKey = 'customer_id';
+    // onDemandSelectInput.acContext = this.context;
+    // onDemandSelectInput.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
+    //   // console.log("Getting on demand data");
+    // };
 
-    console.dir(onDemandSelectInput);
+    // console.dir(onDemandSelectInput);
 
     const tiptapEditorContainer = document.createElement('div');
     tiptapEditorContainer.style.height = "300px";
@@ -346,26 +359,8 @@ export class InputBasicPage extends HTMLElement {
     languageTags.className = 'form-control';
     addField('Languages', languageTags, allInputsGroup);
 
-    this.pageHeader.addMenuItem({
-      label: 'Record',
-      children: [
-        {
-          label: 'Log',
-          callback: () => {
-            console.log(this.context);
-            console.log(JSON.stringify(this.context));
 
-          }
-        },
-        {
-          label: 'Set Value',
-          callback: () => this.setExampleValues()
-        }
-      ]
-    });
-    setTimeout(() => {
-      this.setExampleValues()
-    }, 5000);
+
     // let value:any = {'hello':'world'};
     // value['hello']='new world';
     // value['new-property']='hello world';
@@ -394,6 +389,7 @@ export class InputBasicPage extends HTMLElement {
   }
 
   setExampleValues() {
+    console.log("Set contect value");
     Object.assign(this.context, {
       full_name: 'Bob Martin',
       personal_email: 'bob.m@example.com',
@@ -417,7 +413,54 @@ export class InputBasicPage extends HTMLElement {
       interested_fruits: ['Banana', 'Orange'],
       preferred_framework: 'React',
       languages: 'Telgu,English,Hindi,Sanskrit',
-      customer_id:'fa51d247-f53c-4f25-8436-9de299bb9160'
+      customer_id:'a680504b-8b54-4b1e-85a1-65d8eeafdcde'
     });
+  }
+
+  setLocalData(datagridApi:AcDatagridApi) {
+    const data: any[] = [];
+    const multiplier = 1;
+    let index: number = 0;
+    for (let i = 0; i < multiplier; i++) {
+      for (const row of customersData) {
+        index++;
+        data.push({ index: index, ...row })
+      }
+    }
+    datagridApi.data = data;
+  }
+
+  setOnDemandData(datagridApi:AcDatagridApi) {
+    const onDemandProxyDataManager: AcDataManager = new AcDataManager();
+    onDemandProxyDataManager.logger.logMessages = false;
+    const data: any[] = [];
+    const multiplier = 1;
+    let index: number = 0;
+    for (let i = 0; i < multiplier; i++) {
+      for (const row of customersData) {
+        index++;
+        data.push({ index: index, ...row })
+      }
+    }
+    onDemandProxyDataManager.data = data;
+
+    datagridApi.dataManager.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
+      if (args.filterGroup) {
+        onDemandProxyDataManager.filterGroup = args.filterGroup;
+      }
+      if (args.sortOrder) {
+        onDemandProxyDataManager.sortOrder = args.sortOrder;
+      }
+      onDemandProxyDataManager.searchQuery = args.searchQuery ?? '';
+      onDemandProxyDataManager.processRows();
+      const totalCount = onDemandProxyDataManager.totalRows;
+      const data = await onDemandProxyDataManager.getData({ startIndex: args.startIndex, rowsCount: args.rowsCount });
+      const response = {
+        totalCount,
+        data
+      };
+      args.successCallback(response);
+    };
+    // this.datagridApi.dataManager.getRows({rowsCount:50});
   }
 }

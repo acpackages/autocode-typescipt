@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DatagridComponent } from '../datagrid/datagrid.component';
 import { ScrollableComponent } from '../scrollable/scrollable.component';
+import { InputsComponent } from '../inputs/inputs.component';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,9 @@ export const routes: Routes = [
   },
   {
     path: 'datagrid', component: DatagridComponent
+  },
+  {
+    path: 'inputs', component: InputsComponent
   },
   {
     path: 'scrollable', component: ScrollableComponent

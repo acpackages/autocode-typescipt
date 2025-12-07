@@ -6,7 +6,7 @@ import { AcDatagridHeaderCellElement } from "../elements/ac-datagrid-header-cell
 import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../consts/ac-datagrid-default-column-config.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { IAcDatagridColumnHookArgs } from "../interfaces/hook-args/ac-datagrid-column-hook-args.interface";
-import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_HOOK } from "../consts/ac-datagrid-hook.const";
 import { AC_DATAGRID_ATTRIBUTE } from "../consts/ac-datagrid-attribute.const";
 
 
@@ -77,7 +77,7 @@ export class AcDatagridColumn {
     //   datagridApi: this.datagridApi,
     //   datagridColumn: this,
     // };
-    // this.hooks.execute({ hook: AcEnumDatagridHook.ColumnVisibilityChange, args: hookArgs });
+    // this.hooks.execute({ hook: AC_DATAGRID_HOOK.ColumnVisibilityChange, args: hookArgs });
   }
 
 
@@ -87,11 +87,11 @@ export class AcDatagridColumn {
   }
   set width(value: number) {
     this._width = value;
-    const hookArgs: IAcDatagridColumnHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridColumn: this,
-    };
-    // this.hooks.execute({ hook: AcEnumDatagridHook.ColumnWidthChange, args: hookArgs });
+    // const hookArgs: IAcDatagridColumnHookArgs = {
+    //   datagridApi: this.datagridApi,
+    //   datagridColumn: this,
+    // };
+    // this.hooks.execute({ hook: AC_DATAGRID_HOOK.ColumnWidthChange, args: hookArgs });
   }
 
   constructor({ columnDefinition, datagridApi, index = -1, width = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width }: { columnDefinition: IAcDatagridColumnDefinition, datagridApi: AcDatagridApi, index?: number, width?: number }) {

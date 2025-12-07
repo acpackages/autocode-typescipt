@@ -5,10 +5,11 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css';
 import './../../../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css';
-import { AcDatagrid, AcDatagridApi, AcEnumDatagridExtension, AcEnumDatagridHook } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK } from '@autocode-ts/ac-browser';
 import { customersData } from './../../../../data/customers-data';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
+import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AcDatagridOnAgGridExtension, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 
 export class DatagridLocalData extends HTMLElement {
   public static observedAttributes = [];
@@ -19,13 +20,16 @@ export class DatagridLocalData extends HTMLElement {
   async connectedCallback() {
     const html = `
       <h5>Datagrid : Offline Data</h5>
+      <input type="text" class="form-control filter-input" placheolder="Serach"/>
       <div class="local-datagrid-container" style="height:80vh;"></div>
     `;
     this.innerHTML = html;
+    const filterInput:HTMLInputElement = this.querySelector('.filter-input') as HTMLInputElement;
+
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
     this.datagridApi.hooks.subscribe({
-      hook: AcEnumDatagridHook.FooterInit, callback: () => {
+      hook: AC_DATAGRID_HOOK.FooterInit, callback: () => {
         this.addNewButton.setAttribute('class', 'btn btn-dark btn-add-new py-0 ms-1');
         this.addNewButton.setAttribute('type', 'button');
         this.addNewButton.setAttribute('style', 'height:28px;');
@@ -37,11 +41,16 @@ export class DatagridLocalData extends HTMLElement {
         });
       }
     });
+    filterInput?.addEventListener('input',()=>{
+      console.log(filterInput.value);
+      this.datagridApi.dataManager.searchQuery = filterInput.value;
+    });
     console.log(this.datagridApi);
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers });
-    // const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AcEnumDatagridExtension.RowSelection})!;
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging });
-    this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.KeyboardActions });
+    AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
+    this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME });
+    // const selectionExtension:AcDatagridRowSelectionExtension = this.datagridApi.enableExtension({extensionName:AC_DATAGRID_EXTENSION_NAME.RowSelection})!;
+    this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging });
+    this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.KeyboardActions });
     this.datagridApi.usePagination = true;
     // this.datagridApi.allowRowSelect = true;
     // console.log(this.getElementsByClassName("local-datagrid-container"));

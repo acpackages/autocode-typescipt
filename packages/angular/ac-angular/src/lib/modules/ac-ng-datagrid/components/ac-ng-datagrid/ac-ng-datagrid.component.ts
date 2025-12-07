@@ -5,28 +5,31 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
-import { ApplicationRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { ApplicationRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
-import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-editor.element';
-import { AcNgDatagridCellRenderer } from '../../elements/ac-ng-datagrid-cell-renderer.element';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { IAcNgDatagridColumnDefinition } from '../../interfaces/ac-datagrid-column-definition.interface';
+import { AcNgDatagridCellRenderer } from '../../elements/ac-ng-datagrid-cell-renderer.element';
+import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-editor.element';
 
 @Component({
   selector: 'ac-ng-datagrid',
   templateUrl: './ac-ng-datagrid.component.html',
   styleUrl: './ac-ng-datagrid.component.scss',
   standalone: false,
-  changeDetection:ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AcNgDatagridComponent implements OnInit {
+export class AcNgDatagridComponent implements OnChanges, OnDestroy, OnInit {
   @ViewChild('acDatagrid') acDatagridRef: ElementRef<AcDatagrid>;
   @Input() datagridClass: string = '';
   @Input() columnDefinitions: IAcNgDatagridColumnDefinition[] = [];
   @Input() columnEditorTemplates: Record<string, TemplateRef<any>> = {};
   @Input() columnRendererTemplates: Record<string, TemplateRef<any>> = {};
   @Input() data?: any[];
+  @Input() flexColumn: string = '';
+  @Input() headerHeight: number = 30;
+  @Input() rowHeight: number = 30;
   @Input() onDemandFunction?: ((args: IAcOnDemandRequestArgs) => void) | any;
   @Input() usePagination: boolean = true;
 
@@ -146,7 +149,26 @@ export class AcNgDatagridComponent implements OnInit {
   rowNumbersExtension!: AcDatagridRowNumbersExtension;
   rowSelectionExtension!: AcDatagridRowSelectionExtension;
 
-  constructor(private runtimeService: AcRuntimeService, private appRef: ApplicationRef ) {
+  constructor(private runtimeService: AcRuntimeService, private appRef: ApplicationRef) {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.datagrid && this.datagridApi) {
+      if (changes['rowHeight']) {
+        this.datagridApi.rowHeight = this.rowHeight;
+      }
+      else if (changes['headerHeight']) {
+        this.datagridApi.headerHeight = this.headerHeight;
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.datagrid) {
+      this.datagrid.destroy();
+      this.dataManager = null;
+      this.datagridApi = null;
+    }
   }
 
   ngOnInit(): void {
@@ -157,22 +179,24 @@ export class AcNgDatagridComponent implements OnInit {
     if (this.acDatagridRef) {
       this.datagrid = this.acDatagridRef.nativeElement;
       this.datagridApi = this.datagrid.datagridApi;
+      this.datagridApi.headerHeight = this.headerHeight;
+      this.datagridApi.rowHeight = this.rowHeight;
       this.dataManager = this.datagridApi.dataManager;
       if (this.datagridClass) {
         acAddClassToElement({ class_: this.datagridClass, element: this.datagrid });
       }
       this.setColumnDefinitions();
       this.datagridApi.usePagination = this.usePagination;
-      this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
-      this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
-      this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
-      this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
-      this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
-      this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
+      this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnDragging }) as AcDatagridColumnDraggingExtension;
+      this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
+      this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
+      this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowNumbers }) as AcDatagridRowNumbersExtension;
+      this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
+      this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
       this.columnsCustomizerExtension.showColumnCustomizerPanel = true;
       this.registerListeners();
       this.datagridApi.on({
-        event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: any) => {
+        event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: any) => {
           this.onCellRendererElementInit.emit(args);
         }
       });
@@ -191,336 +215,539 @@ export class AcNgDatagridComponent implements OnInit {
     }
   }
 
-  private registerListeners(){
-    this.datagridApi.on({event:AcEnumDatagridEvent.ActiveRowChange,callback:(args:any)=>{
-      this.onActiveRowChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellBlur,callback:(args:any)=>{
-      this.onCellBlur.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellClick,callback:(args:any)=>{
-      this.onCellClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDoubleClick,callback:(args:any)=>{
-      this.onCellDoubleClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDrag,callback:(args:any)=>{
-      this.onCellDrag.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDragEnd,callback:(args:any)=>{
-      this.onCellDragEnd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDragEnter,callback:(args:any)=>{
-      this.onCellDragEnter.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDragLeave,callback:(args:any)=>{
-      this.onCellDragLeave.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDragOver,callback:(args:any)=>{
-      this.onCellDragOver.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDragStart,callback:(args:any)=>{
-      this.onCellDragStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellDragDrop,callback:(args:any)=>{
-      this.onCellDragDrop.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellEditorElementInit,callback:(args:any)=>{
-      this.onCellEditorElementInit.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellEditingStart,callback:(args:any)=>{
-      this.onCellEditingStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellEditingStop,callback:(args:any)=>{
-      this.onCellEditingStop.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellFocus,callback:(args:any)=>{
-      this.onCellFocus.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellHover,callback:(args:any)=>{
-      this.onCellHover.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellKeyDown,callback:(args:any)=>{
-      this.onCellKeyDown.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellKeyPress,callback:(args:any)=>{
-      this.onCellKeyPress.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellKeyUp,callback:(args:any)=>{
-      this.onCellKeyUp.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellMouseDown,callback:(args:any)=>{
-      this.onCellMouseDown.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellMouseEnter,callback:(args:any)=>{
-      this.onCellMouseEnter.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellMouseLeave,callback:(args:any)=>{
-      this.onCellMouseLeave.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellMouseMove,callback:(args:any)=>{
-      this.onCellMouseMove.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellMouseOver,callback:(args:any)=>{
-      this.onCellMouseOver.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellMouseUp,callback:(args:any)=>{
-      this.onCellMouseUp.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellTouchCancel,callback:(args:any)=>{
-      this.onCellTouchCancel.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellTouchEnd,callback:(args:any)=>{
-      this.onCellTouchEnd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellTouchMove,callback:(args:any)=>{
-      this.onCellTouchMove.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellTouchStart,callback:(args:any)=>{
-      this.onCellTouchStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.CellValueChange,callback:(args:any)=>{
-      this.onCellValueChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDefinitionsSet,callback:(args:any)=>{
-      this.onColumnDefinitionsSet.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnBlur,callback:(args:any)=>{
-      this.onColumnBlur.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnClick,callback:(args:any)=>{
-      this.onColumnClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDataChange,callback:(args:any)=>{
-      this.onColumnDataChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDoubleClick,callback:(args:any)=>{
-      this.onColumnDoubleClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDragEnd,callback:(args:any)=>{
-      this.onColumnDragEnd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDragEnter,callback:(args:any)=>{
-      this.onColumnDragEnter.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDragLeave,callback:(args:any)=>{
-      this.onColumnDragLeave.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDragOver,callback:(args:any)=>{
-      this.onColumnDragOver.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDragStart,callback:(args:any)=>{
-      this.onColumnDragStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnDragDrop,callback:(args:any)=>{
-      this.onColumnDragDrop.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnFilterChange,callback:(args:any)=>{
-      this.onColumnFilterChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnFocus,callback:(args:any)=>{
-      this.onColumnFocus.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnHeaderClick,callback:(args:any)=>{
-      this.onColumnHeaderClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnHover,callback:(args:any)=>{
-      this.onColumnHover.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnKeyDown,callback:(args:any)=>{
-      this.onColumnKeyDown.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnKeyPress,callback:(args:any)=>{
-      this.onColumnKeyPress.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnKeyUp,callback:(args:any)=>{
-      this.onColumnKeyUp.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnMouseDown,callback:(args:any)=>{
-      this.onColumnMouseDown.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnMouseEnter,callback:(args:any)=>{
-      this.onColumnMouseEnter.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnMouseLeave,callback:(args:any)=>{
-      this.onColumnMouseLeave.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnMouseMove,callback:(args:any)=>{
-      this.onColumnMouseMove.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnMouseOver,callback:(args:any)=>{
-      this.onColumnMouseOver.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnMouseUp,callback:(args:any)=>{
-      this.onColumnMouseUp.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnResize,callback:(args:any)=>{
-      this.onColumnResize.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnSortChange,callback:(args:any)=>{
-      this.onColumnSortChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnTouchCancel,callback:(args:any)=>{
-      this.onColumnTouchCancel.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnTouchEnd,callback:(args:any)=>{
-      this.onColumnTouchEnd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnTouchMove,callback:(args:any)=>{
-      this.onColumnTouchMove.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnTouchStart,callback:(args:any)=>{
-      this.onColumnTouchStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnPositionChange,callback:(args:any)=>{
-      this.onColumnPositionChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.ColumnVisibilityChange,callback:(args:any)=>{
-      this.onColumnVisibilityChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.DisplayedRowsChange,callback:(args:any)=>{
-      this.onDisplayedRowsChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.PaginationChange,callback:(args:any)=>{
-      this.onPaginationChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowAdd,callback:(args:any)=>{
-      this.onRowAdd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowBlur,callback:(args:any)=>{
-      this.onRowBlur.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowClick,callback:(args:any)=>{
-      this.onRowClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDataChange,callback:(args:any)=>{
-      this.onRowDataChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDelete,callback:(args:any)=>{
-      this.onRowDelete.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDoubleClick,callback:(args:any)=>{
-      this.onRowDoubleClick.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDrag,callback:(args:any)=>{
-      this.onRowDrag.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragCancel,callback:(args:any)=>{
-      this.onRowDragCancel.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragDrop,callback:(args:any)=>{
-      this.onRowDragDrop.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragEnd,callback:(args:any)=>{
-      this.onRowDragEnd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragEnter,callback:(args:any)=>{
-      this.onRowDragEnter.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragLeave,callback:(args:any)=>{
-      this.onRowDragLeave.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragOver,callback:(args:any)=>{
-      this.onRowDragOver.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowDragStart,callback:(args:any)=>{
-      this.onRowDragStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowEditingStart,callback:(args:any)=>{
-      this.onRowEditingStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowEditingStop,callback:(args:any)=>{
-      this.onRowEditingStop.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowFocus,callback:(args:any)=>{
-      this.onRowFocus.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowHover,callback:(args:any)=>{
-      this.onRowHover.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowKeyDown,callback:(args:any)=>{
-      this.onRowKeyDown.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowKeyPress,callback:(args:any)=>{
-      this.onRowKeyPress.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowKeyUp,callback:(args:any)=>{
-      this.onRowKeyUp.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowMouseDown,callback:(args:any)=>{
-      this.onRowMouseDown.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowMouseEnter,callback:(args:any)=>{
-      this.onRowMouseEnter.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowMouseLeave,callback:(args:any)=>{
-      this.onRowMouseLeave.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowMouseMove,callback:(args:any)=>{
-      this.onRowMouseMove.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowMouseOver,callback:(args:any)=>{
-      this.onRowMouseOver.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowMouseUp,callback:(args:any)=>{
-      this.onRowMouseUp.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowPositionChange,callback:(args:any)=>{
-      this.onRowPositionChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowSelectionChange,callback:(args:any)=>{
-      this.onRowSelectionChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowTouchCancel,callback:(args:any)=>{
-      this.onRowTouchCancel.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowTouchEnd,callback:(args:any)=>{
-      this.onRowTouchEnd.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowTouchMove,callback:(args:any)=>{
-      this.onRowTouchMove.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowTouchStart,callback:(args:any)=>{
-      this.onRowTouchStart.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.RowUpdate,callback:(args:any)=>{
-      this.onRowUpdate.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.StateChange,callback:(args:any)=>{
-      this.onStateChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.SortOrderChange,callback:(args:any)=>{
-      this.onSortOrderChange.emit(args);
-    }});
-    this.datagridApi.on({event:AcEnumDatagridEvent.TotalRowsChange,callback:(args:any)=>{
-      this.onTotalRowsChange.emit(args);
-    }});
+  private registerListeners() {
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: any) => {
+        this.onActiveRowChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellBlur, callback: (args: any) => {
+        this.onCellBlur.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellClick, callback: (args: any) => {
+        this.onCellClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDoubleClick, callback: (args: any) => {
+        this.onCellDoubleClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDrag, callback: (args: any) => {
+        this.onCellDrag.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDragEnd, callback: (args: any) => {
+        this.onCellDragEnd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDragEnter, callback: (args: any) => {
+        this.onCellDragEnter.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDragLeave, callback: (args: any) => {
+        this.onCellDragLeave.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDragOver, callback: (args: any) => {
+        this.onCellDragOver.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDragStart, callback: (args: any) => {
+        this.onCellDragStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellDragDrop, callback: (args: any) => {
+        this.onCellDragDrop.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: any) => {
+        this.onCellEditorElementInit.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellEditingStart, callback: (args: any) => {
+        this.onCellEditingStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellEditingStop, callback: (args: any) => {
+        this.onCellEditingStop.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellFocus, callback: (args: any) => {
+        this.onCellFocus.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellHover, callback: (args: any) => {
+        this.onCellHover.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellKeyDown, callback: (args: any) => {
+        this.onCellKeyDown.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellKeyPress, callback: (args: any) => {
+        this.onCellKeyPress.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellKeyUp, callback: (args: any) => {
+        this.onCellKeyUp.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellMouseDown, callback: (args: any) => {
+        this.onCellMouseDown.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellMouseEnter, callback: (args: any) => {
+        this.onCellMouseEnter.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellMouseLeave, callback: (args: any) => {
+        this.onCellMouseLeave.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellMouseMove, callback: (args: any) => {
+        this.onCellMouseMove.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellMouseOver, callback: (args: any) => {
+        this.onCellMouseOver.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellMouseUp, callback: (args: any) => {
+        this.onCellMouseUp.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellTouchCancel, callback: (args: any) => {
+        this.onCellTouchCancel.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellTouchEnd, callback: (args: any) => {
+        this.onCellTouchEnd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellTouchMove, callback: (args: any) => {
+        this.onCellTouchMove.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellTouchStart, callback: (args: any) => {
+        this.onCellTouchStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: any) => {
+        this.onCellValueChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDefinitionsSet, callback: (args: any) => {
+        this.onColumnDefinitionsSet.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnBlur, callback: (args: any) => {
+        this.onColumnBlur.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnClick, callback: (args: any) => {
+        this.onColumnClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDataChange, callback: (args: any) => {
+        this.onColumnDataChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDoubleClick, callback: (args: any) => {
+        this.onColumnDoubleClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDragEnd, callback: (args: any) => {
+        this.onColumnDragEnd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDragEnter, callback: (args: any) => {
+        this.onColumnDragEnter.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDragLeave, callback: (args: any) => {
+        this.onColumnDragLeave.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDragOver, callback: (args: any) => {
+        this.onColumnDragOver.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDragStart, callback: (args: any) => {
+        this.onColumnDragStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnDragDrop, callback: (args: any) => {
+        this.onColumnDragDrop.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnFilterChange, callback: (args: any) => {
+        this.onColumnFilterChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnFocus, callback: (args: any) => {
+        this.onColumnFocus.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnHeaderClick, callback: (args: any) => {
+        this.onColumnHeaderClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnHover, callback: (args: any) => {
+        this.onColumnHover.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnKeyDown, callback: (args: any) => {
+        this.onColumnKeyDown.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnKeyPress, callback: (args: any) => {
+        this.onColumnKeyPress.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnKeyUp, callback: (args: any) => {
+        this.onColumnKeyUp.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnMouseDown, callback: (args: any) => {
+        this.onColumnMouseDown.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnMouseEnter, callback: (args: any) => {
+        this.onColumnMouseEnter.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnMouseLeave, callback: (args: any) => {
+        this.onColumnMouseLeave.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnMouseMove, callback: (args: any) => {
+        this.onColumnMouseMove.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnMouseOver, callback: (args: any) => {
+        this.onColumnMouseOver.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnMouseUp, callback: (args: any) => {
+        this.onColumnMouseUp.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnResize, callback: (args: any) => {
+        this.onColumnResize.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnSortChange, callback: (args: any) => {
+        this.onColumnSortChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnTouchCancel, callback: (args: any) => {
+        this.onColumnTouchCancel.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnTouchEnd, callback: (args: any) => {
+        this.onColumnTouchEnd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnTouchMove, callback: (args: any) => {
+        this.onColumnTouchMove.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnTouchStart, callback: (args: any) => {
+        this.onColumnTouchStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnPositionChange, callback: (args: any) => {
+        this.onColumnPositionChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.ColumnVisibilityChange, callback: (args: any) => {
+        this.onColumnVisibilityChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.DisplayedRowsChange, callback: (args: any) => {
+        this.onDisplayedRowsChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.PaginationChange, callback: (args: any) => {
+        this.onPaginationChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: any) => {
+        this.onRowAdd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowBlur, callback: (args: any) => {
+        this.onRowBlur.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowClick, callback: (args: any) => {
+        this.onRowClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDataChange, callback: (args: any) => {
+        this.onRowDataChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDelete, callback: (args: any) => {
+        this.onRowDelete.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDoubleClick, callback: (args: any) => {
+        this.onRowDoubleClick.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDrag, callback: (args: any) => {
+        this.onRowDrag.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragCancel, callback: (args: any) => {
+        this.onRowDragCancel.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragDrop, callback: (args: any) => {
+        this.onRowDragDrop.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragEnd, callback: (args: any) => {
+        this.onRowDragEnd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragEnter, callback: (args: any) => {
+        this.onRowDragEnter.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragLeave, callback: (args: any) => {
+        this.onRowDragLeave.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragOver, callback: (args: any) => {
+        this.onRowDragOver.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowDragStart, callback: (args: any) => {
+        this.onRowDragStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowEditingStart, callback: (args: any) => {
+        this.onRowEditingStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowEditingStop, callback: (args: any) => {
+        this.onRowEditingStop.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowFocus, callback: (args: any) => {
+        this.onRowFocus.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowHover, callback: (args: any) => {
+        this.onRowHover.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowKeyDown, callback: (args: any) => {
+        this.onRowKeyDown.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowKeyPress, callback: (args: any) => {
+        this.onRowKeyPress.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowKeyUp, callback: (args: any) => {
+        this.onRowKeyUp.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowMouseDown, callback: (args: any) => {
+        this.onRowMouseDown.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowMouseEnter, callback: (args: any) => {
+        this.onRowMouseEnter.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowMouseLeave, callback: (args: any) => {
+        this.onRowMouseLeave.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowMouseMove, callback: (args: any) => {
+        this.onRowMouseMove.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowMouseOver, callback: (args: any) => {
+        this.onRowMouseOver.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowMouseUp, callback: (args: any) => {
+        this.onRowMouseUp.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowPositionChange, callback: (args: any) => {
+        this.onRowPositionChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowSelectionChange, callback: (args: any) => {
+        this.onRowSelectionChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowTouchCancel, callback: (args: any) => {
+        this.onRowTouchCancel.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowTouchEnd, callback: (args: any) => {
+        this.onRowTouchEnd.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowTouchMove, callback: (args: any) => {
+        this.onRowTouchMove.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowTouchStart, callback: (args: any) => {
+        this.onRowTouchStart.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.RowUpdate, callback: (args: any) => {
+        this.onRowUpdate.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.StateChange, callback: (args: any) => {
+        this.onStateChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.SortOrderChange, callback: (args: any) => {
+        this.onSortOrderChange.emit(args);
+      }
+    });
+    this.datagridApi.on({
+      event: AC_DATAGRID_EVENT.TotalRowsChange, callback: (args: any) => {
+        this.onTotalRowsChange.emit(args);
+      }
+    });
   }
 
   private setColumnDefinitions() {
     const columns: IAcDatagridColumnDefinition[] = [];
     for (const colDef of this.columnDefinitions) {
-      if (this.columnRendererTemplates[colDef.field]) {
-        colDef.cellRendererTemplateRef = this.columnRendererTemplates[colDef.field];
+      colDef.cellRendererElement = AcNgDatagridCellRenderer;
+      if (!colDef.cellRendererElementParams) {
+        colDef.cellRendererElementParams = {};
       }
-      if (colDef.cellRendererTemplateRef || colDef.cellRendererComponent) {
-        colDef.cellRendererElement = AcNgDatagridCellRenderer;
-        if (!colDef.cellRendererElementParams) {
-          colDef.cellRendererElementParams = {};
-        }
-        colDef.cellRendererElementParams['___appRef___'] = this.appRef;
-        colDef.cellRendererElementParams['___runtimeService___'] = this.runtimeService;
-      }
-      if (this.columnEditorTemplates[colDef.field]) {
-        colDef.cellEditorTemplateRef = this.columnEditorTemplates[colDef.field];
-      }
-      if (colDef.cellEditorTemplateRef || colDef.cellEditorComponent) {
-        colDef.cellEditorElement = AcNgDatagridCellEditor;
+      colDef.cellRendererElementParams['___appRef___'] = this.appRef;
+      colDef.cellRendererElementParams['___runtimeService___'] = this.runtimeService;
+
+      colDef.cellEditorElement = AcNgDatagridCellEditor;
         if (!colDef.cellEditorElementParams) {
           colDef.cellEditorElementParams = {};
         }
         colDef.cellEditorElementParams['___appRef___'] = this.appRef;
         colDef.cellEditorElementParams['___runtimeService___'] = this.runtimeService;
+
+      if (this.columnRendererTemplates[colDef.field]) {
+        colDef.cellRendererTemplateRef = this.columnRendererTemplates[colDef.field];
+      }
+      if (this.columnEditorTemplates[colDef.field]) {
+        colDef.cellEditorTemplateRef = this.columnEditorTemplates[colDef.field];
+      }
+      if(this.flexColumn == colDef.field){
+       colDef.flexSize = 1;
       }
       columns.push(colDef);
     }

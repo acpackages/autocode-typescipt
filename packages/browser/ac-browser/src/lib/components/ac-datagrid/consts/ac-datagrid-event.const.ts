@@ -1,4 +1,6 @@
-export const AcEnumDatagridEvent = {
+export const AC_DATAGRID_EVENT = {
+  ActiveCellChange: 'activeCellChange',
+  ActiveColumnChange: 'activeColumnChange',
   ActiveRowChange: 'activeRowChange',
   CellBlur: 'cellBlur',
   CellClick: 'cellClick',
@@ -62,7 +64,9 @@ export const AcEnumDatagridEvent = {
   ColumnTouchStart: 'columnTouchStart',
   ColumnPositionChange: 'columnPositionChange',
   ColumnVisibilityChange: 'columnVisibilityChange',
+  DatagridInit: 'datagridInit',
   DisplayedRowsChange: 'displayedRowsChange',
+  HeaderHeightChange: 'headerHeightChange',
   PaginationChange: 'paginationChange',
   RowAdd: 'rowAdd',
   RowBlur: 'rowBlur',
@@ -85,6 +89,7 @@ export const AcEnumDatagridEvent = {
   RowKeyDown: 'rowKeyDown',
   RowKeyPress: 'rowKeyPress',
   RowKeyUp: 'rowKeyUp',
+  RowHeightChange: 'rowHeightChange',
   RowMouseDown: 'rowMouseDown',
   RowMouseEnter: 'rowMouseEnter',
   RowMouseLeave: 'rowMouseLeave',
@@ -100,5 +105,5 @@ export const AcEnumDatagridEvent = {
   RowUpdate: 'rowUpdate',
   StateChange: 'stateChange',
   SortOrderChange: 'sortOrderChange',
-  TotalRowsChange: 'totalRowsChange'
+  TotalRowsChange: 'totalRowsChange',
 };

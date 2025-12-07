@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
-import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, IAcDataRow, AcEnumDataManagerHook } from "@autocode-ts/autocode";
+import { IAcOnDemandRequestArgs, AcDataManager, AcEnumConditionOperator, IAcDataRow, AC_DATA_MANAGER_HOOK } from "@autocode-ts/autocode";
 import { createPopper } from '@popperjs/core';
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcScrollable } from "../../_components.export";
@@ -112,7 +112,7 @@ export class AcSelectInput extends AcInputBase {
   constructor() {
     super();
     this.dataManager.hooks.subscribe({
-      hook: AcEnumDataManagerHook.DataChange, callback: () => {
+      hook: AC_DATA_MANAGER_HOOK.DataChange, callback: () => {
         this.setValueLabel();
       }
     });
@@ -213,7 +213,7 @@ export class AcSelectInput extends AcInputBase {
 
   private buildOptionElement(row: IAcDataRow): HTMLElement {
     const el = this.ownerDocument.createElement("div");
-    el.dataset["optionIndex"] = String(row.displayIndex);
+    el.dataset["optionIndex"] = String(row.index);
     el.style.padding = "4px 8px";
     el.style.cursor = "pointer";
     el.style.boxSizing = "border-box";

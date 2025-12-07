@@ -11,8 +11,8 @@ import { AcEnumSortOrder } from "../../enums/ac-enum-sort-order.enum";
 import { AcFilterGroup } from "../../models/ac-filter-group.model";
 import { AcFilter } from "../../models/ac-filter.model";
 import { AcSortOrder } from "../../models/ac-sort-order.model";
-import { AcEnumDataManagerEvent } from "../enums/ac-enum-data-manager-event.enum";
-import { AcEnumDataManagerHook } from "../enums/ac-enum-data-manager-hook.enum";
+import { AC_DATA_MANAGER_EVENT } from "../consts/ac-data-manager-event.const";
+import { AC_DATA_MANAGER_HOOK } from "../consts/ac-data-manager-hook.const";
 import { IAcOnDemandRequestArgs } from "../interfaces/ac-on-demand-request-args.interface";
 import { IAcOnDemandResponseArgs } from "../interfaces/ac-on-demand-response-args.interface";
 import { IAcDataManagerDisplayedRowsChangeEvent } from "../interfaces/event-args/ac-data-manager-displayed-rows-change-event.interface";
@@ -23,40 +23,28 @@ import { IAcDataManagerGetOnDemandDataSuccessCallbackHookArgs } from "../interfa
 import { IAcDataManagerRowHookArgs } from "../interfaces/hook-args/ac-data-row-hook-args.interface";
 import { IAcDataManagerRowEvent } from "../interfaces/event-args/ac-data-manager-row-event.interface";
 import { AcLogger } from "../../core/ac-logger";
-import { IAcDataManagerDataEvent } from "../_data-manager.export";
+import { IAcDataManagerDataEvent, IAcDataManagerEvent } from "../_data-manager.export";
 import { IAcDataRow } from "../interfaces/ac-data-row.interface";
 import { Autocode } from "../../core/autocode";
 
 export class AcDataManager {
-  private _data: any[] = [];
   get data(): any[] {
-    return this._data;
+    const values: any[] = [];
+    for (const row of this.rows) {
+      if (row.index >= 0) {
+        values.push(row.data);
+      }
+    }
+    return values;
   }
   set data(value: any[]) {
-    if (this._data != value) {
-      this.logger.log("Setting data", { valueLength: value.length });
-      this.setRows({ data: value });
-      this.logger.log("Data set complete");
-    }
+    this.setRows({ data: value });
   }
 
-  private _displayedRows: IAcDataRow[] = [];
   get displayedRows(): IAcDataRow[] {
-    return this._displayedRows;
-  }
-  set displayedRows(value: IAcDataRow[]) {
-    this.logger.log("Setting displayedRows", { oldLength: this._displayedRows.length, newLength: value.length });
-    if (value != this._displayedRows) {
-      this._displayedRows = value;
-      const eventArgs: IAcDataManagerDisplayedRowsChangeEvent = {
-        displayedRows: value,
-        dataManager: this
-      };
-      this.hooks.execute({ hook: AcEnumDataManagerHook.DisplayedRowsChange, args: eventArgs });
-      this.events.execute({ event: AcEnumDataManagerEvent.DisplayedRowsChange, args: eventArgs });
-      this.logger.log("DisplayedRowsChange event executed");
-    }
-    this.logger.log("DisplayedRows set complete");
+    return this.allRows.filter((row) => {
+      return row.index >= this.displayStartIndex && row.index <= this.displayEndIndex;
+    });
   }
 
   private _filterGroup: AcFilterGroup = new AcFilterGroup();
@@ -70,12 +58,16 @@ export class AcDataManager {
       value.on({
         event: 'change', callback: () => {
           this.logger.log("FilterGroup change detected, triggering refreshRows");
-          this.refreshRows();
         }
       });
-      this.refreshRows();
     }
     this.logger.log("FilterGroup set complete");
+  }
+
+  get rows(): IAcDataRow[] {
+    return this.allRows.filter((row) => {
+      return row.index >= 0;
+    });
   }
 
   private _onDemandFunction?: (args: IAcOnDemandRequestArgs) => void;
@@ -83,13 +75,15 @@ export class AcDataManager {
     return this._onDemandFunction;
   }
   set onDemandFunction(value: (args: IAcOnDemandRequestArgs) => void) {
-    this.logger.log("Setting onDemandFunction");
     if (value != this._onDemandFunction) {
       this._onDemandFunction = value;
       this.type = 'ondemand';
-      this.logger.log("Type switched to 'ondemand'");
+      const eventArgs: IAcDataManagerEvent = {
+        dataManager: this
+      };
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.OnDemandFunctionSet, args: eventArgs });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.OnDemandFunctionSet, args: eventArgs });
     }
-    this.logger.log("OnDemandFunction set complete");
   }
 
   private _searchQuery!: string;
@@ -100,7 +94,8 @@ export class AcDataManager {
     this.logger.log("Setting searchQuery", { query: value });
     if (value != this._searchQuery) {
       this._searchQuery = value;
-      this.refreshRows();
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.SearchQueryChange, args: {searchQuery:value} });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.SearchQueryChange, args: {searchQuery:value} });
     }
     this.logger.log("SearchQuery set complete");
   }
@@ -115,11 +110,9 @@ export class AcDataManager {
       value.on({
         event: 'change', callback: () => {
           this.logger.log("SortOrder change detected, triggering refreshRows");
-          this.refreshRows();
         }
       });
       this._sortOrder = value;
-      this.refreshRows();
     }
     this.logger.log("SortOrder set complete");
   }
@@ -136,10 +129,10 @@ export class AcDataManager {
         totalRows: value,
         dataManager: this
       };
-      this.hooks.execute({ hook: AcEnumDataManagerHook.TotalRowsChange, args: eventArgs });
-      this.hooks.execute({ hook: AcEnumDataManagerHook.DisplayedRowsChange, args: eventArgs });
-      this.events.execute({ event: AcEnumDataManagerEvent.TotalRowsChange, args: eventArgs });
-      this.events.execute({ event: AcEnumDataManagerEvent.DisplayedRowsChange, args: eventArgs });
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.TotalRowsChange, args: eventArgs });
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.TotalRowsChange, args: eventArgs });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
       this.logger.log("TotalRowsChange and DisplayedRowsChange events executed");
     }
     this.logger.log("TotalRows set complete");
@@ -161,44 +154,89 @@ export class AcDataManager {
   allDataAvailable: boolean = true;
   allRows: IAcDataRow[] = [];
   autoSetUniqueIdToData: boolean = false;
-  firstDataNotified:boolean = false;
-  rows: IAcDataRow[] = [];
+  firstDataNotified: boolean = false;
   events: AcEvents = new AcEvents();
   hooks: AcHooks = new AcHooks();
   isWorking: boolean = false;
   lastRowsCount: number = 0;
   lastStartIndex: number = 0;
-  lastDisplayedRowsCount: number = -1;
-  lastDisplayedStartIndex: number = 0;
+  displayStartIndex: number = -1;
+  displayEndIndex: number = -1;
+  displayCount: number = 0;
   logger: AcLogger = new AcLogger({ logMessages: false });
   private refreshRowsTimeout: any;
   refreshRowsTimeoutDuration = 100;
-  private initialized:boolean = false;
 
-  constructor() {
-    this.logger.log("Initializing AcDataManager");
-    this.logger.log("Initialized AcDataManager");
-  }
+  // constructor() {}
 
   addData({ data = {} }: { data?: any } = {}): IAcDataRow {
     this.logger.log("Adding data", { dataKeys: Object.keys(data) });
-    this._data.push(data);
-    const index: number = this._data.length - 1;
+    const index: number = this.allRows.length - 1;
     const dataRow: IAcDataRow = {
       data: data,
       index: index,
-      displayIndex:-1,
-      extensionData:{},
-      isPlaceholder:false,
-      rowId:Autocode.uuid()
+      originalIndex: index,
+      extensionData: {},
+      isPlaceholder: false,
+      rowId: Autocode.uuid()
     };
     this.allRows.push(dataRow);
     this.rows.push(dataRow);
     this.totalRows++;
-    dataRow.displayIndex = this.displayedRows.length;
     this.displayedRows.push(dataRow);
     this.logger.log("Data added successfully", { rowId: dataRow.rowId, index });
     return dataRow;
+  }
+
+  private applyFilter() {
+    let validIndex: number = 0;
+    for (const row of this.allRows) {
+      const keys: any = Object.keys(row.data);
+      let valid: boolean = true;
+      if (this.searchQuery) {
+        valid = this.evaluateSearch(this.searchQuery, row, keys);
+      }
+      if (valid && this.filterGroup && (this.filterGroup.hasFilters() || this.filterGroup.filterGroups.length > 0)) {
+        valid = this.evaluateFilterGroup(this.filterGroup, row)
+      }
+      if (valid) {
+        row.index = validIndex;
+        validIndex++;
+      }
+      else {
+        row.index = -1;
+      }
+    }
+  }
+
+  private applySort() {
+    const rows = this.allRows.filter((row) => { return row.index >= 0 });
+    rows.sort((a: IAcDataRow, b: IAcDataRow): number => {
+      let index = 0;
+      for (const sort of this.sortOrder.sortOrders) {
+        const field = sort.key;
+        const valA: any = a.data[field];
+        const valB: any = b.data[field];
+        let result = 0;
+
+        if (typeof valA === "string" && typeof valB === "string") {
+          result = valA.localeCompare(valB);
+        } else {
+          result = (valA ?? 0) - (valB ?? 0);
+        }
+
+        if (result !== 0) {
+          index = sort.order == AcEnumSortOrder.Ascending ? result : -result;
+          break;
+        }
+      }
+      return index;
+    });
+    let index: number = 0;
+    for (const row of rows) {
+      row.index = index;
+      index++;
+    }
   }
 
   private checkOnDemandRowsAvailable({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): boolean {
@@ -261,10 +299,7 @@ export class AcDataManager {
     });
     if (dataRow) {
       arrayRemoveByKey(this.allRows, 'rowId', dataRow.rowId);
-      arrayRemoveByKey(this.rows, 'rowId', dataRow.rowId);
-      arrayRemoveByKey(this._displayedRows, 'rowId', dataRow.rowId);
       this.totalRows--;
-      this.setDisplayedRowIndexes();
       this.logger.log("Row deleted successfully", { rowId: dataRow.rowId });
     } else {
       this.logger.log("Row not found for deletion");
@@ -493,7 +528,7 @@ export class AcDataManager {
                   });
                   setResultFromRows();
                   this.hooks.execute({
-                    hook: AcEnumDataManagerHook.GetOnDemandDataSuccessCallback,
+                    hook: AC_DATA_MANAGER_HOOK.GetOnDemandDataSuccessCallback,
                     args: hookArgs,
                   });
                   this.logger.log("On-demand success callback processed");
@@ -523,7 +558,7 @@ export class AcDataManager {
             };
 
             this.hooks.execute({
-              hook: AcEnumDataManagerHook.BeforeGetOnDemandData,
+              hook: AC_DATA_MANAGER_HOOK.BeforeGetOnDemandData,
               args: hookArgs,
             });
             this.logger.log("BeforeGetOnDemandData hook executed");
@@ -591,58 +626,20 @@ export class AcDataManager {
     return subscriptionId;
   }
 
-  processRows() {
+  async processRows() {
     this.logger.log("Processing rows", { allRowsLength: this.allRows.length, searchQuery: this.searchQuery, filterGroupHasFilters: this.filterGroup.hasFilters(), sortOrdersCount: this.sortOrder.sortOrders.length });
-    let filteredRows = [...this.allRows];
     if (this.type == 'offline') {
-      if (filteredRows.length > 0) {
-        if (this.searchQuery) {
-          const keys: any = Object.keys(filteredRows[0].data);
-          this.logger.log("Applying search filter", { query: this.searchQuery, keysLength: keys.length });
-          filteredRows = filteredRows.filter((row: IAcDataRow) => this.evaluateSearch(this.searchQuery, row, keys));
-          this.logger.log("Search filter applied", { filteredLength: filteredRows.length });
-        }
-        if (this.filterGroup && (this.filterGroup.hasFilters() || this.filterGroup.filterGroups.length > 0)) {
-          this.logger.log("Applying filter group");
-          filteredRows = filteredRows.filter((row: IAcDataRow) => this.evaluateFilterGroup(this.filterGroup, row));
-          this.logger.log("Filter group applied", { filteredLength: filteredRows.length });
-        }
+      if (this.allRows.length > 0) {
+        this.applyFilter();
+        this.applySort();
       }
-      this.rows = filteredRows;
-      if (this.sortOrder.sortOrders.length > 0) {
-        this.logger.log("Applying sort orders");
-        this.rows.sort((a: IAcDataRow, b: IAcDataRow): number => {
-          let index = 0;
-          for (const sort of this.sortOrder.sortOrders) {
-            const field = sort.key;
-            const valA: any = a.data[field];
-            const valB: any = b.data[field];
-            let result = 0;
-
-            if (typeof valA === "string" && typeof valB === "string") {
-              result = valA.localeCompare(valB);
-            } else {
-              result = (valA ?? 0) - (valB ?? 0);
-            }
-
-            if (result !== 0) {
-              index = sort.order == AcEnumSortOrder.Ascending ? result : -result;
-              break;
-            }
-          }
-          return index;
-        });
-        this.logger.log("Sort orders applied");
-      }
-      this.totalRows = this.rows.length;
-      this.logger.log("Setting displayed rows after processing", { startIndex: this.lastDisplayedStartIndex, rowsCount: this.lastDisplayedRowsCount });
-      this.setDisplayedRows({ startIndex: this.lastDisplayedStartIndex, rowsCount: this.lastDisplayedRowsCount });
+      this.logger.log("Setting displayed rows after processing", { startIndex: this.displayStartIndex, rowsCount: this.displayCount });
     }
     else {
-      this.rows = filteredRows;
-      this.totalRows = this.rows.length;
       this.logger.log("On-demand mode, rows set without full processing");
     }
+    this.totalRows = this.rows.length;
+    this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
     this.logger.log("Rows processing complete", { rowsLength: this.rows.length, totalRows: this.totalRows });
   }
 
@@ -662,7 +659,7 @@ export class AcDataManager {
         this.isWorking = true;
         this.reset();
         await this.getRows({ rowsCount: this.lastRowsCount });
-        this.setDisplayedRows({ startIndex: this.lastDisplayedStartIndex, rowsCount: this.lastDisplayedRowsCount });
+        this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
         this.logger.log("On-demand refresh: setting isWorking to false");
         this.isWorking = false;
       }
@@ -672,24 +669,31 @@ export class AcDataManager {
 
   reset() {
     this.logger.log("Resetting data manager");
-    this._data = [];
     this.totalRows = 0;
+    (this.allRows as any) = null;
     this.allRows = [];
-    this.displayedRows = [];
-    this.lastDisplayedStartIndex = 0;
-    this.rows = [];
+    this.displayStartIndex = -1;
+    this.displayEndIndex = -1;
+    this.hooks.execute({
+      hook: AC_DATA_MANAGER_HOOK.Reset,
+      args: {},
+    });
+    this.events.execute({
+      event: AC_DATA_MANAGER_EVENT.Reset,
+      args: {},
+    });
     this.logger.log("Reset complete");
   }
 
   setRows({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
     this.logger.log("Setting rows", { dataLength: data.length, startIndex, totalCount, type: this.type });
-    if(!this.firstDataNotified && data.length>0){
+    if (!this.firstDataNotified && data.length > 0) {
       this.firstDataNotified = true;
       const eventArgs: IAcDataManagerDataEvent = {
         data: data,
         dataManager: this
       }
-      this.events.execute({ event: AcEnumDataManagerEvent.DataFoundForFirstTime, args: eventArgs });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.DataFoundForFirstTime, args: eventArgs });
     }
     if (this.type == 'offline') {
       const hookArgs: IAcDataManagerDataChangeHookArgs = {
@@ -697,27 +701,26 @@ export class AcDataManager {
         dataManager: this,
         oldData: this.data
       }
-      this.hooks.execute({ hook: AcEnumDataManagerHook.BeforeDataChange, args: hookArgs });
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeDataChange, args: hookArgs });
       this.logger.log("BeforeDataChange hook executed");
-      this._data = data;
       let index = 0;
       this.allRows = [];
-      for (const row of this._data) {
+      for (const row of data) {
         const dataRow: IAcDataRow = {
-          rowId:Autocode.uuid(),
+          rowId: Autocode.uuid(),
           data: row,
+          originalIndex: index,
           index: index,
-          displayIndex:-1,
         };
         this.allRows.push(dataRow);
         const hookArgs: IAcDataManagerRowHookArgs = {
           dataManager: this,
           dataRow: dataRow,
         };
-        this.hooks.execute({ hook: AcEnumDataManagerHook.RowCreate, args: hookArgs });
+        this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
         index++;
       }
-      this.hooks.execute({ hook: AcEnumDataManagerHook.DataChange, args: hookArgs });
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
       this.logger.log("DataChange hook executed, all data available");
       this.allDataAvailable = true;
       this.processRows();
@@ -726,78 +729,39 @@ export class AcDataManager {
       if (totalCount == undefined) {
         totalCount = data.length;
       }
-      if (this._data.length < totalCount) {
+      startIndex = startIndex ?? 0;
+      const endIndex = startIndex + (data.length) - 1;
+      if (this.allRows.length < totalCount) {
         this.logger.log("Initializing placeholders for totalCount", { totalCount });
-        this._data = new Array(totalCount).fill(undefined);
         this.allRows = [];
         for (let index = 0; index < totalCount; index++) {
           const dataRow: IAcDataRow = {
-            rowId:Autocode.uuid(),
+            rowId: Autocode.uuid(),
             data: {},
             isPlaceholder: true,
             index: index,
+            originalIndex: index
           };
           this.allRows[index] = dataRow;
         }
       }
-      const hookArgs: IAcDataManagerDataChangeHookArgs = {
-        data: data,
-        dataManager: this,
-        oldData: this.data
-      }
-      this.hooks.execute({ hook: AcEnumDataManagerHook.BeforeDataChange, args: hookArgs });
-      this.logger.log("BeforeDataChange hook executed for on-demand");
-      if (startIndex == undefined) {
-        startIndex = 0;
-      }
-      let index: number = startIndex;
-      for (const row of data) {
-        this._data[index] = row;
+      for (let index = startIndex; index <= endIndex; index++) {
+        const dataIndex = index - startIndex;
+        const rowData = data[dataIndex];
+        this.allRows[index].data = rowData;
         this.allRows[index].isPlaceholder = false;
-        this.allRows[index].data = row;
         const hookArgs: IAcDataManagerRowHookArgs = {
           dataManager: this,
           dataRow: this.allRows[index],
         };
-        this.hooks.execute({ hook: AcEnumDataManagerHook.RowCreate, args: hookArgs });
-        index++;
+        this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
       }
-      this.hooks.execute({ hook: AcEnumDataManagerHook.DataChange, args: hookArgs });
-      this.allDataAvailable = this.data.filter((item) => { return item == undefined }).length == 0;
+      this.allDataAvailable = this.allRows.filter((row) => { return row.isPlaceholder == false }).length == 0;
       this.totalRows = totalCount;
       this.logger.log("On-demand data set, allDataAvailable:", { allDataAvailable: this.allDataAvailable });
       this.processRows();
     }
     this.logger.log("Rows set complete", { totalRows: this.totalRows, allDataAvailable: this.allDataAvailable });
-  }
-
-  async setDisplayedRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}) {
-    this.logger.log("Setting displayed rows", { startIndex, rowsCount });
-    this.lastDisplayedRowsCount = rowsCount;
-    this.lastDisplayedStartIndex = startIndex;
-    const displayedRows: IAcDataRow[] = await this.getRows({ startIndex, rowsCount });
-    this.logger.log("Setting displayed rows display index");
-    let displayIndex: number = startIndex - 1;
-    for (const row of displayedRows) {
-      displayIndex++;
-      row.displayIndex = displayIndex;
-    }
-    this.displayedRows = displayedRows;
-    this.logger.log("Displayed rows set complete", { length: displayedRows.length });
-  }
-
-  async setDisplayedRowIndexes({ startIndex = 0, displayedRows }: { startIndex?: number; displayedRows?: IAcDataRow[]; } = {}) {
-    this.logger.log("Setting displayed row indexes", { startIndex });
-    if (displayedRows == undefined) {
-      displayedRows = this._displayedRows;
-    }
-    let displayIndex: number = startIndex - 1;
-    for (const row of displayedRows) {
-      displayIndex++;
-      row.displayIndex = displayIndex;
-    }
-    this.displayedRows = displayedRows;
-    this.logger.log("Displayed row indexes set complete", { length: displayedRows.length });
   }
 
   updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDataRow | undefined {
@@ -824,7 +788,7 @@ export class AcDataManager {
         dataManager: this,
         dataRow: dataRow
       };
-      this.events.execute({ event: AcEnumDataManagerEvent.RowUpdate, args: eventArgs });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowUpdate, args: eventArgs });
       this.logger.log("Row updated successfully", { rowId: dataRow.rowId });
     }
     else if (addIfMissing) {
@@ -834,6 +798,19 @@ export class AcDataManager {
       this.logger.log("Row not found and addIfMissing false");
     }
     return dataRow;
+  }
+
+  async setDisplayedRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}) {
+    this.logger.log("Setting displayed rows", { startIndex, rowsCount });
+    this.displayStartIndex = startIndex;
+    this.displayEndIndex = (startIndex + rowsCount) - 1;
+    this.displayCount = rowsCount;
+    const eventArgs: IAcDataManagerDisplayedRowsChangeEvent = {
+      displayedRows: this.displayedRows,
+      dataManager: this
+    };
+    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
   }
 
 }

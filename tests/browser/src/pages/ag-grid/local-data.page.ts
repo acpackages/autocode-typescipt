@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AC_DATAGRID_EXTENSION_NAME, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AC_DATAGRID_EVENT, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
@@ -34,12 +34,12 @@ export class AggridLocalData extends HTMLElement {
       this.datagrid = new AcDatagrid();
       this.datagridApi = this.datagrid.datagridApi;
 
-      this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
-      this.columnsCustomizerExtension = this.datagridApi.enableExtension( {extensionName:AcEnumDatagridExtension.ColumnsCustomizer}) as AcDatagridColumnsCustomizerExtension;
-      this.dataExportXlsxExtension = this.datagridApi.enableExtension( {extensionName:AcEnumDatagridExtension.DataExportXlsx}) as AcDatagridDataExportXlsxExtension;
-      this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
-      this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
-      this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
+      this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnDragging }) as AcDatagridColumnDraggingExtension;
+      this.columnsCustomizerExtension = this.datagridApi.enableExtension( {extensionName:AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer}) as AcDatagridColumnsCustomizerExtension;
+      this.dataExportXlsxExtension = this.datagridApi.enableExtension( {extensionName:AC_DATAGRID_EXTENSION_NAME.DataExportXlsx}) as AcDatagridDataExportXlsxExtension;
+      this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowNumbers }) as AcDatagridRowNumbersExtension;
+      this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
+      this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
       this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
 
       this.datagridApi.usePagination = true;
@@ -148,7 +148,7 @@ export class AggridLocalData extends HTMLElement {
         ]
       });
 
-      this.datagridApi.on({event:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
+      this.datagridApi.on({event:AC_DATAGRID_EVENT.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
         const instance = args.cellRendererElementInstance;
         if(instance instanceof ActionsDatagridColumn){
           instance.editButton.addEventListener('click',(event:any)=>{
@@ -161,7 +161,7 @@ export class AggridLocalData extends HTMLElement {
       }});
       this.datagridApi.events.subscribeAllEvents({callback:(eventName:string,args:any)=>{
         const skipEvents:any[] = [
-          AcEnumDatagridEvent.CellRendererElementInit
+          AC_DATAGRID_EVENT.CellRendererElementInit
         ];
         if(!skipEvents.includes(eventName)){
           console.log(`Found event : ${eventName}`,args);

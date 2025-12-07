@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridApi, AcDatagridTreeTableExtension, AcEnumDatagridExtension, AcEnumDatagridHook, AcEnumDatagridTreeTableHook, IAcDatagridExtensionEnabledHookArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, AcDatagridTreeTableExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, AcEnumDatagridTreeTableHook, IAcDatagridExtensionEnabledHookArgs } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { GridApi } from "ag-grid-community";
 import { AcEnumDatagridOnAgGridHook } from "../enums/ac-enum-datagrid-on-ag-grid-hook.enum";
@@ -31,8 +31,8 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] Constructor: GridApi assigned.");
     this.datagridApi = agGridExtension.datagridApi;
     this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] Constructor: DatagridApi assigned.");
-    if (this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable]) {
-      this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
+    if (this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable]) {
+      this.treeTableExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable] as AcDatagridTreeTableExtension;
       this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] Constructor: TreeTableExtension assigned.");
     } else {
       this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] Constructor: No TreeTableExtension available.");
@@ -105,8 +105,8 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
 
   private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
     this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleExtensionEnabled: Entering with extensionName=${args.extensionName}.`);
-    if (args.extensionName == AcEnumDatagridExtension.TreeTable) {
-      this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
+    if (args.extensionName == AC_DATAGRID_EXTENSION_NAME.TreeTable) {
+      this.treeTableExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable] as AcDatagridTreeTableExtension;
       this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] handleExtensionEnabled: TreeTableExtension assigned.");
     } else {
       this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleExtensionEnabled: Unknown extension ${args.extensionName}, skipping.`);
@@ -116,7 +116,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
 
   handleHook({ hook, args }: { hook: string, args: any }): void {
     this.logger.log(`[AcDatagridTreeTableExtensionOnAgGrid] handleHook: Entering with hook=${hook}.`);
-    if (hook == AcEnumDatagridHook.ExtensionEnable) {
+    if (hook == AC_DATAGRID_HOOK.ExtensionEnable) {
       this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] handleHook: Handling ExtensionEnable.");
       this.handleExtensionEnabled(args);
     }
@@ -200,7 +200,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
 
   private handleTreeDataKeyChangeChange() {
     this.logger.log("[AcDatagridTreeTableExtensionOnAgGrid] handleTreeDataKeyChangeChange: Entering.");
-    const treeTableExtension: AcDatagridTreeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
+    const treeTableExtension: AcDatagridTreeTableExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable] as AcDatagridTreeTableExtension;
     this.treeDataChildKey = treeTableExtension.treeDataChildKey;
     this.treeDataDisplayKey = treeTableExtension.treeDataDisplayKey;
     this.treeDataParentKey = treeTableExtension.treeDataParentKey;

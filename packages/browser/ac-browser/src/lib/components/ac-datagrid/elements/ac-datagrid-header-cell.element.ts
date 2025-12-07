@@ -4,13 +4,13 @@ import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { acAddClassToElement, acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcEnumSortOrder, AcFilter } from "@autocode-ts/autocode";
-import { AcEnumDatagridEvent } from "../enums/ac-enum-datagrid-event.enum";
+import { AC_DATAGRID_EVENT } from "../consts/ac-datagrid-event.const";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { IAcDatagridColumnResizeEvent } from "../interfaces/event-args/ac-datagrid-column-resize-event.interface";
 import { IAcDatagridColumnFilterChangeEvent } from "../interfaces/event-args/ac-datagrid-column-filter-change-event.interface";
 import { IAcDatagridColumnSortChangeEvent } from "../interfaces/event-args/ac-datagrid-column-sort-change-event.interface";
 import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-column-position-change-event.interface";
-import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_HOOK } from "../consts/ac-datagrid-hook.const";
 import { IAcDatagridColumn } from "../interfaces/ac-datagrid-column.interface";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AC_DATAGRID_ICON_SVGS, AcSvgIcon } from "../../_components.export";
@@ -24,7 +24,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   set datagridApi(value: AcDatagridApi) {
     this._datagridApi = value;
     value.on({
-      event: AcEnumDatagridEvent.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
+      event: AC_DATAGRID_EVENT.ColumnPositionChange, callback: (event: IAcDatagridColumnPositionChangeEvent) => {
         if (event.datagridColumn.columnId == this.datagridColumn.columnId && !this.swappingColumpPosition) {
           let element1: HTMLElement | undefined;
           let element2: HTMLElement | undefined;
@@ -55,17 +55,17 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   set datagridColumn(value: IAcDatagridColumn) {
     this._datagridColumn = value;
     // value.hooks.subscribe({
-    //   hook: AcEnumDatagridHook.ColumnSortChange, callback: (event: IAcDatagridColumnSortChangeEvent) => {
+    //   hook: AC_DATAGRID_HOOK.ColumnSortChange, callback: (event: IAcDatagridColumnSortChangeEvent) => {
     //     this.renderSort();
     //   }
     // });
     // value.hooks.subscribe({
-    //   hook: AcEnumDatagridHook.ColumnFilterChange, callback: (event: IAcDatagridColumnFilterChangeEvent) => {
+    //   hook: AC_DATAGRID_HOOK.ColumnFilterChange, callback: (event: IAcDatagridColumnFilterChangeEvent) => {
     //     this.renderFilter();
     //   }
     // });
     // value.hooks.subscribe({
-    //   hook: AcEnumDatagridHook.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
+    //   hook: AC_DATAGRID_HOOK.ColumnWidthChange, callback: (event: IAcDatagridColumnResizeEvent) => {
     //     this.setCellWidth();
     //   }
     // });
@@ -137,8 +137,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   registerListeners() {
     // Filter button
     this.filterElement.addEventListener('click', () => {
-      const filter = new AcFilter();
-      this.datagridApi.setColumnFilter({ datagridColumn: this.datagridColumn, filter });
+      this.datagridApi.setColumnFilter({ datagridColumn: this.datagridColumn });
     });
 
     // Double-click for auto-resize
@@ -236,7 +235,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
   renderFilter() {
     this.filterElement.style.margin = 'auto';
     this.filterElement.style.cursor = 'pointer';
-    if (this.datagridColumn.filterGroup!.hasFilters()) {
+    if (this.datagridColumn.filterGroup && ((this.datagridColumn.filterGroup.filters && this.datagridColumn.filterGroup.filters.length > 0) || (this.datagridColumn.filterGroup.filterGroups && this.datagridColumn.filterGroup.filterGroups.length > 0))) {
       this.filterElement.svgCode = AC_DATAGRID_ICON_SVGS.appliedFilter;
     }
     else {

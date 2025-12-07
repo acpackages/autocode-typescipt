@@ -55,7 +55,7 @@ export class AcDatagridCell {
     const oldValue = this.cellValue;
     if (oldValue != value) {
       this.datagridRow.data[this.columnKey] = value;
-      this.datagridApi.eventHandler.handleCellValueChange({ datagridCell: this });
+      // this.datagridApi.eventHandler.handleCellValueChange({ datagridCell: this });
       if(this.element){
         this.element.refresh();
       }
@@ -72,7 +72,7 @@ export class AcDatagridCell {
     if(this.datagridRow.datagridCells == undefined){
       this.datagridRow.datagridCells = [];
     }
-    this.datagridRow.datagridCells.push(this);
+    // this.datagridRow.datagridCells.push(this);
     this.element = element;
   }
 

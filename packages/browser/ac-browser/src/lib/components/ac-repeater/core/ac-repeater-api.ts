@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { AcDataManager, AcEvents, AcHooks, AcSortOrder } from "@autocode-ts/autocode";
@@ -37,13 +38,17 @@ export class AcRepeaterApi{
   get repeaterRows(): AcRepeaterRow[] {
     let result: AcRepeaterRow[] = [];
     if (this.dataManager) {
-      result = this.dataManager.rows as AcRepeaterRow[];
+      // result = this.dataManager.rows as AcRepeaterRow[];
     }
     return result;
   }
 
   get displayedRepeaterRows(): AcRepeaterRow[] {
-    return this.dataManager.displayedRows as AcRepeaterRow[];
+    let result: AcRepeaterRow[] = [];
+    if (this.dataManager) {
+      // result = this.dataManager.rows as AcRepeaterRow[];
+    }
+    return result;
   }
 
   private _usePagination: boolean = false;

@@ -1,4 +1,4 @@
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
@@ -112,24 +112,24 @@ export class AcDDETablesDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
+      event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
         this.editorApi.dataStorage.setTableProperties(args.datagridCell.datagridRow.data);
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         const row = this.editorApi.dataStorage.addTable({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
         args.datagridRow.data = row;
         this.data.push(row);
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowDelete, callback: (args: IAcDatagridRowEvent) => {
         this.editorApi.dataStorage.deleteTable({ tableId: args.datagridRow.data[AcEnumDDETable.TableId] });
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -141,7 +141,7 @@ export class AcDDETablesDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,

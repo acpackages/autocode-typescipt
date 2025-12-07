@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acAddClassToElement, AcDatagridApi, AcEnumDatagridEvent, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDView } from "@autocode-ts/ac-data-dictionary";
 import { AcHooks,IAcContextEvent } from "@autocode-ts/autocode";
@@ -69,7 +69,7 @@ export class AcDDEViewsDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
+      event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
         setTimeout(() => {
           // this.hooks.execute({ hook: AcEnumDDEHook.DatagridActiveTableChange });
         }, 100);
@@ -77,19 +77,19 @@ export class AcDDEViewsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         const row = this.editorApi.dataStorage.addView({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
         args.datagridRow.data = row;
         this.data.push(row);
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.RowDelete, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATAGRID_EVENT.RowDelete, callback: (args: IAcDatagridRowEvent) => {
         this.editorApi.dataStorage.deleteView({ viewId: args.datagridRow.data[AcEnumDDEView.ViewId] });
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,
@@ -101,7 +101,7 @@ export class AcDDEViewsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AcEnumDatagridEvent.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
+      event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: IAcDatagridCellRendererElementInitEvent) => {
         const hookArgs: IAcDDEDatagridCellInitHookArgs = {
           datagridApi: this.datagridApi,
           editorApi: this.editorApi,

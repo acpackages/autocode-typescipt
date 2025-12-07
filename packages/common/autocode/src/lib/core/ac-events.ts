@@ -1,149 +1,171 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
 import { AcEventExecutionResult } from "../models/ac-event-execution-result.model";
 import { Autocode } from "./autocode";
 
-export class AcEvents {
-  private events: Record<string, Record<string, Function>> = {};
-  private allEventCallbacks: Record<string, Function> = {};
+interface Subscription {
+  callback: Function;
+}
 
+export class AcEvents {
+  // Map<lowercaseEventName, Map<subscriptionId, callback>>
+  private events = new Map<string, Map<string, Function>>();
+
+  // Map<subscriptionId, callback> for "all events" listeners
+  private allEventCallbacks = new Map<string, Function>();
+
+  /** Clear all subscriptions (useful for hot-reload, tests, cleanup) */
   clearSubscriptions() {
-    this.events = {};
-    this.allEventCallbacks = {};
+    this.events.clear();
+    this.allEventCallbacks.clear();
   }
 
+  /**
+   * Execute an event and collect results
+   */
   execute({ event, args }: { event: string; args?: any }): AcEventExecutionResult {
     const result = new AcEventExecutionResult();
+    const name = event.toLowerCase();
+    const functionResults: Record<string, AcEventExecutionResult> = {};
+
     try {
-      const name = event.toLowerCase();
-      const functionResults: Record<string, AcEventExecutionResult> = {};
-      if (this.events[name]) {
-        const functionsToExecute = this.events[name];
-        for (const [functionId, fun] of Object.entries(functionsToExecute)) {
+      // Execute specific event listeners
+      const eventListeners = this.events.get(name);
+      if (eventListeners) {
+        for (const [subId, callback] of eventListeners.entries()) {
           try {
-            const functionResult = fun(args);
-            if (
-              functionResult &&
-              functionResult instanceof AcEventExecutionResult &&
-              functionResult.status === 'success'
-            ) {
-              functionResults[functionId] = functionResult;
+            const res = callback(args);
+            if (res instanceof AcEventExecutionResult && res.status === "success") {
+              functionResults[subId] = res;
             }
-          } catch (ex) {
-            console.error(ex);
+          } catch (ex: any) {
+            console.error(`Event handler failed [${name}] (id: ${subId}):`, ex);
           }
         }
       }
-      for (const [functionId, fun] of Object.entries(this.allEventCallbacks)) {
+
+      // Execute "all events" listeners
+      for (const [subId, callback] of this.allEventCallbacks.entries()) {
         try {
-          const functionResult = fun(name, args);
-          if (
-            functionResult &&
-            functionResult instanceof AcEventExecutionResult &&
-            functionResult.status === 'success'
-          ) {
-            functionResults[functionId] = functionResult;
+          const res = callback(name, args);
+          if (res instanceof AcEventExecutionResult && res.status === "success") {
+            functionResults[subId] = res;
           }
-        } catch (ex) {
-          console.error(ex);
+        } catch (ex: any) {
+          console.error(`Global event handler failed (id: ${subId}):`, ex);
         }
       }
+
       if (Object.keys(functionResults).length > 0) {
         result.hasResults = true;
         result.results = functionResults;
       }
-      result.setSuccess();
-    } catch (ex) {
-      result.setException({ exception: ex });
-      console.error(ex);
-    }
 
+      result.setSuccess();
+    } catch (ex: any) {
+      result.setException({ exception: ex });
+      console.error("Critical error in AcEvents.execute():", ex);
+    }
+    (args as any) = null;
     return result;
   }
 
+  /**
+   * Subscribe to a specific event
+   * @returns subscriptionId — use this to unsubscribe
+   */
   subscribe({ event, callback }: { event: string; callback: Function }): string {
     const name = event.toLowerCase();
-    if (!this.events[name]) {
-      this.events[name] = {};
+    let eventMap = this.events.get(name);
+    if (!eventMap) {
+      eventMap = new Map<string, Function>();
+      this.events.set(name, eventMap);
     }
+
     const subscriptionId = Autocode.uniqueId();
-    this.events[name][subscriptionId] = callback;
+    eventMap.set(subscriptionId, callback);
     return subscriptionId;
   }
 
+  /**
+   * Subscribe to ALL events
+   * @returns subscriptionId
+   */
   subscribeAllEvents({ callback }: { callback: Function }): string {
     const subscriptionId = Autocode.uniqueId();
-    this.allEventCallbacks[subscriptionId] = callback;
+    this.allEventCallbacks.set(subscriptionId, callback);
     return subscriptionId;
   }
 
-  unsubscribe({ event, callback, subscriptionId }: { event?: string; callback?: Function, subscriptionId?: string }): boolean {
-    let removed: boolean = false;
-    if (subscriptionId) {
-      for (const event in this.events) {
-        const eventFunctions = this.events[event];
-        if (eventFunctions[subscriptionId]) {
-          delete eventFunctions[subscriptionId];
-          removed = true;
+  /**
+   * Unsubscribe using subscriptionId (recommended & safe)
+   */
+  unsubscribe({ event,callback,subscriptionId }: { event?:string,callback?: Function,subscriptionId?: string }): boolean {
+    if(event && callback){
+      for (const name of Object.keys(this.events)) {
+        if (name == event) {
+          for (const id of Object.keys(this.events.get(name)!)) {
+            subscriptionId = id;
+            break;
+          }
+          break;
         }
       }
     }
-    else if (callback) {
-      const removeFunction = (eventName: string): boolean => {
-        let found: boolean = false;
-        const eventFunctions = this.events[eventName];
-        if (eventFunctions) {
-          for (const subscriptionId of Object.keys(eventFunctions)) {
-            if (!found) {
-              if (eventFunctions[subscriptionId] == callback) {
-                delete eventFunctions[subscriptionId];
-                found = true;
-                break;
-              }
-            }
-          }
-        }
+    if (!subscriptionId) return false;
 
-        return found;
-      };
-      if (event) {
-        removed = removeFunction(event);
-      }
-      else {
-        for (const eventName of Object.keys(this.events)) {
-          if (!removed) {
-            const found = removeFunction(eventName);
-            if (found) {
-              removed = true;
-              break;
-            }
-          }
-        }
+    let removed = false;
+
+    // Remove from specific events
+    for (const eventMap of this.events.values()) {
+      if (eventMap.delete(subscriptionId)) {
+        removed = true;
       }
     }
+
     return removed;
   }
 
-  unsubscribeAllEvents({ callback, subscriptionId }: { callback?: Function, subscriptionId?: string }): boolean {
-    let removed: boolean = false;
-    if (subscriptionId) {
-      if (this.allEventCallbacks[subscriptionId]) {
-        delete this.allEventCallbacks[subscriptionId];
-      }
-    }
-    else {
-      for (const subscriptionId of Object.keys(this.allEventCallbacks)) {
-        if (!removed) {
-          if (this.allEventCallbacks[subscriptionId] == callback) {
-            delete this.allEventCallbacks[subscriptionId];
-            removed = true;
-            break;
+  /**
+   * Unsubscribe from all events listeners (global only)
+   */
+  unsubscribeAllEvents({ callback,subscriptionId }: { callback?:Function,subscriptionId?: string }): boolean {
+    if(callback){
+      for (const id of Object.keys(this.allEventCallbacks)) {
+        if (this.allEventCallbacks.get(id) == callback) {
+            subscriptionId = id;
           }
-        }
       }
     }
-    return removed;
+    if (!subscriptionId) return false;
+    return this.allEventCallbacks.delete(subscriptionId);
+  }
+
+  /**
+   * (Optional) Remove entire event and all its listeners
+   */
+  removeEvent({ event }: { event: string }): void {
+    this.events.delete(event.toLowerCase());
+  }
+
+  /**
+   * (Debug) Get current subscription count
+   */
+  getSubscriptionCount(): { total: number; perEvent: Record<string, number>; allEvents: number } {
+    const perEvent: Record<string, number> = {};
+    let total = 0;
+
+    for (const [event, map] of this.events.entries()) {
+      perEvent[event] = map.size;
+      total += map.size;
+    }
+
+    return {
+      total: total + this.allEventCallbacks.size,
+      perEvent,
+      allEvents: this.allEventCallbacks.size,
+    };
   }
 }

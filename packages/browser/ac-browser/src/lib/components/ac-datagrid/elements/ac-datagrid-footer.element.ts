@@ -1,13 +1,13 @@
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
-import { AcEnumDatagridHook } from "../_ac-datagrid.export";
+import { AC_DATAGRID_HOOK } from "../_ac-datagrid.export";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 
 
 export class AcDatagridFooter extends AcElementBase {
-  private _datagridApi!: AcDatagridApi;
-  get datagridApi(): AcDatagridApi {
+  private _datagridApi?: AcDatagridApi;
+  get datagridApi(): AcDatagridApi|undefined {
     return this._datagridApi;
   }
   set datagridApi(value: AcDatagridApi) {
@@ -29,12 +29,12 @@ export class AcDatagridFooter extends AcElementBase {
     this.append(this.searchContainer);
     this.setPagination();
     this.setSearchInput();
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.FooterInit});
+    this.datagridApi?.hooks.execute({hook:AC_DATAGRID_HOOK.FooterInit});
   }
 
   setPagination() {
     this.paginationContainer.innerHTML = "";
-    if (this.datagridApi.usePagination && this.datagridApi.pagination) {
+    if (this.datagridApi && this.datagridApi.usePagination && this.datagridApi.pagination) {
       this.datagridApi.pagination.style.paddingRight = '10px';
       this.datagridApi.pagination.style.marginRight = '5px';
       this.datagridApi.pagination.style.borderRight = 'solid 1px #ccc';
@@ -54,7 +54,9 @@ export class AcDatagridFooter extends AcElementBase {
         clearTimeout(this.searchTimeout);
       }
       this.searchTimeout = setTimeout(() => {
-        this.datagridApi.dataManager.searchQuery = this.searchInput.value;
+        if(this.datagridApi){
+          this.datagridApi.dataManager.searchQuery = this.searchInput.value;
+        }
       }, 300);
     });
   }

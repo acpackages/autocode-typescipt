@@ -12,13 +12,4 @@ export interface IAcDatagridCell {
   isPinnedLeft?: boolean;
   isPinnedRight?: boolean;
   element?: AcDatagridCellElement;
-  rowIndex?: number;
-  columnIndex?: number;
-
-  columnId?:string;
-  columnKey?:string;
-  rowId?:string;
-
-  cellValue?:any;
-
 }

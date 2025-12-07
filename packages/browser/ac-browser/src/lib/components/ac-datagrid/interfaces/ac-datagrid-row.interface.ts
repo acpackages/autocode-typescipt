@@ -6,7 +6,7 @@ import { IAcDatagridCell } from "./ac-datagrid-cell.interface";
 export interface IAcDatagridRow extends IAcDataRow {
   isActive?:boolean;
   element?: AcDatagridRowElement;
-  datagridCells: IAcDatagridCell[];
+  datagridCells?: IAcDatagridCell[];
   isLast?:boolean;
   isFirst?:boolean;
 }

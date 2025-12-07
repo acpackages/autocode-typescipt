@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
-import { AcEnumDatagridExtension } from "../../../enums/ac-enum-datagrid-extensions.enum";
+import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { AcEnumDatagridColumnsCustomizerHook } from "../enums/ac-enum-datagrid-columns-customizer-hook.enum";
 import { IAcDatagridColumnsCustomizerHookArgs } from "../interfaces/ac-datagrid-columns-customizer-hook-args.interface";
@@ -46,6 +46,6 @@ export class AcDatagridColumnsCustomizerExtension extends AcDatagridExtension {
 }
 
 export const AcColumnsCustomizerDatagridExtension: IAcDatagridExtension = {
-  extensionName: AcEnumDatagridExtension.ColumnsCustomizer,
+  extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer,
   extensionClass: AcDatagridColumnsCustomizerExtension
 }

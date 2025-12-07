@@ -4,8 +4,8 @@
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRow, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcEnumDatagridEvent, AcEnumDatagridExtension, AcEnumDatagridHook, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
+import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRow, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcNgDatagridComponent, AcNgDatagridModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
@@ -22,7 +22,7 @@ import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@auto
   styleUrl: './datagrid.component.scss',
   standalone: true
 })
-export class DatagridComponent {
+export class DatagridComponent implements OnDestroy{
   @ViewChild('datagrid') datagrid:AcNgDatagridComponent;
   @ViewChild('idTemplate', { static: true }) idTemplateRef!: TemplateRef<any>;
   data?: any;
@@ -46,8 +46,11 @@ export class DatagridComponent {
   onDemandFunction?:any;
 
   constructor(private elementRef: ElementRef) {
-    // console.log(this);
+    console.log(this);
     this.setOnDemandData();
+  }
+  ngOnDestroy(): void {
+    console.log("Datagrid Desrtoyed");
   }
 
   handleDatagridInit(){
@@ -66,7 +69,7 @@ export class DatagridComponent {
 
   handleEdit(datagridRow:AcDatagridRow){
     datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
-    // console.log(datagridRow);
+   console.log(datagridRow);
   }
 
   setLocalData() {
@@ -96,6 +99,7 @@ export class DatagridComponent {
     onDemandProxyDataManager.data = data;
 
     this.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
+      // console.log("Getting on demand data");
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }
@@ -110,6 +114,7 @@ export class DatagridComponent {
         totalCount,
         data
       };
+      // console.log(response);
       args.successCallback(response);
     };
   }

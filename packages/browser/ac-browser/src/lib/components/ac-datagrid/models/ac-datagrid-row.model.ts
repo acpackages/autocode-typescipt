@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDataRow } from "@autocode-ts/autocode";
 import { AcDatagridRowElement } from "../elements/ac-datagrid-row.element";
@@ -48,8 +49,8 @@ export class AcDatagridRow extends AcDataRow {
       return cell.columnId == datagridColumn.columnId;
     });
     if (cell == undefined && createIfNotFound) {
-      cell = new AcDatagridCell({ datagridApi: this.datagridApi, datagridColumn: datagridColumn, datagridRow: this });
-      this.datagridCells.push(cell);
+      // cell = new AcDatagridCell({ datagridApi: this.datagridApi, datagridColumn: datagridColumn, datagridRow: this });
+      // this.datagridCells.push(cell);
     }
     return cell;
   }

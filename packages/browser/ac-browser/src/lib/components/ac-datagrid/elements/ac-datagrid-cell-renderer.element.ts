@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { dateFormat, parseDateTimeString } from "@autocode-ts/ac-extensions";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs, IAcDatagridColumn, AcEnumDatagridHook, IAcDatagridCell } from "../_ac-datagrid.export";
+import { IAcDatagridCellRenderer, IAcDatagridCellElementArgs, IAcDatagridColumn, AC_DATAGRID_HOOK, IAcDatagridCell, AcEnumDatagridColumnDataType } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
@@ -41,20 +41,20 @@ export class AcDatagridCellRendererElement implements IAcDatagridCellRenderer{
   refresh(args: IAcDatagridCellElementArgs): void {
     this.render();
     if(this.datagridApi){
-      this.datagridApi.hooks.execute({hook:AcEnumDatagridHook.CellRendererRefresh,args:this});
+      this.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.CellRendererRefresh,args:this});
     }
   }
 
   render() {
-    const value = this.datagridCell.cellValue;
+    const value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
     if(value){
-      if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'DATE'){
+      if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == AcEnumDatagridColumnDataType.Date){
         const parseValue = parseDateTimeString(value);
         if(parseValue){
           this.element.innerHTML = dateFormat(parseValue,'dd-MM-yyyy');
         }
       }
-      else if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == 'DATETIME'){
+      else if(this.datagridColumn && this.datagridColumn.columnDefinition.dataType == AcEnumDatagridColumnDataType.Datetime){
         const parseValue = parseDateTimeString(value);
         if(parseValue){
           this.element.innerHTML = dateFormat(parseValue,'dd-MM-yyyy HH:mm a');

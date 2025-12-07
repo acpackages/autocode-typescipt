@@ -3,7 +3,7 @@
 import { AcInputBase, acRegisterCustomElement } from "@autocode-ts/ac-browser";
 import TomSelect from "tom-select";
 import TomSelectOptions from "tom-select";
-import { AcDataManager, AcEnumDataManagerHook } from "@autocode-ts/autocode";
+import { AcDataManager, AC_DATA_MANAGER_HOOK } from "@autocode-ts/autocode";
 
 export class AcTomSelectInput extends AcInputBase {
   static override get observedAttributes() {

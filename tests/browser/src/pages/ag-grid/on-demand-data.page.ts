@@ -1,5 +1,5 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcEnumDatagridEvent, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, acInit } from '@autocode-ts/ac-browser';
+import { AcDatagrid, AcDatagridApi, AcDatagridExtensionManager, AcDatagridRowSelectionExtension, AC_DATAGRID_EXTENSION_NAME, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AC_DATAGRID_EVENT, IAcDatagridCellRendererElementInitEvent, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcEnumDataSourceType, AcDatagridOnDemandDataSource, acInit } from '@autocode-ts/ac-browser';
 import { AcDatagridOnAgGridExtension, AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { ActionsDatagridColumn } from '../../components/actions-datagrid-column/actions-datagrid-column.component';
@@ -35,12 +35,12 @@ export class AggridOnDemandData extends HTMLElement {
       AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
       this.datagrid = new AcDatagrid();
       this.datagridApi = this.datagrid.datagridApi;
-      this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.ColumnDragging }) as AcDatagridColumnDraggingExtension;
-      this.columnsCustomizerExtension = this.datagridApi.enableExtension( {extensionName:AcEnumDatagridExtension.ColumnsCustomizer}) as AcDatagridColumnsCustomizerExtension;
-      this.dataExportXlsxExtension = this.datagridApi.enableExtension( {extensionName:AcEnumDatagridExtension.DataExportXlsx}) as AcDatagridDataExportXlsxExtension;
-      this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowNumbers }) as AcDatagridRowNumbersExtension;
-      this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowSelection }) as AcDatagridRowSelectionExtension;
-      this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AcEnumDatagridExtension.RowDragging }) as AcDatagridRowDraggingExtension;
+      this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnDragging }) as AcDatagridColumnDraggingExtension;
+      this.columnsCustomizerExtension = this.datagridApi.enableExtension( {extensionName:AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer}) as AcDatagridColumnsCustomizerExtension;
+      this.dataExportXlsxExtension = this.datagridApi.enableExtension( {extensionName:AC_DATAGRID_EXTENSION_NAME.DataExportXlsx}) as AcDatagridDataExportXlsxExtension;
+      this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowNumbers }) as AcDatagridRowNumbersExtension;
+      this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
+      this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
       this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
 
       this.datagridApi.dataSourceType = AcEnumDataSourceType.OnDemand;
@@ -166,7 +166,7 @@ export class AggridOnDemandData extends HTMLElement {
         ]
       });
 
-      this.datagridApi.on({event:AcEnumDatagridEvent.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
+      this.datagridApi.on({event:AC_DATAGRID_EVENT.CellRendererElementInit,callback:(args:IAcDatagridCellRendererElementInitEvent)=>{
         const instance = args.cellRendererElementInstance;
         if(instance instanceof ActionsDatagridColumn){
           instance.editButton.addEventListener('click',(event:any)=>{
@@ -180,26 +180,26 @@ export class AggridOnDemandData extends HTMLElement {
       this.datagridApi.events.subscribeAllEvents({callback:(eventName:string,args:any)=>{
         // console.log(`Detected event : ${eventName}`,args);
         const identifiedEvents:any[] = [
-          AcEnumDatagridEvent.CellClick,
-          AcEnumDatagridEvent.CellDoubleClick,
-          AcEnumDatagridEvent.CellEditingStart,
-          AcEnumDatagridEvent.CellEditingStop,
-          AcEnumDatagridEvent.CellFocus,
-          AcEnumDatagridEvent.CellKeyDown,
-          AcEnumDatagridEvent.CellMouseDown,
-          AcEnumDatagridEvent.CellMouseLeave,
-          AcEnumDatagridEvent.CellMouseOver,
-          AcEnumDatagridEvent.CellRendererElementInit,
-          AcEnumDatagridEvent.CellValueChange,
+          AC_DATAGRID_EVENT.CellClick,
+          AC_DATAGRID_EVENT.CellDoubleClick,
+          AC_DATAGRID_EVENT.CellEditingStart,
+          AC_DATAGRID_EVENT.CellEditingStop,
+          AC_DATAGRID_EVENT.CellFocus,
+          AC_DATAGRID_EVENT.CellKeyDown,
+          AC_DATAGRID_EVENT.CellMouseDown,
+          AC_DATAGRID_EVENT.CellMouseLeave,
+          AC_DATAGRID_EVENT.CellMouseOver,
+          AC_DATAGRID_EVENT.CellRendererElementInit,
+          AC_DATAGRID_EVENT.CellValueChange,
 
-          AcEnumDatagridEvent.ColumnHeaderClick,
+          AC_DATAGRID_EVENT.ColumnHeaderClick,
 
-          AcEnumDatagridEvent.PaginationChange,
+          AC_DATAGRID_EVENT.PaginationChange,
 
-          AcEnumDatagridEvent.RowClick,
-          AcEnumDatagridEvent.RowDoubleClick,
+          AC_DATAGRID_EVENT.RowClick,
+          AC_DATAGRID_EVENT.RowDoubleClick,
 
-          AcEnumDatagridEvent.SortOrderChange
+          AC_DATAGRID_EVENT.SortOrderChange
         ];
         if(!identifiedEvents.includes(eventName)){
           console.log(`Found event : ${eventName}`,args);

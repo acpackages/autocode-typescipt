@@ -5,21 +5,21 @@
 import { AcDatagridRowElement } from "./ac-datagrid-row.element";
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { IAcDatagridDisplayedRowsChangeEvent } from "../interfaces/event-args/ac-datagrid-displayed-rows-change-event.interface";
-import { AcEnumDatagridHook } from "../enums/ac-enum-datagrid-hooks.enum";
+import { AC_DATAGRID_HOOK } from "../consts/ac-datagrid-hook.const";
 import { IAcDatagridBodyHookArgs } from "../interfaces/hook-args/ac-datagrid-body-hook-args.interface";
 import { acLinkElementScroll, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AcScrollable } from "../../_components.export";
 
 export class AcDatagridBody extends AcElementBase {
-  private _datagridApi!: AcDatagridApi;
-  get datagridApi(): AcDatagridApi {
+  private _datagridApi?: AcDatagridApi;
+  get datagridApi(): AcDatagridApi|undefined {
     return this._datagridApi;
   }
   set datagridApi(value: AcDatagridApi) {
     this._datagridApi = value;
-    this.datagridApi.hooks.subscribe({
-      hook: AcEnumDatagridHook.DisplayedRowsChange,
+    this.datagridApi!.hooks.subscribe({
+      hook: AC_DATAGRID_HOOK.DisplayedRowsChange,
       callback: (event: IAcDatagridDisplayedRowsChangeEvent) => {
         if (!this.isRendering) {
           setTimeout(() => {
@@ -50,7 +50,7 @@ export class AcDatagridBody extends AcElementBase {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    if (this.datagridApi.useVirtualScrolling && this.scrollable) {
+    if (this.datagridApi && this.datagridApi.useVirtualScrolling && this.scrollable) {
       this.scrollable.resume();
     }
     this.setDisplayRows();
@@ -60,11 +60,11 @@ export class AcDatagridBody extends AcElementBase {
     this.isRendering = true;
     if (this._datagridApi?.hooks) {
       this._datagridApi.hooks.unsubscribe({
-        hook: AcEnumDatagridHook.DisplayedRowsChange,
+        hook: AC_DATAGRID_HOOK.DisplayedRowsChange,
         callback: this.setDisplayRows.bind(this)
       });
     }
-    if (this.datagridApi.useVirtualScrolling) {
+    if (this.datagridApi && this.datagridApi.useVirtualScrolling) {
       if (this.scrollable) {
         this.scrollable.pause();
         this.scrollable.clearAll();
@@ -90,7 +90,7 @@ export class AcDatagridBody extends AcElementBase {
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    if (this.datagridApi.useVirtualScrolling && this.scrollable) {
+    if (this.datagridApi && this.datagridApi.useVirtualScrolling && this.scrollable) {
       this.scrollable.pause();
     }
     this.clearDatagridRows();
@@ -100,22 +100,26 @@ export class AcDatagridBody extends AcElementBase {
     super.init();
     this.registerListeners();
     this.setDisplayRows();
-    const hookArgs: IAcDatagridBodyHookArgs = {
+    if(this.datagridApi){
+      const hookArgs: IAcDatagridBodyHookArgs = {
       datagridApi: this.datagridApi,
       datagridBody: this
     };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridHook.BodyInit, args: hookArgs });
+    this.datagridApi.hooks.execute({ hook: AC_DATAGRID_HOOK.BodyInit, args: hookArgs });
     this.datagridApi.bodyWidth = this.getBoundingClientRect().width;
+    }
   }
 
   registerListeners() {
     const datagrid = this.datagridApi?.datagrid;
     const header = datagrid?.datagridHeader;
-    acLinkElementScroll({ source: this, destination: header });
+    if(header){
+      acLinkElementScroll({ source: this, destination: header });
+    }
   }
 
   setDisplayRows() {
-    if (!this.isRendering) {
+    if (!this.isRendering && this.isConnected) {
       if (this.datagridApi) {
         this.isRendering = true;
         this.clearDatagridRows();
@@ -140,7 +144,7 @@ export class AcDatagridBody extends AcElementBase {
   }
 
   setVirtualScrolling() {
-    if (this.datagridApi.useVirtualScrolling) {
+    if (this.datagridApi && this.datagridApi.useVirtualScrolling) {
       this.scrollable = new AcScrollable({ element: this, options: { bufferCount: 10 } });
     }
   }

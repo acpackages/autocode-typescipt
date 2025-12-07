@@ -1,0 +1,38 @@
+<!-- <ac-datagrid-select-input></ac-datagrid-select-input>
+<ac-ng-datagrid #datagrid [columnDefinitions]="columnDefinitions" [data]="data" [onDemandFunction]="onDemandFunction"
+[columnRendererTemplates]="{
+  'index':idTemplate,
+}"
+(onDatagridInit)="handleDatagridInit()"
+/>
+<ng-template #idTemplate let-value="value" let-datagridRow="datagridRow">
+  {{value}}
+</ng-template> -->
+Inputs Test
+<ac-ng-datagrid-select
+#selectInput
+[labelKey]="'first_name'"
+[valueKey]="'customer_id'"
+[columnDefinitions]="columnDefinitions"
+[data]="data"
+[onDemandFunction]="onDemandFunction"
+[templateHeader]="headerTemplate"
+[templateFooter]="footerTemplate"
+[columnRendererTemplates]="{
+  'index':idTemplate,
+}"
+(onDatagridInit)="handleDatagridInit()"></ac-ng-datagrid-select>
+
+<ng-template #idTemplate let-value="value" let-datagridRow="datagridRow">
+  {{value}}
+</ng-template>
+<ng-template #headerTemplate>
+  <div style="height:55px">
+    This is header content of datagrid select from template
+  </div>
+</ng-template>
+<ng-template #footerTemplate>
+  <div style="height:55px">
+  This is footer content of datagrid select from template
+  </div>
+</ng-template>

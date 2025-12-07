@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcPagination } from "../_ac-pagination.export";
 import { AcPaginationCssClassName } from "../consts/ac-pagination-css-class-name.const";
 
-export class AcPaginationSizeDropdown extends AcElementBase{
-  private _pagination!: AcPagination;
-  get pagination():AcPagination{
+export class AcPaginationSizeDropdown extends AcElementBase {
+  private _pagination?: AcPagination;
+  get pagination(): AcPagination | undefined {
     return this._pagination;
   }
-  set pagination(value:AcPagination){
+  set pagination(value: AcPagination) {
     this._pagination = value;
   }
 
@@ -16,29 +17,31 @@ export class AcPaginationSizeDropdown extends AcElementBase{
 
   override init() {
     super.init();
-    acAddClassToElement({class_:AcPaginationCssClassName.acPaginationPageSizeSelect,element:this.selectInput});
+    acAddClassToElement({ class_: AcPaginationCssClassName.acPaginationPageSizeSelect, element: this.selectInput });
     this.setSelectDropdownValues();
     this.innerHTML = "";
     this.append('Page Size:');
     this.append(this.selectInput);;
   }
 
-  setSelectDropdownValues(){
+  setSelectDropdownValues() {
     this.selectInput.innerHTML = "";
     let optionsString = '';
-    for(const pageSize of this.pagination.pageSizes){
-      optionsString += `<option value="${pageSize}"`
-      if(pageSize == this.pagination.activePageSize){
-        optionsString += ` selected `;
+    if (this.pagination) {
+      for (const pageSize of this.pagination.pageSizes) {
+        optionsString += `<option value="${pageSize}"`
+        if (pageSize == this.pagination.activePageSize) {
+          optionsString += ` selected `;
+        }
+        optionsString += `>${pageSize}</option>`;
       }
-      optionsString += `>${pageSize}</option>`;
+      this.selectInput.innerHTML = optionsString;
+      this.selectInput.value = this.pagination.activePageSize.toString();
+      this.selectInput.addEventListener('change', (event: any) => {
+        this.pagination!.activePageSize = parseInt(this.selectInput.value);
+      });
     }
-    this.selectInput.innerHTML = optionsString;
-    this.selectInput.value = this.pagination.activePageSize.toString();
-    this.selectInput.addEventListener('change',(event:any)=>{
-      this.pagination.activePageSize = parseInt(this.selectInput.value);
-    });
   }
 }
 
-acRegisterCustomElement({'tag':'ac-pagination-size-dropdown',type:AcPaginationSizeDropdown});
+acRegisterCustomElement({ 'tag': 'ac-pagination-size-dropdown', type: AcPaginationSizeDropdown });

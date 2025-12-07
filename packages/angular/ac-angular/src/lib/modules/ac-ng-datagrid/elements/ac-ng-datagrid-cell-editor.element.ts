@@ -70,7 +70,9 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     }
     if(continueOperation){
       const firstChild = this.element.children[0] as HTMLElement;
-      firstChild.focus();
+      if(firstChild){
+        firstChild.focus();
+      }
     }
   }
 
@@ -82,7 +84,7 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     if(this.componentRef){
       return this.componentRef.instance.getValue();
     }
-    return this.datagridRow.data[this.datagridCell.columnKey];
+    return this.datagridRow.data[this.datagridColumn.columnKey];
   }
 
   init(args: IAcDatagridCellElementArgs): void {
@@ -106,7 +108,6 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
       this.renderDefault();
     }
   }
-
 
   refresh(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;

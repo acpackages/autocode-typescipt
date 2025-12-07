@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridApi, AcDatagridRowSelectionExtension, AcEnumDatagridExtension, AcEnumDatagridHook, AcEnumDatagridRowSelectionHook, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowSelectionChangeEvent, IAcDatagridSelectionMultipleRowsChangeEvent } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, AcDatagridRowSelectionExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, AcEnumDatagridRowSelectionHook, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowSelectionChangeEvent, IAcDatagridSelectionMultipleRowsChangeEvent } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { GridApi, IRowNode, RowSelectedEvent } from "ag-grid-community";
 import { AcLogger } from "@autocode-ts/autocode";
@@ -22,8 +22,8 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
     this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: GridApi assigned.");
     this.datagridApi = agGridExtension.datagridApi;
     this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: DatagridApi assigned.");
-    if (this.datagridApi.extensions[AcEnumDatagridExtension.RowSelection]) {
-      this.rowSelectionExtension = this.datagridApi.extensions[AcEnumDatagridExtension.RowSelection] as AcDatagridRowSelectionExtension;
+    if (this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection]) {
+      this.rowSelectionExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
       this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: RowSelectionExtension assigned.");
     } else {
       this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: No RowSelectionExtension available.");
@@ -48,8 +48,8 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
 
   private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
     this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: Entering with extensionName=${args.extensionName}.`);
-    if (args.extensionName == AcEnumDatagridExtension.RowSelection) {
-      this.rowSelectionExtension = this.datagridApi.extensions[AcEnumDatagridExtension.RowSelection] as AcDatagridRowSelectionExtension;
+    if (args.extensionName == AC_DATAGRID_EXTENSION_NAME.RowSelection) {
+      this.rowSelectionExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
       this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: RowSelectionExtension assigned.");
       this.setRowSelection();
       this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: Row selection set.");
@@ -67,7 +67,7 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
 
   handleHook({ hook, args }: { hook: string, args: any }): void {
     this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Entering with hook=${hook}.`);
-    if (hook == AcEnumDatagridHook.ExtensionEnable) {
+    if (hook == AC_DATAGRID_HOOK.ExtensionEnable) {
       this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Handling ExtensionEnable.");
       this.handleExtensionEnabled(args);
     }

@@ -75,7 +75,9 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     }
     if(continueOperation){
       const firstChild = this.element.children[0] as HTMLElement;
-      firstChild.focus();
+      if(firstChild){
+        firstChild.focus();
+      }
     }
   }
 

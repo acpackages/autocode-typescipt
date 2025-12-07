@@ -1,4 +1,4 @@
-export const AcEnumDatagridExtension = {
+export const AC_DATAGRID_EXTENSION_NAME = {
   AfterRowsFooter: 'AFTER_ROWS_FOOTER',
   AutoAddNewRow: 'AUTO_ADD_NEW_ROW',
   ColumnDragging : 'COLUMN_DRAGGING',

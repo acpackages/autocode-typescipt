@@ -19,7 +19,9 @@ export class AcElementBase extends HTMLElement {
     const originalDispatch = this.dispatchEvent;
     this.dispatchEvent = (event: Event): boolean => {
       const e = acCloneEvent(event);
-      this.events.execute({event:event.type,args:event});
+      if(this.events){
+        this.events.execute({event:event.type,args:event});
+      }
       return originalDispatch.call(this, e);
     };
   }
@@ -33,7 +35,6 @@ export class AcElementBase extends HTMLElement {
 
   destroy(){
     this.events.clearSubscriptions();
-    (this.events as any) = null;
   }
 
   disconnectedCallback(){

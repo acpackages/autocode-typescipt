@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDataManager, AcEnumDataManagerEvent } from "@autocode-ts/autocode";
+import { AcDataManager, AC_DATA_MANAGER_EVENT } from "@autocode-ts/autocode";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_PAGINATION_TAG, AcEnumPaginationEvent, AcPaginationDisplayedRows } from "../_ac-pagination.export";
@@ -83,7 +83,7 @@ export class AcPagination extends AcElementBase {
   bindDataManager({ dataManager }: { dataManager: AcDataManager }) {
     this.dataManager = dataManager;
     dataManager.on({
-      event: AcEnumDataManagerEvent.TotalRowsChange, callback: () => {
+      event: AC_DATA_MANAGER_EVENT.TotalRowsChange, callback: () => {
         this.totalRows = dataManager.totalRows;
       }
     });

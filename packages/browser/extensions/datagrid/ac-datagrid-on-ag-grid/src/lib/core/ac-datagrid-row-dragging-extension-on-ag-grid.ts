@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridApi, AcDatagridRowDraggingExtension, AcDatagridTreeTableExtension, AcEnumDatagridExtension, AcEnumDatagridHook, AcEnumDatagridRowDraggingHook, IAcDatagridExtensionEnabledHookArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, AcDatagridRowDraggingExtension, AcDatagridTreeTableExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, AcEnumDatagridRowDraggingHook, IAcDatagridExtensionEnabledHookArgs } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { ColDef, GridApi, RowDragCancelEvent, RowDragEndEvent, RowDragEnterEvent, RowDragLeaveEvent, RowDragMoveEvent } from "ag-grid-community";
 import { AcEnumDatagridOnAgGridHook } from "../enums/ac-enum-datagrid-on-ag-grid-hook.enum";
@@ -10,7 +10,7 @@ import { AcLogger } from "@autocode-ts/autocode";
 export class AcDatagridRowDraggingExtensionOnAgGrid {
   agGridExtension!: AcDatagridOnAgGridExtension;
   allowRowDragging: boolean = false;
-  // this.allowRowDragging = this.datagridApi.extensions[AcEnumDatagridExtension.RowDragging] != undefined;/
+  // this.allowRowDragging = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowDragging] != undefined;/
   datagridApi!: AcDatagridApi;
   private draggingRow: any;
   gridApi!: GridApi;
@@ -31,8 +31,8 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
     this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] Constructor: DatagridApi assigned.");
     this.setExtension();
     this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] Constructor: Extension set.");
-    if (this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable]) {
-      this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
+    if (this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable]) {
+      this.treeTableExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable] as AcDatagridTreeTableExtension;
       this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] Constructor: TreeTableExtension assigned.");
     } else {
       this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] Constructor: No TreeTableExtension available.");
@@ -208,12 +208,12 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
 
   private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
     this.logger.log(`[AcDatagridRowDraggingExtensionOnAgGrid] handleExtensionEnabled: Entering with extensionName=${args.extensionName}.`);
-    if (args.extensionName == AcEnumDatagridExtension.RowDragging) {
+    if (args.extensionName == AC_DATAGRID_EXTENSION_NAME.RowDragging) {
       this.setExtension();
       this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] handleExtensionEnabled: Handled RowDragging extension enable.");
     }
-    else if (args.extensionName == AcEnumDatagridExtension.TreeTable) {
-      this.treeTableExtension = this.datagridApi.extensions[AcEnumDatagridExtension.TreeTable] as AcDatagridTreeTableExtension;
+    else if (args.extensionName == AC_DATAGRID_EXTENSION_NAME.TreeTable) {
+      this.treeTableExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.TreeTable] as AcDatagridTreeTableExtension;
       this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] handleExtensionEnabled: Assigned TreeTable extension.");
     } else {
       this.logger.log(`[AcDatagridRowDraggingExtensionOnAgGrid] handleExtensionEnabled: Unknown extension ${args.extensionName}, skipping.`);
@@ -223,7 +223,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
 
   handleHook({ hook, args }: { hook: string, args: any }): void {
     this.logger.log(`[AcDatagridRowDraggingExtensionOnAgGrid] handleHook: Entering with hook=${hook}.`);
-    if (hook == AcEnumDatagridHook.ExtensionEnable) {
+    if (hook == AC_DATAGRID_HOOK.ExtensionEnable) {
       this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] handleHook: Handling ExtensionEnable.");
       this.handleExtensionEnabled(args);
     }
@@ -243,8 +243,8 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
 
   setExtension() {
     this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] setExtension: Entering.");
-    if (this.datagridApi && this.datagridApi.extensions[AcEnumDatagridExtension.RowDragging]) {
-      this.rowDraggingExtension = this.datagridApi.extensions[AcEnumDatagridExtension.RowDragging] as AcDatagridRowDraggingExtension;
+    if (this.datagridApi && this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowDragging]) {
+      this.rowDraggingExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowDragging] as AcDatagridRowDraggingExtension;
       this.logger.log("[AcDatagridRowDraggingExtensionOnAgGrid] setExtension: RowDraggingExtension assigned.");
       this.setAllowRowDragging();
     } else {
