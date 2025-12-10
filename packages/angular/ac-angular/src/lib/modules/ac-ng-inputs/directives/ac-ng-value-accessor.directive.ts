@@ -29,7 +29,6 @@ export class AcNgValueAccessorDirective implements ControlValueAccessor {
   private onTouched: () => void = () => { };
 
   constructor(private el: ElementRef<HTMLElement>) {
-
   }
 
   /** Angular → Element */
@@ -63,8 +62,6 @@ export class AcNgValueAccessorDirective implements ControlValueAccessor {
     const target = this.el.nativeElement as any;
     const value = target?.value ?? target?.getAttribute?.('value');
     this.onChange(value);
-    // console.log(target);
-    // console.log(value);
   }
 
   @HostListener('blur')

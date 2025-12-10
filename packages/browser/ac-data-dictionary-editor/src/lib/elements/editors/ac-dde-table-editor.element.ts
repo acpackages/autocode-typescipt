@@ -15,6 +15,7 @@ import { IAcDDETrigger } from '../../interfaces/ac-dde-trigger.inteface';
 import { AcEnumDDEEvent } from '../../enums/ac-enum-dde-event.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
 import { IAcDDETableEditorState } from '../../interfaces/ac-dde-table-editor-state.interface';
+import { AC_DATA_MANAGER_EVENT } from '@autocode-ts/autocode';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDDETableEditor {
@@ -42,13 +43,11 @@ export class AcDDETableEditor {
     this.tablesDatagrid = new AcDDETablesDatagrid({ editorApi: this.editorApi });
     this.tablesDatagrid.datagridApi.on({
       event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
-        setTimeout(() => {
           this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TableEditorActiveTableChange });
           this.activeTable = this.tablesDatagrid.datagridApi!.activeDatagridRow!.data;
           this.tableColumnsDatagrid.applyFilter();
           this.tableRelationshipsDatagrid.applyFilter();
           this.tableTriggersDatagrid.applyFilter();
-        }, 10);
       }
     });
     this.tablesDatagrid.datagridApi.on({
@@ -67,7 +66,7 @@ export class AcDDETableEditor {
       return row.tableId == tableId;
     };
     this.tableColumnsDatagrid.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         args.datagridRow.data[AcEnumDDETableColumn.TableId] = this.activeTable!.tableId;
       }
     });
@@ -158,8 +157,8 @@ export class AcDDETableEditor {
     setTimeout(() => {
       this.editorPanels.setPanelSizes({
       panelSizes: [
-        { size: 20, index: 0 },
-        { size: 80, index: 1 }
+        { size: 35, index: 0 },
+        { size: 65, index: 1 }
       ]
     });
       this.detailPanels.setPanelSizes({

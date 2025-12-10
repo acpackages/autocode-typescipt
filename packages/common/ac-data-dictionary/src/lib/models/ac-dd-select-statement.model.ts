@@ -3,7 +3,11 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils, AcEnumLogicalOperator, AcEnumConditionOperator } from "@autocode-ts/autocode";
-import { AcDataDictionary, AcDDCondition, AcDDConditionGroup, AcDDTableColumn, AcEnumDDColumnType } from "../..";
+import { AcDDConditionGroup } from "./ac-dd-condition-group.model";
+import { AcDDCondition } from "./ac-dd-condition.model";
+import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
+import { AcDDTableColumn } from "./ac-dd-table-column.model";
 // import { AcDDConditionGroup } from "./ac-dd-condition-group.model";
 // import { AcDataDictionary } from "./ac-data-dictionary.model";
 // import { AcDDCondition } from "./ac-dd-condition.model";
@@ -28,7 +32,7 @@ export class AcDDSelectStatement {
   condition: string = "";
 
   @AcBindJsonProperty({ key: AcDDSelectStatement.KeyConditionGroup })
-  conditionGroup!: AcDDConditionGroup;
+  conditionGroup: AcDDConditionGroup = new AcDDConditionGroup();
 
   @AcBindJsonProperty({ key: AcDDSelectStatement.KeyDatabaseType })
   databaseType: string = "";

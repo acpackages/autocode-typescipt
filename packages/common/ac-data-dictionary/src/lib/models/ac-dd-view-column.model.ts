@@ -2,8 +2,10 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDataDictionary, AcDDTableColumn, AcDDTableColumnProperty, AcEnumDDColumnProperty } from "../..";
-// import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
+import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
+import { AcEnumDDColumnProperty } from "../enums/ac-enum-dd-column-property.enum";
+import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcDDTableColumn } from "./ac-dd-table-column.model";
 
 export class AcDDViewColumn {
   static readonly KeyColumnName = "columnName";

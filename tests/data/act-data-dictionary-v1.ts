@@ -1,4 +1,4 @@
-export const dataDictionaryJson ={
+export const dataDictionaryJson = {
   "name": "Accountea - Pro",
   "version": 1,
   "tables": {
@@ -1487,8 +1487,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10513,8 +10513,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11570,8 +11570,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -12602,8 +12602,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14091,8 +14091,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -15149,8 +15149,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17463,8 +17463,8 @@ export const dataDictionaryJson ={
             }
           }
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -24588,12 +24588,12 @@ export const dataDictionaryJson ={
           "columnSourceName": "act_purchase_invoices",
           "columnSourceOriginalColumn": "taxing_scheme_id"
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoices",
-          "columnSourceOriginalColumn": "transaction_entry_id"
+          "columnSourceOriginalColumn": "transaction_id"
         },
         "purchase_invoice_type": {
           "columnName": "purchase_invoice_type",
@@ -25127,12 +25127,12 @@ export const dataDictionaryJson ={
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "taxing_scheme_id"
         },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
+        "transaction_id": {
+          "columnName": "transaction_id",
           "columnType": "UUID",
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
-          "columnSourceOriginalColumn": "transaction_entry_id"
+          "columnSourceOriginalColumn": "transaction_id"
         },
         "sale_invoice_type": {
           "columnName": "sale_invoice_type",
@@ -25641,6 +25641,511 @@ export const dataDictionaryJson ={
         }
       },
       "viewQuery": "SELECT \ndebit_ledger_accounts.ledger_account_name as debit_ledger_account_name,\ndebit_ledger_accounts.ledger_account_balance as debit_ledger_account_balance,\ndebit_ledger_accounts.ledger_account_type_name as debit_ledger_account_type_name,\ndebit_ledger_accounts.reflecting_statement as debit_reflecting_statement,\ncredit_ledger_accounts.ledger_account_name as credit_ledger_account_name,\ncredit_ledger_accounts.ledger_account_balance as credit_ledger_account_balance,\ncredit_ledger_accounts.ledger_account_type_name as credit_ledger_account_type_name,\ncredit_ledger_accounts.reflecting_statement as credit_reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts as debit_ledger_accounts ON act_transaction_entries.debit_ledger_account_id = debit_ledger_accounts.ledger_account_id \nLEFT JOIN act_vw_ledger_accounts as credit_ledger_accounts ON act_transaction_entries.credit_ledger_account_id = credit_ledger_accounts.ledger_account_id"
+    },
+    "act_vw_assets": {
+      "viewName": "act_vw_assets",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "asset_barcode": {
+          "columnName": "asset_barcode",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_barcode"
+        },
+        "asset_depreciation_occurance": {
+          "columnName": "asset_depreciation_occurance",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_depreciation_occurance"
+        },
+        "asset_depreciation_percentage": {
+          "columnName": "asset_depreciation_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_depreciation_percentage"
+        },
+        "asset_details": {
+          "columnName": "asset_details",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_details"
+        },
+        "asset_id": {
+          "columnName": "asset_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_id"
+        },
+        "asset_image_media_id": {
+          "columnName": "asset_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_image_media_id"
+        },
+        "asset_name": {
+          "columnName": "asset_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_name"
+        },
+        "asset_value": {
+          "columnName": "asset_value",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_value"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "ledger_account_id"
+        },
+        "asset_remarks": {
+          "columnName": "asset_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_remarks"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_assets"
+    },
+    "act_vw_locations": {
+      "viewName": "act_vw_locations",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "location_image_media_id": {
+          "columnName": "location_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_image_media_id"
+        },
+        "location_name": {
+          "columnName": "location_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_name"
+        },
+        "location_type": {
+          "columnName": "location_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_type"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_locations"
+    },
+    "act_vw_purchase_orders": {
+      "viewName": "act_vw_purchase_orders",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "purchase_order_amount": {
+          "columnName": "purchase_order_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_amount"
+        },
+        "purchase_order_datetime": {
+          "columnName": "purchase_order_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_datetime"
+        },
+        "purchase_order_id": {
+          "columnName": "purchase_order_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_id"
+        },
+        "purchase_order_number": {
+          "columnName": "purchase_order_number",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_number"
+        },
+        "purchase_term_id": {
+          "columnName": "purchase_term_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_term_id"
+        },
+        "purchase_order_remarks": {
+          "columnName": "purchase_order_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_remarks"
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "supplier_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "purchase_order_status": {
+          "columnName": "purchase_order_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_status"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_purchase_orders"
+    },
+    "act_vw_sale_quotations": {
+      "viewName": "act_vw_sale_quotations",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "customer_id"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "sale_quotation_remarks": {
+          "columnName": "sale_quotation_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_remarks"
+        },
+        "sale_quotation_amount": {
+          "columnName": "sale_quotation_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_amount"
+        },
+        "sale_quotation_datetime": {
+          "columnName": "sale_quotation_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_datetime"
+        },
+        "sale_quotation_id": {
+          "columnName": "sale_quotation_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_id"
+        },
+        "sale_quotation_number": {
+          "columnName": "sale_quotation_number",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_number"
+        },
+        "sale_term_id": {
+          "columnName": "sale_term_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_term_id"
+        },
+        "sale_quotation_status": {
+          "columnName": "sale_quotation_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_status"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "sale_quotation_type": {
+          "columnName": "sale_quotation_type",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_type"
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "user_id"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_sale_quotations"
+    },
+    "act_vw_storage_locations": {
+      "viewName": "act_vw_storage_locations",
+      "viewColumns": {
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "parent_storage_location_id": {
+          "columnName": "parent_storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "parent_storage_location_id"
+        },
+        "storage_location_remarks": {
+          "columnName": "storage_location_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_remarks"
+        },
+        "storage_location_status": {
+          "columnName": "storage_location_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_status"
+        },
+        "storage_location_code": {
+          "columnName": "storage_location_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_code"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "storage_location_image_media_id": {
+          "columnName": "storage_location_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_image_media_id"
+        },
+        "storage_location_index": {
+          "columnName": "storage_location_index",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_index"
+        },
+        "storage_location_name": {
+          "columnName": "storage_location_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_name"
+        },
+        "storage_location_tree": {
+          "columnName": "storage_location_tree",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_tree"
+        },
+        "storage_location_unique_identifier": {
+          "columnName": "storage_location_unique_identifier",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_unique_identifier"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_storage_locations"
+    },
+    "act_vw_users": {
+      "viewName": "act_vw_users",
+      "viewColumns": {
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_users",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "password": {
+          "columnName": "password",
+          "columnType": "PASSWORD",
+          "columnSource": "table",
+          "columnSourceName": "act_users",
+          "columnSourceOriginalColumn": "password"
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_users",
+          "columnSourceOriginalColumn": "user_id"
+        },
+        "username": {
+          "columnName": "username",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_users",
+          "columnSourceOriginalColumn": "username"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_users"
     }
   },
   "relationships": [
@@ -27629,9 +28134,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_taxing_schemes"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_asset_depreciations",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {
@@ -27647,9 +28152,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_transaction_entries"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_purchase_invoices",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {
@@ -27665,9 +28170,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_transaction_entries"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_purchase_orders",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {
@@ -27683,9 +28188,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_transaction_entries"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_purchase_returns",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {
@@ -27707,9 +28212,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_transaction_entries"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_sale_invoices",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {
@@ -27725,9 +28230,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_transaction_entries"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_sale_maintenances",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {
@@ -27749,9 +28254,9 @@ export const dataDictionaryJson ={
       "sourceTable": "act_transaction_entries"
     },
     {
-      "destinationColumn": "transaction_entry_id",
+      "destinationColumn": "transaction_id",
       "destinationTable": "act_sale_returns",
-      "sourceColumn": "transaction_entry_id",
+      "sourceColumn": "transaction_id",
       "sourceTable": "act_transaction_entries"
     },
     {

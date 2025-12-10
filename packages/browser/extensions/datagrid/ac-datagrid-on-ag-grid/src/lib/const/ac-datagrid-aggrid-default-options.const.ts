@@ -4,7 +4,10 @@ export const AC_DATAGRID_AGGRID_DEFAULT_OPTIONS: GridOptions = {
   alwaysMultiSort: true,
   pagination: true,
   suppressContextMenu: true,
-  animateRows:false,
+  animateRows:true,
+  rowNumbers:{
+    width:40,
+  }
   // suppressColumnVirtualisation:false,
   // cellFadeDuration:0,
   // suppressAnimationFrame:false

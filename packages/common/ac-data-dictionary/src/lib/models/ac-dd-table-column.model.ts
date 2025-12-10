@@ -2,13 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDataDictionary, AcDDRelationship, AcDDTable, AcDDTableColumnProperty, AcEnumDDColumnProperty, AcEnumDDColumnType } from "../..";
-// import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
-// import { AcDDTable } from "./ac-dd-table.model";
-// import { AcDataDictionary } from "./ac-data-dictionary.model";
-// import { AcEnumDDColumnProperty } from "../enums/ac-enum-dd-column-property.enum";
-// import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
-// import { AcDDRelationship } from "./ac-dd-relationship.model";
+import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
+import { AcDDTable } from "./ac-dd-table.model";
+import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcEnumDDColumnProperty } from "../enums/ac-enum-dd-column-property.enum";
+import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
+import { AcDDRelationship } from "./ac-dd-relationship.model";
 
 export class AcDDTableColumn {
   static readonly KeyColumnName = "columnName";
@@ -29,7 +28,7 @@ export class AcDDTableColumn {
   columnValue: any;
 
   @AcBindJsonProperty({ skipInFromJson: true, skipInToJson: true })
-  table?: AcDDTable;
+  table?: AcDDTable|any;
 
   static getInstance({ tableName, columnName, dataDictionaryName = "default" }: { tableName: string; columnName: string; dataDictionaryName?: string }): AcDDTableColumn {
     return AcDataDictionary.getTableColumn({ tableName, columnName, dataDictionaryName })!;

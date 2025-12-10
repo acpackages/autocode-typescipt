@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnRelationType } from "../..";
-// import { AcDDFunction } from "./ac-dd-function.model";
-// import { AcDDRelationship } from "./ac-dd-relationship.model";
-// import { AcDDStoredProcedure } from "./ac-dd-stored-procedure.model";
-// import { AcDDTable } from "./ac-dd-table.model";
-// import { AcDDTableColumn } from "./ac-dd-table-column.model";
-// import { AcEnumDDColumnRelationType } from "../enums/ac-enum-dd-column-relation-type.enum";
-// import { AcDDTrigger } from "./ac-dd-trigger.model";
-// import { AcDDView } from "./ac-dd-view.model";
+import { AcDDFunction } from "./ac-dd-function.model";
+import { AcDDRelationship } from "./ac-dd-relationship.model";
+import { AcDDStoredProcedure } from "./ac-dd-stored-procedure.model";
+import { AcDDTable } from "./ac-dd-table.model";
+import { AcDDTableColumn } from "./ac-dd-table-column.model";
+import { AcEnumDDColumnRelationType } from "../enums/ac-enum-dd-column-relation-type.enum";
+import { AcDDTrigger } from "./ac-dd-trigger.model";
+import { AcDDView } from "./ac-dd-view.model";
+import { AcDDViewColumn } from "./ac-dd-view-column.model";
 
 export class AcDataDictionary {
   static readonly KeyDataDictionaries = "dataDictionaries";

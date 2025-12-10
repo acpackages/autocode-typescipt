@@ -2,14 +2,14 @@
 import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, AcResizablePanels, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDTrigger, AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
-import { AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
-import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AC_DATA_MANAGER_EVENT, AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
+import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
-import { AcDDEDatagridSelectInput } from "../inputs/ac-dde-datagrid-select-input.element";
-import { AcDDEDatagridSelectTableInput } from "../inputs/ac-dde-datagrid-select-table-input.element";
+import { AcDDEDatagridSelectInput } from "../cell-editors/ac-dde-datagrid-select-input.element";
+import { AcDDEDatagridSelectTableInput } from "../cell-editors/ac-dde-datagrid-select-table-input.element";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
 import { AcEnumDDETrigger } from "../../enums/ac-enum-dde-storage-keys.enum";
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
@@ -18,6 +18,7 @@ import { IAcDDETrigger } from "../../interfaces/ac-dde-trigger.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
 import { AcDDETriggerMaster } from "../masters/ac-dde-trigger-master.element";
+import { AcDDETableRenderer } from "../cell-renderers/ac-dde-table-renderer";
 
 export class AcDDETriggersDatagrid {
   activeTrigger?: IAcDDETrigger;
@@ -81,8 +82,8 @@ export class AcDDETriggersDatagrid {
         'field': AcDDTrigger.KeyTriggerExecution, 'title': 'Execution',
         cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
           editorApi: this.editorApi, options: [
-            { label: 'After', value: 'AFTER' },
-            { label: 'Before', value: 'BEFORE' }
+            { label: 'AFTER', value: 'AFTER' },
+            { label: 'BEFORE', value: 'BEFORE' }
           ]
         }, useCellEditorForRenderer: true, allowFilter: true
       },
@@ -91,9 +92,9 @@ export class AcDDETriggersDatagrid {
         cellEditorElement: AcDDEDatagridSelectInput, cellEditorElementParams: {
           editorApi: this.editorApi,
           options: [
-            { label: 'Insert', value: AcEnumDDRowOperation.Insert },
-            { label: 'Update', value: AcEnumDDRowOperation.Update },
-            { label: 'Delete', value: AcEnumDDRowOperation.Delete }
+            { label: 'INSERT', value: AcEnumDDRowOperation.Insert },
+            { label: 'UPDATE', value: AcEnumDDRowOperation.Update },
+            { label: 'DELETE', value: AcEnumDDRowOperation.Delete }
           ]
         }, useCellEditorForRenderer: true, allowFilter: true
       },
@@ -101,7 +102,9 @@ export class AcDDETriggersDatagrid {
         'field': 'tableId', 'title': 'Table',
         cellEditorElement: AcDDEDatagridSelectTableInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true, allowFilter: true
+        }, cellRendererElement:AcDDETableRenderer,cellRendererElementParams: {
+                  editorApi: this.editorApi
+                }, allowFilter: true
       },
       {
         'field': AcDDTrigger.KeyTriggerName, 'title': 'Trigger Name',
@@ -126,9 +129,9 @@ export class AcDDETriggersDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addTrigger({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
-        args.datagridRow.data = row;
+      event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, callback: (args: any) => {
+        const row = this.editorApi.dataStorage.addTrigger({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.data });
+        args.data = row;
         this.data.push(row);
       }
     });
@@ -196,8 +199,8 @@ export class AcDDETriggersDatagrid {
     setTimeout(() => {
       this.editorPanels.setPanelSizes({
         panelSizes: [
-          { size: 30, index: 0 },
-          { size: 70, index: 1 }
+          { size: 60, index: 0 },
+          { size: 40, index: 1 }
         ]
       });
     }, 50);

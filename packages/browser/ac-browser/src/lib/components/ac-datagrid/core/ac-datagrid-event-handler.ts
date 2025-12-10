@@ -231,9 +231,9 @@ export class AcDatagridEventHandler {
       datagridCell: datagridCell,
       event: event
     };
-    // datagridCell.events.execute({ event: AC_DATAGRID_EVENT.CellValueChange, args: eventArgs });
     this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.CellValueChange, args: eventArgs });
-    this.notifyRowDataChange();
+    console.log('Cell value change');
+    // this.notifyRowDataChange();
   }
 
   handleColumnHeaderClick({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {

@@ -9,6 +9,7 @@ import { AcEnumDDEEvent } from '../../enums/ac-enum-dde-event.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
 import { AcDDEViewColumnsDatagrid, AcDDEViewsDatagrid, IAcDDEView, IAcDDEViewColumn, IAcDDEViewEditorState } from '../../_ac-data-dictionary-editor.export';
 import { AcDDEViewMaster } from '../masters/ac-dde-view-master.element';
+import { AC_DATA_MANAGER_EVENT } from '@autocode-ts/autocode';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDDEViewEditor {
@@ -36,12 +37,11 @@ export class AcDDEViewEditor {
     this.viewsDatagrid = new AcDDEViewsDatagrid({ editorApi: this.editorApi });
     this.viewsDatagrid.datagridApi.on({
       event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
-        setTimeout(() => {
-          this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TableEditorActiveTableChange });
-          this.activeView = this.viewsDatagrid.datagridApi!.activeDatagridRow!.data;
-          this.viewColumnsDatagrid.applyFilter();
-          this.viewMaster.view = this.activeView!;
-        }, 10);
+        this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TableEditorActiveTableChange });
+        this.activeView = this.viewsDatagrid.datagridApi!.activeDatagridRow!.data;
+        this.viewColumnsDatagrid.applyFilter();
+        this.viewMaster.view = this.activeView!;
+        console.log(this);
       }
     });
     this.viewsDatagrid.datagridApi.on({
@@ -57,14 +57,18 @@ export class AcDDEViewEditor {
 
     this.viewMaster = new AcDDEViewMaster();
     this.viewMaster.editorApi = this.editorApi;
-    this.viewMaster.on({event:"change",callback:(args:any)=>{
-      if(this.viewsDatagrid.datagridApi.activeDatagridRow){
-        this.viewsDatagrid.datagridApi!.updateRow({rowId:this.viewsDatagrid.datagridApi.activeDatagridRow!.rowId,data:args.view});
+    this.viewMaster.on({
+      event: "change", callback: (args: any) => {
+        if (this.viewsDatagrid.datagridApi.activeDatagridRow) {
+          this.viewsDatagrid.datagridApi!.updateRow({ rowId: this.viewsDatagrid.datagridApi.activeDatagridRow!.rowId, data: args.view });
+        }
       }
-    }});
-    this.viewMaster.on({event:"viewColumnsChange",callback:(args:any)=>{
-      this.viewColumnsDatagrid.setColumnsData();
-    }});
+    });
+    this.viewMaster.on({
+      event: "viewColumnsChange", callback: (args: any) => {
+        this.viewColumnsDatagrid.setColumnsData();
+      }
+    });
 
     this.viewColumnsDatagrid = new AcDDEViewColumnsDatagrid({ editorApi: this.editorApi });
     this.viewColumnsDatagrid.filterFunction = (row: IAcDDEViewColumn) => {
@@ -76,7 +80,7 @@ export class AcDDEViewEditor {
       return row.viewId == viewId;
     };
     this.viewColumnsDatagrid.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
         args.datagridRow.data[AcEnumDDEViewColumn.ViewId] = this.activeView!.viewId;
       }
     });

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcInputBase } from "../core/ac-input-base";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
-import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { acCloneEvent, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_DATAGRID_EVENT, AcDatagrid, IAcDatagridCell } from "../../_components.export";
 import { AcEnumConditionOperator, IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
 import { createPopper, Instance as PopperInstance, Placement } from '@popperjs/core';
@@ -128,35 +128,39 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   private attachEvents() {
-    this.textInputElement.addEventListener("input", () => {
+    this.textInputElement.addEventListener("input", (event) => {
+      this.dispatchEvent(acCloneEvent(event));
       const term = this.textInputElement.value.toLowerCase();
       if (term != this.searchQuery) {
         this.searchQuery = term;
       }
       this.openDropdown();
     });
-    this.textInputElement.addEventListener("focus", () => {
+    this.textInputElement.addEventListener("focus", (event:any) => {
+      this.dispatchEvent(acCloneEvent(event));
       this.openDropdown();
     });
-    this.textInputElement.addEventListener("click", () => {
+    this.textInputElement.addEventListener("click", (event) => {
+      this.dispatchEvent(acCloneEvent(event));
       setTimeout(() => this.openDropdown(), 150);
     });
     this.textInputElement.addEventListener("keydown", (e: any) => {
+      this.dispatchEvent(acCloneEvent(e));
       if (!this.isDropdownOpen) return;
       if (e.key === "ArrowDown") {
         e.preventDefault();
         let rowIndex: number = 0;
-        const activeCell = this.datagrid.datagridApi.activeCell;
-        if (activeCell) {
-          rowIndex = activeCell.datagridRow.index + 1;
+        const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
+        if (activeDatagridCell) {
+          rowIndex = activeDatagridCell.datagridRow.index + 1;
         }
         this.highlightRow({ rowIndex });
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         let rowIndex: number = 0;
-        const activeCell = this.datagrid.datagridApi.activeCell;
-        if (activeCell) {
-          rowIndex = activeCell.datagridRow.index - 1;
+        const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
+        if (activeDatagridCell) {
+          rowIndex = activeDatagridCell.datagridRow.index - 1;
         }
         this.highlightRow({ rowIndex });
       }
@@ -223,6 +227,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     if (this.isDropdownOpen) return;
     this.isDropdownOpen = true;
     this.dropdownContainer = this.ownerDocument.createElement("div");
+    this.dropdownContainer.classList.add('ac-datagrid-select-dropdown');
     this.dropdownContainer.innerHTML = `
       <div class="dropdown-header" style=""></div>
       <div class="dropdown-body" style="flex-grow:1;overflow:auto"></div>
@@ -335,10 +340,10 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   setValueFromDatagridData() {
-    const activeCell = this.datagrid.datagridApi.activeCell;
-    if (activeCell) {
-      this.setSelectedRows({rows:[activeCell.datagridRow.data]});
-      this.value = activeCell.datagridRow.data[this.valueKey];
+    const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
+    if (activeDatagridCell) {
+      this.setSelectedRows({rows:[activeDatagridCell.datagridRow.data]});
+      this.value = activeDatagridCell.datagridRow.data[this.valueKey];
     }
     else {
       this.setSelectedRows({rows:[]});

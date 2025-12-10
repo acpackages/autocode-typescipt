@@ -1,11 +1,11 @@
 import { AcHooks, Autocode } from "@autocode-ts/autocode";
 import { AcDatagridInternalCellElement } from "../elements/ac-datagrid-internal-cell.element";
-import { AcDatagridRow } from "./ac-datagrid-row.model";
 import { AcDatagridInternalColumn } from "./ac-datagrid-internal-column.model";
+import { IAcDatagridRow } from "../interfaces/ac-datagrid-row.interface";
 
 export class AcDatagridInternalCell {
   cellId: string = Autocode.uuid();
-  datagridRow!: AcDatagridRow;
+  datagridRow!: IAcDatagridRow;
   datagridInternalColumn!: AcDatagridInternalColumn;
   extensionData: Record<string, any> = {};
   hooks: AcHooks = new AcHooks();

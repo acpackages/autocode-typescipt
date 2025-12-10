@@ -80,6 +80,20 @@ export class AcDDInputElement extends AcInputBase {
     this.setInputElement();
   }
 
+  override get validity() {
+    if(this.inputElement){
+      return this.inputElement.validity;
+    }
+    return {valid:true};
+  }
+
+  override get validationMessage() {
+    if(this.inputElement){
+      return this.inputElement.validationMessage;
+    }
+    return '';
+  }
+
   override get validityStateFlags(): { valid: boolean; flags: Partial<ValidityState>; message: string; } {
     return this.inputElement.validityStateFlags;
   }

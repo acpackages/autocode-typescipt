@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcDatagridApi, IAcDatagridCell, AcDatagridCellElement, IAcDatagridColumn, AcDatagridRow, IAcDatagridCellRenderer, IAcDatagridRow, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellRenderer, IAcDatagridRow, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 import { AgPromise, ICellRendererComp, ICellRendererParams } from "ag-grid-community";
 import { AcDatagridOnAgGridExtension } from "../core/ac-datagrid-on-ag-grid-extension";
 
@@ -25,7 +25,6 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   };
 
   handleFocus: Function = () => {
-
     if (!this.isFocused) {
       this.isFocused = true;
       if (this.datagridCell && this.datagridCell.element) {
@@ -60,8 +59,8 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   init?(params: ICellRendererParams | any): AgPromise<void> | void {
     requestAnimationFrame(() => {
       this.params = params;
-      this.params.eGridCell.addEventListener('focusin', this.handleFocus);
-      this.params.eGridCell.addEventListener('focusout', this.handleBlur);
+      // this.params.eGridCell.addEventListener('focusin', this.handleFocus);
+      // this.params.eGridCell.addEventListener('focusout', this.handleBlur);
       this.defaultElement.innerHTML = "";
       this.agGridExtension = params.agGridExtension;
       this.datagridColumn = params.datagridColumn;

@@ -4,13 +4,11 @@
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
-import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRow, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
-import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
+import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { AcDatagridExtensionManager, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcNgDatagridComponent, AcNgDatagridModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../data/customers-data';
-import { ActionColumnComponent } from '../../components/action-column/action-column.component';
 import { ComponentsModule } from '../../components/components.module';
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 
@@ -22,7 +20,7 @@ import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@auto
   styleUrl: './datagrid.component.scss',
   standalone: true
 })
-export class DatagridComponent implements OnDestroy{
+export class DatagridComponent implements OnDestroy, AfterViewInit{
   @ViewChild('datagrid') datagrid:AcNgDatagridComponent;
   @ViewChild('idTemplate', { static: true }) idTemplateRef!: TemplateRef<any>;
   data?: any;
@@ -47,8 +45,16 @@ export class DatagridComponent implements OnDestroy{
 
   constructor(private elementRef: ElementRef) {
     console.log(this);
-    this.setOnDemandData();
+    //
   }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      // this.setOnDemandData();
+      this.setLocalData();
+    }, 1500);
+  }
+
+
   ngOnDestroy(): void {
     console.log("Datagrid Desrtoyed");
   }
@@ -67,7 +73,7 @@ export class DatagridComponent implements OnDestroy{
     this.datagrid.datagrid.datagridFooter.append(button);
   }
 
-  handleEdit(datagridRow:AcDatagridRow){
+  handleEdit(datagridRow:IAcDatagridRow){
     datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
    console.log(datagridRow);
   }
@@ -119,8 +125,8 @@ export class DatagridComponent implements OnDestroy{
     };
   }
 
-  handleDatagridRowUpdate(datagridRow:AcDatagridRow){
-    const datagridApi = datagridRow.datagridApi;
+  handleDatagridRowUpdate(datagridRow:IAcDatagridRow){
+    // const datagridApi = datagridRow;
     const data = {...datagridRow.data};
     data['index']++;
     this.datagrid.datagridApi.updateRow({data:data,rowId:datagridRow.rowId})

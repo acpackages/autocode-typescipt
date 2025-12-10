@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-output-native */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @typescript-eslint/no-wrapper-object-types */
 /* eslint-disable @angular-eslint/prefer-inject */
@@ -32,9 +33,10 @@ import { AcNgDatagridCellEditor } from '../../../ac-ng-datagrid/elements/ac-ng-d
   styles: [``],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class AcNgDatagridSelectComponent implements OnChanges,OnInit {
+export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
   @ViewChild('selectInput') selectInputsRef: ElementRef<AcDatagridSelectInput>;
 
+  @Input() inputClass: string = '';
   @Input() labelKey: string = 'label';
   @Input() valueKey: string = 'value';
   @Input() templateHeader?: TemplateRef<any>;
@@ -51,6 +53,33 @@ export class AcNgDatagridSelectComponent implements OnChanges,OnInit {
   @Input() onDemandFunction?: ((args: IAcOnDemandRequestArgs) => void) | any;
   @Input() usePagination: boolean = true;
 
+  @Input()
+  get value(): any {
+    return this.selectInput?.value;
+  }
+  set value(val: any) {
+    if (this.selectInput && this.selectInput.value !== val) {
+      this.selectInput.value = val;
+    }
+  }
+
+  @Output() change = new EventEmitter<any>();
+  @Output() click = new EventEmitter<any>();
+  @Output() dropdownClose = new EventEmitter<void>();
+  @Output() dropdownCreate = new EventEmitter<{ dropdownContainer: HTMLElement }>();
+  @Output() dropdownOpen = new EventEmitter<void>();
+  @Output() dropdownResize = new EventEmitter<any>();
+  @Output() focus = new EventEmitter<FocusEvent>();
+  @Output() keydown = new EventEmitter<KeyboardEvent>();
+  @Output() input = new EventEmitter<any>();
+  @Output() searchQueryChange = new EventEmitter<string>();
+
+  // Bonus: Most important ones (highly recommended)
+  @Output() valueChange = new EventEmitter<any>();                    // when selected value changes
+  @Output() selectionChange = new EventEmitter<any[]>();              // selected rows (multi-select aware)
+  @Output() rowClick = new EventEmitter<any>();
+  @Output() rowDoubleClick = new EventEmitter<any>();
+
   @Output() onDatagridInit: EventEmitter<any> = new EventEmitter();
 
   datagrid: AcDatagrid;
@@ -64,15 +93,15 @@ export class AcNgDatagridSelectComponent implements OnChanges,OnInit {
   rowNumbersExtension!: AcDatagridRowNumbersExtension;
   rowSelectionExtension!: AcDatagridRowSelectionExtension;
 
-  constructor(private runtimeService: AcRuntimeService, private appRef: ApplicationRef ) {
+  constructor(private runtimeService: AcRuntimeService, private appRef: ApplicationRef) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.datagrid && this.datagridApi){
-      if(changes['rowHeight']){
+    if (this.datagrid && this.datagridApi) {
+      if (changes['rowHeight']) {
         this.datagridApi.rowHeight = this.rowHeight;
       }
-      else if(changes['headerHeight']){
+      else if (changes['headerHeight']) {
         this.datagridApi.headerHeight = this.headerHeight;
       }
     }
@@ -86,7 +115,7 @@ export class AcNgDatagridSelectComponent implements OnChanges,OnInit {
   private async initDatagrid() {
     if (this.datagrid) {
       this.datagridApi = this.datagrid.datagridApi;
-      this.datagridApi.headerHeight= this.headerHeight;
+      this.datagridApi.headerHeight = this.headerHeight;
       this.datagridApi.rowHeight = this.rowHeight;
       this.dataManager = this.datagridApi.dataManager;
       if (this.datagridClass) {
@@ -126,20 +155,73 @@ export class AcNgDatagridSelectComponent implements OnChanges,OnInit {
       if (this.selectInputsRef.nativeElement) {
         continueOperation = false;
         this.selectInput = this.selectInputsRef.nativeElement;
-        this.selectInput.addEventListener('dropdownCreate',(event:any)=>{
-          console.log("Dropdown create event",event);
-          const dropdownContainer:HTMLElement = event.detail.dropdownContainer;
-          if(this.templateHeader){
+        this.selectInput.addEventListener('change', (e: any) => {
+          this.valueChange.emit(e.detail.value);
+          this.change.emit(e.detail); // backward compat with native <select>
+        });
+
+        this.selectInput.addEventListener('selectionChange', (e: any) => {
+          this.selectionChange.emit(e.detail.selectedRows);
+        });
+
+        // Dropdown lifecycle
+        this.selectInput.addEventListener('dropdownOpen', () => {
+          this.dropdownOpen.emit();
+        });
+
+        this.selectInput.addEventListener('dropdownClose', () => {
+          this.dropdownClose.emit();
+        });
+
+        this.selectInput.addEventListener('dropdownResize', (e: any) => {
+          this.dropdownResize.emit(e.detail);
+        });
+
+        this.selectInput.addEventListener('input', (e: any) => {
+          this.input.emit(e);
+        });
+
+        this.selectInput.addEventListener('searchQueryChange', (e: any) => {
+          this.searchQueryChange.emit(e.detail.searchText);
+        });
+
+        // Keyboard & Focus
+        this.selectInput.addEventListener('focus', (e: FocusEvent) => {
+          this.focus.emit(e);
+        });
+
+        this.selectInput.addEventListener('keydown', (e: KeyboardEvent) => {
+          this.keydown.emit(e);
+        });
+
+        // Click events
+        this.selectInput.addEventListener('click', (e: any) => {
+          this.click.emit(e);
+        });
+
+        // Row interactions
+        this.selectInput.addEventListener('rowClick', (e: any) => {
+          this.rowClick.emit(e.detail.rowData);
+        });
+
+        this.selectInput.addEventListener('rowDoubleClick', (e: any) => {
+          this.rowDoubleClick.emit(e.detail.rowData);
+        });
+
+        this.selectInput.addEventListener('dropdownCreate', (event: any) => {
+          this.dropdownCreate.emit();
+          const dropdownContainer: HTMLElement = event.detail.dropdownContainer;
+          if (this.templateHeader) {
             const headerContainer = dropdownContainer.querySelector('.dropdown-header') as HTMLElement;
-            if(headerContainer){
+            if (headerContainer) {
               const headerView = this.templateHeader.createEmbeddedView({});
               headerView.rootNodes.forEach(node => headerContainer.appendChild(node));
               headerView.detectChanges();
             }
           }
-          if(this.templateFooter){
+          if (this.templateFooter) {
             const footerContainer = dropdownContainer.querySelector('.dropdown-footer') as HTMLElement;
-            if(footerContainer){
+            if (footerContainer) {
               const footerView = this.templateFooter.createEmbeddedView({});
               footerView.rootNodes.forEach(node => footerContainer.appendChild(node));
               footerView.detectChanges();
@@ -158,33 +240,33 @@ export class AcNgDatagridSelectComponent implements OnChanges,OnInit {
   }
 
   private setColumnDefinitions() {
-      const columns: IAcDatagridColumnDefinition[] = [];
-      for (const colDef of this.columnDefinitions) {
-        colDef.cellRendererElement = AcNgDatagridCellRenderer;
-        if (!colDef.cellRendererElementParams) {
-          colDef.cellRendererElementParams = {};
-        }
-        colDef.cellRendererElementParams['___appRef___'] = this.appRef;
-        colDef.cellRendererElementParams['___runtimeService___'] = this.runtimeService;
-
-        colDef.cellEditorElement = AcNgDatagridCellEditor;
-          if (!colDef.cellEditorElementParams) {
-            colDef.cellEditorElementParams = {};
-          }
-          colDef.cellEditorElementParams['___appRef___'] = this.appRef;
-          colDef.cellEditorElementParams['___runtimeService___'] = this.runtimeService;
-
-        if (this.columnRendererTemplates[colDef.field]) {
-          colDef.cellRendererTemplateRef = this.columnRendererTemplates[colDef.field];
-        }
-        if (this.columnEditorTemplates[colDef.field]) {
-          colDef.cellEditorTemplateRef = this.columnEditorTemplates[colDef.field];
-        }
-        if(this.flexColumn == colDef.field){
-         colDef.flexSize = 1;
-        }
-        columns.push(colDef);
+    const columns: IAcDatagridColumnDefinition[] = [];
+    for (const colDef of this.columnDefinitions) {
+      colDef.cellRendererElement = AcNgDatagridCellRenderer;
+      if (!colDef.cellRendererElementParams) {
+        colDef.cellRendererElementParams = {};
       }
-      this.datagridApi.columnDefinitions = columns;
+      colDef.cellRendererElementParams['___appRef___'] = this.appRef;
+      colDef.cellRendererElementParams['___runtimeService___'] = this.runtimeService;
+
+      colDef.cellEditorElement = AcNgDatagridCellEditor;
+      if (!colDef.cellEditorElementParams) {
+        colDef.cellEditorElementParams = {};
+      }
+      colDef.cellEditorElementParams['___appRef___'] = this.appRef;
+      colDef.cellEditorElementParams['___runtimeService___'] = this.runtimeService;
+
+      if (this.columnRendererTemplates[colDef.field]) {
+        colDef.cellRendererTemplateRef = this.columnRendererTemplates[colDef.field];
+      }
+      if (this.columnEditorTemplates[colDef.field]) {
+        colDef.cellEditorTemplateRef = this.columnEditorTemplates[colDef.field];
+      }
+      if (this.flexColumn == colDef.field) {
+        colDef.flexSize = 1;
+      }
+      columns.push(colDef);
     }
+    this.datagridApi.columnDefinitions = columns;
+  }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumSortOrder, AcFilterGroup, AcHooks, Autocode } from "@autocode-ts/autocode";
 import { AC_DATAGRID_DEFAULT_COLUMN_DEFINITION } from "../consts/ac-datagrid-default-column-config.const";
@@ -16,6 +17,6 @@ export class AcDatagridInternalColumn {
 
   constructor({ index = -1, width = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width }: { index?: number, width?: number }) {
     this.index = index;
-    this.width = width;
+    this.width = width!;
   }
 }

@@ -2,8 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDDCondition } from "../..";
-// import { AcDDCondition } from "./ac-dd-condition.model";
+import { AcDDCondition } from "./ac-dd-condition.model";
 
 export class AcDDConditionGroup {
   static readonly KeyDatabaseType = "databaseType";

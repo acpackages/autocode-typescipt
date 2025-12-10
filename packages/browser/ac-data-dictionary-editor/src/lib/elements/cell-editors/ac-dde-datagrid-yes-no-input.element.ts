@@ -33,11 +33,11 @@ export class AcDDEDatagridYesNoInput implements IAcDatagridCellEditor {
     // this.element.append(this.optionInput);
     acAddClassToElement({ class_: 'ac-option-input-wrap', element: this.element });
     // this.optionInput.init();
-    this.input.checked = args.datagridCell.cellValue;
+    this.input.checked = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.input.checked = args.datagridCell.cellValue;
+    this.input.checked = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDatagridApi, AcDatagridColumn, IAcDatagridColumnState, IAcDatagridState } from "../_ac-datagrid.export";
+import { AcDatagridApi, IAcDatagridColumnState, IAcDatagridState } from "../_ac-datagrid.export";
 
 export class AcDatagridState {
   static readonly KeyColumns = "columns";

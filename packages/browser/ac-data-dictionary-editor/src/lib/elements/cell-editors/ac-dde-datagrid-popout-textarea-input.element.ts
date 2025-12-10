@@ -20,11 +20,11 @@ export class AcDDEDatagridPopoutTextareaInput implements IAcDatagridCellEditor{
   }
 
   init(args: IAcDatagridCellElementArgs): void {
-    this.textareaInput.value = args.datagridCell.cellValue;
+    this.textareaInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.textareaInput.value = args.datagridCell.cellValue;
+    this.textareaInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
 }

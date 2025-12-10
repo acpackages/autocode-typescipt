@@ -2,8 +2,8 @@
 import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDView } from "@autocode-ts/ac-data-dictionary";
-import { AcHooks,IAcContextEvent } from "@autocode-ts/autocode";
-import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AC_DATA_MANAGER_EVENT, AcHooks,IAcContextEvent } from "@autocode-ts/autocode";
+import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
@@ -77,9 +77,9 @@ export class AcDDEViewsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addView({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
-        args.datagridRow.data = row;
+      event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, callback: (args: any) => {
+        const row = this.editorApi.dataStorage.addView({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.data });
+        args.data = row;
         this.data.push(row);
       }
     });

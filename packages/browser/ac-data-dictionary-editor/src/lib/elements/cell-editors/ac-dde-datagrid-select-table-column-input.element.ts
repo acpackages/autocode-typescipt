@@ -35,11 +35,12 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
       });
       this.setOptions();
     }
-    this.selectInput.value = this.datagridCell.cellValue;
+    this.selectInput.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.value = args.datagridCell.cellValue;
+    this.datagridCell = args.datagridCell;
+    this.selectInput.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
   }
 
   setOptions() {
@@ -48,7 +49,7 @@ export class AcDDEDatagridSelectTableColumnInput implements IAcDatagridCellEdito
       options.push({ 'label': row.columnName, 'value': row.columnId });
     }
     this.selectInput.options = options;
-    this.selectInput.value = this.datagridCell.cellValue;
+    this.selectInput.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
   }
 
 }

@@ -1,5 +1,6 @@
 import { AcDatagrid, AcDatagridAfterRowsFooterExtension, AcDatagridApi, AcDatagridAutoAddNewRowExtension, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumnDefinition } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
+import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AcDatagridOnAgGridExtension } from "@autocode-ts/ac-datagrid-on-ag-grid";
 
 export class AcDDEDatagrid {
   get columnDefinitions(): IAcDatagridColumnDefinition[] {
@@ -23,7 +24,7 @@ export class AcDDEDatagrid {
   private rowNumbersExtension!: AcDatagridRowNumbersExtension;
   private rowSelectionExtension!: AcDatagridRowSelectionExtension;
   private rowDraggingExtension!: AcDatagridRowDraggingExtension;
-  // private agGridExtension!: AcDatagridOnAgGridExtension;
+  private agGridExtension!: AcDatagridOnAgGridExtension;
   newRowDataFunction: Function = () => {
     return {};
   };
@@ -32,6 +33,9 @@ export class AcDDEDatagrid {
     this.editorApi = editorApi;
     this.datagrid = new AcDatagrid();
     this.datagridApi = this.datagrid.datagridApi;
+    this.datagridApi.defaultColumnDefiniation.allowEdit = true;
+    this.datagridApi.showAddButton = true;
+    this.datagridApi.showSearchInput = true;
     this.datagridApi.hooks.subscribe({
       hook: AC_DATAGRID_HOOK.FooterInit, callback: () => {
         const addNewButton: HTMLElement = this.datagrid.ownerDocument.createElement('button');
@@ -47,8 +51,10 @@ export class AcDDEDatagrid {
     });
     this.datagridApi.on({event:AC_DATAGRID_EVENT.RowDataChange,callback:(args:any)=>{
       // console.log(`Row data change`,args);
-    }})
+    }});
     this.element = this.datagrid;
+    this.datagrid.datagridApi.rowHeight = 30;
+    this.datagrid.datagridApi.headerHeight = 30;
     this.element.classList.add("ac-dde-datagrid")
 
     this.afterRowsExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.AfterRowsFooter }) as AcDatagridAfterRowsFooterExtension;
@@ -59,8 +65,8 @@ export class AcDDEDatagrid {
     this.rowNumbersExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowNumbers }) as AcDatagridRowNumbersExtension;
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
-    this.autoAddNewRowExtension.autoAddNewRow = false;
-    // this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
+    this.autoAddNewRowExtension.autoAddNewRow = true;
+    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
     setTimeout(() => {
 
       this.afterRowsExtension.footerElement = this.footerElement;

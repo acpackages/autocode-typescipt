@@ -1,7 +1,7 @@
 import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
-import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AC_DATA_MANAGER_EVENT, AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
+import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
@@ -13,9 +13,11 @@ import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETable } from "../../interfaces/ac-dde-table.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
-import { AcDDEDatagridTableConstraintsInput } from "../inputs/ac-dde-datagrid-table-constraints-input.element";
+import { AcDDEDatagridTableConstraintsInput } from "../cell-editors/ac-dde-datagrid-table-constraints-input.element";
 import { AcEnumDDTableProperty } from "@autocode-ts/ac-data-dictionary";
 import { AcDDEDatagridSelectViewInput } from "../../_ac-data-dictionary-editor.export";
+import { AcDDEViewRenderer } from "../cell-renderers/ac-dde-view-renderer";
+import { AcDDETableConstraintRenderer } from "../cell-renderers/ac-dde-table-constraint-renderer";
 
 export class AcDDETablesDatagrid {
   ddeDatagrid!: AcDDEDatagrid;
@@ -36,6 +38,7 @@ export class AcDDETablesDatagrid {
         this.setTablesData();
       }
     });
+    console.log(this);
   }
 
   initDatagrid() {
@@ -68,13 +71,17 @@ export class AcDDETablesDatagrid {
         'field': AcEnumDDTableProperty.Constraints, 'title': 'Constraints', allowFilter: true,
         cellEditorElement: AcDDEDatagridTableConstraintsInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, cellRendererElement:AcDDETableConstraintRenderer,cellRendererElementParams: {
+                  editorApi: this.editorApi
+                }
       },
       {
         'field': AcEnumDDETable.ViewId, 'title': 'View', allowFilter: true,
         cellEditorElement: AcDDEDatagridSelectViewInput, cellEditorElementParams: {
           editorApi: this.editorApi
-        }, useCellEditorForRenderer: true
+        }, cellRendererElement:AcDDEViewRenderer, cellRendererElementParams: {
+          editorApi: this.editorApi
+        }
       },
       // {
       //   'field': AcEnumDDTableProperty.SelectSqlQuery, 'title': 'Select Query',allowFilter:true,
@@ -117,9 +124,9 @@ export class AcDDETablesDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addTable({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
-        args.datagridRow.data = row;
+      event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, callback: (args: any) => {
+        const row = this.editorApi.dataStorage.addTable({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.data });
+        args.data = row;
         this.data.push(row);
       }
     });

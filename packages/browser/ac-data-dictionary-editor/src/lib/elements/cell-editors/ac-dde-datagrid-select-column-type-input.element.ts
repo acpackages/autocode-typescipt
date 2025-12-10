@@ -40,11 +40,11 @@ export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditor
       {label:'UUID',value:AcEnumDDColumnType.Uuid},
       {label:'Yes/No',value:AcEnumDDColumnType.YesNo}
     ];
-    this.selectInput.value = args.datagridCell.cellValue
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.value = args.datagridCell.cellValue;
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
 }

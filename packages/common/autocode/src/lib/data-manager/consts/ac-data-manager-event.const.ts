@@ -2,6 +2,7 @@
 export const AC_DATA_MANAGER_EVENT = {
   BeforeDataChange : 'beforeDataChange',
   BeforeGetOnDemandData : 'beforeGetOnDemandData',
+  BeforeRowAdd:'beforeRowAdd',
   DataChange : 'dataChange',
   DataFoundForFirstTime : 'dataFoundForFirstTime',
   DataRowInstanceCreate : 'dataSourceInstanceCreate',
@@ -10,6 +11,7 @@ export const AC_DATA_MANAGER_EVENT = {
   OnDemandFunctionSet : 'onDemandFunctionSet',
   RefreshRows : 'refreshRows',
   Reset : 'reset',
+  RowAdd : 'rowAdd',
   RowCreate : 'rowCreate',
   RowDelete : 'rowDelete',
   RowUpdate : 'rowUpdate',

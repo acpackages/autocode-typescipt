@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
-import { CellClickedEvent, GridApi, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, FullWidthCellKeyDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, PaginationChangedEvent, ComponentStateChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEndEvent, RowDragEnterEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowSelectedEvent, RowValueChangedEvent, SortChangedEvent, ModelUpdatedEvent } from "ag-grid-community";
+import { CellClickedEvent, GridApi, CellDoubleClickedEvent, CellEditingStartedEvent, CellEditingStoppedEvent, CellKeyDownEvent, CellMouseDownEvent, FullWidthCellKeyDownEvent, CellMouseOutEvent, CellMouseOverEvent, CellSelectionChangedEvent, CellValueChangedEvent, ColumnHeaderClickedEvent, ColumnMovedEvent, ColumnResizedEvent, ColumnValueChangedEvent, ColumnVisibleEvent, FilterChangedEvent, FilterModifiedEvent, FilterOpenedEvent, PaginationChangedEvent, ComponentStateChangedEvent, RowClickedEvent, RowDataUpdatedEvent, RowDoubleClickedEvent, RowDragEndEvent, RowDragEnterEvent, RowEditingStartedEvent, RowEditingStoppedEvent, RowSelectedEvent, RowValueChangedEvent, SortChangedEvent, ModelUpdatedEvent, CellFocusedEvent } from "ag-grid-community";
 import { AcEnumSortOrder, AcLogger } from "@autocode-ts/autocode";
 
 export class AcDatagridOnAgGridEventHandler {
@@ -32,7 +32,6 @@ export class AcDatagridOnAgGridEventHandler {
 
   registerAgGridListeners() {
     this.gridApi.addEventListener('cellClicked', (event: CellClickedEvent) => {
-
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
         const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
         if (datagridCell) {
@@ -61,6 +60,14 @@ export class AcDatagridOnAgGridEventHandler {
         const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
         if (datagridCell) {
           this.datagridApi.eventHandler.handleCellEditingStop({ datagridCell, event: event.event as any });
+        }
+      }
+    });
+    this.gridApi.addEventListener('cellFocused', (event: CellFocusedEvent) => {
+      if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
+        const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
+        if (datagridCell) {
+          this.datagridApi.setActiveCell({datagridCell});
         }
       }
     });
@@ -140,7 +147,7 @@ export class AcDatagridOnAgGridEventHandler {
       // for(const row of this.datagridApi.datagridRows){
       //   row.displayIndex = -1;
       // }
-      // const displayedRows:AcDatagridRow[] = [];
+      // const displayedRows:IAcDatagridRow[] = [];
       // let index:number = -1;
       // this.gridApi.forEachNodeAfterFilterAndSort(node => {
       //   index++;

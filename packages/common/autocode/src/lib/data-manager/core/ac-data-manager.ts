@@ -28,6 +28,17 @@ import { IAcDataRow } from "../interfaces/ac-data-row.interface";
 import { Autocode } from "../../core/autocode";
 
 export class AcDataManager {
+  private _assignUniqueIdToData: boolean = false;
+  get assignUniqueIdToData(): boolean {
+    return this._assignUniqueIdToData;
+  }
+  set assignUniqueIdToData(value: boolean) {
+    if (value != this._assignUniqueIdToData) {
+      this._assignUniqueIdToData = value;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.UniqueIdKeyChange, args: { searchQuery: value } });
+    }
+  }
+
   get data(): any[] {
     const values: any[] = [];
     for (const row of this.rows) {
@@ -94,8 +105,8 @@ export class AcDataManager {
     this.logger.log("Setting searchQuery", { query: value });
     if (value != this._searchQuery) {
       this._searchQuery = value;
-      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.SearchQueryChange, args: {searchQuery:value} });
-      this.events.execute({ event: AC_DATA_MANAGER_EVENT.SearchQueryChange, args: {searchQuery:value} });
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.SearchQueryChange, args: { searchQuery: value } });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.SearchQueryChange, args: { searchQuery: value } });
     }
     this.logger.log("SearchQuery set complete");
   }
@@ -151,6 +162,17 @@ export class AcDataManager {
     this.logger.log("Type set complete");
   }
 
+  private _uniqueIdKey: string = '__ac_row_id__';
+  get uniqueIdKey(): string {
+    return this._uniqueIdKey;
+  }
+  set uniqueIdKey(value: string) {
+    if (value != this._uniqueIdKey) {
+      this._uniqueIdKey = value;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.UniqueIdKeyChange, args: { searchQuery: value } });
+    }
+  }
+
   allDataAvailable: boolean = true;
   allRows: IAcDataRow[] = [];
   autoSetUniqueIdToData: boolean = false;
@@ -170,8 +192,14 @@ export class AcDataManager {
   // constructor() {}
 
   addData({ data = {} }: { data?: any } = {}): IAcDataRow {
-    this.logger.log("Adding data", { dataKeys: Object.keys(data) });
     const index: number = this.allRows.length - 1;
+    const beforeArgs:any = {
+      dataManager: this,
+      data: data,
+    };
+    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeRowAdd, args:beforeArgs  });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, args: beforeArgs});
+    data = beforeArgs.data;
     const dataRow: IAcDataRow = {
       data: data,
       index: index,
@@ -180,11 +208,21 @@ export class AcDataManager {
       isPlaceholder: false,
       rowId: Autocode.uuid()
     };
+    if (this.assignUniqueIdToData) {
+      dataRow.data[this.uniqueIdKey] = dataRow.rowId;
+    }
+    const hookArgs: IAcDataManagerRowHookArgs = {
+      dataManager: this,
+      dataRow: dataRow,
+    };
+    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
     this.allRows.push(dataRow);
     this.rows.push(dataRow);
     this.totalRows++;
     this.displayedRows.push(dataRow);
-    this.logger.log("Data added successfully", { rowId: dataRow.rowId, index });
+    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowAdd, args: { dataRow: dataRow, data: data } });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: { dataRow: dataRow, data: data } });
     return dataRow;
   }
 
@@ -712,12 +750,16 @@ export class AcDataManager {
           originalIndex: index,
           index: index,
         };
+        if (this.assignUniqueIdToData) {
+          dataRow.data[this.uniqueIdKey] = dataRow.rowId;
+        }
         this.allRows.push(dataRow);
         const hookArgs: IAcDataManagerRowHookArgs = {
           dataManager: this,
           dataRow: dataRow,
         };
         this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
+        this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
         index++;
       }
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
@@ -748,6 +790,9 @@ export class AcDataManager {
       for (let index = startIndex; index <= endIndex; index++) {
         const dataIndex = index - startIndex;
         const rowData = data[dataIndex];
+        if (this.assignUniqueIdToData) {
+          rowData[this.uniqueIdKey] = this.allRows[index].rowId;
+        }
         this.allRows[index].data = rowData;
         this.allRows[index].isPlaceholder = false;
         const hookArgs: IAcDataManagerRowHookArgs = {
@@ -755,6 +800,7 @@ export class AcDataManager {
           dataRow: this.allRows[index],
         };
         this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
+        this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
       }
       this.allDataAvailable = this.allRows.filter((row) => { return row.isPlaceholder == false }).length == 0;
       this.totalRows = totalCount;

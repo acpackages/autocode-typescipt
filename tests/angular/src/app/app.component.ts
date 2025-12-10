@@ -2,6 +2,10 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AcNgMultiRouterComponent, IAcNgRouterOutlet } from '@autocode-ts/ac-angular';
 import { acInit, AcWindowTabs } from '@autocode-ts/ac-browser';
+import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
+import { dataDictionaryJson as actDataDictionary } from './../../../data/act-data-dictionary-v1';
+import { AppInputFieldElement } from '../components/input-elements/app-input-field-element';
+import { AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,6 +22,8 @@ export class AppComponent implements AfterViewInit{
 
   constructor(){
     this.setDataGridConfig();
+    AcDDInputManager.inputFieldElementClass = AppInputFieldElement;
+    AcDataDictionary.registerDataDictionary({jsonData:actDataDictionary});
     acInit();
     console.log(this);
   }

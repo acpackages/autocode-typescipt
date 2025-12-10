@@ -106,8 +106,6 @@ export function acLinkElementScroll({ source, destination, both = true }: { sour
 export function acListenElementEvents(options: {
   element: HTMLElement;
   callback: ({ name, event }: { name: string, event: Event }) => void;
-
-  // category booleans
   mouse?: boolean;
   pointer?: boolean;
   touch?: boolean;
@@ -141,7 +139,6 @@ export function acListenElementEvents(options: {
 
   for (const category of categories) {
     if (anySelected) {
-      // only include selected categories
       if (flags[category]) {
         events.push(...AC_DOM_EVENT_TYPES[category]);
       }
@@ -165,7 +162,7 @@ export function acListenElementEvents(options: {
   for (const eventName of events) {
     const handler = (ev: Event) => callback({name:eventName,event: ev});
     handlers[eventName] = handler;
-    element.addEventListener(eventName, handler);
+    element.addEventListener(eventName, handler,{passive:true});
   }
 
   // return unsubscribe function

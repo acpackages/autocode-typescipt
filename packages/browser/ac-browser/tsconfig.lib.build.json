@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
     "declaration": true,
-    "paths": {},
+    "paths": {
+    },
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
     "skipLibCheck": true,

@@ -5,7 +5,7 @@
 import { AcPagination } from "../../ac-pagination/elements/ac-pagination.element";
 import { AcDatagrid } from "../elements/ac-datagrid.element";
 import { IAcDatagridColumnDefinition } from "../interfaces/ac-datagrid-column-definition.interface";
-import { AcDataManager, AC_DATA_MANAGER_EVENT, AcEnumLogicalOperator, AcEnumSortOrder, AcEvents, AcFilter, AcFilterGroup, AcHooks, AcLogger, AcSortOrder, Autocode, IAcDataManagerDataEvent, IAcFilter, IAcFilterGroup } from "@autocode-ts/autocode";
+import { AcDataManager, AC_DATA_MANAGER_EVENT, AcEnumLogicalOperator, AcEnumSortOrder, AcEvents, AcHooks, AcLogger, Autocode, IAcDataManagerDataEvent, IAcFilter, IAcFilterGroup } from "@autocode-ts/autocode";
 import { AC_DATAGRID_EVENT } from "../consts/ac-datagrid-event.const";
 import { IAcDatagridColumnDragPlaceholderCreatorArgs } from "../interfaces/callback-args/ac-datagrid-column-drag-placeholder-creator-args.interface";
 import { IAcDatagridRowDragPlaceholderCreatorArgs } from "../interfaces/callback-args/ac-datagrid-row-drag-placeholder-creator-args.interface";
@@ -96,7 +96,7 @@ export class AcDatagridApi {
 
     let displayIndex: number = -1;
     for (const colDef of this._columnDefinitions) {
-      const column = { ...AC_DATAGRID_DEFAULT_COLUMN_DEFINITION, ...colDef };
+      const column:IAcDatagridColumnDefinition|any = { ...this.defaultColumnDefiniation, ...colDef };
       if (column.visible) {
         displayIndex++;
       }
@@ -118,7 +118,7 @@ export class AcDatagridApi {
         title: column.title ?? column.field,
         visible: column.visible,
         index: column.visible ? displayIndex : -1,
-        width: column.width ?? AC_DATAGRID_DEFAULT_COLUMN_DEFINITION.width
+        width: column.width ?? this.defaultColumnDefiniation.width
       };
       this.datagridColumns.push(datagridColumn);
       this.logger.log('Created and added datagridColumn', { field: colDef.field, index: column.index });
@@ -150,9 +150,7 @@ export class AcDatagridApi {
     return this.dataManager.data;
   }
   set data(value: any[]) {
-    this.logger.log('Setting data', { oldCount: this.dataManager.data.length, newCount: value.length });
     this.dataManager.data = value;
-    this.logger.log('Data set successfully');
   }
 
   get datagridRows(): IAcDatagridRow[] {
@@ -229,6 +227,34 @@ export class AcDatagridApi {
     this._useVirtualScrolling = value;
   }
 
+  private _showAddButton: boolean = false;
+  get showAddButton(): boolean {
+    return this._showAddButton;
+  }
+  set showAddButton(value: boolean) {
+    if(this._showAddButton != value){
+      this._showAddButton = value;
+      this.hooks.execute({ hook: AC_DATAGRID_HOOK.ShowAddButtonChange, args: {
+        showAddButton:value,
+        datagridApi:this
+      } });
+    }
+  }
+
+  private _showSearchInput: boolean = false;
+  get showSearchInput(): boolean {
+    return this._showSearchInput;
+  }
+  set showSearchInput(value: boolean) {
+    if(this._showSearchInput != value){
+      this._showSearchInput = value;
+      this.hooks.execute({ hook: AC_DATAGRID_HOOK.ShowSearchInputChange, args: {
+        showSearchInput:value,
+        datagridApi:this
+      } });
+    }
+  }
+
   activeDatagridRow: IAcDatagridRow | undefined;
   columnDragPlaceholderElementCreator: Function = (args: IAcDatagridColumnDragPlaceholderCreatorArgs): HTMLElement => {
     const element = document.createElement('span');
@@ -242,12 +268,13 @@ export class AcDatagridApi {
     this.logger.log('Created row drag placeholder', { rowId: args.datagridRow.rowId });
     return element;
   };
-  activeCell?: IAcDatagridCell;
+  activeDatagridCell?: IAcDatagridCell;
   dataTypeIdentified: boolean = false;
   datagrid!: AcDatagrid;
   datagridColumns: IAcDatagridColumn[] = [];
   datagridState: AcDatagridState;
   dataManager: AcDataManager = new AcDataManager();
+  defaultColumnDefiniation:Partial<IAcDatagridColumnDefinition> = AC_DATAGRID_DEFAULT_COLUMN_DEFINITION;
   eventHandler!: AcDatagridEventHandler;
   events: AcEvents;
   extensions: Record<string, AcDatagridExtension> = {};
@@ -261,16 +288,12 @@ export class AcDatagridApi {
   rowValueChangeTimeoutDuration = 250;
 
   constructor({ datagrid }: { datagrid: AcDatagrid }) {
-    this.logger.log('Initializing AcDatagridApi', { datagridId: datagrid.id || 'unknown' });
     this.datagrid = datagrid;
     this.dataManager.logger = this.logger;
     this.events = datagrid.events;
-    this.logger.log('Assigned datagrid and events');
     AcDatagridExtensionManager.registerBuiltInExtensions();
-    this.logger.log('Registered built-in extensions');
     this.dataManager.events = this.events;
     this.dataManager.hooks = this.hooks;
-    this.logger.log('Assigned events and hooks to dataManager');
     this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.DataFoundForFirstTime, callback: (args: IAcDataManagerDataEvent) => {
         const data: any = args.data;
@@ -333,6 +356,21 @@ export class AcDatagridApi {
       }
     });
     this.dataManager.on({
+      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args:any) => {
+        args['datagridRow'] = args.dataRow;
+      }
+    });
+    this.dataManager.on({
+      event: AC_DATA_MANAGER_EVENT.RowUpdate, callback: (args:any) => {
+        args['datagridRow'] = args.dataRow;
+      }
+    });
+    this.dataManager.on({
+      event: AC_DATA_MANAGER_EVENT.RowDelete, callback: (args:any) => {
+        args['datagridRow'] = args.dataRow;
+      }
+    });
+    this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.DataRowInstanceCreate, callback: ({ dataRow }: { dataRow: IAcDatagridRow }) => {
         // dataRow.datagridApi = this;
         // this.logger.log('Assigned datagridApi to dataRow', { rowId: dataRow.rowId });
@@ -340,17 +378,13 @@ export class AcDatagridApi {
     });
     this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.TotalRowsChange, callback: (args: any) => {
-        this.logger.log('TotalRowsChange event in dataManager', args);
         if (!this.usePagination) {
-          this.logger.log('Set displayed rows due to total rows change (no pagination)');
+          //
         }
       }
     });
     this.datagridState = new AcDatagridState({ datagridApi: this });
-    this.logger.log('Initialized datagridState');
     this.eventHandler = new AcDatagridEventHandler({ datagridApi: this });
-    this.logger.log('Initialized eventHandler');
-    this.logger.log('AcDatagridApi initialization complete');
   }
 
   addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}) {
@@ -375,7 +409,7 @@ export class AcDatagridApi {
       datagridApi: this,
       datagridRow: datagridRow
     };
-    this.events.execute({ event: AC_DATAGRID_EVENT.RowAdd, args: eventArgs });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: eventArgs });
     this.logger.log('Executed RowAdd event');
   }
 
@@ -666,26 +700,26 @@ export class AcDatagridApi {
     if (!datagridCell) {
       datagridCell = this.getCell({ rowIndex, columnIndex,key,value });
     }
-    if (datagridCell) {
+    if (datagridCell && (this.activeDatagridCell == undefined || this.activeDatagridCell.cellId != datagridCell.cellId)) {
       let previousActiveCell: IAcDatagridCell | undefined;
       let previousActiveColumn: IAcDatagridColumn | undefined;
       let previousActiveRow: IAcDatagridRow | undefined;
-      if (this.activeCell && this.activeCell != datagridCell) {
-        previousActiveCell = this.activeCell;
-        previousActiveColumn = this.activeCell.datagridColumn;
-        previousActiveRow = this.activeCell.datagridRow;
-        if (this.activeCell.element) {
-          if (this.activeCell.element.isEditing) {
-            this.activeCell.element.exitEditMode();
+      if (this.activeDatagridCell && this.activeDatagridCell != datagridCell) {
+        previousActiveCell = this.activeDatagridCell;
+        previousActiveColumn = this.activeDatagridCell.datagridColumn;
+        previousActiveRow = this.activeDatagridCell.datagridRow;
+        if (this.activeDatagridCell.element) {
+          if (this.activeDatagridCell.element.isEditing) {
+            this.activeDatagridCell.element.exitEditMode();
             this.logger.log('Exited edit mode for previous active cell');
           }
         }
-        this.activeCell.isActive = false;
+        this.activeDatagridCell.isActive = false;
         this.logger.log('Deactivated previous active cell');
       }
       datagridCell.isActive = true;
-      this.activeCell = datagridCell;
-      if (previousActiveCell != datagridCell) {
+      this.activeDatagridCell = datagridCell;
+      if ((previousActiveCell && previousActiveCell.cellId != datagridCell.cellId) || previousActiveCell == undefined) {
         const args:any = {
           oldActiveDatagridCell: previousActiveCell,
           activeDatagridRow: datagridCell,
@@ -694,16 +728,17 @@ export class AcDatagridApi {
         this.hooks.execute({ hook: AC_DATAGRID_EVENT.ActiveCellChange, args:args});
         this.events.execute({ event: AC_DATAGRID_EVENT.ActiveCellChange, args: args });
       }
-      if (previousActiveRow != datagridCell.datagridRow) {
+      if ((previousActiveRow && previousActiveRow.rowId != datagridCell.datagridRow.rowId) || previousActiveRow == undefined) {
         const activeEventParams: IAcDatagridActiveRowChangeEvent = {
           oldActiveDatagridRow: previousActiveRow,
           activeDatagridRow: datagridCell.datagridRow,
           datagridApi: this
         };
+        this.activeDatagridRow = datagridCell.datagridRow;
         this.hooks.execute({ hook: AC_DATAGRID_EVENT.ActiveRowChange, args: activeEventParams });
         this.events.execute({ event: AC_DATAGRID_EVENT.ActiveRowChange, args: activeEventParams });
       }
-      if (previousActiveColumn != datagridCell.datagridColumn) {
+      if ((previousActiveColumn && previousActiveColumn.columnId != datagridCell.datagridColumn.columnId) || previousActiveColumn == undefined) {
         const args:any = {
           oldActiveDatagridColumn: previousActiveColumn,
           activeDatagridColumn: datagridCell.datagridColumn,

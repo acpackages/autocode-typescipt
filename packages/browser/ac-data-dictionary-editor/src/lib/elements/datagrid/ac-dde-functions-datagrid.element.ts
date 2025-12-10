@@ -8,14 +8,14 @@ import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.ele
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { IAcDDEFunction } from "../../interfaces/ac-dde-function.inteface";
-import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
 import { AcEnumDDEFunction } from "../../enums/ac-enum-dde-storage-keys.enum";
 import { IAcDDEDatagridCellInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-cell-init-hook-args.interface";
 import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
-import { IAcContextEvent } from "@autocode-ts/autocode";
+import { AC_DATA_MANAGER_EVENT, IAcContextEvent } from "@autocode-ts/autocode";
 
 export class AcDDEFunctionsDatagrid {
   data: any[] = [];
@@ -77,9 +77,9 @@ export class AcDDEFunctionsDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addFunction({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
-        args.datagridRow.data = row;
+      event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, callback: (args: any) => {
+        const row = this.editorApi.dataStorage.addFunction({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.data });
+        args.data = row;
         this.data.push(row);
       }
     });

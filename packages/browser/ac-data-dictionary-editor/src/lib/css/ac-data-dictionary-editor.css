@@ -132,7 +132,7 @@ ac-option-input input {
   width: 60px;
   /* height: 30px; */
   display: block;
-  margin: 4px auto;
+  margin: 1px auto;
 }
 .ac-option-input-wrap ac-option-input input {
   display: block;
@@ -287,3 +287,54 @@ input:checked + .slider:before {
 }
 
 /* SWITCH END */
+
+/* DATAGRID AGGRID*/
+.ag-cell{
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+  padding-top:0px!important;
+  padding-bottom:0px!important;
+}
+.ag-row-even {
+  background-color: #f1f1f1!important;
+}
+.ag-row-odd {
+  background-color: #ffffff!important;
+}
+.ag-row-focus {
+  background-color:#c7c7c7!important;
+}
+
+.ag-header {
+  background-color: #181818!important;
+  color: white !important;
+}
+.ag-paging-panel{
+  border-top-width:1px ;
+  gap:10px!important;
+  height:30px!important;
+  justify-content: flex-start!important;
+  white-space: nowrap!important;
+}
+.ag-picker-field-wrapper{
+  min-height: 25px!important;
+  height: 25px!important;
+  border:solid 1px #cccccc;
+}
+.ag-header-cell-resize::after{
+  background-color: #3a3a3a!important;
+}
+.datagrid-card{
+  height: 100%;
+}
+
+.ag-row-number-cell{
+  text-align: center!important;
+}
+
+.input-ac-datagrid-search{
+  padding: 2px 5px;
+  border-radius: 5px;
+  border: solid 1px #b4b4b4;
+}
+/*  */

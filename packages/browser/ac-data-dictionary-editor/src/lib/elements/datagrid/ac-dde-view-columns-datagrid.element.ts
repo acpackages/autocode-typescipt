@@ -2,11 +2,11 @@
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDViewColumn, AcEnumDDColumnProperty } from "@autocode-ts/ac-data-dictionary";
-import { AcDDEDatagridSelectColumnTypeInput } from "../inputs/ac-dde-datagrid-select-column-type-input.element";
-import { AcDDEDatagridTextInput } from "../inputs/ac-dde-datagrid-text-input.element";
+import { AcDDEDatagridSelectColumnTypeInput } from "../cell-editors/ac-dde-datagrid-select-column-type-input.element";
+import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
-import { IAcContextEvent } from "@autocode-ts/autocode";
+import { AC_DATA_MANAGER_EVENT, IAcContextEvent } from "@autocode-ts/autocode";
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcEnumDDEHook } from "../../enums/ac-enum-dde-hooks.enum";
@@ -64,9 +64,9 @@ export class AcDDEViewColumnsDatagrid {
     this.ddeDatagrid.columnDefinitions = columnDefinitions;
 
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
-        const row = this.editorApi.dataStorage.addViewColumn({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.datagridRow.data });
-        args.datagridRow.data = row;
+      event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, callback: (args: any) => {
+        const row = this.editorApi.dataStorage.addViewColumn({ dataDictionaryId: this.editorApi.activeDataDictionary?.dataDictionaryId, ...args.data });
+        args.data = row;
         this.data.push(row);
       }
     });

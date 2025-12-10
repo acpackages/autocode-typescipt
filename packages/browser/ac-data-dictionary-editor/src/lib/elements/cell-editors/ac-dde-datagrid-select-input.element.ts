@@ -20,8 +20,8 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditor{
 
   getDisplayLabel():string{
     const optionLabels:string[] = [];
-    if(this.datagridCell && this.datagridCell.cellValue){
-      for(const option of this.datagridCell.cellValue){
+    if(this.datagridCell && this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey]){
+      for(const option of this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey]){
         optionLabels.push(option.value);
       }
     }
@@ -41,7 +41,7 @@ export class AcDDEDatagridSelectInput implements IAcDatagridCellEditor{
     if(this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams && this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.options){
       this.options = this.datagridCell.datagridColumn.columnDefinition.cellEditorElementParams.options;
     }
-    this.selectInput.value = this.datagridCell.cellValue;
+    this.selectInput.value = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {

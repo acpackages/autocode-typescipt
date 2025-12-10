@@ -25,11 +25,11 @@ export class AcDDEDatagridSelectFormatInput implements IAcDatagridCellEditor {
       { label: 'Lowercase', value: AcEnumDDColumnFormat.Lowercase },
       { label: 'Uppercase', value: AcEnumDDColumnFormat.Uppercase },
     ];
-    this.selectInput.value = args.datagridCell.cellValue
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
-    this.selectInput.value = args.datagridCell.cellValue;
+    this.selectInput.value = args.datagridCell.datagridRow.data[args.datagridCell.datagridColumn.columnKey];
   }
 
 }

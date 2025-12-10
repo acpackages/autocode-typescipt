@@ -5,16 +5,18 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef,OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
-import { AcNgDatagridSelectComponent, AcNgInputsModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
+import { AcDataManager,IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { AcNgDatagridSelectComponent, AcNgInputsModule, AcNgValueAccessorDirective, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../data/customers-data';
 import { ComponentsModule } from '../../components/components.module';
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { AcDatagridExtensionManager } from '@autocode-ts/ac-browser';
+import { Tables, TblActTaxRates } from '../../consts/act-data-dictionary';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-inputs',
-  imports: [CommonModule, AcNgInputsModule,ComponentsModule],
+  imports: [CommonModule, AcNgInputsModule,ComponentsModule,AcNgValueAccessorDirective,FormsModule,ReactiveFormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './inputs.component.html',
   styleUrl: './inputs.component.scss',
@@ -23,7 +25,12 @@ import { AcDatagridExtensionManager } from '@autocode-ts/ac-browser';
 export class InputsComponent implements OnDestroy{
   @ViewChild('selectInput') selectInput:AcNgDatagridSelectComponent;
   @ViewChild('idTemplate', { static: true }) idTemplateRef!: TemplateRef<any>;
+
+  Tables = Tables;
+  TblActTaxRates = TblActTaxRates;
+
   data?: any;
+  record:any = {};
 
   columnDefinitions:IAcNgDatagridColumnDefinition[] = [
     { field: 'index', title: "SrNo.", autoWidth: true, allowEdit: false,cellRendererTemplateRef: this.idTemplateRef},
@@ -54,6 +61,15 @@ export class InputsComponent implements OnDestroy{
     });
     this.selectInput.datagrid.datagridFooter.append(button);
   }
+
+  async handleFormSubmit() {
+    console.log(this);
+    // const httpResponse: IAcHttpResponse = await AcHttp.postPromise({ url: '', data: { row: this.record } });
+    // if (httpResponse.status == AcEnumHttpResponseCode.Ok && httpResponse.data) {
+    //   //
+    // }
+  }
+
 
   setLocalData() {
     const data: any[] = [];

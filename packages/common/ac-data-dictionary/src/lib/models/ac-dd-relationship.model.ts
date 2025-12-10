@@ -2,8 +2,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDataDictionary } from "../..";
-// import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcDataDictionary } from "./ac-data-dictionary.model";
 
 export class AcDDRelationship {
   static readonly KeyCascadeDeleteDestination = "cascadeDeleteDestination";

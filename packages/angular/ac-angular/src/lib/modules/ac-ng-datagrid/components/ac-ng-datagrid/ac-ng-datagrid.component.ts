@@ -8,7 +8,7 @@
 import { ApplicationRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
-import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { AC_DATA_MANAGER_EVENT, AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { IAcNgDatagridColumnDefinition } from '../../interfaces/ac-datagrid-column-definition.interface';
 import { AcNgDatagridCellRenderer } from '../../elements/ac-ng-datagrid-cell-renderer.element';
 import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-editor.element';
@@ -159,6 +159,12 @@ export class AcNgDatagridComponent implements OnChanges, OnDestroy, OnInit {
       }
       else if (changes['headerHeight']) {
         this.datagridApi.headerHeight = this.headerHeight;
+      }
+      else if (changes['onDemandFunction']) {
+        this.dataManager.onDemandFunction = this.onDemandFunction;
+      }
+      else if (changes['data']) {
+        this.dataManager.data = this.data;
       }
     }
   }
@@ -537,7 +543,7 @@ export class AcNgDatagridComponent implements OnChanges, OnDestroy, OnInit {
       }
     });
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.RowAdd, callback: (args: any) => {
+      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args: any) => {
         this.onRowAdd.emit(args);
       }
     });

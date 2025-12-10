@@ -11,9 +11,9 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
   private navigate: boolean = false;
 
   private handleCellKeyDown(event:KeyboardEvent) {
-    if (event && this.datagridApi.activeCell) {
+    if (event && this.datagridApi.activeDatagridCell) {
       if (this.navigate && event && event.key) {
-        const datagridCell: IAcDatagridCell = this.datagridApi.activeCell;
+        const datagridCell: IAcDatagridCell = this.datagridApi.activeDatagridCell;
         const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
         const datagridColumn: IAcDatagridColumn = datagridCell.datagridColumn;
         let newColumnIndex = datagridColumn.index;
@@ -58,8 +58,8 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
         if(newColumnIndex != datagridColumn.index || newRowIndex != datagridRow.index){
           event.preventDefault();
           this.datagridApi.setActiveCell({rowIndex:newRowIndex,columnIndex:newColumnIndex});
-          if(this.datagridApi.activeCell.element){
-            acScrollIntoViewIfHidden({element:this.datagridApi.activeCell.element});
+          if(this.datagridApi.activeDatagridCell.element){
+            acScrollIntoViewIfHidden({element:this.datagridApi.activeDatagridCell.element});
           }
         }
       }
