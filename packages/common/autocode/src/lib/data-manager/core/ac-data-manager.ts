@@ -28,7 +28,7 @@ import { IAcDataRow } from "../interfaces/ac-data-row.interface";
 import { Autocode } from "../../core/autocode";
 
 export class AcDataManager {
-  private _assignUniqueIdToData: boolean = false;
+  private _assignUniqueIdToData: boolean = true;
   get assignUniqueIdToData(): boolean {
     return this._assignUniqueIdToData;
   }

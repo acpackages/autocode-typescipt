@@ -80,7 +80,6 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
             this.defaultElement.replaceWith(element.getElement());
           }
         }
-
       }
       else {
         console.warn(`Datagrid Row and Datagrid Column Not Found`);
@@ -89,6 +88,7 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   }
 
   refresh(params: ICellRendererParams<any, any, any>): boolean {
-    return false;
+    this.init!(params);
+    return true;
   }
 }

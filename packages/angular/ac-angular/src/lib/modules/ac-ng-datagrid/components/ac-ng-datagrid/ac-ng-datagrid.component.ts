@@ -166,6 +166,12 @@ export class AcNgDatagridComponent implements OnChanges, OnDestroy, OnInit {
       else if (changes['data']) {
         this.dataManager.data = this.data;
       }
+      else if (changes['columnDefinitions'] || changes['columnEditorTemplates'] || changes['columnRendererTemplates'] || changes['flexColumn']) {
+        this.setColumnDefinitions();
+      }
+      else if (changes['usePagination']) {
+        this.datagridApi.usePagination = this.usePagination;
+      }
     }
   }
 

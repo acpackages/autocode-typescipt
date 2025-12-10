@@ -33,7 +33,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   agGridEventHandler!: AcDatagridOnAgGridEventHandler;
   allowColumnDragging: boolean = false;
   colDefs: ColDef[] = [];
-  data: any[] = [];
+  // data: any[] = [];
   gridApi!: GridApi;
   gridOptions: GridOptions;
   isClientSideData: boolean = true;
@@ -226,7 +226,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       datagridCell = this.datagridApi.getCell({ column: datagridColumn, row: datagridRow });
     }
     else {
-      // console.warn("Not found row for event : ", event, this);
+      console.warn("Not found row for event : ", event, this);
     }
     return datagridCell;
   }
@@ -258,7 +258,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       datagridRow = this.datagridApi.getRow({ index: event.rowIndex })!;
     }
     else {
-      // console.warn("get row from event, no valid parameter found in event");
+      console.warn("get row from event, no valid parameter found in event");
     }
     return datagridRow;
   }
@@ -345,10 +345,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       data: data
     }
     this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.DataChange, args: hookArgs });
-    this.data = data;
     if (this.isClientSideData) {
-      this.gridOptions['rowData'] = this.data;
-      this.gridApi.setGridOption('rowData', this.data);
+      this.gridOptions['rowData'] = data;
+      this.gridApi.setGridOption('rowData', data);
     }
   }
 
@@ -485,7 +484,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
     else {
       this.gridApi.updateGridOptions({
-        rowData: this.data,
+        rowData: this.datagridApi.data,
       });
     }
   }

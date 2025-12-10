@@ -26,7 +26,7 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
   private viewRef?: EmbeddedViewRef<any>;
   private componentRef?: ComponentRef<IAcDatagridCellRenderer>;
 
-   blur() {
+  blur() {
     let continueOperation:boolean = true;
     if(this.componentRef){
       if(this.componentRef.instance.blur){
@@ -92,9 +92,7 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     this.columnDefinition = this.datagridColumn.columnDefinition;
     this.appRef = this.datagridColumn.columnDefinition.cellRendererElementParams['___appRef___'];
     this.runtimeService = this.datagridColumn.columnDefinition.cellRendererElementParams['___runtimeService___'];
-
     this.element.style.display = 'contents';
-
     if (this.columnDefinition.cellRendererTemplateRef) {
       this.renderTemplate(this.columnDefinition.cellRendererTemplateRef);
     } else if (this.columnDefinition.cellRendererComponent) {
@@ -143,7 +141,7 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
   private renderDefault() {
     this.element.innerText =
       this.datagridRow.data[
-        this.datagridCell.datagridColumn.columnDefinition.field
+        this.datagridCell.datagridColumn.columnKey
       ] ?? '';
   }
 
@@ -154,7 +152,7 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
       datagridCell:this.datagridCell,
       datagridRow: this.datagridCell.datagridRow,
       datagridColumn: this.datagridCell.datagridColumn,
-      value:this.datagridRow.data[this.datagridCell.datagridColumn.columnDefinition.field],
+      value:this.datagridRow.data[this.datagridCell.datagridColumn.columnKey],
     }
     this.viewRef = template.createEmbeddedView(context);
     this.appRef?.attachView(this.viewRef);
