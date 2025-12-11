@@ -14,6 +14,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   params: any;
   element: HTMLInputElement = document.createElement('input');
   private isFocused: boolean = false;
+  editor:any;
 
   handleBlur: Function = () => {
     this.isFocused = false;
@@ -55,12 +56,12 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
       this.params.eGridCell.removeEventListener('focusout', this.handleBlur);
       this.params.eGridCell.removeEventListener('focusin', this.handleFocus);
     }
-    if (this.datagridCell && this.datagridCell.element) {
-      if (this.datagridCell.element.destroy != undefined) {
-        this.datagridCell.element.destroy();
+    if (this.editor) {
+      if (this.editor.destroy != undefined) {
+        this.editor.destroy();
       }
-      this.datagridCell.element.remove();
     }
+    this.element.remove();
   }
 
   getGui(): HTMLElement {
@@ -77,6 +78,9 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
       if (this.datagridRow && this.datagridColumn) {
         this.datagridCell = this.datagridApi?.getCell({ row: this.datagridRow, column: this.datagridColumn });
         if (this.datagridCell) {
+          if(this.datagridCell.extensionData == undefined){
+            this.datagridCell.extensionData = {}
+          }
           const columnDefinition = this.datagridColumn.columnDefinition;
           if (columnDefinition.cellEditorElement) {
             const editor = new columnDefinition.cellEditorElement();
@@ -85,6 +89,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
               datagridCell: this.datagridCell!
             };
             editor.init(initArgs);
+            this.editor = editor;
             const element = editor.getElement();
             if (this.element) {
               this.element.replaceWith(element);
@@ -93,16 +98,34 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
             if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
               this.element.focus();
             }
+            this.datagridCell.extensionData['cellEditingEditor'] = editor;
           }
-          else {
-            const element = this.datagridApi?.datagrid.ownerDocument.createElement('input') as HTMLElement;
+          else if(columnDefinition.cellInputElement){
+            const element = new columnDefinition.cellInputElement();
             if (this.element) {
               this.element.replaceWith(element);
             }
+            this.element = element;
+            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey];
+            if(columnDefinition.cellInputElementAttrs){
+              Object.assign(element,columnDefinition.cellInputElementAttrs);
+            }
+            if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
+              this.element.focus();
+            }
+            this.datagridCell.extensionData['cellEditingElement'] = element;
+          }
+          else {
+            const element = this.datagridApi?.datagrid.ownerDocument.createElement('input') as HTMLInputElement;
+            if (this.element) {
+              this.element.replaceWith(element);
+            }
+            this.element = element;
             this.element.value = this.datagridRow.data[this.datagridColumn.columnKey];
             if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
               this.element.focus();
             }
+            this.datagridCell.extensionData['cellEditingElement'] = element;
           }
         }
         this.params.eGridCell.addEventListener('focusin', this.handleFocus);

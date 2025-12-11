@@ -13894,11 +13894,33 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "UOM"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -21542,6 +21564,110 @@ export const dataDictionaryJson = {
     }
   },
   "views": {
+    "act_vw_assets": {
+      "viewName": "act_vw_assets",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "asset_barcode": {
+          "columnName": "asset_barcode",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_barcode"
+        },
+        "asset_depreciation_occurance": {
+          "columnName": "asset_depreciation_occurance",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_depreciation_occurance"
+        },
+        "asset_depreciation_percentage": {
+          "columnName": "asset_depreciation_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_depreciation_percentage"
+        },
+        "asset_details": {
+          "columnName": "asset_details",
+          "columnType": "JSON",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_details"
+        },
+        "asset_id": {
+          "columnName": "asset_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_id"
+        },
+        "asset_image_media_id": {
+          "columnName": "asset_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_image_media_id"
+        },
+        "asset_name": {
+          "columnName": "asset_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_name"
+        },
+        "asset_value": {
+          "columnName": "asset_value",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_value"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "ledger_account_id"
+        },
+        "asset_remarks": {
+          "columnName": "asset_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_assets",
+          "columnSourceOriginalColumn": "asset_remarks"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_assets"
+    },
     "act_vw_chargeable_service_categories": {
       "viewName": "act_vw_chargeable_service_categories",
       "viewColumns": {
@@ -22384,6 +22510,54 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT act_ledger_account_types.ledger_account_type_name,act_ledger_accounts.* FROM act_ledger_accounts LEFT JOIN act_ledger_account_types ON act_ledger_accounts.ledger_account_type_id = act_ledger_account_types.ledger_account_type_id"
+    },
+    "act_vw_locations": {
+      "viewName": "act_vw_locations",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "location_image_media_id": {
+          "columnName": "location_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_image_media_id"
+        },
+        "location_name": {
+          "columnName": "location_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_name"
+        },
+        "location_type": {
+          "columnName": "location_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_type"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_locations"
     },
     "act_vw_parties": {
       "viewName": "act_vw_parties",
@@ -24633,6 +24807,110 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_vw_suppliers.supplier_type,act_vw_suppliers.party_id,act_vw_suppliers.party_name,act_purchase_invoices.* FROM act_purchase_invoices LEFT JOIN act_vw_suppliers ON act_purchase_invoices.supplier_id = act_vw_suppliers.supplier_id"
     },
+    "act_vw_purchase_orders": {
+      "viewName": "act_vw_purchase_orders",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "purchase_order_amount": {
+          "columnName": "purchase_order_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_amount"
+        },
+        "purchase_order_datetime": {
+          "columnName": "purchase_order_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_datetime"
+        },
+        "purchase_order_id": {
+          "columnName": "purchase_order_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_id"
+        },
+        "purchase_order_number": {
+          "columnName": "purchase_order_number",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_number"
+        },
+        "purchase_term_id": {
+          "columnName": "purchase_term_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_term_id"
+        },
+        "purchase_order_remarks": {
+          "columnName": "purchase_order_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_remarks"
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "supplier_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "purchase_order_status": {
+          "columnName": "purchase_order_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_orders",
+          "columnSourceOriginalColumn": "purchase_order_status"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_purchase_orders"
+    },
     "act_vw_sale_invoice_chargeable_services": {
       "viewName": "act_vw_sale_invoice_chargeable_services",
       "viewColumns": {
@@ -25001,9 +25279,41 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "taxing_scheme_name": {
+          "columnName": "taxing_scheme_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes",
+          "columnSourceOriginalColumn": "taxing_scheme_name"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_uom_name"
         }
       },
-      "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,act_sale_invoice_products.* FROM act_sale_invoice_products LEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id"
+      "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_sale_invoice_products.* FROM act_sale_invoice_products \nLEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_sale_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_sale_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_sale_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
     },
     "act_vw_sale_invoices": {
       "viewName": "act_vw_sale_invoices",
@@ -25171,6 +25481,221 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT act_vw_customers.customer_category,act_vw_customers.party_name,act_vw_customers.party_id,act_sale_invoices.* FROM act_sale_invoices LEFT JOIN act_vw_customers ON act_sale_invoices.customer_id = act_vw_customers.customer_id"
+    },
+    "act_vw_sale_quotations": {
+      "viewName": "act_vw_sale_quotations",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "customer_id"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "sale_quotation_remarks": {
+          "columnName": "sale_quotation_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_remarks"
+        },
+        "sale_quotation_amount": {
+          "columnName": "sale_quotation_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_amount"
+        },
+        "sale_quotation_datetime": {
+          "columnName": "sale_quotation_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_datetime"
+        },
+        "sale_quotation_id": {
+          "columnName": "sale_quotation_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_id"
+        },
+        "sale_quotation_number": {
+          "columnName": "sale_quotation_number",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_number"
+        },
+        "sale_term_id": {
+          "columnName": "sale_term_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_term_id"
+        },
+        "sale_quotation_status": {
+          "columnName": "sale_quotation_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_status"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "sale_quotation_type": {
+          "columnName": "sale_quotation_type",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "sale_quotation_type"
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_quotations",
+          "columnSourceOriginalColumn": "user_id"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_sale_quotations"
+    },
+    "act_vw_storage_locations": {
+      "viewName": "act_vw_storage_locations",
+      "viewColumns": {
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "parent_storage_location_id": {
+          "columnName": "parent_storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "parent_storage_location_id"
+        },
+        "storage_location_remarks": {
+          "columnName": "storage_location_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_remarks"
+        },
+        "storage_location_status": {
+          "columnName": "storage_location_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_status"
+        },
+        "storage_location_code": {
+          "columnName": "storage_location_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_code"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "storage_location_image_media_id": {
+          "columnName": "storage_location_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_image_media_id"
+        },
+        "storage_location_index": {
+          "columnName": "storage_location_index",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_index"
+        },
+        "storage_location_name": {
+          "columnName": "storage_location_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_name"
+        },
+        "storage_location_tree": {
+          "columnName": "storage_location_tree",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_tree"
+        },
+        "storage_location_unique_identifier": {
+          "columnName": "storage_location_unique_identifier",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_storage_locations",
+          "columnSourceOriginalColumn": "storage_location_unique_identifier"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_storage_locations"
     },
     "act_vw_suppliers": {
       "viewName": "act_vw_suppliers",
@@ -25641,477 +26166,6 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT \ndebit_ledger_accounts.ledger_account_name as debit_ledger_account_name,\ndebit_ledger_accounts.ledger_account_balance as debit_ledger_account_balance,\ndebit_ledger_accounts.ledger_account_type_name as debit_ledger_account_type_name,\ndebit_ledger_accounts.reflecting_statement as debit_reflecting_statement,\ncredit_ledger_accounts.ledger_account_name as credit_ledger_account_name,\ncredit_ledger_accounts.ledger_account_balance as credit_ledger_account_balance,\ncredit_ledger_accounts.ledger_account_type_name as credit_ledger_account_type_name,\ncredit_ledger_accounts.reflecting_statement as credit_reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts as debit_ledger_accounts ON act_transaction_entries.debit_ledger_account_id = debit_ledger_accounts.ledger_account_id \nLEFT JOIN act_vw_ledger_accounts as credit_ledger_accounts ON act_transaction_entries.credit_ledger_account_id = credit_ledger_accounts.ledger_account_id"
-    },
-    "act_vw_assets": {
-      "viewName": "act_vw_assets",
-      "viewColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "accountee_id"
-        },
-        "asset_barcode": {
-          "columnName": "asset_barcode",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_barcode"
-        },
-        "asset_depreciation_occurance": {
-          "columnName": "asset_depreciation_occurance",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_depreciation_occurance"
-        },
-        "asset_depreciation_percentage": {
-          "columnName": "asset_depreciation_percentage",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_depreciation_percentage"
-        },
-        "asset_details": {
-          "columnName": "asset_details",
-          "columnType": "JSON",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_details"
-        },
-        "asset_id": {
-          "columnName": "asset_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_id"
-        },
-        "asset_image_media_id": {
-          "columnName": "asset_image_media_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_image_media_id"
-        },
-        "asset_name": {
-          "columnName": "asset_name",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_name"
-        },
-        "asset_value": {
-          "columnName": "asset_value",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_value"
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "currency_code"
-        },
-        "exchange_rate": {
-          "columnName": "exchange_rate",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "exchange_rate"
-        },
-        "is_active": {
-          "columnName": "is_active",
-          "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "is_active"
-        },
-        "ledger_account_id": {
-          "columnName": "ledger_account_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "ledger_account_id"
-        },
-        "asset_remarks": {
-          "columnName": "asset_remarks",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_assets",
-          "columnSourceOriginalColumn": "asset_remarks"
-        }
-      },
-      "viewQuery": "SELECT * FROM act_assets"
-    },
-    "act_vw_locations": {
-      "viewName": "act_vw_locations",
-      "viewColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_locations",
-          "columnSourceOriginalColumn": "accountee_id"
-        },
-        "is_active": {
-          "columnName": "is_active",
-          "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_locations",
-          "columnSourceOriginalColumn": "is_active"
-        },
-        "location_id": {
-          "columnName": "location_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_locations",
-          "columnSourceOriginalColumn": "location_id"
-        },
-        "location_image_media_id": {
-          "columnName": "location_image_media_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_locations",
-          "columnSourceOriginalColumn": "location_image_media_id"
-        },
-        "location_name": {
-          "columnName": "location_name",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_locations",
-          "columnSourceOriginalColumn": "location_name"
-        },
-        "location_type": {
-          "columnName": "location_type",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_locations",
-          "columnSourceOriginalColumn": "location_type"
-        }
-      },
-      "viewQuery": "SELECT * FROM act_locations"
-    },
-    "act_vw_purchase_orders": {
-      "viewName": "act_vw_purchase_orders",
-      "viewColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "accountee_id"
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "currency_code"
-        },
-        "exchange_rate": {
-          "columnName": "exchange_rate",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "exchange_rate"
-        },
-        "is_draft": {
-          "columnName": "is_draft",
-          "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "is_draft"
-        },
-        "purchase_order_amount": {
-          "columnName": "purchase_order_amount",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_order_amount"
-        },
-        "purchase_order_datetime": {
-          "columnName": "purchase_order_datetime",
-          "columnType": "DATETIME",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_order_datetime"
-        },
-        "purchase_order_id": {
-          "columnName": "purchase_order_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_order_id"
-        },
-        "purchase_order_number": {
-          "columnName": "purchase_order_number",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_order_number"
-        },
-        "purchase_term_id": {
-          "columnName": "purchase_term_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_term_id"
-        },
-        "purchase_order_remarks": {
-          "columnName": "purchase_order_remarks",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_order_remarks"
-        },
-        "supplier_id": {
-          "columnName": "supplier_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "supplier_id"
-        },
-        "taxing_scheme_id": {
-          "columnName": "taxing_scheme_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "taxing_scheme_id"
-        },
-        "transaction_id": {
-          "columnName": "transaction_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "transaction_id"
-        },
-        "purchase_order_status": {
-          "columnName": "purchase_order_status",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_purchase_orders",
-          "columnSourceOriginalColumn": "purchase_order_status"
-        }
-      },
-      "viewQuery": "SELECT * FROM act_purchase_orders"
-    },
-    "act_vw_sale_quotations": {
-      "viewName": "act_vw_sale_quotations",
-      "viewColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "accountee_id"
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "currency_code"
-        },
-        "customer_id": {
-          "columnName": "customer_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "customer_id"
-        },
-        "exchange_rate": {
-          "columnName": "exchange_rate",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "exchange_rate"
-        },
-        "display_index": {
-          "columnName": "display_index",
-          "columnType": "INTEGER",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "display_index"
-        },
-        "is_draft": {
-          "columnName": "is_draft",
-          "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "is_draft"
-        },
-        "sale_quotation_remarks": {
-          "columnName": "sale_quotation_remarks",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_remarks"
-        },
-        "sale_quotation_amount": {
-          "columnName": "sale_quotation_amount",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_amount"
-        },
-        "sale_quotation_datetime": {
-          "columnName": "sale_quotation_datetime",
-          "columnType": "DATETIME",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_datetime"
-        },
-        "sale_quotation_id": {
-          "columnName": "sale_quotation_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_id"
-        },
-        "sale_quotation_number": {
-          "columnName": "sale_quotation_number",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_number"
-        },
-        "sale_term_id": {
-          "columnName": "sale_term_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_term_id"
-        },
-        "sale_quotation_status": {
-          "columnName": "sale_quotation_status",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_status"
-        },
-        "taxing_scheme_id": {
-          "columnName": "taxing_scheme_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "taxing_scheme_id"
-        },
-        "sale_quotation_type": {
-          "columnName": "sale_quotation_type",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "sale_quotation_type"
-        },
-        "user_id": {
-          "columnName": "user_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_sale_quotations",
-          "columnSourceOriginalColumn": "user_id"
-        }
-      },
-      "viewQuery": "SELECT * FROM act_sale_quotations"
-    },
-    "act_vw_storage_locations": {
-      "viewName": "act_vw_storage_locations",
-      "viewColumns": {
-        "display_index": {
-          "columnName": "display_index",
-          "columnType": "INTEGER",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "display_index"
-        },
-        "is_active": {
-          "columnName": "is_active",
-          "columnType": "YES_NO",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "is_active"
-        },
-        "location_id": {
-          "columnName": "location_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "location_id"
-        },
-        "parent_storage_location_id": {
-          "columnName": "parent_storage_location_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "parent_storage_location_id"
-        },
-        "storage_location_remarks": {
-          "columnName": "storage_location_remarks",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_remarks"
-        },
-        "storage_location_status": {
-          "columnName": "storage_location_status",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_status"
-        },
-        "storage_location_code": {
-          "columnName": "storage_location_code",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_code"
-        },
-        "storage_location_id": {
-          "columnName": "storage_location_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_id"
-        },
-        "storage_location_image_media_id": {
-          "columnName": "storage_location_image_media_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_image_media_id"
-        },
-        "storage_location_index": {
-          "columnName": "storage_location_index",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_index"
-        },
-        "storage_location_name": {
-          "columnName": "storage_location_name",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_name"
-        },
-        "storage_location_tree": {
-          "columnName": "storage_location_tree",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_tree"
-        },
-        "storage_location_unique_identifier": {
-          "columnName": "storage_location_unique_identifier",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_storage_locations",
-          "columnSourceOriginalColumn": "storage_location_unique_identifier"
-        }
-      },
-      "viewQuery": "SELECT * FROM act_storage_locations"
     },
     "act_vw_users": {
       "viewName": "act_vw_users",
@@ -29349,4 +29403,4 @@ export const dataDictionaryJson = {
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     }
   }
-};
+}

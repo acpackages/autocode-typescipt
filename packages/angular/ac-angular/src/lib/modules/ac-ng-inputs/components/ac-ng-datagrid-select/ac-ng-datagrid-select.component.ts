@@ -81,6 +81,7 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
   @Output() rowDoubleClick = new EventEmitter<any>();
 
   @Output() onDatagridInit: EventEmitter<any> = new EventEmitter();
+  @Output() stateChange: EventEmitter<any> = new EventEmitter();
 
   datagrid: AcDatagrid;
   datagridApi!: AcDatagridApi;
@@ -110,6 +111,10 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.initSelectInput();
+  }
+
+  getState():any{
+    return this.selectInput.getState();
   }
 
   private async initDatagrid() {
@@ -228,6 +233,10 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
             }
           }
         });
+
+        this.selectInput.addEventListener('stateChange', (event:any) => {
+          this.stateChange.emit(event.detail);
+        });
         this.datagrid = this.selectInput.datagrid;
         this.initDatagrid();
       }
@@ -268,5 +277,9 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
       columns.push(colDef);
     }
     this.datagridApi.columnDefinitions = columns;
+  }
+
+  setState({state}:{state:any}){
+    this.selectInput.setState({state});
   }
 }

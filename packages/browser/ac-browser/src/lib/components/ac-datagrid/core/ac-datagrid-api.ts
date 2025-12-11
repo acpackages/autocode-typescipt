@@ -758,9 +758,7 @@ export class AcDatagridApi {
   }
 
   setState({ state }: { state: IAcDatagridState }) {
-    this.logger.log('Setting datagrid state', { stateKeys: Object.keys(state) });
     this.datagridState.apply(state);
-    this.logger.log('Applied state to datagridState');
   }
 
   updateColumnPosition({ datagidColumn, oldDatagridColumn }: { datagidColumn: IAcDatagridColumn, oldDatagridColumn: IAcDatagridColumn }) {

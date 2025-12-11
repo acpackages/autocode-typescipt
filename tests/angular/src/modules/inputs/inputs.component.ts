@@ -60,6 +60,10 @@ export class InputsComponent implements OnDestroy{
       this.selectInput.datagridApi.addRow();
     });
     this.selectInput.datagrid.datagridFooter.append(button);
+    const state = {"datagridState":{"columns":[{"field":"index","width":87,"index":0},{"field":"first_name","width":121,"index":1},{"field":"last_name","width":119,"index":2},{"field":"company","width":530,"index":3}],"extensionStates":{"agGridOnAcDatagrid":{"version":"34.0.1","sideBar":{"visible":true,"position":"right","openToolPanel":null,"toolPanels":{"columns":{"expandedGroupIds":[]}}},"columnSizing":{"columnSizingModel":[{"colId":"index","width":87},{"colId":"first_name","width":121},{"colId":"last_name","width":119},{"colId":"company","flex":1,"width":803}]},"columnOrder":{"orderedColIds":["index","first_name","last_name","company"]},"pagination":{"page":0,"pageSize":100}}},"pagination":{},"sortOrder":{}},"dropdownSize":{"height":396,"width":1210}};
+    setTimeout(() => {
+      this.selectInput.setState({state});
+    }, 5000);
   }
 
   async handleFormSubmit() {
@@ -68,6 +72,10 @@ export class InputsComponent implements OnDestroy{
     // if (httpResponse.status == AcEnumHttpResponseCode.Ok && httpResponse.data) {
     //   //
     // }
+  }
+
+  handleStateChange(event:any){
+    console.log(event);
   }
 
 

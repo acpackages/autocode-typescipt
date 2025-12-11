@@ -91,8 +91,8 @@ export class AcDatagridSelectInput extends AcInputBase {
 
   private dropdownContainer!: HTMLDivElement;
   private isDropdownOpen = false;
-  private dropdownHeight = 600;
-  private dropdownWidth = 1200;
+  // private dropdownHeight = 400;
+  // private dropdownWidth = 700;
   private popper!: PopperInstance | null;
   textInputElement: HTMLInputElement = this.ownerDocument.createElement('input');
   datagrid: AcDatagrid = new AcDatagrid();
@@ -109,7 +109,7 @@ export class AcDatagridSelectInput extends AcInputBase {
   private visibilityObserver?: IntersectionObserver | null;
   private resizeObserver?: ResizeObserver | null;
   selectedRows:any[] = [];
-  dropdownSize: { height: number, width: number } = { height: 0, width: 0 };
+  dropdownSize: { height: number, width: number } = { height: 300, width: 600};
 
   override init() {
     super.init();
@@ -179,6 +179,11 @@ export class AcDatagridSelectInput extends AcInputBase {
         this.closeDropdown();
       }
     }});
+    this.datagrid.datagridApi.on({event:AC_DATAGRID_EVENT.StateChange,callback:(args:any)=>{
+      if(this.isDropdownOpen){
+        this.notifyState();
+      }
+    }});
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -216,11 +221,24 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.textInputElement.focus();
   }
 
+  getState(){
+    const state =  {
+      datagridState:this.datagrid.datagridApi.getState(),
+      dropdownSize:this.dropdownSize
+    };
+    return state;
+  }
+
   highlightRow({ rowIndex = 0, focusInput = true }: { rowIndex?: number, focusInput?: boolean } = {}) {
     this.datagrid.datagridApi.setActiveCell({ rowIndex: rowIndex, key: this.labelKey });
     if (focusInput) {
       this.textInputElement.focus();
     }
+  }
+
+  private notifyState(){
+    const event:CustomEvent = new CustomEvent('stateChange',{detail:{state:this.getState()}});
+    this.dispatchEvent(event);
   }
 
   openDropdown() {
@@ -238,15 +256,16 @@ export class AcDatagridSelectInput extends AcInputBase {
     (this.dropdownContainer.querySelector('.dropdown-body') as HTMLElement).append(this.datagrid);
     this.ownerDocument.body.append(this.dropdownContainer);
     Object.assign(this.dropdownContainer.style, {
-      height: `${this.dropdownHeight}px`,
-      width: `${this.dropdownWidth}px`,
+      height: `${this.dropdownSize.height}px`,
+      width: `${this.dropdownSize.width}px`,
       border: "1px solid #ccc",
       background: "#fff",
       boxSizing: "border-box",
       resize: 'both',
       display: 'flex',
       flexDirection: 'column',
-      overflow:'hidden'
+      overflow:'hidden',
+      zIndex:9999999999
     });
     this.popper = createPopper(this.textInputElement, this.dropdownContainer, {
       placement: 'bottom-start' as Placement,
@@ -283,7 +302,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.popper?.update();
     this.datagrid.datagridApi.dataManager.getData();
     const event:CustomEvent = new CustomEvent('dropdownOpen',{});
-      this.dispatchEvent(event);
+    this.dispatchEvent(event);
   }
 
   private setSelectedRows({rows}:{rows:any[]}){
@@ -336,6 +355,15 @@ export class AcDatagridSelectInput extends AcInputBase {
       else{
         this.datagrid.datagridApi.setActiveCell({ key: this.valueKey, value: this.value });
       }
+    }
+  }
+
+  setState({state}:{state:any}){
+    if(state.dropdownSize){
+      this.dropdownSize = state.dropdownSize;
+    }
+    if(state.datagridState){
+      this.datagrid.datagridApi.setState({state:state.datagridState});
     }
   }
 

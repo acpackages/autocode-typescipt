@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcJsonUtils } from "@autocode-ts/autocode";
-import { AcDatagridApi, IAcDatagridColumnState, IAcDatagridState } from "../_ac-datagrid.export";
+import { AC_DATAGRID_EVENT, AcDatagridApi, IAcDatagridColumnState, IAcDatagridState } from "../_ac-datagrid.export";
 
 export class AcDatagridState {
   static readonly KeyColumns = "columns";
@@ -50,7 +50,9 @@ export class AcDatagridState {
     }
   }
 
-  constructor({datagridApi}:{datagridApi:AcDatagridApi}){
+  private refreshNotifyTimeout: any;
+
+  constructor({ datagridApi }: { datagridApi: AcDatagridApi }) {
     this.datagridApi = datagridApi;
   }
 
@@ -69,11 +71,10 @@ export class AcDatagridState {
         }
       }
       if (state[AcDatagridState.KeyExtensionStates]) {
-        this.columns = state[AcDatagridState.KeyColumns];
         for (const extensionName of Object.keys(state[AcDatagridState.KeyExtensionStates])) {
           if (this.datagridApi.extensions) {
             if (this.datagridApi.extensions[extensionName]) {
-              this.datagridApi.extensions[extensionName].setState({state:state[AcDatagridState.KeyExtensionStates][extensionName]});
+              this.datagridApi.extensions[extensionName].setState({ state: state[AcDatagridState.KeyExtensionStates][extensionName] });
             }
           }
         }
@@ -82,16 +83,25 @@ export class AcDatagridState {
   }
 
   refresh() {
-    this.setColumnsState();
-    this.setExtensionsState();
+    if (this.refreshNotifyTimeout) {
+      clearTimeout(this.refreshNotifyTimeout);
+    }
+    this.refreshNotifyTimeout = setTimeout(() => {
+      this.setColumnsState();
+      this.setExtensionsState();
+      const state: IAcDatagridState = this.toJson();
+      this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.StateChange, args: { state } });
+      this.datagridApi.hooks.execute({ hook: AC_DATAGRID_EVENT.StateChange, args: { state } });
+      clearTimeout(this.refreshNotifyTimeout);
+    }, 300);
   }
 
   toJson(): IAcDatagridState {
     return {
-      columns:this.columns,
-      extension_states:this.extensionStates,
-      pagination:this.pagination,
-      sort_order:this.sortOrder
+      columns: this.columns,
+      extensionStates: this.extensionStates,
+      pagination: this.pagination,
+      sortOrder: this.sortOrder
     };
   }
 

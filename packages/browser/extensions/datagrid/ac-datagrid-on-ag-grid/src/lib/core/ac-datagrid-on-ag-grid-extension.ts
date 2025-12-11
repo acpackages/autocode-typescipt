@@ -20,6 +20,7 @@ import { acGetColDefFromAcDataGridColumn } from '../helpers/col-def-helper';
 import { AcDatagridOnAgGridCellRenderer } from '../elements/ac-datagrid-on-ag-grid-cell-renderer.element';
 import { AcDatagridOnAgGridCellEditor } from '../elements/ac-datagrid-on-ag-grid-cell-editor.element';
 import { IAcDatagriOnAgGridDataChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-data-set-hook-args.interface';
+import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 ModuleRegistry.registerModules([
   AllCommunityModule,
   AllEnterpriseModule,
@@ -96,6 +97,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   logger: AcLogger = new AcLogger({ logMessages: false });
   searchInputContainer?: HTMLElement;
   addButtonContainer?: HTMLElement;
+  columnsCustomizerButtonContainer?:HTMLElement;
+  isColumnsCustomizerOpen:boolean = false;
+  leftFooterContainer?:HTMLElement;
+  rightFooterContainer?:HTMLElement;
 
   constructor() {
     super();
@@ -336,7 +341,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     } else {
       this.gridApi.closeToolPanel();
     }
-
   }
 
   private handleDataChange() {
@@ -582,17 +586,38 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   override init(): void {
     this.datagridApi.dataManager.assignUniqueIdToData = true;
     this.rowKey = this.datagridApi.dataManager.uniqueIdKey;
+    this.leftFooterContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
+    this.leftFooterContainer.style.display = 'flex';
+    this.leftFooterContainer.classList.add("ac-datagrid-footer-left-container");
+    this.rightFooterContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
+    this.rightFooterContainer.style.display = 'flex';
+    this.rightFooterContainer.classList.add("ac-datagrid-footer-right-container");
+
+    this.columnsCustomizerButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
+    this.columnsCustomizerButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-columns-customizer"><ac-svg-icon>${ACI_SVG_SOLID.gear}</ac-svg-icon></button>`;
+    (this.columnsCustomizerButtonContainer.querySelector('button') as HTMLElement).addEventListener('click',(event:any)=>{
+      this.isColumnsCustomizerOpen = !this.isColumnsCustomizerOpen;
+      if(this.isColumnsCustomizerOpen){
+        this.gridApi.openToolPanel('columns');
+      }
+      else{
+        this.gridApi.closeToolPanel();
+      }
+    });
+
     this.addButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.addButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-add">+ Add</button>`;
     (this.addButtonContainer.querySelector('button') as HTMLElement).addEventListener('click',(event:any)=>{
       this.datagridApi.dataManager.addData({});
     });
+
     this.searchInputContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.searchInputContainer.innerHTML = `<input type="text" class="input-ac-datagrid-search" placeholder="Search..."/>`;
     const searchInput:HTMLInputElement = this.searchInputContainer.querySelector('input') as HTMLInputElement;
     searchInput.addEventListener('input',(event:any)=>{
       this.datagridApi.dataManager.searchQuery = searchInput.value;
     });
+
     this.setDataSourceType();
     new AcDatagridRowSelectionExtensionOnAgGrid({ agGridExtension: this });
     new AcDatagridTreeTableExtensionOnAgGrid({ agGridExtension: this });
@@ -623,8 +648,18 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.gridApi = createGrid(this.agGridElement, this.gridOptions);
     const pagingPanel = this.agGridElement.querySelector('.ag-paging-panel') as HTMLElement;
     if(pagingPanel){
-      pagingPanel.append(this.addButtonContainer!);
-      pagingPanel.append(this.searchInputContainer!);
+      this.leftFooterContainer!.innerHTML = '';
+      this.leftFooterContainer?.appendChild(pagingPanel.querySelector('.ag-paging-page-summary-panel')!);
+      this.leftFooterContainer?.appendChild(pagingPanel.querySelector('.ag-paging-row-summary-panel')!);
+      this.leftFooterContainer?.appendChild(pagingPanel.querySelector('.ag-paging-page-size')!);
+      // this.leftFooterContainer
+      pagingPanel.innerHTML = '';
+      this.leftFooterContainer!.append(this.addButtonContainer!);
+      this.leftFooterContainer!.append(this.searchInputContainer!);
+      this.rightFooterContainer!.append(this.columnsCustomizerButtonContainer!);
+      pagingPanel.append(this.leftFooterContainer!);
+      pagingPanel.append(this.rightFooterContainer!);
+      // pagingPanel.append(this.columnsCustomizerButtonContainer!);
     }
     if (this.agGridEventHandler) {
       (this.agGridEventHandler as any) = null;
@@ -701,7 +736,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
           datagridApi: this.datagridApi,
         };
       }
-      if (column.columnDefinition.cellEditorElement) {
+      if (column.columnDefinition.cellEditorElement || column.columnDefinition.cellInputElement) {
         if (column.columnDefinition.useCellEditorForRenderer) {
           colDef.editable = false;
           colDef.cellRenderer = AcDatagridOnAgGridCellEditor;
