@@ -51,7 +51,7 @@ export class DatagridComponent implements OnDestroy, AfterViewInit{
     setTimeout(() => {
       // this.setOnDemandData();
       this.setLocalData();
-    }, 1500);
+    }, 1);
   }
 
 

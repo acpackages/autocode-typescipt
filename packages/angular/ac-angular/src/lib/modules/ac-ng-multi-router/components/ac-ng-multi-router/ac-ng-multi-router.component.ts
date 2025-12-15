@@ -5,7 +5,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, ComponentRef, ElementRef } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { IAcNgRouterOutlet } from '../../_ac-ng-mutli-router.export';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
@@ -53,15 +52,13 @@ export class AcNgMultiRouterComponent implements OnInit{
 
   add({route,title = 'New Tab'}:{route: any[], title?: string}) {
     const id = Autocode.uuid();
-
     const newRouter: IAcNgRouterOutlet = { id, title,route,isActive: false };
-    // this.routerOutlets = this.routerOutlets.map(t => ({ ...t, isActive: false }));
     this.routerOutlets.push(newRouter);
     this.onAdd.emit(newRouter);
     const componentRef:ComponentRef<AcNgRouterComponent> = this.panels.createComponent(AcNgRouterComponent);
+    newRouter.componentRef = componentRef;
     componentRef.instance.id = id;
     this.routers.set(id,componentRef.instance);
-
     this.setActive({id});
     this.router.navigate(route);
     return newRouter;
@@ -70,8 +67,6 @@ export class AcNgMultiRouterComponent implements OnInit{
   setActive({id}:{id:string}) {
     const targetRouter = this.routerOutlets.find((router:IAcNgRouterOutlet) => router.id === id);
     if (!targetRouter || targetRouter.isActive) return;
-
-
     if(this.activeRouterOutlet){
       this.routers.get(this.activeRouterOutlet.id).visible = false;
       this.activeRouterOutlet.isActive = false;
@@ -85,9 +80,7 @@ export class AcNgMultiRouterComponent implements OnInit{
   remove({id}:{id:string}) {
     const removedRouter = this.routerOutlets.find(t => t.id === id);
     if (!removedRouter) return;
-
     this.router.navigate([{ outlets: { [id]: null } }]);
-
     this.routerOutlets = this.routerOutlets.filter(t => t.id !== id);
     if (this.activeRouterOutlet?.id === id && this.routerOutlets.length > 0) {
       const last = this.routerOutlets[this.routerOutlets.length - 1];

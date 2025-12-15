@@ -336,8 +336,11 @@ export class AcDataManager {
       return valid;
     });
     if (dataRow) {
+      const row = {...dataRow};
       arrayRemoveByKey(this.allRows, 'rowId', dataRow.rowId);
       this.totalRows--;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowDelete, args: { dataRow: dataRow } });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowDelete, args: { dataRow: dataRow } });
       this.logger.log("Row deleted successfully", { rowId: dataRow.rowId });
     } else {
       this.logger.log("Row not found for deletion");

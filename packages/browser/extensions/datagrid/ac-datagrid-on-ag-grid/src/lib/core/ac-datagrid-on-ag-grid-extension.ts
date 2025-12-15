@@ -521,12 +521,13 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
   }
 
-  private handleRowDelete(args: IAcDatagridRowDeleteHookArgs) {
+  private handleRowDelete(args: any) {
+    console.log(args);
     if (this.isClientSideData) {
-      this.gridApi.applyTransaction({ remove: [args.datagridRow.data] });
+      this.gridApi.applyTransaction({ remove: [args.dataRow.data] });
     }
     else {
-      this.gridApi.applyServerSideTransaction({ remove: [args.datagridRow.data] });
+      this.gridApi.applyServerSideTransaction({ remove: [args.dataRow.data] });
     }
   }
 

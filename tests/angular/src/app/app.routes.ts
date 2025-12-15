@@ -2,8 +2,23 @@ import { Routes } from '@angular/router';
 
 export const appRoutes: Routes = [
   {
-    path: '', loadChildren: () => import('../modules/dashboard/dashboard.module').then(
+    path: 'dashboard', loadChildren: () => import('../modules/dashboard/dashboard.module').then(
       (m) => m.DashboardModule
+    ),
+  },
+  {
+    path: 'datagrid', loadComponent: () => import('../modules/datagrid/datagrid.component').then(
+      (m) => m.DatagridComponent
+    ),
+  },
+  {
+    path: 'inputs', loadComponent: () => import('../modules/inputs/inputs.component').then(
+      (m) => m.InputsComponent
+    ),
+  },
+  {
+    path: 'scrollable', loadComponent: () => import('../modules/scrollable/scrollable.component').then(
+      (m) => m.ScrollableComponent
     ),
   },
   // {

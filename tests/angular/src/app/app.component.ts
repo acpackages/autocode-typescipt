@@ -6,6 +6,7 @@ import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { dataDictionaryJson as actDataDictionary } from './../../../data/act-data-dictionary-v1';
 import { AppInputFieldElement } from '../components/input-elements/app-input-field-element';
 import { AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,12 +16,13 @@ import { AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
 export class AppComponent implements AfterViewInit{
   @ViewChild('windowTabs', { static: true })
   windowTabsRef!: ElementRef<AcWindowTabs>;
+  activeOutlet = 'outlet1';
 
-  @ViewChild('router') router!:AcNgMultiRouterComponent;
+  @ViewChild('multiRouter') multiRouter!:AcNgMultiRouterComponent;
   title = 'test-angular';
   windowsTabs?:AcWindowTabs;
 
-  constructor(){
+  constructor(private router:Router){
     this.setDataGridConfig();
     AcDDInputManager.inputFieldElementClass = AppInputFieldElement;
     AcDataDictionary.registerDataDictionary({jsonData:actDataDictionary});
@@ -30,15 +32,28 @@ export class AppComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     this.windowsTabs = this.windowTabsRef.nativeElement as AcWindowTabs;
+    // this.windowsTabs.addTab({ tab:{id: 'outlet1', title: 'Outlet 1', closeable: true, icon: '📘' }})
+    // this.windowsTabs.addTab({ tab:{id: 'outlet2', title: 'Outlet 2', closeable: true, icon: '📘' }})
+    // this.windowsTabs.addTab({ tab:{id: 'outlet3', title: 'Outlet 3', closeable: true, icon: '📘' }})
+    // this.windowsTabs.selectTab({id:'outlet1'});
     this.windowsTabs.addEventListener('activeChange',(args:any)=>{
-      this.router.setActive({id:args.detail.id});
+      // this.activeOutlet = args.detail.id;
+      this.multiRouter.setActive({id:args.detail.id});
     });
     this.windowsTabs.addEventListener('remove',(args:any)=>{
-      this.router.remove({id:args.detail.id});
+      this.multiRouter.remove({id:args.detail.id});
     });
     this.windowsTabs.addEventListener('addNewClick',()=>{
-      this.router.add({route:['datagrid']});
+      this.multiRouter.add({route:['datagrid']});
     });
+  }
+
+  handleNavigate(url){
+    const id = this.multiRouter.activeRouterOutlet.id;
+    // const id =this.activeOutlet;
+    console.log(`id => ${id}, url => ${url}`);
+    // this.router.navigate([{ outlets: { [id]: url } }]);
+    this.router.navigate([url ]);
   }
 
   handleOnActiveRouterChange(event:IAcNgRouterOutlet){

@@ -4243,8 +4243,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "inventory_tracking_quantity_id": {
-          "columnName": "inventory_tracking_quantity_id",
+        "inventory_tracking_entry_id": {
+          "columnName": "inventory_tracking_entry_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -22414,6 +22414,124 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_salary_amount, act_employees.employee_gender, act_vw_parties.* FROM act_employees LEFT JOIN act_vw_parties ON act_employees.party_id = act_vw_parties.party_id"
     },
+    "act_vw_inventory_tracking_entries": {
+      "viewName": "act_vw_inventory_tracking_entries",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "in_quantity": {
+          "columnName": "in_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_quantity"
+        },
+        "in_uom_quantity": {
+          "columnName": "in_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_quantity"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "inventory_tracking_entry_id": {
+          "columnName": "inventory_tracking_entry_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_entry_id"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "out_quantity": {
+          "columnName": "out_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_quantity"
+        },
+        "out_uom_quantity": {
+          "columnName": "out_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_quantity"
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_barcode_id"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "in_uom_id": {
+          "columnName": "in_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_id"
+        },
+        "out_uom_id": {
+          "columnName": "out_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_id"
+        }
+      },
+      "viewQuery": "SELECT act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
+    },
     "act_vw_ledger_accounts": {
       "viewName": "act_vw_ledger_accounts",
       "viewColumns": {
@@ -24473,9 +24591,217 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_purchase_invoice_chargeable_services.* FROM act_purchase_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_purchase_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
     },
+    "act_vw_purchase_invoice_product_inventory_tracking_entries": {
+      "viewName": "act_vw_purchase_invoice_product_inventory_tracking_entries",
+      "viewColumns": {
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "purchase_invoice_product_id": {
+          "columnName": "purchase_invoice_product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_product_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "in_quantity": {
+          "columnName": "in_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_quantity"
+        },
+        "in_uom_quantity": {
+          "columnName": "in_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_quantity"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "inventory_tracking_entry_id": {
+          "columnName": "inventory_tracking_entry_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_entry_id"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "out_quantity": {
+          "columnName": "out_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_quantity"
+        },
+        "out_uom_quantity": {
+          "columnName": "out_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_quantity"
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_barcode_id"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "in_uom_id": {
+          "columnName": "in_uom_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_id"
+        },
+        "out_uom_id": {
+          "columnName": "out_uom_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_id"
+        }
+      },
+      "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_vw_inventory_tracking_entries LEFT JOIN act_purchase_invoice_products ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id"
+    },
+    "act_vw_purchase_invoice_product_inventory_trackings": {
+      "viewName": "act_vw_purchase_invoice_product_inventory_trackings",
+      "viewColumns": {
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "purchase_invoice_product_id": {
+          "columnName": "purchase_invoice_product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "product_id"
+        }
+      },
+      "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_inventory_trackings.* FROM act_inventory_trackings LEFT JOIN act_purchase_invoice_products ON act_inventory_trackings.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id"
+    },
     "act_vw_purchase_invoice_products": {
       "viewName": "act_vw_purchase_invoice_products",
       "viewColumns": {
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "taxing_scheme_name": {
+          "columnName": "taxing_scheme_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_taxing_schemes",
+          "columnSourceOriginalColumn": "taxing_scheme_name"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_tax_rates",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
         "discount_cash_percentage": {
           "columnName": "discount_cash_percentage",
           "columnType": "DOUBLE",
@@ -24629,9 +24955,51 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "gross_amount": {
+          "columnName": "gross_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceOriginalColumn": "Gross Amount"
+        },
+        "discount_trade_amount": {
+          "columnName": "discount_trade_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceOriginalColumn": "TD Amount"
+        },
+        "discount_cash_amount": {
+          "columnName": "discount_cash_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceOriginalColumn": "CD Amount"
+        },
+        "discount_rebate_amount": {
+          "columnName": "discount_rebate_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceOriginalColumn": "Rebate Amount"
+        },
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceOriginalColumn": "Taxable Amount"
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceOriginalColumn": "Tax Amount"
         }
       },
-      "viewQuery": "SELECT act_purchase_invoice_products.* FROM act_purchase_invoice_products LEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id"
+      "viewQuery": "SELECT (COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_purchase_invoice_products.* FROM act_purchase_invoice_products \nLEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_purchase_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_purchase_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_purchase_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
     },
     "act_vw_purchase_invoices": {
       "viewName": "act_vw_purchase_invoices",
@@ -25056,6 +25424,186 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT act_sale_invoice_chargeable_services.* FROM act_sale_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_sale_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
+    },
+    "act_vw_sale_invoice_product_inventory_tracking_entries": {
+      "viewName": "act_vw_sale_invoice_product_inventory_tracking_entries",
+      "viewColumns": {
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "sale_invoice_product_id": {
+          "columnName": "sale_invoice_product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_product_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "in_quantity": {
+          "columnName": "in_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_quantity"
+        },
+        "in_uom_quantity": {
+          "columnName": "in_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_quantity"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "inventory_tracking_entry_id": {
+          "columnName": "inventory_tracking_entry_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_entry_id"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "out_quantity": {
+          "columnName": "out_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_quantity"
+        },
+        "out_uom_quantity": {
+          "columnName": "out_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_quantity"
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_barcode_id"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "in_uom_id": {
+          "columnName": "in_uom_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_id"
+        },
+        "out_uom_id": {
+          "columnName": "out_uom_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_id"
+        }
+      },
+      "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_vw_inventory_tracking_entries LEFT JOIN act_sale_invoice_products ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id"
+    },
+    "act_vw_sale_invoice_product_inventory_trackings": {
+      "viewName": "act_vw_sale_invoice_product_inventory_trackings",
+      "viewColumns": {
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "sale_invoice_product_id": {
+          "columnName": "sale_invoice_product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "product_id"
+        }
+      },
+      "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_inventory_trackings.* FROM act_inventory_trackings LEFT JOIN act_sale_invoice_products ON act_inventory_trackings.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id"
     },
     "act_vw_sale_invoice_products": {
       "viewName": "act_vw_sale_invoice_products",
@@ -26200,6 +26748,167 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT * FROM act_users"
+    },
+    "act_vw_stock": {
+      "viewName": "act_vw_stock",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        }
+      },
+      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id FROM act_vw_inventory_tracking_entries GROUP BY product_id"
+    },
+    "act_vw_stock_at_location": {
+      "viewName": "act_vw_stock_at_location",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        }
+      },
+      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,location_id"
+    },
+    "act_vw_stock_at_storage_location": {
+      "viewName": "act_vw_stock_at_storage_location",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        }
+      },
+      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,storage_location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,storage_location_id"
     }
   },
   "relationships": [
@@ -29403,4 +30112,4 @@ export const dataDictionaryJson = {
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     }
   }
-}
+};

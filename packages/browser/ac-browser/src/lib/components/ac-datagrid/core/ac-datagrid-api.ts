@@ -291,7 +291,6 @@ export class AcDatagridApi {
     this.datagrid = datagrid;
     this.dataManager.logger = this.logger;
     this.events = datagrid.events;
-    AcDatagridExtensionManager.registerBuiltInExtensions();
     this.dataManager.events = this.events;
     this.dataManager.hooks = this.hooks;
     this.dataManager.on({
@@ -358,16 +357,19 @@ export class AcDatagridApi {
     this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args:any) => {
         args['datagridRow'] = args.dataRow;
+        args['datagridApi'] = this;
       }
     });
     this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.RowUpdate, callback: (args:any) => {
         args['datagridRow'] = args.dataRow;
+        args['datagridApi'] = this;
       }
     });
     this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.RowDelete, callback: (args:any) => {
         args['datagridRow'] = args.dataRow;
+        args['datagridApi'] = this;
       }
     });
     this.dataManager.on({
@@ -385,6 +387,7 @@ export class AcDatagridApi {
     });
     this.datagridState = new AcDatagridState({ datagridApi: this });
     this.eventHandler = new AcDatagridEventHandler({ datagridApi: this });
+    AcDatagridExtensionManager.registerBuiltInExtensions();
   }
 
   addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}) {
@@ -452,19 +455,6 @@ export class AcDatagridApi {
         datagridRow.element.remove();
         this.logger.log('Removed row element from DOM');
       }
-      const deleteHookArgs: IAcDatagridRowDeleteHookArgs = {
-        datagridApi: this,
-        datagridRow: datagridRow,
-        highlightCells: highlightCells
-      }
-      this.hooks.execute({ hook: AC_DATAGRID_HOOK.RowDelete, args: deleteHookArgs });
-      this.logger.log('Executed RowDelete hook');
-      const eventArgs: IAcDatagridRowEvent = {
-        datagridApi: this,
-        datagridRow: datagridRow
-      };
-      this.events.execute({ event: AC_DATAGRID_EVENT.RowDelete, args: eventArgs });
-      this.logger.log('Executed RowDelete event');
     } else {
       this.logger.log('No row found to delete');
     }
