@@ -7,7 +7,7 @@
 import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, ComponentRef, ElementRef } from '@angular/core';
 import { IAcNgRouterOutlet } from '../../_ac-ng-mutli-router.export';
 import { filter, Subscription } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Autocode } from '@autocode-ts/autocode';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { AcNgRouterComponent } from '../ac-ng-router/ac-ng-router.component';
@@ -15,26 +15,61 @@ import { AcNgRouterComponent } from '../ac-ng-router/ac-ng-router.component';
 @Component({
   selector: 'ac-ng-multi-router',
   standalone: false,
-  template: `<ng-container #panels></ng-container>`,
+  template: ` <router-outlet (activate)="handleActivate($event)"></router-outlet><ng-container #panels></ng-container>`,
   styles: [``]
 })
-export class AcNgMultiRouterComponent implements OnInit{
+export class AcNgMultiRouterComponent implements OnInit {
+  @ViewChild('panels', { read: ViewContainerRef }) panels!: ViewContainerRef;
+  @ViewChild(RouterOutlet) routerOutlet!: RouterOutlet;
+
   routerOutlets: IAcNgRouterOutlet[] = [];
   activeRouterOutlet: IAcNgRouterOutlet | null = null;
   private sub = new Subscription();
-  private routers:Map<string,AcNgRouterComponent> = new Map();
 
-  @Output() onActiveChange:EventEmitter<any> = new EventEmitter();
-  @Output() onAdd:EventEmitter<any> = new EventEmitter();
-  @Output() onRemove:EventEmitter<any> = new EventEmitter();
+  @Output() onActiveChange: EventEmitter<any> = new EventEmitter();
+  @Output() onAdd: EventEmitter<any> = new EventEmitter();
+  @Output() onRemove: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('panels', { read: ViewContainerRef }) panels!: ViewContainerRef;
 
-  constructor(private elementRef:ElementRef,private router: Router,private runtimeService:AcRuntimeService) {}
+  constructor(private elementRef: ElementRef, private router: Router, private runtimeService: AcRuntimeService) { }
 
   ngOnInit() {
     this.sub.add(this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe(() => this.loadCurrentRoute()));
     setTimeout(() => this.loadCurrentRoute());
+  }
+
+  add({ route, title = 'New Tab' }: { route: any[], title?: string }) {
+    const id = Autocode.uuid();
+    const newRouter: IAcNgRouterOutlet = { id, title, route, isActive: false };
+    this.routerOutlets.push(newRouter);
+    const componentRef: ComponentRef<AcNgRouterComponent> = this.panels.createComponent(AcNgRouterComponent);
+    newRouter.routerComponent = componentRef.instance;
+    componentRef.instance.id = id;
+    this.onAdd.emit(newRouter);
+    this.setActive({ id });
+    this.router.navigate(route);
+    setTimeout(() => {
+      if (!this.activeRouterOutlet.routerComponent.componentRef) {
+        if (this.routerOutlet && this.routerOutlet.activatedRoute) {
+          this.activeRouterOutlet.routerComponent.createComponent(this.routerOutlet.component.constructor);
+        }
+      }
+    }, 50);
+    return newRouter;
+  }
+
+  handleActivate(event: any) {
+    if (this.routerOutlet && this.activeRouterOutlet) {
+      this.activeRouterOutlet.routerComponent.createComponent(event.constructor);
+    }
+    else {
+      setTimeout(() => {
+        this.handleActivate(event);
+      }, 1);
+    }
+    if (this.routerOutlet) {
+      (this.routerOutlet as any).location.clear();
+    }
   }
 
   private loadCurrentRoute() {
@@ -47,44 +82,30 @@ export class AcNgMultiRouterComponent implements OnInit{
       return;
     }
     const segments = primary.segments.map(s => s.path);
-    this.add({route:segments});
+    this.add({ route: segments });
   }
 
-  add({route,title = 'New Tab'}:{route: any[], title?: string}) {
-    const id = Autocode.uuid();
-    const newRouter: IAcNgRouterOutlet = { id, title,route,isActive: false };
-    this.routerOutlets.push(newRouter);
-    this.onAdd.emit(newRouter);
-    const componentRef:ComponentRef<AcNgRouterComponent> = this.panels.createComponent(AcNgRouterComponent);
-    newRouter.componentRef = componentRef;
-    componentRef.instance.id = id;
-    this.routers.set(id,componentRef.instance);
-    this.setActive({id});
-    this.router.navigate(route);
-    return newRouter;
-  }
-
-  setActive({id}:{id:string}) {
-    const targetRouter = this.routerOutlets.find((router:IAcNgRouterOutlet) => router.id === id);
+  setActive({ id }: { id: string }) {
+    const targetRouter = this.routerOutlets.find((router: IAcNgRouterOutlet) => router.id === id);
     if (!targetRouter || targetRouter.isActive) return;
-    if(this.activeRouterOutlet){
-      this.routers.get(this.activeRouterOutlet.id).visible = false;
+    if (this.activeRouterOutlet) {
       this.activeRouterOutlet.isActive = false;
+      this.activeRouterOutlet.routerComponent.visible = false;
     }
     this.activeRouterOutlet = targetRouter;
     targetRouter.isActive = true;
-    this.routers.get(this.activeRouterOutlet.id).visible = true;
+    this.activeRouterOutlet.routerComponent.visible = true;
     this.onActiveChange.emit(targetRouter);
   }
 
-  remove({id}:{id:string}) {
+  remove({ id }: { id: string }) {
     const removedRouter = this.routerOutlets.find(t => t.id === id);
     if (!removedRouter) return;
     this.router.navigate([{ outlets: { [id]: null } }]);
     this.routerOutlets = this.routerOutlets.filter(t => t.id !== id);
     if (this.activeRouterOutlet?.id === id && this.routerOutlets.length > 0) {
       const last = this.routerOutlets[this.routerOutlets.length - 1];
-      this.setActive({id:last.id});
+      this.setActive({ id: last.id });
     }
     this.onRemove.emit(removedRouter);
   }

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AcContext, AcEnumContextEvent } from "@autocode-ts/autocode";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDraggableApi } from "../../ac-draggable/core/ac-draggable-api";
@@ -5,16 +7,62 @@ import { AcSortable } from "../../ac-draggable/elements/ac-sortable.element";
 import { AcEnumDraggableEvent } from "../../ac-draggable/enums/ac-enum-draggable-event.enum";
 import { IAcDraggableDragDropEvent } from "../../ac-draggable/interfaces/ac-draggable-drag-drop-event.interface";
 
-export interface AcWindowTab {
+export interface IAcWindowTab {
   id: string;
   title: string;
   closeable?: boolean;
   icon?: string;
+  element?:HTMLElement
 }
 
 export class AcWindowTabs extends AcElementBase {
   public static observedAttributes = [];
   private activeId: string | null = null;
+  tabs:AcContext|any = new AcContext({value:{}});
+
+  constructor(){
+    super();
+    this.tabs.on({event:AcEnumContextEvent.Change,callback:()=>{
+      console.log('tabs change');
+      this.renderTabs();
+    }});
+  }
+
+  public addTab({ tab }: { tab: IAcWindowTab }): void {
+    const tabContainer = this.querySelector('.ac-window-tabs-container');
+    if (tabContainer) {
+      const windowTab = {...tab};
+      const tabElement = this.ownerDocument.createElement('div');
+      tabElement.className = `ac-window-tab-item`;
+      tabElement.setAttribute('ac-draggable-lock-x-axis', '');
+      tabElement.setAttribute('ac-draggable-element', '');
+      tabElement.setAttribute('ac-draggable-target', '');
+      tabElement.setAttribute('data-id', tab.id);
+      tabElement.innerHTML = `${tab.icon ? `<div class="ac-window-tab-icon">${tab.icon}</div>` : ''}<div class="ac-window-tab-title">${tab.title}</div>${tab.closeable ? '<div class="ac-window-tab-close">×</div>' : ''}`;
+      tabContainer.appendChild(tabElement);
+      tabElement.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).classList.contains('ac-window-tab-close')) {
+          this.removeTab({ id: tab.id });
+        } else {
+          this.selectTab({ id: tab.id });
+        }
+      });
+      windowTab.element = tabElement;
+      this.tabs[tab.id] = windowTab;
+    }
+  }
+
+  public getTabs(): IAcWindowTab[] {
+    const tabs: IAcWindowTab[] = [];
+    this.querySelectorAll('.ac-window-tab-item').forEach(tab => {
+      const id = tab.getAttribute('data-id')!;
+      const title = tab.childNodes[0].textContent || tab.textContent!.split('×')[0].trim();
+      const closeable = !!tab.querySelector('.ac-window-tab-close');
+      const icon = tab.querySelector('.ac-window-tab-icon')?.textContent || undefined;
+      tabs.push({ id, title, closeable, icon });
+    });
+    return tabs;
+  }
 
   override async init() {
     super.init();
@@ -57,52 +105,18 @@ export class AcWindowTabs extends AcElementBase {
     });
   }
 
-  public addTab({ tab }: { tab: AcWindowTab }): void {
-    const tabContainer = this.querySelector('.ac-window-tabs-container');
-    if (tabContainer) {
-      const tabElement = this.ownerDocument.createElement('div');
-      tabElement.className = `ac-window-tab-item`;
-      tabElement.setAttribute('ac-draggable-lock-x-axis', '');
-      tabElement.setAttribute('ac-draggable-element', '');
-      tabElement.setAttribute('ac-draggable-target', '');
-      tabElement.setAttribute('data-id', tab.id);
-      tabElement.innerHTML = `${tab.icon ? `<div class="ac-window-tab-icon">${tab.icon}</div>` : ''}<div class="ac-window-tab-title">${tab.title}</div>${tab.closeable ? '<div class="ac-window-tab-close">×</div>' : ''}`;
-      tabContainer.appendChild(tabElement);
-      tabElement.addEventListener('click', (e) => {
-        if ((e.target as HTMLElement).classList.contains('ac-window-tab-close')) {
-          this.removeTab({ id: tab.id });
-        } else {
-          this.selectTab({ id: tab.id });
-        }
-      });
-    }
-  }
-
-  public setTabs({ tabs }: { tabs: AcWindowTab[] }): void {
-    const tabContainer = this.querySelector('.ac-window-tabs-container');
-    if (tabContainer) {
-      tabContainer.innerHTML = '';
-      tabs.forEach((tab, index) => {
-        this.addTab({ tab });
-      });
-      this.activeId = tabs[0]?.id || null;
-      if (tabs[0]) {
-        const event = new CustomEvent('activeChange', { detail: { id: tabs[0].id } });
-        this.dispatchEvent(event);
+  public renderTabs(): void {
+    for(const tab of Object.values(this.tabs.toJson()) as IAcWindowTab[]){
+      console.log(tab);
+      const iconElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-icon') as HTMLElement;
+      const titleElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-title') as HTMLElement;
+      if(iconElement && tab.icon){
+        iconElement.innerHTML = tab.icon;
+      }
+      if(titleElement && tab.title){
+        titleElement.innerHTML = tab.title;
       }
     }
-  }
-
-  public getTabs(): AcWindowTab[] {
-    const tabs: AcWindowTab[] = [];
-    this.querySelectorAll('.ac-window-tab-item').forEach(tab => {
-      const id = tab.getAttribute('data-id')!;
-      const title = tab.childNodes[0].textContent || tab.textContent!.split('×')[0].trim();
-      const closeable = !!tab.querySelector('.ac-window-tab-close');
-      const icon = tab.querySelector('.ac-window-tab-icon')?.textContent || undefined;
-      tabs.push({ id, title, closeable, icon });
-    });
-    return tabs;
   }
 
   public removeTab({ id }: { id: string }): void {
@@ -138,8 +152,19 @@ export class AcWindowTabs extends AcElementBase {
 
   }
 
-  public get activeIdGetter(): string | null {
-    return this.activeId;
+  public setTabs({ tabs }: { tabs: IAcWindowTab[] }): void {
+    const tabContainer = this.querySelector('.ac-window-tabs-container');
+    if (tabContainer) {
+      tabContainer.innerHTML = '';
+      tabs.forEach((tab, index) => {
+        this.addTab({ tab });
+      });
+      this.activeId = tabs[0]?.id || null;
+      if (tabs[0]) {
+        const event = new CustomEvent('activeChange', { detail: { id: tabs[0].id } });
+        this.dispatchEvent(event);
+      }
+    }
   }
 }
 

@@ -63,7 +63,7 @@ export class AcContext {
         value: () => {
           const result: any = {};
           for (const key of Object.keys(this.value)) {
-            if (!['__acContextName__', 'on', 'toJson'].includes(key)) {
+            if (!['__acContextName__', 'on','off', 'toJson'].includes(key)) {
               result[key] = value[key];
             }
           }

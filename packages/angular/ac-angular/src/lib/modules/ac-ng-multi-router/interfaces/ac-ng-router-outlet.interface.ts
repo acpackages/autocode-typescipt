@@ -1,4 +1,4 @@
-import { ComponentRef } from "@angular/core";
+import { AcNgRouterComponent } from "../components/_components.export";
 
 export interface IAcNgRouterOutlet {
   id: string;
@@ -6,5 +6,5 @@ export interface IAcNgRouterOutlet {
   isActive: boolean;
   title?:string;
   additionalDetails?:any;
-  componentRef?: ComponentRef<any>;
+  routerComponent?:AcNgRouterComponent
 }
