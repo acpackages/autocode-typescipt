@@ -32,7 +32,7 @@ export default defineConfig(() => ({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/ac-report-engine.ts',
-      name: 'ac-report-engine',
+      name: 'acReportEngine',
       fileName: (format) => {
           if (format === 'es') return 'ac-report-engine.js';
           if (format === 'cjs') return 'ac-report-engine.cjs';
@@ -47,6 +47,12 @@ export default defineConfig(() => ({
         "@autocode-ts/autocode",
         "@autocode-ts/ac-extensions"
       ],
+      output:{
+        globals:{
+          "@autocode-ts/autocode":"autocode",
+          "@autocode-ts/ac-extensions":"acExtensions"
+        }
+      }
     },
   },
 }));

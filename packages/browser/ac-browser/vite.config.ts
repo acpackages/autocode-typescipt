@@ -49,7 +49,7 @@ export default defineConfig(({ command }) => {
       lib: {
         // Could also be a dictionary or array of multiple entry points.
         entry: 'src/ac-browser.ts',
-        name: 'ac-browser',
+        name: 'acBrowser',
         fileName: (format) => {
           if (format === 'es') return 'ac-browser.js';
           if (format === 'cjs') return 'ac-browser.cjs';

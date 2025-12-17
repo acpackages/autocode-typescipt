@@ -32,7 +32,7 @@ export default defineConfig(() => ({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/ac-data-dictionary.ts',
-      name: 'ac-data-dictionary',
+      name: 'acDataDictionary',
       fileName: (format) => {
         if (format === 'es') return 'ac-data-dictionary.js';
         if (format === 'cjs') return 'ac-data-dictionary.cjs';

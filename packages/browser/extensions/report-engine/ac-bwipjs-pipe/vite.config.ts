@@ -34,7 +34,7 @@ export default defineConfig(() => ({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/ac-bwipjs-pipe.ts',
-      name: 'ac-bwipjs-pipe',
+      name: 'acBwipjsPipe',
       fileName: (format) => {
           if (format === 'es') return 'ac-bwipjs-pipe.js';
           if (format === 'cjs') return 'ac-bwipjs-pipe.cjs';
@@ -49,6 +49,12 @@ export default defineConfig(() => ({
         "@autocode-ts/ac-report-engine",
         "bwip-js"
       ],
+      output:{
+        globals:{
+          "@autocode-ts/ac-report-engine":"acReportEngine",
+          "bwip-js":"bwipjs"
+        }
+      }
     },
   },
 }));

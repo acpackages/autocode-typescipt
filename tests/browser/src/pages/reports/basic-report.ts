@@ -1345,7 +1345,7 @@ export class BasicReportPage extends HTMLElement {
     const report: AcReport = new AcReport({ element: this.querySelector('[ac-report]') as HTMLElement });
     report.generate({
       data: this.data
-    })
+    });
     console.log(report);
   }
 
