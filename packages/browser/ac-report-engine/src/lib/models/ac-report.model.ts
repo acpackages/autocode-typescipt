@@ -4,7 +4,8 @@ import { AC_PAGE_SIZES, AcEvents, AcHooks, AcLogger, Autocode, IAcPageSizeDetail
 import { AcReportPage } from "./ac-report-page.model";
 import { AC_REPORT_ATTRIBUTE } from '../consts/ac-report-html-attributes.const';
 import { AcEnumPageOrientation } from '../enums/ac-enum-page-orientations.enum';
-import { AcTemplateProcessor } from '../template-processor/ac-template-processor';
+import { AcTemplateProcessor } from '../core/ac-template-processor';
+import { AcReportEngine } from '../core/ac-report-engine';
 
 export class AcReport {
   reportElClone!: HTMLElement;
@@ -22,6 +23,7 @@ export class AcReport {
   activeLoopElementIds: string[] = [];
 
   constructor({ element }: { element: HTMLElement }) {
+    AcReportEngine.init();
     this.setTempIdsToElement({ element: element });
     this.reportElClone = element.cloneNode(true) as HTMLElement;
     this.element = element;

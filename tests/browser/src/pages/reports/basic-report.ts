@@ -1490,7 +1490,7 @@ export class BasicReportPage extends HTMLElement {
                         <table width="100%">
                             <tr>
                                 <table style="width:100%;">
-                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total</th><th class="text-right py-1" >{{data.record.amount}}</th></tr>
+                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total</th><th class="text-right py-1" >{{data.record.amount | currency:'INR'}}</th></tr>
                                 </table>
                             </tr>
                             <tr>
