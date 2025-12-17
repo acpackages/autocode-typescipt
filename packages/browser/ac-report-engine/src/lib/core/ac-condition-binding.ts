@@ -19,17 +19,16 @@ export class AcConditionBinding {
     this.processor = processor;
     this.page = processor.page;
     this.report = processor.page.report;
-    this.apply();
   }
 
-  apply(): boolean {
+  async apply(): Promise<boolean> {
     return (
-      this.processConditionalChain() ||
-      this.processAcSwitch()
+      await this.processConditionalChain() ||
+      await this.processAcSwitch()
     );
   }
 
-  processConditionalChain(): boolean {
+  async processConditionalChain(): Promise<boolean> {
     if (!this.element.hasAttribute(AC_REPORT_ATTRIBUTE.templateIf) && !this.element.hasAttribute(AC_REPORT_ATTRIBUTE.templateElseIf) && !this.element.hasAttribute(AC_REPORT_ATTRIBUTE.templateElse)) return false;
 
     const siblings = Array.from(this.element.parentElement?.children ?? []);
@@ -62,7 +61,7 @@ export class AcConditionBinding {
 
       if (node.hasAttribute(AC_REPORT_ATTRIBUTE.templateIf)) {
         const expr = node.getAttribute(AC_REPORT_ATTRIBUTE.templateIf)!;
-        if (AcExpression.evaluate({ expression: expr, context: context })) {
+        if (await AcExpression.evaluate({ expression: expr, context: context })) {
           matched = true;
           node.removeAttribute(AC_REPORT_ATTRIBUTE.templateIf);
         } else {
@@ -70,7 +69,7 @@ export class AcConditionBinding {
         }
       } else if (node.hasAttribute(AC_REPORT_ATTRIBUTE.templateElseIf)) {
         const expr = node.getAttribute(AC_REPORT_ATTRIBUTE.templateElseIf)!;
-        if (AcExpression.evaluate({ expression: expr, context: context })) {
+        if (await AcExpression.evaluate({ expression: expr, context: context })) {
           matched = true;
           node.removeAttribute(AC_REPORT_ATTRIBUTE.templateElseIf);
         } else {
@@ -85,18 +84,18 @@ export class AcConditionBinding {
     return true;
   }
 
-  processAcSwitch(): boolean {
+  async processAcSwitch(): Promise<boolean> {
     const switchExpr = this.element.getAttribute(AC_REPORT_ATTRIBUTE.templateSwitch);
     if (!switchExpr) return false;
     const context = this.context.getContextValueObject();
-    const switchValue = AcExpression.evaluate({ expression: switchExpr, context: context });
+    const switchValue = await AcExpression.evaluate({ expression: switchExpr, context: context });
     const parent = this.element.parentElement!;
     let matched = false;
 
     const siblings = Array.from(this.element.children);
     for (const child of siblings) {
       if ((child as HTMLElement).hasAttribute(AC_REPORT_ATTRIBUTE.templateSwitchCase)) {
-        const caseVal = AcExpression.evaluate({ expression: (child as HTMLElement).getAttribute(AC_REPORT_ATTRIBUTE.templateSwitchCase)!, context: context });
+        const caseVal = await AcExpression.evaluate({ expression: (child as HTMLElement).getAttribute(AC_REPORT_ATTRIBUTE.templateSwitchCase)!, context: context });
         if (!matched && caseVal === switchValue) {
           matched = true;
         } else {

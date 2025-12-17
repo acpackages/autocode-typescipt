@@ -20,16 +20,13 @@ export class AcLoopBinding {
     this.processor = processor;
     this.page = processor.page;
     this.report = processor.page.report;
-    this.apply();
   }
 
-  apply(): boolean {
-    return (
-      this.processAcFor()
-    );
+  async apply(): Promise<boolean> {
+    return await this.processAcFor();
   }
 
-  processAcFor(): boolean {
+  async processAcFor(): Promise<boolean> {
     const expr = this.element.getAttribute(AC_REPORT_ATTRIBUTE.templateFor);
     if (expr !== null) {
       let varKey = '';
@@ -73,7 +70,7 @@ export class AcLoopBinding {
       this.element.innerHTML = '';
       const elementId = this.element.getAttribute(AC_REPORT_ATTRIBUTE.tempId)!;
       this.report.activeLoopElementIds.push(elementId)
-      const iteratorData = AcExpression.evaluate({ expression: contextKey, context:  context });
+      const iteratorData = await AcExpression.evaluate({ expression: contextKey, context:  context });
       const iteratorValues = Object.values(iteratorData);
 
       for(let i=0;i<iteratorValues  .length;i++){
@@ -94,7 +91,7 @@ export class AcLoopBinding {
             }
           }
           const processor = new AcTemplateProcessor({context:itemContext,element:childEl,page:this.processor.page});
-          processor.process();
+          await processor.process();
         }
       }
       this.report.activeLoopElementIds = arrayRemove(this.report.activeLoopElementIds,elementId);

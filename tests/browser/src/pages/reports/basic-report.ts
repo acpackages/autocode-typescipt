@@ -1,5 +1,5 @@
 import { AC_REPORT_ATTRIBUTE, AcReport } from '@autocode-ts/ac-report-engine';
-
+import { acInitBwipjsPipe } from '@autocode-ts/ac-bwipjs-pipe';
 export class BasicReportPage extends HTMLElement {
   public static observedAttributes = [];
   data: any = {
@@ -1341,6 +1341,7 @@ export class BasicReportPage extends HTMLElement {
       </div>
     `;
     this.setTemplate01();
+    acInitBwipjsPipe();
     const report: AcReport = new AcReport({ element: this.querySelector('[ac-report]') as HTMLElement });
     report.generate({
       data: this.data
@@ -1498,7 +1499,8 @@ export class BasicReportPage extends HTMLElement {
                                     <table style="width:100%;">
                                         <tr>
                                             <td style="padding:5px 0px;padding-right: 5px;width:110px;">
-                                                <div document-value="document_qrcode" style="height:100px;width:100px;margin-left:5px;"></div>
+                                                <div style="height:100px;width:100px;margin-left:5px;" ac:bind:innerHTML="data.record.document_number | bwipjs:{height:100,width:100}">
+                                                </div>
                                             </td>
                                             <td style="border-left: solid 1px;vertical-align:middle;">
                                                 <table style="width:100%;">

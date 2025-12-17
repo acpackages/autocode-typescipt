@@ -1,83 +1,54 @@
+// ac-expression.ts
 import { AcPipe } from "./ac-pipe";
 import { AcReportEngine } from "./ac-report-engine";
 
 export class AcExpression {
-
-  static evaluate({ expression, context }: { expression: string; context: any }): any {
+  /**
+   * Evaluate an expression with full async pipe support
+   */
+  static async evaluate({
+    expression,
+    context,
+  }: {
+    expression: string;
+    context: any;
+  }): Promise<any> {
     try {
       const trimmed = expression.trim();
+
+      // Fast path: no pipes → just evaluate base expression
       if (!trimmed.includes('|')) {
-        return AcExpression.evaluateBase({expression:trimmed, context});
+        return this.evaluateBase({ expression: trimmed, context });
       }
 
-      const pipeChain = AcExpression.parsePipeChain(trimmed);
-      let value = AcExpression.evaluateBase({expression:pipeChain.base, context});
+      // Parse: base | pipe1:arg1 | pipe2:{opt:val}
+      const pipeChain = this.parsePipeChain(trimmed);
 
+      // Evaluate the base expression (sync)
+      let value: any = this.evaluateBase({ expression: pipeChain.base, context });
+
+      // Process each pipe sequentially
       for (const { name, args } of pipeChain.pipes) {
-        if (name.toLowerCase() === 'async') continue; // skip in sync mode
-
-        const pipe = AcExpression.getPipe(name);
-        console.log(pipe);
+        const pipe = this.getPipe(name);
         if (!pipe) {
           console.warn(`Unknown pipe: ${name}`);
           continue;
         }
 
-        const evaluatedArgs = args.map((arg) =>
-          typeof arg === 'string' && arg.startsWith('{{') && arg.endsWith('}}')
-            ? this.evaluate({ expression: arg.slice(2, -2).trim(), context })
-            : arg
-        );
-
-        value = pipe.transform(value, ...evaluatedArgs);
-      }
-
-      return value ?? '';
-    } catch (ex) {
-      console.error(`Sync expression failed: "${expression}"`, ex);
-      return '';
-    }
-  }
-
-  static async evaluateAsync({ expression, context }: { expression: string; context: any }): Promise<any> {
-    try {
-      const trimmed = expression.trim();
-      if (!trimmed.includes('|')) {
-        // Fast path: no pipes
-        return AcExpression.evaluateBase({expression:trimmed, context});
-      }
-
-      const pipeChain = AcExpression.parsePipeChain(trimmed);
-      let value: any = await AcExpression.evaluateBase({expression:pipeChain.base, context});
-
-      for (const { name, args } of pipeChain.pipes) {
-        const pipe = AcExpression.getPipe(name);
-        if (!pipe) {
-          console.warn(`Unknown pipe: ${name}`);
-          continue;
-        }
-
+        // Evaluate all arguments (support nested {{ }} expressions → recursive async eval)
         const evaluatedArgs = await Promise.all(
-          args.map(async (arg) => {
+          args.map(async (arg: any) => {
             if (typeof arg === 'string' && arg.startsWith('{{') && arg.endsWith('}}')) {
-              return this.evaluate({
-                expression: arg.slice(2, -2).trim(),
-                context,
-              });
+              const innerExpr = arg.slice(2, -2).trim();
+              return await this.evaluate({ expression: innerExpr, context });
             }
             return arg;
           })
         );
 
-        // Handle async pipes
+        // Apply pipe — supports both sync and async transform
         const result = pipe.transform(value, ...evaluatedArgs);
         value = result instanceof Promise ? await result : result;
-      }
-
-      // Final async pipe support (optional: apply at end if needed)
-      // You can also use | async explicitly
-      if (pipeChain.pipes.some(p => p.name.toLowerCase() === 'async')) {
-        value = value instanceof Promise ? await value : value;
       }
 
       return value ?? '';
@@ -87,28 +58,43 @@ export class AcExpression {
     }
   }
 
-  static evaluateBase({expression,context}:{expression: string, context: any}): any {
-    try{
-      return new Function(...Object.keys(context), `return (${expression});`)(...Object.values(context));
+  /**
+   * Evaluate raw base expression using safe Function constructor
+   */
+  private static evaluateBase({
+    expression,
+    context,
+  }: {
+    expression: string;
+    context: any;
+  }): any {
+    if (!expression) return '';
+
+    try {
+      return new Function(...Object.keys(context), `return (${expression});`)(
+        ...Object.values(context)
+      );
+    } catch (ex) {
+      console.error(`Base expression failed: "${expression}"`, ex);
+      return '';
     }
-    catch(ex){
-      console.error(expression,context);
-      console.error(ex);
-      // console.error(expression);
-      // console.error(context);
-      // console.trace();
-    }
-    return '';
   }
 
+  /**
+   * Get pipe from global registry
+   */
   private static getPipe(name: string): AcPipe | undefined {
     const normalized = name.toLowerCase();
-    console.log(`Resolving pipe : ${normalized}`);
-    return AcReportEngine.getPipe({name:normalized});
-    ;
+    return AcReportEngine.getPipe({ name: normalized });
   }
 
-  private static parsePipeChain(expression: string): { base: string; pipes: { name: string; args: any[] }[] } {
+  /**
+   * Robust pipe chain parser
+   * Supports: data | uppercase | bwipqr:{scale:5} | default:'N/A'
+   */
+  private static parsePipeChain(
+    expression: string
+  ): { base: string; pipes: { name: string; args: any[] }[] } {
     const parts: string[] = [];
     let current = '';
     let depth = 0;
@@ -122,7 +108,6 @@ export class AcExpression {
         current += char;
         if (char === quoteChar && expression[i - 1] !== '\\') {
           inString = false;
-          quoteChar = '';
         }
         continue;
       }
@@ -137,31 +122,47 @@ export class AcExpression {
       if (char === '(' || char === '{' || char === '[') depth++;
       if (char === ')' || char === '}' || char === ']') depth--;
 
-      if (char === '|' && depth === 0) {
+      if (char === '|' && depth === 0 && !inString) {
         parts.push(current.trim());
         current = '';
       } else {
         current += char;
       }
     }
+
     if (current.trim()) parts.push(current.trim());
 
-    if (parts.length === 0) return { base: expression, pipes: [] };
+    if (parts.length === 0) {
+      return { base: expression, pipes: [] };
+    }
 
     const base = parts[0];
     const pipes = parts.slice(1).map((part) => {
       const [pipeName, ...argStrs] = part.split(':').map((s) => s.trim());
 
       const args = argStrs.map((arg) => {
-        if ((arg.startsWith("'") && arg.endsWith("'")) || (arg.startsWith('"') && arg.endsWith('"'))) {
+        // String literals
+        if (
+          (arg.startsWith("'") && arg.endsWith("'")) ||
+          (arg.startsWith('"') && arg.endsWith('"'))
+        ) {
           return arg.slice(1, -1);
         }
+
+        // Literals
         if (arg === 'true') return true;
         if (arg === 'false') return false;
         if (arg === 'null') return null;
         if (arg === 'undefined') return undefined;
+
+        // Numbers
         if (!isNaN(Number(arg)) && arg !== '') return Number(arg);
-        if (arg.startsWith('{{') && arg.endsWith('}}')) return arg; // dynamic
+
+        // Nested expressions (will be evaluated async later)
+        if (arg.startsWith('{{') && arg.endsWith('}}')) return arg;
+
+        // Objects/arrays (raw string, will be parsed by pipe if needed)
+        // Or plain identifier
         return arg;
       });
 

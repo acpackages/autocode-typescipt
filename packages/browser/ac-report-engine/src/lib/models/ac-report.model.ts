@@ -118,11 +118,11 @@ export class AcReport {
     this.clearTempIdsFromElement({element:this.element});
   }
 
-  generate({ data }: { data: any }) {
+  async generate({ data }: { data: any }) {
     this.addPage();
     const context = { data: data, report: {}, page: {} };
     const processor = new AcTemplateProcessor({ context: context, element: this.element, page: this.activePage! });
-    processor.process();
+    await processor.process();
     this.finalizePages();
   }
 

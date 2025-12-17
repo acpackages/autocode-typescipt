@@ -1,0 +1,9 @@
+{
+  "name": "ac-bwipjs-pipe",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/browser/extensions/report-engine/ac-bwipjs-pipe/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ac-bwipjs-pipe --web",
+  "targets": {}
+}
