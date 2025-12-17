@@ -31,12 +31,15 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
+      entry: 'src/ac-report-engine.ts',
       name: 'ac-report-engine',
-      fileName: 'index',
-      // Change this to the formats you want to support.
-      // Don't forget to update your package.json as well.
-      formats: ['es' as const, 'cjs' as const, 'umd' as const],
+      fileName: (format) => {
+          if (format === 'es') return 'ac-report-engine.js';
+          if (format === 'cjs') return 'ac-report-engine.cjs';
+          if (format === 'umd') return 'ac-report-engine.umd.js';
+          return 'ac-report-engine.js';
+        },
+        formats: ['es' as const, 'cjs' as const, 'umd' as const],
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.

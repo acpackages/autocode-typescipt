@@ -2,13 +2,15 @@
   "name": "@autocode-ts/ac-report-engine",
   "version": "0.0.1",
   "type": "module",
-  "main": "./index.cjs",
-  "module": "./index.js",
-  "browser": "./index.umd.cjs",
-  "types": "./index.d.ts",
+  "main": "./ac-report-engine.js",
+  "module": "./ac-report-engine.js",
+  "browser": "./ac-report-engine.umd.js",
+  "types": "./ac-report-engine.d.ts",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    ".":{
+    "import": "./ac-report-engine.js",
+    "require": "./ac-report-engine.cjs"
+    }
   },
   "dependencies": {
     "@autocode-ts/autocode": "^0.0.6",

@@ -31,9 +31,14 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
+      entry: 'src/autocode.ts',
       name: 'autocode',
-      fileName: 'index',
+      fileName: (format) => {
+        if (format === 'es') return 'autocode.js';
+        if (format === 'cjs') return 'autocode.cjs';
+        if (format === 'umd') return 'autocode.umd.js';
+        return 'autocode.js';
+      },
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es' as const, 'cjs' as const, 'umd' as const],
@@ -41,17 +46,17 @@ export default defineConfig(() => ({
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: [
-        "crypto-js",
-        "reflect-metadata",
-        "uuid",
-        "axios"
+        // "crypto-js",
+        // "reflect-metadata",
+        // "uuid",
+        // "axios"
       ],
       output: {
         globals: {
-          'axios': 'axios',
-          'crypto-js': 'CryptoJS',
-          'uuid': 'uuid',
-          'reflect-metadata': 'Reflect'
+          // 'axios': 'axios',
+          // 'crypto-js': 'CryptoJS',
+          // 'uuid': 'uuid',
+          // 'reflect-metadata': 'Reflect'
         }
       }
     },

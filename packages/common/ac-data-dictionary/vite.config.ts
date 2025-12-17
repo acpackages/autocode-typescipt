@@ -31,9 +31,14 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
+      entry: 'src/ac-data-dictionary.ts',
       name: 'ac-data-dictionary',
-      fileName: 'index',
+      fileName: (format) => {
+        if (format === 'es') return 'ac-data-dictionary.js';
+        if (format === 'cjs') return 'ac-data-dictionary.cjs';
+        if (format === 'umd') return 'ac-data-dictionary.umd.js';
+        return 'ac-data-dictionary.js';
+      },
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es' as const, 'cjs' as const, 'umd' as const],

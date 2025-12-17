@@ -2,13 +2,12 @@
   "name": "@autocode-ts/autocode",
   "version": "0.0.6",
   "type": "module",
-  "main": "./index.cjs",
-  "module": "./index.js",
-  "browser": "./index.umd.cjs",
-  "types": "./index.d.ts",
+  "main": "./autocode.js",
+  "module": "./autocode.js",
+  "types": "./autocode.d.ts",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    "import": "./autocode.js",
+    "require": "./autocode.cjs"
   },
   "dependencies": {
     "crypto-js": "^4.2.0",

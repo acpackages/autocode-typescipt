@@ -2,13 +2,13 @@
   "name": "@autocode-ts/ac-extensions",
   "version": "0.0.4",
   "type": "module",
-  "main": "./index.cjs",
-  "module": "./index.js",
-  "browser": "./index.umd.cjs",
-  "types": "./index.d.ts",
+  "main": "./ac-extensions.js",
+  "module": "./ac-extensions.js",
+  "browser": "./ac-extensions.umd.cjs",
+  "types": "./ac-extensions.d.ts",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    "import": "./ac-extensions.js",
+    "require": "./ac-extensions.cjs"
   },
   "dependencies": {
     "luxon": "^3.6.1"

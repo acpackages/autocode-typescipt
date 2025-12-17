@@ -3,19 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-browser.js",
+  "module": "./ac-browser.js",
+  "types": "./ac-browser.d.ts",
   "dependencies": {
     "@autocode-ts/autocode": "^0.0.6",
     "@autocode-ts/ac-extensions": "^0.0.4",
     "@autocode-ts/ac-icons": "^0.0.1",
-    "@autocode-ts/ac-template-engine": "^0.0.1",
     "@popperjs/core": "^2.11.8"
   },
   "exports": {
     ".":{
-      "import": "./index.js",
-      "require": "./index.cjs"
+      "import": "./ac-browser.js",
+      "require": "./ac-browser.cjs"
     },
     "./css/ac-vscode-window-tabs.css": {
       "default": "./css/ac-vscode-window-tabs.css"

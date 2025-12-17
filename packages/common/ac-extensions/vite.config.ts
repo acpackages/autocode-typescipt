@@ -31,9 +31,14 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
+      entry: 'src/ac-extensions.ts',
       name: 'ac-extensions',
-      fileName: 'index',
+      fileName: (format) => {
+        if (format === 'es') return 'ac-extensions.js';
+        if (format === 'cjs') return 'ac-extensions.cjs';
+        if (format === 'umd') return 'ac-extensions.umd.js';
+        return 'ac-extensions.js';
+      },
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es' as const, 'cjs' as const, 'umd' as const],
@@ -41,7 +46,7 @@ export default defineConfig(() => ({
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: [
-        "luxon"
+        // "luxon"
       ],
     },
   },

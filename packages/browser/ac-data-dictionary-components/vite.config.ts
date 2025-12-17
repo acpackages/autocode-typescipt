@@ -34,12 +34,15 @@ export default defineConfig(({ command }) => {
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
+      entry: 'src/ac-data-dictionary-components.ts',
       name: 'ac-data-dictionary-components',
-      fileName: 'index',
-      // Change this to the formats you want to support.
-      // Don't forget to update your package.json as well.
-      formats: ['es' as const],
+      fileName: (format) => {
+          if (format === 'es') return 'ac-data-dictionary-components.js';
+          if (format === 'cjs') return 'ac-data-dictionary-components.cjs';
+          if (format === 'umd') return 'ac-data-dictionary-components.umd.js';
+          return 'ac-data-dictionary-components.js';
+        },
+        formats: ['es' as const, 'cjs' as const, 'umd' as const],
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.

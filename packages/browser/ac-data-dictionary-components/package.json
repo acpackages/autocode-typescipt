@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-data-dictionary-components.js",
+  "types": "./ac-data-dictionary-components.d.ts",
   "exports":{
     ".":{
-      "import": "./index.js",
-      "require": "./index.js"
+      "import": "./ac-data-dictionary-components.js",
+      "require": "./ac-data-dictionary-components.cjs"
     }
   },
   "dependencies": {

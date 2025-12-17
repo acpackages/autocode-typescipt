@@ -2,13 +2,13 @@
   "name": "@autocode-ts/ac-bwipjs-pipe",
   "version": "0.0.1",
   "type": "module",
-  "main": "./index.cjs",
-  "module": "./index.js",
-  "browser": "./index.umd.cjs",
-  "types": "./index.d.ts",
+  "main": "./ac-bwipjs-pipe.js",
+  "module": "./ac-bwipjs-pipe.js",
+  "browser": "./ac-bwipjs-pipe.umd.js",
+  "types": "./ac-bwipjs-pipe.d.ts",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    "import": "./ac-bwipjs-pipe.js",
+    "require": "./ac-bwipjs-pipe.cjs"
   },
   "dependencies": {
     "@autocode-ts/ac-report-engine": "^0.0.1",

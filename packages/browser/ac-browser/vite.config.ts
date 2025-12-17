@@ -48,12 +48,15 @@ export default defineConfig(({ command }) => {
       },
       lib: {
         // Could also be a dictionary or array of multiple entry points.
-        entry: 'src/index.ts',
+        entry: 'src/ac-browser.ts',
         name: 'ac-browser',
-        fileName: 'index',
-        // Change this to the formats you want to support.
-        // Don't forget to update your package.json as well.
-        formats: ['es' as const,'cjs' as const],
+        fileName: (format) => {
+          if (format === 'es') return 'ac-browser.js';
+          if (format === 'cjs') return 'ac-browser.cjs';
+          if (format === 'umd') return 'ac-browser.umd.js';
+          return 'ac-browser.js';
+        },
+        formats: ['es' as const, 'cjs' as const, 'umd' as const],
       },
       rollupOptions: {
         // External packages that should not be bundled into your library.
@@ -61,7 +64,6 @@ export default defineConfig(({ command }) => {
           "@autocode-ts/autocode",
           "@autocode-ts/ac-extensions",
           "@autocode-ts/ac-icons",
-          "@autocode-ts/ac-template-engine",
           "@popperjs/core"
         ],
       },

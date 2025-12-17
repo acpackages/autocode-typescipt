@@ -2,13 +2,13 @@
   "name": "@autocode-ts/ac-data-dictionary",
   "version": "0.0.2",
   "type": "module",
-  "main": "./index.cjs",
-  "module": "./index.js",
-  "browser": "./index.umd.cjs",
-  "types": "./index.d.ts",
+  "main": "./ac-data-dictionary.js",
+  "module": "./ac-data-dictionary.js",
+  "browser": "./ac-data-dictionary.umd.cjs",
+  "types": "./ac-data-dictionary.d.ts",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    "import": "./ac-data-dictionary.js",
+    "require": "./ac-data-dictionary.cjs"
   },
   "dependencies": {
     "@autocode-ts/autocode":"0.0.6"
