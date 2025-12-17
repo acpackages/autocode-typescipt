@@ -214,5 +214,8 @@
   },
   "nx": {
     "includedScripts": []
-  }
+  },
+  "workspaces": [
+    "dist/packages/**"
+  ]
 }

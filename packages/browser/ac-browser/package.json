@@ -15,7 +15,7 @@
   "exports": {
     ".":{
       "import": "./index.js",
-      "require": "./index.js"
+      "require": "./index.cjs"
     },
     "./css/ac-vscode-window-tabs.css": {
       "default": "./css/ac-vscode-window-tabs.css"

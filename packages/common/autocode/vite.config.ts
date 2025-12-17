@@ -46,6 +46,14 @@ export default defineConfig(() => ({
         "uuid",
         "axios"
       ],
+      output: {
+        globals: {
+          'axios': 'axios',
+          'crypto-js': 'CryptoJS',
+          'uuid': 'uuid',
+          'reflect-metadata': 'Reflect'
+        }
+      }
     },
   },
 }));
