@@ -4,6 +4,7 @@ import { AC_REPORT_ATTRIBUTE } from "../consts/ac-report-html-attributes.const";
 import { AcReportPage } from "../models/ac-report-page.model";
 import { AcReport } from "../models/ac-report.model";
 import { AcExpression } from "./ac-expression";
+import { AcReportEngine } from "./ac-report-engine";
 import { AcTemplateProcessor } from "./ac-template-processor";
 import { arrayRemove } from "@autocode-ts/ac-extensions";
 
@@ -45,11 +46,11 @@ export class AcLoopBinding {
           contextKey = exprParts[3];
         }
         else {
-          console.error('*acFor expression must start with let and include of : ' + expr);
+          AcReportEngine.logError('*acFor expression must start with let and include of : ' + expr);
         }
       }
       else {
-        console.error('*Invalid acFor expression : ' + expr);
+        AcReportEngine.logError('*Invalid acFor expression : ' + expr);
       }
       if (exprSplit.length > 1) {
         const indexStr = exprSplit[1];
@@ -59,7 +60,7 @@ export class AcLoopBinding {
             indexKey = indexParts[1]
           }
           else {
-            console.error('*acFor index expression must start with let : ' + expr);
+            AcReportEngine.logError('*acFor index expression must start with let : ' + expr);
           }
         }
       }

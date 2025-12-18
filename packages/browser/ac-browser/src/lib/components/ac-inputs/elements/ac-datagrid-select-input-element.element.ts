@@ -309,6 +309,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.selectedRows = rows;
     if(rows.length > 0){
       this.textInputElement.value = rows[0][this.labelKey];
+      this.value = rows[0][this.valueKey];
     }
     else{
       if(this.value){

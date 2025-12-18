@@ -1,6 +1,6 @@
 {
   "name": "@autocode-ts/autocode",
-  "version": "0.0.6",
+  "version": "0.0.1",
   "type": "module",
   "main": "./autocode.js",
   "module": "./autocode.js",

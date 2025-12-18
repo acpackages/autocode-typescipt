@@ -5,6 +5,7 @@
 import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocode-ts/autocode";
 import { AcDDViewColumn } from "./ac-dd-view-column.model";
 import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { stringEqualsIgnoreCase } from "@autocode-ts/ac-extensions";
 
 export class AcDDView {
   static readonly KeyViewName = "viewName";
@@ -57,7 +58,13 @@ export class AcDDView {
   }
 
   getColumn({ columnName }: { columnName: string }): AcDDViewColumn | undefined {
-    return this.viewColumns.find((column) => column.columnName === columnName);
+    console.log(columnName,this.viewColumns.length);
+    const findResult = this.viewColumns.find((column) => {
+      console.log(`${column.columnName} == ${columnName} => ${stringEqualsIgnoreCase(column.columnName.toString().trim(),columnName.toString().trim())}`);
+      return column.columnName == columnName;
+    });
+    console.log(findResult);
+    return findResult;
   }
 
   getColumnNames(): string[] {

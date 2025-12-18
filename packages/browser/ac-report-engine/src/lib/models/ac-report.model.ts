@@ -51,13 +51,11 @@ export class AcReport {
     if (this.pages.length > 0) {
       const lastPageEl = this.pages[this.pages.length - 1].element as HTMLElement;
       const cloneEl = lastPageEl.cloneNode(true) as HTMLElement;
-      console.log(cloneEl);
       const page = new AcReportPage({ element: cloneEl, index: this.pages.length, report: this });
       this.pages.push(page);
       this.activePage = page;
       this.element.append(cloneEl);
       if(this.activeLoopElementIds.length > 0){
-        console.log(this.activeLoopElementIds);
         for(let i=0;i<this.activeLoopElementIds.length ;i++){
           const tempId = this.activeLoopElementIds[i];
           const loopEl = cloneEl.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}=${tempId}]`);

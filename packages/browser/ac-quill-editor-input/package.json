@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-quill-editor-input.js",
+  "types": "./ac-quill-editor-input.d.ts",
   "dependencies": {
     "@autocode-ts/ac-browser": "^0.0.1",
-    "@autocode-ts/ac-extensions": "^0.0.4",
-    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/ac-extensions": "^0.0.1",
+    "@autocode-ts/autocode": "^0.0.1",
     "quill": "^2.0.3"
   }
 }

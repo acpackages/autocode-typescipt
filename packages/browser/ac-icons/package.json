@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-icons.js",
+  "types": "./ac-icons.d.ts",
   "dependencies": {},
   "exports": {
     ".":{
-      "import": "./index.js",
-      "require": "./index.js"
+      "import": "./ac-icons.js",
+      "require": "./ac-icons.js"
     }
   },
   "files": [

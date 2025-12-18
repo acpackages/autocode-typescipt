@@ -48,7 +48,18 @@ export class DataDictionaryComponentsPage extends HTMLElement {
       inputDefinition:{
         inputElement:ProductCategorySelectInput
       }
-    })
+    });
+    const trnsEntiresView = AcDataDictionary.getView({viewName:'act_vw_transaction_entries'});
+    for(const col of trnsEntiresView!.viewColumns){
+      console.log(`${col.columnName} => ${col.getColumnTitle()}`);
+    }
+    console.log(trnsEntiresView);
+
+    const ledgerAccountView = AcDataDictionary.getView({viewName:'act_vw_ledger_accounts'});
+    for(const col of ledgerAccountView!.viewColumns){
+      console.log(`${col.columnName} => ${col.getColumnTitle()}`);
+    }
+    console.log(ledgerAccountView);
     // console.log(AcDataDictionary.dataDictionaries);
     // console.log(AcDDInputFieldElement);
     // console.log(AcDDDatagridElement);

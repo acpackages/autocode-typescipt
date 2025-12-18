@@ -141,6 +141,10 @@ export class InputBasicPage extends HTMLElement {
     this.datagridApi.usePagination = true;
     datagridSelectInput.acContextKey = 'customer_id';
     datagridSelectInput.acContext = this.context;
+    datagridSelectInput.addEventListener('change',()=>{
+      console.log("Datagrid value change");
+      console.dir(datagridSelectInput);
+    })
 
 
     this.columnsCustomizerExtension.showColumnCustomizerPanel = true;

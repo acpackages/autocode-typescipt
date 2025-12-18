@@ -10,10 +10,15 @@ import { AcPipe } from "./ac-pipe";
 export class AcReportEngine {
   private static pipes:Record<string,AcPipe> = {};
   private static isInititalized:boolean = false;
+  static logError:Function = (...args: any[])=>{
+    // console.error(args);
+  }
+  static logWarn:Function = (...args: any[])=>{
+    // console.warn(args);
+  }
 
   static getPipe({name}:{name:string}){
     const normalizedName = name.toLowerCase();
-    console.log(this.pipes);
     return this.pipes[normalizedName];
   }
 
@@ -54,7 +59,7 @@ export class AcReportEngine {
       this.pipes[normalizedName] = pipe;
     }
     else{
-      console.warn(`Pipe already registered : ${normalizedName}`);
+      AcReportEngine.logWarn(`Pipe already registered : ${normalizedName}`);
     }
   }
 }

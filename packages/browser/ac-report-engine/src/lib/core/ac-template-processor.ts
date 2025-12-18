@@ -5,6 +5,7 @@ import { AcConditionBinding } from "./ac-condition-binding";
 import { AcDataBinding } from "./ac-data-binding";
 import { AcExpression } from "./ac-expression";
 import { AcLoopBinding } from "./ac-loop-binding";
+import { AcReportEngine } from "./ac-report-engine";
 
 export class AcTemplateProcessor {
   context: any = {};
@@ -25,7 +26,6 @@ export class AcTemplateProcessor {
 
   async processDataBindings(node: Node) {
     const el = node as HTMLElement;
-    // console.log(el);
     if (node.nodeType === Node.ELEMENT_NODE) {
       const conBinding = new AcConditionBinding({ element: el, context: this.context, processor: this });
       await conBinding.apply();
@@ -62,7 +62,7 @@ export class AcTemplateProcessor {
                 context: this.context,
               });
             } catch (e) {
-              console.error("Expression error:", expression, e);
+              AcReportEngine.logError("Expression error:", expression, e);
               return "";
             }
           })

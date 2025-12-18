@@ -6,9 +6,9 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "dependencies": {
-    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/autocode": "^0.0.1",
     "@autocode-ts/ac-browser": "^0.0.1",
-    "@autocode-ts/ac-extensions": "^0.0.4",
+    "@autocode-ts/ac-extensions": "^0.0.1",
     "@autocode-ts/ac-icons": "^0.0.1",
     "@autocode-ts/runtime-ts": "^0.0.1",
     "@autocode-ts/ac-template-engine": "^0.0.1",

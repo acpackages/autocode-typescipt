@@ -9639,11 +9639,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -10278,11 +10290,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -10545,15 +10569,33 @@ export const dataDictionaryJson = {
         },
         "products_count": {
           "columnName": "products_count",
-          "columnType": "INTEGER"
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Products"
+            }
+          }
         },
         "paid_amount": {
           "columnName": "paid_amount",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Paid"
+            }
+          }
         },
         "chargeable_services_count": {
           "columnName": "chargeable_services_count",
-          "columnType": "INTEGER"
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Services"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -10804,11 +10846,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -11397,11 +11451,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -11807,11 +11873,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -12358,11 +12436,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -13309,11 +13399,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -14145,15 +14247,53 @@ export const dataDictionaryJson = {
         },
         "products_count": {
           "columnName": "products_count",
-          "columnType": "INTEGER"
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Products"
+            }
+          }
         },
         "paid_amount": {
           "columnName": "paid_amount",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Paid"
+            }
+          }
         },
         "chargeable_services_count": {
           "columnName": "chargeable_services_count",
-          "columnType": "INTEGER"
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Services"
+            }
+          }
+        },
+        "received_by": {
+          "columnName": "received_by",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Received By"
+            }
+          }
+        },
+        "sale_invoice_details": {
+          "columnName": "sale_invoice_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -14376,11 +14516,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -14927,11 +15079,23 @@ export const dataDictionaryJson = {
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -15874,11 +16038,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -16256,11 +16432,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -16690,11 +16878,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -17241,11 +17441,23 @@ export const dataDictionaryJson = {
         },
         "currency_code": {
           "columnName": "currency_code",
-          "columnType": "STRING"
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
         },
         "exchange_rate": {
           "columnName": "exchange_rate",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -20679,7 +20891,12 @@ export const dataDictionaryJson = {
         "tax_rate_flags": {
           "columnName": "tax_rate_flags",
           "columnType": "TEXT",
-          "columnProperties": {}
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Rate Flags"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -20921,15 +21138,33 @@ export const dataDictionaryJson = {
         },
         "tax_rate_id": {
           "columnName": "tax_rate_id",
-          "columnType": "UUID"
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Rate"
+            }
+          }
         },
         "taxing_scheme_id": {
           "columnName": "taxing_scheme_id",
-          "columnType": "UUID"
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Scheme"
+            }
+          }
         },
         "tax_rate_percentage": {
           "columnName": "tax_rate_percentage",
-          "columnType": "DOUBLE"
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax%"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -21773,12 +22008,12 @@ export const dataDictionaryJson = {
     "act_vw_chargeable_service_purchase_details": {
       "viewName": "act_vw_chargeable_service_purchase_details",
       "viewColumns": {
-        "uom_name": {
-          "columnName": "uom_name",
+        "chargeable_service_uom_name": {
+          "columnName": "chargeable_service_uom_name",
           "columnType": "STRING",
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "chargeable_service_uom_name"
         },
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
@@ -21851,17 +22086,17 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "chargeable_service_charge_id"
         }
       },
-      "viewQuery": "SELECT act_chargeable_service_uoms.uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_purchase_details.* FROM act_chargeable_service_purchase_details \nLEFT JOIN act_product_uoms ON act_chargeable_service_purchase_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_purchase_details.* FROM act_chargeable_service_purchase_details \nLEFT JOIN act_chargeable_service_uoms ON act_chargeable_service_purchase_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_chargeable_service_sale_details": {
       "viewName": "act_vw_chargeable_service_sale_details",
       "viewColumns": {
-        "uom_name": {
-          "columnName": "uom_name",
+        "chargeable_service_uom_name": {
+          "columnName": "chargeable_service_uom_name",
           "columnType": "STRING",
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "chargeable_service_uom_name"
         },
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
@@ -21934,11 +22169,37 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "chargeable_service_charge_id"
         }
       },
-      "viewQuery": "SELECT act_chargeable_service_uoms.uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_sale_details.* FROM act_chargeable_service_sale_details \nLEFT JOIN act_product_uoms ON act_chargeable_servicesale_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_sale_details.* FROM act_chargeable_service_sale_details \nLEFT JOIN act_product_uoms ON act_chargeable_servicesale_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_chargeable_services": {
       "viewName": "act_vw_chargeable_services",
       "viewColumns": {
+        "chargeable_service_charge": {
+          "columnName": "chargeable_service_charge",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_charge"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_services",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "chargeable_service_image_media": {
+          "columnName": "chargeable_service_image_media",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "json_object"
+        },
         "chargeable_service_category_name": {
           "columnName": "chargeable_service_category_name",
           "columnType": "TEXT",
@@ -21952,13 +22213,6 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_chargeable_services",
           "columnSourceOriginalColumn": "accountee_id"
-        },
-        "chargeable_service_charge": {
-          "columnName": "chargeable_service_charge",
-          "columnType": "DOUBLE",
-          "columnSource": "table",
-          "columnSourceName": "act_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_charge"
         },
         "chargeable_service_code": {
           "columnName": "chargeable_service_code",
@@ -22002,13 +22256,6 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_quick_description"
         },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_chargeable_services",
-          "columnSourceOriginalColumn": "currency_code"
-        },
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
@@ -22043,18 +22290,6 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_category_id"
-        },
-        "chargeable_service_image_media": {
-          "columnName": "chargeable_service_image_media",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Image"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "json_object"
         }
       },
       "viewQuery": "SELECT act_chargeable_service_categories.chargeable_service_category_name,\njson_object('media_path', media_path,'media_details', media_details) AS chargeable_service_image_media,\nact_chargeable_services.* FROM act_chargeable_services LEFT JOIN act_chargeable_service_categories ON act_chargeable_services.chargeable_service_category_id = act_chargeable_service_categories.chargeable_service_category_id\nLEFT JOIN act_medias ON act_chargeable_services.chargeable_service_image_media_id = act_medias.media_id"
@@ -22683,7 +22918,12 @@ export const dataDictionaryJson = {
         "party_image_media ": {
           "columnName": "party_image_media ",
           "columnType": "JSON",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
           "columnSource": "function",
           "columnSourceName": "json_object"
         },
@@ -23947,7 +24187,7 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         },
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
@@ -24051,10 +24291,10 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         }
       },
-      "viewQuery": "SELECT act_product_uoms.uom_name AS purchase_uom_name, order_uoms.uom_name AS minimum_order_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_product_uoms.product_uom_name AS purchase_uom_name, order_uoms.uom_name AS minimum_order_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_product_sale_details": {
       "viewName": "act_vw_product_sale_details",
@@ -24070,7 +24310,7 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         },
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
@@ -24150,7 +24390,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "is_active"
         }
       },
-      "viewQuery": "SELECT act_product_uoms.uom_name AS sale_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_sale_details.* FROM act_product_sale_details\nLEFT JOIN act_product_uoms ON act_product_sale_details.sale_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_product_uoms.product_uom_name AS sale_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_sale_details.* FROM act_product_sale_details\nLEFT JOIN act_product_uoms ON act_product_sale_details.sale_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_product_stock_details": {
       "viewName": "act_vw_product_stock_details",
@@ -24166,7 +24406,7 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "ptroduct_uom_name"
         },
         "product_stock_detail_id": {
           "columnName": "product_stock_detail_id",
@@ -24263,7 +24503,7 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         },
         "maximum_stock_uom_name": {
           "columnName": "maximum_stock_uom_name",
@@ -24276,7 +24516,7 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         },
         "reorder_level_uom_name": {
           "columnName": "reorder_level_uom_name",
@@ -24289,10 +24529,10 @@ export const dataDictionaryJson = {
           },
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         }
       },
-      "viewQuery": "SELECT act_product_uoms.uom_name AS stock_uom_name, \nmin_uoms.uom_name AS minimum_stock_uom_name,\nmax_uoms.uom_name AS maximum_stock_uom_name,\nreorder_uoms.uom_name AS reorder_level_uom_name,\nact_product_stock_details.* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
+      "viewQuery": "SELECT act_product_uoms.product_uom_name AS stock_uom_name, \nmin_uoms.product_uom_name AS minimum_stock_uom_name,\nmax_uoms.product_uom_name AS maximum_stock_uom_name,\nreorder_uoms.uom_name AS reorder_level_uom_name,\nact_product_stock_details.* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
     },
     "act_vw_products": {
       "viewName": "act_vw_products",
@@ -24959,44 +25199,74 @@ export const dataDictionaryJson = {
         "gross_amount": {
           "columnName": "gross_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Amount"
+            }
+          },
           "columnSource": "function",
-          "columnSourceOriginalColumn": "Gross Amount"
+          "columnSourceOriginalColumn": ""
         },
         "discount_trade_amount": {
           "columnName": "discount_trade_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "TD Amount"
+            }
+          },
           "columnSource": "function",
-          "columnSourceOriginalColumn": "TD Amount"
+          "columnSourceOriginalColumn": ""
         },
         "discount_cash_amount": {
           "columnName": "discount_cash_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "CD Amount"
+            }
+          },
           "columnSource": "function",
-          "columnSourceOriginalColumn": "CD Amount"
+          "columnSourceOriginalColumn": ""
         },
         "discount_rebate_amount": {
           "columnName": "discount_rebate_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rebate Amount"
+            }
+          },
           "columnSource": "function",
-          "columnSourceOriginalColumn": "Rebate Amount"
+          "columnSourceOriginalColumn": ""
         },
         "taxable_amount": {
           "columnName": "taxable_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
           "columnSource": "function",
-          "columnSourceOriginalColumn": "Taxable Amount"
+          "columnSourceOriginalColumn": ""
         },
         "tax_amount": {
           "columnName": "tax_amount",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
           "columnSource": "function",
-          "columnSourceOriginalColumn": "Tax Amount"
+          "columnSourceOriginalColumn": ""
         }
       },
       "viewQuery": "SELECT (COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_purchase_invoice_products.* FROM act_purchase_invoice_products \nLEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_purchase_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_purchase_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_purchase_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
@@ -26148,6 +26418,167 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT * FROM act_sale_quotations"
     },
+    "act_vw_stock": {
+      "viewName": "act_vw_stock",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        }
+      },
+      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id FROM act_vw_inventory_tracking_entries GROUP BY product_id"
+    },
+    "act_vw_stock_at_location": {
+      "viewName": "act_vw_stock_at_location",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        }
+      },
+      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,location_id"
+    },
+    "act_vw_stock_at_storage_location": {
+      "viewName": "act_vw_stock_at_storage_location",
+      "viewColumns": {
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM"
+        }
+      },
+      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,storage_location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,storage_location_id"
+    },
     "act_vw_storage_locations": {
       "viewName": "act_vw_storage_locations",
       "viewColumns": {
@@ -26490,6 +26921,12 @@ export const dataDictionaryJson = {
         "transaction_entries_count": {
           "columnName": "transaction_entries_count",
           "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Entries"
+            }
+          },
           "columnSource": "function",
           "columnSourceName": "count"
         }
@@ -26528,6 +26965,12 @@ export const dataDictionaryJson = {
         "entries_count": {
           "columnName": "entries_count",
           "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Entries"
+            }
+          },
           "columnSource": "function",
           "columnSourceName": "count"
         }
@@ -26631,6 +27074,12 @@ export const dataDictionaryJson = {
         "debit_ledger_account_name": {
           "columnName": "debit_ledger_account_name",
           "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Debit Ledger Account"
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_name "
@@ -26659,6 +27108,12 @@ export const dataDictionaryJson = {
         "credit_ledger_account_name": {
           "columnName": "credit_ledger_account_name",
           "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Credit Ledger Account"
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_name "
@@ -26682,7 +27137,7 @@ export const dataDictionaryJson = {
           "columnType": "STRING",
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
-          "columnSourceOriginalColumn": "reflecting_statement "
+          "columnSourceOriginalColumn": "reflecting_statement"
         },
         "accountee_id": {
           "columnName": "accountee_id",
@@ -26748,167 +27203,6 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT * FROM act_users"
-    },
-    "act_vw_stock": {
-      "viewName": "act_vw_stock",
-      "viewColumns": {
-        "product_id": {
-          "columnName": "product_id",
-          "columnType": "UUID",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "product_id"
-        },
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total Out"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        },
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total In"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        }
-      },
-      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id FROM act_vw_inventory_tracking_entries GROUP BY product_id"
-    },
-    "act_vw_stock_at_location": {
-      "viewName": "act_vw_stock_at_location",
-      "viewColumns": {
-        "product_id": {
-          "columnName": "product_id",
-          "columnType": "UUID",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "product_id"
-        },
-        "location_id": {
-          "columnName": "location_id",
-          "columnType": "UUID",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "location_id"
-        },
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total In"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        },
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total Out"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        }
-      },
-      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,location_id"
-    },
-    "act_vw_stock_at_storage_location": {
-      "viewName": "act_vw_stock_at_storage_location",
-      "viewColumns": {
-        "product_id": {
-          "columnName": "product_id",
-          "columnType": "UUID",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "product_id"
-        },
-        "storage_location_id": {
-          "columnName": "storage_location_id",
-          "columnType": "UUID",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "storage_location_id"
-        },
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total In"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        },
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total Out"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM"
-        }
-      },
-      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,storage_location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,storage_location_id"
     }
   },
   "relationships": [

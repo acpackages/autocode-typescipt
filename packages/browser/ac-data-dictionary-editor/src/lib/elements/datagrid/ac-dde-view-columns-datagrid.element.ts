@@ -78,7 +78,7 @@ export class AcDDEViewColumnsDatagrid {
     });
     this.datagridApi.on({
       event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: IAcDatagridCellEvent) => {
-        this.editorApi.dataStorage.setTableColumnProperties(args.datagridCell.datagridRow.data);
+        this.editorApi.dataStorage.setViewColumnProperties(args.datagridCell.datagridRow.data);
       }
     });
 

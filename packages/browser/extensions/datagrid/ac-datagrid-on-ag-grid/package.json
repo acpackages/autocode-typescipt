@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-datagrid-on-ag-grid.js",
+  "types": "./ac-datagrid-on-ag-grid.d.ts",
   "dependencies": {
-    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/autocode": "^0.0.1",
     "@autocode-ts/ac-browser": "^0.0.1",
-    "@autocode-ts/ac-extensions": "^0.0.4",
+    "@autocode-ts/ac-extensions": "^0.0.1",
     "ag-charts-community": "^11.3.2",
     "ag-charts-types": "^11.3.2",
     "ag-grid-community": "^34.0.1",
@@ -16,8 +16,8 @@
   },
   "exports": {
     ".":{
-      "import": "./index.js",
-      "require": "./index.js"
+      "import": "./ac-datagrid-on-ag-grid.js",
+      "require": "./ac-datagrid-on-ag-grid.js"
     },
     "./css/ac-datagrid-on-ag-grid.css": {
       "default": "./css/ac-datagrid-on-ag-grid.css"

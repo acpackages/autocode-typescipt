@@ -6,8 +6,8 @@
     "@angular/core": "~20.0.4"
   },
   "dependencies": {
-    "@autocode-ts/autocode": "^0.0.2",
-    "@autocode-ts/ac-extensions": "^0.0.2",
+    "@autocode-ts/autocode": "^0.0.1",
+    "@autocode-ts/ac-extensions": "^0.0.1",
     "tslib": "^2.3.0",
     "typescript": "~5.7.2"
   },

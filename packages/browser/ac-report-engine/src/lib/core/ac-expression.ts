@@ -31,7 +31,7 @@ export class AcExpression {
       for (const { name, args } of pipeChain.pipes) {
         const pipe = this.getPipe(name);
         if (!pipe) {
-          console.warn(`Unknown pipe: ${name}`);
+          AcReportEngine.logWarn(`Unknown pipe: ${name}`);
           continue;
         }
 
@@ -53,7 +53,7 @@ export class AcExpression {
 
       return value ?? '';
     } catch (ex) {
-      console.error(`Expression evaluation failed: "${expression}"`, ex);
+      AcReportEngine.logError(`Expression evaluation failed: "${expression}"`, ex);
       return '';
     }
   }
@@ -75,7 +75,7 @@ export class AcExpression {
         ...Object.values(context)
       );
     } catch (ex) {
-      console.error(`Base expression failed: "${expression}"`, ex);
+      AcReportEngine.logError(`Base expression failed: "${expression}"`, ex);
       return '';
     }
   }

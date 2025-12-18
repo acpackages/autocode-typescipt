@@ -32,9 +32,9 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
-      name: 'ac-quill-editor-input',
-      fileName: 'index',
+      entry: 'src/ac-quill-editor-input.ts',
+      name: 'acQuillEditorInput',
+      fileName: 'ac-quill-editor-input',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es' as const],

@@ -276,7 +276,9 @@ export class AcDataDictionary {
   }): AcDDViewColumn | null {
     const acDataDictionary = this.getInstance({ dataDictionaryName });
     if (viewName in acDataDictionary.views) {
+      console.log(viewName);
       const view = AcDDView.instanceFromJson({ jsonData: acDataDictionary.views[viewName] });
+      console.log(view);
       return view.getColumn({columnName})!;
     }
     return null;

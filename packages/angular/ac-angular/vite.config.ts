@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: path.resolve(__dirname, 'src/ac-angular.ts'),
       name: 'AcAngular',
       fileName: 'ac-angular',
       formats: ['es'],

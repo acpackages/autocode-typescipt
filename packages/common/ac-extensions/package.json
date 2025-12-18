@@ -1,6 +1,6 @@
 {
   "name": "@autocode-ts/ac-extensions",
-  "version": "0.0.4",
+  "version": "0.0.1",
   "type": "module",
   "main": "./ac-extensions.js",
   "module": "./ac-extensions.js",

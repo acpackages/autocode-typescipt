@@ -37,9 +37,9 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
-      name: 'ac-datagrid-on-ag-grid',
-      fileName: 'index',
+      entry: 'src/ac-datagrid-on-ag-grid.ts',
+      name: 'acDatagridOnAgGrid',
+      fileName: 'ac-datagrid-on-ag-grid',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
       formats: ['es' as const],

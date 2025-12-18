@@ -7,8 +7,8 @@
   "types": "./src/index.d.ts",
   "dependencies": {
     "tslib": "^2.3.0",
-    "@autocode-ts/autocode":"0.0.5",
-    "@autocode-ts/ac-data-dictionary":"0.0.2"
+    "@autocode-ts/autocode":"0.0.1",
+    "@autocode-ts/ac-data-dictionary":"0.0.1"
   },
   "publishConfig": {
     "access": "public"

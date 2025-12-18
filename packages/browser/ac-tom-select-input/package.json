@@ -7,8 +7,8 @@
   "types": "./index.d.ts",
   "dependencies": {
     "@autocode-ts/ac-browser": "^0.0.1",
-    "@autocode-ts/ac-extensions": "^0.0.4",
-    "@autocode-ts/autocode": "^0.0.6",
+    "@autocode-ts/ac-extensions": "^0.0.1",
+    "@autocode-ts/autocode": "^0.0.1",
     "tom-select": "^2.4.3"
   }
 }

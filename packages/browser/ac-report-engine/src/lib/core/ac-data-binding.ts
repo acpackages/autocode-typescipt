@@ -2,6 +2,7 @@
 import { stringToCamelCase } from "@autocode-ts/ac-extensions";
 import { AC_REPORT_ATTRIBUTE } from "../consts/ac-report-html-attributes.const";
 import { AcExpression } from "./ac-expression";
+import { AcReportEngine } from "./ac-report-engine";
 
 export class AcDataBinding {
   element!: HTMLElement;
@@ -33,7 +34,7 @@ export class AcDataBinding {
           }
           attrToRemove.push(attr.name);
         } catch (e) {
-          console.warn(`Failed to bind '${attrName}' with expression "${expr}":`, e);
+          AcReportEngine.logError(`Failed to bind '${attrName}' with expression "${expr}":`, e);
         }
       }
       else if (attr.name.toLowerCase().startsWith(AC_REPORT_ATTRIBUTE.templateClass)) {
