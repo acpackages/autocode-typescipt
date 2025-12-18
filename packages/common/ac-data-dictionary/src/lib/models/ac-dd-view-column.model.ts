@@ -38,7 +38,6 @@ export class AcDDViewColumn {
   columnSourceOriginalColumn: string = "";
 
   static getInstance({ viewName, columnName, dataDictionaryName = "default" }: { viewName: string; columnName: string; dataDictionaryName?: string }): AcDDViewColumn {
-    console.log(AcDataDictionary.getViewColumn({ viewName, columnName, dataDictionaryName }));
     return AcDataDictionary.getViewColumn({ viewName, columnName, dataDictionaryName })!;
   }
 
@@ -79,9 +78,7 @@ export class AcDDViewColumn {
     }
     else if(this.columnSource == 'view'){
       if(this.columnSourceName && this.columnSourceOriginalColumn){
-        // console.log(this.columnSourceName,this.columnSourceOriginalColumn);
         const ddViewColumn = AcDDViewColumn.getInstance({viewName:this.columnSourceName,columnName:this.columnSourceOriginalColumn});
-        console.log(ddViewColumn);
         if(ddViewColumn){
           return ddViewColumn.getColumnTitle();
         }
