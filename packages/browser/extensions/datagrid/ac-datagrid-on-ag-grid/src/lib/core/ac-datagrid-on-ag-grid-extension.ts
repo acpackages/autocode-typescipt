@@ -21,13 +21,15 @@ import { AcDatagridOnAgGridCellRenderer } from '../elements/ac-datagrid-on-ag-gr
 import { AcDatagridOnAgGridCellEditor } from '../elements/ac-datagrid-on-ag-grid-cell-editor.element';
 import { IAcDatagriOnAgGridDataChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-data-set-hook-args.interface';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
-ModuleRegistry.registerModules([
-  AllCommunityModule,
-  AllEnterpriseModule,
-  ClientSideRowModelModule,
-  ServerSideRowModelModule
-]);
 
+export function initAgGrid() {
+  ModuleRegistry.registerModules([
+    AllCommunityModule,
+    AllEnterpriseModule,
+    ClientSideRowModelModule,
+    ServerSideRowModelModule
+  ]);
+}
 
 export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   agGridElement = document.createElement('div');
@@ -97,10 +99,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   logger: AcLogger = new AcLogger({ logMessages: false });
   searchInputContainer?: HTMLElement;
   addButtonContainer?: HTMLElement;
-  columnsCustomizerButtonContainer?:HTMLElement;
-  isColumnsCustomizerOpen:boolean = false;
-  leftFooterContainer?:HTMLElement;
-  rightFooterContainer?:HTMLElement;
+  columnsCustomizerButtonContainer?: HTMLElement;
+  isColumnsCustomizerOpen: boolean = false;
+  leftFooterContainer?: HTMLElement;
+  rightFooterContainer?: HTMLElement;
 
   constructor() {
     super();
@@ -231,7 +233,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       datagridCell = this.datagridApi.getCell({ column: datagridColumn, row: datagridRow });
     }
     else {
-      console.warn("Not found row for event : ", event, this);
+      // console.warn("Not found row for event : ", event, this);
     }
     return datagridCell;
   }
@@ -263,7 +265,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       datagridRow = this.datagridApi.getRow({ index: event.rowIndex })!;
     }
     else {
-      console.warn("get row from event, no valid parameter found in event");
+      // console.warn("get row from event, no valid parameter found in event",event);
     }
     return datagridRow;
   }
@@ -492,7 +494,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   private handleRowAdd(args: any) {
-    const data: any = args.dataRow.data;
+    const data: any = args.datagridRow.data;
     if (this.isClientSideData) {
       const hookArgs: IAcDatagriOnAgGridRowAddHookArgs = {
         data: data
@@ -507,7 +509,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       const rowIndex = this.gridApi.getDisplayedRowCount() - 1;
       const rowNode: any = this.gridApi.getDisplayedRowAtIndex(rowIndex);
       this.gridApi.refreshCells({ rowNodes: [rowNode], force: true });
-      this.gridApi.redrawRows();
       if (args.highlightCells) {
         this.gridApi.flashCells({
           rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
@@ -521,10 +522,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   private handleRowDelete(args: any) {
     if (this.isClientSideData) {
-      this.gridApi.applyTransaction({ remove: [args.dataRow.data] });
+      this.gridApi.applyTransaction({ remove: [args.datagridRow.data] });
     }
     else {
-      this.gridApi.applyServerSideTransaction({ remove: [args.dataRow.data] });
+      this.gridApi.applyServerSideTransaction({ remove: [args.datagridRow.data] });
     }
   }
 
@@ -593,26 +594,26 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
     this.columnsCustomizerButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.columnsCustomizerButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-columns-customizer"><ac-svg-icon>${ACI_SVG_SOLID.gear}</ac-svg-icon></button>`;
-    (this.columnsCustomizerButtonContainer.querySelector('button') as HTMLElement).addEventListener('click',(event:any)=>{
+    (this.columnsCustomizerButtonContainer.querySelector('button') as HTMLElement).addEventListener('click', (event: any) => {
       this.isColumnsCustomizerOpen = !this.isColumnsCustomizerOpen;
-      if(this.isColumnsCustomizerOpen){
+      if (this.isColumnsCustomizerOpen) {
         this.gridApi.openToolPanel('columns');
       }
-      else{
+      else {
         this.gridApi.closeToolPanel();
       }
     });
 
     this.addButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.addButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-add">+ Add</button>`;
-    (this.addButtonContainer.querySelector('button') as HTMLElement).addEventListener('click',(event:any)=>{
-      this.datagridApi.dataManager.addData({});
+    (this.addButtonContainer.querySelector('button') as HTMLElement).addEventListener('click', (event: any) => {
+      this.datagridApi.dataManager.addData();
     });
 
     this.searchInputContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.searchInputContainer.innerHTML = `<input type="text" class="input-ac-datagrid-search" placeholder="Search..."/>`;
-    const searchInput:HTMLInputElement = this.searchInputContainer.querySelector('input') as HTMLInputElement;
-    searchInput.addEventListener('input',(event:any)=>{
+    const searchInput: HTMLInputElement = this.searchInputContainer.querySelector('input') as HTMLInputElement;
+    searchInput.addEventListener('input', (event: any) => {
       this.datagridApi.dataManager.searchQuery = searchInput.value;
     });
 
@@ -643,9 +644,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       (this.gridApi as any) = null;
     }
     this.agGridElement.innerHTML = "";
+    this.registerModules();
     this.gridApi = createGrid(this.agGridElement, this.gridOptions);
     const pagingPanel = this.agGridElement.querySelector('.ag-paging-panel') as HTMLElement;
-    if(pagingPanel){
+    if (pagingPanel) {
       this.leftFooterContainer!.innerHTML = '';
       this.leftFooterContainer?.appendChild(pagingPanel.querySelector('.ag-paging-page-summary-panel')!);
       this.leftFooterContainer?.appendChild(pagingPanel.querySelector('.ag-paging-row-summary-panel')!);
@@ -678,7 +680,12 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   private registerModules() {
-    ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
+    //     ModuleRegistry.registerModules([
+    //   AllCommunityModule,
+    //   AllEnterpriseModule,
+    //   ClientSideRowModelModule,
+    //   ServerSideRowModelModule
+    // ]);
   }
 
   setAddButtonDisplay() {

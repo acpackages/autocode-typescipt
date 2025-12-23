@@ -293,6 +293,18 @@ export class AcDatagridApi {
     this.events = datagrid.events;
     this.dataManager.events = this.events;
     this.dataManager.hooks = this.hooks;
+    this.events.on({event:'beforeexecute',callback:({event,args}:{event:string,args:any})=>{
+      if(args['dataRow'] != undefined){
+        args['datagridRow'] = args['dataRow'];
+      }
+      args['datagridApi'] = this;
+    }});
+    this.hooks.on({event:'beforeexecute',callback:({hook,args}:{hook:string,args:any})=>{
+      if(args['dataRow'] != undefined){
+        args['datagridRow'] = args['dataRow'];
+      }
+      args['datagridApi'] = this;
+    }});
     this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.DataFoundForFirstTime, callback: (args: IAcDataManagerDataEvent) => {
         const data: any = args.data;
@@ -355,24 +367,6 @@ export class AcDatagridApi {
       }
     });
     this.dataManager.on({
-      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args:any) => {
-        args['datagridRow'] = args.dataRow;
-        args['datagridApi'] = this;
-      }
-    });
-    this.dataManager.on({
-      event: AC_DATA_MANAGER_EVENT.RowUpdate, callback: (args:any) => {
-        args['datagridRow'] = args.dataRow;
-        args['datagridApi'] = this;
-      }
-    });
-    this.dataManager.on({
-      event: AC_DATA_MANAGER_EVENT.RowDelete, callback: (args:any) => {
-        args['datagridRow'] = args.dataRow;
-        args['datagridApi'] = this;
-      }
-    });
-    this.dataManager.on({
       event: AC_DATA_MANAGER_EVENT.DataRowInstanceCreate, callback: ({ dataRow }: { dataRow: IAcDatagridRow }) => {
         // dataRow.datagridApi = this;
         // this.logger.log('Assigned datagridApi to dataRow', { rowId: dataRow.rowId });
@@ -400,19 +394,19 @@ export class AcDatagridApi {
     };
     this.hooks.execute({ hook: AC_DATAGRID_HOOK.DatagridRowCreate, args: hookArgs });
     this.logger.log('Executed DatagridRowCreate hook');
-    const addHookArgs: IAcDatagridRowAddHookArgs = {
-      datagridApi: this,
-      datagridRow: datagridRow,
-      append: append,
-      highlightCells: highlightCells
-    }
-    this.hooks.execute({ hook: AC_DATAGRID_HOOK.RowAdd, args: addHookArgs });
-    this.logger.log('Executed RowAdd hook');
-    const eventArgs: IAcDatagridRowEvent = {
-      datagridApi: this,
-      datagridRow: datagridRow
-    };
-    this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: eventArgs });
+    // const addHookArgs: IAcDatagridRowAddHookArgs = {
+    //   datagridApi: this,
+    //   datagridRow: datagridRow,
+    //   append: append,
+    //   highlightCells: highlightCells
+    // }
+    // this.hooks.execute({ hook: AC_DATAGRID_HOOK.RowAdd, args: addHookArgs });
+    // this.logger.log('Executed RowAdd hook');
+    // const eventArgs: IAcDatagridRowEvent = {
+    //   datagridApi: this,
+    //   datagridRow: datagridRow
+    // };
+    // this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: eventArgs });
     this.logger.log('Executed RowAdd event');
   }
 

@@ -192,7 +192,7 @@ export class AcDataManager {
   // constructor() {}
 
   addData({ data = {} }: { data?: any } = {}): IAcDataRow {
-    const index: number = this.allRows.length - 1;
+    const index: number = this.allRows.length;
     const beforeArgs:any = {
       dataManager: this,
       data: data,
@@ -215,12 +215,12 @@ export class AcDataManager {
       dataManager: this,
       dataRow: dataRow,
     };
-    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
-    this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
     this.allRows.push(dataRow);
     this.rows.push(dataRow);
     this.totalRows++;
     this.displayedRows.push(dataRow);
+    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
     this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowAdd, args: { dataRow: dataRow, data: data } });
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: { dataRow: dataRow, data: data } });
     return dataRow;
@@ -743,9 +743,8 @@ export class AcDataManager {
         oldData: this.data
       }
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeDataChange, args: hookArgs });
-      this.logger.log("BeforeDataChange hook executed");
       let index = 0;
-      this.allRows = [];
+      const allRows = [];
       for (const row of data) {
         const dataRow: IAcDataRow = {
           rowId: Autocode.uuid(),
@@ -756,7 +755,7 @@ export class AcDataManager {
         if (this.assignUniqueIdToData) {
           dataRow.data[this.uniqueIdKey] = dataRow.rowId;
         }
-        this.allRows.push(dataRow);
+        allRows.push(dataRow);
         const hookArgs: IAcDataManagerRowHookArgs = {
           dataManager: this,
           dataRow: dataRow,
@@ -765,6 +764,7 @@ export class AcDataManager {
         this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
         index++;
       }
+      this.allRows = allRows;
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
       this.logger.log("DataChange hook executed, all data available");
       this.allDataAvailable = true;

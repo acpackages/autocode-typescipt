@@ -47,6 +47,7 @@ import { AcDataManagerTestPage } from './pages/utils/ac-data-maganer.tests';
 import { FilePreviewTestPage } from './pages/inputs/file-preview-tests.page';
 import { AcDataCacheTestPage } from './pages/utils/ac-data-cache.tests';
 import { BasicReportPage } from './pages/reports/basic-report';
+import { initAgGrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 
 // AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 // AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -70,6 +71,8 @@ AcTabsCssClassName.acTabPane += ' ';
 AcTabsCssClassName.acTabPane += ' show active';
 
 AcSqliteDao.wasmUrl = './assets/vendor/sql.js/sql-wasm.wasm';
+
+initAgGrid();
 
 window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRoute({ label: 'Dashboard', path: '/', componentTag: 'dashboard-page', component: DashboardPage });

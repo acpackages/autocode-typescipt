@@ -3,11 +3,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
 import { AcHookExecutionResult } from "../models/ac-hook-execution-result.model";
+import { AcEvents } from "./ac-events";
 import { Autocode } from "./autocode";
 
 export class AcHooks {
   // Map<lowercaseHookName, Map<subscriptionId, callback>>
   private hooks = new Map<string, Map<string, Function>>();
+  private internalEvents = new Map<string, Map<string, Function>>();
 
   // Global ("all hooks") listeners: subscriptionId → callback
   private allHookCallbacks = new Map<string, Function>();
@@ -28,8 +30,18 @@ export class AcHooks {
     const name = hook.toLowerCase();
     const functionResults: Record<string, any> = {};
     let continueOperation = true;
-
     try {
+      const beforeListeners = this.internalEvents.get("beforeexecute");
+      if (beforeListeners) {
+        for (const callback of beforeListeners.values()) {
+          try {
+            callback({ hook: name, args });
+          } catch (ex: any) {
+            console.error(`beforeExecute internal handler failed:`, ex);
+          }
+        }
+      }
+
       // Execute specific hook listeners
       const hookListeners = this.hooks.get(name);
       if (hookListeners) {
@@ -93,6 +105,68 @@ export class AcHooks {
     (args as any) = null;
     return result;
   }
+
+  /**
+   * Subscribe to an internal event (e.g., "beforeexecute")
+   * @returns subscriptionId
+   */
+  on({ event, callback }: { event: string; callback: Function }): string {
+    const name = event.toLowerCase();
+    let eventMap = this.internalEvents.get(name);
+    if (!eventMap) {
+      eventMap = new Map<string, Function>();
+      this.internalEvents.set(name, eventMap);
+    }
+
+    const subscriptionId = Autocode.uniqueId();
+    eventMap.set(subscriptionId, callback);
+    return subscriptionId;
+  }
+
+  /**
+   * Unsubscribe from an internal event
+   * @returns true if something was removed
+   */
+  off({
+    event,
+    callback,
+    subscriptionId,
+  }: {
+    event?: string;
+    callback?: Function;
+    subscriptionId?: string;
+  }): boolean {
+    if (!subscriptionId && !event) return false;
+
+    if (subscriptionId) {
+      // Fast path: remove by ID from all internal events
+      for (const map of this.internalEvents.values()) {
+        if (map.delete(subscriptionId)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // Slower path: find by event + callback
+    if (event) {
+      const name = event.toLowerCase();
+      const map = this.internalEvents.get(name);
+      if (!map) return false;
+
+      if (callback) {
+        for (const [id, cb] of map.entries()) {
+          if (cb === callback) {
+            map.delete(id);
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
 
   /**
    * Subscribe to a specific hook

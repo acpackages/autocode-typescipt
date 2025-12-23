@@ -27,7 +27,7 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
       if(stringEqualsIgnoreCase(hook,AC_DATAGRID_HOOK.CellValueChange)){
         const datagridCell:IAcDatagridCell = args.datagridCell;
         const datagridRow:IAcDatagridRow = datagridCell.datagridRow;
-        if(datagridRow.isLast){
+        if(datagridRow.index == this.datagridApi.dataManager.totalRows - 1){
           this.datagridApi.addRow();
         }
       }

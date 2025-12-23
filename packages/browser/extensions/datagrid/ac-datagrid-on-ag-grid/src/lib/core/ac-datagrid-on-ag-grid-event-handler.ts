@@ -67,7 +67,7 @@ export class AcDatagridOnAgGridEventHandler {
       if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
         const datagridCell = this.agGridExtension.getDatagridCellFromEvent({ event: event });
         if (datagridCell) {
-          this.datagridApi.setActiveCell({datagridCell});
+          this.datagridApi.setActiveCell({ datagridCell });
         }
       }
     });
@@ -222,17 +222,19 @@ export class AcDatagridOnAgGridEventHandler {
     });
     this.gridApi.addEventListener('sortChanged', (event: SortChangedEvent) => {
       if (event.columns && event.columns.length > 0 && !this.ignoreEvents) {
-        const column: any = event.columns[0];
-        let order: AcEnumSortOrder = AcEnumSortOrder.None
-        if (column.sort == 'asc') {
-          order = AcEnumSortOrder.Ascending;
+        if (!this.agGridExtension.isClientSideData) {
+          const column: any = event.columns[0];
+          let order: AcEnumSortOrder = AcEnumSortOrder.None
+          if (column.sort == 'asc') {
+            order = AcEnumSortOrder.Ascending;
+          }
+          else if (column.sort == 'desc') {
+            order = AcEnumSortOrder.Descending;
+          }
+          this.datagridApi.dataManager.sortOrder.addSort({ key: column.colDef.field!, order: order });
+          this.datagridApi.dataManager.reset();
+          this.gridApi.refreshServerSide({ purge: true });
         }
-        else if (column.sort == 'desc') {
-          order = AcEnumSortOrder.Descending;
-        }
-        this.datagridApi.dataManager.sortOrder.addSort({ key: column.colDef.field!, order: order });
-        this.datagridApi.dataManager.reset();
-        this.gridApi.refreshServerSide({ purge: true });
       }
     });
     this.gridApi.addEventListener('stateUpdated', (event: StateUpdatedEvent) => {
