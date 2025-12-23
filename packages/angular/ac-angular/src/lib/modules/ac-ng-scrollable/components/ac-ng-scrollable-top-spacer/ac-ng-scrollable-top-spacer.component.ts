@@ -28,7 +28,7 @@ export class AcNgScrollableTopSpacerComponent {
   }
 
   constructor() {
-    console.log(this);
+    //
   }
 
 }

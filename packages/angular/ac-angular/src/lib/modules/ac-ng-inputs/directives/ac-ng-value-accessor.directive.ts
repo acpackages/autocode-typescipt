@@ -29,6 +29,7 @@ export class AcNgValueAccessorDirective implements ControlValueAccessor {
   private onTouched: () => void = () => { };
 
   constructor(private el: ElementRef<HTMLElement>) {
+    //
   }
 
   /** Angular → Element */

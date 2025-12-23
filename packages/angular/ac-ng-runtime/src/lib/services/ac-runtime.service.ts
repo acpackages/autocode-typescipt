@@ -55,14 +55,11 @@ export class AcRuntimeService {
   }
 
   getComponentDetails(component: Type<any>): any {
-    // console.log(component);
     const cmpMetadata = (component as any).ɵcmp;
-    // console.log(cmpMetadata);
     if (!cmpMetadata) {
       throw new Error(`Component metadata not found for ${component.name}`);
     }
     const inputData:any = cmpMetadata.inputs;
-    // console.log(inputData);
     let className:string = "",filePath:string = "";
     if (cmpMetadata.debugInfo) {
       className = cmpMetadata.debugInfo?.className || component.name;
@@ -89,15 +86,13 @@ export class AcRuntimeService {
     const inputNames:string[] = Object.keys(inputs);
     if(inputNames.length > 0){
       const componentRef = this.createComponent(component);
-      // console.log(componentRef);
       const componentInstance = componentRef!.instance;
       for(const inputName of inputNames){
         const value:any = componentInstance[inputName];
         const type:string = typeof value;
         if(type == "object"){
-          // console.log(inputName,value);
+          //
         }
-        // console.log(inputName,value);
       }
     }
     return {
@@ -219,10 +214,7 @@ export class AcRuntimeService {
     inputs?: { [key: string]: any },
     outputs?: { [key: string]: (data: any) => void },
   ): any {
-    // console.log(tsCode);
     const transpiledCode: any = this.compileTypeScriptCode(tsCode);
-    // console.log(transpiledCode);
-    // const jsCode = typescriptSimple(tsCode);
     const componentClass = new Function(
       'ChangeDetectorRef',
       'ElementRef',

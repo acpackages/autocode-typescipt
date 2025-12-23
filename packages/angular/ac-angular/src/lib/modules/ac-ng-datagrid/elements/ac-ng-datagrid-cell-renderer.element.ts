@@ -6,7 +6,7 @@ import {
   TemplateRef,
   Type,
 } from '@angular/core';
-import { IAcDatagridCellRenderer, IAcDatagridCell, IAcDatagridCellElementArgs, IAcDatagridColumn, IAcDatagridRow } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellRenderer, IAcDatagridCell, IAcDatagridCellElementArgs, IAcDatagridColumn, IAcDatagridRow, AC_DATAGRID_HOOK, AC_DATAGRID_EVENT } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
@@ -42,26 +42,25 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
 
   private clear() {
     if (this.viewRef) {
+      this.appRef?.detachView(this.viewRef);
+       for (const node of Array.from(this.viewRef.rootNodes) as HTMLElement[]) {
+        node.remove();
+      }
       this.viewRef.destroy();
       this.viewRef = undefined;
     }
     if (this.componentRef) {
       this.componentRef.destroy();
+      if(this.componentRef.location && this.componentRef.location.nativeElement){
+        this.componentRef.location.nativeElement.remove();
+      }
       this.componentRef = undefined;
     }
     this.element.innerHTML = '';
   }
 
   destroy(): void {
-    if (this.viewRef) {
-      this.viewRef.destroy();
-    }
-    if (this.componentRef) {
-      if(this.componentRef.instance.destroy){
-        this.componentRef.instance.destroy();
-      }
-      this.componentRef.destroy();
-    }
+    this.clear();
     this.element.remove();
   }
 
@@ -114,6 +113,8 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
     } else {
       this.renderDefault();
     }
+    args.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.CellRendererElementInit,args:{renderer:this}});
+    args.datagridApi.events.execute({event:AC_DATAGRID_EVENT.CellRendererElementInit,args:{renderer:this}});
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {

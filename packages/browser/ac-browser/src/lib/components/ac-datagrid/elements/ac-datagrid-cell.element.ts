@@ -171,7 +171,6 @@ export class AcDatagridCellElement extends AcElementBase {
   private initCell() {
     requestAnimationFrame(() => {
       if (!this.datagridCell && this.datagridColumn && this.datagridRow && this.datagridApi && !this.initialized) {
-        console.log("Init Cell");
         this.initialized = true;
         this.datagridCell = {
           datagridColumn: this.datagridColumn,
@@ -405,7 +404,6 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   private checkCellValueChange(delayCheck: boolean = true) {
-    console.log("Checking value changes");
     const checkFunction: Function = () => {
       if (this.cellEditor && this.cellEditor.getValue() != this.previousValue) {
         this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor.getValue();

@@ -232,7 +232,6 @@ export class AcDatagridEventHandler {
       event: event
     };
     this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.CellValueChange, args: eventArgs });
-    console.log('Cell value change');
     // this.notifyRowDataChange();
   }
 
@@ -493,6 +492,7 @@ export class AcDatagridEventHandler {
       sortOrder: this.datagridApi.dataManager.sortOrder!,
       event: event
     };
+    this.datagridApi.dataManager.refreshRows();
     this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.SortOrderChange, args: eventArgs });
   }
 

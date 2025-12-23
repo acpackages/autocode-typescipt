@@ -30,6 +30,8 @@ export class AcElementBase extends HTMLElement {
     if(!this.isInitialized){
       this.isInitialized = true;
       this.init();
+      const event:CustomEvent = new CustomEvent('init');
+      this.dispatchEvent(event)
     }
   }
 

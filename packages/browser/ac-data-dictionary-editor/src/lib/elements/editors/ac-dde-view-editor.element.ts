@@ -41,7 +41,6 @@ export class AcDDEViewEditor {
         this.activeView = this.viewsDatagrid.datagridApi!.activeDatagridRow!.data;
         this.viewColumnsDatagrid.applyFilter();
         this.viewMaster.view = this.activeView!;
-        console.log(this);
       }
     });
     this.viewsDatagrid.datagridApi.on({

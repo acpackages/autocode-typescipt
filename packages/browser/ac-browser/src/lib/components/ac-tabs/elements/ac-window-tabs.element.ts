@@ -23,7 +23,6 @@ export class AcWindowTabs extends AcElementBase {
   constructor(){
     super();
     this.tabs.on({event:AcEnumContextEvent.Change,callback:()=>{
-      console.log('tabs change');
       this.renderTabs();
     }});
   }
@@ -107,7 +106,6 @@ export class AcWindowTabs extends AcElementBase {
 
   public renderTabs(): void {
     for(const tab of Object.values(this.tabs.toJson()) as IAcWindowTab[]){
-      console.log(tab);
       const iconElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-icon') as HTMLElement;
       const titleElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-title') as HTMLElement;
       if(iconElement && tab.icon){

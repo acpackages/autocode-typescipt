@@ -7,14 +7,15 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { AcDatagridExtensionManager, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
-import { AcNgDatagridComponent, AcNgDatagridModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
+import { AcNgDatagridComponent, AcNgDatagridModule, AcNgInputsModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../data/customers-data';
 import { ComponentsModule } from '../../components/components.module';
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-datagrid',
-  imports: [CommonModule, AcNgDatagridModule,ComponentsModule],
+  imports: [CommonModule, AcNgDatagridModule,ComponentsModule, AcNgInputsModule,ReactiveFormsModule,FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './datagrid.component.html',
   styleUrl: './datagrid.component.scss',
@@ -49,8 +50,8 @@ export class DatagridComponent implements OnDestroy, AfterViewInit{
   }
   ngAfterViewInit(): void {
     setTimeout(() => {
-      // this.setOnDemandData();
-      this.setLocalData();
+      this.setOnDemandData();
+      // this.setLocalData();
     }, 1);
   }
 
@@ -61,7 +62,7 @@ export class DatagridComponent implements OnDestroy, AfterViewInit{
 
   handleDatagridInit(){
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
-
+    this.datagrid.datagridApi.showAddButton = true;
     this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
     const button = document.createElement('button');
     button.setAttribute('class','btn btn-primary');
@@ -75,6 +76,14 @@ export class DatagridComponent implements OnDestroy, AfterViewInit{
 
   handleEdit(datagridRow:IAcDatagridRow){
     datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
+   console.log(datagridRow);
+  }
+
+  handleElementInit(event:any,datagridRow:IAcDatagridRow){
+    // event.target.value = datagridRow.data['first_name'];
+  }
+
+  handleNameChange(datagridRow:IAcDatagridRow){
    console.log(datagridRow);
   }
 
@@ -105,7 +114,7 @@ export class DatagridComponent implements OnDestroy, AfterViewInit{
     onDemandProxyDataManager.data = data;
 
     this.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      // console.log("Getting on demand data");
+      console.log("Getting on demand data",args);
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }

@@ -35,7 +35,6 @@ const ariaProperties: IAcBuilderElementProperty[] = [
 export class AcBsForm extends AcBuilderElement {
   override initBuilder({ args }: { args: IAcBuilderElementInitArgs }): void {
     // Basic placeholder HTML for Form
-    console.log(this);
     this.element.innerHTML = `<form>
     <div class="mb-3" ac-builder-element-interactive>
       <label for="exampleFormControlInput1" class="form-label" ac-builder-element-interactive>Email address</label>
@@ -56,12 +55,10 @@ export class AcBsForm extends AcBuilderElement {
   private registerEvents(): void {
     for (const ev of AC_BUILDER_BS_FORM_ELEMENT.events!) {
       try {
-        console.log(ev);
         let eventName = ev.name;
         if (ev.htmlEventName && typeof ev.htmlEventName === 'string') {
           eventName = ev.htmlEventName;
         }
-        console.log(eventName);
         this.element.addEventListener(eventName, (event: Event) => {
           this.events.execute({ event: ev.name, args: event });
         });

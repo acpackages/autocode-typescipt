@@ -320,7 +320,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         }
       }
       if (this.gridApi.getQuickFilter()) {
-        // console.log(this.gridApi.getQuickFilter());
+        //
       }
       if (agGridRequest.sortModel) {
         if (agGridRequest.sortModel.length > 0) {
@@ -430,7 +430,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.gridApi.updateGridOptions({ 'headerHeight': this.datagridApi.headerHeight });
     }
     if (stringEqualsIgnoreCase(hook, AC_DATA_MANAGER_HOOK.Reset)) {
-      // console.log("Resetting data");
       if (this.isClientSideData) {
         // this.gridApi.doFilterAction(args.search);
       }
@@ -464,7 +463,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.setShowRowNumbers();
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATA_MANAGER_HOOK.SearchQueryChange)) {
-      console.log("Refresh rows for search query change");
       this.refreshRows();
     }
     else if (stringEqualsIgnoreCase(hook, AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange)) {
@@ -522,7 +520,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   private handleRowDelete(args: any) {
-    console.log(args);
     if (this.isClientSideData) {
       this.gridApi.applyTransaction({ remove: [args.dataRow.data] });
     }
@@ -672,10 +669,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   refreshRows() {
     if (this.isClientSideData) {
-      //
+      this.gridApi.setGridOption('quickFilterText', this.datagridApi.dataManager.searchQuery);
     }
     else {
-      console.log("Refreshng rows");
       this.datagridApi.dataManager.reset();
       this.gridApi.refreshServerSide({ purge: true });
     }

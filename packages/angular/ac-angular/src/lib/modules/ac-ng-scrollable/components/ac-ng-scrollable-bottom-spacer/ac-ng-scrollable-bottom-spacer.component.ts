@@ -26,6 +26,6 @@ export class AcNgScrollableBottomSpacerComponent {
     return `${this.height}px`;
   }
     constructor() {
-      console.log(this);
+      //
     }
 }

@@ -7,7 +7,7 @@ export class AcDDInputManager {
   private static columnTypeInputs: Record<string, IAcDDInputDefinition> = {
     [AcEnumDDColumnType.AutoNumber]: { inputElement: AcTextInput },
     [AcEnumDDColumnType.Blob]: { inputElement: AcInput },
-    [AcEnumDDColumnType.Date]: { inputElement: AcDatetimeInput },
+    [AcEnumDDColumnType.Date]: { inputElement: AcDatetimeInput, defaultProperties: { type: 'date' } },
     [AcEnumDDColumnType.Datetime]: { inputElement: AcDatetimeInput },
     [AcEnumDDColumnType.Double]: { inputElement: AcNumberInput },
     [AcEnumDDColumnType.Integer]: { inputElement: AcNumberInput },

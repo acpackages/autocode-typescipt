@@ -50,7 +50,7 @@ export class AcDDEDatagrid {
       }
     });
     this.datagridApi.on({event:AC_DATAGRID_EVENT.RowDataChange,callback:(args:any)=>{
-      // console.log(`Row data change`,args);
+      //
     }});
     this.element = this.datagrid;
     this.datagrid.datagridApi.rowHeight = 30;

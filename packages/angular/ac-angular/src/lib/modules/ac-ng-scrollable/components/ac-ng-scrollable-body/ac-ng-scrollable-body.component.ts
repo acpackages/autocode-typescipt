@@ -22,6 +22,6 @@ export class AcNgScrollableBodyComponent  {
   trackByVisibleIndex = (idx: number, i: number) => i;
 
     constructor() {
-      console.log(this);
+      //
     }
 }

@@ -19,8 +19,8 @@ export class AcFilterGroup {
   filterGroups: AcFilterGroup[] = [];
   operator: AcEnumLogicalOperator = AcEnumLogicalOperator.And;
 
-  static instanceFromJson({ jsonData }: { jsonData: any }): AcFilter {
-    const instance = new AcFilter();
+  static instanceFromJson({ jsonData }: { jsonData: any }): AcFilterGroup {
+    const instance = new AcFilterGroup();
     instance.fromJson({ jsonData });
     return instance;
   }

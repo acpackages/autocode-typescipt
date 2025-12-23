@@ -96,10 +96,10 @@ export class AcWebviewChannel {
       this.cefBrowser({
         request: JSON.stringify(dataResult),
         onSuccess: function (response: any) {
-          console.log(response);
+          //
         },
         onFailure: function () {
-          console.log("Error ")
+          console.error("Error ")
         }
       });
     }

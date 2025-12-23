@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellRenderer, IAcDatagridRow, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellRenderer, IAcDatagridRow, IAcDatagridCellElementArgs, AC_DATAGRID_EVENT, AC_DATAGRID_HOOK } from "@autocode-ts/ac-browser";
 import { AgPromise, ICellEditorComp, ICellEditorParams, ICellRendererParams } from "ag-grid-community";
 import { AcDatagridOnAgGridExtension } from "../core/ac-datagrid-on-ag-grid-extension";
 
@@ -127,6 +127,8 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
             }
             this.datagridCell.extensionData['cellEditingElement'] = element;
           }
+          this.datagridApi?.hooks.execute({hook:AC_DATAGRID_HOOK.CellEditorElementInit,args:{editor:this}});
+          this.datagridApi?.events.execute({event:AC_DATAGRID_EVENT.CellEditorElementInit,args:{editor:this}});
         }
         this.params.eGridCell.addEventListener('focusin', this.handleFocus);
         this.params.eGridCell.addEventListener('focusout', this.handleBlur);

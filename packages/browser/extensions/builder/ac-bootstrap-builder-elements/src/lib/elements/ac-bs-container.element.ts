@@ -49,7 +49,6 @@ export class AcBsContainer extends AcBuilderElement {
         if (ev.htmlEventName && typeof ev.htmlEventName === 'string') {
           eventName = ev.htmlEventName;
         }
-        console.log(eventName);
         this.element.addEventListener(eventName, (event: Event) => {
           this.events.execute({ event: ev.name, args: event });
         });

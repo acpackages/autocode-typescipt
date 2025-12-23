@@ -120,7 +120,6 @@ export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit,
     private elementRef: ElementRef<HTMLElement>,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    console.log(this);
   }
 
   get itemSizeForCdk(): number {

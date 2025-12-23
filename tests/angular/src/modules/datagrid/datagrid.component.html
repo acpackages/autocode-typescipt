@@ -3,10 +3,16 @@
   'index':idTemplate,
   'action':actionTemplate
 }"
-(onDatagridInit)="handleDatagridInit()"
+[columnEditorTemplates]="{
+  'first_name':nameTemplate
+}"
+(datagridInit)="handleDatagridInit()"
 />
 <ng-template #idTemplate let-value="value" let-datagridRow="datagridRow">
   {{value}}
+</ng-template>
+<ng-template #nameTemplate let-value="value" let-datagridRow="datagridRow">
+  <ac-input [attr.name]="datagridRow.rowId" [(ngModel)]="datagridRow.data['first_name']" (change)="handleNameChange(datagridRow)" (init)="handleElementInit($event,datagridRow)"/>
 </ng-template>
 <ng-template #actionTemplate let-value="value" let-datagridRow="datagridRow">
   <action-column (onEdit)="handleEdit(datagridRow)" [showDelete]="false" />

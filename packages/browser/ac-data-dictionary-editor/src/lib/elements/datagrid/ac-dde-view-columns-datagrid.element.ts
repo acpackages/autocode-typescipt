@@ -72,7 +72,6 @@ export class AcDDEViewColumnsDatagrid {
     });
     this.datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDelete, callback: (args: IAcDatagridRowEvent) => {
-        console.log("Row deletes",args);
         this.editorApi.dataStorage.deleteViewColumn({ columnId: args.datagridRow.data[AcEnumDDEViewColumn.ColumnId] });
       }
     });

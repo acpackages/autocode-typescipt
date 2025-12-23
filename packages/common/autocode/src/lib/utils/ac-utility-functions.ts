@@ -7,6 +7,5 @@ export function acSingleTimeout({callback,key,duration = 0}:{callback:Function,k
     delete acSingleTimeoutRegistry[key];
     clearTimeout(acSingleTimeoutRegistry[key]);
     callback();
-    console.log(`Executing timeout ${key}`);
   }, duration);
 }

@@ -15,614 +15,614 @@ import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-edito
 
 @Component({ selector: '', template: '' })
 export class AcNgDatagridEvents {
-  @Output() onActiveRowChange: EventEmitter<any> = new EventEmitter();
-  @Output() onCellBlur: EventEmitter<any> = new EventEmitter();
-  @Output() onCellClick: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDoubleClick: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDrag: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDragEnd: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDragEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDragLeave: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDragOver: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDragStart: EventEmitter<any> = new EventEmitter();
-  @Output() onCellDragDrop: EventEmitter<any> = new EventEmitter();
-  @Output() onCellEditorElementInit: EventEmitter<any> = new EventEmitter();
-  @Output() onCellEditingStart: EventEmitter<any> = new EventEmitter();
-  @Output() onCellEditingStop: EventEmitter<any> = new EventEmitter();
-  @Output() onCellFocus: EventEmitter<any> = new EventEmitter();
-  @Output() onCellHover: EventEmitter<any> = new EventEmitter();
-  @Output() onCellKeyDown: EventEmitter<any> = new EventEmitter();
-  @Output() onCellKeyPress: EventEmitter<any> = new EventEmitter();
-  @Output() onCellKeyUp: EventEmitter<any> = new EventEmitter();
-  @Output() onCellMouseDown: EventEmitter<any> = new EventEmitter();
-  @Output() onCellMouseEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onCellMouseLeave: EventEmitter<any> = new EventEmitter();
-  @Output() onCellMouseMove: EventEmitter<any> = new EventEmitter();
-  @Output() onCellMouseOver: EventEmitter<any> = new EventEmitter();
-  @Output() onCellMouseUp: EventEmitter<any> = new EventEmitter();
-  @Output() onCellRendererElementInit: EventEmitter<any> = new EventEmitter();
-  @Output() onCellTouchCancel: EventEmitter<any> = new EventEmitter();
-  @Output() onCellTouchEnd: EventEmitter<any> = new EventEmitter();
-  @Output() onCellTouchMove: EventEmitter<any> = new EventEmitter();
-  @Output() onCellTouchStart: EventEmitter<any> = new EventEmitter();
-  @Output() onCellValueChange: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDefinitionsSet: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnBlur: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnClick: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDataChange: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDoubleClick: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDragEnd: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDragEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDragLeave: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDragOver: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDragStart: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnDragDrop: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnFilterChange: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnFocus: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnHeaderClick: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnHover: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnKeyDown: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnKeyPress: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnKeyUp: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnMouseDown: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnMouseEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnMouseLeave: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnMouseMove: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnMouseOver: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnMouseUp: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnResize: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnSortChange: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnTouchCancel: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnTouchEnd: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnTouchMove: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnTouchStart: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnPositionChange: EventEmitter<any> = new EventEmitter();
-  @Output() onColumnVisibilityChange: EventEmitter<any> = new EventEmitter();
-  @Output() onDisplayedRowsChange: EventEmitter<any> = new EventEmitter();
-  @Output() onPaginationChange: EventEmitter<any> = new EventEmitter();
-  @Output() onRowAdd: EventEmitter<any> = new EventEmitter();
-  @Output() onRowBlur: EventEmitter<any> = new EventEmitter();
-  @Output() onRowClick: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDataChange: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDelete: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDoubleClick: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDrag: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragCancel: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragDrop: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragEnd: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragLeave: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragOver: EventEmitter<any> = new EventEmitter();
-  @Output() onRowDragStart: EventEmitter<any> = new EventEmitter();
-  @Output() onRowEditingStart: EventEmitter<any> = new EventEmitter();
-  @Output() onRowEditingStop: EventEmitter<any> = new EventEmitter();
-  @Output() onRowFocus: EventEmitter<any> = new EventEmitter();
-  @Output() onRowHover: EventEmitter<any> = new EventEmitter();
-  @Output() onRowKeyDown: EventEmitter<any> = new EventEmitter();
-  @Output() onRowKeyPress: EventEmitter<any> = new EventEmitter();
-  @Output() onRowKeyUp: EventEmitter<any> = new EventEmitter();
-  @Output() onRowMouseDown: EventEmitter<any> = new EventEmitter();
-  @Output() onRowMouseEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onRowMouseLeave: EventEmitter<any> = new EventEmitter();
-  @Output() onRowMouseMove: EventEmitter<any> = new EventEmitter();
-  @Output() onRowMouseOver: EventEmitter<any> = new EventEmitter();
-  @Output() onRowMouseUp: EventEmitter<any> = new EventEmitter();
-  @Output() onRowPositionChange: EventEmitter<any> = new EventEmitter();
-  @Output() onRowSelectionChange: EventEmitter<any> = new EventEmitter();
-  @Output() onRowTouchCancel: EventEmitter<any> = new EventEmitter();
-  @Output() onRowTouchEnd: EventEmitter<any> = new EventEmitter();
-  @Output() onRowTouchMove: EventEmitter<any> = new EventEmitter();
-  @Output() onRowTouchStart: EventEmitter<any> = new EventEmitter();
-  @Output() onRowUpdate: EventEmitter<any> = new EventEmitter();
-  @Output() onStateChange: EventEmitter<any> = new EventEmitter();
-  @Output() onSortOrderChange: EventEmitter<any> = new EventEmitter();
-  @Output() onTotalRowsChange: EventEmitter<any> = new EventEmitter();
-  @Output() onDatagridInit: EventEmitter<any> = new EventEmitter();
+  @Output() activeRowChange: EventEmitter<any> = new EventEmitter();
+  @Output() cellBlur: EventEmitter<any> = new EventEmitter();
+  @Output() cellClick: EventEmitter<any> = new EventEmitter();
+  @Output() cellDoubleClick: EventEmitter<any> = new EventEmitter();
+  @Output() cellDrag: EventEmitter<any> = new EventEmitter();
+  @Output() cellDragEnd: EventEmitter<any> = new EventEmitter();
+  @Output() cellDragEnter: EventEmitter<any> = new EventEmitter();
+  @Output() cellDragLeave: EventEmitter<any> = new EventEmitter();
+  @Output() cellDragOver: EventEmitter<any> = new EventEmitter();
+  @Output() cellDragStart: EventEmitter<any> = new EventEmitter();
+  @Output() cellDragDrop: EventEmitter<any> = new EventEmitter();
+  @Output() cellEditorElementInit: EventEmitter<any> = new EventEmitter();
+  @Output() cellEditingStart: EventEmitter<any> = new EventEmitter();
+  @Output() cellEditingStop: EventEmitter<any> = new EventEmitter();
+  @Output() cellFocus: EventEmitter<any> = new EventEmitter();
+  @Output() cellHover: EventEmitter<any> = new EventEmitter();
+  @Output() cellKeyDown: EventEmitter<any> = new EventEmitter();
+  @Output() cellKeyPress: EventEmitter<any> = new EventEmitter();
+  @Output() cellKeyUp: EventEmitter<any> = new EventEmitter();
+  @Output() cellMouseDown: EventEmitter<any> = new EventEmitter();
+  @Output() cellMouseEnter: EventEmitter<any> = new EventEmitter();
+  @Output() cellMouseLeave: EventEmitter<any> = new EventEmitter();
+  @Output() cellMouseMove: EventEmitter<any> = new EventEmitter();
+  @Output() cellMouseOver: EventEmitter<any> = new EventEmitter();
+  @Output() cellMouseUp: EventEmitter<any> = new EventEmitter();
+  @Output() cellRendererElementInit: EventEmitter<any> = new EventEmitter();
+  @Output() cellTouchCancel: EventEmitter<any> = new EventEmitter();
+  @Output() cellTouchEnd: EventEmitter<any> = new EventEmitter();
+  @Output() cellTouchMove: EventEmitter<any> = new EventEmitter();
+  @Output() cellTouchStart: EventEmitter<any> = new EventEmitter();
+  @Output() cellValueChange: EventEmitter<any> = new EventEmitter();
+  @Output() columnDefinitionsSet: EventEmitter<any> = new EventEmitter();
+  @Output() columnBlur: EventEmitter<any> = new EventEmitter();
+  @Output() columnClick: EventEmitter<any> = new EventEmitter();
+  @Output() columnDataChange: EventEmitter<any> = new EventEmitter();
+  @Output() columnDoubleClick: EventEmitter<any> = new EventEmitter();
+  @Output() columnDragEnd: EventEmitter<any> = new EventEmitter();
+  @Output() columnDragEnter: EventEmitter<any> = new EventEmitter();
+  @Output() columnDragLeave: EventEmitter<any> = new EventEmitter();
+  @Output() columnDragOver: EventEmitter<any> = new EventEmitter();
+  @Output() columnDragStart: EventEmitter<any> = new EventEmitter();
+  @Output() columnDragDrop: EventEmitter<any> = new EventEmitter();
+  @Output() columnFilterChange: EventEmitter<any> = new EventEmitter();
+  @Output() columnFocus: EventEmitter<any> = new EventEmitter();
+  @Output() columnHeaderClick: EventEmitter<any> = new EventEmitter();
+  @Output() columnHover: EventEmitter<any> = new EventEmitter();
+  @Output() columnKeyDown: EventEmitter<any> = new EventEmitter();
+  @Output() columnKeyPress: EventEmitter<any> = new EventEmitter();
+  @Output() columnKeyUp: EventEmitter<any> = new EventEmitter();
+  @Output() columnMouseDown: EventEmitter<any> = new EventEmitter();
+  @Output() columnMouseEnter: EventEmitter<any> = new EventEmitter();
+  @Output() columnMouseLeave: EventEmitter<any> = new EventEmitter();
+  @Output() columnMouseMove: EventEmitter<any> = new EventEmitter();
+  @Output() columnMouseOver: EventEmitter<any> = new EventEmitter();
+  @Output() columnMouseUp: EventEmitter<any> = new EventEmitter();
+  @Output() columnResize: EventEmitter<any> = new EventEmitter();
+  @Output() columnSortChange: EventEmitter<any> = new EventEmitter();
+  @Output() columnTouchCancel: EventEmitter<any> = new EventEmitter();
+  @Output() columnTouchEnd: EventEmitter<any> = new EventEmitter();
+  @Output() columnTouchMove: EventEmitter<any> = new EventEmitter();
+  @Output() columnTouchStart: EventEmitter<any> = new EventEmitter();
+  @Output() columnPositionChange: EventEmitter<any> = new EventEmitter();
+  @Output() columnVisibilityChange: EventEmitter<any> = new EventEmitter();
+  @Output() displayedRowsChange: EventEmitter<any> = new EventEmitter();
+  @Output() paginationChange: EventEmitter<any> = new EventEmitter();
+  @Output() rowAdd: EventEmitter<any> = new EventEmitter();
+  @Output() rowBlur: EventEmitter<any> = new EventEmitter();
+  @Output() rowClick: EventEmitter<any> = new EventEmitter();
+  @Output() rowDataChange: EventEmitter<any> = new EventEmitter();
+  @Output() rowDelete: EventEmitter<any> = new EventEmitter();
+  @Output() rowDoubleClick: EventEmitter<any> = new EventEmitter();
+  @Output() rowDrag: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragCancel: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragDrop: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragEnd: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragEnter: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragLeave: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragOver: EventEmitter<any> = new EventEmitter();
+  @Output() rowDragStart: EventEmitter<any> = new EventEmitter();
+  @Output() rowEditingStart: EventEmitter<any> = new EventEmitter();
+  @Output() rowEditingStop: EventEmitter<any> = new EventEmitter();
+  @Output() rowFocus: EventEmitter<any> = new EventEmitter();
+  @Output() rowHover: EventEmitter<any> = new EventEmitter();
+  @Output() rowKeyDown: EventEmitter<any> = new EventEmitter();
+  @Output() rowKeyPress: EventEmitter<any> = new EventEmitter();
+  @Output() rowKeyUp: EventEmitter<any> = new EventEmitter();
+  @Output() rowMouseDown: EventEmitter<any> = new EventEmitter();
+  @Output() rowMouseEnter: EventEmitter<any> = new EventEmitter();
+  @Output() rowMouseLeave: EventEmitter<any> = new EventEmitter();
+  @Output() rowMouseMove: EventEmitter<any> = new EventEmitter();
+  @Output() rowMouseOver: EventEmitter<any> = new EventEmitter();
+  @Output() rowMouseUp: EventEmitter<any> = new EventEmitter();
+  @Output() rowPositionChange: EventEmitter<any> = new EventEmitter();
+  @Output() rowSelectionChange: EventEmitter<any> = new EventEmitter();
+  @Output() rowTouchCancel: EventEmitter<any> = new EventEmitter();
+  @Output() rowTouchEnd: EventEmitter<any> = new EventEmitter();
+  @Output() rowTouchMove: EventEmitter<any> = new EventEmitter();
+  @Output() rowTouchStart: EventEmitter<any> = new EventEmitter();
+  @Output() rowUpdate: EventEmitter<any> = new EventEmitter();
+  @Output() stateChange: EventEmitter<any> = new EventEmitter();
+  @Output() sortOrderChange: EventEmitter<any> = new EventEmitter();
+  @Output() totalRowsChange: EventEmitter<any> = new EventEmitter();
+  @Output() datagridInit: EventEmitter<any> = new EventEmitter();
 
   protected registerListeners(datagridApi: AcDatagridApi) {
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: any) => {
-        this.onActiveRowChange.emit(args);
+        this.activeRowChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellBlur, callback: (args: any) => {
-        this.onCellBlur.emit(args);
+        this.cellBlur.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellClick, callback: (args: any) => {
-        this.onCellClick.emit(args);
+        this.cellClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDoubleClick, callback: (args: any) => {
-        this.onCellDoubleClick.emit(args);
+        this.cellDoubleClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDrag, callback: (args: any) => {
-        this.onCellDrag.emit(args);
+        this.cellDrag.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDragEnd, callback: (args: any) => {
-        this.onCellDragEnd.emit(args);
+        this.cellDragEnd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDragEnter, callback: (args: any) => {
-        this.onCellDragEnter.emit(args);
+        this.cellDragEnter.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDragLeave, callback: (args: any) => {
-        this.onCellDragLeave.emit(args);
+        this.cellDragLeave.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDragOver, callback: (args: any) => {
-        this.onCellDragOver.emit(args);
+        this.cellDragOver.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDragStart, callback: (args: any) => {
-        this.onCellDragStart.emit(args);
+        this.cellDragStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellDragDrop, callback: (args: any) => {
-        this.onCellDragDrop.emit(args);
+        this.cellDragDrop.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: any) => {
-        this.onCellEditorElementInit.emit(args);
+        this.cellEditorElementInit.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellEditingStart, callback: (args: any) => {
-        this.onCellEditingStart.emit(args);
+        this.cellEditingStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellEditingStop, callback: (args: any) => {
-        this.onCellEditingStop.emit(args);
+        this.cellEditingStop.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellFocus, callback: (args: any) => {
-        this.onCellFocus.emit(args);
+        this.cellFocus.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellHover, callback: (args: any) => {
-        this.onCellHover.emit(args);
+        this.cellHover.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellKeyDown, callback: (args: any) => {
-        this.onCellKeyDown.emit(args);
+        this.cellKeyDown.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellKeyPress, callback: (args: any) => {
-        this.onCellKeyPress.emit(args);
+        this.cellKeyPress.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellKeyUp, callback: (args: any) => {
-        this.onCellKeyUp.emit(args);
+        this.cellKeyUp.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseDown, callback: (args: any) => {
-        this.onCellMouseDown.emit(args);
+        this.cellMouseDown.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseEnter, callback: (args: any) => {
-        this.onCellMouseEnter.emit(args);
+        this.cellMouseEnter.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseLeave, callback: (args: any) => {
-        this.onCellMouseLeave.emit(args);
+        this.cellMouseLeave.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseMove, callback: (args: any) => {
-        this.onCellMouseMove.emit(args);
+        this.cellMouseMove.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseOver, callback: (args: any) => {
-        this.onCellMouseOver.emit(args);
+        this.cellMouseOver.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseUp, callback: (args: any) => {
-        this.onCellMouseUp.emit(args);
+        this.cellMouseUp.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellTouchCancel, callback: (args: any) => {
-        this.onCellTouchCancel.emit(args);
+        this.cellTouchCancel.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellTouchEnd, callback: (args: any) => {
-        this.onCellTouchEnd.emit(args);
+        this.cellTouchEnd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellTouchMove, callback: (args: any) => {
-        this.onCellTouchMove.emit(args);
+        this.cellTouchMove.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellTouchStart, callback: (args: any) => {
-        this.onCellTouchStart.emit(args);
+        this.cellTouchStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: any) => {
-        this.onCellValueChange.emit(args);
+        this.cellValueChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDefinitionsSet, callback: (args: any) => {
-        this.onColumnDefinitionsSet.emit(args);
+        this.columnDefinitionsSet.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnBlur, callback: (args: any) => {
-        this.onColumnBlur.emit(args);
+        this.columnBlur.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnClick, callback: (args: any) => {
-        this.onColumnClick.emit(args);
+        this.columnClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDataChange, callback: (args: any) => {
-        this.onColumnDataChange.emit(args);
+        this.columnDataChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDoubleClick, callback: (args: any) => {
-        this.onColumnDoubleClick.emit(args);
+        this.columnDoubleClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDragEnd, callback: (args: any) => {
-        this.onColumnDragEnd.emit(args);
+        this.columnDragEnd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDragEnter, callback: (args: any) => {
-        this.onColumnDragEnter.emit(args);
+        this.columnDragEnter.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDragLeave, callback: (args: any) => {
-        this.onColumnDragLeave.emit(args);
+        this.columnDragLeave.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDragOver, callback: (args: any) => {
-        this.onColumnDragOver.emit(args);
+        this.columnDragOver.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDragStart, callback: (args: any) => {
-        this.onColumnDragStart.emit(args);
+        this.columnDragStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnDragDrop, callback: (args: any) => {
-        this.onColumnDragDrop.emit(args);
+        this.columnDragDrop.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnFilterChange, callback: (args: any) => {
-        this.onColumnFilterChange.emit(args);
+        this.columnFilterChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnFocus, callback: (args: any) => {
-        this.onColumnFocus.emit(args);
+        this.columnFocus.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnHeaderClick, callback: (args: any) => {
-        this.onColumnHeaderClick.emit(args);
+        this.columnHeaderClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnHover, callback: (args: any) => {
-        this.onColumnHover.emit(args);
+        this.columnHover.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnKeyDown, callback: (args: any) => {
-        this.onColumnKeyDown.emit(args);
+        this.columnKeyDown.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnKeyPress, callback: (args: any) => {
-        this.onColumnKeyPress.emit(args);
+        this.columnKeyPress.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnKeyUp, callback: (args: any) => {
-        this.onColumnKeyUp.emit(args);
+        this.columnKeyUp.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnMouseDown, callback: (args: any) => {
-        this.onColumnMouseDown.emit(args);
+        this.columnMouseDown.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnMouseEnter, callback: (args: any) => {
-        this.onColumnMouseEnter.emit(args);
+        this.columnMouseEnter.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnMouseLeave, callback: (args: any) => {
-        this.onColumnMouseLeave.emit(args);
+        this.columnMouseLeave.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnMouseMove, callback: (args: any) => {
-        this.onColumnMouseMove.emit(args);
+        this.columnMouseMove.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnMouseOver, callback: (args: any) => {
-        this.onColumnMouseOver.emit(args);
+        this.columnMouseOver.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnMouseUp, callback: (args: any) => {
-        this.onColumnMouseUp.emit(args);
+        this.columnMouseUp.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnResize, callback: (args: any) => {
-        this.onColumnResize.emit(args);
+        this.columnResize.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnSortChange, callback: (args: any) => {
-        this.onColumnSortChange.emit(args);
+        this.columnSortChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnTouchCancel, callback: (args: any) => {
-        this.onColumnTouchCancel.emit(args);
+        this.columnTouchCancel.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnTouchEnd, callback: (args: any) => {
-        this.onColumnTouchEnd.emit(args);
+        this.columnTouchEnd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnTouchMove, callback: (args: any) => {
-        this.onColumnTouchMove.emit(args);
+        this.columnTouchMove.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnTouchStart, callback: (args: any) => {
-        this.onColumnTouchStart.emit(args);
+        this.columnTouchStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnPositionChange, callback: (args: any) => {
-        this.onColumnPositionChange.emit(args);
+        this.columnPositionChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.ColumnVisibilityChange, callback: (args: any) => {
-        this.onColumnVisibilityChange.emit(args);
+        this.columnVisibilityChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.DisplayedRowsChange, callback: (args: any) => {
-        this.onDisplayedRowsChange.emit(args);
+        this.displayedRowsChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.PaginationChange, callback: (args: any) => {
-        this.onPaginationChange.emit(args);
+        this.paginationChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args: any) => {
-        this.onRowAdd.emit(args);
+        this.rowAdd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowBlur, callback: (args: any) => {
-        this.onRowBlur.emit(args);
+        this.rowBlur.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowClick, callback: (args: any) => {
-        this.onRowClick.emit(args);
+        this.rowClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDataChange, callback: (args: any) => {
-        this.onRowDataChange.emit(args);
+        this.rowDataChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDelete, callback: (args: any) => {
-        this.onRowDelete.emit(args);
+        this.rowDelete.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDoubleClick, callback: (args: any) => {
-        this.onRowDoubleClick.emit(args);
+        this.rowDoubleClick.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDrag, callback: (args: any) => {
-        this.onRowDrag.emit(args);
+        this.rowDrag.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragCancel, callback: (args: any) => {
-        this.onRowDragCancel.emit(args);
+        this.rowDragCancel.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragDrop, callback: (args: any) => {
-        this.onRowDragDrop.emit(args);
+        this.rowDragDrop.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragEnd, callback: (args: any) => {
-        this.onRowDragEnd.emit(args);
+        this.rowDragEnd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragEnter, callback: (args: any) => {
-        this.onRowDragEnter.emit(args);
+        this.rowDragEnter.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragLeave, callback: (args: any) => {
-        this.onRowDragLeave.emit(args);
+        this.rowDragLeave.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragOver, callback: (args: any) => {
-        this.onRowDragOver.emit(args);
+        this.rowDragOver.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowDragStart, callback: (args: any) => {
-        this.onRowDragStart.emit(args);
+        this.rowDragStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowEditingStart, callback: (args: any) => {
-        this.onRowEditingStart.emit(args);
+        this.rowEditingStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowEditingStop, callback: (args: any) => {
-        this.onRowEditingStop.emit(args);
+        this.rowEditingStop.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowFocus, callback: (args: any) => {
-        this.onRowFocus.emit(args);
+        this.rowFocus.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowHover, callback: (args: any) => {
-        this.onRowHover.emit(args);
+        this.rowHover.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowKeyDown, callback: (args: any) => {
-        this.onRowKeyDown.emit(args);
+        this.rowKeyDown.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowKeyPress, callback: (args: any) => {
-        this.onRowKeyPress.emit(args);
+        this.rowKeyPress.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowKeyUp, callback: (args: any) => {
-        this.onRowKeyUp.emit(args);
+        this.rowKeyUp.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowMouseDown, callback: (args: any) => {
-        this.onRowMouseDown.emit(args);
+        this.rowMouseDown.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowMouseEnter, callback: (args: any) => {
-        this.onRowMouseEnter.emit(args);
+        this.rowMouseEnter.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowMouseLeave, callback: (args: any) => {
-        this.onRowMouseLeave.emit(args);
+        this.rowMouseLeave.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowMouseMove, callback: (args: any) => {
-        this.onRowMouseMove.emit(args);
+        this.rowMouseMove.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowMouseOver, callback: (args: any) => {
-        this.onRowMouseOver.emit(args);
+        this.rowMouseOver.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowMouseUp, callback: (args: any) => {
-        this.onRowMouseUp.emit(args);
+        this.rowMouseUp.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowPositionChange, callback: (args: any) => {
-        this.onRowPositionChange.emit(args);
+        this.rowPositionChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowSelectionChange, callback: (args: any) => {
-        this.onRowSelectionChange.emit(args);
+        this.rowSelectionChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowTouchCancel, callback: (args: any) => {
-        this.onRowTouchCancel.emit(args);
+        this.rowTouchCancel.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowTouchEnd, callback: (args: any) => {
-        this.onRowTouchEnd.emit(args);
+        this.rowTouchEnd.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowTouchMove, callback: (args: any) => {
-        this.onRowTouchMove.emit(args);
+        this.rowTouchMove.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowTouchStart, callback: (args: any) => {
-        this.onRowTouchStart.emit(args);
+        this.rowTouchStart.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.RowUpdate, callback: (args: any) => {
-        this.onRowUpdate.emit(args);
+        this.rowUpdate.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.StateChange, callback: (args: any) => {
-        this.onStateChange.emit(args);
+        this.stateChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.SortOrderChange, callback: (args: any) => {
-        this.onSortOrderChange.emit(args);
+        this.sortOrderChange.emit(args);
       }
     });
     datagridApi.on({
       event: AC_DATAGRID_EVENT.TotalRowsChange, callback: (args: any) => {
-        this.onTotalRowsChange.emit(args);
+        this.totalRowsChange.emit(args);
       }
     });
   }
@@ -735,7 +735,7 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
       this.registerListeners(this.datagridApi);
       this.datagridApi.on({
         event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: any) => {
-          this.onCellRendererElementInit.emit(args);
+          this.cellRendererElementInit.emit(args);
         }
       });
       if (this.data) {
@@ -744,7 +744,7 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
       if (this.onDemandFunction) {
         this.dataManager.onDemandFunction = this.onDemandFunction;
       }
-      this.onDatagridInit.emit();
+      this.datagridInit.emit();
     }
     else {
       setTimeout(() => {

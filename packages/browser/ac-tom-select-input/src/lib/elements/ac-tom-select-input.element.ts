@@ -163,13 +163,11 @@ export class AcTomSelectInput extends AcInputBase {
   }
 
   override focus(options?: FocusOptions): void {
-    console.log("tom select input focus");
     this.tomSelect.focus();
     // this.tomSelect.open();
   }
 
   private positionDropdown() {
-    console.log("Positioning dropdown");
       const rect = this.tsWrapper.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const spaceBelow = viewportHeight - rect.bottom;

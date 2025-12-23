@@ -231,7 +231,8 @@ export class AcDatagridOnAgGridEventHandler {
           order = AcEnumSortOrder.Descending;
         }
         this.datagridApi.dataManager.sortOrder.addSort({ key: column.colDef.field!, order: order });
-        this.datagridApi.eventHandler.handleSortOrderChange();
+        this.datagridApi.dataManager.reset();
+        this.gridApi.refreshServerSide({ purge: true });
       }
     });
     this.gridApi.addEventListener('stateUpdated', (event: StateUpdatedEvent) => {

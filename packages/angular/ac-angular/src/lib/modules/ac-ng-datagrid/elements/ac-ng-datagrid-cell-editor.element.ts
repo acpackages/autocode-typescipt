@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApplicationRef, ComponentRef, EmbeddedViewRef, TemplateRef, Type } from '@angular/core';
-import { IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridRow } from '@autocode-ts/ac-browser';
+import { IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridRow, AC_DATAGRID_EVENT, AC_DATAGRID_HOOK } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
 
@@ -37,26 +37,25 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
 
   private clear() {
     if (this.viewRef) {
+      this.appRef?.detachView(this.viewRef);
+       for (const node of Array.from(this.viewRef.rootNodes) as HTMLElement[]) {
+        node.remove();
+      }
       this.viewRef.destroy();
-      this.viewRef = undefined;
+      this.viewRef = null;
     }
     if (this.componentRef) {
       this.componentRef.destroy();
-      this.componentRef = undefined;
+      if(this.componentRef.location && this.componentRef.location.nativeElement){
+        this.componentRef.location.nativeElement.remove();
+      }
+      this.componentRef = null;
     }
     this.element.innerHTML = '';
   }
 
   destroy(): void {
-    if (this.viewRef) {
-      this.viewRef.destroy();
-    }
-    if (this.componentRef) {
-      if (this.componentRef.instance.destroy) {
-        this.componentRef.instance.destroy();
-      }
-      this.componentRef.destroy();
-    }
+    this.clear();
     this.element.remove();
   }
 
@@ -117,12 +116,17 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     } else {
       this.renderDefault();
     }
+    args.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.CellEditorElementInit,args:{editor:this}});
+    args.datagridApi.events.execute({event:AC_DATAGRID_EVENT.CellEditorElementInit,args:{editor:this}});
   }
 
   refresh(args: IAcDatagridCellElementArgs): void {
     this.datagridCell = args.datagridCell;
+    this.datagridColumn = args.datagridCell.datagridColumn;
+    this.datagridRow = args.datagridCell.datagridRow;
+    this.columnDefinition = this.datagridColumn.columnDefinition;
     if (this.viewRef) {
-      this.viewRef.context.row = this.datagridCell.datagridRow;
+      this.viewRef.context = this.getContext();
     }
     else if (this.componentRef) {
       this.componentRef.instance.refresh(args);

@@ -205,13 +205,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_addresses"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_address"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_addresses"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_adresses"
         }
       }
     },
@@ -276,13 +280,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_bank_accounts"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_bank_account"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_bank_accounts"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_bank_accounts"
         }
       }
     },
@@ -333,13 +341,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_email_addresses"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_email_address"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_email_addresses"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_email_addresses"
         }
       }
     },
@@ -390,13 +402,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_fax_numbers"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_fax_number"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_fax_numbers"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_fax_numbers"
         }
       }
     },
@@ -447,13 +463,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_legal_documents"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_legal_document"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_legal_documents"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_legal_documents"
         }
       }
     },
@@ -504,13 +524,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_medias"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_media"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_medias"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_medias"
         }
       }
     },
@@ -561,13 +585,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_phone_numbers"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_phone_number"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_phone_numbers"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_phone_numbers"
         }
       }
     },
@@ -653,6 +681,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Media"
             }
           }
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -697,8 +735,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "accountee_social_meida_id": {
-          "columnName": "accountee_social_meida_id",
+        "accountee_social_media_id": {
+          "columnName": "accountee_social_media_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -720,6 +758,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_social_media"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_social_medias"
         }
       }
     },
@@ -770,13 +812,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_websites"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee_website"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "accountee_webistes"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountee_websites"
         }
       }
     },
@@ -976,6 +1022,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "GST No."
+            }
+          }
         }
       },
       "tableProperties": {
@@ -995,6 +1051,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "accountee"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_accountees"
         }
       }
     },
@@ -10596,6 +10656,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Services"
             }
           }
+        },
+        "supply_mode": {
+          "columnName": "supply_mode",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supply Mode"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -14292,6 +14362,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Details"
+            }
+          }
+        },
+        "supply_mode": {
+          "columnName": "supply_mode",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supply Mode"
             }
           }
         }
@@ -21799,6 +21879,898 @@ export const dataDictionaryJson = {
     }
   },
   "views": {
+    "act_vw_accountee_adresses": {
+      "viewName": "act_vw_accountee_adresses",
+      "viewColumns": {
+        "accountee_address_id": {
+          "columnName": "accountee_address_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_addresses",
+          "columnSourceOriginalColumn": "accountee_address_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_addresses",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "address_id": {
+          "columnName": "address_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_id"
+        },
+        "address_label": {
+          "columnName": "address_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_label"
+        },
+        "address_line_1": {
+          "columnName": "address_line_1",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_line_1"
+        },
+        "address_line_2": {
+          "columnName": "address_line_2",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_line_2"
+        },
+        "country_name": {
+          "columnName": "country_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "country_name"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "landmark": {
+          "columnName": "landmark",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "landmark"
+        },
+        "latitude": {
+          "columnName": "latitude",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "latitude"
+        },
+        "longitude": {
+          "columnName": "longitude",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "longitude"
+        },
+        "postal_code": {
+          "columnName": "postal_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "postal_code"
+        },
+        "state_name": {
+          "columnName": "state_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "state_name"
+        },
+        "city_name": {
+          "columnName": "city_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "city_name"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_addresses.accountee_address_id,act_accountee_addresses.accountee_id,act_addresses.* FROM act_accountee_addresses LEFT JOIN act_addresses ON act_accountee_addresses.address_id = act_addresses.address_id"
+    },
+    "act_vw_accountee_bank_accounts": {
+      "viewName": "act_vw_accountee_bank_accounts",
+      "viewColumns": {
+        "accountee_bank_account_id": {
+          "columnName": "accountee_bank_account_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_bank_accounts",
+          "columnSourceOriginalColumn": "accountee_bank_account_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_bank_accounts",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "account_holder_name": {
+          "columnName": "account_holder_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "account_holder_name"
+        },
+        "account_number": {
+          "columnName": "account_number",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "account_number"
+        },
+        "account_type": {
+          "columnName": "account_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "account_type"
+        },
+        "bank_account_id": {
+          "columnName": "bank_account_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_account_id"
+        },
+        "bank_code": {
+          "columnName": "bank_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_code"
+        },
+        "bank_name": {
+          "columnName": "bank_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_name"
+        },
+        "branch_code": {
+          "columnName": "branch_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "branch_code"
+        },
+        "branch_name": {
+          "columnName": "branch_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "branch_name"
+        },
+        "branch_address": {
+          "columnName": "branch_address",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "branch_address"
+        },
+        "country_code": {
+          "columnName": "country_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "country_code"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "iban": {
+          "columnName": "iban",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "iban"
+        },
+        "ifsc": {
+          "columnName": "ifsc",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "ifsc"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "is_primary": {
+          "columnName": "is_primary",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "is_primary"
+        },
+        "swift_bic": {
+          "columnName": "swift_bic",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "swift_bic"
+        },
+        "bank_label": {
+          "columnName": "bank_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_label"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_bank_accounts.accountee_bank_account_id,act_accountee_bank_accounts.accountee_id,act_bank_accounts.* FROM act_accountee_bank_accounts LEFT JOIN act_bank_accounts ON act_accountee_bank_accounts.bank_account_id = act_bank_accounts.bank_account_id"
+    },
+    "act_vw_accountee_email_addresses": {
+      "viewName": "act_vw_accountee_email_addresses",
+      "viewColumns": {
+        "accountee_email_address_id": {
+          "columnName": "accountee_email_address_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_email_addresses",
+          "columnSourceOriginalColumn": "accountee_email_address_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_email_addresses",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "email_address_id": {
+          "columnName": "email_address_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_id"
+        },
+        "email_address_label": {
+          "columnName": "email_address_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_label"
+        },
+        "email_address_value": {
+          "columnName": "email_address_value",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_value"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_email_addresses.accountee_email_address_id,act_accountee_email_addresses.accountee_id,act_email_addresses.* FROM act_accountee_email_addresses LEFT JOIN act_email_addresses ON act_accountee_email_addresses.email_address_id = act_email_addresses.email_address_id"
+    },
+    "act_vw_accountee_fax_numbers": {
+      "viewName": "act_vw_accountee_fax_numbers",
+      "viewColumns": {
+        "accountee_fax_number_id": {
+          "columnName": "accountee_fax_number_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_fax_numbers",
+          "columnSourceOriginalColumn": "accountee_fax_number_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_fax_numbers",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "fax_number_id": {
+          "columnName": "fax_number_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_id"
+        },
+        "fax_number_label": {
+          "columnName": "fax_number_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_label"
+        },
+        "fax_number_value": {
+          "columnName": "fax_number_value",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_value"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "is_active"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_fax_numbers.accountee_fax_number_id,act_accountee_fax_numbers.accountee_id,act_fax_numbers.* FROM act_accountee_fax_numbers LEFT JOIN act_fax_numbers ON act_accountee_fax_numbers.fax_number_id = act_fax_numbers.fax_number_id"
+    },
+    "act_vw_accountee_legal_documents": {
+      "viewName": "act_vw_accountee_legal_documents",
+      "viewColumns": {
+        "accountee_legal_document_id": {
+          "columnName": "accountee_legal_document_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_legal_documents",
+          "columnSourceOriginalColumn": "accountee_legal_document_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_legal_documents",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "expiry_date": {
+          "columnName": "expiry_date",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "expiry_date"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "is_expired": {
+          "columnName": "is_expired",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "is_expired"
+        },
+        "is_verified": {
+          "columnName": "is_verified",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "is_verified"
+        },
+        "legal_document_id": {
+          "columnName": "legal_document_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_id"
+        },
+        "legal_document_value": {
+          "columnName": "legal_document_value",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_value"
+        },
+        "legal_document_label": {
+          "columnName": "legal_document_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_label"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_legal_documents.accountee_legal_document_id,act_accountee_legal_documents.accountee_id,act_legal_documents.* FROM act_accountee_legal_documents LEFT JOIN act_legal_documents ON act_accountee_legal_documents.legal_document_id = act_legal_documents.legal_document_id"
+    },
+    "act_vw_accountee_medias": {
+      "viewName": "act_vw_accountee_medias",
+      "viewColumns": {
+        "accountee_media_id": {
+          "columnName": "accountee_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_medias",
+          "columnSourceOriginalColumn": "accountee_media_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_medias",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "media_details": {
+          "columnName": "media_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_details"
+        },
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_id"
+        },
+        "media_name": {
+          "columnName": "media_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_name"
+        },
+        "media_path": {
+          "columnName": "media_path",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_path"
+        },
+        "media_size": {
+          "columnName": "media_size",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_size"
+        },
+        "media_type": {
+          "columnName": "media_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_type"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_medias.accountee_media_id,act_accountee_medias.accountee_id,act_medias.* FROM act_accountee_medias LEFT JOIN act_medias ON act_accountee_medias.media_id = act_medias.media_id"
+    },
+    "act_vw_accountee_phone_numbers": {
+      "viewName": "act_vw_accountee_phone_numbers",
+      "viewColumns": {
+        "accountee_phone_number_id": {
+          "columnName": "accountee_phone_number_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_phone_numbers",
+          "columnSourceOriginalColumn": "accountee_phone_number_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_phone_numbers",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "phone_number_id": {
+          "columnName": "phone_number_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_id"
+        },
+        "phone_number_label": {
+          "columnName": "phone_number_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_label"
+        },
+        "phone_number_value": {
+          "columnName": "phone_number_value",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_value"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_phone_numbers.accountee_phone_number_id,act_accountee_phone_numbers.accountee_id,act_phone_numbers.* FROM act_accountee_phone_numbers LEFT JOIN act_phone_numbers ON act_accountee_phone_numbers.phone_number_id = act_phone_numbers.phone_number_id"
+    },
+    "act_vw_accountee_social_medias": {
+      "viewName": "act_vw_accountee_social_medias",
+      "viewColumns": {
+        "accountee_social_media_id": {
+          "columnName": "accountee_social_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_social_medias",
+          "columnSourceOriginalColumn": "accountee_social_media_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_social_medias",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "social_media_id": {
+          "columnName": "social_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_id"
+        },
+        "social_media_type": {
+          "columnName": "social_media_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_type"
+        },
+        "social_media_value": {
+          "columnName": "social_media_value",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_value"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_social_medias.accountee_social_media_id,act_accountee_social_medias.accountee_id,act_social_medias.* FROM act_accountee_social_medias LEFT JOIN act_social_medias ON act_accountee_social_medias.social_media_id = act_social_medias.social_media_id"
+    },
+    "act_vw_accountee_websites": {
+      "viewName": "act_vw_accountee_websites",
+      "viewColumns": {
+        "accountee_website_id": {
+          "columnName": "accountee_website_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_websites",
+          "columnSourceOriginalColumn": "accountee_website_id"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountee_websites",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "website_id": {
+          "columnName": "website_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_id"
+        },
+        "website_label": {
+          "columnName": "website_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_label"
+        },
+        "website_value": {
+          "columnName": "website_value",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_value"
+        }
+      },
+      "viewQuery": "SELECT act_accountee_websites.accountee_website_id,act_accountee_websites.accountee_id,act_websites.* FROM act_accountee_websites LEFT JOIN act_websites ON act_accountee_websites.website_id = act_websites.website_id"
+    },
+    "act_vw_accountees": {
+      "viewName": "act_vw_accountees",
+      "viewColumns": {
+        "accountee_image_media": {
+          "columnName": "accountee_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "json_object",
+          "columnSourceOriginalColumn": ""
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "accountee_image_media_id": {
+          "columnName": "accountee_image_media_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "accountee_image_media_id"
+        },
+        "accountee_name": {
+          "columnName": "accountee_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "accountee_name"
+        },
+        "financial_year_end": {
+          "columnName": "financial_year_end",
+          "columnType": "DATE",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "financial_year_end"
+        },
+        "financial_year_start": {
+          "columnName": "financial_year_start",
+          "columnType": "DATE",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "financial_year_start"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "accountee_remarks": {
+          "columnName": "accountee_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "accountee_remarks"
+        },
+        "accountee_type": {
+          "columnName": "accountee_type",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "accountee_type"
+        },
+        "email_addresses": {
+          "columnName": "email_addresses",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "email_addresses"
+        },
+        "phone_numbers": {
+          "columnName": "phone_numbers",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "phone_numbers"
+        },
+        "addresses": {
+          "columnName": "addresses",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "addresses"
+        },
+        "fax_numbers": {
+          "columnName": "fax_numbers",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "fax_numbers"
+        },
+        "websites": {
+          "columnName": "websites",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "websites"
+        },
+        "bank_accounts": {
+          "columnName": "bank_accounts",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "bank_accounts"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "legal_identifier"
+        }
+      },
+      "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS accountee_image_media,act_accountees.* FROM act_accountees LEFT JOIN act_medias ON act_accountees.accountee_image_media_id = act_medias.media_id"
+    },
     "act_vw_assets": {
       "viewName": "act_vw_assets",
       "viewColumns": {
@@ -23222,7 +24194,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "legal_identifier"
         }
       },
-      "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS party_image_media ,act_parties.* FROM act_parties LEFT JOIN act_medias ON act_parties.party_image_media_id = act_medias.media_id"
+      "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS party_image_media,act_parties.* FROM act_parties LEFT JOIN act_medias ON act_parties.party_image_media_id = act_medias.media_id"
     },
     "act_vw_party_addresses": {
       "viewName": "act_vw_party_addresses",
@@ -25904,6 +26876,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoices",
           "columnSourceOriginalColumn": "chargeable_services_count"
+        },
+        "supply_mode": {
+          "columnName": "supply_mode",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoices",
+          "columnSourceOriginalColumn": "supply_mode"
         }
       },
       "viewQuery": "SELECT act_vw_suppliers.supplier_type,act_vw_suppliers.party_id,act_vw_suppliers.party_name,act_purchase_invoices.* FROM act_purchase_invoices LEFT JOIN act_vw_suppliers ON act_purchase_invoices.supplier_id = act_vw_suppliers.supplier_id"
@@ -26874,6 +27854,30 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "chargeable_services_count"
+        },
+        "received_by": {
+          "columnName": "received_by",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "received_by"
+        },
+        "sale_invoice_details": {
+          "columnName": "sale_invoice_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_details"
+        },
+        "supply_mode": {
+          "columnName": "supply_mode",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "supply_mode"
         }
       },
       "viewQuery": "SELECT act_vw_customers.customer_category,act_vw_customers.party_name,act_vw_customers.party_id,act_sale_invoices.* FROM act_sale_invoices LEFT JOIN act_vw_customers ON act_sale_invoices.customer_id = act_vw_customers.customer_id"

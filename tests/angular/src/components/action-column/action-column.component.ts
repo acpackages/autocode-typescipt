@@ -21,7 +21,6 @@ export class ActionColumnComponent {
 
   constructor(){
     // console.log(this);
-    // console.log(this);
   }
 
   handleDelete(event:any){
