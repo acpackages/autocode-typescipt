@@ -6,6 +6,7 @@ import { AcHooks } from "../../core/ac-hooks";
 import { AcEnumConditionOperator } from "../../enums/ac-enum-condition-operator.enum";
 import { AcEnumLogicalOperator } from "../../enums/ac-enum-logical-operator.enum";
 import { AcEnumSortOrder } from "../../enums/ac-enum-sort-order.enum";
+import { IAcFilter, IAcFilterGroup, IAcSortOrder } from "../../interfaces/_interfaces.export";
 import { AcFilterGroup } from "../../models/ac-filter-group.model";
 import { AcFilter } from "../../models/ac-filter.model";
 import { AcSortOrder } from "../../models/ac-sort-order.model";
@@ -18,10 +19,10 @@ export class AcDataCacheCollection {
   };
 
   private _data: any[] = [];
-  get data(): any[] {
+  get rows(): any[] {
     return this._data;
   }
-  set data(value: any[]) {
+  set rows(value: any[]) {
     if (value != this._data) {
       this._data = value;
     }
@@ -35,16 +36,16 @@ export class AcDataCacheCollection {
   hooks: AcHooks = new AcHooks();
   uniqueRowKey: string;
 
-  constructor({ name, data = [], dataCache,uniqueRowKey = '__ac_row_id__',autoSetUniqueIdToData = false}: { name: string, data?: any, dataCache: AcDataCache,uniqueRowKey?:string;autoSetUniqueIdToData?:boolean }) {
+  constructor({ name, rows = [], dataCache,uniqueRowKey = '__ac_row_id__',autoSetUniqueIdToData = false}: { name: string, rows?: any, dataCache: AcDataCache,uniqueRowKey?:string;autoSetUniqueIdToData?:boolean }) {
     this.autoSetUniqueIdToData = autoSetUniqueIdToData;
     this.uniqueRowKey = uniqueRowKey;
-    this.data = data;
+    this.rows = rows;
     this.name = name;
     this.dataCache = dataCache;
   }
 
   addRow({ data }: { data: any }): any {
-    this.data.push(data);
+    this.rows.push(data);
     return data;
   }
 
@@ -66,7 +67,7 @@ export class AcDataCacheCollection {
     return undefined;
   }
 
-  private evaluateFilter({ filter, row }: { filter: AcFilter, row: any }): boolean {
+  private evaluateFilter({ filter, row }: { filter: IAcFilter, row: any }): boolean {
     const field = filter.key;
     if (!field) return true;
 
@@ -123,17 +124,21 @@ export class AcDataCacheCollection {
     }
   }
 
-  private evaluateFilterGroup({ filterGroup, row }: { filterGroup: AcFilterGroup, row: any }): boolean {
-    if (filterGroup.filters.length === 0 && filterGroup.filterGroups.length === 0) return true;
+  private evaluateFilterGroup({ filterGroup, row }: { filterGroup: IAcFilterGroup, row: any }): boolean {
+    if ((filterGroup.filters && filterGroup.filters.length === 0) && (filterGroup.filterGroups && filterGroup.filterGroups.length === 0)) return true;
 
     const results: boolean[] = [];
 
-    for (const filter of filterGroup.filters) {
-      results.push(this.evaluateFilter({ filter, row }));
+    if(filterGroup.filters){
+      for (const filter of filterGroup.filters) {
+        results.push(this.evaluateFilter({ filter, row }));
+      }
     }
 
-    for (const subGroup of filterGroup.filterGroups) {
-      results.push(this.evaluateFilterGroup({ filterGroup: subGroup, row }));
+    if(filterGroup.filterGroups){
+      for (const subGroup of filterGroup.filterGroups) {
+        results.push(this.evaluateFilterGroup({ filterGroup: subGroup, row }));
+      }
     }
 
     return filterGroup.operator === AcEnumLogicalOperator.Or ? results.some(Boolean) : results.every(Boolean);
@@ -147,9 +152,9 @@ export class AcDataCacheCollection {
     });
   }
 
-  async getRows({ filterGroup, sortOrder, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize }: {
-    filterGroup?: AcFilterGroup;
-    sortOrder?: AcSortOrder;
+  async getRows({ filters, sort, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize }: {
+    filters?: IAcFilterGroup;
+    sort?: IAcSortOrder;
     searchQuery?: string;
     startIndex?: number;
     rowsCount?: number;
@@ -167,26 +172,26 @@ export class AcDataCacheCollection {
     }
     if (rowsCount === -1) rowsCount = Infinity;
 
-    let filteredRows = [...this.data];
+    let filteredRows = [...this.rows];
 
     if (searchQuery) {
       const keys = Object.keys(filteredRows[0]);
       filteredRows = filteredRows.filter((row: any) => this.evaluateSearch(searchQuery, row, keys));
     }
 
-    if (filterGroup) {
-      const hasFilters = filterGroup.filters.length > 0 || filterGroup.filterGroups.length > 0;
+    if (filters) {
+      const hasFilters = (filters.filters && filters.filters.length > 0) || (filters.filterGroups && filters.filterGroups.length > 0);
       if (hasFilters) {
-        filteredRows = filteredRows.filter((row: any) => this.evaluateFilterGroup({ filterGroup, row }));
+        filteredRows = filteredRows.filter((row: any) => this.evaluateFilterGroup({ filterGroup:filters, row }));
       }
     }
 
-    if(sortOrder){
-      if (sortOrder.sortOrders.length > 0) {
+    if(sort){
+      if (sort.sortOrders.length > 0) {
       filteredRows.sort((a: any, b: any): number => {
-        for (const sort of sortOrder.sortOrders) {
-          const valA = a[sort.key];
-          const valB = b[sort.key];
+        for (const sortDetails of sort.sortOrders) {
+          const valA = a[sortDetails.key];
+          const valB = b[sortDetails.key];
           let result = 0;
           if (valA == null && valB == null) {
             result = 0;
@@ -200,7 +205,7 @@ export class AcDataCacheCollection {
             result = Number(valA) - Number(valB);
           }
           if (result !== 0) {
-            return sort.order === AcEnumSortOrder.Ascending ? result : -result;
+            return sortDetails.order === AcEnumSortOrder.Ascending ? result : -result;
           }
         }
         return 0;
@@ -235,11 +240,11 @@ export class AcDataCacheCollection {
   updateRow({ key, value, rowId, data, addIfMissing = true }: { key?: string; value?: any; rowId?: string; data?: any, addIfMissing?: boolean }): any | undefined {
     let targetRow: any | undefined;
     if (rowId !== undefined) {
-      targetRow = this.data.find((r: any) => r.rowId === rowId);
+      targetRow = this.rows.find((r: any) => r.rowId === rowId);
     } else if (key && value !== undefined) {
-      targetRow = this.data.find((r: any) => r[key!] === value);
+      targetRow = this.rows.find((r: any) => r[key!] === value);
     } else if (data) {
-      targetRow = this.data.find((r: any) => r === data); // reference equality
+      targetRow = this.rows.find((r: any) => r === data); // reference equality
     }
 
     if (targetRow) {

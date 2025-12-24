@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { AcDataCache, AcEnumConditionOperator, AcFilterGroup, IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
+import { AcDataCache, AcEnumConditionOperator, AcEnumLogicalOperator, AcFilterGroup, IAcFilterGroup, IAcOnDemandRequestArgs } from "@autocode-ts/autocode";
 import { customersData } from "../../../../data/customers-data";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { AcModal } from "@autocode-ts/ac-browser";
@@ -9,33 +9,33 @@ export class AcDataCacheTestPage extends HTMLElement {
   pageHeader: PageHeader = new PageHeader();
   dataCache: AcDataCache = new AcDataCache();
 
-  filterKey:any = '';
-  filterOperator:any = '';
-  filterValue:any = '';
+  filterKey: any = '';
+  filterOperator: any = '';
+  filterValue: any = '';
 
-  getCurrentPage:number = 0;
-  getStartIndex:number = 0;
-  getRowsCount:number = 100;
+  getCurrentPage: number = 0;
+  getStartIndex: number = 0;
+  getRowsCount: number = 100;
 
   connectedCallback() {
     this.prepend(this.pageHeader.element);
     this.pageHeader.pageTitle = 'Data Cache Tests';
-    this.dataCache.onDemandFunction = async ({collection,args}:{collection:string,args: IAcOnDemandRequestArgs}) => {
+    this.dataCache.onDemandFunction = async ({ collection, args }: { collection: string, args: IAcOnDemandRequestArgs }) => {
       const response = {
-        totalCount:customersData.length,
-        data:customersData
+        totalCount: customersData.length,
+        data: customersData
       };
       console.log(response);
       args.successCallback(response);
     };
-    this.dataCache.registerCollection({collection:'customers','uniqueRowKey':'customer_id'});
+    this.dataCache.registerCollection({ collection: 'customers', 'uniqueRowKey': 'customer_id' });
 
     // ONLINE DATA END
 
     this.registerHeaderActions();
   }
 
-  registerHeaderActions(){
+  registerHeaderActions() {
     this.pageHeader.addMenuItem({
       label: 'Actions',
       children: [
@@ -57,17 +57,17 @@ export class AcDataCacheTestPage extends HTMLElement {
             this.openGetOnDemandRowsModal();
           }
         },
-         {
+        {
           label: 'Refresh Rows',
           callback: () => {
-            this.dataCache.refreshCollection({collection:'customers'});
+            this.dataCache.refreshCollection({ collection: 'customers' });
           }
         }
       ]
     });
   }
 
-  openGetOnDemandRowsModal(){
+  openGetOnDemandRowsModal() {
     const modal = new AcModal();
     modal.innerHTML = `<div class="bg-white p-3" style="border-radius:10px">
       <div class="form-group mb-3">
@@ -87,23 +87,25 @@ export class AcDataCacheTestPage extends HTMLElement {
 
     pageInput.value = `${this.getCurrentPage}`;
     rowsInput.value = `${this.getRowsCount}`;
-    getButton.addEventListener('click',async ()=>{
+    getButton.addEventListener('click', async () => {
       this.getCurrentPage = parseInt(pageInput.value);
       this.getRowsCount = parseInt(rowsInput.value);
-      const response =  await this.dataCache.getRows({collection:'customers',pageSize:this.getRowsCount,pageNumber:this.getCurrentPage});
+      const response = await this.dataCache.getRows({ collection: 'customers', pageSize: this.getRowsCount, pageNumber: this.getCurrentPage });
       console.log(response);
       modal.close();
     })
 
-    modal.on({event:'close',callback:()=>{
-      modal.remove();
-    }});
+    modal.on({
+      event: 'close', callback: () => {
+        modal.remove();
+      }
+    });
     this.ownerDocument.querySelector('body')?.append(modal);
     modal.open();
     //
   }
 
-  openFilterModal(){
+  openFilterModal() {
     const modal = new AcModal();
     modal.innerHTML = `<div class="bg-white p-3" style="border-radius:10px">
       <div class="form-group mb-3">
@@ -129,11 +131,11 @@ export class AcDataCacheTestPage extends HTMLElement {
     const filterValueInput = modal.querySelector('.filter-value') as HTMLInputElement;
     const applyButton = modal.querySelector('.apply-button') as HTMLButtonElement;
 
-    for(const key of Object.keys(customersData[0])){
+    for (const key of Object.keys(customersData[0])) {
       filterKeyInput.innerHTML += `<option value="${key}">${key}</option>`;
     }
 
-    for(const operator of Object.values(AcEnumConditionOperator)){
+    for (const operator of Object.values(AcEnumConditionOperator)) {
       filterOperatorInput.innerHTML += `<option value="${operator}">${operator}</option>`;
     }
 
@@ -141,26 +143,32 @@ export class AcDataCacheTestPage extends HTMLElement {
     filterOperatorInput.value = this.filterOperator;
     filterValueInput.value = this.filterValue;
 
-    applyButton.addEventListener('click',async ()=>{
+    applyButton.addEventListener('click', async () => {
       this.filterKey = filterKeyInput.value;
       this.filterOperator = filterOperatorInput.value;
       this.filterValue = filterValueInput.value;
-      const filterGroup = new AcFilterGroup();
-      filterGroup.setFilter({
-        key:this.filterKey,
-        operator:this.filterOperator,
-        value:this.filterValue
-      });
+      const filterGroup: IAcFilterGroup = {
+        operator: AcEnumLogicalOperator.And,
+        filters: [
+          {
+            key: this.filterKey,
+            operator: this.filterOperator,
+            value: this.filterValue
+          }
+        ]
+      };
       console.log(filterGroup);
-      const rows = await this.dataCache.getRows({collection:'customers',filterGroup});
+      const rows = await this.dataCache.getRows({ collection: 'customers', filters: filterGroup });
       console.log(rows);
       // const rows = await dataManager.getRows({startIndex:this.onDemandStartIndex,rowsCount:this.onDemandRowsCount});
       modal.close();
     })
 
-    modal.on({event:'close',callback:()=>{
-      modal.remove();
-    }});
+    modal.on({
+      event: 'close', callback: () => {
+        modal.remove();
+      }
+    });
     this.ownerDocument.querySelector('body')?.append(modal);
     modal.open();
     //

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
 import { AcLogger } from "../../core/ac-logger";
-import { AcFilterGroup } from "../../models/ac-filter-group.model";
-import { AcSortOrder } from "../../models/ac-sort-order.model";
+import { IAcFilterGroup } from "../../interfaces/ac-filter-group.interface";
+import { IAcSortOrder } from "../../interfaces/ac-sort-order.interface";
 import { IAcOnDemandRequestArgs } from "../interfaces/ac-on-demand-request-args.interface";
 import { IAcOnDemandResponseArgs } from "../interfaces/ac-on-demand-response-args.interface";
 import { AcDataCacheCollection } from "../models/ac-data-cache-collection.model";
@@ -42,6 +43,12 @@ export class AcDataCache {
     return result;
   }
 
+  clearCollection({ collection }: { collection: string }){
+    if(!this.hasCollection({collection})){
+      this.collections.get(collection)!.rows = [];
+    }
+  }
+
   deleteRow({ collection, key, value, rowId, data }: { collection: string, key?: string; value?: any; rowId?: string; data?: any }): any | undefined {
     this.logger.log('Deleting row from collection', { collection, rowId, key, valueProvided: !!value, dataProvided: !!data });
     const cacheCollection = this.collections.get(collection);
@@ -55,10 +62,10 @@ export class AcDataCache {
     return result;
   }
 
-  async getRows({ collection, filterGroup, sortOrder, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize }: {
+  async getRows({ collection, filters, sort, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize }: {
     collection: string,
-    filterGroup?: AcFilterGroup;
-    sortOrder?: AcSortOrder;
+    filters?: IAcFilterGroup;
+    sort?: IAcSortOrder;
     searchQuery?: string;
     startIndex?: number;
     rowsCount?: number;
@@ -66,24 +73,13 @@ export class AcDataCache {
     pageNumber?: number;
     pageSize?: number;
   }): Promise<{ rows: any[], totalCount: number }> {
-    this.logger.log('Getting rows from collection', {
-      collection,
-      filterGroup: !!filterGroup,
-      sortOrder: !!sortOrder,
-      searchQuery,
-      startIndex,
-      rowsCount,
-      endIndex,
-      pageNumber,
-      pageSize
-    });
     const cacheCollection = this.collections.get(collection);
     if (!cacheCollection) {
       this.logger.log('Error: Collection not found', { collection });
       throw new Error(`Collection ${collection} not found`);
     }
     this.logger.log('Collection found, retrieving rows');
-    const result = await cacheCollection.getRows({ filterGroup, sortOrder, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize });
+    const result = await cacheCollection.getRows({ filters, sort, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize });
     this.logger.log('Rows retrieved successfully', { collection, rowsCount: result.rows.length, totalCount: result.totalCount });
     return result;
   }
@@ -105,10 +101,10 @@ export class AcDataCache {
     this.logger.log('Collection found, checking onDemandFunction');
     if (this.onDemandFunction) {
       this.logger.log('onDemandFunction available, clearing data and requesting refresh');
-      cacheCollection.data = [];
+      cacheCollection.rows = [];
       const requestArgs: IAcOnDemandRequestArgs = {
         successCallback: (response: IAcOnDemandResponseArgs) => {
-          cacheCollection.data = response.data;
+          cacheCollection.rows = response.data;
           this.logger.log('Data refreshed via onDemandFunction', { collection, newDataCount: response.data.length });
         }
       };
@@ -120,7 +116,7 @@ export class AcDataCache {
     this.logger.log('Collection refresh complete', { collection });
   }
 
-  registerCollection({ collection, uniqueRowKey,data }: { collection: string, uniqueRowKey: string,data?:any[] }) {
+  registerCollection({ collection, uniqueRowKey,rows }: { collection: string, uniqueRowKey: string,rows?:any[] }) {
     this.logger.log('Registering collection', { collection, uniqueRowKey });
     if (this.collections.has(collection)) {
       this.logger.log('Error: Collection already exists', { collection });
@@ -130,14 +126,20 @@ export class AcDataCache {
     const cacheCollection:AcDataCacheCollection = new AcDataCacheCollection({dataCache:this,name:collection,uniqueRowKey:uniqueRowKey});
     this.collections.set(collection, cacheCollection);
     this.logger.log('Collection registered in map', { collection });
-    if(data!=undefined){
-      cacheCollection.data = data;
+    if(rows!=undefined){
+      cacheCollection.rows = rows;
     }
     else{
       this.refreshCollection({collection:collection});
     }
     this.logger.log('Collection registration complete');
     return cacheCollection;
+  }
+
+  setRows({ collection,rows }: { collection: string,rows:any[] }){
+    if(!this.hasCollection({collection})){
+      this.collections.get(collection)!.rows = rows;
+    }
   }
 
   updateRow({ collection, key, value, rowId, data, addIfMissing = true }: { collection: string, key?: string; value?: any; rowId?: string; data?: any, addIfMissing?: boolean }): any | undefined {
