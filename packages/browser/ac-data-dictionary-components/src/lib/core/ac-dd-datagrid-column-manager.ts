@@ -78,8 +78,10 @@ export class AcDDDatagridColumnManager {
     if (ddTableColumn) {
       let resolvedDefinition: IAcDatagridColumnDefinition | undefined;
       if (this.columnResolver && skipResolver != true) {
-        resolvedDefinition = this.columnResolver();
-        objectCopyTo(resolvedDefinition, result);
+        resolvedDefinition = this.columnResolver({tableName,columnName,defaultValues,ddTableColumn});
+        if(resolvedDefinition){
+          objectCopyTo(resolvedDefinition, result);
+        }
       }
       if (resolvedDefinition == undefined) {
         result.title = ddTableColumn.getColumnTitle();
@@ -188,8 +190,10 @@ export class AcDDDatagridColumnManager {
     if (ddViewColumn) {
       let resolvedDefinition: IAcDatagridColumnDefinition | undefined;
       if (this.columnResolver && skipResolver != true) {
-        resolvedDefinition = this.columnResolver();
-        objectCopyTo(resolvedDefinition, result);
+        resolvedDefinition = this.columnResolver({viewName,columnName,defaultValues,ddViewColumn});
+        if(resolvedDefinition){
+          objectCopyTo(resolvedDefinition, result);
+        }
       }
       if (resolvedDefinition == undefined) {
         result.title = ddViewColumn.getColumnTitle();

@@ -37,8 +37,10 @@ export class AcDDInputManager {
     const ddTableColumn: AcDDTableColumn | null = AcDataDictionary.getTableColumn({ tableName, columnName });
     let resolvedDefinition;
     if (this.inputResolver) {
-      resolvedDefinition = this.inputResolver();
-      result = resolvedDefinition;
+      resolvedDefinition = this.inputResolver({columnName,tableName,ddTableColumn});
+      if(resolvedDefinition){
+        result = resolvedDefinition;
+      }
     }
     if (resolvedDefinition == undefined) {
       if (ddTableColumn) {
