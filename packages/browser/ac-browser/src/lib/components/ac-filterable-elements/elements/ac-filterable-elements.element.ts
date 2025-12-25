@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcEvents } from "@autocode-ts/autocode";
 import { AcFilterableElementsAttributeName } from "../consts/ac-filterable-elements-attribute-name.const";
 import { acHideElement, acRegisterCustomElement, acShowElement } from "../../../utils/ac-element-functions";
 import { AC_FLITERABLE_TAG } from "../_ac-filterable-elements.export";
