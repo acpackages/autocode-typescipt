@@ -60,7 +60,15 @@ export class AcTagsInput extends AcInputBase {
   override set value(val: string) {
     let valueString: string = typeof val === 'string' ? val : '';
     if (stringIsJson(val)) {
-      valueString = JSON.parse(val).join(this.separator);
+      try{
+        valueString = JSON.parse(val).join(this.separator);
+      }
+      catch(ex){
+        //
+      }
+    }
+    if(Array.isArray(val)){
+      valueString = val.join(this.separator);
     }
     super.value = valueString;
     this._filteredOptions = this._tagOptions.filter(opt => !this.value.split(this.separator).map(v => v.trim()).includes(opt[this.valueKey]));

@@ -178,11 +178,11 @@ export class AcOptionInput extends AcInput {
   protected override setValueFromAcContext() {
     if (this.acContextKey && this.acContext) {
       this.refreshChecked();
-      this.acContext.on(AcEnumContextEvent.Change, (args: IAcContextEvent) => {
+      this.acContext.on({event:AcEnumContextEvent.Change, callback:(args: IAcContextEvent) => {
         if (args.property == this.acContextKey) {
           this.refreshChecked();
         }
-      });
+      }});
     }
   }
 

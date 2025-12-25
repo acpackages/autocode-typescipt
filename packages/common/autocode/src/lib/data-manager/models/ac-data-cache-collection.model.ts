@@ -7,10 +7,8 @@ import { AcEnumConditionOperator } from "../../enums/ac-enum-condition-operator.
 import { AcEnumLogicalOperator } from "../../enums/ac-enum-logical-operator.enum";
 import { AcEnumSortOrder } from "../../enums/ac-enum-sort-order.enum";
 import { IAcFilter, IAcFilterGroup, IAcSortOrder } from "../../interfaces/_interfaces.export";
-import { AcFilterGroup } from "../../models/ac-filter-group.model";
-import { AcFilter } from "../../models/ac-filter.model";
-import { AcSortOrder } from "../../models/ac-sort-order.model";
 import { AcDataCache } from "../core/ac-data-cache";
+import { IAcDataCacheGetResult } from "../interfaces/ac-data-cache-get-result.interface";
 
 export class AcDataCacheCollection {
 
@@ -18,13 +16,13 @@ export class AcDataCacheCollection {
     this.notifyRowDataChange();
   };
 
-  private _data: any[] = [];
+  private _rows: any[] = [];
   get rows(): any[] {
-    return this._data;
+    return this._rows;
   }
   set rows(value: any[]) {
-    if (value != this._data) {
-      this._data = value;
+    if (value != this._rows) {
+      this._rows = value;
     }
   }
 
@@ -52,16 +50,16 @@ export class AcDataCacheCollection {
   deleteRow({ key, value, rowId, data }: { key?: string; value?: any; rowId?: string; data?: any }): any | undefined {
     let targetRow: any | undefined;
     if (rowId !== undefined) {
-      targetRow = this._data.find((r: any) => r.rowId === rowId);
+      targetRow = this._rows.find((r: any) => r.rowId === rowId);
     } else if (key && value !== undefined) {
-      targetRow = this._data.find((r: any) => r[key!] === value);
+      targetRow = this._rows.find((r: any) => r[key!] === value);
     } else if (data) {
-      targetRow = this._data.find((r: any) => r === data);
+      targetRow = this._rows.find((r: any) => r === data);
     }
 
     if (targetRow) {
-      const index = this._data.indexOf(targetRow);
-      this._data.splice(index, 1);
+      const index = this._rows.indexOf(targetRow);
+      this._rows.splice(index, 1);
       return targetRow;
     }
     return undefined;
@@ -161,7 +159,7 @@ export class AcDataCacheCollection {
     endIndex?: number;
     pageNumber?: number;
     pageSize?: number;
-  }): Promise<{ rows: any[], totalCount: number }> {
+  }): Promise<IAcDataCacheGetResult> {
     startIndex = startIndex ?? 0;
     rowsCount = rowsCount ?? -1;
     if (pageNumber !== undefined && pageSize !== undefined) {
