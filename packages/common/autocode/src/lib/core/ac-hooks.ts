@@ -224,7 +224,7 @@ export class AcHooks {
     return removed;
   }
 
-  unsubscribeAllEvents({ callback,subscriptionId }: { callback?:Function,subscriptionId?: string }): boolean {
+  unsubscribeAllHooks({ callback,subscriptionId }: { callback?:Function,subscriptionId?: string }): boolean {
     if(callback){
       for (const id of Object.keys(this.allHookCallbacks)) {
         if (this.allHookCallbacks.get(id) == callback) {

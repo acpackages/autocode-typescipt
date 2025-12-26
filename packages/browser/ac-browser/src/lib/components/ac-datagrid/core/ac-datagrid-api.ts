@@ -454,6 +454,19 @@ export class AcDatagridApi {
     }
   }
 
+  destroy(){
+    this.dataManager.destroy();
+    (this.dataManager as any) = null;
+    this.events.clearSubscriptions();
+    (this.events as any) = null;
+    this.hooks.clearSubscriptions();
+    (this.hooks as any) = null;
+    for(const ext of Object.values(this.extensions)){
+      ext.destroy();
+    }
+    this.extensions = null;
+  }
+
   enableExtension({ extensionName }: { extensionName: string }): AcDatagridExtension | null {
     this.logger.log('Enabling extension', { extensionName });
     if (AcDatagridExtensionManager.hasExtension({ extensionName: extensionName })) {
@@ -512,13 +525,6 @@ export class AcDatagridApi {
     } else {
       this.logger.log('Row not found for focus', { index });
     }
-  }
-
-  on({ event, callback }: { event: string, callback: Function }): string {
-    this.logger.log('Subscribing to event', { event });
-    const subscriptionId = this.events.subscribe({ event: event, callback: callback });
-    this.logger.log('Subscribed to event', { event, subscriptionId });
-    return subscriptionId;
   }
 
   getColumn({ columnId, index, originalIndex, key }: { key?: string, columnId?: string, index?: number, originalIndex?: number }): IAcDatagridColumn | undefined {
@@ -603,6 +609,15 @@ export class AcDatagridApi {
     const state = this.datagridState.toJson();
     this.logger.log('Retrieved state', { keys: Object.keys(state) });
     return state;
+  }
+
+  off({ event, callback,subscriptionId }: { event?: string, callback?: Function,subscriptionId?:string }): boolean {
+    return this.events.unsubscribe({ event, callback,subscriptionId });
+  }
+
+  on({ event, callback }: { event: string, callback: Function }): string {
+    const subscriptionId = this.events.subscribe({ event: event, callback: callback });
+    return subscriptionId;
   }
 
   refreshRows(): void {
@@ -767,7 +782,6 @@ export class AcDatagridApi {
     this.logger.log('Executed RowPositionChange event');
   }
 
-  // PENDING
   updateRow({ data, value, key, rowId, highlightCells = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDatagridRow | undefined {
     this.logger.log('Updating row', { rowId, key, addIfMissing, highlightCells, dataProvided: !!data, valueProvided: !!value });
     const datagridRow: IAcDatagridRow | undefined = this.dataManager.updateRow({ data, value, key, rowId, addIfMissing }) as IAcDatagridRow;

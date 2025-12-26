@@ -4,6 +4,10 @@ export abstract class AcDatagridExtension{
   datagridApi!:AcDatagridApi;
   hookId = '';
 
+  destroy(){
+    (this.datagridApi as any) = null;
+  }
+
   init(){
     // Init implementation in child
   }

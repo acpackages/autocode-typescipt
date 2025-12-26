@@ -348,6 +348,16 @@ export class AcDataManager {
     return dataRow;
   }
 
+  destroy(){
+    this.hooks.clearSubscriptions();
+    (this.hooks as any) = null;
+    this.events.clearSubscriptions();
+    (this.events as any) = null;
+    (this.logger as any) = null;
+    this.allRows = [];
+    (this.allRows as any) = null;
+  }
+
   private evaluateFilter(filter: AcFilter, row: IAcDataRow): boolean {
     this.logger.log("Evaluating filter", { key: filter.key, operator: filter.operator, value: filter.value });
     const field = filter.key;

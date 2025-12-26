@@ -11,15 +11,18 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   datagridRow?: IAcDatagridRow;
   agGridExtension?: AcDatagridOnAgGridExtension;
   instance?: IAcDatagridCellRenderer;
+
+  blurTimeout:any;
   params: any;
   element: HTMLInputElement = document.createElement('input');
   private isFocused: boolean = false;
   editor:any;
 
+
   handleBlur: Function = () => {
     this.isFocused = false;
     const cellValue = this.getValue();
-    setTimeout(() => {
+    this.blurTimeout = setTimeout(() => {
       if (!this.isFocused) {
         if (this.datagridRow && this.datagridColumn && this.datagridApi) {
           if (this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
@@ -52,16 +55,28 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
 
   destroy(): void {
     (this.datagridApi as any) = null;
+    if(this.datagridCell){
+      (this.datagridCell.element as any) = null;
+      (this.datagridCell as any) = null;
+    }
+    (this.datagridColumn as any) = null;
+    (this.datagridRow as any) = null;
     if (this.params) {
       this.params.eGridCell.removeEventListener('focusout', this.handleBlur);
       this.params.eGridCell.removeEventListener('focusin', this.handleFocus);
+      this.params = null;
     }
     if (this.editor) {
       if (this.editor.destroy != undefined) {
         this.editor.destroy();
       }
+      this.editor = null;
     }
+    (this.agGridExtension as any) = null;
+    (this.instance as any) = null;
     this.element.remove();
+    (this.element as any) = null;
+    clearTimeout(this.blurTimeout);
   }
 
   getGui(): HTMLElement {

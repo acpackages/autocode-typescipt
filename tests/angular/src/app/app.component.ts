@@ -41,6 +41,7 @@ export class AppComponent implements AfterViewInit{
       this.multiRouter.setActive({id:args.detail.id});
     });
     this.windowsTabs.addEventListener('remove',(args:any)=>{
+      console.log("Removed tab",args);
       this.multiRouter.remove({id:args.detail.id});
     });
     this.windowsTabs.addEventListener('addNewClick',()=>{

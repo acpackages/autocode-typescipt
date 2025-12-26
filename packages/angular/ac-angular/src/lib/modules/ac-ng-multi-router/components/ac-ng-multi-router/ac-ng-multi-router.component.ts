@@ -43,6 +43,7 @@ export class AcNgMultiRouterComponent implements OnInit {
     const newRouter: IAcNgRouterOutlet = { id, title, route, isActive: false };
     this.routerOutlets.push(newRouter);
     const componentRef: ComponentRef<AcNgRouterComponent> = this.panels.createComponent(AcNgRouterComponent);
+    newRouter.routerComponentRef = componentRef;
     newRouter.routerComponent = componentRef.instance;
     componentRef.instance.id = id;
     this.onAdd.emit(newRouter);
@@ -101,6 +102,12 @@ export class AcNgMultiRouterComponent implements OnInit {
   remove({ id }: { id: string }) {
     const removedRouter = this.routerOutlets.find(t => t.id === id);
     if (!removedRouter) return;
+    if (removedRouter.routerComponentRef) {
+      removedRouter.routerComponentRef.destroy();
+    }
+    removedRouter.routerComponent = undefined;
+    removedRouter.routerComponentRef = undefined;
+
     this.router.navigate([{ outlets: { [id]: null } }]);
     this.routerOutlets = this.routerOutlets.filter(t => t.id !== id);
     if (this.activeRouterOutlet?.id === id && this.routerOutlets.length > 0) {

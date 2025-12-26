@@ -1,152 +1,117 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridApi, AcDatagridRowSelectionExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, AcEnumDatagridRowSelectionHook, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowSelectionChangeEvent, IAcDatagridSelectionMultipleRowsChangeEvent } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { GridApi, IRowNode, RowSelectedEvent } from "ag-grid-community";
-import { AcLogger } from "@autocode-ts/autocode";
 
 export class AcDatagridRowSelectionExtensionOnAgGrid {
-  agGridExtension!: AcDatagridOnAgGridExtension;
+  agGridExtension?: AcDatagridOnAgGridExtension | null;
   allowRowSelection: boolean = false;
-  datagridApi!: AcDatagridApi;
-  gridApi!: GridApi;
-  rowSelectionExtension!: AcDatagridRowSelectionExtension;
-  logger!:AcLogger;
+  datagridApi?: AcDatagridApi | null;
+  gridApi?: GridApi | null;
+  rowSelectionExtension?: AcDatagridRowSelectionExtension | null;
 
-  constructor({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }) {
-    this.logger = agGridExtension.logger;
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: Logger assigned.");
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: Starting initialization.");
-    this.agGridExtension = agGridExtension;
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: AgGridExtension assigned.");
-    this.gridApi = agGridExtension.gridApi;
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: GridApi assigned.");
-    this.datagridApi = agGridExtension.datagridApi;
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: DatagridApi assigned.");
-    if (this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection]) {
-      this.rowSelectionExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: RowSelectionExtension assigned.");
-    } else {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: No RowSelectionExtension available.");
-    }
-    this.datagridApi.hooks.subscribeAllHooks({
-      callback: (hook: string, args: any) => {
-        this.handleHook({ hook: hook, args: args });
-      }
-    });
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: Hooks subscribed.");
-    this.gridApi.addEventListener('rowSelected', (args: RowSelectedEvent) => {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] rowSelected: Event triggered.");
-      this.handleAgGridRowSelected(args);
-    });
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: Registered rowSelected listener.");
-    // this.gridApi.addEventListener('selectionChanged', (event: SelectionChangedEvent) => {
-    //   this.datagridApi.eventHandler.handleSelectionChange({ datagridCell: this.agGridExtension.getDatagridCellFromEvent({ event: event }), event: event.event as any });
-    // });
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: Skipped selectionChanged listener (commented).");
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] Constructor: Exiting constructor.");
-  }
-
-  private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
-    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: Entering with extensionName=${args.extensionName}.`);
-    if (args.extensionName == AC_DATAGRID_EXTENSION_NAME.RowSelection) {
-      this.rowSelectionExtension = this.datagridApi.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: RowSelectionExtension assigned.");
-      this.setRowSelection();
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: Row selection set.");
-    } else {
-      this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: Unknown extension ${args.extensionName}, skipping.`);
-    }
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleExtensionEnabled: Exiting.");
-  }
-
-  handleAgGridRowSelected(args: RowSelectedEvent) {
-    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleAgGridRowSelected: Entering with rowId=${args.data[this.agGridExtension.rowKey]}, isSelected=${args.node.isSelected()}.`);
-    this.rowSelectionExtension.setRowSelection({ isSelected: args.node.isSelected() == true, rowId: args.data[this.agGridExtension.rowKey] });
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleAgGridRowSelected: Updated row selection in extension. Exiting.");
-  }
-
-  handleHook({ hook, args }: { hook: string, args: any }): void {
-    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Entering with hook=${hook}.`);
-    if (hook == AC_DATAGRID_HOOK.ExtensionEnable) {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Handling ExtensionEnable.");
+  private handleHook:Function = ({ hook, args }: { hook: string, args: any }): void => {
+    if (hook === AC_DATAGRID_HOOK.ExtensionEnable) {
       this.handleExtensionEnabled(args);
-    }
-    else if (hook == AcEnumDatagridRowSelectionHook.RowSelectionChange) {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Handling RowSelectionChange.");
+    } else if (hook === AcEnumDatagridRowSelectionHook.RowSelectionChange) {
       this.handleRowSelectionChange(args);
-    }
-    else if (hook == AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange) {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Handling MultipleRowSelectionChange.");
+    } else if (hook === AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange) {
       this.handleMultipleRowSelectionChange(args);
-    }
-    else if ([
+    } else if ([
       AcEnumDatagridRowSelectionHook.AllowMultipleSelectionChange,
       AcEnumDatagridRowSelectionHook.AllowSelectionChange
     ].includes(hook)) {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Handling selection mode change.");
-      this.setRowSelection();
+      this.setExtension();
     }
-    else {
-      this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Unknown hook ${hook}, skipping.`);
+  }
+
+  private onRowSelected = (event: RowSelectedEvent) => {
+    this.handleAgGridRowSelected(event);
+  };
+
+  destroy() {
+    if(this.datagridApi){
+      this.datagridApi.hooks.unsubscribeAllHooks({callback:this.handleHook});
+      this.datagridApi = null;
     }
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleHook: Exiting.");
+    if(this.agGridExtension){
+      this.agGridExtension = null;
+    }
+    if (this.gridApi) {
+      this.gridApi.removeEventListener('rowSelected', this.onRowSelected);
+      this.gridApi = null;
+    }
+    if(this.rowSelectionExtension){
+      this.rowSelectionExtension.destroy();
+      this.rowSelectionExtension = null;
+    }
+  }
+
+  private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
+    if (args.extensionName === AC_DATAGRID_EXTENSION_NAME.RowSelection) {
+      this.setExtension();
+    }
+  }
+
+  private handleAgGridRowSelected(event: RowSelectedEvent) {
+    if (this.rowSelectionExtension) {
+      this.rowSelectionExtension.setRowSelection({
+        isSelected: event.node.isSelected() === true,
+        rowId: event.data[this.agGridExtension!.rowKey]
+      });
+    }
   }
 
   private handleMultipleRowSelectionChange(args: IAcDatagridSelectionMultipleRowsChangeEvent) {
-    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Entering with isSelected=${args.isSelected}, rowsCount=${args.datagridRows.length}.`);
-    const nodes:IRowNode[] = [];
-    for(const datagridRow of args.datagridRows){
-      const rowNode = this.gridApi.getRowNode(datagridRow.rowId);
-      if (rowNode) {
-        nodes.push(rowNode);
-        this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Added node for rowId=${datagridRow.rowId}.`);
-      } else {
-        this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: No node found for rowId=${datagridRow.rowId}.`);
+    if (this.gridApi) {
+      const nodes: IRowNode[] = [];
+      for (const datagridRow of args.datagridRows) {
+        const rowNode = this.gridApi.getRowNode(datagridRow.rowId);
+        if (rowNode) {
+          nodes.push(rowNode);
+        }
+      }
+      if (nodes.length > 0) {
+        this.gridApi.setNodesSelected({ newValue: args.isSelected, nodes });
       }
     }
-    if (nodes.length > 0) {
-      this.gridApi.setNodesSelected({ newValue: args.isSelected, nodes: nodes });
-      this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Set selection for ${nodes.length} nodes.`);
-    } else {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: No nodes to select, skipping.");
-    }
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleMultipleRowSelectionChange: Exiting.");
   }
 
   private handleRowSelectionChange(args: IAcDatagridRowSelectionChangeEvent) {
-    this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Entering with rowId=${args.datagridRow.rowId}, isSelected=${args.isSelected}.`);
-    const rowNode = this.gridApi.getRowNode(args.datagridRow.rowId);
-    if (rowNode) {
-      this.gridApi.setNodesSelected({ newValue: args.isSelected, nodes: [rowNode] });
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Set selection for row node.");
-    } else {
-      this.logger.log(`[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: No rowNode found for rowId=${args.datagridRow.rowId}, skipping.`);
+    if (this.gridApi) {
+      const rowNode = this.gridApi.getRowNode(args.datagridRow.rowId);
+      if (rowNode) {
+        this.gridApi.setNodesSelected({ newValue: args.isSelected, nodes: [rowNode] });
+      }
     }
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] handleRowSelectionChange: Exiting.");
   }
 
-  private setRowSelection() {
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Entering.");
-    const selectionOption: any = {};
-    this.gridApi.setGridOption('rowSelection', selectionOption);
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Initialized selectionOption.");
-    if (this.rowSelectionExtension) {
-      if (this.rowSelectionExtension.allowSelection) {
-        this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Selection allowed.");
-        if (this.rowSelectionExtension.allowMultipleSelection) {
-          selectionOption.mode = 'multiRow';
-          this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Set mode to multiRow.");
-        }
-        else {
-          selectionOption.mode = 'singleRow';
-          this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Set mode to singleRow.");
-        }
-      } else {
-        this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Selection not allowed, no mode set.");
-      }
-    } else {
-      this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: No RowSelectionExtension, no options set.");
+  init({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }) {
+    this.destroy();
+    this.agGridExtension = agGridExtension;
+    this.datagridApi = agGridExtension.datagridApi;
+    this.datagridApi.hooks.subscribeAllHooks({callback: this.handleHook});
+    if (this.agGridExtension.gridApi) {
+      this.gridApi = this.agGridExtension.gridApi;
+      this.setExtension();
     }
-    this.logger.log("[AcDatagridRowSelectionExtensionOnAgGrid] setRowSelection: Exiting.");
   }
+
+  private setExtension() {
+    this.rowSelectionExtension = this.datagridApi!.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
+    const selectionOption: any = {};
+    if (this.gridApi) {
+      this.gridApi.setGridOption('rowSelection', selectionOption);
+
+      if (this.rowSelectionExtension) {
+        if (this.rowSelectionExtension.allowSelection) {
+          selectionOption.mode = this.rowSelectionExtension.allowMultipleSelection ? 'multiRow' : 'singleRow';
+          this.gridApi.addEventListener('rowSelected', this.onRowSelected);
+        }
+      }
+    }
+  }
+
+
 }

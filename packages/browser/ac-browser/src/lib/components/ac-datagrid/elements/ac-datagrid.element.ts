@@ -25,7 +25,7 @@ export class AcDatagrid extends AcElementBase {
 
   override destroy(): void {
     super.destroy();
-    (this.datagridApi.dataManager as any) = null;
+    this.datagridApi.destroy();
     (this.datagridApi as any)= null;
   }
 

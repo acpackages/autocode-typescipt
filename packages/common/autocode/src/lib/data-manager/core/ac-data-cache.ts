@@ -51,6 +51,17 @@ export class AcDataCache {
     return result;
   }
 
+  destroy(){
+    this.hooks.clearSubscriptions();
+    (this.hooks as any) = null;
+    this.events.clearSubscriptions();
+    (this.events as any) = null;
+    this.collections.forEach((collection:AcDataCacheCollection)=>{
+      collection.destroy();
+    });
+    (this.collections as any) = null;
+  }
+
   async getRows({ collection, filters, sort, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize }: {
     collection: string,
     filters?: IAcFilterGroup;

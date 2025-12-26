@@ -65,6 +65,15 @@ export class AcDataCacheCollection {
     return undefined;
   }
 
+  destroy(){
+    this.hooks.clearSubscriptions();
+    (this.hooks as any) = null;
+    this.events.clearSubscriptions();
+    (this.events as any) = null;
+    this._rows = [];
+    (this._rows as any) = null;
+  }
+
   private evaluateFilter({ filter, row }: { filter: IAcFilter, row: any }): boolean {
     const field = filter.key;
     if (!field) return true;

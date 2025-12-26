@@ -10,16 +10,16 @@ import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-
  * Supports both TemplateRef and Component-based editors.
  */
 export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
-  private datagridCell!: IAcDatagridCell;
-  private datagridColumn!: IAcDatagridColumn;
-  private datagridRow!: IAcDatagridRow;
-  private columnDefinition: IAcNgDatagridColumnDefinition;
+  private datagridCell?: IAcDatagridCell;
+  private datagridColumn?: IAcDatagridColumn;
+  private datagridRow?: IAcDatagridRow;
+  private columnDefinition?: IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 
-  private appRef: ApplicationRef;
+  private appRef?: ApplicationRef;
   private viewRef?: EmbeddedViewRef<any>;
   private componentRef?: ComponentRef<IAcDatagridCellEditor>;
-  private runtimeService!: AcRuntimeService;
+  private runtimeService?: AcRuntimeService;
 
   blur() {
     let continueOperation: boolean = true;
@@ -36,7 +36,7 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
   }
 
   private clear() {
-    if (this.viewRef) {
+    if (this.viewRef && this.appRef) {
       this.appRef?.detachView(this.viewRef);
        for (const node of Array.from(this.viewRef.rootNodes) as HTMLElement[]) {
         node.remove();
@@ -56,7 +56,20 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
 
   destroy(): void {
     this.clear();
+    (this.datagridColumn as any) = null;
+    (this.datagridRow as any) = null;
+    (this.columnDefinition as any) = null;
+    (this.appRef as any) = null;
+    (this.viewRef as any) = null;
+    (this.componentRef as any) = null;
+    (this.runtimeService as any) = null;
+
+    if(this.datagridCell){
+      (this.datagridCell.element as any) = null;
+      (this.datagridCell as any) = null;
+    }
     this.element.remove();
+    (this.element as any) = null;
   }
 
   focus() {

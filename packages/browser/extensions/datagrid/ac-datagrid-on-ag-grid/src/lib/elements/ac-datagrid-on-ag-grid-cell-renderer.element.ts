@@ -15,12 +15,13 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   element: HTMLElement = document.createElement('div');
   renderer: any;
   private isFocused: boolean = false;
+  private blurTimeout:any;
 
   handleBlur: Function = () => {
     if (this.datagridCell && this.datagridCell.element) {
       this.datagridCell.element.blur();
     }
-    setTimeout(() => {
+    this.blurTimeout = setTimeout(() => {
       this.isFocused = false;
     }, 50);
   };
@@ -35,19 +36,29 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   };
 
   destroy(): void {
+    (this.datagridApi as any) = null;
+    if(this.datagridCell){
+      (this.datagridCell.element as any) = null;
+      (this.datagridCell as any) = null;
+    }
+    (this.datagridColumn as any) = null;
+    (this.datagridRow as any) = null;
     if (this.params) {
       this.params.eGridCell.removeEventListener('focusout', this.handleBlur);
       this.params.eGridCell.removeEventListener('focusin', this.handleFocus);
+      this.params = null;
     }
-    (this.datagridApi as any) = null;
     if (this.renderer) {
       if (this.renderer.destroy != undefined) {
         this.renderer.destroy();
       }
+      this.renderer = null;
     }
-    if (this.element) {
-      this.element.remove();
-    }
+    (this.agGridExtension as any) = null;
+    (this.instance as any) = null;
+    this.element.remove();
+    (this.element as any) = null;
+    clearTimeout(this.blurTimeout);
   }
 
   getGui(): HTMLElement {

@@ -15,14 +15,14 @@ import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-
  * Supports both TemplateRef and Component renderers.
  */
 export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
-  private datagridCell!: IAcDatagridCell;
-  private datagridColumn!: IAcDatagridColumn;
-  private datagridRow!: IAcDatagridRow|any;
-  private columnDefinition:IAcNgDatagridColumnDefinition;
+  private datagridCell?: IAcDatagridCell;
+  private datagridColumn?: IAcDatagridColumn;
+  private datagridRow?: IAcDatagridRow|any;
+  private columnDefinition?:IAcNgDatagridColumnDefinition;
   public element: HTMLElement = document.createElement('div');
 
-  private runtimeService!:AcRuntimeService;
-  private appRef: ApplicationRef;
+  private runtimeService?:AcRuntimeService;
+  private appRef?: ApplicationRef;
   private viewRef?: EmbeddedViewRef<any>;
   private componentRef?: ComponentRef<IAcDatagridCellRenderer>;
 
@@ -61,7 +61,20 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
 
   destroy(): void {
     this.clear();
+    (this.datagridColumn as any) = null;
+    (this.datagridRow as any) = null;
+    (this.columnDefinition as any) = null;
+    (this.appRef as any) = null;
+    (this.viewRef as any) = null;
+    (this.componentRef as any) = null;
+    (this.runtimeService as any) = null;
+
+    if(this.datagridCell){
+      (this.datagridCell.element as any) = null;
+      (this.datagridCell as any) = null;
+    }
     this.element.remove();
+    (this.element as any) = null;
   }
 
   focus(): void {
