@@ -40,7 +40,6 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
   }
 
   destroy(){
-    this.destroy();
     if(this.agGridExtension){
       this.agGridExtension = null;
     }
@@ -141,6 +140,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
   }
 
   init({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }){
+    this.destroy();
     this.agGridExtension = agGridExtension;
     this.datagridApi = agGridExtension.datagridApi;
     this.datagridApi.hooks.subscribeAllHooks({callback: this.handleHook});

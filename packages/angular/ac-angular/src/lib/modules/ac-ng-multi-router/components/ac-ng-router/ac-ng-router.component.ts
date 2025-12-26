@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { Component, ComponentRef, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { Autocode } from '@autocode-ts/autocode';
 
 @Component({
@@ -15,22 +15,39 @@ import { Autocode } from '@autocode-ts/autocode';
   </div>`,
   styles: [``]
 })
-export class AcNgRouterComponent {
+export class AcNgRouterComponent implements OnDestroy {
   @ViewChild('renderingContainer', { read: ViewContainerRef }) renderingContainer!: ViewContainerRef;
   @Input() id: string = Autocode.uuid();
   @Input() visible: boolean = true;
-  componentRef?:ComponentRef<any>;
-  componentInstance?:any;
+  componentRef?: ComponentRef<any>;
+  componentInstance?: any;
+  createTimeout: any;
+
+  ngOnDestroy(): void {
+    clearTimeout(this.createTimeout);
+    this.renderingContainer?.clear();
+
+    if (this.componentRef) {
+      this.componentRef.destroy();
+      this.componentRef = undefined;
+    }
+
+    this.componentInstance = undefined;
+  }
 
   createComponent(type: any) {
     if (this.visible) {
       if (this.renderingContainer) {
         this.renderingContainer.clear();
+        if (this.componentRef) {
+          this.componentRef.destroy();
+          this.componentRef = undefined;
+        }
         this.componentRef = this.renderingContainer.createComponent(type);
         this.componentInstance = this.componentRef.instance;
       }
       else {
-        setTimeout(() => {
+        this.createTimeout = setTimeout(() => {
           this.createComponent(type);
         }, 1);
       }

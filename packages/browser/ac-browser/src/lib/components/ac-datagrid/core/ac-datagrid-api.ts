@@ -455,16 +455,17 @@ export class AcDatagridApi {
   }
 
   destroy(){
+    for(const ext of Object.values(this.extensions)){
+      ext.destroy();
+    }
+    (this.extensions as any) = null;
     this.dataManager.destroy();
     (this.dataManager as any) = null;
     this.events.clearSubscriptions();
     (this.events as any) = null;
     this.hooks.clearSubscriptions();
     (this.hooks as any) = null;
-    for(const ext of Object.values(this.extensions)){
-      ext.destroy();
-    }
-    this.extensions = null;
+
   }
 
   enableExtension({ extensionName }: { extensionName: string }): AcDatagridExtension | null {

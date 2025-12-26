@@ -4,7 +4,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, ComponentRef, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, ComponentRef, ElementRef, OnDestroy } from '@angular/core';
 import { IAcNgRouterOutlet } from '../../_ac-ng-mutli-router.export';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
@@ -18,7 +18,7 @@ import { AcNgRouterComponent } from '../ac-ng-router/ac-ng-router.component';
   template: ` <router-outlet (activate)="handleActivate($event)"></router-outlet><ng-container #panels></ng-container>`,
   styles: [``]
 })
-export class AcNgMultiRouterComponent implements OnInit {
+export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
   @ViewChild('panels', { read: ViewContainerRef }) panels!: ViewContainerRef;
   @ViewChild(RouterOutlet) routerOutlet!: RouterOutlet;
 
@@ -30,12 +30,31 @@ export class AcNgMultiRouterComponent implements OnInit {
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
 
+  activateTimeout:any;
+  addTimeout:any;
 
   constructor(private elementRef: ElementRef, private router: Router, private runtimeService: AcRuntimeService) { }
 
+  ngOnDestroy(): void {
+    clearTimeout(this.activateTimeout);
+    clearTimeout(this.addTimeout);
+    this.sub.unsubscribe();
+
+    this.panels?.clear();
+
+    this.routerOutlets.forEach(o => {
+      o.routerComponentRef?.destroy();
+      o.routerComponent = undefined;
+      o.routerComponentRef = undefined;
+    });
+
+    this.routerOutlets = [];
+    this.activeRouterOutlet = null;
+  }
+
   ngOnInit() {
     this.sub.add(this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe(() => this.loadCurrentRoute()));
-    setTimeout(() => this.loadCurrentRoute());
+    this.loadCurrentRoute();
   }
 
   add({ route, title = 'New Tab' }: { route: any[], title?: string }) {
@@ -49,7 +68,7 @@ export class AcNgMultiRouterComponent implements OnInit {
     this.onAdd.emit(newRouter);
     this.setActive({ id });
     this.router.navigate(route);
-    setTimeout(() => {
+    this.addTimeout = setTimeout(() => {
       if (!this.activeRouterOutlet.routerComponent.componentRef) {
         if (this.routerOutlet && this.routerOutlet.activatedRoute) {
           this.activeRouterOutlet.routerComponent.createComponent(this.routerOutlet.component.constructor);
@@ -64,7 +83,7 @@ export class AcNgMultiRouterComponent implements OnInit {
       this.activeRouterOutlet.routerComponent.createComponent(event.constructor);
     }
     else {
-      setTimeout(() => {
+      this.activateTimeout = setTimeout(() => {
         this.handleActivate(event);
       }, 1);
     }
