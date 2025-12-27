@@ -82,6 +82,10 @@ export class AcDatagridState {
     }
   }
 
+  destroy(){
+    (this.datagridApi as any) = null;
+  }
+
   refresh() {
     if (this.refreshNotifyTimeout) {
       clearTimeout(this.refreshNotifyTimeout);

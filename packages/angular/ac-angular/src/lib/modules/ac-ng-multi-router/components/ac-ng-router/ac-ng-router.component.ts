@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 import { Component, ComponentRef, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
-import { Autocode } from '@autocode-ts/autocode';
+import { acNullifyInstanceProperties, Autocode } from '@autocode-ts/autocode';
 
 @Component({
   selector: 'ac-ng-router',
@@ -29,10 +29,9 @@ export class AcNgRouterComponent implements OnDestroy {
 
     if (this.componentRef) {
       this.componentRef.destroy();
-      this.componentRef = undefined;
     }
 
-    this.componentInstance = undefined;
+    acNullifyInstanceProperties({instance:this});
   }
 
   createComponent(type: any) {

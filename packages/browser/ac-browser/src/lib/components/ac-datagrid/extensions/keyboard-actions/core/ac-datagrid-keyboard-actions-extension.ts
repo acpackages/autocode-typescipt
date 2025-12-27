@@ -76,13 +76,13 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
   // }
 
   override init(): void {
-    this.datagridApi.datagrid.datagridBody.addEventListener('mouseover',(event:MouseEvent)=>{
+    this.datagridApi.datagrid.datagridBody!.addEventListener('mouseover',(event:MouseEvent)=>{
       this.navigate = true;
     });
-    this.datagridApi.datagrid.datagridBody.addEventListener('mouseenter',(event:MouseEvent)=>{
+    this.datagridApi.datagrid.datagridBody!.addEventListener('mouseenter',(event:MouseEvent)=>{
       this.navigate = true;
     });
-    this.datagridApi.datagrid.datagridBody.addEventListener('mouseleave',(event:MouseEvent)=>{
+    this.datagridApi.datagrid.datagridBody!.addEventListener('mouseleave',(event:MouseEvent)=>{
       this.navigate = false;
     });
     this.datagridApi.datagrid.ownerDocument.addEventListener('keydown',(event:KeyboardEvent)=>{

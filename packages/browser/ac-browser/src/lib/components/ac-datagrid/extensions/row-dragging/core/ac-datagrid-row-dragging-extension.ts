@@ -33,13 +33,20 @@ export class AcDatagridRowDraggingExtension extends AcDatagridExtension {
   datagridInternalColumn: AcDatagridInternalColumn = new AcDatagridInternalColumn({
     width: 35,
   });
-  rowDraggingEventHandler!:AcDatagridRowDraggingEventHandler;
+  rowDraggingEventHandler?:AcDatagridRowDraggingEventHandler;
+
+  override destroy(): void {
+    if(this.rowDraggingEventHandler){
+      this.rowDraggingEventHandler.destroy();
+    }
+    super.destroy();
+  }
 
   override init(): void {
     // const draggableSort = new AcDraggableSort({element:this.datagridApi.datagrid.datagridBody.element});
-    const draggableSort = new AcSortable();
-    this.draggableApi = draggableSort.draggableApi;
-    this.rowDraggingEventHandler = new AcDatagridRowDraggingEventHandler({rowDraggingExtension:this});
+    // const draggableSort = new AcSortable();
+    // this.draggableApi = draggableSort.draggableApi;
+    // this.rowDraggingEventHandler = new AcDatagridRowDraggingEventHandler({rowDraggingExtension:this});
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {

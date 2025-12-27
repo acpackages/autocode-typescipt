@@ -1,4 +1,4 @@
-import { AcEvents } from "@autocode-ts/autocode";
+import { AcEvents, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { AcDraggable } from "../elements/ac-draggable.element";
 import { AcDraggableSortElement, AcEnumDraggableEvent } from "../_ac-draggable.export";
 import { AcDraggableTarget } from "../elements/ac-draggable-target.element";
@@ -28,6 +28,11 @@ export class AcDraggableApi {
 
   constructor({ instance }: { instance: AcDraggable|AcSortable }) {
     this.instance = instance;
+  }
+
+  destroy(){
+    this.events.destroy();
+    acNullifyInstanceProperties({instance:this});
   }
 
   handleDragEnter({ targetInstance, event }: { targetInstance: AcDraggableTarget, event: MouseEvent | TouchEvent }): void {

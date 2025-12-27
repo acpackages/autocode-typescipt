@@ -8,6 +8,7 @@ import { arrayRemove, stringEqualsIgnoreCase } from "@autocode-ts/ac-extensions"
 import { IAcDatagriOnAgGridDataChangeHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-data-set-hook-args.interface";
 import { IAcDatagriOnAgGridRowAddHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface";
 import { IAcDatagriOnAgGridRowUpdateHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface";
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridTreeTableExtensionOnAgGrid {
   agGridExtension?: AcDatagridOnAgGridExtension|null;
@@ -33,20 +34,9 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     }
   }
 
-  destroy(){
-    if(this.agGridExtension){
-      this.agGridExtension = null;
-    }
-    if(this.gridApi){
-      this.gridApi = null;
-    }
-    if(this.treeTableExtension){
-      this.treeTableExtension = null;
-    }
-    if(this.datagridApi){
-      this.datagridApi.hooks.unsubscribeAllHooks({callback:this.handleHook});
-      this.datagridApi = null;
-    }
+  destroy() {
+    this.removeListeners();
+    acNullifyInstanceProperties({instance:this});
   }
 
   private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
@@ -79,7 +69,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
   }
 
   init({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }){
-    this.destroy();
+    this.removeListeners();
     this.agGridExtension = agGridExtension;
     this.datagridApi = agGridExtension.datagridApi;
     this.datagridApi.hooks.subscribeAllHooks({callback: this.handleHook});
@@ -87,6 +77,12 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
       this.gridApi = this.agGridExtension.gridApi;
     }
     this.setExtension();
+  }
+
+  private removeListeners(){
+    if(this.datagridApi){
+      this.datagridApi.hooks.unsubscribeAllHooks({callback:this.handleHook});
+    }
   }
 
   private setExtension(){

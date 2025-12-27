@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcEnumLogType } from '../enums/ac-enum-log-type.enum';
+import { acNullifyInstanceProperties } from '../utils/ac-utility-functions';
 import { AcBackgroundFile } from './ac-background-file';
 import { Autocode } from './autocode';
 
@@ -61,6 +62,10 @@ export class AcLogger {
 
   debug(...args: any[]) {
     this._loggerMessage(args, "debug");
+  }
+
+  destroy(){
+    acNullifyInstanceProperties({instance:this});
   }
 
   error(...args: any[]) {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents, Autocode } from "@autocode-ts/autocode";
+import { AcEvents, Autocode, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { acCloneEvent, acRegisterCustomElement } from "../utils/ac-element-functions";
 
 export class AcElementBase extends HTMLElement {
@@ -36,7 +36,8 @@ export class AcElementBase extends HTMLElement {
   }
 
   destroy(){
-    this.events.clearSubscriptions();
+    this.events.destroy();
+    acNullifyInstanceProperties({instance:this});
   }
 
   disconnectedCallback(){

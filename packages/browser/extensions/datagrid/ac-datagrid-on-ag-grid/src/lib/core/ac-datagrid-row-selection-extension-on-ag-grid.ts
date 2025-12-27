@@ -3,6 +3,7 @@
 import { AcDatagridApi, AcDatagridRowSelectionExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, AcEnumDatagridRowSelectionHook, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowSelectionChangeEvent, IAcDatagridSelectionMultipleRowsChangeEvent } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { GridApi, IRowNode, RowSelectedEvent, RowSelectionOptions } from "ag-grid-community";
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridRowSelectionExtensionOnAgGrid {
   agGridExtension?: AcDatagridOnAgGridExtension | null;
@@ -31,21 +32,8 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
   };
 
   destroy() {
-    if(this.datagridApi){
-      this.datagridApi.hooks.unsubscribeAllHooks({callback:this.handleHook});
-      this.datagridApi = null;
-    }
-    if(this.agGridExtension){
-      this.agGridExtension = null;
-    }
-    if (this.gridApi) {
-      this.gridApi.removeEventListener('rowSelected', this.onRowSelected);
-      this.gridApi = null;
-    }
-    if(this.rowSelectionExtension){
-      this.rowSelectionExtension.destroy();
-      this.rowSelectionExtension = null;
-    }
+    this.removeListeners();
+    acNullifyInstanceProperties({instance:this});
   }
 
   private handleExtensionEnabled(args: IAcDatagridExtensionEnabledHookArgs) {
@@ -88,13 +76,22 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
   }
 
   init({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }) {
-    this.destroy();
+    this.removeListeners();
     this.agGridExtension = agGridExtension;
     this.datagridApi = agGridExtension.datagridApi;
     this.datagridApi.hooks.subscribeAllHooks({callback: this.handleHook});
     if (this.agGridExtension.gridApi) {
       this.gridApi = this.agGridExtension.gridApi;
       this.setExtension();
+    }
+  }
+
+  private removeListeners(){
+    if(this.datagridApi){
+      this.datagridApi.hooks.unsubscribeAllHooks({callback:this.handleHook});
+    }
+    if (this.gridApi) {
+      this.gridApi.removeEventListener('rowSelected', this.onRowSelected);
     }
   }
 

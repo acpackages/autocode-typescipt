@@ -7,6 +7,7 @@ import { AcEnumConditionOperator } from "../../enums/ac-enum-condition-operator.
 import { AcEnumLogicalOperator } from "../../enums/ac-enum-logical-operator.enum";
 import { AcEnumSortOrder } from "../../enums/ac-enum-sort-order.enum";
 import { IAcFilter, IAcFilterGroup, IAcSortOrder } from "../../interfaces/_interfaces.export";
+import { acNullifyInstanceProperties } from "../../utils/ac-utility-functions";
 import { AcDataCache } from "../core/ac-data-cache";
 import { IAcDataCacheGetResult } from "../interfaces/ac-data-cache-get-result.interface";
 
@@ -66,12 +67,11 @@ export class AcDataCacheCollection {
   }
 
   destroy(){
-    this.hooks.clearSubscriptions();
-    (this.hooks as any) = null;
-    this.events.clearSubscriptions();
-    (this.events as any) = null;
-    this._rows = [];
-    (this._rows as any) = null;
+    this.hooks.destroy();
+
+    this.events.destroy();
+
+    acNullifyInstanceProperties({instance:this});
   }
 
   private evaluateFilter({ filter, row }: { filter: IAcFilter, row: any }): boolean {

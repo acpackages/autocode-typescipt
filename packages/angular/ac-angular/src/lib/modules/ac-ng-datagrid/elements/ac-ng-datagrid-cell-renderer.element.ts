@@ -9,6 +9,7 @@ import {
 import { IAcDatagridCellRenderer, IAcDatagridCell, IAcDatagridCellElementArgs, IAcDatagridColumn, IAcDatagridRow, AC_DATAGRID_HOOK, AC_DATAGRID_EVENT } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { IAcNgDatagridColumnDefinition } from '../interfaces/ac-datagrid-column-definition.interface';
+import { acNullifyInstanceProperties } from '@autocode-ts/autocode';
 
 /**
  * Angular Datagrid Cell Renderer
@@ -61,20 +62,11 @@ export class AcNgDatagridCellRenderer implements IAcDatagridCellRenderer {
 
   destroy(): void {
     this.clear();
-    (this.datagridColumn as any) = null;
-    (this.datagridRow as any) = null;
-    (this.columnDefinition as any) = null;
-    (this.appRef as any) = null;
-    (this.viewRef as any) = null;
-    (this.componentRef as any) = null;
-    (this.runtimeService as any) = null;
-
     if(this.datagridCell){
       (this.datagridCell.element as any) = null;
-      (this.datagridCell as any) = null;
     }
     this.element.remove();
-    (this.element as any) = null;
+    acNullifyInstanceProperties({instance:this});
   }
 
   focus(): void {

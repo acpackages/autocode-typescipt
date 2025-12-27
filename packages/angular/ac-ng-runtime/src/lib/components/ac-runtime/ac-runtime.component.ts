@@ -3,8 +3,9 @@
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, EventEmitter, Input, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { AcRuntimeService } from '../../services/ac-runtime.service';
+import { acNullifyInstanceProperties } from '@autocode-ts/autocode';
 
 @Component({
     selector: 'ac-repeater',
@@ -12,7 +13,7 @@ import { AcRuntimeService } from '../../services/ac-runtime.service';
     styleUrl: './ac-runtime.component.css',
     standalone: false
 })
-export class AcBuilderRuntimeComponent{
+export class AcBuilderRuntimeComponent implements OnInit,OnDestroy{
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
   @Input() component:any;
@@ -24,6 +25,10 @@ export class AcBuilderRuntimeComponent{
   constructor(
     public acRuntimeService:AcRuntimeService
   ) {
+  }
+
+  ngOnDestroy(): void {
+    acNullifyInstanceProperties({instance:this});
   }
 
   ngOnInit() {

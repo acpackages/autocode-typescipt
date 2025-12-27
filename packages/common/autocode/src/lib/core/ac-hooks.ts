@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
 import { AcHookExecutionResult } from "../models/ac-hook-execution-result.model";
-import { AcEvents } from "./ac-events";
+import { acNullifyInstanceProperties } from "../utils/ac-utility-functions";
 import { Autocode } from "./autocode";
 
 export class AcHooks {
@@ -18,6 +18,10 @@ export class AcHooks {
   clearSubscriptions() {
     this.hooks.clear();
     this.allHookCallbacks.clear();
+  }
+
+  destroy(){
+    acNullifyInstanceProperties({instance:this});
   }
 
   /**
@@ -49,6 +53,7 @@ export class AcHooks {
           if (!continueOperation) break;
 
           try {
+            if(typeof callback == 'function'){
             const res = callback(args);
 
             if (res !== undefined && res !== null) {
@@ -63,6 +68,7 @@ export class AcHooks {
                 result.continueOperation = false;
               }
             }
+          }
           } catch (ex: any) {
             console.error(`Hook handler failed [${name}] (id: ${subId}):`, ex);
           }
@@ -74,6 +80,7 @@ export class AcHooks {
         if (!continueOperation) break;
 
         try {
+          if(typeof callback == 'function'){
           const res = callback(name, args);
 
           if (res !== undefined && res !== null) {
@@ -87,6 +94,7 @@ export class AcHooks {
               result.continueOperation = false;
             }
           }
+        }
         } catch (ex: any) {
           console.error(`Global hook handler failed (id: ${subId}):`, ex);
         }

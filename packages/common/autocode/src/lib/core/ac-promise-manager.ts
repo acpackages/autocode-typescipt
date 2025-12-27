@@ -1,3 +1,4 @@
+import { acNullifyInstanceProperties } from "../utils/ac-utility-functions";
 import { Autocode } from "./autocode";
 
 export type AcPromiseInstance = {
@@ -32,6 +33,10 @@ export class AcPromiseManager {
     });
 
     return { id,promise, resolve, reject };
+  }
+
+  destroy(){
+    acNullifyInstanceProperties({instance:this});
   }
 
   resolve(key: string, value?: any) {

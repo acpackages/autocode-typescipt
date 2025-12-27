@@ -3,6 +3,7 @@
 import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellRenderer, IAcDatagridRow, IAcDatagridCellElementArgs, AC_DATAGRID_EVENT, AC_DATAGRID_HOOK } from "@autocode-ts/ac-browser";
 import { AgPromise, ICellEditorComp, ICellEditorParams, ICellRendererParams } from "ag-grid-community";
 import { AcDatagridOnAgGridExtension } from "../core/ac-datagrid-on-ag-grid-extension";
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   datagridApi?: AcDatagridApi;
@@ -54,29 +55,20 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   }
 
   destroy(): void {
-    (this.datagridApi as any) = null;
     if(this.datagridCell){
       (this.datagridCell.element as any) = null;
-      (this.datagridCell as any) = null;
     }
-    (this.datagridColumn as any) = null;
-    (this.datagridRow as any) = null;
     if (this.params) {
       this.params.eGridCell.removeEventListener('focusout', this.handleBlur);
       this.params.eGridCell.removeEventListener('focusin', this.handleFocus);
-      this.params = null;
     }
     if (this.editor) {
       if (this.editor.destroy != undefined) {
         this.editor.destroy();
       }
-      this.editor = null;
     }
-    (this.agGridExtension as any) = null;
-    (this.instance as any) = null;
-    this.element.remove();
-    (this.element as any) = null;
     clearTimeout(this.blurTimeout);
+    acNullifyInstanceProperties({instance:this});
   }
 
   getGui(): HTMLElement {

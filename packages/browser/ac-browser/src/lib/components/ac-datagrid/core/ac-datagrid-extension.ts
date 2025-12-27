@@ -1,3 +1,4 @@
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { AcDatagridApi } from "./ac-datagrid-api";
 
 export abstract class AcDatagridExtension{
@@ -5,7 +6,7 @@ export abstract class AcDatagridExtension{
   hookId = '';
 
   destroy(){
-    (this.datagridApi as any) = null;
+    acNullifyInstanceProperties({instance:this});
   }
 
   init(){

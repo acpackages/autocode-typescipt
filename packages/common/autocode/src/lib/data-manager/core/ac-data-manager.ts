@@ -26,6 +26,7 @@ import { AcLogger } from "../../core/ac-logger";
 import { IAcDataManagerDataEvent, IAcDataManagerEvent } from "../_data-manager.export";
 import { IAcDataRow } from "../interfaces/ac-data-row.interface";
 import { Autocode } from "../../core/autocode";
+import { acNullifyInstanceProperties } from "../../utils/ac-utility-functions";
 
 export class AcDataManager {
   private _assignUniqueIdToData: boolean = true;
@@ -377,13 +378,11 @@ export class AcDataManager {
   }
 
   destroy() {
-    this.hooks.clearSubscriptions();
-    (this.hooks as any) = null;
-    this.events.clearSubscriptions();
-    (this.events as any) = null;
-    (this.logger as any) = null;
-    this.allRows = [];
-    (this.allRows as any) = null;
+    this.hooks.destroy();
+
+    this.events.destroy();
+
+    acNullifyInstanceProperties({instance:this});
   }
 
   private evaluateFilter(filter: AcFilter, row: IAcDataRow): boolean {

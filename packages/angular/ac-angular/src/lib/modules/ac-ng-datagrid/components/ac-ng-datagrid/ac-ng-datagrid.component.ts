@@ -8,7 +8,7 @@
 import { ApplicationRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
-import { AC_DATA_MANAGER_EVENT, AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { AC_DATA_MANAGER_EVENT, AcDataManager, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { IAcNgDatagridColumnDefinition } from '../../interfaces/ac-datagrid-column-definition.interface';
 import { AcNgDatagridCellRenderer } from '../../elements/ac-ng-datagrid-cell-renderer.element';
 import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-editor.element';
@@ -650,17 +650,16 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
   @Input() showSearchInput: boolean = true;
   @Input() usePagination: boolean = true;
 
-  addNewButton: HTMLElement = document.createElement('button');
-  datagrid: AcDatagrid;
-  datagridApi!: AcDatagridApi;
+  datagrid?: AcDatagrid;
+  datagridApi?: AcDatagridApi;
 
-  columnDraggingExtension!: AcDatagridColumnDraggingExtension;
-  columnsCustomizerExtension!: AcDatagridColumnsCustomizerExtension;
-  dataExportXlsxExtension!: AcDatagridDataExportXlsxExtension;
-  dataManager!: AcDataManager;
-  rowDraggingExtension!: AcDatagridRowDraggingExtension;
-  rowNumbersExtension!: AcDatagridRowNumbersExtension;
-  rowSelectionExtension!: AcDatagridRowSelectionExtension;
+  columnDraggingExtension?: AcDatagridColumnDraggingExtension;
+  columnsCustomizerExtension?: AcDatagridColumnsCustomizerExtension;
+  dataExportXlsxExtension?: AcDatagridDataExportXlsxExtension;
+  dataManager?: AcDataManager;
+  rowDraggingExtension?: AcDatagridRowDraggingExtension;
+  rowNumbersExtension?: AcDatagridRowNumbersExtension;
+  rowSelectionExtension?: AcDatagridRowSelectionExtension;
 
   constructor(private runtimeService: AcRuntimeService, private appRef: ApplicationRef) {
     super();
@@ -698,9 +697,9 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
   ngOnDestroy(): void {
     if (this.datagrid) {
       this.datagrid.destroy();
-      this.dataManager = null;
-      this.datagridApi = null;
+      this.datagrid.remove();
     }
+    acNullifyInstanceProperties({instance:this});
   }
 
   ngOnInit(): void {

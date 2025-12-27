@@ -1,12 +1,13 @@
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { AcDatagridApi, IAcDatagridRow, AC_DATAGRID_EVENT, IAcDatagridRowEvent } from "../../../_ac-datagrid.export";
 import { AcDatagridRowDraggingExtension } from "./_core.export";
 
 export class AcDatagridRowDraggingEventHandler {
   datagridApi!: AcDatagridApi;
-  rowDraggingExtension!: AcDatagridRowDraggingExtension;
-  constructor({ rowDraggingExtension }: { rowDraggingExtension: AcDatagridRowDraggingExtension }) {
-    this.rowDraggingExtension = rowDraggingExtension;
-    this.datagridApi = rowDraggingExtension.datagridApi;
+  rowDraggingExtension?: AcDatagridRowDraggingExtension;
+
+  destroy(){
+    acNullifyInstanceProperties({instance:this});
   }
 
   handleRowDrag({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
@@ -79,5 +80,10 @@ export class AcDatagridRowDraggingEventHandler {
       event: event
     };
     this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowDragStart, args: eventArgs });
+  }
+
+  init({ rowDraggingExtension }: { rowDraggingExtension: AcDatagridRowDraggingExtension }){
+    this.rowDraggingExtension = rowDraggingExtension;
+    this.datagridApi = rowDraggingExtension.datagridApi;
   }
 }

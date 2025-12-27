@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
+
 interface ObservationCallbacks {
   onMutation?: (mutations: MutationRecord[]) => void;
   onResize?: (entries: ResizeObserverEntry[]) => void;
@@ -31,6 +33,10 @@ class AcElementObserver {
   private intersectionCallbacks: WeakMap<Element, Set<(entries: IntersectionObserverEntry[]) => void>> = new WeakMap();
   private observedIntersectionElements: WeakSet<Element> = new WeakSet();
   private observedIntersectionCount: number = 0;
+
+  destroy(){
+    acNullifyInstanceProperties({instance:this});
+  }
 
   /**
    * Registers an element for observation with provided callbacks.

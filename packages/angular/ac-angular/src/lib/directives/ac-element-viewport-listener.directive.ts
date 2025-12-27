@@ -5,6 +5,7 @@
 /* eslint-disable @angular-eslint/directive-selector */
 import { Directive, Output, EventEmitter } from '@angular/core';
 import { AcBase } from '../_base/ac-base.component';
+import { acNullifyInstanceProperties } from '@autocode-ts/autocode';
 
 @Directive({
   selector: '[acElementViewportListener]',
@@ -32,6 +33,7 @@ export class AcElementViewportListenerDirective extends AcBase {
   override ngOnDestroy() {
     super.ngOnDestroy();
     this.observer!.disconnect();
+    acNullifyInstanceProperties({instance:this});
   }
 
 }

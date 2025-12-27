@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 
 import { AcEventExecutionResult } from "../models/ac-event-execution-result.model";
+import { acNullifyInstanceProperties } from "../utils/ac-utility-functions";
 import { AcHooks } from "./ac-hooks";
 import { Autocode } from "./autocode";
 
@@ -23,6 +24,10 @@ export class AcEvents {
   clearSubscriptions() {
     this.events.clear();
     this.allEventCallbacks.clear();
+  }
+
+  destroy() {
+    acNullifyInstanceProperties({ instance: this });
   }
 
   /**
@@ -48,10 +53,13 @@ export class AcEvents {
       if (eventListeners) {
         for (const [subId, callback] of eventListeners.entries()) {
           try {
-            const res = callback(args);
-            if (res instanceof AcEventExecutionResult && res.status === "success") {
-              functionResults[subId] = res;
+            if (typeof callback == 'function') {
+              const res = callback(args);
+              if (res instanceof AcEventExecutionResult && res.status === "success") {
+                functionResults[subId] = res;
+              }
             }
+
           } catch (ex: any) {
             console.error(`Event handler failed [${name}] (id: ${subId}):`, ex);
           }
@@ -61,9 +69,11 @@ export class AcEvents {
       // Execute "all events" listeners
       for (const [subId, callback] of this.allEventCallbacks.entries()) {
         try {
-          const res = callback(name, args);
-          if (res instanceof AcEventExecutionResult && res.status === "success") {
-            functionResults[subId] = res;
+          if (typeof callback == 'function') {
+            const res = callback(name, args);
+            if (res instanceof AcEventExecutionResult && res.status === "success") {
+              functionResults[subId] = res;
+            }
           }
         } catch (ex: any) {
           console.error(`Global event handler failed (id: ${subId}):`, ex);
@@ -175,8 +185,8 @@ export class AcEvents {
   /**
    * Unsubscribe using subscriptionId (recommended & safe)
    */
-  unsubscribe({ event,callback,subscriptionId }: { event?:string,callback?: Function,subscriptionId?: string }): boolean {
-    if(event && callback){
+  unsubscribe({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): boolean {
+    if (event && callback) {
       for (const name of Object.keys(this.events)) {
         if (name == event) {
           for (const id of Object.keys(this.events.get(name)!)) {
@@ -204,12 +214,12 @@ export class AcEvents {
   /**
    * Unsubscribe from all events listeners (global only)
    */
-  unsubscribeAllEvents({ callback,subscriptionId }: { callback?:Function,subscriptionId?: string }): boolean {
-    if(callback){
+  unsubscribeAllEvents({ callback, subscriptionId }: { callback?: Function, subscriptionId?: string }): boolean {
+    if (callback) {
       for (const id of Object.keys(this.allEventCallbacks)) {
         if (this.allEventCallbacks.get(id) == callback) {
-            subscriptionId = id;
-          }
+          subscriptionId = id;
+        }
       }
     }
     if (!subscriptionId) return false;

@@ -4,6 +4,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import { acNullifyInstanceProperties } from '@autocode-ts/autocode'
 
 @Component({
     selector: 'ac-repeater',
@@ -61,5 +62,6 @@ export class AcIframeContentComponent implements AfterViewInit,OnDestroy{
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
     }
+    acNullifyInstanceProperties({instance:this});
   }
 }

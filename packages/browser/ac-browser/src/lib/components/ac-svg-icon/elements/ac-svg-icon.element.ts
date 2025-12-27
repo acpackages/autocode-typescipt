@@ -125,6 +125,11 @@ export class AcSvgIcon extends AcElementBase {
     svg.style.display = 'block';
   }
 
+  override destroy(): void {
+    this.innerHTML = '';
+    super.destroy();
+  }
+
   private async loadFromSrc(url: string): Promise<void> {
     try {
       const res = await fetch(url, { credentials: 'same-origin' });

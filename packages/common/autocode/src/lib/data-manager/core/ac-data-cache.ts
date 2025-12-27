@@ -5,6 +5,7 @@ import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
 import { IAcFilterGroup } from "../../interfaces/ac-filter-group.interface";
 import { IAcSortOrder } from "../../interfaces/ac-sort-order.interface";
+import { acNullifyInstanceProperties } from "../../utils/ac-utility-functions";
 import { IAcDataCacheGetResult } from "../interfaces/ac-data-cache-get-result.interface";
 import { IAcOnDemandRequestArgs } from "../interfaces/ac-on-demand-request-args.interface";
 import { IAcOnDemandResponseArgs } from "../interfaces/ac-on-demand-response-args.interface";
@@ -52,14 +53,15 @@ export class AcDataCache {
   }
 
   destroy(){
-    this.hooks.clearSubscriptions();
-    (this.hooks as any) = null;
-    this.events.clearSubscriptions();
-    (this.events as any) = null;
+    this.hooks.destroy();
+
+    this.events.destroy();
+
     this.collections.forEach((collection:AcDataCacheCollection)=>{
       collection.destroy();
     });
-    (this.collections as any) = null;
+
+    acNullifyInstanceProperties({instance:this});
   }
 
   async getRows({ collection, filters, sort, searchQuery, startIndex, rowsCount, endIndex, pageNumber, pageSize }: {

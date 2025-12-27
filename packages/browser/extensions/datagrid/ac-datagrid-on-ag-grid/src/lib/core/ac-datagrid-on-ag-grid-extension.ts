@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridExtension, AcEnumDatagridColumnDataType, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumnDefinition, IAcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, IAcDatagridCell, IAcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridTreeTableExtension } from '@autocode-ts/ac-browser';
-import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, RowModelType, IServerSideDatasource, SuppressKeyboardEventParams, ICellRendererParams, ClientSideRowModelModule, IServerSideGetRowsRequest } from 'ag-grid-community';
+import { AcDatagridExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, IAcDatagridCell, IAcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridTreeTableExtension } from '@autocode-ts/ac-browser';
+import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, IServerSideDatasource, SuppressKeyboardEventParams, ClientSideRowModelModule, IServerSideGetRowsRequest } from 'ag-grid-community';
 import { AllEnterpriseModule, ServerSideRowModelModule,TreeDataModule } from 'ag-grid-enterprise';
 import { AcDatagridRowSelectionExtensionOnAgGrid } from './ac-datagrid-row-selection-extension-on-ag-grid';
 import { IAcDatagriOnAgGridColDefsChangeHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-col-defs-set-hook-args.interface';
@@ -12,7 +12,7 @@ import { AcDatagridTreeTableExtensionOnAgGrid } from './ac-datagrid-tree-table-e
 import { AcDatagridRowDraggingExtensionOnAgGrid } from './ac-datagrid-row-dragging-extension-on-ag-grid';
 import { IAcDatagriOnAgGridRowAddHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowUpdateHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface';
-import { AcEnumConditionOperator, AC_DATA_MANAGER_HOOK, AcEnumLogicalOperator, AcFilterGroup, AcLogger, AcSortOrder, Autocode, IAcDataManagerRowEvent, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from '@autocode-ts/autocode';
+import { AcEnumConditionOperator, AC_DATA_MANAGER_HOOK, AcEnumLogicalOperator, AcFilterGroup, AcLogger, AcSortOrder, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs, acNullifyInstanceProperties } from '@autocode-ts/autocode';
 import { AcDatagridOnAgGridEventHandler } from './ac-datagrid-on-ag-grid-event-handler';
 import { stringEqualsIgnoreCase } from '@autocode-ts/ac-extensions';
 import { AC_DATAGRID_AGGRID_DEFAULT_OPTIONS } from '../const/ac-datagrid-aggrid-default-options.const';
@@ -122,15 +122,21 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   override destroy(): void {
-    super.destroy();
+    this.agGridElement.innerHTML = '';
+
+    if(this.gridApi){
+      this.gridApi.destroy();
+    }
+
     this.agGridEventHandler.destroy();
-    (this.agGridEventHandler as any) = null;
+
     this.agGridRowDragExt.destroy();
-    (this.agGridRowDragExt as any) = null;
+
     this.agGridSelectionExt.destroy();
-    (this.agGridSelectionExt as any) = null;
+
     this.agGridTreeTableExt.destroy();
-    (this.agGridTreeTableExt as any) = null;
+
+    super.destroy();
   }
 
   private handleCellKeyUp(args: SuppressKeyboardEventParams) {
@@ -673,6 +679,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.gridOptions['serverSideDatasource'] = this.onDemandDataSource;
     }
     if (this.gridApi) {
+      this.gridApi.destroy();
       (this.gridApi as any) = null;
     }
     this.agGridElement.innerHTML = "";

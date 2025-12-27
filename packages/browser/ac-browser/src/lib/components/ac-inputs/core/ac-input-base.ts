@@ -209,9 +209,10 @@ export class AcInputBase extends AcElementBase {
   checkValidity() { return this.elementInternals.checkValidity(); }
 
   override destroy() {
-    super.destroy();
+    this.hooks.clearSubscriptions();
     this.inputElement.removeEventListener('input', this.handleInput);
     this.inputElement.removeEventListener('change', this.handleChange);
+    super.destroy();
   }
 
   override focus(options?: FocusOptions): void {

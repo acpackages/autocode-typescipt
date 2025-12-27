@@ -31,7 +31,7 @@ import {
   CellFocusedEvent,
   StateUpdatedEvent
 } from "ag-grid-community";
-import { AcEnumSortOrder } from "@autocode-ts/autocode";
+import { AcEnumSortOrder, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridOnAgGridEventHandler {
   agGridExtension?: AcDatagridOnAgGridExtension | null;
@@ -268,46 +268,15 @@ export class AcDatagridOnAgGridEventHandler {
     return isValid;
   }
 
-  destroy() {
-    if (this.datagridApi!) {
-      this.datagridApi = null;
-    }
-    if (this.agGridExtension!) {
-      this.agGridExtension = null;
-    }
-    if (this.gridApi) {
-      this.gridApi.removeEventListener('cellClicked', this.onCellClicked);
-      this.gridApi.removeEventListener('cellDoubleClicked', this.onCellDoubleClicked);
-      this.gridApi.removeEventListener('cellEditingStarted', this.onCellEditingStarted);
-      this.gridApi.removeEventListener('cellEditingStopped', this.onCellEditingStopped);
-      this.gridApi.removeEventListener('cellFocused', this.onCellFocused);
-      this.gridApi.removeEventListener('cellKeyDown', this.onCellKeyDown);
-      this.gridApi.removeEventListener('cellMouseDown', this.onCellMouseDown);
-      this.gridApi.removeEventListener('cellMouseOut', this.onCellMouseOut);
-      this.gridApi.removeEventListener('cellMouseOver', this.onCellMouseOver);
-      this.gridApi.removeEventListener('cellValueChanged', this.onCellValueChanged);
-      this.gridApi.removeEventListener('columnHeaderClicked', this.onColumnHeaderClicked);
-      this.gridApi.removeEventListener('columnMoved', this.onColumnMoved);
-      this.gridApi.removeEventListener('columnResized', this.onColumnResized);
-      this.gridApi.removeEventListener('columnValueChanged', this.onColumnValueChanged);
-      this.gridApi.removeEventListener('columnVisible', this.onColumnVisible);
-      this.gridApi.removeEventListener('paginationChanged', this.onPaginationChanged);
-      this.gridApi.removeEventListener('rowClicked', this.onRowClicked);
-      this.gridApi.removeEventListener('rowDataUpdated', this.onRowDataUpdated);
-      this.gridApi.removeEventListener('rowDoubleClicked', this.onRowDoubleClicked);
-      this.gridApi.removeEventListener('rowEditingStarted', this.onRowEditingStarted);
-      this.gridApi.removeEventListener('rowEditingStopped', this.onRowEditingStopped);
-      this.gridApi.removeEventListener('rowSelected', this.onRowSelected);
-      this.gridApi.removeEventListener('rowValueChanged', this.onRowValueChanged);
-      this.gridApi.removeEventListener('sortChanged', this.onSortChanged);
-      this.gridApi.removeEventListener('stateUpdated', this.onStateUpdated);
-    }
+  destroy(){
+    this.removeListeners();
+    acNullifyInstanceProperties({instance:this});
   }
 
   init({ agGridExtension }: { agGridExtension: AcDatagridOnAgGridExtension }) {
-    this.destroy();
+    this.removeListeners();
     this.agGridExtension! = agGridExtension;
-    this.datagridApi! = agGridExtension.datagridApi;
+    this.datagridApi = agGridExtension.datagridApi;
     if (this.agGridExtension.gridApi) {
       this.gridApi = agGridExtension.gridApi;
       if (this.gridApi) {
@@ -337,6 +306,36 @@ export class AcDatagridOnAgGridEventHandler {
         this.gridApi.addEventListener('sortChanged', this.onSortChanged);
         this.gridApi.addEventListener('stateUpdated', this.onStateUpdated);
       }
+    }
+  }
+
+  removeListeners() {
+    if (this.gridApi) {
+      this.gridApi.removeEventListener('cellClicked', this.onCellClicked);
+      this.gridApi.removeEventListener('cellDoubleClicked', this.onCellDoubleClicked);
+      this.gridApi.removeEventListener('cellEditingStarted', this.onCellEditingStarted);
+      this.gridApi.removeEventListener('cellEditingStopped', this.onCellEditingStopped);
+      this.gridApi.removeEventListener('cellFocused', this.onCellFocused);
+      this.gridApi.removeEventListener('cellKeyDown', this.onCellKeyDown);
+      this.gridApi.removeEventListener('cellMouseDown', this.onCellMouseDown);
+      this.gridApi.removeEventListener('cellMouseOut', this.onCellMouseOut);
+      this.gridApi.removeEventListener('cellMouseOver', this.onCellMouseOver);
+      this.gridApi.removeEventListener('cellValueChanged', this.onCellValueChanged);
+      this.gridApi.removeEventListener('columnHeaderClicked', this.onColumnHeaderClicked);
+      this.gridApi.removeEventListener('columnMoved', this.onColumnMoved);
+      this.gridApi.removeEventListener('columnResized', this.onColumnResized);
+      this.gridApi.removeEventListener('columnValueChanged', this.onColumnValueChanged);
+      this.gridApi.removeEventListener('columnVisible', this.onColumnVisible);
+      this.gridApi.removeEventListener('paginationChanged', this.onPaginationChanged);
+      this.gridApi.removeEventListener('rowClicked', this.onRowClicked);
+      this.gridApi.removeEventListener('rowDataUpdated', this.onRowDataUpdated);
+      this.gridApi.removeEventListener('rowDoubleClicked', this.onRowDoubleClicked);
+      this.gridApi.removeEventListener('rowEditingStarted', this.onRowEditingStarted);
+      this.gridApi.removeEventListener('rowEditingStopped', this.onRowEditingStopped);
+      this.gridApi.removeEventListener('rowSelected', this.onRowSelected);
+      this.gridApi.removeEventListener('rowValueChanged', this.onRowValueChanged);
+      this.gridApi.removeEventListener('sortChanged', this.onSortChanged);
+      this.gridApi.removeEventListener('stateUpdated', this.onStateUpdated);
     }
   }
 }

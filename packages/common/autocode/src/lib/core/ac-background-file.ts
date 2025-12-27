@@ -1,3 +1,4 @@
+import { acNullifyInstanceProperties } from "../utils/ac-utility-functions";
 import { Autocode } from "./autocode";
 
 export class AcBackgroundFile {
@@ -24,6 +25,10 @@ export class AcBackgroundFile {
     if (this.worker) {
       this.worker.terminate();  // Terminate the worker when done
     }
+  }
+
+  destroy(){
+    acNullifyInstanceProperties({instance:this});
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

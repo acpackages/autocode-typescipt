@@ -6,6 +6,7 @@
 import { Directive, ElementRef, NgZone, Output, EventEmitter } from '@angular/core';
 import { AcBase } from '../_base/ac-base.component';
 import { AutocodeService } from '../services/autocode.service';
+import { acNullifyInstanceProperties } from '@autocode-ts/autocode';
 
 @Directive({
   selector: '[acDimensionChangeListener]',
@@ -47,5 +48,6 @@ export class AcDimensionChangeListenerDirective extends AcBase{
 
   override ngOnDestroy(): void {
     this.observer.disconnect();
+    acNullifyInstanceProperties({instance:this});
   }
 }

@@ -17,11 +17,12 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  OnDestroy
 } from '@angular/core';
 import { AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { IAcNgDatagridColumnDefinition } from '../../../ac-ng-datagrid/interfaces/ac-datagrid-column-definition.interface';
-import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { AcDataManager, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { AcNgDatagridCellRenderer } from '../../../ac-ng-datagrid/elements/ac-ng-datagrid-cell-renderer.element';
 import { AcNgDatagridCellEditor } from '../../../ac-ng-datagrid/elements/ac-ng-datagrid-cell-editor.element';
@@ -33,7 +34,7 @@ import { AcNgDatagridCellEditor } from '../../../ac-ng-datagrid/elements/ac-ng-d
   styles: [``],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
+export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy {
   @ViewChild('selectInput') selectInputsRef: ElementRef<AcDatagridSelectInput>;
 
   @Input() inputClass: string = '';
@@ -106,6 +107,10 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit {
         this.datagridApi.headerHeight = this.headerHeight;
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    acNullifyInstanceProperties({instance:this});
   }
 
 

@@ -8,7 +8,7 @@ import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, C
 import { IAcNgRouterOutlet } from '../../_ac-ng-mutli-router.export';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { Autocode } from '@autocode-ts/autocode';
+import { acNullifyInstanceProperties, Autocode } from '@autocode-ts/autocode';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { AcNgRouterComponent } from '../ac-ng-router/ac-ng-router.component';
 
@@ -49,7 +49,7 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
     });
 
     this.routerOutlets = [];
-    this.activeRouterOutlet = null;
+    acNullifyInstanceProperties({instance:this});
   }
 
   ngOnInit() {

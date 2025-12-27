@@ -3,14 +3,10 @@
 import { AcDatagridApi } from "../core/ac-datagrid-api";
 import { acAddClassToElement, acRegisterCustomElement, acSwapElementsWithAnimation } from "../../../utils/ac-element-functions";
 import { AcDatagridCssClassName } from "../consts/ac-datagrid-css-class-name.const";
-import { AcEnumSortOrder, AcFilter } from "@autocode-ts/autocode";
+import { AcEnumSortOrder } from "@autocode-ts/autocode";
 import { AC_DATAGRID_EVENT } from "../consts/ac-datagrid-event.const";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
-import { IAcDatagridColumnResizeEvent } from "../interfaces/event-args/ac-datagrid-column-resize-event.interface";
-import { IAcDatagridColumnFilterChangeEvent } from "../interfaces/event-args/ac-datagrid-column-filter-change-event.interface";
-import { IAcDatagridColumnSortChangeEvent } from "../interfaces/event-args/ac-datagrid-column-sort-change-event.interface";
 import { IAcDatagridColumnPositionChangeEvent } from "../interfaces/event-args/ac-datagrid-column-position-change-event.interface";
-import { AC_DATAGRID_HOOK } from "../consts/ac-datagrid-hook.const";
 import { IAcDatagridColumn } from "../interfaces/ac-datagrid-column.interface";
 import { AcElementBase } from "../../../core/ac-element-base";
 import { AC_DATAGRID_ICON_SVGS, AcSvgIcon } from "../../_components.export";
@@ -28,7 +24,7 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
         if (event.datagridColumn.columnId == this.datagridColumn.columnId && !this.swappingColumpPosition) {
           let element1: HTMLElement | undefined;
           let element2: HTMLElement | undefined;
-          for (const headerCell of this.datagridApi.datagrid.datagridHeader.datagridHeaderCells) {
+          for (const headerCell of this.datagridApi.datagrid.datagridHeader!.datagridHeaderCells) {
             if (headerCell.datagridColumn.columnId == event.datagridColumn.columnId) {
               element1 = headerCell;
             }
