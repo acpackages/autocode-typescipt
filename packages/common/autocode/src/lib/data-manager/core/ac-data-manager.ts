@@ -148,12 +148,11 @@ export class AcDataManager {
     if (value != this._sortOrder) {
       value.on({
         event: 'change', callback: () => {
-          this.logger.log("SortOrder change detected, triggering refreshRows");
+          // SortOrder change detected, triggering refreshRows (comment kept for context)
         }
       });
       this._sortOrder = value;
     }
-    this.logger.log("SortOrder set complete");
   }
 
   private _totalRows: number = 0;
@@ -161,7 +160,6 @@ export class AcDataManager {
     return this._totalRows;
   }
   set totalRows(value: number) {
-    this.logger.log("Setting totalRows", { oldValue: this._totalRows, newValue: value });
     if (value != this._totalRows) {
       this._totalRows = value;
       const eventArgs: IAcDataManagerTotalRowsChangeEvent = {
@@ -172,9 +170,7 @@ export class AcDataManager {
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.TotalRowsChange, args: eventArgs });
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
-      this.logger.log("TotalRowsChange and DisplayedRowsChange events executed");
     }
-    this.logger.log("TotalRows set complete");
   }
 
   private _type: 'offline' | 'ondemand' = 'offline';
@@ -182,12 +178,9 @@ export class AcDataManager {
     return this._type;
   }
   set type(value: 'offline' | 'ondemand') {
-    this.logger.log("Setting type", { oldType: this._type, newType: value });
     if (this._type != value) {
       this._type = value;
-      this.logger.log(`Type switched to '${value}'`);
     }
-    this.logger.log("Type set complete");
   }
 
   private _uniqueIdKey: string = '__ac_row_id__';
@@ -227,8 +220,6 @@ export class AcDataManager {
   logger: AcLogger = new AcLogger({ logMessages: false });
   private refreshRowsTimeout: any;
   refreshRowsTimeoutDuration = 100;
-
-  // constructor() {}
 
   addData({ data = {} }: { data?: any } = {}): IAcDataRow {
     const index: number = this.allRows.length;
@@ -330,7 +321,6 @@ export class AcDataManager {
   }
 
   private checkOnDemandRowsAvailable({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): boolean {
-    this.logger.log("Checking on-demand rows availability", { startIndex, rowsCount, totalRows: this.totalRows });
     let available: boolean = false;
     if (this.totalRows > 0) {
       if (rowsCount == -1) {
@@ -340,37 +330,26 @@ export class AcDataManager {
       if (endIndex > (this.totalRows - 1)) {
         endIndex = this.totalRows - 1;
       }
-      this.logger.log(`Checking rows availble from start index ${startIndex} to end index ${endIndex} in total rows ${this.totalRows}`);
       if (startIndex < this.totalRows && endIndex < this.totalRows) {
         available = true;
         for (let index = startIndex; index <= endIndex; index++) {
           if (available) {
             if (!this.rows[index]) {
               available = false;
-              this.logger.log("Row not available at index", { index });
               break;
             }
             else if (this.rows[index].isPlaceholder) {
               available = false;
-              this.logger.log("Placeholder row found at index", { index });
               break;
             }
           }
         }
       }
-      else {
-        this.logger.log("Start or end index out of bounds");
-      }
     }
-    else {
-      this.logger.log("No total rows, all available");
-    }
-    this.logger.log("On-demand rows availability check complete", { available });
     return available;
   }
 
   deleteRow({ data, rowId, key, value }: { data?: any, rowId?: string, key?: string, value?: any }): IAcDataRow | undefined {
-    this.logger.log("Deleting row", { rowId, key, value });
     const dataRow: IAcDataRow | undefined = this.rows.find((dataRow: IAcDataRow) => {
       let valid: boolean = false;
       if (rowId) {
@@ -393,9 +372,6 @@ export class AcDataManager {
       this.totalRows--;
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowDelete, args: { dataRow: dataRow } });
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowDelete, args: { dataRow: dataRow } });
-      this.logger.log("Row deleted successfully", { rowId: dataRow.rowId });
-    } else {
-      this.logger.log("Row not found for deletion");
     }
     return dataRow;
   }
@@ -411,10 +387,8 @@ export class AcDataManager {
   }
 
   private evaluateFilter(filter: AcFilter, row: IAcDataRow): boolean {
-    this.logger.log("Evaluating filter", { key: filter.key, operator: filter.operator, value: filter.value });
     const field = filter.key;
     if (!field) {
-      this.logger.log("No field in filter, returning true");
       return true;
     }
 
@@ -497,7 +471,6 @@ export class AcDataManager {
 
       case AcEnumConditionOperator.Between:
         if (!Array.isArray(filterValue) || filterValue.length !== 2) {
-          this.logger.log("Invalid Between filter value");
           result = true;
         } else {
           const [min, max] = filterValue;
@@ -524,41 +497,31 @@ export class AcDataManager {
 
       default:
         result = true;
-        this.logger.log("Unknown operator, defaulting to true");
     }
-    this.logger.log("Filter evaluation complete", { result, fieldValue: value });
     return result;
   }
 
   private evaluateFilterGroup(group: AcFilterGroup, row: IAcDataRow): boolean {
-    this.logger.log("Evaluating filter group", { operator: group.operator, filtersCount: group.filters.length, subGroupsCount: group.filterGroups.length });
     const results: boolean[] = [];
 
-    // Evaluate filters in this group
     for (const filter of group.filters) {
       results.push(this.evaluateFilter(filter, row));
     }
 
-    // Evaluate nested groups recursively
     for (const subGroup of group.filterGroups) {
       results.push(this.evaluateFilterGroup(subGroup, row));
     }
 
-    // Combine results based on logical operator
     let combinedResult: boolean;
     if (group.operator === AcEnumLogicalOperator.Or) {
       combinedResult = results.some(Boolean);
-    }
-    // Default AND
-    else {
+    } else {
       combinedResult = results.every(Boolean);
     }
-    this.logger.log("Filter group evaluation complete", { combinedResult, resultsCount: results.length });
     return combinedResult;
   }
 
   private evaluateSearch(searchQuery: string, row: IAcDataRow, searchKeys: string[]): boolean {
-    this.logger.log("Evaluating search", { query: searchQuery, searchKeysLength: searchKeys.length, rowIndex: row.index });
     let isValid: boolean = true;
     if (searchQuery) {
       isValid = false;
@@ -568,29 +531,24 @@ export class AcDataManager {
           const valid: boolean = value != null && searchQuery != null && value.toString().toLowerCase().includes(searchQuery.toString().toLowerCase());
           if (valid) {
             isValid = true;
-            this.logger.log("Search match found in field", { field, value });
             break;
           }
         }
       }
     }
-    this.logger.log("Search evaluation complete", { isValid });
     return isValid;
   }
 
   async getData({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): Promise<any[]> {
-    this.logger.log("Getting data", { startIndex, rowsCount });
     const allRows: IAcDataRow[] = await this.getRows({ startIndex, rowsCount });
     const result: any[] = [];
     for (const row of allRows) {
       result.push(row.data);
     }
-    this.logger.log("Data retrieval complete", { resultLength: result.length });
     return result;
   }
 
   async getRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): Promise<IAcDataRow[]> {
-    this.logger.log("Getting rows", { startIndex, rowsCount, type: this.type });
     this.lastStartIndex = startIndex;
     this.lastRowsCount = rowsCount;
     const setResultFromRows = () => {
@@ -601,17 +559,14 @@ export class AcDataManager {
           result.push(this.rows[index]);
         }
       }
-      this.logger.log("Rows set from existing data", { fromIndex, toIndex, fetchedCount: result.length });
     };
     const result: IAcDataRow[] = [];
     if (this.type === "ondemand") {
       if (this.onDemandFunction) {
         if (this.checkOnDemandRowsAvailable({ startIndex, rowsCount })) {
-          this.logger.log("All requested on-demand rows available locally");
           setResultFromRows();
         }
         else {
-          this.logger.log("Fetching on-demand data");
           return new Promise<IAcDataRow[]>((resolve, reject) => {
             const requestArgs: IAcOnDemandRequestArgs = {
               filterGroup: this.filterGroup.clone(),
@@ -623,7 +578,6 @@ export class AcDataManager {
                     requestArgs,
                     responseArgs: response,
                   };
-                  this.logger.log("On-demand success callback received", { dataLength: response.data.length, totalCount: response.totalCount });
                   this.setRows({
                     data: response.data,
                     totalCount: response.totalCount,
@@ -634,25 +588,19 @@ export class AcDataManager {
                     hook: AC_DATA_MANAGER_HOOK.GetOnDemandDataSuccessCallback,
                     args: hookArgs,
                   });
-                  this.logger.log("On-demand success callback processed");
                   resolve(result);
                 } catch (error) {
-                  this.logger.log("Error in on-demand success callback", { error });
                   reject(error);
                 }
               },
               errorCallback: (error: any) => {
-                this.logger.log("On-demand error callback", { error });
-                reject(error); // ✅ Optional: handle rejection from API
+                reject(error);
               },
             };
             if (startIndex >= 0 && rowsCount > 0) {
               requestArgs.pageNumber = (startIndex / rowsCount) + 1;
               requestArgs.rowsCount = rowsCount;
               requestArgs.startIndex = startIndex;
-            }
-            else {
-              // requestArgs.allRows = true;
             }
             requestArgs.searchQuery = this.searchQuery;
             const hookArgs: IAcDataManagerBeforeGetOnDemandDataHookArgs = {
@@ -664,114 +612,84 @@ export class AcDataManager {
               hook: AC_DATA_MANAGER_HOOK.BeforeGetOnDemandData,
               args: hookArgs,
             });
-            this.logger.log("BeforeGetOnDemandData hook executed");
 
-            // Call the on-demand function
             try {
               this.onDemandFunction!(requestArgs);
-              this.logger.log("On-demand function called");
             } catch (err) {
-              this.logger.log("Error calling on-demand function", { err });
               reject(err);
             }
           });
         }
       } else {
-        this.logger.log("No onDemandFunction set, returning empty array");
         return [];
       }
     }
     else {
-      this.logger.log("Offline mode, setting rows from local data");
       setResultFromRows();
     }
-    this.logger.log("Rows retrieval complete", { resultLength: result.length });
     return result;
   }
 
   getRowIndex({ key, value }: { key: string, value: any }): number {
-    this.logger.log("Getting row index", { key, value });
     const index = this.allRows.findIndex((row: IAcDataRow) => {
       return row.data[key] == value;
     });
-    this.logger.log("Row index retrieval complete", { index });
     return index;
   }
 
   getRowAtIndex({ index }: { index: number }): IAcDataRow | undefined {
-    this.logger.log("Getting row at index", { index });
     const row = this.allRows.find((row: IAcDataRow) => {
       return row.index == index;
     });
-    this.logger.log("Row at index retrieval complete", { index, found: !!row });
     return row;
   }
 
   getRow({ key, value }: { key: string, value: any }): IAcDataRow | undefined {
-    this.logger.log("Getting row", { key, value });
     const row = this.allRows.find((row: IAcDataRow) => {
       return row.data[key] == value;
     });
-    this.logger.log("Row retrieval complete", { key, found: !!row });
     return row;
   }
 
   off({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): void {
-    this.logger.log("Unsubscribing from event", { event, subscriptionId });
     this.events.unsubscribe({ event, callback, subscriptionId });
-    this.logger.log("Unsubscribe complete");
   }
 
   on({ event, callback }: { event: string, callback: Function }): string {
-    this.logger.log("Subscribing to event", { event });
     const subscriptionId = this.events.subscribe({ event, callback });
-    this.logger.log("Subscribe complete", { subscriptionId });
     return subscriptionId;
   }
 
   async processRows() {
-    this.logger.log("Processing rows", { allRowsLength: this.allRows.length, searchQuery: this.searchQuery, filterGroupHasFilters: this.filterGroup.hasFilters(), sortOrdersCount: this.sortOrder.sortOrders.length });
     if (this.type == 'offline') {
       if (this.allRows.length > 0) {
         this.applyFilter();
         this.applySort();
       }
-      this.logger.log("Setting displayed rows after processing", { startIndex: this.displayStartIndex, rowsCount: this.displayCount });
-    }
-    else {
-      this.logger.log("On-demand mode, rows set without full processing");
     }
     this.totalRows = this.rows.length;
     this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
-    this.logger.log("Rows processing complete", { rowsLength: this.rows.length, totalRows: this.totalRows });
   }
 
   async refreshRows() {
-    this.logger.log("Refreshing rows", { type: this.type, timeoutDuration: this.refreshRowsTimeoutDuration });
     if (this.refreshRowsTimeout) {
       clearTimeout(this.refreshRowsTimeout);
-      this.logger.log("Cleared existing refresh timeout");
     }
     this.refreshRowsTimeout = setTimeout(async () => {
-      this.logger.log("Refresh timeout executed");
       if (this.type == "offline") {
         this.processRows();
       }
       else {
-        this.logger.log("On-demand refresh: setting isWorking to true");
         this.isWorking = true;
         this.reset();
         await this.getRows({ rowsCount: this.lastRowsCount });
         this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
-        this.logger.log("On-demand refresh: setting isWorking to false");
         this.isWorking = false;
       }
-      this.logger.log("Refresh rows complete");
     }, this.refreshRowsTimeoutDuration);
   }
 
   reset() {
-    this.logger.log("Resetting data manager");
     this.totalRows = 0;
     (this.allRows as any) = null;
     this.allRows = [];
@@ -785,11 +703,9 @@ export class AcDataManager {
       event: AC_DATA_MANAGER_EVENT.Reset,
       args: {},
     });
-    this.logger.log("Reset complete");
   }
 
   setRows({ data, startIndex, totalCount }: { data: any[], startIndex?: number, totalCount?: number }) {
-    this.logger.log("Setting rows", { dataLength: data.length, startIndex, totalCount, type: this.type });
     if (!this.firstDataNotified && data.length > 0) {
       this.firstDataNotified = true;
       const eventArgs: IAcDataManagerDataEvent = {
@@ -843,7 +759,6 @@ export class AcDataManager {
       }
       this.allRows = allRows;
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
-      this.logger.log("DataChange hook executed, all data available");
       this.allDataAvailable = true;
       this.processRows();
     }
@@ -854,7 +769,6 @@ export class AcDataManager {
       startIndex = startIndex ?? 0;
       const endIndex = startIndex + (data.length) - 1;
       if (this.allRows.length < totalCount) {
-        this.logger.log("Initializing placeholders for totalCount", { totalCount });
         this.allRows = [];
         for (let index = 0; index < totalCount; index++) {
           const dataRow: IAcDataRow = {
@@ -884,14 +798,11 @@ export class AcDataManager {
       }
       this.allDataAvailable = this.allRows.filter((row) => { return row.isPlaceholder == false }).length == 0;
       this.totalRows = totalCount;
-      this.logger.log("On-demand data set, allDataAvailable:", { allDataAvailable: this.allDataAvailable });
       this.processRows();
     }
-    this.logger.log("Rows set complete", { totalRows: this.totalRows, allDataAvailable: this.allDataAvailable });
   }
 
   updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDataRow | undefined {
-    this.logger.log("Updating row", { rowId, key, value, dataKeys: Object.keys(data), addIfMissing });
     let dataRow: IAcDataRow | undefined = this.rows.find((row) => {
       let valid: boolean = false;
       if (rowId) {
@@ -928,19 +839,14 @@ export class AcDataManager {
         dataRow: dataRow
       };
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowUpdate, args: eventArgs });
-      this.logger.log("Row updated successfully", { rowId: dataRow.rowId });
     }
     else if (addIfMissing) {
-      this.logger.log("Row not found, adding new row");
       dataRow = this.addData({ data: data });
-    } else {
-      this.logger.log("Row not found and addIfMissing false");
     }
     return dataRow;
   }
 
   async setDisplayedRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}) {
-    this.logger.log("Setting displayed rows", { startIndex, rowsCount });
     this.displayStartIndex = startIndex;
     this.displayEndIndex = (startIndex + rowsCount) - 1;
     this.displayCount = rowsCount;
@@ -951,5 +857,4 @@ export class AcDataManager {
     this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
   }
-
 }
