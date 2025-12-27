@@ -16,7 +16,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
   treeTableExtension?: AcDatagridTreeTableExtension | null;
   private draggingRow: any;
 
-  private handleHook:Function = ({ hook, args }: { hook: string, args: any }): void => {
+  private handleHook:Function = (hook: string, args: any): void => {
     if (hook === AC_DATAGRID_HOOK.ExtensionEnable) {
       this.handleExtensionEnabled(args);
     } else if (hook === AcEnumDatagridRowDraggingHook.AllowRowDraggingChange) {

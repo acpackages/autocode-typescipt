@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagridApi, AcDatagridRowSelectionExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, AcEnumDatagridRowSelectionHook, IAcDatagridExtensionEnabledHookArgs, IAcDatagridRowSelectionChangeEvent, IAcDatagridSelectionMultipleRowsChangeEvent } from "@autocode-ts/ac-browser";
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
-import { GridApi, IRowNode, RowSelectedEvent } from "ag-grid-community";
+import { GridApi, IRowNode, RowSelectedEvent, RowSelectionOptions } from "ag-grid-community";
 
 export class AcDatagridRowSelectionExtensionOnAgGrid {
   agGridExtension?: AcDatagridOnAgGridExtension | null;
@@ -11,7 +11,7 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
   gridApi?: GridApi | null;
   rowSelectionExtension?: AcDatagridRowSelectionExtension | null;
 
-  private handleHook:Function = ({ hook, args }: { hook: string, args: any }): void => {
+  private handleHook:Function = (hook: string, args: any): void => {
     if (hook === AC_DATAGRID_HOOK.ExtensionEnable) {
       this.handleExtensionEnabled(args);
     } else if (hook === AcEnumDatagridRowSelectionHook.RowSelectionChange) {
@@ -100,16 +100,25 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
 
   private setExtension() {
     this.rowSelectionExtension = this.datagridApi!.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
-    const selectionOption: any = {};
+    const selectionOption: Partial<RowSelectionOptions>  = {};
     if (this.gridApi) {
-      this.gridApi.setGridOption('rowSelection', selectionOption);
-
       if (this.rowSelectionExtension) {
         if (this.rowSelectionExtension.allowSelection) {
           selectionOption.mode = this.rowSelectionExtension.allowMultipleSelection ? 'multiRow' : 'singleRow';
           this.gridApi.addEventListener('rowSelected', this.onRowSelected);
         }
       }
+      this.gridApi.setGridOption('rowSelection', selectionOption as any);
+      this.gridApi.setGridOption('selectionColumnDef',{
+        sortable: true,
+        resizable: false,
+        minWidth: 25,
+        maxWidth: 25,
+        width: 25,
+        suppressHeaderMenuButton: true,
+        headerStyle:{paddingLeft:'2.5px',paddingRight:'2.5px'},
+        cellStyle:{paddingLeft:'2.5px',paddingRight:'2.5px'}
+    });
     }
   }
 

@@ -23826,6 +23826,232 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_chargeable_service_categories.chargeable_service_category_name,\njson_object('media_path', media_path,'media_details', media_details) AS chargeable_service_image_media,\nact_chargeable_services.* FROM act_chargeable_services LEFT JOIN act_chargeable_service_categories ON act_chargeable_services.chargeable_service_category_id = act_chargeable_service_categories.chargeable_service_category_id\nLEFT JOIN act_medias ON act_chargeable_services.chargeable_service_image_media_id = act_medias.media_id"
     },
+    "act_vw_current_product_purchase_details": {
+      "viewName": "act_vw_current_product_purchase_details",
+      "viewColumns": {
+        "product_purchase_detail_id": {
+          "columnName": "product_purchase_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "minimum_order_quantity": {
+          "columnName": "minimum_order_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity"
+        },
+        "minimum_order_quantity_uom_id": {
+          "columnName": "minimum_order_quantity_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity_uom_id"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "purchase_uom_id": {
+          "columnName": "purchase_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "purchase_uom_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "product_purchase_detail_name": {
+          "columnName": "product_purchase_detail_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_price_id"
+        }
+      },
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_purchase_detail_id ) AS rn FROM act_product_purchase_details WHERE is_active = 1 ) WHERE rn = 1;"
+    },
+    "act_vw_current_product_sale_details": {
+      "viewName": "act_vw_current_product_sale_details",
+      "viewColumns": {
+        "product_sale_detail_id": {
+          "columnName": "product_sale_detail_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "sale_uom_id": {
+          "columnName": "sale_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "sale_uom_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "product_sale_detail_name": {
+          "columnName": "product_sale_detail_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_price_id"
+        }
+      },
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_sale_detail_id ) AS rn FROM act_product_sale_details WHERE is_active = 1 ) WHERE rn = 1;"
+    },
+    "act_vw_current_product_stock_details": {
+      "viewName": "act_vw_current_product_stock_details",
+      "viewColumns": {
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        }
+      },
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_uom_id ) AS rn FROM act_product_uoms WHERE is_active = 1 ) WHERE rn = 1;"
+    },
     "act_vw_customers": {
       "viewName": "act_vw_customers",
       "viewColumns": {
@@ -24363,6 +24589,68 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
+    },
+    "act_vw_ledger_account_types": {
+      "viewName": "act_vw_ledger_account_types",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "ledger_account_type_id": {
+          "columnName": "ledger_account_type_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "ledger_account_type_id"
+        },
+        "ledger_account_type_index": {
+          "columnName": "ledger_account_type_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "ledger_account_type_index"
+        },
+        "ledger_account_type_name": {
+          "columnName": "ledger_account_type_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "ledger_account_type_name"
+        },
+        "parent_ledger_account_type_id": {
+          "columnName": "parent_ledger_account_type_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "parent_ledger_account_type_id"
+        },
+        "ledger_account_type_remarks": {
+          "columnName": "ledger_account_type_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "ledger_account_type_remarks"
+        },
+        "ledger_account_types_description": {
+          "columnName": "ledger_account_types_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_ledger_account_types",
+          "columnSourceOriginalColumn": "ledger_account_types_description"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_ledger_account_types"
     },
     "act_vw_ledger_accounts": {
       "viewName": "act_vw_ledger_accounts",
@@ -25946,6 +26234,244 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\njson_object('media_path', media_path,'media_details', media_details) AS product_category_image_media,\nact_product_categories.* FROM act_product_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_product_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_product_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_product_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_product_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id \nLEFT JOIN act_medias ON act_product_categories.product_category_image_media_id = act_medias.media_id"
+    },
+    "act_vw_product_orders": {
+      "viewName": "act_vw_product_orders",
+      "viewColumns": {
+        "minimum_order_quantity": {
+          "columnName": "minimum_order_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity"
+        },
+        "minimum_order_quantity_uom_id": {
+          "columnName": "minimum_order_quantity_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity_uom_id"
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "total_out_quantity"
+        },
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "total_in_quantity"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
+        "stock_in_hand_quantity": {
+          "columnName": "stock_in_hand_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "stock_in_hand_quantity"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_image_media"
+        },
+        "product_category_name": {
+          "columnName": "product_category_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_category_name"
+        },
+        "product_category_tree": {
+          "columnName": "product_category_tree",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_category_tree"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "delivery_available": {
+          "columnName": "delivery_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "delivery_available"
+        },
+        "pickup_available": {
+          "columnName": "pickup_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "pickup_available"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_category_id": {
+          "columnName": "product_category_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_category_id"
+        },
+        "product_details": {
+          "columnName": "product_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_details"
+        },
+        "product_full_description": {
+          "columnName": "product_full_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_full_description"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_image_media_id": {
+          "columnName": "product_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_image_media_id"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_quick_description": {
+          "columnName": "product_quick_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_quick_description"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_tags": {
+          "columnName": "product_tags",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "product_tags"
+        },
+        "waitlist_quantity": {
+          "columnName": "waitlist_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "waitlist_quantity"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "hsn_code"
+        },
+        "brand_name": {
+          "columnName": "brand_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "brand_name"
+        },
+        "stock_in_hand_uom_quantity": {
+          "columnName": "stock_in_hand_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "stock_in_hand_uom_quantity"
+        }
+      },
+      "viewQuery": "SELECT \nact_vw_current_product_purchase_details.minimum_order_quantity, act_vw_current_product_purchase_details.minimum_order_quantity_uom_id,\nact_vw_stock.* FROM act_vw_stock \nLEFT JOIN act_vw_current_product_purchase_details ON act_vw_stock.product_id = act_vw_current_product_purchase_details.product_id"
     },
     "act_vw_product_purchase_details": {
       "viewName": "act_vw_product_purchase_details",
@@ -28908,14 +29434,6 @@ export const dataDictionaryJson = {
     "act_vw_stock": {
       "viewName": "act_vw_stock",
       "viewColumns": {
-        "product_id": {
-          "columnName": "product_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "product_id"
-        },
         "total_out_quantity": {
           "columnName": "total_out_quantity",
           "columnType": "DOUBLE",
@@ -28945,6 +29463,14 @@ export const dataDictionaryJson = {
         "stock_quantity": {
           "columnName": "stock_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
+        "stock_in_hand_quantity": {
+          "columnName": "stock_in_hand_quantity",
+          "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -28954,20 +29480,437 @@ export const dataDictionaryJson = {
           "columnSource": "function",
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
-        }
-      },
-      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id FROM act_vw_inventory_tracking_entries GROUP BY product_id"
-    },
-    "act_vw_stock_at_location": {
-      "viewName": "act_vw_stock_at_location",
-      "viewColumns": {
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
+        },
+        "product_category_name": {
+          "columnName": "product_category_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_name"
+        },
+        "product_category_tree": {
+          "columnName": "product_category_tree",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_tree"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "delivery_available": {
+          "columnName": "delivery_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "delivery_available"
+        },
+        "pickup_available": {
+          "columnName": "pickup_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "pickup_available"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_category_id": {
+          "columnName": "product_category_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_id"
+        },
+        "product_details": {
+          "columnName": "product_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_details"
+        },
+        "product_full_description": {
+          "columnName": "product_full_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_full_description"
+        },
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
           "columnProperties": {},
           "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_id"
+        },
+        "product_image_media_id": {
+          "columnName": "product_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media_id"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_quick_description": {
+          "columnName": "product_quick_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_quick_description"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_tags": {
+          "columnName": "product_tags",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_tags"
+        },
+        "waitlist_quantity": {
+          "columnName": "waitlist_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "waitlist_quantity"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "hsn_code"
+        },
+        "brand_name": {
+          "columnName": "brand_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "brand_name"
+        },
+        "stock_in_hand_uom_quantity": {
+          "columnName": "stock_in_hand_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        }
+      },
+      "viewQuery": "SELECT \nSUM(in_quantity) AS total_in_quantity, \nSUM(out_quantity) AS total_out_quantity, \nSUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_in_hand_quantity, \n(SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) / IIF(act_vw_current_product_stock_details.product_uom_quantity IS NULL,1,act_vw_current_product_stock_details.product_uom_quantity)) AS stock_in_hand_uom_quantity,\nact_vw_current_product_stock_details.product_uom_id, act_vw_current_product_stock_details.product_uom_name, act_vw_current_product_stock_details.product_uom_quantity,\nact_vw_products.* FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id"
+    },
+    "act_vw_stock_at_location": {
+      "viewName": "act_vw_stock_at_location",
+      "viewColumns": {
+        "total_in_quantity": {
+          "columnName": "total_in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total In"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "total_out_quantity": {
+          "columnName": "total_out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Out"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "stock_in_hand_quantity": {
+          "columnName": "stock_in_hand_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "stock_in_hand_uom_quantity": {
+          "columnName": "stock_in_hand_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
+        },
+        "product_category_name": {
+          "columnName": "product_category_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_name"
+        },
+        "product_category_tree": {
+          "columnName": "product_category_tree",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_tree"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "delivery_available": {
+          "columnName": "delivery_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "delivery_available"
+        },
+        "pickup_available": {
+          "columnName": "pickup_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "pickup_available"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_category_id": {
+          "columnName": "product_category_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_id"
+        },
+        "product_details": {
+          "columnName": "product_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_details"
+        },
+        "product_full_description": {
+          "columnName": "product_full_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_full_description"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_image_media_id": {
+          "columnName": "product_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media_id"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_quick_description": {
+          "columnName": "product_quick_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_quick_description"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_tags": {
+          "columnName": "product_tags",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_tags"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
+        "waitlist_quantity": {
+          "columnName": "waitlist_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "waitlist_quantity"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "hsn_code"
+        },
+        "brand_name": {
+          "columnName": "brand_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "brand_name"
         },
         "location_id": {
           "columnName": "location_id",
@@ -28976,7 +29919,13 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "location_id"
-        },
+        }
+      },
+      "viewQuery": "SELECT \nSUM(in_quantity) AS total_in_quantity, \nSUM(out_quantity) AS total_out_quantity, \nSUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_in_hand_quantity, \n(SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) / IIF(act_vw_current_product_stock_details.product_uom_quantity IS NULL,1,act_vw_current_product_stock_details.product_uom_quantity)) AS stock_in_hand_uom_quantity,\nact_vw_current_product_stock_details.product_uom_id, act_vw_current_product_stock_details.product_uom_name, act_vw_current_product_stock_details.product_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,location_id"
+    },
+    "act_vw_stock_at_storage_location": {
+      "viewName": "act_vw_stock_at_storage_location",
+      "viewColumns": {
         "total_in_quantity": {
           "columnName": "total_in_quantity",
           "columnType": "DOUBLE",
@@ -29003,8 +29952,8 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
+        "stock_in_hand_quantity": {
+          "columnName": "stock_in_hand_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -29015,20 +29964,203 @@ export const dataDictionaryJson = {
           "columnSource": "function",
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
-        }
-      },
-      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,location_id"
-    },
-    "act_vw_stock_at_storage_location": {
-      "viewName": "act_vw_stock_at_storage_location",
-      "viewColumns": {
+        },
+        "stock_in_hand_uom_quantity": {
+          "columnName": "stock_in_hand_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
+        "product_uom_quantity": {
+          "columnName": "product_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_stock_details",
+          "columnSourceOriginalColumn": "product_uom_quantity"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
+        },
+        "product_category_name": {
+          "columnName": "product_category_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_name"
+        },
+        "product_category_tree": {
+          "columnName": "product_category_tree",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_tree"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "delivery_available": {
+          "columnName": "delivery_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "delivery_available"
+        },
+        "pickup_available": {
+          "columnName": "pickup_available",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "pickup_available"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_category_id": {
+          "columnName": "product_category_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_category_id"
+        },
+        "product_details": {
+          "columnName": "product_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_details"
+        },
+        "product_full_description": {
+          "columnName": "product_full_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_full_description"
+        },
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
           "columnProperties": {},
           "columnSource": "view",
-          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_id"
+        },
+        "product_image_media_id": {
+          "columnName": "product_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media_id"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_quick_description": {
+          "columnName": "product_quick_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_quick_description"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_tags": {
+          "columnName": "product_tags",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_tags"
+        },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
+        "waitlist_quantity": {
+          "columnName": "waitlist_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "waitlist_quantity"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "hsn_code"
+        },
+        "brand_name": {
+          "columnName": "brand_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "brand_name"
         },
         "storage_location_id": {
           "columnName": "storage_location_id",
@@ -29037,48 +30169,9 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "storage_location_id"
-        },
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total In"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM",
-          "columnSourceOriginalColumn": ""
-        },
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Total Out"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM",
-          "columnSourceOriginalColumn": ""
-        },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "SUM",
-          "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT SUM(in_quantity) AS total_in_quantity,SUM(out_quantity) AS total_out_quantity,SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_quantity,product_id,storage_location_id FROM act_vw_inventory_tracking_entries GROUP BY product_id,storage_location_id"
+      "viewQuery": "SELECT \nSUM(in_quantity) AS total_in_quantity, \nSUM(out_quantity) AS total_out_quantity, \nSUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_in_hand_quantity, \n(SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) / IIF(act_vw_current_product_stock_details.product_uom_quantity IS NULL,1,act_vw_current_product_stock_details.product_uom_quantity)) AS stock_in_hand_uom_quantity,\nact_vw_current_product_stock_details.product_uom_id, act_vw_current_product_stock_details.product_uom_name, act_vw_current_product_stock_details.product_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.storage_location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,storage_location_id"
     },
     "act_vw_storage_locations": {
       "viewName": "act_vw_storage_locations",
@@ -29780,61 +30873,6 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT * FROM act_users"
-    },
-    "act_vw_ledger_account_types": {
-      "viewName": "act_vw_ledger_account_types",
-      "viewColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "accountee_id"
-        },
-        "ledger_account_type_id": {
-          "columnName": "ledger_account_type_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "ledger_account_type_id"
-        },
-        "ledger_account_type_index": {
-          "columnName": "ledger_account_type_index",
-          "columnType": "INTEGER",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "ledger_account_type_index"
-        },
-        "ledger_account_type_name": {
-          "columnName": "ledger_account_type_name",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "ledger_account_type_name"
-        },
-        "parent_ledger_account_type_id": {
-          "columnName": "parent_ledger_account_type_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "parent_ledger_account_type_id"
-        },
-        "ledger_account_type_remarks": {
-          "columnName": "ledger_account_type_remarks",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "ledger_account_type_remarks"
-        },
-        "ledger_account_types_description": {
-          "columnName": "ledger_account_types_description",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "ledger_account_types_description"
-        }
-      },
-      "viewQuery": "SELECT * FROM act_ledger_account_types"
     }
   },
   "relationships": [

@@ -612,6 +612,10 @@ export class AcDatagridApi {
     return state;
   }
 
+  init(){
+//
+  }
+
   off({ event, callback,subscriptionId }: { event?: string, callback?: Function,subscriptionId?:string }): boolean {
     return this.events.unsubscribe({ event, callback,subscriptionId });
   }

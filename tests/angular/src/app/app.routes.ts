@@ -7,8 +7,13 @@ export const appRoutes: Routes = [
     ),
   },
   {
-    path: 'datagrid', loadComponent: () => import('../modules/datagrid/datagrid.component').then(
-      (m) => m.DatagridComponent
+    path: 'datagrid-simple', loadComponent: () => import('../modules/datagrid/datagrid-simple/datagrid-simple.component').then(
+      (m) => m.DatagridSimpleComponent
+    ),
+  },
+  {
+    path: 'datagrid-tree', loadComponent: () => import('../modules/datagrid/datagrid-tree/datagrid-tree.component').then(
+      (m) => m.DatagridTreeComponent
     ),
   },
   {

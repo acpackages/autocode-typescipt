@@ -10,7 +10,21 @@
         <a class="nav-link" (click)="handleNavigate('dashboard')">Dashboard</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="handleNavigate('datagrid')">Datagrid</a>
+        <a class="nav-link" (click)="handleNavigate('datagrid-simple')">Datagrid Simple</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="handleNavigate('datagrid-tree')">Datagrid Tree</a>
+      </li>
+      <li class="nav-item dropdown d-none">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Datagrid
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="handleNavigate('datagrid-simple')">Simple</a>
+          <a class="dropdown-item" (click)="handleNavigate('datagrid-tree')">Tree</a>
+          <!-- <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a> -->
+        </div>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="handleNavigate('inputs')">Inputs</a>
@@ -18,7 +32,7 @@
       <li class="nav-item">
         <a class="nav-link" (click)="handleNavigate('scrollable')">Scrollable</a>
       </li>
-      <li class="nav-item dropdown d-none">
+      <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown
         </a>

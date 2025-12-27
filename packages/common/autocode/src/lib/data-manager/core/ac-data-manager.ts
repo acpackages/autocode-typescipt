@@ -35,7 +35,18 @@ export class AcDataManager {
   set assignUniqueIdToData(value: boolean) {
     if (value != this._assignUniqueIdToData) {
       this._assignUniqueIdToData = value;
-      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.UniqueIdKeyChange, args: { searchQuery: value } });
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.AssignUniqueIdToDataChange });
+    }
+  }
+
+  private _assignUniqueParentIdToData: boolean = true;
+  get assignUniqueParentIdToData(): boolean {
+    return this._assignUniqueParentIdToData;
+  }
+  set assignUniqueParentIdToData(value: boolean) {
+    if (value != this._assignUniqueParentIdToData) {
+      this._assignUniqueParentIdToData = value;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.AssignUniqueParentIdToDataChange });
     }
   }
 
@@ -52,6 +63,28 @@ export class AcDataManager {
     this.setRows({ data: value });
   }
 
+  private _dataParentUniqueValueKey: string = '';
+  get dataParentUniqueValueKey(): string {
+    return this._dataParentUniqueValueKey;
+  }
+  set dataParentUniqueValueKey(value: string) {
+    if (value != this._dataParentUniqueValueKey) {
+      this._dataParentUniqueValueKey = value;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataParentUniqueValueKeyChange, args: { searchQuery: value } });
+    }
+  }
+
+  private _dataUniqueValueKey: string = '';
+  get dataUniqueValueKey(): string {
+    return this._dataUniqueValueKey;
+  }
+  set dataUniqueValueKey(value: string) {
+    if (value != this._dataUniqueValueKey) {
+      this._dataUniqueValueKey = value;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataUniqueValueKeyChange, args: { searchQuery: value } });
+    }
+  }
+
   get displayedRows(): IAcDataRow[] {
     return this.allRows.filter((row) => {
       return row.index >= this.displayStartIndex && row.index <= this.displayEndIndex;
@@ -63,16 +96,14 @@ export class AcDataManager {
     return this._filterGroup;
   }
   set filterGroup(value: AcFilterGroup) {
-    this.logger.log("Setting filterGroup", { hasFilters: value.hasFilters(), filterGroupsCount: value.filterGroups.length });
     if (value != this._filterGroup) {
       this._filterGroup = value;
       value.on({
         event: 'change', callback: () => {
-          this.logger.log("FilterGroup change detected, triggering refreshRows");
+          //
         }
       });
     }
-    this.logger.log("FilterGroup set complete");
   }
 
   get rows(): IAcDataRow[] {
@@ -102,13 +133,11 @@ export class AcDataManager {
     return this._searchQuery;
   }
   set searchQuery(value: string) {
-    this.logger.log("Setting searchQuery", { query: value });
     if (value != this._searchQuery) {
       this._searchQuery = value;
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.SearchQueryChange, args: { searchQuery: value } });
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.SearchQueryChange, args: { searchQuery: value } });
     }
-    this.logger.log("SearchQuery set complete");
   }
 
   private _sortOrder: AcSortOrder = new AcSortOrder();
@@ -116,7 +145,6 @@ export class AcDataManager {
     return this._sortOrder;
   }
   set sortOrder(value: AcSortOrder) {
-    this.logger.log("Setting sortOrder", { sortOrdersCount: value.sortOrders.length });
     if (value != this._sortOrder) {
       value.on({
         event: 'change', callback: () => {
@@ -173,6 +201,17 @@ export class AcDataManager {
     }
   }
 
+  private _uniqueIdParentKey: string = '__ac_row_parent_id__';
+  get uniqueIdParentKey(): string {
+    return this._uniqueIdParentKey;
+  }
+  set uniqueIdParentKey(value: string) {
+    if (value != this._uniqueIdParentKey) {
+      this._uniqueIdParentKey = value;
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.UniqueIdParentKeyChange, args: { searchQuery: value } });
+    }
+  }
+
   allDataAvailable: boolean = true;
   allRows: IAcDataRow[] = [];
   autoSetUniqueIdToData: boolean = false;
@@ -193,12 +232,12 @@ export class AcDataManager {
 
   addData({ data = {} }: { data?: any } = {}): IAcDataRow {
     const index: number = this.allRows.length;
-    const beforeArgs:any = {
+    const beforeArgs: any = {
       dataManager: this,
       data: data,
     };
-    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeRowAdd, args:beforeArgs  });
-    this.events.execute({ event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, args: beforeArgs});
+    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeRowAdd, args: beforeArgs });
+    this.events.execute({ event: AC_DATA_MANAGER_EVENT.BeforeRowAdd, args: beforeArgs });
     data = beforeArgs.data;
     const dataRow: IAcDataRow = {
       data: data,
@@ -210,6 +249,19 @@ export class AcDataManager {
     };
     if (this.assignUniqueIdToData) {
       dataRow.data[this.uniqueIdKey] = dataRow.rowId;
+    }
+    if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
+      const parentUniqueValue = dataRow.data[this.dataParentUniqueValueKey];
+      let parentRowId: any = undefined;
+      if (parentUniqueValue) {
+        const parentRow: any = this.allRows.find((val) => {
+          return val.data[this.dataUniqueValueKey] == parentUniqueValue;
+        });
+        if (parentRow) {
+          parentRowId = parentRow.rowId;
+        }
+      }
+      dataRow.data[this.uniqueIdParentKey] = parentRowId;
     }
     const hookArgs: IAcDataManagerRowHookArgs = {
       dataManager: this,
@@ -336,7 +388,7 @@ export class AcDataManager {
       return valid;
     });
     if (dataRow) {
-      const row = {...dataRow};
+      const row = { ...dataRow };
       arrayRemoveByKey(this.allRows, 'rowId', dataRow.rowId);
       this.totalRows--;
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowDelete, args: { dataRow: dataRow } });
@@ -348,7 +400,7 @@ export class AcDataManager {
     return dataRow;
   }
 
-  destroy(){
+  destroy() {
     this.hooks.clearSubscriptions();
     (this.hooks as any) = null;
     this.events.clearSubscriptions();
@@ -774,6 +826,21 @@ export class AcDataManager {
         this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
         index++;
       }
+      if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
+        for (const row of allRows) {
+          const parentUniqueValue = row.data[this.dataParentUniqueValueKey];
+          let parentRowId: any = undefined;
+          if (parentUniqueValue) {
+            const parentRow: any = allRows.find((val) => {
+              return val.data[this.dataUniqueValueKey] == parentUniqueValue;
+            });
+            if (parentRow) {
+              parentRowId = parentRow.rowId;
+            }
+          }
+          row.data[this.uniqueIdParentKey] = parentRowId;
+        }
+      }
       this.allRows = allRows;
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
       this.logger.log("DataChange hook executed, all data available");
@@ -843,6 +910,19 @@ export class AcDataManager {
     });
     if (dataRow) {
       dataRow.data = data;
+      if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
+        const parentUniqueValue = dataRow.data[this.dataParentUniqueValueKey];
+        let parentRowId: any = undefined;
+        if (parentUniqueValue) {
+          const parentRow: any = this.allRows.find((val) => {
+            return val.data[this.dataUniqueValueKey] == parentUniqueValue;
+          });
+          if (parentRow) {
+            parentRowId = parentRow.rowId;
+          }
+        }
+        dataRow.data[this.uniqueIdParentKey] = parentRowId;
+      }
       const eventArgs: IAcDataManagerRowEvent = {
         dataManager: this,
         dataRow: dataRow

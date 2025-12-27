@@ -71,6 +71,9 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
       this.agGridExtension = params.agGridExtension;
       this.datagridColumn = params.datagridColumn;
       this.datagridApi = params.datagridApi;
+      if(!this.element){
+        this.element = document.createElement('div');
+      }
       this.element.style.display = 'contents';
       this.datagridRow = this.datagridApi!.getRow({ rowId: params.data[this.agGridExtension!.rowKey] });
       if (this.datagridRow && this.datagridColumn) {
