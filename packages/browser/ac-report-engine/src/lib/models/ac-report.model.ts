@@ -45,6 +45,11 @@ export class AcReport {
       this.setPageHeightWidth();
       this.element.querySelector(`[${AC_REPORT_ATTRIBUTE.page}]`)?.remove();
     }
+    else{
+      const page = new AcReportPage({ element: this.element, index: this.pages.length, report: this });
+      this.pages.push(page);
+      this.activePage = page;
+    }
   }
 
   addPage() {
@@ -117,7 +122,9 @@ export class AcReport {
   }
 
   async generate({ data }: { data: any }) {
-    this.addPage();
+    if(this.pageElClone){
+      this.addPage();
+    }
     const context = { data: data, report: {}, page: {} };
     const processor = new AcTemplateProcessor({ context: context, element: this.element, page: this.activePage! });
     await processor.process();

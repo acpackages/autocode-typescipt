@@ -1,20 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AcBuilderRuntimeComponent } from './components/ac-runtime/ac-runtime.component';
-import { AcIframeContentComponent } from './components/ac-iframe-content/ac-iframe-content.component';
+import { AcNgIframeContentComponent } from './components/ac-iframe-content/ac-iframe-content.component';
 
 
 @NgModule({
   declarations: [
-    AcIframeContentComponent,
-    AcBuilderRuntimeComponent
+    AcNgIframeContentComponent
   ],
   exports: [
-    AcIframeContentComponent,
-    AcBuilderRuntimeComponent
+    AcNgIframeContentComponent
   ],
   imports: [
     CommonModule
   ]
 })
-export class AcDatagridOnAgGridModule { }
+export class AcNgRuntimeModule { }

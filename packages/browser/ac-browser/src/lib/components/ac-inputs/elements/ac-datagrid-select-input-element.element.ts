@@ -110,30 +110,26 @@ export class AcDatagridSelectInput extends AcInputBase {
   private resizeObserver?: ResizeObserver | null;
   selectedRows:any[] = [];
   dropdownSize: { height: number, width: number } = { height: 300, width: 600};
+  private searchInputTimeout:any;
 
-  override init() {
-    super.init();
-    if (!this.hasAttribute('label-key')) {
-      this.labelKey = 'label';
-    }
-    if (!this.hasAttribute('value-key')) {
-      this.valueKey = 'value';
-    }
-    this.innerHTML = '';
-    this.append(this.textInputElement);
-    this.textInputElement.type = "text";
-    this.textInputElement.autocomplete = "off";
-    this.attachEvents();
-
+  override destroy(): void {
+    clearTimeout(this.searchInputTimeout);
+    super.destroy();
   }
 
   private attachEvents() {
     this.textInputElement.addEventListener("input", (event) => {
       this.dispatchEvent(acCloneEvent(event));
-      const term = this.textInputElement.value.toLowerCase();
-      if (term != this.searchQuery) {
+      if(this.searchInputTimeout){
+        clearTimeout(this.searchInputTimeout);
+      }
+      this.searchInputTimeout = setTimeout(() => {
+        const term = this.textInputElement.value.toLowerCase();
+        if (term != this.searchQuery) {
         this.searchQuery = term;
       }
+      }, 100);
+
       this.openDropdown();
     });
     this.textInputElement.addEventListener("focus", (event:any) => {
@@ -234,6 +230,22 @@ export class AcDatagridSelectInput extends AcInputBase {
     if (focusInput) {
       this.textInputElement.focus();
     }
+  }
+
+  override init() {
+    super.init();
+    if (!this.hasAttribute('label-key')) {
+      this.labelKey = 'label';
+    }
+    if (!this.hasAttribute('value-key')) {
+      this.valueKey = 'value';
+    }
+    this.innerHTML = '';
+    this.append(this.textInputElement);
+    this.textInputElement.type = "text";
+    this.textInputElement.autocomplete = "off";
+    this.attachEvents();
+
   }
 
   private notifyState(){

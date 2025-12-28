@@ -109,6 +109,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   private agGridSelectionExt = new AcDatagridRowSelectionExtensionOnAgGrid();
   private agGridTreeTableExt = new AcDatagridTreeTableExtensionOnAgGrid();
 
+  private searchInputTimeout:any;
+
   constructor() {
     super();
     this.registerModules();
@@ -123,6 +125,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   override destroy(): void {
     this.agGridElement.innerHTML = '';
+    clearTimeout(this.searchInputTimeout);
 
     if(this.gridApi){
       this.gridApi.destroy();
@@ -654,7 +657,12 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.searchInputContainer.innerHTML = `<input type="text" class="input-ac-datagrid-search" placeholder="Search..."/>`;
     const searchInput: HTMLInputElement = this.searchInputContainer.querySelector('input') as HTMLInputElement;
     searchInput.addEventListener('input', (event: any) => {
-      this.datagridApi.dataManager.searchQuery = searchInput.value;
+      if(this.searchInputTimeout){
+        clearTimeout(this.searchInputTimeout);
+      }
+      this.searchInputTimeout = setTimeout(() => {
+        this.datagridApi.dataManager.searchQuery = searchInput.value;
+      }, 300);
     });
 
     this.setDataSourceType();

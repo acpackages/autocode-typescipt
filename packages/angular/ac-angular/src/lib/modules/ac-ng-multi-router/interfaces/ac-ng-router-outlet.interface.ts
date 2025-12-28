@@ -3,7 +3,7 @@ import { AcNgRouterComponent } from "../components/_components.export";
 
 export interface IAcNgRouterOutlet {
   id: string;
-  route?: any[];
+  route?: any;
   isActive: boolean;
   title?:string;
   additionalDetails?:any;

@@ -18,43 +18,100 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-ts/ac-angular": ["packages/angular/ac-angular/src/ac-angular.ts"],
-      "@autocode-ts/ac-bootstrap-builder-elements": ["packages/browser/extensions/builder/ac-bootstrap-builder-elements/src/index.ts"],
-      "@autocode-ts/ac-browser": ["packages/browser/ac-browser/src/ac-browser.ts"],
+      "@autocode-ts/ac-ng-report-engine": [
+        "packages/angular/ac-ng-report-engine/src/index.ts"
+      ],
+      "@autocode-ts/ac-angular": [
+        "packages/angular/ac-angular/src/ac-angular.ts"
+      ],
+      "@autocode-ts/ac-bootstrap-builder-elements": [
+        "packages/browser/extensions/builder/ac-bootstrap-builder-elements/src/index.ts"
+      ],
+      "@autocode-ts/ac-browser": [
+        "packages/browser/ac-browser/src/ac-browser.ts"
+      ],
       "@autocode-ts/ac-builder": ["packages/browser/ac-builder/src/index.ts"],
-      "@autocode-ts/ac-bwipjs-pipe": ["packages/browser/extensions/report-engine/ac-bwipjs-pipe/src/ac-bwipjs-pipe.ts"],
-      "@autocode-ts/ac-data-bridge": ["packages/common/ac-data-bridge/src/index.ts"],
-      "@autocode-ts/ac-data-dictionary": ["packages/common/ac-data-dictionary/src/ac-data-dictionary.ts"],
-      "@autocode-ts/ac-data-dictionary-browser": ["packages/browser/ac-data-dictionary-browser/src/index.ts"],
-      "@autocode-ts/ac-data-dictionary-components": ["packages/browser/ac-data-dictionary-components/src/ac-data-dictionary-components.ts"],
-      "@autocode-ts/ac-data-dictionary-editor": ["packages/browser/ac-data-dictionary-editor/src/index.ts"],
+      "@autocode-ts/ac-bwipjs-pipe": [
+        "packages/browser/extensions/report-engine/ac-bwipjs-pipe/src/ac-bwipjs-pipe.ts"
+      ],
+      "@autocode-ts/ac-data-bridge": [
+        "packages/common/ac-data-bridge/src/index.ts"
+      ],
+      "@autocode-ts/ac-data-dictionary": [
+        "packages/common/ac-data-dictionary/src/ac-data-dictionary.ts"
+      ],
+      "@autocode-ts/ac-data-dictionary-browser": [
+        "packages/browser/ac-data-dictionary-browser/src/index.ts"
+      ],
+      "@autocode-ts/ac-data-dictionary-components": [
+        "packages/browser/ac-data-dictionary-components/src/ac-data-dictionary-components.ts"
+      ],
+      "@autocode-ts/ac-data-dictionary-editor": [
+        "packages/browser/ac-data-dictionary-editor/src/index.ts"
+      ],
       "@autocode-ts/ac-datagrid": ["packages/browser/ac-datagrid/src/index.ts"],
-      "@autocode-ts/ac-datagrid-on-ag-grid": ["packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/ac-datagrid-on-ag-grid.ts"],
-      "@autocode-ts/ac-dd-builder-elements": ["packages/browser/extensions/builder/ac-dd-builder-elements/src/index.ts"],
-      "@autocode-ts/ac-dde-browser-storage": ["packages/browser/extensions/data-dictionary-editor/ac-dde-browser-storage/src/index.ts"],
-      "@autocode-ts/ac-dde-code-generator": ["packages/browser/extensions/data-dictionary-editor/ac-dde-code-generator/src/index.ts"],
-      "@autocode-ts/ac-extensions": ["packages/common/ac-extensions/src/ac-extensions.ts"],
+      "@autocode-ts/ac-datagrid-on-ag-grid": [
+        "packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/ac-datagrid-on-ag-grid.ts"
+      ],
+      "@autocode-ts/ac-dd-builder-elements": [
+        "packages/browser/extensions/builder/ac-dd-builder-elements/src/index.ts"
+      ],
+      "@autocode-ts/ac-dde-browser-storage": [
+        "packages/browser/extensions/data-dictionary-editor/ac-dde-browser-storage/src/index.ts"
+      ],
+      "@autocode-ts/ac-dde-code-generator": [
+        "packages/browser/extensions/data-dictionary-editor/ac-dde-code-generator/src/index.ts"
+      ],
+      "@autocode-ts/ac-extensions": [
+        "packages/common/ac-extensions/src/ac-extensions.ts"
+      ],
       "@autocode-ts/ac-icons": ["packages/browser/ac-icons/src/ac-icons.ts"],
-      "@autocode-ts/ac-ng-runtime": ["packages/angular/ac-ng-runtime/src/ac-ng-runtime.ts"],
-      "@autocode-ts/ac-nodeflow-designer": ["packages/browser/ac-nodeflow-designer/src/index.ts"],
-      "@autocode-ts/ac-quill-editor-input": ["packages/browser/ac-quill-editor-input/src/ac-quill-editor-input.ts"],
+      "@autocode-ts/ac-ng-runtime": [
+        "packages/angular/ac-ng-runtime/src/ac-ng-runtime.ts"
+      ],
+      "@autocode-ts/ac-nodeflow-designer": [
+        "packages/browser/ac-nodeflow-designer/src/index.ts"
+      ],
+      "@autocode-ts/ac-quill-editor-input": [
+        "packages/browser/ac-quill-editor-input/src/ac-quill-editor-input.ts"
+      ],
       "@autocode-ts/ac-react": ["packages/react/ac-react/index.ts"],
-      "@autocode-ts/ac-remote-dao": ["packages/common/ac-remote-dao/src/index.ts"],
+      "@autocode-ts/ac-remote-dao": [
+        "packages/common/ac-remote-dao/src/index.ts"
+      ],
       "@autocode-ts/ac-repeater": ["packages/browser/ac-repeater/src/index.ts"],
-      "@autocode-ts/ac-report-designer": ["packages/browser/ac-report-designer/src/index.ts"],
-      "@autocode-ts/ac-report-engine": ["packages/browser/ac-report-engine/src/ac-report-engine.ts"],
-      "@autocode-ts/ac-runtime-ts": ["packages/browser/ac-runtime-ts/src/index.ts"],
+      "@autocode-ts/ac-report-designer": [
+        "packages/browser/ac-report-designer/src/index.ts"
+      ],
+      "@autocode-ts/ac-report-engine": [
+        "packages/browser/ac-report-engine/src/ac-report-engine.ts"
+      ],
+      "@autocode-ts/ac-runtime-ts": [
+        "packages/browser/ac-runtime-ts/src/index.ts"
+      ],
       "@autocode-ts/ac-sql": ["packages/common/ac-sql/src/index.ts"],
       "@autocode-ts/ac-sql-core": ["packages/common/ac-sql-core/src/index.ts"],
       "@autocode-ts/ac-sql-node": ["packages/node/ac-sql-node/index.ts"],
-      "@autocode-ts/ac-sql-parser": ["packages/common/ac-sql-parser/src/index.ts"],
-      "@autocode-ts/ac-sqlite-dao-browser": ["packages/browser/ac-sqlite-dao-browser/src/index.ts"],
-      "@autocode-ts/ac-template-engine": ["packages/browser/ac-template-engine/src/index.ts"],
-      "@autocode-ts/ac-tiptap-editor-input": ["packages/browser/ac-tiptap-editor-input/src/index.ts"],
-      "@autocode-ts/ac-tom-select-input": ["packages/browser/ac-tom-select-input/src/index.ts"],
+      "@autocode-ts/ac-sql-parser": [
+        "packages/common/ac-sql-parser/src/index.ts"
+      ],
+      "@autocode-ts/ac-sqlite-dao-browser": [
+        "packages/browser/ac-sqlite-dao-browser/src/index.ts"
+      ],
+      "@autocode-ts/ac-template-engine": [
+        "packages/browser/ac-template-engine/src/index.ts"
+      ],
+      "@autocode-ts/ac-tiptap-editor-input": [
+        "packages/browser/ac-tiptap-editor-input/src/index.ts"
+      ],
+      "@autocode-ts/ac-tom-select-input": [
+        "packages/browser/ac-tom-select-input/src/index.ts"
+      ],
       "@autocode-ts/ac-vue": ["packages/vue/ac-vue/index.ts"],
       "@autocode-ts/ac-web": ["packages/node/ac-web/index.ts"],
-      "@autocode-ts/ac-web-on-express": ["packages/node/ac-web-on-express/index.ts"],
+      "@autocode-ts/ac-web-on-express": [
+        "packages/node/ac-web-on-express/index.ts"
+      ],
       "@autocode-ts/autocode": ["packages/common/autocode/src/autocode.ts"]
     }
   },

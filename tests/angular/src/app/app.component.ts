@@ -45,7 +45,7 @@ export class AppComponent implements AfterViewInit{
       this.multiRouter.remove({id:args.detail.id});
     });
     this.windowsTabs.addEventListener('addNewClick',()=>{
-      this.multiRouter.add({route:['datagrid-simple']});
+      this.multiRouter.add({route:'datagrid-simple'});
     });
   }
 

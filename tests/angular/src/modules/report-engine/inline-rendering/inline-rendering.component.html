@@ -1,0 +1,13 @@
+Inline Rendering
+<ac-ng-iframe-content>
+<div style="display: flex;flex-direction: column; gap:10px;height: 80vh;justify-items: center;align-items: center;overflow: auto;">
+<ng-container *ngFor="let item of data">
+  <div ac-ng-report ngNonBindable [data]="item" style="width: 350px;min-width: 350px!important;height: fit-content;;">
+  <div  class="p-1" style="border:solid 1px black;">
+    <div ac:bind:innerHTML="data.customer_id | bwipjs:{height:30,width:30}" style="height:100px;width:100px;margin-left:5px;"></div>
+    {{data.first_name}} {{data.last_name}}
+  </div>
+</div>
+</ng-container>
+</div>
+</ac-ng-iframe-content>

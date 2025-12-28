@@ -17,6 +17,11 @@ export const appRoutes: Routes = [
     ),
   },
   {
+    path: 'inline-rendering', loadComponent: () => import('../modules/report-engine/inline-rendering/inline-rendering.component').then(
+      (m) => m.InlineRenderingComponent
+    ),
+  },
+  {
     path: 'inputs', loadComponent: () => import('../modules/inputs/inputs.component').then(
       (m) => m.InputsComponent
     ),

@@ -7,12 +7,12 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestr
 import { acNullifyInstanceProperties } from '@autocode-ts/autocode'
 
 @Component({
-    selector: 'ac-repeater',
+    selector: 'ac-ng-iframe-content',
     templateUrl: './ac-iframe-content.component.html',
     styleUrl: './ac-iframe-content.component.css',
     standalone: false
 })
-export class AcIframeContentComponent implements AfterViewInit,OnDestroy{
+export class AcNgIframeContentComponent implements AfterViewInit,OnDestroy{
   @ViewChild('iframeElement') iframeElement!: ElementRef;
   @ViewChild('contentContainer') contentContainer!: ElementRef;
   @Input() stylesheetUrls: string[] = [];

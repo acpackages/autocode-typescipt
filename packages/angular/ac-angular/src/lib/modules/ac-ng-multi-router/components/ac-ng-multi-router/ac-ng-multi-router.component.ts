@@ -57,7 +57,7 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
     this.loadCurrentRoute();
   }
 
-  add({ route, title = 'New Tab' }: { route: any[], title?: string }) {
+  add({ route, title = 'New Tab' }: { route: string, title?: string }) {
     const id = Autocode.uuid();
     const newRouter: IAcNgRouterOutlet = { id, title, route, isActive: false };
     this.routerOutlets.push(newRouter);
@@ -67,7 +67,7 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
     componentRef.instance.id = id;
     this.onAdd.emit(newRouter);
     this.setActive({ id });
-    this.router.navigate(route);
+    this.router.navigateByUrl(route);
     this.addTimeout = setTimeout(() => {
       if (!this.activeRouterOutlet.routerComponent.componentRef) {
         if (this.routerOutlet && this.routerOutlet.activatedRoute) {
@@ -97,12 +97,11 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
 
     const urlTree = this.router.parseUrl(this.router.url);
     const primary = urlTree.root.children['primary'];
-
     if (!primary?.segments?.length) {
       return;
     }
     const segments = primary.segments.map(s => s.path);
-    this.add({ route: segments });
+    this.add({ route: this.router.url });
   }
 
   setActive({ id }: { id: string }) {
