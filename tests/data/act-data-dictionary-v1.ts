@@ -2910,8 +2910,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_id": {
-          "columnName": "chargeable_service_uom_id",
+        "purchase_uom_id": {
+          "columnName": "purchase_uom_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -3049,8 +3049,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_id": {
-          "columnName": "chargeable_service_uom_id",
+        "sale_uom_id": {
+          "columnName": "sale_uom_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -7838,6 +7838,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            }
+          }
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Current?"
             }
           }
         }
@@ -24001,56 +24011,92 @@ export const dataDictionaryJson = {
     "act_vw_current_product_stock_details": {
       "viewName": "act_vw_current_product_stock_details",
       "viewColumns": {
-        "display_index": {
-          "columnName": "display_index",
-          "columnType": "INTEGER",
-          "columnProperties": {},
+        "product_stock_detail_id": {
+          "columnName": "product_stock_detail_id",
+          "columnType": "UUID",
           "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "display_index"
-        },
-        "is_active": {
-          "columnName": "is_active",
-          "columnType": "YES_NO",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "is_active"
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_stock_detail_id"
         },
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
-          "columnProperties": {},
           "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
+          "columnSourceName": "act_product_stock_details",
           "columnSourceOriginalColumn": "product_id"
         },
-        "product_uom_id": {
-          "columnName": "product_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_id"
-        },
-        "product_uom_name": {
-          "columnName": "product_uom_name",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_name"
-        },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "maximum_stock_quantity": {
+          "columnName": "maximum_stock_quantity",
           "columnType": "DOUBLE",
-          "columnProperties": {},
           "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_quantity"
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "maximum_stock_quantity"
+        },
+        "maximum_stock_uom_id": {
+          "columnName": "maximum_stock_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "maximum_stock_uom_id"
+        },
+        "minimum_stock_quantity": {
+          "columnName": "minimum_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "minimum_stock_quantity"
+        },
+        "minimum_stock_uom_id": {
+          "columnName": "minimum_stock_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "minimum_stock_uom_id"
+        },
+        "reorder_level_quantity": {
+          "columnName": "reorder_level_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "reorder_level_quantity"
+        },
+        "reorder_level_uom_id": {
+          "columnName": "reorder_level_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "reorder_level_uom_id"
+        },
+        "stock_uom_id": {
+          "columnName": "stock_uom_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "stock_uom_id"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "is_current"
+        },
+        "product_stock_detail_name": {
+          "columnName": "product_stock_detail_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_stock_detail_name"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "is_active"
         }
       },
-      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_uom_id ) AS rn FROM act_product_uoms WHERE is_active = 1 ) WHERE rn = 1;"
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_stock_detail_id ) AS rn FROM act_product_stock_details WHERE is_current = 1 ) WHERE rn = 1;"
     },
     "act_vw_customers": {
       "viewName": "act_vw_customers",
@@ -30873,6 +30919,144 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT * FROM act_users"
+    },
+    "act_vw_current_product_barcodes": {
+      "viewName": "act_vw_current_product_barcodes",
+      "viewColumns": {
+        "barcode_value": {
+          "columnName": "barcode_value",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "barcode_value"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "product_barcode_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_barcode_name": {
+          "columnName": "product_barcode_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "product_barcode_name"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "is_current"
+        }
+      },
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_barcode_id ) AS rn FROM act_product_barcodes WHERE is_active = 1 ) WHERE rn = 1;"
+    },
+    "act_vw_current_product_prices": {
+      "viewName": "act_vw_current_product_prices",
+      "viewColumns": {
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "is_active": {
+          "columnName": "is_active",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "is_active"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "price_mrp": {
+          "columnName": "price_mrp",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "price_mrp"
+        },
+        "price_purchase": {
+          "columnName": "price_purchase",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "price_purchase"
+        },
+        "price_sale": {
+          "columnName": "price_sale",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "price_sale"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "profit_margin": {
+          "columnName": "profit_margin",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "profit_margin"
+        },
+        "landing_cost_percentage": {
+          "columnName": "landing_cost_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "landing_cost_percentage"
+        },
+        "product_price_name": {
+          "columnName": "product_price_name",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "product_price_name"
+        },
+        "is_current": {
+          "columnName": "is_current",
+          "columnType": "YES_NO",
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "is_current"
+        }
+      },
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_price_id ) AS rn FROM act_product_prices WHERE is_active = 1 ) WHERE rn = 1;"
     }
   },
   "relationships": [
@@ -33553,7 +33737,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_medias"
     },
     {
-      "destinationColumn": "chargeable_service_uom_id",
+      "destinationColumn": "purchase_uom_id",
       "destinationTable": "act_chargeable_service_purchase_details",
       "sourceColumn": "chargeable_service_uom_id",
       "sourceTable": "act_chargeable_service_uoms"
@@ -33571,7 +33755,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_chargeable_services"
     },
     {
-      "destinationColumn": "chargeable_service_uom_id",
+      "destinationColumn": "sale_uom_id",
       "destinationTable": "act_chargeable_service_sale_details",
       "sourceColumn": "chargeable_service_uom_id",
       "sourceTable": "act_chargeable_service_uoms"

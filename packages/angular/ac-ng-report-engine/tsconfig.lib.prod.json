@@ -1,9 +1,14 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
-    "declarationMap": false
-  },
-  "angularCompilerOptions": {
-    "compilationMode": "partial"
+    "declarationMap": false,
+    "sourceMap": false,
+    "paths": {
+      "@autocode-ts/autocode": ["dist/packages/common/autocode"],
+      "@autocode-ts/ac-browser": ["dist/packages/browser/ac-browser"],
+      "@autocode-ts/ac-extensions": ["dist/packages/common/ac-extensions"],
+      "@autocode-ts/ac-ng-runtime": ["dist/packages/angular/ac-ng-runtime"],
+      "@autocode-ts/ac-report-engine": ["dist/packages/browser/ac-report-engine"]
+    }
   }
 }

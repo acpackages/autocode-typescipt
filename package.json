@@ -15,6 +15,7 @@
     "build:ac-dd-builder-elements": "nx run ac-dd-builder-elements:build",
     "build:ac-extensions": "nx run ac-extensions:build",
     "build:ac-icons": "nx run ac-icons:build",
+    "build:ac-ng-report-engine": "nx run ac-ng-report-engine:build",
     "build:ac-ng-runtime": "nx run ac-ng-runtime:build",
     "build:ac-quill-editor-input": "nx run ac-quill-editor-input:build",
     "build:ac-report-engine": "nx run ac-report-engine:build",
