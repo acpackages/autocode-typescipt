@@ -1,3 +1,5 @@
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/prefer-inject */
@@ -7,15 +9,16 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { AcDatagridExtensionManager, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
-import { AcNgDatagridComponent, AcNgDatagridModule, AcNgInputsModule, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
+import { AcNgDatagridComponent, AcNgDatagridModule, AcNgInputsModule, AcNgValueAccessorDirective, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../../data/customers-data';
 import { ComponentsModule } from '../../../components/components.module';
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomerCompanySelectInput } from 'tests/angular/src/components/select-inputs/customer-company-select-input.element';
 
 @Component({
   selector: 'app-datagrid-simple',
-  imports: [CommonModule, AcNgDatagridModule,ComponentsModule, AcNgInputsModule,ReactiveFormsModule,FormsModule],
+  imports: [CommonModule, AcNgDatagridModule,ComponentsModule, AcNgInputsModule,ReactiveFormsModule,FormsModule,AcNgValueAccessorDirective],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './datagrid-simple.component.html',
   styleUrl: './datagrid-simple.component.scss',
@@ -32,7 +35,7 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     { field: 'index', title: "SrNo.", autoWidth: true, allowEdit: false,cellRendererTemplateRef: this.idTemplateRef,cellClass:'text-center',headerCellClass:'text-center'},
     { field: 'first_name', title: "First Name", autoWidth: true, allowEdit: true },
     { field: 'last_name', title: "Last Name", autoWidth: true, allowEdit: true },
-    { field: 'company', title: "Company",flexSize:1 },
+    { field: 'company', title: "Company",flexSize:1,allowEdit: true },
     // { field: 'city', title: "City" },
     // { field: 'country', title: "Country" },
     // { field: 'phone_1', title: "Phone 1" },
@@ -45,7 +48,7 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
   onDemandFunction?:any;
 
   constructor(private elementRef: ElementRef) {
-    console.log(this);
+    CustomerCompanySelectInput;
     //
   }
   ngAfterViewInit(): void {
@@ -57,26 +60,17 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
 
 
   ngOnDestroy(): void {
-    console.log("Datagrid Desrtoyed");
+    //
   }
 
   handleDatagridInit(){
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
     this.datagrid.datagridApi.showAddButton = true;
     this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
-    const button = document.createElement('button');
-    button.setAttribute('class','btn btn-primary');
-    button.setAttribute('type','button');
-    button.innerHTML='Add Row';
-    button.addEventListener('click',()=>{
-      this.datagrid.datagridApi.addRow();
-    });
-    this.datagrid.datagrid.datagridFooter.append(button);
   }
 
   handleEdit(datagridRow:IAcDatagridRow){
     datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
-   console.log(datagridRow);
   }
 
   handleElementInit(event:any,datagridRow:IAcDatagridRow){
@@ -84,7 +78,7 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
   }
 
   handleNameChange(datagridRow:IAcDatagridRow){
-   console.log(datagridRow);
+    //
   }
 
   setLocalData() {
@@ -114,7 +108,6 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     onDemandProxyDataManager.data = data;
 
     this.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      console.log("Getting on demand data",args);
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }
@@ -129,9 +122,12 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
         totalCount,
         data
       };
-      // console.log(response);
       args.successCallback(response);
     };
+  }
+
+  handleCompanyChange(args:any){
+    // console.log(args);
   }
 
   handleDatagridRowUpdate(datagridRow:IAcDatagridRow){
@@ -139,5 +135,9 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     const data = {...datagridRow.data};
     data['index']++;
     this.datagrid.datagridApi.updateRow({data:data,rowId:datagridRow.rowId})
+  }
+
+  handleDropdownInit(event: any) {
+    event.target.focus();
   }
 }

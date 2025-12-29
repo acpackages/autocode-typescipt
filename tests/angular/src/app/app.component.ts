@@ -1,3 +1,5 @@
+/* eslint-disable @nx/enforce-module-boundaries */
+/* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AcNgMultiRouterComponent, IAcNgRouterOutlet } from '@autocode-ts/ac-angular';
@@ -7,6 +9,7 @@ import { dataDictionaryJson as actDataDictionary } from './../../../data/act-dat
 import { AppInputFieldElement } from '../components/input-elements/app-input-field-element';
 import { AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
 import { Router } from '@angular/router';
+import { AC_DATAGRID_AGGRID_DEFAULT_OPTIONS } from '@autocode-ts/ac-datagrid-on-ag-grid';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,6 +27,8 @@ export class AppComponent implements AfterViewInit{
 
   constructor(private router:Router){
     this.setDataGridConfig();
+    AC_DATAGRID_AGGRID_DEFAULT_OPTIONS['singleClickEdit'] = true;
+    AC_DATAGRID_AGGRID_DEFAULT_OPTIONS['cellEditorPopup'] = false;
     AcDDInputManager.inputFieldElementClass = AppInputFieldElement;
     AcDataDictionary.registerDataDictionary({jsonData:actDataDictionary});
     acInit();

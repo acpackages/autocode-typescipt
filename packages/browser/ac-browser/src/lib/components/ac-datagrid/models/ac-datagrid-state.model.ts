@@ -82,7 +82,7 @@ export class AcDatagridState {
     }
   }
 
-  destroy(){
+  destroy() {
     (this.datagridApi as any) = null;
   }
 
@@ -91,12 +91,15 @@ export class AcDatagridState {
       clearTimeout(this.refreshNotifyTimeout);
     }
     this.refreshNotifyTimeout = setTimeout(() => {
+      clearTimeout(this.refreshNotifyTimeout);
+      const previousState = this.toJson();
       this.setColumnsState();
       this.setExtensionsState();
-      const state: IAcDatagridState = this.toJson();
-      this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.StateChange, args: { state } });
-      this.datagridApi.hooks.execute({ hook: AC_DATAGRID_EVENT.StateChange, args: { state } });
-      clearTimeout(this.refreshNotifyTimeout);
+      const currentState: IAcDatagridState = this.toJson();
+      if (JSON.stringify(previousState) != JSON.stringify(currentState)) {
+        this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.StateChange, args: { currentState } });
+        this.datagridApi.hooks.execute({ hook: AC_DATAGRID_EVENT.StateChange, args: { currentState } });
+      }
     }, 300);
   }
 

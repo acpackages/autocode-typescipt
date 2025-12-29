@@ -66,6 +66,7 @@ export const AC_DATAGRID_EVENT = {
   ColumnVisibilityChange: 'columnVisibilityChange',
   DatagridInit: 'datagridInit',
   DisplayedRowsChange: 'displayedRowsChange',
+  EnsureRowVisible: 'ensureRowVisible',
   HeaderHeightChange: 'headerHeightChange',
   PaginationChange: 'paginationChange',
   RowAdd: 'rowAdd',

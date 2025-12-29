@@ -210,6 +210,7 @@ export class AcDataManager {
   allRows: IAcDataRow[] = [];
   autoSetUniqueIdToData: boolean = false;
   firstDataNotified: boolean = false;
+  isFirstRowsSet:boolean = false;
   events: AcEvents = new AcEvents();
   hooks: AcHooks = new AcHooks();
   isWorking: boolean = false;
@@ -799,6 +800,7 @@ export class AcDataManager {
       this.totalRows = totalCount;
       this.processRows();
     }
+    this.isFirstRowsSet = true;
   }
 
   updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDataRow | undefined {

@@ -39,6 +39,7 @@ export class AcDatagridOnAgGridEventHandler {
   gridApi?: GridApi;
   focusedDatagridCell?: IAcDatagridCell;
   ignoreEvents: boolean = false;
+  previousState:boolean = false;
 
   private onCellClicked = (event: CellClickedEvent) => {
     if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {

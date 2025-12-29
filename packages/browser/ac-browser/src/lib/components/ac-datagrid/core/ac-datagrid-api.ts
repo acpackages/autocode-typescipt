@@ -396,7 +396,7 @@ export class AcDatagridApi {
     AcDatagridExtensionManager.registerBuiltInExtensions();
   }
 
-  addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}) {
+  addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}):IAcDatagridRow {
     this.logger.log('Adding row', { data: data ? '[provided]' : 'undefined', append, highlightCells });
     const datagridRow = this.dataManager.addData({ data }) as IAcDatagridRow;
     this.logger.log('Added data to dataManager, created datagridRow', { rowId: datagridRow.rowId });
@@ -420,6 +420,7 @@ export class AcDatagridApi {
     // };
     // this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: eventArgs });
     this.logger.log('Executed RowAdd event');
+    return datagridRow;
   }
 
   applyFilter({ search }: { search?: string }) {
@@ -515,6 +516,18 @@ export class AcDatagridApi {
       this.logger.log('Extension not found');
     }
     return null;
+  }
+
+  ensureRowVisible({ rowId, index, key, value }: { rowId?: string, index?: number, key?: string, value?: any }){
+    const datagridRow = this.getRow({rowId,index,key,value});
+    if(datagridRow){
+       const args: any = {
+          datagridRow,
+          datagridApi: this
+        };
+        this.hooks.execute({ hook: AC_DATAGRID_EVENT.EnsureRowVisible, args: args });
+        this.events.execute({ event: AC_DATAGRID_EVENT.EnsureRowVisible, args: args });
+    }
   }
 
   focusFirstRow({ highlightCells }: { highlightCells?: boolean } = {}) {

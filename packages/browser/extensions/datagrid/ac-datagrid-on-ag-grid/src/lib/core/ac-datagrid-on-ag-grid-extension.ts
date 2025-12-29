@@ -101,6 +101,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   addButtonContainer?: HTMLElement;
   columnsCustomizerButtonContainer?: HTMLElement;
   isColumnsCustomizerOpen: boolean = false;
+  isFirstDataRendered:boolean = false;
   leftFooterContainer?: HTMLElement;
   rightFooterContainer?: HTMLElement;
 
@@ -118,6 +119,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.gridOptions = { ...AC_DATAGRID_AGGRID_DEFAULT_OPTIONS };
     this.gridOptions.getRowId = (params: GetRowIdParams) => {
       return params.data[this.rowKey];
+    };
+    this.gridOptions['onFirstDataRendered'] = ()=>{
+      this.isFirstDataRendered = true;
     };
     this.gridOptions['rowModelType'] = 'serverSide';
     this.gridOptions['serverSideDatasource'] = this.onDemandDataSource;
@@ -299,7 +303,14 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   override getState() {
     if (this.gridApi) {
       const state = this.gridApi.getState();
-      return state;
+      return {
+        columnGroup:state.columnGroup,
+        columnOrder:state.columnOrder,
+        columnPinning:state.columnPinning,
+        columnSizing:state.columnSizing,
+        columnVisibility:state.columnVisibility,
+        version:state.version
+      };
     }
     return null;
   }
@@ -432,7 +443,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.ActiveCellChange)) {
       if (this.gridApi) {
         const activeDatagridCell = this.datagridApi.activeDatagridCell as IAcDatagridCell;
-        this.gridApi.setFocusedCell(activeDatagridCell.datagridRow.index, activeDatagridCell?.datagridColumn.columnKey)
+        this.gridApi.setFocusedCell(activeDatagridCell.datagridRow.index, activeDatagridCell?.datagridColumn.columnKey);
       }
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.BeforeGetOnDemandData)) {
@@ -456,6 +467,24 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.DataSourceTypeChange)) {
       this.handleDataSourceTypeChange(args);
+    }
+    else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.EnsureRowVisible)) {
+      if (this.gridApi) {
+        let timeout:any;
+        const handleEnsureRow:Function = ()=>{
+          if(this.isFirstDataRendered){
+            const datagridRow = args.datagridRow as IAcDatagridRow;
+              this.gridApi!.ensureIndexVisible(datagridRow.index, 'top');
+            }
+            else{
+            timeout = setTimeout(() => {
+              handleEnsureRow();
+            }, 10);
+          }
+        }
+        handleEnsureRow();
+
+      }
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.ExtensionEnable)) {
       this.handleExtensionEnabled(args);

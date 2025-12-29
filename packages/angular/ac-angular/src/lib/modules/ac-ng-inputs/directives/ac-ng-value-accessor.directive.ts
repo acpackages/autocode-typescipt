@@ -27,6 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class AcNgValueAccessorDirective implements ControlValueAccessor {
   private onChange: (value: any) => void = () => { };
   private onTouched: () => void = () => { };
+  private _tempValue:any;
 
   constructor(private el: ElementRef<HTMLElement>) {
     //
@@ -38,6 +39,7 @@ export class AcNgValueAccessorDirective implements ControlValueAccessor {
     if ('value' in el) {
       el.value = value;
     } else {
+      console.log("Setting vaue in attr");
       el.setAttribute('value', value);
     }
   }
@@ -62,7 +64,10 @@ export class AcNgValueAccessorDirective implements ControlValueAccessor {
   handleInput(event: Event) {
     const target = this.el.nativeElement as any;
     const value = target?.value ?? target?.getAttribute?.('value');
-    this.onChange(value);
+    if(this._tempValue != value){
+      this.onChange(value);
+    }
+    this._tempValue = value;
   }
 
   @HostListener('blur')

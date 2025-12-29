@@ -8,10 +8,12 @@ import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { IAcDatagridStateChangeEvent } from "../interfaces/event-args/ac-datagrid-state-change-event.interface";
 import { AcDatagridApi } from "./ac-datagrid-api";
+import { objectIsSame } from "@autocode-ts/ac-extensions";
 
 export class AcDatagridEventHandler {
   columnResizeTimeouts: any = {};
   datagridApi?: AcDatagridApi;
+  previousNotifiedState: any = {};
 
   destroy() {
     acNullifyInstanceProperties({ instance: this });
@@ -560,11 +562,15 @@ export class AcDatagridEventHandler {
   private notifyStateChange() {
     if (!this.datagridApi) return;
     this.datagridApi.datagridState.refresh();
-    const eventArgs: IAcDatagridStateChangeEvent = {
-      datagridApi: this.datagridApi,
-      datagridState: this.datagridApi.datagridState.toJson(),
-      event: undefined
-    };
-    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.StateChange, args: eventArgs });
+    const currentState = this.datagridApi.datagridState.toJson();
+    if (JSON.stringify(currentState) != JSON.stringify(this.previousNotifiedState)) {
+      this.previousNotifiedState = currentState;
+      const eventArgs: IAcDatagridStateChangeEvent = {
+        datagridApi: this.datagridApi,
+        datagridState: currentState,
+        event: undefined
+      };
+      this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.StateChange, args: eventArgs });
+    }
   }
 }

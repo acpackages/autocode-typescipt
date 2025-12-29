@@ -1,10 +1,11 @@
 <ac-ng-datagrid #datagrid [columnDefinitions]="columnDefinitions" [data]="data" [onDemandFunction]="onDemandFunction"
 [columnRendererTemplates]="{
   'index':idTemplate,
-  'action':actionTemplate
+  'action':actionTemplate,
 }"
 [columnEditorTemplates]="{
-  'first_name':nameTemplate
+  'first_name':nameTemplate,
+  'company':companyEditorTemplate
 }"
 (datagridInit)="handleDatagridInit()"
 />
@@ -13,6 +14,11 @@
 </ng-template>
 <ng-template #nameTemplate let-value="value" let-datagridRow="datagridRow">
   <ac-input [attr.name]="datagridRow.rowId" [(ngModel)]="datagridRow.data['first_name']" (change)="handleNameChange(datagridRow)" (init)="handleElementInit($event,datagridRow)"/>
+</ng-template>
+<ng-template #companyEditorTemplate let-datagridRow="datagridRow" let-data="data">
+  <customer-company-select-input [attr.name]="`${datagridRow.rowId}_company`"
+    [(ngModel)]="datagridRow.data['company']" (change)="handleCompanyChange({datagridRow})"
+    (init)="handleDropdownInit($event)"></customer-company-select-input>
 </ng-template>
 <ng-template #actionTemplate let-value="value" let-datagridRow="datagridRow">
   <action-column (onEdit)="handleEdit(datagridRow)" [showDelete]="false" />
