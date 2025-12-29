@@ -46,11 +46,10 @@ export class InputsComponent implements OnDestroy{
   }
 
   ngOnDestroy(): void {
-    console.log("Datagrid Desrtoyed");
+    console.log("Datagrid Destroyed");
   }
 
   handleDatagridInit(){
-    console.log("Datagrid api")
     this.selectInput.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
     const button = document.createElement('button');
     button.setAttribute('class','btn btn-primary');

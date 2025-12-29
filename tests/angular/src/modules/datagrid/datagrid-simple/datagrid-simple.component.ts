@@ -7,7 +7,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { AcDatagridExtensionManager, IAcDatagridRow } from '@autocode-ts/ac-browser';
+import { AcDatagridApi, AcDatagridExtensionManager, AcEnumDatagridColumnDataType, IAcDatagridCell, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcNgDatagridComponent, AcNgDatagridModule, AcNgInputsModule, AcNgValueAccessorDirective, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../../data/customers-data';
@@ -32,7 +32,9 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
   columnDefinitions:IAcNgDatagridColumnDefinition[] = [
     // { field: 'action', title: "Action", autoWidth: true, allowEdit: false,cellEditorComponent: ActionColumnComponent,cellEditorComponentProperties:{showEdit:false},useCellEditorForRenderer:true},
     { field: 'action', title: "Action", autoWidth: true, allowEdit: false},
-    { field: 'index', title: "SrNo.", autoWidth: true, allowEdit: false,cellRendererTemplateRef: this.idTemplateRef,cellClass:'text-center',headerCellClass:'text-center'},
+    { field: 'index', title: "SrNo.", autoWidth: true, allowEdit: true,
+      dataType:AcEnumDatagridColumnDataType.Number,cellRendererTemplateRef: this.idTemplateRef,cellClass:'text-center',headerCellClass:'text-center',
+    cellEditorElementAttrs:{'class':'text-center'}},
     { field: 'first_name', title: "First Name", autoWidth: true, allowEdit: true },
     { field: 'last_name', title: "Last Name", autoWidth: true, allowEdit: true },
     { field: 'company', title: "Company",flexSize:1,allowEdit: true },
@@ -63,11 +65,45 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     //
   }
 
+  handleCellKeyUp(event:any){
+    // console.log("Cell key up",event);
+  }
+
+
+  handleCellValueChange(event:any){
+    const datagridCell:IAcDatagridCell = event.datagridCell;
+    if(datagridCell.datagridColumn.columnKey == "company"){
+      const updatedData = {...datagridCell.datagridRow.data};
+      const datagridApi:AcDatagridApi = event.datagridApi;
+      updatedData.first_name = updatedData.first_name+'-modified';
+      updatedData.last_name = updatedData.last_name+'-modified';
+      datagridApi.updateRow({data:updatedData,rowId:datagridCell.datagridRow.rowId});
+    }
+    console.log("Cell value change",event);
+  }
+
+  handleCompanyChange(args:any){
+    // if(this.datagrid.)
+  }
+
   handleDatagridInit(){
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
     this.datagrid.datagridApi.showAddButton = true;
     this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
   }
+
+  handleDatagridRowUpdate(datagridRow:IAcDatagridRow){
+    // const datagridApi = datagridRow;
+    const data = {...datagridRow.data};
+    data['index']++;
+    this.datagrid.datagridApi.updateRow({data:data,rowId:datagridRow.rowId})
+  }
+
+  handleDropdownInit(event: any) {
+    event.target.focus();
+  }
+
+
 
   handleEdit(datagridRow:IAcDatagridRow){
     datagridRow.data['first_name'] = `Updated ${datagridRow.data['first_name']}`;
@@ -126,18 +162,5 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     };
   }
 
-  handleCompanyChange(args:any){
-    // console.log(args);
-  }
 
-  handleDatagridRowUpdate(datagridRow:IAcDatagridRow){
-    // const datagridApi = datagridRow;
-    const data = {...datagridRow.data};
-    data['index']++;
-    this.datagrid.datagridApi.updateRow({data:data,rowId:datagridRow.rowId})
-  }
-
-  handleDropdownInit(event: any) {
-    event.target.focus();
-  }
 }

@@ -39,7 +39,6 @@ export class AcNgValueAccessorDirective implements ControlValueAccessor {
     if ('value' in el) {
       el.value = value;
     } else {
-      console.log("Setting vaue in attr");
       el.setAttribute('value', value);
     }
   }

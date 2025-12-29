@@ -8,6 +8,8 @@
   'company':companyEditorTemplate
 }"
 (datagridInit)="handleDatagridInit()"
+(cellKeyUp)="handleCellKeyUp($event)"
+(cellValueChange)="handleCellValueChange($event)"
 />
 <ng-template #idTemplate let-value="value" let-datagridRow="datagridRow">
   {{value}}

@@ -224,7 +224,6 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   closeDropdown() {
-    console.trace();
     this.dropdownContainer.remove();
     this.isDropdownOpen = false;
     this.popper?.destroy();
@@ -377,96 +376,96 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   private async setSelectedRowsFromValue(): Promise<void> {
-  if (!this.value) return;
+    if (!this.value) return;
 
-  let retry = false;
-  let continueOperation = true;
+    let retry = false;
+    let continueOperation = true;
 
-  const finalize = () => {
-    if (continueOperation) {
-      this.setSelectedRows({ rows: [] });
-    } else {
-      const activeCell =
-        this.datagrid.datagridApi.setActiveCell({
-          key: this.valueKey,
-          value: this.value
-        });
+    const finalize = () => {
+      if (continueOperation) {
+        this.setSelectedRows({ rows: [] });
+      } else {
+        const activeCell =
+          this.datagrid.datagridApi.setActiveCell({
+            key: this.valueKey,
+            value: this.value
+          });
 
-      if (activeCell) {
-        this.datagrid.datagridApi.ensureRowVisible({
-          rowId: activeCell.datagridRow.rowId
-        });
+        if (activeCell) {
+          this.datagrid.datagridApi.ensureRowVisible({
+            rowId: activeCell.datagridRow.rowId
+          });
+        }
       }
-    }
-    setTimeout(() => {
-    this.textInputElement.focus();
-    });
-  };
-
-  // 🔹 Already selected?
-  if (
-    this.selectedRows.length > 0 &&
-    this.selectedRows[0][this.valueKey] === this.value
-  ) {
-    continueOperation = false;
-    finalize();
-    return;
-  }
-
-  if (!this.datagrid) return;
-
-  retry = !this.datagrid.datagridApi.dataManager.isFirstRowsSet;
-  if (retry) {
-    setTimeout(() => this.setSelectedRowsFromValue(), 1);
-    return;
-  }
-
-  // 🔹 Search in existing rows
-  const valueRow =
-    this.datagrid.datagridApi.dataManager.allRows.find(
-      row => row.data[this.valueKey] === this.value
-    );
-
-  if (valueRow) {
-    this.setSelectedRows({ rows: [valueRow.data] });
-    continueOperation = false;
-    finalize();
-    return;
-  }
-
-  // 🔹 On-demand fetch (awaited)
-  if (this.onDemandFunction) {
-    const filterGroup = new AcFilterGroup();
-    filterGroup.addFilter({
-      key: this.valueKey,
-      operator: AcEnumConditionOperator.EqualTo,
-      value: this.value
-    });
-
-    const response = await new Promise<IAcOnDemandResponseArgs>(
-      (resolve) => {
-        this.onDemandFunction({
-          filterGroup,
-          successCallback: resolve
-        });
+      if (this.isDropdownOpen) {
+        this.textInputElement.focus();
       }
-    );
+    };
 
-    if (response.totalCount > 0) {
+    // 🔹 Already selected?
+    if (
+      this.selectedRows.length > 0 &&
+      this.selectedRows[0][this.valueKey] === this.value
+    ) {
       continueOperation = false;
-
-      this.datagrid.datagridApi.dataManager.reset();
-      const datagridRow =
-        this.datagrid.datagridApi.addRow({
-          data: response.data[0]
-        });
-
-      this.setSelectedRows({ rows: [datagridRow.data] });
+      finalize();
+      return;
     }
-  }
 
-  finalize();
-}
+    if (!this.datagrid) return;
+
+    retry = !this.datagrid.datagridApi.dataManager.isFirstRowsSet;
+    if (retry) {
+      setTimeout(() => this.setSelectedRowsFromValue(), 1);
+      return;
+    }
+
+    // 🔹 Search in existing rows
+    const valueRow =
+      this.datagrid.datagridApi.dataManager.allRows.find(
+        row => row.data[this.valueKey] === this.value
+      );
+
+    if (valueRow) {
+      this.setSelectedRows({ rows: [valueRow.data] });
+      continueOperation = false;
+      finalize();
+      return;
+    }
+
+    // 🔹 On-demand fetch (awaited)
+    if (this.onDemandFunction) {
+      const filterGroup = new AcFilterGroup();
+      filterGroup.addFilter({
+        key: this.valueKey,
+        operator: AcEnumConditionOperator.EqualTo,
+        value: this.value
+      });
+
+      const response = await new Promise<IAcOnDemandResponseArgs>(
+        (resolve) => {
+          this.onDemandFunction({
+            filterGroup,
+            successCallback: resolve
+          });
+        }
+      );
+
+      if (response.totalCount > 0) {
+        continueOperation = false;
+
+        this.datagrid.datagridApi.dataManager.reset();
+        const datagridRow =
+          this.datagrid.datagridApi.addRow({
+            data: response.data[0]
+          });
+
+        this.setSelectedRows({ rows: [datagridRow.data] });
+      }
+    }
+
+    finalize();
+  }
 
   setState({ state }: { state: any }) {
     if (state.dropdownSize) {
@@ -481,7 +480,6 @@ export class AcDatagridSelectInput extends AcInputBase {
     const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
     if (activeDatagridCell) {
       this.setSelectedRows({ rows: [activeDatagridCell.datagridRow.data] });
-      console.log(activeDatagridCell.datagridRow.data[this.valueKey]);
       this.value = activeDatagridCell.datagridRow.data[this.valueKey];
     }
     else {

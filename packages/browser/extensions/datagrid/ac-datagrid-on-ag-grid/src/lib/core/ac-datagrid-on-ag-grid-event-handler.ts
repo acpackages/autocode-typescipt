@@ -126,7 +126,7 @@ export class AcDatagridOnAgGridEventHandler {
     if (this.checkEventHasColumnDetail(event) && !this.ignoreEvents) {
       const datagridCell = this.agGridExtension!.getDatagridCellFromEvent({ event });
       if (datagridCell) {
-        this.datagridApi!.eventHandler.handleCellValueChange({ datagridCell, event: event.event as any });
+        // this.datagridApi!.eventHandler.handleCellValueChange({ datagridCell, event: event.event as any });
       }
     }
   };

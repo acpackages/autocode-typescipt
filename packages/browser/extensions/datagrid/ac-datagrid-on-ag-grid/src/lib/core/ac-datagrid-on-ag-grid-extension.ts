@@ -479,7 +479,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
               const page = Math.floor(datagridRow.index / pageSize);
               this.gridApi.paginationGoToPage(page);
               setTimeout(() => {
-                this.gridApi!.ensureIndexVisible(datagridRow.index, 'top');
+                this.gridApi!.ensureIndexVisible(datagridRow.index);
               });
             }
           }
@@ -623,7 +623,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
   }
 
-  private handleRowUpdate(args: IAcDatagridRowUpdateHookArgs) {
+  private handleRowUpdate(args: IAcDatagridRowUpdateHookArgs|any) {
     const data = args.datagridRow.data;
     const hookArgs: IAcDatagriOnAgGridRowUpdateHookArgs = {
       data: data
@@ -643,6 +643,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         else {
           this.gridApi.applyServerSideTransaction({ update: [data] });
           rowNode.setData(data);
+        }
+        if(args.forceRefresh){
+          this.gridApi.refreshCells({rowNodes:[rowNode],force:true});
         }
         if (args.highlightCells) {
           this.gridApi.flashCells({
@@ -831,15 +834,13 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.BeforeColDefsChange, args: beforeHookArgs });
     for (const column of this.datagridApi.datagridColumns) {
       const colDef: ColDef = acGetColDefFromAcDataGridColumn({ datagridColDef: column.columnDefinition });
-      if (column.columnDefinition.cellRendererElement) {
-        colDef.cellRenderer = AcDatagridOnAgGridCellRenderer;
+      colDef.cellRenderer = AcDatagridOnAgGridCellRenderer;
         colDef.cellRendererParams = {
           agGridExtension: this,
           datagridColumn: column,
           datagridApi: this.datagridApi,
         };
-      }
-      if (column.columnDefinition.cellEditorElement || column.columnDefinition.cellInputElement) {
+      if (column.columnDefinition.allowEdit) {
         if (column.columnDefinition.useCellEditorForRenderer) {
           colDef.editable = false;
           colDef.cellRenderer = AcDatagridOnAgGridCellEditor;

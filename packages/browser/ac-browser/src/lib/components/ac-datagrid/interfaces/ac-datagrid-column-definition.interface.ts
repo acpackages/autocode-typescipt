@@ -27,12 +27,14 @@ export interface IAcDatagridColumnDefinition {
   cellClass?:string;
 
   cellEditorElement?:any;
+  cellEditorElementAttrs?:any;
   cellEditorElementParams?:any;
 
   cellInputElement?:any;
   cellInputElementAttrs?:any;
 
   cellRendererElement?:any;
+  cellRendererElementAttrs?:any;
   cellRendererElementParams?:any;
 
   dataType?: "BOOLEAN"|"CUSTOM"|"DATE"|"DATETIME"|"NUMBER"|"OBJECT"|"STRING"|"UNKNOWN";

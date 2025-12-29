@@ -821,7 +821,6 @@ export class AcDatagridApi {
     this.logger.log('Updating row', { rowId, key, addIfMissing, highlightCells, dataProvided: !!data, valueProvided: !!value });
     const datagridRow: IAcDatagridRow | undefined = this.dataManager.updateRow({ data, value, key, rowId, addIfMissing }) as IAcDatagridRow;
     if (datagridRow) {
-      this.logger.log('Updated row in dataManager', { rowId: datagridRow.rowId });
       if (highlightCells && datagridRow.datagridCells) {
         for (const cell of datagridRow.datagridCells) {
           if (cell.element) {

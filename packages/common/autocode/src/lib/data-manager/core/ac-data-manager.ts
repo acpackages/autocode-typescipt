@@ -712,6 +712,7 @@ export class AcDataManager {
         data: data,
         dataManager: this
       }
+      this.hooks.execute({ hook: AC_DATA_MANAGER_EVENT.DataFoundForFirstTime, args: eventArgs });
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.DataFoundForFirstTime, args: eventArgs });
     }
     if (this.type == 'offline') {
@@ -839,6 +840,7 @@ export class AcDataManager {
         dataManager: this,
         dataRow: dataRow
       };
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowUpdate, args: eventArgs });
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowUpdate, args: eventArgs });
     }
     else if (addIfMissing) {

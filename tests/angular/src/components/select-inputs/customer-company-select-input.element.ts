@@ -33,7 +33,6 @@ export class CustomerCompanySelectInput extends AppDatagridSelectInputBase {
     onDemandProxyDataManager.data = data;
 
     this.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      console.log(args);
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }
@@ -48,7 +47,6 @@ export class CustomerCompanySelectInput extends AppDatagridSelectInputBase {
         totalCount,
         data
       };
-      console.log(response);
       args.successCallback(response);
     };
   }

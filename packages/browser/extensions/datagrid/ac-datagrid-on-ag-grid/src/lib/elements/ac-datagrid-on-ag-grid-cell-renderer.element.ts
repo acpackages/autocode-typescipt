@@ -16,7 +16,7 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   element: HTMLElement = document.createElement('div');
   renderer: any;
   private isFocused: boolean = false;
-  private blurTimeout:any;
+  private blurTimeout: any;
 
   handleBlur: Function = () => {
     if (this.datagridCell && this.datagridCell.element) {
@@ -37,7 +37,7 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   };
 
   destroy(): void {
-    if(this.datagridCell){
+    if (this.datagridCell) {
       (this.datagridCell.element as any) = null;
     }
     if (this.params) {
@@ -51,7 +51,7 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
     }
     this.element.remove();
     clearTimeout(this.blurTimeout);
-    acNullifyInstanceProperties({instance:this});
+    acNullifyInstanceProperties({ instance: this });
   }
 
   getGui(): HTMLElement {
@@ -64,7 +64,7 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
       this.agGridExtension = params.agGridExtension;
       this.datagridColumn = params.datagridColumn;
       this.datagridApi = params.datagridApi;
-      if(!this.element){
+      if (!this.element) {
         this.element = document.createElement('div');
       }
       this.element.style.display = 'contents';
@@ -83,15 +83,24 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
             this.renderer = renderer;
             this.element.innerHTML = '';
             this.element.append(renderer.getElement());
-            this.datagridApi?.hooks.execute({hook:AC_DATAGRID_HOOK.CellRendererElementInit,args:{renderer:this}});
-            this.datagridApi?.events.execute({event:AC_DATAGRID_EVENT.CellRendererElementInit,args:{renderer:this}});
+            this.datagridApi?.hooks.execute({ hook: AC_DATAGRID_HOOK.CellRendererElementInit, args: { renderer: this } });
+            this.datagridApi?.events.execute({ event: AC_DATAGRID_EVENT.CellRendererElementInit, args: { renderer: this } });
+          }
+          else{
+            this.element.innerText = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
+          }
+        }
+        if (this.datagridColumn.columnDefinition.cellRendererElementAttrs) {
+          const attrs: any = this.datagridColumn.columnDefinition.cellRendererElementAttrs;
+          for (const key of Object.keys(attrs)) {
+            this.element.setAttribute(key, attrs[key]);
           }
         }
         this.params.eGridCell.addEventListener('focusin', this.handleFocus);
         this.params.eGridCell.addEventListener('focusout', this.handleBlur);
       }
       else {
-        console.warn(`Datagrid Row and Datagrid Column Not Found`,params);
+        console.warn(`Datagrid Row and Datagrid Column Not Found`, params);
       }
     });
   }
