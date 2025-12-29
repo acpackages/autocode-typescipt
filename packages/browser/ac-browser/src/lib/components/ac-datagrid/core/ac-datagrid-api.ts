@@ -373,7 +373,7 @@ export class AcDatagridApi {
               column.dataType = 'UNKNOWN';
             }
           }
-
+          datagridColumn.dataType = (column.dataType as any);
         }
       }
     });

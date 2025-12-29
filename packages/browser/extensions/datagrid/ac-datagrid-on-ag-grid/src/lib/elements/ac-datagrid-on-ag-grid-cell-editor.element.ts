@@ -77,7 +77,11 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
     if(this.editor){
       return this.editor.getValue()
     }
-    return this.element.value;
+    let value:any = this.element.value;
+    if(value!= '' && value != undefined && value!=null && this.datagridColumn && this.datagridColumn.columnDefinition.dataType == AcEnumDatagridColumnDataType.Number){
+      value = Number(value);
+    }
+    return value;
   }
 
   focusIn?(): void {
@@ -205,9 +209,6 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
         }
         this.params.eGridCell.addEventListener('focusin', this.handleFocus);
         this.params.eGridCell.addEventListener('focusout', this.handleBlur);
-      }
-      else {
-        console.warn(`Datagrid Row and Datagrid Column Not Found`);
       }
     });
   }

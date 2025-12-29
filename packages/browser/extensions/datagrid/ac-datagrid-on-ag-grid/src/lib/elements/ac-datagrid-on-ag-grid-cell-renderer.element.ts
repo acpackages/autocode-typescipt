@@ -87,7 +87,7 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
             this.datagridApi?.events.execute({ event: AC_DATAGRID_EVENT.CellRendererElementInit, args: { renderer: this } });
           }
           else{
-            this.element.innerText = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey];
+            this.element.innerText = this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey] ?? '';
           }
         }
         if (this.datagridColumn.columnDefinition.cellRendererElementAttrs) {

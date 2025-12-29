@@ -38,6 +38,7 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     { field: 'first_name', title: "First Name", autoWidth: true, allowEdit: true },
     { field: 'last_name', title: "Last Name", autoWidth: true, allowEdit: true },
     { field: 'company', title: "Company",flexSize:1,allowEdit: true },
+    { field: 'amount', title: "Amount",flexSize:1,allowEdit: true, dataType:AcEnumDatagridColumnDataType.Number },
     // { field: 'city', title: "City" },
     // { field: 'country', title: "Country" },
     // { field: 'phone_1', title: "Phone 1" },
