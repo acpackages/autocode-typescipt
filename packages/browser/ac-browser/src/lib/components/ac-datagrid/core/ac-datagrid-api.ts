@@ -788,6 +788,7 @@ export class AcDatagridApi {
     } else {
       this.logger.log('No valid datagridCell to activate');
     }
+    return datagridCell;
   }
 
   setState({ state }: { state: IAcDatagridState }) {

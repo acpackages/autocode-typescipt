@@ -376,56 +376,97 @@ export class AcDatagridSelectInput extends AcInputBase {
     }
   }
 
-  private async setSelectedRowsFromValue() {
-    let retry: boolean = false;
-    if (this.value) {
-      let continueOperation = true;
-      if (this.selectedRows.length > 0) {
-        if (this.selectedRows[0][this.valueKey] == this.value) {
-          continueOperation = false;
-        }
-      }
-      if (continueOperation && this.datagrid) {
-        retry = !this.datagrid.datagridApi.dataManager.isFirstRowsSet;
-        if (!retry) {
-          const valueRow = this.datagrid.datagridApi.dataManager.allRows.find((row) => {
-            return row.data[this.valueKey] == this.value;
-          });
-          if (valueRow) {
-            this.setSelectedRows({ rows: [valueRow.data] });
-            continueOperation = false;
-          }
-          else {
-            this.datagrid.datagridApi.dataManager.filterGroup.addFilter({
-              key: this.valueKey,
-              operator: AcEnumConditionOperator.EqualTo,
-              value: this.value
-            });
-            const values = await this.datagrid.datagridApi.dataManager.getData();
-            if (values.length > 0) {
-              this.setSelectedRows({ rows: [values[0]] });
-              continueOperation = false;
-            }
+  private async setSelectedRowsFromValue(): Promise<void> {
+  if (!this.value) return;
 
-          }
-        }
-      }
-      if (!retry) {
-        if (continueOperation) {
-          this.setSelectedRows({ rows: [] });
-        }
-        else {
-          this.datagrid.datagridApi.setActiveCell({ key: this.valueKey, value: this.value });
-          this.datagrid.datagridApi.ensureRowVisible({rowId:this.datagrid.datagridApi.activeDatagridRow.rowId});
-        }
+  let retry = false;
+  let continueOperation = true;
+
+  const finalize = () => {
+    if (continueOperation) {
+      this.setSelectedRows({ rows: [] });
+    } else {
+      const activeCell =
+        this.datagrid.datagridApi.setActiveCell({
+          key: this.valueKey,
+          value: this.value
+        });
+
+      if (activeCell) {
+        this.datagrid.datagridApi.ensureRowVisible({
+          rowId: activeCell.datagridRow.rowId
+        });
       }
     }
-    if (retry) {
-      setTimeout(() => {
-        this.setSelectedRowsFromValue();
-      }, 1);
+    setTimeout(() => {
+    this.textInputElement.focus();
+    });
+  };
+
+  // 🔹 Already selected?
+  if (
+    this.selectedRows.length > 0 &&
+    this.selectedRows[0][this.valueKey] === this.value
+  ) {
+    continueOperation = false;
+    finalize();
+    return;
+  }
+
+  if (!this.datagrid) return;
+
+  retry = !this.datagrid.datagridApi.dataManager.isFirstRowsSet;
+  if (retry) {
+    setTimeout(() => this.setSelectedRowsFromValue(), 1);
+    return;
+  }
+
+  // 🔹 Search in existing rows
+  const valueRow =
+    this.datagrid.datagridApi.dataManager.allRows.find(
+      row => row.data[this.valueKey] === this.value
+    );
+
+  if (valueRow) {
+    this.setSelectedRows({ rows: [valueRow.data] });
+    continueOperation = false;
+    finalize();
+    return;
+  }
+
+  // 🔹 On-demand fetch (awaited)
+  if (this.onDemandFunction) {
+    const filterGroup = new AcFilterGroup();
+    filterGroup.addFilter({
+      key: this.valueKey,
+      operator: AcEnumConditionOperator.EqualTo,
+      value: this.value
+    });
+
+    const response = await new Promise<IAcOnDemandResponseArgs>(
+      (resolve) => {
+        this.onDemandFunction({
+          filterGroup,
+          successCallback: resolve
+        });
+      }
+    );
+
+    if (response.totalCount > 0) {
+      continueOperation = false;
+
+      this.datagrid.datagridApi.dataManager.reset();
+      const datagridRow =
+        this.datagrid.datagridApi.addRow({
+          data: response.data[0]
+        });
+
+      this.setSelectedRows({ rows: [datagridRow.data] });
     }
   }
+
+  finalize();
+}
 
   setState({ state }: { state: any }) {
     if (state.dropdownSize) {
