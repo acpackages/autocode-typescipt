@@ -1,4 +1,4 @@
 export interface IAcDatagridAutoSaveRowData {
-  status:'not_changed'|'pending_save'|'saving'|'saved'|'error';
+  status:'NOT_CHANGED'|'CHANGED'|'SAVING'|'SAVED'|'ERROR';
   lastChangeTime?:Date
 }

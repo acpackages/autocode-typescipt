@@ -167,7 +167,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
               this.element.replaceWith(element);
             }
             this.element = element;
-            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey];
+            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey] ?? null;
             if (columnDefinition.cellInputElementAttrs) {
               Object.assign(element, columnDefinition.cellInputElementAttrs);
             }
@@ -195,7 +195,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
             }
             this.element = element;
             this.element.classList.add('ac-datagrid-cell-editor-element');
-            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey];
+            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey] ?? '';
             if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
               this.element.focus();
             }

@@ -824,6 +824,24 @@ export class AcDataManager {
       return valid;
     });
     if (dataRow) {
+      if(this.assignUniqueIdToData){
+        data[this.uniqueIdKey] = dataRow.rowId;
+      }
+      if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
+        for (const row of this.allRows) {
+          const parentUniqueValue = data[this.dataParentUniqueValueKey];
+          let parentRowId: any = undefined;
+          if (parentUniqueValue) {
+            const parentRow: any = this.allRows.find((val) => {
+              return val.data[this.dataUniqueValueKey] == parentUniqueValue;
+            });
+            if (parentRow) {
+              parentRowId = parentRow.rowId;
+            }
+          }
+          data[this.uniqueIdParentKey] = parentRowId;
+        }
+      }
       dataRow.data = data;
       if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
         const parentUniqueValue = dataRow.data[this.dataParentUniqueValueKey];

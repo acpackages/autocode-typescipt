@@ -69,7 +69,7 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
       if (stringEqualsIgnoreCase(hook, AC_DATA_MANAGER_HOOK.RowCreate)) {
         const datagridRow: IAcDatagridRow = args.datagridRow;
         const extensionData: IAcDatagridAutoSaveRowData = {
-          status: "not_changed",
+          status: "NOT_CHANGED",
         };
         datagridRow.extensionData['autoSaveRow'] = extensionData;
       }
@@ -80,7 +80,7 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
           const rowId = datagridRow.rowId;
           const extensionData: IAcDatagridAutoSaveRowData = datagridRow.extensionData['autoSaveRow'];
           extensionData.lastChangeTime = new Date();
-          extensionData.status = "pending_save";
+          extensionData.status = "CHANGED";
           this.delayedCallback.add({
             callback: () => {
               this.saveRow({ datagridRow })
@@ -116,7 +116,7 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
   private async saveRow({ datagridRow }: { datagridRow: IAcDatagridRow }) {
     if (this.datagridApi) {
       const extensionData: IAcDatagridAutoSaveRowData = datagridRow.extensionData['autoSaveRow'];
-      extensionData.status = 'saving';
+      extensionData.status = 'SAVING';
       const rowId = datagridRow.rowId;
       if (this.autoSaveFunction) {
         await new Promise<any>(
@@ -125,12 +125,12 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
               datagridRow,
               datagridApi: this.datagridApi!,
               successCallback: (responseArgs: IAcDatagridAutoSaveResponseArgs) => {
-                extensionData.status = 'saved';
+                extensionData.status = 'SAVED';
                 this.datagridApi!.updateRow({ data: responseArgs.savedData, rowId });
                 resolve(null);
               },
               errorCallback: () => {
-                extensionData.status = 'error';
+                extensionData.status = 'ERROR';
                 resolve(null);
               }
             };
