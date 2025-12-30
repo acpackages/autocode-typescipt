@@ -113,6 +113,10 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
       }
     }
     clearTimeout(this.blurTimeout);
+    if(this.datagridApi){
+      this.datagridApi.hooks.execute({hook:AC_DATAGRID_EVENT.CellEditorElementDestroy,args:{datagridCell:this.datagridCell}});
+      this.datagridApi.events.execute({event:AC_DATAGRID_EVENT.CellEditorElementDestroy,args:{datagridCell:this.datagridCell}});
+    }
     acNullifyInstanceProperties({ instance: this });
   }
 
@@ -189,6 +193,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
               element.setAttribute('type', 'number');
             }
             this.element = element;
+            this.element.classList.add('ac-datagrid-cell-editor-element');
             this.element.value = this.datagridRow.data[this.datagridColumn.columnKey];
             if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
               this.element.focus();

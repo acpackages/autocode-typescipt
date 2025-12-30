@@ -26,6 +26,7 @@ export class AcNgDatagridEvents {
   @Output() cellDragOver: EventEmitter<any> = new EventEmitter();
   @Output() cellDragStart: EventEmitter<any> = new EventEmitter();
   @Output() cellDragDrop: EventEmitter<any> = new EventEmitter();
+  @Output() cellEditorElementDestroy: EventEmitter<any> = new EventEmitter();
   @Output() cellEditorElementInit: EventEmitter<any> = new EventEmitter();
   @Output() cellEditingStart: EventEmitter<any> = new EventEmitter();
   @Output() cellEditingStop: EventEmitter<any> = new EventEmitter();
@@ -40,6 +41,7 @@ export class AcNgDatagridEvents {
   @Output() cellMouseMove: EventEmitter<any> = new EventEmitter();
   @Output() cellMouseOver: EventEmitter<any> = new EventEmitter();
   @Output() cellMouseUp: EventEmitter<any> = new EventEmitter();
+  @Output() cellRendererElementDestroy: EventEmitter<any> = new EventEmitter();
   @Output() cellRendererElementInit: EventEmitter<any> = new EventEmitter();
   @Output() cellTouchCancel: EventEmitter<any> = new EventEmitter();
   @Output() cellTouchEnd: EventEmitter<any> = new EventEmitter();
@@ -176,6 +178,11 @@ export class AcNgDatagridEvents {
       }
     });
     datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellEditorElementDestroy, callback: (args: any) => {
+        this.cellEditorElementDestroy.emit(args);
+      }
+    });
+    datagridApi.on({
       event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: any) => {
         this.cellEditorElementInit.emit(args);
       }
@@ -243,6 +250,16 @@ export class AcNgDatagridEvents {
     datagridApi.on({
       event: AC_DATAGRID_EVENT.CellMouseUp, callback: (args: any) => {
         this.cellMouseUp.emit(args);
+      }
+    });
+    datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellRendererElementDestroy, callback: (args: any) => {
+        this.cellRendererElementDestroy.emit(args);
+      }
+    });
+    datagridApi.on({
+      event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: any) => {
+        this.cellRendererElementInit.emit(args);
       }
     });
     datagridApi.on({
@@ -732,11 +749,6 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
       this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
       this.columnsCustomizerExtension.showColumnCustomizerPanel = true;
       this.registerListeners(this.datagridApi);
-      this.datagridApi.on({
-        event: AC_DATAGRID_EVENT.CellRendererElementInit, callback: (args: any) => {
-          this.cellRendererElementInit.emit(args);
-        }
-      });
       if (this.data) {
         this.dataManager.data = this.data;
       }

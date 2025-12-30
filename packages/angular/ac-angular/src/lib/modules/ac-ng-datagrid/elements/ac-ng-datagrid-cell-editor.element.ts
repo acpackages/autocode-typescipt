@@ -21,6 +21,7 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
   private viewRef?: EmbeddedViewRef<any>;
   private componentRef?: ComponentRef<IAcDatagridCellEditor>;
   private runtimeService?: AcRuntimeService;
+  private templateElements?:HTMLElement[]|any[];
 
   blur() {
     let continueOperation: boolean = true;
@@ -59,6 +60,15 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     this.clear();
     if(this.datagridCell){
       (this.datagridCell.element as any) = null;
+    }
+    if(this.templateElements){
+      console.log("Found Cell Editor Template Elements");
+      for(const el of this.templateElements){
+        console.log(el);
+        if(el.destroy != undefined){
+          el.destroy();
+        }
+      }
     }
     this.element.remove();
     acNullifyInstanceProperties({instance:this});
@@ -177,7 +187,9 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
     this.viewRef = template.createEmbeddedView(this.getContext());
     this.appRef?.attachView(this.viewRef);
 
-    for (const node of this.viewRef.rootNodes) {
+    this.templateElements = this.viewRef.rootNodes as HTMLElement[];
+
+    for (const node of this.templateElements) {
       this.element.appendChild(node);
     }
   }

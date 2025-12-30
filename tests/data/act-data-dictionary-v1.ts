@@ -4383,8 +4383,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "in_uom_quantity": {
-          "columnName": "in_uom_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -4445,8 +4445,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "out_uom_quantity": {
-          "columnName": "out_uom_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8087,8 +8087,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "in_order_quantity": {
-          "columnName": "in_order_quantity",
+        "in_order_total_quantity": {
+          "columnName": "in_order_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -8153,8 +8153,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
+        "stock_total_quantity": {
+          "columnName": "stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9010,8 +9010,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
+        "stock_total_quantity": {
+          "columnName": "stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9504,8 +9504,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
+        "stock_total_quantity": {
+          "columnName": "stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9518,8 +9518,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "waitlist_quantity": {
-          "columnName": "waitlist_quantity",
+        "waitlist_total_quantity": {
+          "columnName": "waitlist_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -9663,8 +9663,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10378,8 +10378,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -10916,8 +10916,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11589,8 +11589,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -11965,8 +11965,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -12584,8 +12584,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -13481,8 +13481,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14231,8 +14231,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -14863,8 +14863,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -15482,8 +15482,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -16395,8 +16395,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -16845,8 +16845,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17245,8 +17245,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -17864,8 +17864,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -18635,8 +18635,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "stock_uom_quantity": {
-          "columnName": "stock_uom_quantity",
+        "stock_total_quantity": {
+          "columnName": "stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -19088,8 +19088,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -19404,8 +19404,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "destination_new_stock_uom_quantity": {
-          "columnName": "destination_new_stock_uom_quantity",
+        "destination_new_stock_total_quantity": {
+          "columnName": "destination_new_stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -19432,8 +19432,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "destination_old_stock_uom_quantity": {
-          "columnName": "destination_old_stock_uom_quantity",
+        "destination_old_stock_total_quantity": {
+          "columnName": "destination_old_stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20225,8 +20225,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "new_stock_uom_quantity": {
-          "columnName": "new_stock_uom_quantity",
+        "new_stock_total_quantity": {
+          "columnName": "new_stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20253,8 +20253,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "old_stock_uom_quantity": {
-          "columnName": "old_stock_uom_quantity",
+        "old_stock_total_quantity": {
+          "columnName": "old_stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20380,8 +20380,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "update_uom_quantity": {
-          "columnName": "update_uom_quantity",
+        "update_total_quantity": {
+          "columnName": "update_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -24773,13 +24773,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_inventory_tracking_entries",
           "columnSourceOriginalColumn": "in_quantity"
         },
-        "in_uom_quantity": {
-          "columnName": "in_uom_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "in_uom_quantity"
+          "columnSourceOriginalColumn": "in_total_quantity"
         },
         "inventory_tracking_id": {
           "columnName": "inventory_tracking_id",
@@ -24813,13 +24813,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_quantity"
         },
-        "out_uom_quantity": {
-          "columnName": "out_uom_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "out_uom_quantity"
+          "columnSourceOriginalColumn": "out_total_quantity"
         },
         "product_barcode_id": {
           "columnName": "product_barcode_id",
@@ -26523,6 +26523,7 @@ export const dataDictionaryJson = {
         "minimum_order_quantity": {
           "columnName": "minimum_order_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_purchase_details",
           "columnSourceOriginalColumn": "minimum_order_quantity"
@@ -26530,6 +26531,7 @@ export const dataDictionaryJson = {
         "minimum_order_quantity_uom_id": {
           "columnName": "minimum_order_quantity_uom_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_purchase_details",
           "columnSourceOriginalColumn": "minimum_order_quantity_uom_id"
@@ -26537,6 +26539,7 @@ export const dataDictionaryJson = {
         "total_out_quantity": {
           "columnName": "total_out_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "total_out_quantity"
@@ -26544,6 +26547,7 @@ export const dataDictionaryJson = {
         "total_in_quantity": {
           "columnName": "total_in_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "total_in_quantity"
@@ -26551,6 +26555,7 @@ export const dataDictionaryJson = {
         "stock_quantity": {
           "columnName": "stock_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_quantity"
@@ -26558,6 +26563,7 @@ export const dataDictionaryJson = {
         "stock_in_hand_quantity": {
           "columnName": "stock_in_hand_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_in_hand_quantity"
@@ -26565,6 +26571,7 @@ export const dataDictionaryJson = {
         "stock_uom_id": {
           "columnName": "stock_uom_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_uom_id"
@@ -26572,6 +26579,7 @@ export const dataDictionaryJson = {
         "stock_uom_name": {
           "columnName": "stock_uom_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_uom_name"
@@ -26579,6 +26587,7 @@ export const dataDictionaryJson = {
         "stock_uom_quantity": {
           "columnName": "stock_uom_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_uom_quantity"
@@ -26586,6 +26595,7 @@ export const dataDictionaryJson = {
         "product_image_media": {
           "columnName": "product_image_media",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_image_media"
@@ -26593,6 +26603,7 @@ export const dataDictionaryJson = {
         "product_category_name": {
           "columnName": "product_category_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_category_name"
@@ -26600,6 +26611,7 @@ export const dataDictionaryJson = {
         "product_category_tree": {
           "columnName": "product_category_tree",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_category_tree"
@@ -26607,6 +26619,7 @@ export const dataDictionaryJson = {
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "accountee_id"
@@ -26614,6 +26627,7 @@ export const dataDictionaryJson = {
         "delivery_available": {
           "columnName": "delivery_available",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "delivery_available"
@@ -26621,6 +26635,7 @@ export const dataDictionaryJson = {
         "pickup_available": {
           "columnName": "pickup_available",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "pickup_available"
@@ -26628,6 +26643,7 @@ export const dataDictionaryJson = {
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "is_active"
@@ -26635,6 +26651,7 @@ export const dataDictionaryJson = {
         "product_category_id": {
           "columnName": "product_category_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_category_id"
@@ -26642,6 +26659,7 @@ export const dataDictionaryJson = {
         "product_details": {
           "columnName": "product_details",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_details"
@@ -26649,6 +26667,7 @@ export const dataDictionaryJson = {
         "product_full_description": {
           "columnName": "product_full_description",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_full_description"
@@ -26656,6 +26675,7 @@ export const dataDictionaryJson = {
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_id"
@@ -26663,6 +26683,7 @@ export const dataDictionaryJson = {
         "product_image_media_id": {
           "columnName": "product_image_media_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_image_media_id"
@@ -26670,6 +26691,7 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_name"
@@ -26677,6 +26699,7 @@ export const dataDictionaryJson = {
         "product_quick_description": {
           "columnName": "product_quick_description",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_quick_description"
@@ -26684,6 +26707,7 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_sku"
@@ -26691,6 +26715,7 @@ export const dataDictionaryJson = {
         "product_tags": {
           "columnName": "product_tags",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_tags"
@@ -26698,6 +26723,7 @@ export const dataDictionaryJson = {
         "waitlist_quantity": {
           "columnName": "waitlist_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "waitlist_quantity"
@@ -26705,6 +26731,7 @@ export const dataDictionaryJson = {
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "hsn_code"
@@ -26712,6 +26739,7 @@ export const dataDictionaryJson = {
         "brand_name": {
           "columnName": "brand_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "brand_name"
@@ -26719,6 +26747,7 @@ export const dataDictionaryJson = {
         "stock_in_hand_uom_quantity": {
           "columnName": "stock_in_hand_uom_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_in_hand_uom_quantity"
@@ -27345,13 +27374,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_uom_id"
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_uom_quantity"
+          "columnSourceOriginalColumn": "chargeable_service_total_quantity"
         },
         "discount_cash_percentage": {
           "columnName": "discount_cash_percentage",
@@ -27511,13 +27540,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "in_quantity"
         },
-        "in_uom_quantity": {
-          "columnName": "in_uom_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "in_uom_quantity"
+          "columnSourceOriginalColumn": "in_total_quantity"
         },
         "inventory_tracking_id": {
           "columnName": "inventory_tracking_id",
@@ -27551,13 +27580,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_quantity"
         },
-        "out_uom_quantity": {
-          "columnName": "out_uom_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "out_uom_quantity"
+          "columnSourceOriginalColumn": "out_total_quantity"
         },
         "product_barcode_id": {
           "columnName": "product_barcode_id",
@@ -27795,13 +27824,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "product_uom_id"
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_products",
-          "columnSourceOriginalColumn": "product_uom_quantity"
+          "columnSourceOriginalColumn": "product_total_quantity"
         },
         "purchase_invoice_id": {
           "columnName": "purchase_invoice_id",
@@ -29148,13 +29177,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "in_quantity"
         },
-        "in_uom_quantity": {
-          "columnName": "in_uom_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "in_uom_quantity"
+          "columnSourceOriginalColumn": "in_total_quantity"
         },
         "inventory_tracking_id": {
           "columnName": "inventory_tracking_id",
@@ -29188,13 +29217,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_quantity"
         },
-        "out_uom_quantity": {
-          "columnName": "out_uom_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
-          "columnSourceOriginalColumn": "out_uom_quantity"
+          "columnSourceOriginalColumn": "out_total_quantity"
         },
         "product_barcode_id": {
           "columnName": "product_barcode_id",
@@ -29502,13 +29531,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "product_uom_id"
         },
-        "product_uom_quantity": {
-          "columnName": "product_uom_quantity",
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
-          "columnSourceOriginalColumn": "product_uom_quantity"
+          "columnSourceOriginalColumn": "product_total_quantity"
         },
         "sale_invoice_id": {
           "columnName": "sale_invoice_id",
@@ -30486,7 +30515,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT \nSUM(in_quantity) AS total_in_quantity, \nSUM(out_quantity) AS total_out_quantity, \nSUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_in_hand_quantity, \n(SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS stock_in_hand_uom_quantity,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.* FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id"
+      "viewQuery": "SELECT \nSUM(in_total_quantity) AS in_total_quantity, \nSUM(out_total_quantity) AS out_total_quantity, \nSUM(IIF(in_total_quantity IS NULL,0,in_total_quantity) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) AS total_closing_stock, \n(SUM(IIF(in_total_quantity IS NULL,0,in_quantity) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS closing_stock,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.* FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id"
     },
     "act_vw_stock_at_location": {
       "viewName": "act_vw_stock_at_location",
@@ -30736,7 +30765,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "location_id"
         }
       },
-      "viewQuery": "SELECT \nSUM(in_quantity) AS total_in_quantity, \nSUM(out_quantity) AS total_out_quantity, \nSUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_in_hand_quantity, \n(SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS stock_in_hand_uom_quantity,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,location_id"
+      "viewQuery": "SELECT \nSUM(in_total_quantity) AS in_total_quantity, \nSUM(out_total_quantity) AS out_total_quantity, \nSUM(IIF(in_total_quantity IS NULL,0,in_total_quantity) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) AS total_closing_stock, \n(SUM(IIF(in_total_quantity IS NULL,0,in_total_quantity) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS closing_stock,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,location_id"
     },
     "act_vw_stock_at_storage_location": {
       "viewName": "act_vw_stock_at_storage_location",
@@ -30986,7 +31015,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "storage_location_id"
         }
       },
-      "viewQuery": "SELECT \nSUM(in_quantity) AS total_in_quantity, \nSUM(out_quantity) AS total_out_quantity, \nSUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) AS stock_in_hand_quantity, \n(SUM(IIF(in_quantity IS NULL,0,in_quantity) - IIF(out_quantity IS NULL,0,out_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS stock_in_hand_uom_quantity,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.storage_location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,storage_location_id"
+      "viewQuery": "SELECT \nSUM(in_total_quantity ) AS in_total_quantity , \nSUM(out_total_quantity) AS out_total_quantity, \nSUM(IIF(in_total_quantity IS NULL,0,in_total_quantity ) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) AS total_closing_stock, \n(SUM(IIF(in_total_quantity IS NULL,0,in_total_quantity ) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS closing_stock,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.storage_location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,storage_location_id"
     },
     "act_vw_storage_locations": {
       "viewName": "act_vw_storage_locations",

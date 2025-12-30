@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDatagrid, AcDatagridApi, AcDatagridSelectInput, AcInputBase, AcMessage } from "@autocode-ts/ac-browser";
-import { AcDataManager, AcEnumConditionOperator, AcEnumHttpResponseCode, AcEnumLogicalOperator, IAcDataCacheGetResult, IAcFilterGroup, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from "@autocode-ts/autocode";
+import { AcDataManager, IAcFilterGroup } from "@autocode-ts/autocode";
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME } from "@autocode-ts/ac-datagrid-on-ag-grid";
 
 export class AppDatagridSelectInputBase extends AcInputBase {
@@ -23,7 +23,7 @@ export class AppDatagridSelectInputBase extends AcInputBase {
   apiUrl: string = '';
   override init(): void {
     super.init();
-    console.log("Init datagrid");
+    this.inputElement.dispatchEvent = this.dispatchEvent;
     this.inputElement.addEventListener('stateChange', () => {
       this.saveInputState();
     });
@@ -38,8 +38,8 @@ export class AppDatagridSelectInputBase extends AcInputBase {
   }
 
   override destroy(): void {
-    if(this.datagridApi){
-      this.datagridApi.datagrid.destroy();
+    if(this.inputElement){
+      this.inputElement.destroy();
     }
     super.destroy();
   }
@@ -77,7 +77,6 @@ export class AppDatagridSelectInputBase extends AcInputBase {
       clearTimeout(this.saveStateTimeout);
       this.saveStateTimeout = setTimeout(async () => {
         this.ignoreStateChange = true;
-        console.log(this.inputElement.getState());
         // const row: any = {
         //   [TblActAccounteeSettings.AccounteeSettingName]: this.settingName,
         //   [TblActAccounteeSettings.AccounteeId]: App.activeAccounteeId,

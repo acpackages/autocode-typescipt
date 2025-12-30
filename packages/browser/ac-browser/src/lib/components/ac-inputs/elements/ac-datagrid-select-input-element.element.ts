@@ -127,6 +127,10 @@ export class AcDatagridSelectInput extends AcInputBase {
   isFocused: boolean = false;
 
   override destroy(): void {
+    console.log("Destroying datagrid dropdown");
+    if(this.isDropdownOpen){
+      this.closeDropdown();
+    }
     clearTimeout(this.searchInputTimeout);
     clearTimeout(this.resizeTimeout);
     clearTimeout(this.outsideCloseTimeout);
@@ -248,6 +252,9 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   getState() {
+    if(!this.datagrid || !this.datagrid.datagridApi){
+      return null;
+    }
     const state = {
       datagridState: this.datagrid.datagridApi.getState(),
       dropdownSize: this.dropdownSize
@@ -278,6 +285,9 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   private notifyState() {
+    if(!this.datagrid || !this.datagrid.datagridApi){
+      return;
+    }
     const currentState = this.getState();
     const currentStateJson = JSON.stringify(currentState)
     if (this.previousState != currentStateJson) {
@@ -377,6 +387,9 @@ export class AcDatagridSelectInput extends AcInputBase {
 
   private async setSelectedRowsFromValue(): Promise<void> {
     if (!this.value) return;
+    if(!this.datagrid || !this.datagrid.datagridApi){
+      return;
+    }
 
     let retry = false;
     let continueOperation = true;
@@ -468,6 +481,9 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   setState({ state }: { state: any }) {
+    if(!this.datagrid || !this.datagrid.datagridApi){
+      return;
+    }
     if (state.dropdownSize) {
       this.dropdownSize = state.dropdownSize;
     }
@@ -477,6 +493,9 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   setValueFromDatagridData() {
+    if(!this.datagrid || !this.datagrid.datagridApi){
+      return;
+    }
     const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
     if (activeDatagridCell) {
       this.setSelectedRows({ rows: [activeDatagridCell.datagridRow.data] });

@@ -66,10 +66,24 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     //
   }
 
+  handleCellDatagridInit(event:any){
+    // console.log('Cell Editor Datagrid init',event)
+    // AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
+    // this.datagrid.datagridApi.showAddButton = true;
+    // this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
+  }
+
+  handleCellEditorDestroy(event:any){
+    // console.log("Cell editor destroy",event);
+  }
+
+  handleCellEditorInit(event:any){
+    // console.log("Cell editor init",event);
+  }
+
   handleCellKeyUp(event:any){
     // console.log("Cell key up",event);
   }
-
 
   handleCellValueChange(event:any){
     const datagridCell:IAcDatagridCell = event.datagridCell;
@@ -80,16 +94,17 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
       updatedData.last_name = updatedData.last_name+'-modified';
       datagridApi.updateRow({data:updatedData,rowId:datagridCell.datagridRow.rowId});
     }
-    console.log("Cell value change",event);
+    // console.log("Cell value change",event);
   }
 
   handleCompanyChange(args:any){
     // if(this.datagrid.)
   }
 
-  handleDatagridInit(){
+  handleDatagridInit(event:any){
+    // console.log('Cell Editor Datagrid init',event)
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
-    this.datagrid.datagridApi.showAddButton = true;
+    // this.datagrid.datagridApi.showAddButton = true;
     this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
   }
 

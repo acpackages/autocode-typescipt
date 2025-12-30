@@ -51,6 +51,10 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
     }
     this.element.remove();
     clearTimeout(this.blurTimeout);
+    if(this.datagridApi){
+      this.datagridApi.hooks.execute({hook:AC_DATAGRID_EVENT.CellRendererElementDestroy,args:{datagridCell:this.datagridCell}});
+      this.datagridApi.events.execute({event:AC_DATAGRID_EVENT.CellRendererElementDestroy,args:{datagridCell:this.datagridCell}});
+    }
     acNullifyInstanceProperties({ instance: this });
   }
 

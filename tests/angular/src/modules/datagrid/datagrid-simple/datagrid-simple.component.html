@@ -7,7 +7,9 @@
   'first_name':nameTemplate,
   'company':companyEditorTemplate
 }"
-(datagridInit)="handleDatagridInit()"
+(datagridInit)="handleDatagridInit($event)"
+(cellEditorElementDestroy)="handleCellEditorDestroy($event)"
+(cellEditorElementInit)="handleCellEditorInit($event)"
 (cellKeyUp)="handleCellKeyUp($event)"
 (cellValueChange)="handleCellValueChange($event)"
 />
@@ -20,7 +22,7 @@
 <ng-template #companyEditorTemplate let-datagridRow="datagridRow" let-data="data">
   <customer-company-select-input [attr.name]="`${datagridRow.rowId}_company`"
     [(ngModel)]="datagridRow.data['company']" (change)="handleCompanyChange({datagridRow})"
-    (init)="handleDropdownInit($event)"></customer-company-select-input>
+    (init)="handleDropdownInit($event)" (datagridInit)="handleCellDatagridInit($event)"></customer-company-select-input>
 </ng-template>
 <ng-template #actionTemplate let-value="value" let-datagridRow="datagridRow">
   <action-column (onEdit)="handleEdit(datagridRow)" [showDelete]="false" />
