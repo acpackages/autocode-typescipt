@@ -7,18 +7,20 @@ import { IAcDatagridColumnDraggingHookArgs } from "../interfaces/ac-datagrid-col
 
 
 export class AcDatagridColumnDraggingExtension extends AcDatagridExtension {
-  private _allowColumnDragging:boolean = true;
-  get allowColumnDragging():boolean{
+  private _allowColumnDragging: boolean = true;
+  get allowColumnDragging(): boolean {
     return this._allowColumnDragging;
   }
-  set allowColumnDragging(value:boolean){
+  set allowColumnDragging(value: boolean) {
     this._allowColumnDragging = value;
-    const hookArgs:IAcDatagridColumnDraggingHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridColumnDraggingExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridColumnDraggingHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridColumnDraggingExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridColumnDraggingHook.AllowColumnDraggingChange, args: hookArgs });
+    }
   }
 }
 

@@ -24,12 +24,14 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
   }
   set treeDataChildKey(value: string) {
     this._treeDataChildKey = value;
-    const hookArgs: IAcDatagridTreeTableHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridTreeTableExtension: this,
-      value: value
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeDataChildKeyChange, args: hookArgs });
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridTreeTableHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridTreeTableExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeDataChildKeyChange, args: hookArgs });
+    }
   }
 
   private _treeDataDisplayKey: string = '';
@@ -38,12 +40,14 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
   }
   set treeDataDisplayKey(value: string) {
     this._treeDataDisplayKey = value;
-    const hookArgs: IAcDatagridTreeTableHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridTreeTableExtension: this,
-      value: value
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeDataDisplayKeyChange, args: hookArgs });
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridTreeTableHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridTreeTableExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeDataDisplayKeyChange, args: hookArgs });
+    }
   }
 
   private _treeDataParentKey: string = '';
@@ -52,15 +56,16 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
   }
   set treeDataParentKey(value: string) {
     this._treeDataParentKey = value;
-    const hookArgs: IAcDatagridTreeTableHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridTreeTableExtension: this,
-      value: value
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeDataParentKeyChange, args: hookArgs });
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridTreeTableHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridTreeTableExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeDataParentKeyChange, args: hookArgs });
+    }
   }
 
-  draggableApi!: AcDraggableApi;
   datagridInternalColumn: AcDatagridInternalColumn = new AcDatagridInternalColumn({
     width: 35,
   });
@@ -72,40 +77,44 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
-      this.handleBeforeRowCellsCreated(args);
-    }
-    else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
-      this.handleBeforeHeaderColumnCellsCreated(args);
+    if (this.datagridApi) {
+      if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
+        this.handleBeforeRowCellsCreated(args);
+      }
+      else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
+        this.handleBeforeHeaderColumnCellsCreated(args);
+      }
     }
   }
 
-  getNestedDataTree({childrenKey = 'children'}:{childrenKey?:string} = {}) {
+  getNestedDataTree({ childrenKey = 'children' }: { childrenKey?: string } = {}) {
     const rootData: any[] = [];
     const parentDataMap: any = {};
-    for (const datagridRow of this.datagridApi.datagridRows) {
-      const data = datagridRow.data;
-      const parentId: any = data[this.treeDataChildKey];
-      if (parentId) {
-        if (parentDataMap[parentId] == undefined) {
-          parentDataMap[parentId] = [];
+    if (this.datagridApi) {
+      for (const datagridRow of this.datagridApi.datagridRows) {
+        const data = datagridRow.data;
+        const parentId: any = data[this.treeDataChildKey];
+        if (parentId) {
+          if (parentDataMap[parentId] == undefined) {
+            parentDataMap[parentId] = [];
+          }
+          parentDataMap[parentId].push(data)
         }
-        parentDataMap[parentId].push(data)
-      }
-      else {
-        rootData.push(data);
-      }
-    }
-    const setChildData: Function = (data: any): void => {
-      if (parentDataMap[data[this.treeDataParentKey]]) {
-        data[childrenKey] = parentDataMap[data[this.treeDataParentKey]];
-        for (const childData of data[childrenKey]) {
-          setChildData(childData);
+        else {
+          rootData.push(data);
         }
       }
-    };
-    for (const childData of rootData) {
-      setChildData(childData);
+      const setChildData: Function = (data: any): void => {
+        if (parentDataMap[data[this.treeDataParentKey]]) {
+          data[childrenKey] = parentDataMap[data[this.treeDataParentKey]];
+          for (const childData of data[childrenKey]) {
+            setChildData(childData);
+          }
+        }
+      };
+      for (const childData of rootData) {
+        setChildData(childData);
+      }
     }
     return rootData;
   }

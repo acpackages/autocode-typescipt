@@ -12,37 +12,41 @@ import { AcEnumDatagridRowNumbersHook } from "../enums/ac-enum-datagrid-row-numb
 import { IAcDatagridRowNumbersHookArgs } from "../interfaces/ac-datagrid-row-numbers-hook-args.interface";
 
 export class AcDatagridRowNumbersExtension extends AcDatagridExtension {
-  private _showRowNumbers:boolean = true;
-  get showRowNumbers():boolean{
+  private _showRowNumbers: boolean = true;
+  get showRowNumbers(): boolean {
     return this._showRowNumbers;
   }
-  set showRowNumbers(value:boolean){
+  set showRowNumbers(value: boolean) {
     this._showRowNumbers = value;
-    const hookArgs:IAcDatagridRowNumbersHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridRowNumbersExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridRowNumbersHook.ShowRowNumbersChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridRowNumbersHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridRowNumbersExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowNumbersHook.ShowRowNumbersChange, args: hookArgs });
+    }
   }
 
   datagridInternalColumn: AcDatagridInternalColumn = new AcDatagridInternalColumn({
-    width:35,
+    width: 35,
   });
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
-      this.handleBeforeRowCellsCreated(args);
-    }
-    else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
-      this.handleBeforeHeaderColumnCellsCreated(args);
+    if (this.datagridApi) {
+      if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
+        this.handleBeforeRowCellsCreated(args);
+      }
+      else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
+        this.handleBeforeHeaderColumnCellsCreated(args);
+      }
     }
   }
 
   handleBeforeHeaderColumnCellsCreated(args: IAcDatagridHeaderHookArgs) {
     const datagridApi = args.datagridApi;
     const datagridHeader = args.datagridHeader;
-    const datagriRowNumberCell = new AcDatagridRowNumberHeaderCell({ datagridApi: datagridApi,datagridInternalColumn:this.datagridInternalColumn });
+    const datagriRowNumberCell = new AcDatagridRowNumberHeaderCell({ datagridApi: datagridApi, datagridInternalColumn: this.datagridInternalColumn });
     datagridHeader.append(datagriRowNumberCell.element);
     // }
   }
@@ -51,7 +55,7 @@ export class AcDatagridRowNumbersExtension extends AcDatagridExtension {
     const datagridApi = args.datagridApi;
     const datagridRow = args.datagridRow;
     if (datagridRow.element) {
-      const datagriRowNumberCell = new AcDatagridRowNumberCell({ datagridApi: datagridApi, datagridRow: datagridRow,datagridInternalColumn:this.datagridInternalColumn });
+      const datagriRowNumberCell = new AcDatagridRowNumberCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
       datagridRow.element.append(datagriRowNumberCell.element);
     }
   }

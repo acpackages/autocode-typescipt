@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringEqualsIgnoreCase } from "@autocode-ts/ac-extensions";
 import { IAcDatagridCell, IAcDatagridRow, AC_DATAGRID_HOOK } from "../../../_ac-datagrid.export";
@@ -27,7 +28,7 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
   }
 
   private _autoSaveFunction?: (args: IAcDatagridAutoSaveRequestArgs) => void;
-  get autoSaveFunction(): (args: IAcDatagridAutoSaveRequestArgs) => void {
+  get autoSaveFunction(): ((args: IAcDatagridAutoSaveRequestArgs) => void)|undefined {
     return this._autoSaveFunction;
   }
   set autoSaveFunction(value: (args: IAcDatagridAutoSaveRequestArgs) => void) {
@@ -64,39 +65,41 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (stringEqualsIgnoreCase(hook, AC_DATA_MANAGER_HOOK.RowCreate)) {
-      const datagridRow: IAcDatagridRow = args.datagridRow;
-      const extensionData: IAcDatagridAutoSaveRowData = {
-        status: "not_changed",
-      };
-      datagridRow.extensionData['autoSaveRow'] = extensionData;
-    }
-    else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.CellValueChange)) {
-      if (this.autoSaveRow) {
-        const datagridCell: IAcDatagridCell = args.datagridCell;
-        const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
-        const rowId = datagridRow.rowId;
-        const extensionData: IAcDatagridAutoSaveRowData = datagridRow.extensionData['autoSaveRow'];
-        extensionData.lastChangeTime = new Date();
-        extensionData.status = "pending_save";
-        this.delayedCallback.add({
-          callback: () => {
-            this.saveRow({ datagridRow })
-          }, duration: this.autoSaveDuration, key: rowId
-        });
-      }
-    }
-    else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.ActiveCellChange)) {
-      if (this.autoSaveRow) {
-        const datagridCell: IAcDatagridCell = this.datagridApi.activeDatagridCell;
-        const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
-        this.resetTimeoutForRow({ datagridRow });
-      }
-    }
-    else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.RowKeyUp)) {
-      if (this.autoSaveRow) {
+    if (this.datagridApi) {
+      if (stringEqualsIgnoreCase(hook, AC_DATA_MANAGER_HOOK.RowCreate)) {
         const datagridRow: IAcDatagridRow = args.datagridRow;
-        this.resetTimeoutForRow({ datagridRow });
+        const extensionData: IAcDatagridAutoSaveRowData = {
+          status: "not_changed",
+        };
+        datagridRow.extensionData['autoSaveRow'] = extensionData;
+      }
+      else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.CellValueChange)) {
+        if (this.autoSaveRow) {
+          const datagridCell: IAcDatagridCell = args.datagridCell;
+          const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
+          const rowId = datagridRow.rowId;
+          const extensionData: IAcDatagridAutoSaveRowData = datagridRow.extensionData['autoSaveRow'];
+          extensionData.lastChangeTime = new Date();
+          extensionData.status = "pending_save";
+          this.delayedCallback.add({
+            callback: () => {
+              this.saveRow({ datagridRow })
+            }, duration: this.autoSaveDuration, key: rowId
+          });
+        }
+      }
+      else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.ActiveCellChange)) {
+        if (this.autoSaveRow) {
+          const datagridCell: IAcDatagridCell = this.datagridApi.activeDatagridCell!;
+          const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
+          this.resetTimeoutForRow({ datagridRow });
+        }
+      }
+      else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.RowKeyUp)) {
+        if (this.autoSaveRow) {
+          const datagridRow: IAcDatagridRow = args.datagridRow;
+          this.resetTimeoutForRow({ datagridRow });
+        }
       }
     }
   }
@@ -111,28 +114,30 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
   }
 
   private async saveRow({ datagridRow }: { datagridRow: IAcDatagridRow }) {
-    const extensionData: IAcDatagridAutoSaveRowData = datagridRow.extensionData['autoSaveRow'];
-    extensionData.status = 'saving';
-    const rowId = datagridRow.rowId;
-    if (this.autoSaveFunction) {
-      await new Promise<any>(
-        (resolve) => {
-          const requestArgs: IAcDatagridAutoSaveRequestArgs = {
-            datagridRow,
-            datagridApi: this.datagridApi,
-            successCallback: (responseArgs: IAcDatagridAutoSaveResponseArgs) => {
-              extensionData.status = 'saved';
-              this.datagridApi.updateRow({ data: responseArgs.savedData, rowId });
-              resolve(null);
-            },
-            errorCallback: () => {
-              extensionData.status = 'error';
-              resolve(null);
-            }
-          };
-          this.autoSaveFunction(requestArgs);
-        }
-      );
+    if (this.datagridApi) {
+      const extensionData: IAcDatagridAutoSaveRowData = datagridRow.extensionData['autoSaveRow'];
+      extensionData.status = 'saving';
+      const rowId = datagridRow.rowId;
+      if (this.autoSaveFunction) {
+        await new Promise<any>(
+          (resolve) => {
+            const requestArgs: IAcDatagridAutoSaveRequestArgs = {
+              datagridRow,
+              datagridApi: this.datagridApi!,
+              successCallback: (responseArgs: IAcDatagridAutoSaveResponseArgs) => {
+                extensionData.status = 'saved';
+                this.datagridApi!.updateRow({ data: responseArgs.savedData, rowId });
+                resolve(null);
+              },
+              errorCallback: () => {
+                extensionData.status = 'error';
+                resolve(null);
+              }
+            };
+            this.autoSaveFunction!(requestArgs);
+          }
+        );
+      }
     }
   }
 }

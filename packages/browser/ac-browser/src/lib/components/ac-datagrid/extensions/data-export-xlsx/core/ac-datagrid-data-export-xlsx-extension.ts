@@ -8,27 +8,31 @@ import { IAcDatagridDataExportXlsxExportCallHookArgs } from "../interfaces/ac-da
 import { IAcDatagridDataExportXlsxHookArgs } from "../interfaces/ac-datagrid-data-export-xlsx-hook-args.interface";
 
 export class AcDatagridDataExportXlsxExtension extends AcDatagridExtension {
-  private _allowXlsxExport:boolean = false;
-  get allowXlsxExport():boolean{
+  private _allowXlsxExport: boolean = false;
+  get allowXlsxExport(): boolean {
     return this._allowXlsxExport;
   }
-  set allowXlsxExport(value:boolean){
+  set allowXlsxExport(value: boolean) {
     this._allowXlsxExport = value;
-    const hookArgs:IAcDatagridDataExportXlsxHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridDataExportXlsxExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridDataExportXlsxHook.AllowXlsxExportChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridDataExportXlsxHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridDataExportXlsxExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridDataExportXlsxHook.AllowXlsxExportChange, args: hookArgs });
+    }
   }
 
-  exportData(args:IAcDatagridDataExportXlsxExportCallArgs){
-    const hookArgs:IAcDatagridDataExportXlsxExportCallHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridDataExportXlsxExtension:this,
-      args:args
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridDataExportXlsxHook.ExportData,args:hookArgs});
+  exportData(args: IAcDatagridDataExportXlsxExportCallArgs) {
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridDataExportXlsxExportCallHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridDataExportXlsxExtension: this,
+        args: args
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridDataExportXlsxHook.ExportData, args: hookArgs });
+    }
   }
 }
 

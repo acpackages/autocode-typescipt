@@ -72,7 +72,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     this.removeListeners();
     this.agGridExtension = agGridExtension;
     this.datagridApi = agGridExtension.datagridApi;
-    this.datagridApi.hooks.subscribeAllHooks({callback: this.handleHook});
+    this.datagridApi!.hooks.subscribeAllHooks({callback: this.handleHook});
     if(this.agGridExtension.gridApi){
       this.gridApi = this.agGridExtension.gridApi;
     }

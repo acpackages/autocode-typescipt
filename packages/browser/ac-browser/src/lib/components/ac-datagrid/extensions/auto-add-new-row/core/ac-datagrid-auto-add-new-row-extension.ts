@@ -8,26 +8,29 @@ import { AcEnumDatagridAutoAddNewRowHook } from "../enums/ac-enum-datagrid-auto-
 import { IAcDatagridAutoAddNewRowHookArgs } from "../interfaces/ac-datagrid-auto-add-new-row-hook-args.interface";
 
 export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
-  private _autoAddNewRow:boolean = false;
-  get autoAddNewRow():boolean{
+  private _autoAddNewRow: boolean = false;
+  get autoAddNewRow(): boolean {
     return this._autoAddNewRow;
   }
-  set autoAddNewRow(value:boolean){
+  set autoAddNewRow(value: boolean) {
     this._autoAddNewRow = value;
-    const hookArgs:IAcDatagridAutoAddNewRowHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridAutoAddNewRowExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridAutoAddNewRowHook.AutoAddNewRowValueChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridAutoAddNewRowHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridAutoAddNewRowExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridAutoAddNewRowHook.AutoAddNewRowValueChange, args: hookArgs });
+    }
+
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if(this.autoAddNewRow) {
-      if(stringEqualsIgnoreCase(hook,AC_DATAGRID_HOOK.CellValueChange)){
-        const datagridCell:IAcDatagridCell = args.datagridCell;
-        const datagridRow:IAcDatagridRow = datagridCell.datagridRow;
-        if(datagridRow.index == this.datagridApi.dataManager.totalRows - 1){
+    if (this.autoAddNewRow) {
+      if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.CellValueChange)) {
+        const datagridCell: IAcDatagridCell = args.datagridCell;
+        const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
+        if (datagridRow.index == this.datagridApi.dataManager.totalRows - 1) {
           this.datagridApi.addRow();
         }
       }

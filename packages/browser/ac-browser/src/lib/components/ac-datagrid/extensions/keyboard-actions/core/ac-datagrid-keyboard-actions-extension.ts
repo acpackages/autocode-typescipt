@@ -10,8 +10,8 @@ import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.
 export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
   private navigate: boolean = false;
 
-  private handleCellKeyDown(event:KeyboardEvent) {
-    if (event && this.datagridApi.activeDatagridCell) {
+  private handleCellKeyDown(event: KeyboardEvent) {
+    if (event && this.datagridApi && this.datagridApi.activeDatagridCell) {
       if (this.navigate && event && event.key) {
         const datagridCell: IAcDatagridCell = this.datagridApi.activeDatagridCell;
         const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
@@ -55,11 +55,11 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
         //   default:
         //     return; // Allow other keys (e.g., typing in editable cells)
         // }
-        if(newColumnIndex != datagridColumn.index || newRowIndex != datagridRow.index){
+        if (newColumnIndex != datagridColumn.index || newRowIndex != datagridRow.index) {
           event.preventDefault();
-          this.datagridApi.setActiveCell({rowIndex:newRowIndex,columnIndex:newColumnIndex});
-          if(this.datagridApi.activeDatagridCell.element){
-            acScrollIntoViewIfHidden({element:this.datagridApi.activeDatagridCell.element});
+          this.datagridApi.setActiveCell({ rowIndex: newRowIndex, columnIndex: newColumnIndex });
+          if (this.datagridApi.activeDatagridCell.element) {
+            acScrollIntoViewIfHidden({ element: this.datagridApi.activeDatagridCell.element });
           }
         }
       }
@@ -76,18 +76,20 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
   // }
 
   override init(): void {
-    this.datagridApi.datagrid.datagridBody!.addEventListener('mouseover',(event:MouseEvent)=>{
-      this.navigate = true;
-    });
-    this.datagridApi.datagrid.datagridBody!.addEventListener('mouseenter',(event:MouseEvent)=>{
-      this.navigate = true;
-    });
-    this.datagridApi.datagrid.datagridBody!.addEventListener('mouseleave',(event:MouseEvent)=>{
-      this.navigate = false;
-    });
-    this.datagridApi.datagrid.ownerDocument.addEventListener('keydown',(event:KeyboardEvent)=>{
-      this.handleCellKeyDown(event);
-    });
+    if (this.datagridApi) {
+      this.datagridApi.datagrid.datagridBody!.addEventListener('mouseover', (event: MouseEvent) => {
+        this.navigate = true;
+      });
+      this.datagridApi.datagrid.datagridBody!.addEventListener('mouseenter', (event: MouseEvent) => {
+        this.navigate = true;
+      });
+      this.datagridApi.datagrid.datagridBody!.addEventListener('mouseleave', (event: MouseEvent) => {
+        this.navigate = false;
+      });
+      this.datagridApi.datagrid.ownerDocument.addEventListener('keydown', (event: KeyboardEvent) => {
+        this.handleCellKeyDown(event);
+      });
+    }
   }
 
 }

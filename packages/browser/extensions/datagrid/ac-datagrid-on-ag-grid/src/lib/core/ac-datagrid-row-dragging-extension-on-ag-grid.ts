@@ -38,21 +38,21 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
   private onRowDragCancel = (event: RowDragCancelEvent) => {
     const datagridRow = this.agGridExtension?.getDatagridRowFromEvent({ event });
     if (datagridRow && this.rowDraggingExtension && this.rowDraggingExtension.rowDraggingEventHandler) {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragCancel({ datagridRow, event: event.event });
+      // this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragCancel({ datagridRow, event: event.event });
     }
   };
 
   private onRowDragLeave = (event: RowDragLeaveEvent) => {
     const datagridRow = this.agGridExtension?.getDatagridRowFromEvent({ event });
     if (datagridRow && this.rowDraggingExtension && this.rowDraggingExtension.rowDraggingEventHandler) {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragLeave({ datagridRow, event: event.event });
+      // this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragLeave({ datagridRow, event: event.event });
     }
   };
 
   private onRowDragMove = (event: RowDragMoveEvent) => {
     const datagridRow = this.agGridExtension?.getDatagridRowFromEvent({ event });
     if (datagridRow && this.rowDraggingExtension && this.rowDraggingExtension.rowDraggingEventHandler) {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragOver({ datagridRow, event: event.event });
+      // this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragOver({ datagridRow, event: event.event });
     }
   };
 
@@ -109,7 +109,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
     if (this.agGridExtension){
       const datagridRow = this.agGridExtension.getDatagridRowFromEvent({ event });
       if (datagridRow && this.rowDraggingExtension && this.rowDraggingExtension.rowDraggingEventHandler) {
-        this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragEnd({ datagridRow, event: event.event });
+        // this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragEnd({ datagridRow, event: event.event });
       }
     }
   }
@@ -132,7 +132,7 @@ export class AcDatagridRowDraggingExtensionOnAgGrid {
 
     const datagridRow = this.agGridExtension!.getDatagridRowFromEvent({ event });
     if (datagridRow && this.rowDraggingExtension && this.rowDraggingExtension.rowDraggingEventHandler) {
-      this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragStart({ datagridRow, event: event.event });
+      // this.rowDraggingExtension.rowDraggingEventHandler.handleRowDragStart({ datagridRow, event: event.event });
     }
   }
 

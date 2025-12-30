@@ -6,42 +6,48 @@ import { AcEnumDatagridColumnsCustomizerHook } from "../enums/ac-enum-datagrid-c
 import { IAcDatagridColumnsCustomizerHookArgs } from "../interfaces/ac-datagrid-columns-customizer-hook-args.interface";
 
 export class AcDatagridColumnsCustomizerExtension extends AcDatagridExtension {
-  private _showColumnCustomizerPanel:boolean = false;
-  get showColumnCustomizerPanel():boolean{
+  private _showColumnCustomizerPanel: boolean = false;
+  get showColumnCustomizerPanel(): boolean {
     return this._showColumnCustomizerPanel;
   }
-  set showColumnCustomizerPanel(value:boolean){
+  set showColumnCustomizerPanel(value: boolean) {
     this._showColumnCustomizerPanel = value;
-    const hookArgs:IAcDatagridColumnsCustomizerHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridColumnsCustomizerExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridColumnsCustomizerHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridColumnsCustomizerExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridColumnsCustomizerHook.ShowColumnsCustomizerPanelChange, args: hookArgs });
+    }
   }
 
-  private _isCustomizerOpen:boolean = false;
-  get isCustomizerOpen():boolean{
+  private _isCustomizerOpen: boolean = false;
+  get isCustomizerOpen(): boolean {
     return this._isCustomizerOpen;
   }
-  set isCustomizerOpen(value:boolean){
+  set isCustomizerOpen(value: boolean) {
     this._isCustomizerOpen = value;
-    const hookArgs:IAcDatagridColumnsCustomizerHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridColumnsCustomizerExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridColumnsCustomizerHook.IsCustomizerOpenChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridColumnsCustomizerHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridColumnsCustomizerExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridColumnsCustomizerHook.IsCustomizerOpenChange, args: hookArgs });
+    }
   }
 
   toggleColumnsCustomizer() {
     this.isCustomizerOpen = !this.isCustomizerOpen;
-    const hookArgs:IAcDatagridColumnsCustomizerHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridColumnsCustomizerExtension:this,
-      value:this.isCustomizerOpen
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridColumnsCustomizerHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridColumnsCustomizerExtension: this,
+        value: this.isCustomizerOpen
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridColumnsCustomizerHook.ToggleColumnsCustomizerPanel, args: hookArgs });
+    }
   }
 }
 

@@ -23,12 +23,14 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   }
   set allowMultipleSelection(value: boolean) {
     this._allowMultipleSelection = value;
-    const hookArgs: IAcDatagridRowSelectionHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridRowSelectionExtension: this,
-      value: value
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.AllowMultipleSelectionChange, args: hookArgs });
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridRowSelectionHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridRowSelectionExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.AllowMultipleSelectionChange, args: hookArgs });
+    }
   }
 
   private _allowSelection: boolean = true;
@@ -37,12 +39,14 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   }
   set allowSelection(value: boolean) {
     this._allowSelection = value;
-    const hookArgs: IAcDatagridRowSelectionHookArgs = {
-      datagridApi: this.datagridApi,
-      datagridRowSelectionExtension: this,
-      value: value
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.AllowSelectionChange, args: hookArgs });
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridRowSelectionHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridRowSelectionExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.AllowSelectionChange, args: hookArgs });
+    }
   }
 
   datagridInternalColumn: AcDatagridInternalColumn = new AcDatagridInternalColumn({
@@ -50,120 +54,132 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   });
 
   clearSelection() {
-    this.setAllRowsSelection({isSelected:false});
+    // this.setAllRowsSelection({ isSelected: false });
   }
 
   getSelectedRows(): IAcDatagridRow[] {
     const selectedRows: IAcDatagridRow[] = [];
+    if (this.datagridApi) {
     for (const row of this.datagridApi.datagridRows) {
       if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
         selectedRows.push(row);
       }
     }
+  }
     return selectedRows;
   }
 
   getSelectedRowsData(): any[] {
     const selectedData: any[] = [];
+    if (this.datagridApi) {
     for (const row of this.datagridApi.datagridRows) {
       if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
         selectedData.push(row.data);
       }
     }
+  }
     return selectedData;
   }
 
   getSelectedRowsDataKeyValues({ key }: { key: string }): any[] {
     const selectedKeyValues: any[] = [];
+    if (this.datagridApi) {
     for (const row of this.datagridApi.datagridRows) {
       if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection] && row.data[key] != undefined) {
         selectedKeyValues.push(row.data[key]);
       }
     }
+  }
     return selectedKeyValues;
   }
 
-  private handleBeforeHeaderColumnCellsCreated(args: IAcDatagridHeaderHookArgs) {
-    const datagridApi = args.datagridApi;
-    const datagridHeader = args.datagridHeader;
-    const datagriRowNumberCell = new AcDatagridRowSelectionHeaderCell({ datagridApi: datagridApi, datagridInternalColumn: this.datagridInternalColumn });
-    datagridHeader.append(datagriRowNumberCell.element);
-  }
+  // private handleBeforeHeaderColumnCellsCreated(args: IAcDatagridHeaderHookArgs) {
+  //   const datagridApi = args.datagridApi;
+  //   const datagridHeader = args.datagridHeader;
+  //   const datagriRowNumberCell = new AcDatagridRowSelectionHeaderCell({ datagridApi: datagridApi, datagridInternalColumn: this.datagridInternalColumn });
+  //   datagridHeader.append(datagriRowNumberCell.element);
+  // }
 
-  private handleBeforeRowCellsCreated(args: IAcDatagridRowHookArgs) {
-    const datagridApi = args.datagridApi;
-    const datagridRow = args.datagridRow;
-    if (datagridRow.element) {
-      const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
-      datagridRow.element.append(datagriRowNumberCell.element);
-    }
-  }
+  // private handleBeforeRowCellsCreated(args: IAcDatagridRowHookArgs) {
+  //   const datagridApi = args.datagridApi;
+  //   const datagridRow = args.datagridRow;
+  //   if (datagridRow.element) {
+  //     const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
+  //     datagridRow.element.append(datagriRowNumberCell.element);
+  //   }
+  // }
 
-  private handleDatagridRowCreated(args: IAcDatagridRowHookArgs) {
-    const datagridApi = args.datagridApi;
-    const datagridRow = args.datagridRow;
-    const rowExtensionData: IAcDatagridRowSelectionData = {
-      isSelected: false
-    };
-    datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection] = rowExtensionData;
-    if (datagridRow.element) {
-      const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
-      datagridRow.element.append(datagriRowNumberCell.element);
-    }
-  }
+  // private handleDatagridRowCreated(args: IAcDatagridRowHookArgs) {
+  //   const datagridApi = args.datagridApi;
+  //   const datagridRow = args.datagridRow;
+  //   const rowExtensionData: IAcDatagridRowSelectionData = {
+  //     isSelected: false
+  //   };
+  //   datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection] = rowExtensionData;
+  //   if (datagridRow.element) {
+  //     const datagriRowNumberCell = new AcDatagridRowSelectionCell({ datagridApi: datagridApi, datagridRow: datagridRow, datagridInternalColumn: this.datagridInternalColumn });
+  //     datagridRow.element.append(datagriRowNumberCell.element);
+  //   }
+  // }
 
-  override handleHook({ hook, args }: { hook: string; args: any; }): void {
-    if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
-      this.handleBeforeRowCellsCreated(args);
-    }
-    else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
-      this.handleBeforeHeaderColumnCellsCreated(args);
-    }
-    else if (hook == AC_DATAGRID_HOOK.DatagridRowCreate) {
-      this.handleDatagridRowCreated(args);
-    }
-  }
+  // override handleHook({ hook, args }: { hook: string; args: any; }): void {
+  //   if (this.datagridApi) {
+  //   if (hook == AC_DATAGRID_HOOK.BeforeRowCellsCreate) {
+  //     this.handleBeforeRowCellsCreated(args);
+  //   }
+  //   else if (hook == AC_DATAGRID_HOOK.BeforeHeaderColumnCellsCreate) {
+  //     this.handleBeforeHeaderColumnCellsCreated(args);
+  //   }
+  //   else if (hook == AC_DATAGRID_HOOK.DatagridRowCreate) {
+  //     this.handleDatagridRowCreated(args);
+  //   }
+  // }
+  // }
 
-  setAllRowsSelection({ isSelected }: { isSelected: boolean }) {
-    for (const datagridRow of this.datagridApi.datagridRows) {
-      datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
-      const rowEventArgs: IAcDatagridRowSelectionChangeEvent = {
-        datagridApi: this.datagridApi,
-        datagridRow: datagridRow,
-        isSelected: isSelected,
-        datagridRowSelectionExtension: this
-      };
-      // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: rowEventArgs });
-    }
-    const eventArgs: IAcDatagridSelectionMultipleRowsChangeEvent = {
-      datagridApi: this.datagridApi,
-      datagridRows: this.datagridApi.datagridRows,
-      isSelected: isSelected,
-      datagridRowSelectionExtension: this
-    };
-    this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange, args: eventArgs });
-  }
+  // setAllRowsSelection({ isSelected }: { isSelected: boolean }) {
+  //   if (this.datagridApi) {
+  //   for (const datagridRow of this.datagridApi.datagridRows) {
+  //     datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
+  //     const rowEventArgs: IAcDatagridRowSelectionChangeEvent = {
+  //       datagridApi: this.datagridApi,
+  //       datagridRow: datagridRow,
+  //       isSelected: isSelected,
+  //       datagridRowSelectionExtension: this
+  //     };
+  //     // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: rowEventArgs });
+  //   }
+  //   const eventArgs: IAcDatagridSelectionMultipleRowsChangeEvent = {
+  //     datagridApi: this.datagridApi,
+  //     datagridRows: this.datagridApi.datagridRows,
+  //     isSelected: isSelected,
+  //     datagridRowSelectionExtension: this
+  //   };
+  //   this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.MultipleRowSelectionChange, args: eventArgs });
+  // }
+  // }
 
-  setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: IAcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
-    if (datagridRow == undefined && rowId) {
-      datagridRow = this.datagridApi.getRow({ rowId: rowId });
-    }
-    else if (datagridRow == undefined && key && value) {
-      datagridRow = this.datagridApi.getRow({ key: key, value: value });
-    }
-    if (datagridRow) {
-      datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
-      const eventArgs: IAcDatagridRowSelectionChangeEvent = {
-        datagridApi: this.datagridApi,
-        datagridRow: datagridRow,
-        isSelected: isSelected,
-        datagridRowSelectionExtension: this
-      };
-      this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
-      // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
-      this.datagridApi.events.execute({ event: AcEnumDatagridRowSelectionEvent.RowSelectionChange, args: eventArgs });
-    }
-  }
+  // setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: IAcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
+  //   if (datagridRow == undefined && rowId) {
+  //     datagridRow = this.datagridApi.getRow({ rowId: rowId });
+  //   }
+  //   else if (datagridRow == undefined && key && value) {
+  //     datagridRow = this.datagridApi.getRow({ key: key, value: value });
+  //   }
+  //   if (datagridRow) {
+  //     datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
+  //     if (this.datagridApi) {
+  //     const eventArgs: IAcDatagridRowSelectionChangeEvent = {
+  //       datagridApi: this.datagridApi,
+  //       datagridRow: datagridRow,
+  //       isSelected: isSelected,
+  //       datagridRowSelectionExtension: this
+  //     };
+  //     this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
+  //     // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
+  //     this.datagridApi.events.execute({ event: AcEnumDatagridRowSelectionEvent.RowSelectionChange, args: eventArgs });
+  //   }
+  //   }
+  // }
 
 }
 

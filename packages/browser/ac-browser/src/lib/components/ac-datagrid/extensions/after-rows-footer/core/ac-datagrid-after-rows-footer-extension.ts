@@ -6,18 +6,20 @@ import { AcEnumDatagridAfterRowsFooterHook } from "../enums/ac-enum-datagrid-aft
 import { IAcDatagridAfterRowsFooterHookArgs } from "../interfaces/ac-datagrid-after-rows-footer-hook-args.interface";
 
 export class AcDatagridAfterRowsFooterExtension extends AcDatagridExtension {
-  private _footerElement?:HTMLElement;
-  get footerElement():HTMLElement|undefined{
+  private _footerElement?: HTMLElement;
+  get footerElement(): HTMLElement | undefined {
     return this._footerElement;
   }
-  set footerElement(value:HTMLElement){
+  set footerElement(value: HTMLElement) {
     this._footerElement = value;
-    const hookArgs:IAcDatagridAfterRowsFooterHookArgs = {
-      datagridApi:this.datagridApi,
-      datagridAfterRowsFooterExtension:this,
-      value:value
-    };
-    this.datagridApi.hooks.execute({hook:AcEnumDatagridAfterRowsFooterHook.AfterRowsFooterElementChange,args:hookArgs});
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridAfterRowsFooterHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridAfterRowsFooterExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridAfterRowsFooterHook.AfterRowsFooterElementChange, args: hookArgs });
+    }
   }
 }
 
