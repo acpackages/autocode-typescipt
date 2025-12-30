@@ -25,5 +25,9 @@
     (init)="handleDropdownInit($event)" (datagridInit)="handleCellDatagridInit($event)"></customer-company-select-input>
 </ng-template>
 <ng-template #actionTemplate let-value="value" let-datagridRow="datagridRow">
-  <action-column (onEdit)="handleEdit(datagridRow)" [showDelete]="false" />
+  Auto Save Status :
+  <ng-container *ngIf="datagridRow && datagridRow.extensionData && datagridRow.extensionData['autoSaveRow']">
+    {{datagridRow.extensionData['autoSaveRow'].status}}
+  </ng-container>
+  <!-- <action-column (onEdit)="handleEdit(datagridRow)" [showDelete]="false" /> -->
 </ng-template>

@@ -77,7 +77,7 @@ export class AcDatagridRowDraggingExtension extends AcDatagridExtension {
 
 }
 
-export const AcRowDraggingDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_ROW_DRAGGING_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging,
   extensionClass: AcDatagridRowDraggingExtension
 }

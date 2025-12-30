@@ -47,8 +47,9 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
         if (previousValue != currentValue) {
           this.datagridRow.data[this.datagridColumn.columnKey] = currentValue;
         }
+        this.datagridApi!.eventHandler.handleCellKeyUp({ datagridCell: this.datagridCell, event: event as any });
+        this.datagridApi!.eventHandler.handleRowKeyUp({ datagridRow: this.datagridRow, event: event as any });
       }
-      this.datagridApi!.eventHandler.handleCellKeyUp({ datagridCell: this.datagridCell, event: event as any });
     }
 
   };

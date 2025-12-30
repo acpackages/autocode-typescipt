@@ -21,7 +21,7 @@ export class AcDatagridAfterRowsFooterExtension extends AcDatagridExtension {
   }
 }
 
-export const AcAfterRowsFooterDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_AFTER_ROWS_FOOTER_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.AfterRowsFooter,
   extensionClass: AcDatagridAfterRowsFooterExtension
 }

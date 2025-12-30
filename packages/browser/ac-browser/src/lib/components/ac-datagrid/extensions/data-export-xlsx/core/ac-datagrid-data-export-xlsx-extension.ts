@@ -32,7 +32,7 @@ export class AcDatagridDataExportXlsxExtension extends AcDatagridExtension {
   }
 }
 
-export const AcDataExportXlsxDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_DATA_EXPORT_XLSX_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.DataExportXlsx,
   extensionClass: AcDatagridDataExportXlsxExtension
 }

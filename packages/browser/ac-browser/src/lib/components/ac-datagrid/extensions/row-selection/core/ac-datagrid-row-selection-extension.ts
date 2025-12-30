@@ -167,7 +167,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
 
 }
 
-export const AcRowSelectionDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_ROW_SELECTION_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection,
   extensionClass: AcDatagridRowSelectionExtension
 }

@@ -419,6 +419,17 @@ export class AcDatagridEventHandler {
     this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowKeyPress, args: eventArgs });
   }
 
+  handleRowKeyUp({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
+    if (!this.datagridApi) return;
+    const eventArgs: IAcDatagridRowEvent = {
+      datagridApi: this.datagridApi,
+      datagridRow: datagridRow,
+      event: event
+    };
+    this.datagridApi.hooks.execute({ hook: AC_DATAGRID_HOOK.RowKeyUp, args: eventArgs });
+    this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.RowKeyUp, args: eventArgs });
+  }
+
   handleRowMouseDown({ datagridRow, event }: { datagridRow: IAcDatagridRow, event?: any }) {
     if (!this.datagridApi) return;
     const eventArgs: IAcDatagridRowEvent = {

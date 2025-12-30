@@ -1,15 +1,3 @@
-const acSingleTimeoutRegistry:any = {};
-export function acSingleTimeout({callback,key,duration = 0}:{callback:Function,key:string,duration?:number}){
-  if(acSingleTimeoutRegistry[key]){
-    clearTimeout(acSingleTimeoutRegistry[key]);
-  }
-  acSingleTimeoutRegistry[key] = setTimeout(() => {
-    delete acSingleTimeoutRegistry[key];
-    clearTimeout(acSingleTimeoutRegistry[key]);
-    callback();
-  }, duration);
-}
-
 export function acNullifyInstanceProperties({instance,excludeKeys = []}:{instance: any,excludeKeys?: (string | RegExp)[]}): void {
   const obj = instance;
 

@@ -129,7 +129,7 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
 
 }
 
-export const AcTreeTableDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_TREE_TABLE_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.TreeTable,
   extensionClass: AcDatagridTreeTableExtension
 }

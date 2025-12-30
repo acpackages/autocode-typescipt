@@ -35,7 +35,7 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
   }
 }
 
-export const AcAutoAddNewRowDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_AUTO_ADD_NEW_ROW_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.AutoAddNewRow,
   extensionClass: AcDatagridAutoAddNewRowExtension
 }

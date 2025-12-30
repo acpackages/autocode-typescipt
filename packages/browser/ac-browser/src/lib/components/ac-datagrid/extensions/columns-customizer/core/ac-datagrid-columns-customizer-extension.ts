@@ -45,7 +45,7 @@ export class AcDatagridColumnsCustomizerExtension extends AcDatagridExtension {
   }
 }
 
-export const AcColumnsCustomizerDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_COLUMNS_CUSTOMIZER_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer,
   extensionClass: AcDatagridColumnsCustomizerExtension
 }

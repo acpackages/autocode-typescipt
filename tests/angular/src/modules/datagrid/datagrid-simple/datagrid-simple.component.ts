@@ -7,7 +7,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
-import { AcDatagridApi, AcDatagridExtensionManager, AcEnumDatagridColumnDataType, IAcDatagridCell, IAcDatagridRow } from '@autocode-ts/ac-browser';
+import { AC_DATAGRID_EXTENSION_NAME, AcDatagridApi, AcDatagridAutoSaveRowExtension, AcDatagridExtensionManager, AcEnumDatagridColumnDataType, IAcDatagridAutoSaveRequestArgs, IAcDatagridCell, IAcDatagridRow } from '@autocode-ts/ac-browser';
 import { AcDataManager, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcNgDatagridComponent, AcNgDatagridModule, AcNgInputsModule, AcNgValueAccessorDirective, IAcNgDatagridColumnDefinition } from '@autocode-ts/ac-angular';
 import { customersData } from './../../../../../data/customers-data';
@@ -105,6 +105,11 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     // console.log('Cell Editor Datagrid init',event)
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
     // this.datagrid.datagridApi.showAddButton = true;
+    const autoSaveExtension = this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_EXTENSION_NAME.AutoSaveRow}) as AcDatagridAutoSaveRowExtension;
+    autoSaveExtension.autoSaveRow = true;
+    autoSaveExtension.autoSaveFunction = (args:IAcDatagridAutoSaveRequestArgs)=>{
+      args.successCallback({savedData:args.datagridRow.data});
+    };
     this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME});
   }
 

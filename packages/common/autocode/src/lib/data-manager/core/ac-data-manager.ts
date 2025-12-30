@@ -730,6 +730,7 @@ export class AcDataManager {
           data: row,
           originalIndex: index,
           index: index,
+          extensionData:{}
         };
         if (this.assignUniqueIdToData) {
           dataRow.data[this.uniqueIdKey] = dataRow.rowId;
@@ -777,7 +778,8 @@ export class AcDataManager {
             data: {},
             isPlaceholder: true,
             index: index,
-            originalIndex: index
+            originalIndex: index,
+            extensionData:{}
           };
           this.allRows[index] = dataRow;
         }

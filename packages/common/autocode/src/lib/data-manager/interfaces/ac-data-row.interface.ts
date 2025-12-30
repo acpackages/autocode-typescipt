@@ -3,6 +3,6 @@ export interface IAcDataRow {
   data: any;
   originalIndex: number;
   index: number;
-  extensionData?: Record<string, any>;
+  extensionData: Record<string, any>;
   isPlaceholder?: boolean;
 }

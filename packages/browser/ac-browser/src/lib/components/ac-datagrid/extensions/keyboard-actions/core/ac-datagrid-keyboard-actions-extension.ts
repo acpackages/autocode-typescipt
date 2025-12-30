@@ -92,7 +92,7 @@ export class AcDatagridKeyboardActionsExtension extends AcDatagridExtension {
 
 }
 
-export const AcKeyboardActionsDatagridExtension: IAcDatagridExtension = {
+export const AC_DATAGRID_KEYBOARD_ACTIONS_EXTENSION: IAcDatagridExtension = {
   extensionName: AC_DATAGRID_EXTENSION_NAME.KeyboardActions,
   extensionClass: AcDatagridKeyboardActionsExtension
 }
