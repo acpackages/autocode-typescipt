@@ -26,6 +26,7 @@ export function acGetColDefFromAcDataGridColumn({ datagridColDef }: { datagridCo
   const colDef: ColDef|any = {
     field: datagridColDef.field,
     headerName: datagridColDef.title,
+    autoHeight:datagridColDef.autoHeight,
     width: datagridColDef.width,
     minWidth: datagridColDef.minWidth,
     maxWidth: datagridColDef.maxWidth,

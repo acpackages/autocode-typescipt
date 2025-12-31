@@ -4594,6 +4594,49 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_journal_entries": {
+      "tableName": "act_journal_entries",
+      "tableColumns": {
+        "journal_entry_id": {
+          "columnName": "journal_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "transaction_entries": {
+          "columnName": "transaction_entries",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Particulars"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "journal_entry"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "journal_entries"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_journal_entries"
+        }
+      }
+    },
     "act_ledger_account_mappings": {
       "tableName": "act_ledger_account_mappings",
       "tableColumns": {
@@ -10036,6 +10079,45 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_purchase_invoice_medias": {
+      "tableName": "act_purchase_invoice_medias",
+      "tableColumns": {
+        "purchase_invoice_media_id": {
+          "columnName": "purchase_invoice_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {}
+        },
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnProperties": {}
+        }
+      },
+      "tableProperties": {
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "purchase_invoice_media"
+        },
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "purchase_invoice_medias"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_purchase_invoice_medias"
+        }
+      }
+    },
     "act_purchase_invoice_payments": {
       "tableName": "act_purchase_invoice_payments",
       "tableColumns": {
@@ -10179,13 +10261,46 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "payment_status": {
-          "columnName": "payment_status",
+        "purchase_invoice_payment_status": {
+          "columnName": "purchase_invoice_payment_status",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "RECEIVED"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "label": "Pending",
+                  "value": "PENDING"
+                },
+                {
+                  "label": "Initiated",
+                  "value": "INITIATED"
+                },
+                {
+                  "label": "Paid",
+                  "value": "PAID"
+                },
+                {
+                  "label": "Cancelled",
+                  "value": "CANCELLED"
+                },
+                {
+                  "label": "Returned",
+                  "value": "RETURNED"
+                },
+                {
+                  "label": "Technical Error",
+                  "value": "TECHINICAL_ERROR"
+                }
+              ]
             }
           }
         },
@@ -10684,6 +10799,35 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "CREATED"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "label": "Created",
+                  "value": "CREATED"
+                },
+                {
+                  "label": "Active",
+                  "value": "ACTIVE"
+                },
+                {
+                  "label": "Settled",
+                  "value": "SETTLED"
+                },
+                {
+                  "label": "Cancelled",
+                  "value": "CANCELLED"
+                },
+                {
+                  "label": "Disputed",
+                  "value": "DISPUTED"
+                }
+              ]
             }
           }
         },
@@ -10732,6 +10876,23 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "TAX"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "label": "Tax",
+                  "value": "TAX"
+                },
+                {
+                  "label": "Retail",
+                  "value": "RETAIL"
+                }
+              ]
             }
           }
         },
@@ -10802,6 +10963,59 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Address"
+            }
+          }
+        },
+        "purchase_invoice_details": {
+          "columnName": "purchase_invoice_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          }
+        },
+        "payment_status": {
+          "columnName": "payment_status",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PAID"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "label": "Pending",
+                  "value": "PENDING"
+                },
+                {
+                  "label": "Initiated",
+                  "value": "INITIATED"
+                },
+                {
+                  "label": "Paid",
+                  "value": "PAID"
+                },
+                {
+                  "label": "Cancelled",
+                  "value": "CANCELLED"
+                },
+                {
+                  "label": "Returned",
+                  "value": "RETURNED"
+                },
+                {
+                  "label": "Technical Error",
+                  "value": "TECHINICAL_ERROR"
+                }
+              ]
             }
           }
         }
@@ -13890,6 +14104,45 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_sale_invoice_medias": {
+      "tableName": "act_sale_invoice_medias",
+      "tableColumns": {
+        "sale_invoice_media_id": {
+          "columnName": "sale_invoice_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {}
+        },
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnProperties": {}
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "sale_invoice_medias"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "sale_invoice_media"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_sale_invoice_medias"
+        }
+      }
+    },
     "act_sale_invoice_payments": {
       "tableName": "act_sale_invoice_payments",
       "tableColumns": {
@@ -14743,12 +14996,12 @@ export const dataDictionaryJson = {
                   "value": "PENDING"
                 },
                 {
-                  "label": "Partially Paid",
-                  "value": "PARTIALLY_PAID"
+                  "label": "Partially Received",
+                  "value": "PARTIALLY_RECEIVED"
                 },
                 {
-                  "label": "Paid",
-                  "value": "PAID"
+                  "label": "Received",
+                  "value": "RECEIVED"
                 },
                 {
                   "label": "Overdue",
@@ -21607,7 +21860,7 @@ export const dataDictionaryJson = {
         },
         "reference_number": {
           "columnName": "reference_number",
-          "columnType": "TEXT",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -21696,6 +21949,26 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Tax%"
+            }
+          }
+        },
+        "transaction_entry_description": {
+          "columnName": "transaction_entry_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
+        },
+        "transaction_entry_type": {
+          "columnName": "transaction_entry_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Entry Type"
             }
           }
         }
@@ -24872,6 +25145,124 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
     },
+    "act_vw_journal_entries": {
+      "viewName": "act_vw_journal_entries",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "transaction_remarks": {
+          "columnName": "transaction_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_remarks"
+        },
+        "transaction_amount": {
+          "columnName": "transaction_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_amount"
+        },
+        "transaction_details": {
+          "columnName": "transaction_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_details"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "transaction_narration": {
+          "columnName": "transaction_narration",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_narration"
+        },
+        "transaction_number": {
+          "columnName": "transaction_number",
+          "columnType": "AUTO_NUMBER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_number"
+        },
+        "transaction_time": {
+          "columnName": "transaction_time",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_time"
+        },
+        "transaction_type": {
+          "columnName": "transaction_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transactions",
+          "columnSourceOriginalColumn": "transaction_type"
+        },
+        "journal_entry_id": {
+          "columnName": "journal_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_journal_entries",
+          "columnSourceOriginalColumn": "journal_entry_id"
+        },
+        "transaction_entries": {
+          "columnName": "transaction_entries",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_journal_entries",
+          "columnSourceOriginalColumn": "transaction_entries"
+        }
+      },
+      "viewQuery": "SELECT act_transactions.*,act_journal_entries.* FROM act_transactions LEFT JOIN act_journal_entries ON act_transactions.transaction_id = act_journal_entries.journal_entry_id"
+    },
     "act_vw_ledger_account_types": {
       "viewName": "act_vw_ledger_account_types",
       "viewColumns": {
@@ -27489,6 +27880,202 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT act_purchase_invoice_chargeable_services.* FROM act_purchase_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_purchase_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
     },
+    "act_vw_purchase_invoice_medias": {
+      "viewName": "act_vw_purchase_invoice_medias",
+      "viewColumns": {
+        "purchase_invoice_media_id": {
+          "columnName": "purchase_invoice_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_medias",
+          "columnSourceOriginalColumn": "purchase_invoice_media_id"
+        },
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_medias",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "media_details": {
+          "columnName": "media_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_details"
+        },
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_id"
+        },
+        "media_name": {
+          "columnName": "media_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_name"
+        },
+        "media_path": {
+          "columnName": "media_path",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_path"
+        },
+        "media_size": {
+          "columnName": "media_size",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_size"
+        },
+        "media_type": {
+          "columnName": "media_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_type"
+        }
+      },
+      "viewQuery": "SELECT act_purchase_invoice_medias.purchase_invoice_media_id,act_purchase_invoice_medias.purchase_invoice_id,act_medias.* FROM act_purchase_invoice_medias LEFT JOIN act_medias ON act_medias.media_id = act_purchase_invoice_medias.media_id"
+    },
+    "act_vw_purchase_invoice_payments": {
+      "viewName": "act_vw_purchase_invoice_payments",
+      "viewColumns": {
+        "payment_method_name": {
+          "columnName": "payment_method_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_payment_methods",
+          "columnSourceOriginalColumn": "payment_method_name"
+        },
+        "payment_method_image_media": {
+          "columnName": "payment_method_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_payment_methods",
+          "columnSourceOriginalColumn": "payment_method_image_media"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "payment_method_id": {
+          "columnName": "payment_method_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "payment_method_id"
+        },
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "purchase_invoice_payment_amount": {
+          "columnName": "purchase_invoice_payment_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "purchase_invoice_payment_amount"
+        },
+        "purchase_invoice_payment_datetime": {
+          "columnName": "purchase_invoice_payment_datetime",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "purchase_invoice_payment_datetime"
+        },
+        "purchase_invoice_payment_id": {
+          "columnName": "purchase_invoice_payment_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "purchase_invoice_payment_id"
+        },
+        "reference_number": {
+          "columnName": "reference_number",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "reference_number"
+        },
+        "purchase_invoice_payment_remarks": {
+          "columnName": "purchase_invoice_payment_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "purchase_invoice_payment_remarks"
+        },
+        "purchase_invoice_payment_status": {
+          "columnName": "purchase_invoice_payment_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "purchase_invoice_payment_status"
+        },
+        "transaction_entry_id": {
+          "columnName": "transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "transaction_entry_id"
+        }
+      },
+      "viewQuery": "SELECT act_vw_payment_methods.payment_method_name,act_vw_payment_methods.payment_method_image_media,act_purchase_invoice_payments.* FROM act_purchase_invoice_payments LEFT JOIN act_vw_payment_methods ON act_purchase_invoice_payments.payment_method_id = act_vw_payment_methods.payment_method_id"
+    },
     "act_vw_purchase_invoice_product_inventory_tracking_entries": {
       "viewName": "act_vw_purchase_invoice_product_inventory_tracking_entries",
       "viewColumns": {
@@ -28283,6 +28870,22 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoices",
           "columnSourceOriginalColumn": "address_id"
+        },
+        "purchase_invoice_details": {
+          "columnName": "purchase_invoice_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_details"
+        },
+        "payment_status": {
+          "columnName": "payment_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoices",
+          "columnSourceOriginalColumn": "payment_status"
         }
       },
       "viewQuery": "SELECT act_vw_suppliers.supplier_type,act_vw_suppliers.party_id,act_vw_suppliers.party_name,act_vw_suppliers.legal_identifier,\nact_addresses.address_line_1,\nact_addresses.address_line_2,\nact_addresses.landmark,\nact_addresses.latitude,\nact_addresses.longitude,\nact_addresses.city_name,\nact_addresses.postal_code,\nact_addresses.state_name,\nact_addresses.country_name,\nact_purchase_invoices.* FROM act_purchase_invoices \nLEFT JOIN act_vw_suppliers ON act_purchase_invoices.supplier_id = act_vw_suppliers.supplier_id\nLEFT JOIN act_addresses ON act_purchase_invoices.address_id= act_addresses.address_id"
@@ -29007,6 +29610,84 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT act_vw_ledger_accounts.ledger_account_name,act_sale_invoice_expenses.* FROM act_sale_invoice_expenses LEFT JOIN act_vw_ledger_accounts ON act_sale_invoice_expenses.ledger_account_id = act_vw_ledger_accounts .ledger_account_id"
+    },
+    "act_vw_sale_invoice_medias": {
+      "viewName": "act_vw_sale_invoice_medias",
+      "viewColumns": {
+        "sale_invoice_media_id": {
+          "columnName": "sale_invoice_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_medias",
+          "columnSourceOriginalColumn": "sale_invoice_media_id"
+        },
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_medias",
+          "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "media_details": {
+          "columnName": "media_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_details"
+        },
+        "media_id": {
+          "columnName": "media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_id"
+        },
+        "media_name": {
+          "columnName": "media_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_name"
+        },
+        "media_path": {
+          "columnName": "media_path",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_path"
+        },
+        "media_size": {
+          "columnName": "media_size",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_size"
+        },
+        "media_type": {
+          "columnName": "media_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_type"
+        }
+      },
+      "viewQuery": "SELECT act_sale_invoice_medias.sale_invoice_media_id,act_sale_invoice_medias.sale_invoice_id,act_medias.* FROM act_sale_invoice_medias LEFT JOIN act_medias ON act_medias.media_id = act_sale_invoice_medias.media_id"
     },
     "act_vw_sale_invoice_payments": {
       "viewName": "act_vw_sale_invoice_payments",
@@ -31676,6 +32357,22 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "transaction_type"
+        },
+        "transaction_entry_description": {
+          "columnName": "transaction_entry_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_description"
+        },
+        "transaction_entry_type": {
+          "columnName": "transaction_entry_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_type"
         }
       },
       "viewQuery": "SELECT \ndebit_ledger_accounts.ledger_account_name as debit_ledger_account_name,\ndebit_ledger_accounts.ledger_account_balance as debit_ledger_account_balance,\ndebit_ledger_accounts.ledger_account_type_name as debit_ledger_account_type_name,\ndebit_ledger_accounts.reflecting_statement as debit_reflecting_statement,\ncredit_ledger_accounts.ledger_account_name as credit_ledger_account_name,\ncredit_ledger_accounts.ledger_account_balance as credit_ledger_account_balance,\ncredit_ledger_accounts.ledger_account_type_name as credit_ledger_account_type_name,\ncredit_ledger_accounts.reflecting_statement as credit_reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts as debit_ledger_accounts ON act_transaction_entries.debit_ledger_account_id = debit_ledger_accounts.ledger_account_id \nLEFT JOIN act_vw_ledger_accounts as credit_ledger_accounts ON act_transaction_entries.credit_ledger_account_id = credit_ledger_accounts.ledger_account_id"
@@ -34605,11 +35302,37 @@ export const dataDictionaryJson = {
       "destinationTable": "act_sale_invoices",
       "sourceColumn": "address_id",
       "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_sale_invoice_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "media_id",
+      "destinationTable": "act_purchase_invoice_medias",
+      "sourceColumn": "media_id",
+      "sourceTable": "act_medias"
     }
   ],
   "storedProcedures": {},
   "functions": {},
   "triggers": {
+    "act_trg_create_journal_entry_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_transactions",
+      "triggerName": "act_trg_create_journal_entry_on_insert",
+      "triggerCode": "INSERT INTO act_journal_entries (journal_entry_id) VALUES(NEW.transaction_id);"
+    },
+    "act_trg_remove_journal_entry_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_transactions",
+      "triggerName": "act_trg_remove_journal_entry_on_delete",
+      "triggerCode": "DELETE FROM act_journal_entries WHERE journal_entry_id = OLD.transaction_id;"
+    },
     "act_trg_set_accountee_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -34735,6 +35458,20 @@ export const dataDictionaryJson = {
       "tableName": "act_accountee_websites",
       "triggerName": "act_trg_set_accountee_websites_on_update",
       "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_set_journal_entries_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_set_journal_entries_on_insert",
+      "triggerCode": "UPDATE act_journal_entries SET transaction_entries = (SELECT json_group_array(\n        json_object(\n            'debit_ledger_account_name', debit_ledger_account_name,\n            'credit_ledger_account_name', credit_ledger_account_name,\n            'transaction_entry_amount', transaction_entry_amount\n        )\n    )\n        FROM act_vw_transaction_entries\n         WHERE transaction_id = NEW.transaction_id) WHERE act_journal_entries.journal_entry_id = NEW.transaction_id;"
+    },
+    "act_trg_set_journal_entries_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_set_journal_entries_on_update",
+      "triggerCode": "UPDATE act_journal_entries SET transaction_entries = (SELECT json_group_array(\n        json_object(\n            'debit_ledger_account_name', debit_ledger_account_name,\n            'credit_ledger_account_name', credit_ledger_account_name,\n            'transaction_entry_amount', transaction_entry_amount\n        )\n    )\n        FROM act_vw_transaction_entries\n         WHERE transaction_id = NEW.transaction_id) WHERE act_journal_entries.journal_entry_id = NEW.transaction_id;"
     },
     "act_trg_set_led_bal_on_trns_entry_delete": {
       "triggerExecution": "AFTER",

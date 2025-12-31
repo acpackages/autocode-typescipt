@@ -142,7 +142,6 @@ export class AcDDInputElement extends AcInputBase {
       }
       if (inputDefinition) {
         this.inputElement = new inputDefinition.inputElement();
-        this.events.execute({ event: 'inputElementSet' });
         if (inputDefinition.defaultProperties) {
           for (const key in inputDefinition.defaultProperties) {
             this.inputElement[key] = inputDefinition.defaultProperties[key];
@@ -153,7 +152,6 @@ export class AcDDInputElement extends AcInputBase {
             this.setAttribute('required',`true`);
           }
         }
-        this.events.execute({event:'inputElementSet'});
         this.innerHTML = "";
         this.append(this.inputElement);
         this.inputElement.addEventListener('input', ()=>{
@@ -165,6 +163,8 @@ export class AcDDInputElement extends AcInputBase {
         if(this.value){
           this.inputElement.value = this.value;
         }
+        const event = new CustomEvent('inputElementSet',{detail:{inputElement:this.inputElement}});
+        this.dispatchEvent(event);
       }
     }
   }

@@ -133,7 +133,8 @@ export class AcDDInputFieldElement extends AcInputBase {
       this.value = this.ddInput.value;
     }});
     this.ddInput.on({event:'inputElementSet',callback:(args:any)=>{
-      this.events.execute({event:'inputElementSet',args});
+      const event = new CustomEvent('inputElementSet',{detail:{inputElement:this.ddInput.inputElement}});
+      this.dispatchEvent(event);
     }});
   }
 
@@ -182,12 +183,13 @@ export class AcDDInputFieldElement extends AcInputBase {
       if(this.ddInput){
         this.required = this.ddInput.required;
       }
-      this.events.execute({ event: 'ddInputSet' });
       const container = this.querySelector('ac-dd-input-container');
       if (container) {
         container.innerHTML = '';
         container.append(this.ddInput);
       }
+      const event = new CustomEvent('ddInputSet',{detail:{ddInput:this.ddInput}});
+      this.dispatchEvent(event);
     }
   }
 }
