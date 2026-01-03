@@ -25,6 +25,7 @@ export function acInit({ element, observe = true }: { element?: HTMLElement, obs
         });
       }
     });
+    observer.observe(element);
   });
   if (element.hasAttribute('ac-tooltip')) {
     acInitTooltip({ element });

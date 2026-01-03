@@ -4594,49 +4594,6 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "act_journal_entries": {
-      "tableName": "act_journal_entries",
-      "tableColumns": {
-        "journal_entry_id": {
-          "columnName": "journal_entry_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "transaction_entries": {
-          "columnName": "transaction_entries",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Particulars"
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "journal_entry"
-        },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "journal_entries"
-        },
-        "SQL_VIEW_NAME": {
-          "propertyName": "SQL_VIEW_NAME",
-          "propertyValue": "act_vw_journal_entries"
-        }
-      }
-    },
     "act_ledger_account_mappings": {
       "tableName": "act_ledger_account_mappings",
       "tableColumns": {
@@ -10313,6 +10270,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Transaction"
             }
           }
+        },
+        "supplier_transaction_entry_id": {
+          "columnName": "supplier_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier Transaction"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -11645,6 +11612,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Transaction"
             }
           }
+        },
+        "supplier_transaction_entry_id": {
+          "columnName": "supplier_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier Transaction"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -12638,6 +12615,20 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Transaction"
+            }
+          }
+        },
+        "supplier_transaction_entry_id": {
+          "columnName": "supplier_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Supplier Transaction"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
             }
           }
         }
@@ -14322,6 +14313,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Transaction"
             }
           }
+        },
+        "customer_transaction_entry_id": {
+          "columnName": "customer_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer Transaction"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -15575,6 +15576,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Transaction"
+            }
+          }
+        },
+        "customer_transaction_entry_id": {
+          "columnName": "customer_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer Transaction"
             }
           }
         }
@@ -17959,6 +17970,11 @@ export const dataDictionaryJson = {
               "propertyValue": "Transaction"
             }
           }
+        },
+        "customer_transaction_entry_id": {
+          "columnName": "customer_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {}
         }
       },
       "tableProperties": {
@@ -21844,13 +21860,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "debit_ledger_account_id": {
-          "columnName": "debit_ledger_account_id",
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Debit Ledger Account"
+              "propertyValue": "Ledger Account"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -21892,33 +21908,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "credit_ledger_account_id": {
-          "columnName": "credit_ledger_account_id",
+        "payment_method_id": {
+          "columnName": "payment_method_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Credit Ledger Account"
-            }
-          }
-        },
-        "debit_payment_method_id": {
-          "columnName": "debit_payment_method_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Debit Payment Method"
-            }
-          }
-        },
-        "credit_payment_method_id": {
-          "columnName": "credit_payment_method_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Credit Payment Method"
+              "propertyValue": "Payment Method"
             }
           }
         },
@@ -21969,6 +21965,24 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Entry Type"
+            }
+          }
+        },
+        "is_credit": {
+          "columnName": "is_credit",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Credit"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         }
@@ -22201,6 +22215,34 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            }
+          }
+        },
+        "debit_total": {
+          "columnName": "debit_total",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Debit Total"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
+            }
+          }
+        },
+        "credit_total": {
+          "columnName": "credit_total",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Credit Total"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
             }
           }
         }
@@ -23821,13 +23863,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_chargeable_service_purchase_details",
           "columnSourceOriginalColumn": "chargeable_service_purchase_detail_name"
         },
-        "chargeable_service_uom_id": {
-          "columnName": "chargeable_service_uom_id",
+        "purchase_uom_id": {
+          "columnName": "purchase_uom_id",
           "columnType": "UUID",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_purchase_details",
-          "columnSourceOriginalColumn": "chargeable_service_uom_id"
+          "columnSourceOriginalColumn": "purchase_uom_id"
         },
         "chargeable_service_id": {
           "columnName": "chargeable_service_id",
@@ -23878,7 +23920,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "tax_rate_id"
         }
       },
-      "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_purchase_details.* FROM act_chargeable_service_purchase_details \nLEFT JOIN act_chargeable_service_uoms ON act_chargeable_service_purchase_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_purchase_details.* FROM act_chargeable_service_purchase_details \nLEFT JOIN act_chargeable_service_uoms ON act_chargeable_service_purchase_details.purchase_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_chargeable_service_sale_details": {
       "viewName": "act_vw_chargeable_service_sale_details",
@@ -23939,13 +23981,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_chargeable_service_sale_details",
           "columnSourceOriginalColumn": "chargeable_service_id"
         },
-        "chargeable_service_uom_id": {
-          "columnName": "chargeable_service_uom_id",
+        "sale_uom_id": {
+          "columnName": "sale_uom_id",
           "columnType": "UUID",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_sale_details",
-          "columnSourceOriginalColumn": "chargeable_service_uom_id"
+          "columnSourceOriginalColumn": "sale_uom_id"
         },
         "is_active": {
           "columnName": "is_active",
@@ -23988,7 +24030,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "tax_rate_id"
         }
       },
-      "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_sale_details.* FROM act_chargeable_service_sale_details \nLEFT JOIN act_product_uoms ON act_chargeable_servicesale_details.chargeable_service_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_sale_details.* FROM act_chargeable_service_sale_details \nLEFT JOIN act_chargeable_service_uoms ON act_chargeable_service_sale_details.sale_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_chargeable_services": {
       "viewName": "act_vw_chargeable_services",
@@ -25144,124 +25186,6 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
-    },
-    "act_vw_journal_entries": {
-      "viewName": "act_vw_journal_entries",
-      "viewColumns": {
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "accountee_id"
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "currency_code"
-        },
-        "exchange_rate": {
-          "columnName": "exchange_rate",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "exchange_rate"
-        },
-        "is_draft": {
-          "columnName": "is_draft",
-          "columnType": "YES_NO",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "is_draft"
-        },
-        "transaction_remarks": {
-          "columnName": "transaction_remarks",
-          "columnType": "TEXT",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_remarks"
-        },
-        "transaction_amount": {
-          "columnName": "transaction_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_amount"
-        },
-        "transaction_details": {
-          "columnName": "transaction_details",
-          "columnType": "JSON",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_details"
-        },
-        "transaction_id": {
-          "columnName": "transaction_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_id"
-        },
-        "transaction_narration": {
-          "columnName": "transaction_narration",
-          "columnType": "TEXT",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_narration"
-        },
-        "transaction_number": {
-          "columnName": "transaction_number",
-          "columnType": "AUTO_NUMBER",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_number"
-        },
-        "transaction_time": {
-          "columnName": "transaction_time",
-          "columnType": "DATETIME",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_time"
-        },
-        "transaction_type": {
-          "columnName": "transaction_type",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transactions",
-          "columnSourceOriginalColumn": "transaction_type"
-        },
-        "journal_entry_id": {
-          "columnName": "journal_entry_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_journal_entries",
-          "columnSourceOriginalColumn": "journal_entry_id"
-        },
-        "transaction_entries": {
-          "columnName": "transaction_entries",
-          "columnType": "JSON",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_journal_entries",
-          "columnSourceOriginalColumn": "transaction_entries"
-        }
-      },
-      "viewQuery": "SELECT act_transactions.*,act_journal_entries.* FROM act_transactions LEFT JOIN act_journal_entries ON act_transactions.transaction_id = act_journal_entries.journal_entry_id"
     },
     "act_vw_ledger_account_types": {
       "viewName": "act_vw_ledger_account_types",
@@ -28072,6 +27996,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_payments",
           "columnSourceOriginalColumn": "transaction_entry_id"
+        },
+        "supplier_transaction_entry_id": {
+          "columnName": "supplier_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_payments",
+          "columnSourceOriginalColumn": "supplier_transaction_entry_id"
         }
       },
       "viewQuery": "SELECT act_vw_payment_methods.payment_method_name,act_vw_payment_methods.payment_method_image_media,act_purchase_invoice_payments.* FROM act_purchase_invoice_payments LEFT JOIN act_vw_payment_methods ON act_purchase_invoice_payments.payment_method_id = act_vw_payment_methods.payment_method_id"
@@ -29803,6 +29735,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_payments",
           "columnSourceOriginalColumn": "transaction_entry_id"
+        },
+        "customer_transaction_entry_id": {
+          "columnName": "customer_transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_payments",
+          "columnSourceOriginalColumn": "customer_transaction_entry_id"
         }
       },
       "viewQuery": "SELECT act_vw_payment_methods.payment_method_name,act_vw_payment_methods.payment_method_image_media,act_sale_invoice_payments.* FROM act_sale_invoice_payments LEFT JOIN act_vw_payment_methods ON act_sale_invoice_payments.payment_method_id = act_vw_payment_methods.payment_method_id"
@@ -32095,7 +32035,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT SUM(transaction_entry_amount) as credit_amount,count(credit_ledger_account_id) AS entries_count,credit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,credit_ledger_account_id"
+      "viewQuery": "SELECT SUM(transaction_entry_amount) as credit_amount,count(ledger_account_id) AS entries_count,ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,ledger_account_id HAVING is_credit = 1"
     },
     "act_vw_transaction_debit_entries": {
       "viewName": "act_vw_transaction_debit_entries",
@@ -32143,122 +32083,18 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT SUM(transaction_entry_amount) as debit_amount,count(debit_ledger_account_id) AS entries_count, debit_ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,debit_ledger_account_id"
+      "viewQuery": "SELECT SUM(transaction_entry_amount) as debit_amount,count(ledger_account_id) AS entries_count, ledger_account_id,transaction_id FROM act_transaction_entries GROUP BY transaction_id,ledger_account_id HAVING is_credit=0"
     },
     "act_vw_transaction_entries": {
       "viewName": "act_vw_transaction_entries",
       "viewColumns": {
-        "transaction_entry_amount": {
-          "columnName": "transaction_entry_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "transaction_entry_amount"
-        },
-        "currency_code": {
-          "columnName": "currency_code",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "currency_code"
-        },
-        "exchange_rate": {
-          "columnName": "exchange_rate",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "exchange_rate"
-        },
-        "debit_ledger_account_id": {
-          "columnName": "debit_ledger_account_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "debit_ledger_account_id"
-        },
-        "reference_number": {
-          "columnName": "reference_number",
-          "columnType": "TEXT",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "reference_number"
-        },
-        "transaction_entry_id": {
-          "columnName": "transaction_entry_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "transaction_entry_id"
-        },
-        "transaction_id": {
-          "columnName": "transaction_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "transaction_id"
-        },
-        "credit_ledger_account_id": {
-          "columnName": "credit_ledger_account_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "credit_ledger_account_id"
-        },
-        "debit_payment_method_id": {
-          "columnName": "debit_payment_method_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "debit_payment_method_id"
-        },
-        "credit_payment_method_id": {
-          "columnName": "credit_payment_method_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "credit_payment_method_id"
-        },
-        "tax_rate_id": {
-          "columnName": "tax_rate_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "tax_rate_id"
-        },
-        "taxing_scheme_id": {
-          "columnName": "taxing_scheme_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "taxing_scheme_id"
-        },
-        "tax_rate_percentage": {
-          "columnName": "tax_rate_percentage",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_transaction_entries",
-          "columnSourceOriginalColumn": "tax_rate_percentage"
-        },
         "debit_ledger_account_name": {
           "columnName": "debit_ledger_account_name",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Debit Ledger Account"
+              "propertyValue": "Debit Account"
             }
           },
           "columnSource": "view",
@@ -32295,7 +32131,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Credit Ledger Account"
+              "propertyValue": "Credit Account"
             }
           },
           "columnSource": "view",
@@ -32325,6 +32161,32 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "reflecting_statement"
+        },
+        "debit_amount": {
+          "columnName": "debit_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Debit Amount"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_amount"
+        },
+        "credit_amount": {
+          "columnName": "credit_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Credit Amount"
+            }
+          },
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_amount"
         },
         "accountee_id": {
           "columnName": "accountee_id",
@@ -32358,6 +32220,94 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "transaction_type"
         },
+        "transaction_entry_amount": {
+          "columnName": "transaction_entry_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_amount"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "ledger_account_id"
+        },
+        "reference_number": {
+          "columnName": "reference_number",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "reference_number"
+        },
+        "transaction_entry_id": {
+          "columnName": "transaction_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "payment_method_id": {
+          "columnName": "payment_method_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "payment_method_id"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
         "transaction_entry_description": {
           "columnName": "transaction_entry_description",
           "columnType": "TEXT",
@@ -32373,9 +32323,41 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_type"
+        },
+        "is_credit": {
+          "columnName": "is_credit",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "is_credit"
+        },
+        "ledger_account_name": {
+          "columnName": "ledger_account_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "acr_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_name"
+        },
+        "ledger_account_type_name": {
+          "columnName": "ledger_account_type_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_type_name"
+        },
+        "reflecting_statement": {
+          "columnName": "reflecting_statement",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "reflecting_statement"
         }
       },
-      "viewQuery": "SELECT \ndebit_ledger_accounts.ledger_account_name as debit_ledger_account_name,\ndebit_ledger_accounts.ledger_account_balance as debit_ledger_account_balance,\ndebit_ledger_accounts.ledger_account_type_name as debit_ledger_account_type_name,\ndebit_ledger_accounts.reflecting_statement as debit_reflecting_statement,\ncredit_ledger_accounts.ledger_account_name as credit_ledger_account_name,\ncredit_ledger_accounts.ledger_account_balance as credit_ledger_account_balance,\ncredit_ledger_accounts.ledger_account_type_name as credit_ledger_account_type_name,\ncredit_ledger_accounts.reflecting_statement as credit_reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts as debit_ledger_accounts ON act_transaction_entries.debit_ledger_account_id = debit_ledger_accounts.ledger_account_id \nLEFT JOIN act_vw_ledger_accounts as credit_ledger_accounts ON act_transaction_entries.credit_ledger_account_id = credit_ledger_accounts.ledger_account_id"
+      "viewQuery": "SELECT \nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS debit_ledger_account_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS debit_ledger_account_type_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS debit_reflecting_statement,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS debit_ledger_account_balance,\nCASE WHEN is_credit = 0 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS debit_amount,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS credit_ledger_account_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS credit_ledger_account_type_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS credit_reflecting_statement,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS credit_ledger_account_balance,\nCASE WHEN is_credit = 1 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS credit_amount,\nact_vw_ledger_accounts.ledger_account_name,\nact_vw_ledger_accounts.ledger_account_type_name,\nact_vw_ledger_accounts.reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts ON act_transaction_entries.ledger_account_id = act_vw_ledger_accounts.ledger_account_id"
     },
     "act_vw_users": {
       "viewName": "act_vw_users",
@@ -34853,13 +34835,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_medias"
     },
     {
-      "destinationColumn": "debit_ledger_account_id",
-      "destinationTable": "act_transaction_entries",
-      "sourceColumn": "ledger_account_id",
-      "sourceTable": "act_ledger_accounts"
-    },
-    {
-      "destinationColumn": "credit_ledger_account_id",
+      "destinationColumn": "ledger_account_id",
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "ledger_account_id",
       "sourceTable": "act_ledger_accounts"
@@ -34996,13 +34972,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_accountees"
     },
     {
-      "destinationColumn": "debit_payment_method_id",
-      "destinationTable": "act_transaction_entries",
-      "sourceColumn": "payment_method_id",
-      "sourceTable": "act_payment_methods"
-    },
-    {
-      "destinationColumn": "credit_payment_method_id",
+      "destinationColumn": "payment_method_id",
       "destinationTable": "act_transaction_entries",
       "sourceColumn": "payment_method_id",
       "sourceTable": "act_payment_methods"
@@ -35314,25 +35284,47 @@ export const dataDictionaryJson = {
       "destinationTable": "act_purchase_invoice_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "supplier_transaction_entry_id",
+      "destinationTable": "act_purchase_invoice_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "supplier_transaction_entry_id",
+      "destinationTable": "act_purchase_order_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "supplier_transaction_entry_id",
+      "destinationTable": "act_purchase_return_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "customer_transaction_entry_id",
+      "destinationTable": "act_sale_invoice_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "customer_transaction_entry_id",
+      "destinationTable": "act_sale_maintenance_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "customer_transaction_entry_id",
+      "destinationTable": "act_sale_return_payments",
+      "sourceColumn": "transaction_entry_id",
+      "sourceTable": "act_transaction_entries"
     }
   ],
   "storedProcedures": {},
   "functions": {},
   "triggers": {
-    "act_trg_create_journal_entry_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_transactions",
-      "triggerName": "act_trg_create_journal_entry_on_insert",
-      "triggerCode": "INSERT INTO act_journal_entries (journal_entry_id) VALUES(NEW.transaction_id);"
-    },
-    "act_trg_remove_journal_entry_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_transactions",
-      "triggerName": "act_trg_remove_journal_entry_on_delete",
-      "triggerCode": "DELETE FROM act_journal_entries WHERE journal_entry_id = OLD.transaction_id;"
-    },
     "act_trg_set_accountee_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -35459,40 +35451,26 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_set_accountee_websites_on_update",
       "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
     },
-    "act_trg_set_journal_entries_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_transaction_entries",
-      "triggerName": "act_trg_set_journal_entries_on_insert",
-      "triggerCode": "UPDATE act_journal_entries SET transaction_entries = (SELECT json_group_array(\n        json_object(\n            'debit_ledger_account_name', debit_ledger_account_name,\n            'credit_ledger_account_name', credit_ledger_account_name,\n            'transaction_entry_amount', transaction_entry_amount\n        )\n    )\n        FROM act_vw_transaction_entries\n         WHERE transaction_id = NEW.transaction_id) WHERE act_journal_entries.journal_entry_id = NEW.transaction_id;"
-    },
-    "act_trg_set_journal_entries_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_transaction_entries",
-      "triggerName": "act_trg_set_journal_entries_on_update",
-      "triggerCode": "UPDATE act_journal_entries SET transaction_entries = (SELECT json_group_array(\n        json_object(\n            'debit_ledger_account_name', debit_ledger_account_name,\n            'credit_ledger_account_name', credit_ledger_account_name,\n            'transaction_entry_amount', transaction_entry_amount\n        )\n    )\n        FROM act_vw_transaction_entries\n         WHERE transaction_id = NEW.transaction_id) WHERE act_journal_entries.journal_entry_id = NEW.transaction_id;"
-    },
     "act_trg_set_led_bal_on_trns_entry_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_delete",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE transaction_id = OLD.transaction_id ;"
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) - \n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = OLD.transaction_id;"
     },
     "act_trg_set_led_bal_on_trns_entry_insert": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_insert",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE transaction_id = NEW.transaction_id;"
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) + \n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = NEW.transaction_id;"
     },
     "act_trg_set_led_bal_on_trns_entry_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_set_led_bal_on_trns_entry_update",
-      "triggerCode": "UPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(OLD.transaction_entry_amount,0) WHERE ledger_account_id = OLD.credit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.debit_ledger_account_id;\nUPDATE act_ledger_accounts SET ledger_account_balance = IFNULL(ledger_account_balance,0) - IFNULL(NEW.transaction_entry_amount,0) WHERE ledger_account_id = NEW.credit_ledger_account_id;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) - IFNULL(OLD.transaction_entry_amount,0) WHERE transaction_id = OLD.transaction_id ;\nUPDATE act_transactions SET transaction_amount = IFNULL(transaction_amount ,0) + IFNULL(NEW.transaction_entry_amount,0) WHERE transaction_id = NEW.transaction_id ;"
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) - \n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = OLD.transaction_id;\n\nUPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) + \n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = NEW.transaction_id;"
     },
     "act_trg_set_party_addresses_on_delete": {
       "triggerExecution": "AFTER",
