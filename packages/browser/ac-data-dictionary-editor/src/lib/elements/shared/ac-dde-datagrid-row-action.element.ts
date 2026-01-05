@@ -36,10 +36,15 @@ export class AcDDEDatagridRowAction implements IAcDatagridCellRenderer{
   }
 
   setActions(){
-    this.element.innerHTML = `<button type="button" class="btn text-danger btn-delete btn-sm py-1" style="margin-left:0px;height:30px;" ac-tooltip="Delete"><ac-svg-icon>${ACI_SVG_SOLID.trash}</ac-svg-icon></button>`;
-    const deleteButton:HTMLElement = this.element.querySelector('.btn-delete')!;
+    const deleteButton:HTMLElement = this.args.datagridApi.datagrid.ownerDocument.createElement('button');
+    deleteButton.setAttribute('type','button');
+    deleteButton.setAttribute('class','btn text-danger btn-delete btn-sm py-1');
+    deleteButton.setAttribute('style','margin-left:0px;height:30px;');
+    deleteButton.setAttribute('ac-tooltip',"Delete");
+    deleteButton.innerHTML = `<ac-svg-icon>${ACI_SVG_SOLID.trash}</ac-svg-icon>`;
     deleteButton.addEventListener('click',(e)=>{
       this.args.datagridApi.deleteRow({rowId:this.args.datagridCell.datagridRow.rowId});
     });
+    this.element.append(deleteButton);
   }
 }

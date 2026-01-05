@@ -28,8 +28,9 @@ export class AcDDEDataStorage {
   static readonly KeyTriggers = "triggers";
   static readonly KeyViewColumns = "columns";
   static readonly KeyViews = "views";
+
   @AcBindJsonProperty({ skipInFromJson:true,skipInToJson:true })
-  editorApi!: AcDDEApi;
+  editorApi?: AcDDEApi;
   @AcBindJsonProperty({ skipInFromJson:true,skipInToJson:true })
   hooks:AcHooks = new AcHooks();
 

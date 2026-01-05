@@ -55,7 +55,6 @@ export default defineConfig(({ command }) => {
         "@autocode-ts/ac-extensions",
         "@autocode-ts/ac-icons",
         "@autocode-ts/runtime-ts",
-        "@autocode-ts/ac-template-engine",
         "@silexlabs/grapesjs-ui-suggest-classes",
         "grapesjs",
         "grapesjs-blocks-basic",

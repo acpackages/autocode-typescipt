@@ -8,10 +8,12 @@ import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { IAcScriptFunctionChangeEventArgs } from "../interfaces/event-args/ac-script-function-change-event-args.interface";
 import { IAcScriptPropertyChangeEventArgs } from "../interfaces/event-args/ac-script-property-change-event-args.interface";
 import { AcRuntimeDeclaration } from "@autocode-ts/ac-browser";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 export class AcTypescriptEditorHelper {
   private editor: monaco.editor.IStandaloneCodeEditor;
   private builderApi: AcBuilderApi;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ editor, builderApi }: { editor: monaco.editor.IStandaloneCodeEditor, builderApi: AcBuilderApi }) {
     this.editor = editor;
@@ -329,7 +331,6 @@ export class AcTypescriptEditorHelper {
     }) => void,
     debounceMs = 500
   ) {
-    let timeoutId: any = null;
     let lastSnapshot: any = null;
 
     const runCheck = async () => {
@@ -386,8 +387,8 @@ export class AcTypescriptEditorHelper {
 
     // Debounced trigger
     this.editor.onDidChangeModelContent(() => {
-      if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = setTimeout(runCheck, debounceMs);
+
+      this.delayedCallback.add({callback:runCheck,duration: debounceMs});
     });
 
     // Initial snapshot

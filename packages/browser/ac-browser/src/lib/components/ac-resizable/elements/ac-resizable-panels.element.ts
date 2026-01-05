@@ -34,9 +34,9 @@ export class AcResizablePanels extends AcElementBase {
 
   override init(): void {
     this.direction = this.direction;
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.updateAllowed = true;
-    }, 500);
+    }, duration:500});
   }
 
 
@@ -105,14 +105,14 @@ export class AcResizablePanels extends AcElementBase {
       panel.size = size;
     }
 
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.updateAllowed = true;
       for (const panelSize of newPanelSizes) {
         const size = panelSize.size;
         const index = panelSize.index;
         this.panels[index].size = size;
       }
-    }, 400);
+    }, duration:400});
 
   }
 
@@ -124,27 +124,21 @@ export class AcResizablePanels extends AcElementBase {
         return acc + (isHorizontal ? rect.width : rect.height);
       }, 0);
 
-      let index: number = 0;
       this.panels.forEach((panel) => {
         const rect = panel.getBoundingClientRect();
         const size = isHorizontal ? rect.width : rect.height;
         const percent = (size / totalSize) * 100;
         panel.style.flexBasis = `${percent}%`;
         panel.size = percent;
-        index++;
       });
-      if (this.updateTimeout) {
-        clearTimeout(this.updateTimeout);
-      }
-      this.updateTimeout = setTimeout(() => {
-        this.updateTimeout = undefined;
+      this.updateTimeout = this.delayedCallback.add({callback:() => {
         const event: IAcResizablePanelResizeEvent = {
           panels: this.panels,
           panelSizes: this.getPanelSizes(),
           resizableInstance: this
         }
         this.events.execute({ event: AcEnumResizableEvent.resize, args: event });
-      }, 300);
+      }, duration:300,key:'updatePanelSize'});
   }
 
 }

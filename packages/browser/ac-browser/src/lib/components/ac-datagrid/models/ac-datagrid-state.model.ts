@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcJsonUtils } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcJsonUtils, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { AC_DATAGRID_EVENT, AcDatagridApi, IAcDatagridColumnState, IAcDatagridState } from "../_ac-datagrid.export";
 
 export class AcDatagridState {
@@ -51,6 +51,7 @@ export class AcDatagridState {
   }
 
   private refreshNotifyTimeout: any;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ datagridApi }: { datagridApi: AcDatagridApi }) {
     this.datagridApi = datagridApi;
@@ -83,14 +84,15 @@ export class AcDatagridState {
   }
 
   destroy() {
-    (this.datagridApi as any) = null;
+    this.delayedCallback.destroy();
+    acNullifyInstanceProperties({instance:this});
   }
 
   refresh() {
     if (this.refreshNotifyTimeout) {
       clearTimeout(this.refreshNotifyTimeout);
     }
-    this.refreshNotifyTimeout = setTimeout(() => {
+    this.refreshNotifyTimeout = this.delayedCallback.add({callback:() => {
       clearTimeout(this.refreshNotifyTimeout);
       const previousState = this.toJson();
       this.setColumnsState();
@@ -100,7 +102,7 @@ export class AcDatagridState {
         this.datagridApi.events.execute({ event: AC_DATAGRID_EVENT.StateChange, args: { currentState } });
         this.datagridApi.hooks.execute({ hook: AC_DATAGRID_EVENT.StateChange, args: { currentState } });
       }
-    }, 300);
+    }, duration:300});
   }
 
   toJson(): IAcDatagridState {

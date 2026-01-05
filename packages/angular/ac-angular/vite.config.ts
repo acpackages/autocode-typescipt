@@ -30,7 +30,6 @@ export default defineConfig({
         "@angular/common",
         "@autocode-ts/ac-browser",
         "@autocode-ts/ac-extensions",
-        "@autocode-ts/ac-template-engine",
         "@autocode-ts/autocode",
         "@primeng/themes",
         "tslib"

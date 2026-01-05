@@ -52,13 +52,13 @@ export class AcSortable extends AcElementBase {
     });
     this.draggableApi.on({event: AcEnumDraggableEvent.DragDrop, callback: (args: IAcDraggableDragDropEvent) => {
         if (!args.elementInstance || !args.targetInstance) return;
-        setTimeout(() => {
+        this.delayedCallback.add({"callback":() => {
           acSwapElementsWithAnimation({
             element1: args.elementInstance.element,
             element2: args.targetInstance.element,
             duration: 0
           });
-        }, 100);
+        }, duration:100});
       }
     })
   }
@@ -74,39 +74,6 @@ export class AcSortable extends AcElementBase {
   public unobserve(): void {
     this.mutationObserver.disconnect();
   }
-
-  // element: HTMLElement;
-  // draggable: AcDraggable;
-  // draggableApi: AcDraggableApi;
-
-  // constructor({ element }: { element: HTMLElement }) {
-  //   this.element = element;
-  //   this.draggable = new AcDraggable({ element: this.element });
-  //   this.draggableApi = this.draggable.draggableApi;
-  //   this.initElement();
-  // }
-
-  // initElement(): void {
-  //   if (!this.element.hasAttribute(AcDraggableAttributeName.acDraggableSort)){
-  //     this.element.setAttribute(AcDraggableAttributeName.acDraggableSort,"");
-  //   }
-  //   const draggables = this.element.querySelectorAll(`[${AcDraggableAttributeName.acDraggableSortElement}]`);
-  //   draggables.forEach((el) => {
-  //     new AcDraggableSortElement({ draggableApi: this.draggableApi, element: el as HTMLElement });
-  //   });
-  //   this.draggableApi.on({event: AcEnumDraggableEvent.DragDrop, callback: (args: IAcDraggableDragDropEvent) => {
-  //       if (!args.elementInstance || !args.targetInstance) return;
-  //       setTimeout(() => {
-  //         acSwapElementsWithAnimation({
-  //           element1: args.elementInstance.element,
-  //           element2: args.targetInstance.element,
-  //           duration: 0
-  //         });
-  //       }, 100);
-  //     }
-  //   })
-  // }
-
 }
 
 acRegisterCustomElement({ tag: AC_DRAGGABLE_TAG.sortable, type: AcSortable });

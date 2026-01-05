@@ -40,9 +40,9 @@ export class AcDatagridHeaderInternalCellElement {
   //         if (element1 && element2) {
   //           this.swappingColumpPosition = true;
   //           acSwapElementsWithAnimation({ element1: element1, element2: element2, duration: 300 });
-  //           setTimeout(() => {
+  //           this.delayedCallback.add({callback:() => {
   //             this.swappingColumpPosition = false;
-  //           }, 500);
+  //           }, duration:500});
   //         }
   //       }
   //     }

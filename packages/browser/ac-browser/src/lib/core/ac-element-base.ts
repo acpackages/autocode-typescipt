@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcEvents, Autocode, acNullifyInstanceProperties } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcEvents, Autocode, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { acCloneEvent, acRegisterCustomElement } from "../utils/ac-element-functions";
 
 export class AcElementBase extends HTMLElement {
@@ -13,6 +13,7 @@ export class AcElementBase extends HTMLElement {
 
   events: AcEvents = new AcEvents();
   acId:string = Autocode.uuid();
+  protected delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor(){
     super();
@@ -37,6 +38,7 @@ export class AcElementBase extends HTMLElement {
 
   destroy(){
     this.events.destroy();
+    this.delayedCallback.destroy();
     acNullifyInstanceProperties({instance:this});
   }
 

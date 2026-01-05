@@ -2,7 +2,7 @@
 import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDView } from "@autocode-ts/ac-data-dictionary";
-import { AC_DATA_MANAGER_EVENT, AcHooks,IAcContextEvent } from "@autocode-ts/autocode";
+import { AC_DATA_MANAGER_EVENT, AcDelayedCallback, AcHooks,IAcContextEvent } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
@@ -24,6 +24,7 @@ export class AcDDEViewsDatagrid {
   filterFunction: Function | undefined;
   hooks: AcHooks = new AcHooks();
   data: any[] = [];
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
@@ -70,9 +71,9 @@ export class AcDDEViewsDatagrid {
 
     this.datagridApi.on({
       event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
-        setTimeout(() => {
+        this.delayedCallback.add({callback:() => {
           // this.hooks.execute({ hook: AcEnumDDEHook.DatagridActiveTableChange });
-        }, 100);
+        }, duration:100});
 
       }
     });

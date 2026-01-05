@@ -8,7 +8,7 @@ interface ObservationCallbacks {
   onIntersection?: (entries: IntersectionObserverEntry[]) => void;
 }
 
-class AcElementObserver {
+export class AcElementObserver {
   // Shared MutationObserver
   private mutationObserver: MutationObserver | null = null;
   private mutationCallbacks: WeakMap<Element, Set<(mutations: MutationRecord[]) => void>> = new WeakMap();
@@ -39,18 +39,17 @@ class AcElementObserver {
   }
 
   /**
-   * Registers an element for observation with provided callbacks.
-   * @param element - The DOM element to observe.
-   * @param callbacks - Callbacks for each type.
-   * @param mutationConfig - Config for mutations (defaults to all types). Uses first-provided config per element.
+   * Observes an element with the provided callbacks.
+   * Automatically cleans up observation when the element is removed from the DOM.
    * @returns Unsubscribe function for these specific callbacks.
    */
-  public register({ element, onMutation, onResize, onIntersection, mutationConfig = this.defaultMutationConfig }: {
-    element: Element, onMutation?: (mutations: MutationRecord[]) => void,
+  public observe({ element, onMutation, onResize, onIntersection, mutationConfig = this.defaultMutationConfig }: {
+    element: Element,
+    onMutation?: (mutations: MutationRecord[]) => void,
     onResize?: (entries: ResizeObserverEntry[]) => void,
-    onIntersection?: (entries: IntersectionObserverEntry[]) => void, mutationConfig?: MutationObserverInit
-  }
-  ): () => void {
+    onIntersection?: (entries: IntersectionObserverEntry[]) => void,
+    mutationConfig?: MutationObserverInit
+  }): () => void {
     if (!(element instanceof Element)) {
       throw new Error('Invalid element provided. Must be a DOM Element.');
     }
@@ -75,6 +74,13 @@ class AcElementObserver {
       unsubscribeFuncs.push(unsubIntersection);
     }
 
+    // Auto-cleanup when element is removed from DOM
+    // We use a shared MutationObserver that watches ancestors/document for childList changes
+    this._setupDomRemovalDetection(element, () => {
+      // Element was removed from DOM → clean up all observations for it
+      this._cleanupElementCompletely(element);
+    });
+
     // Return composite unsubscribe
     return () => {
       unsubscribeFuncs.forEach(unsub => unsub());
@@ -82,18 +88,68 @@ class AcElementObserver {
   }
 
   /**
-   * Internal: Register mutation callback for element.
+   * Completely removes an element from mutation observation (all callbacks and stops observing it).
+   * Useful for manual cleanup.
+   */
+  public unobserve(element: Element): void {
+    if (!(element instanceof Element)) {
+      throw new Error('Invalid element provided. Must be a DOM Element.');
+    }
+    this._removeMutationElement(element);
+  }
+
+  /**
+   * Internal: Full cleanup of an element across all observer types
    * @private
    */
-  private _registerMutation(
-    element: Element,
-    callback: (mutations: MutationRecord[]) => void,
-    config: MutationObserverInit
-  ): () => void {
-    // Lazy init shared observer
+  private _cleanupElementCompletely(element: Element): void {
+    // Remove from mutation
+    this._removeMutationElement(element);
+
+    // Remove from resize (if any callbacks remain)
+    const resizeCbs = this.resizeCallbacks.get(element);
+    if (resizeCbs && resizeCbs.size > 0) {
+      resizeCbs.clear();
+      this.resizeCallbacks.delete(element);
+      if (this.resizeObserver && this.observedResizeElements.has(element)) {
+        this.resizeObserver.unobserve(element);
+        this.observedResizeElements.delete(element);
+        this.observedResizeCount--;
+        if (this.observedResizeCount === 0) {
+          this.resizeObserver.disconnect();
+          this.resizeObserver = null;
+        }
+      }
+    }
+
+    // Remove from intersection
+    const intersectionCbs = this.intersectionCallbacks.get(element);
+    if (intersectionCbs && intersectionCbs.size > 0) {
+      intersectionCbs.clear();
+      this.intersectionCallbacks.delete(element);
+      if (this.intersectionObserver && this.observedIntersectionElements.has(element)) {
+        this.intersectionObserver.unobserve(element);
+        this.observedIntersectionElements.delete(element);
+        this.observedIntersectionCount--;
+        if (this.observedIntersectionCount === 0) {
+          this.intersectionObserver.disconnect();
+          this.intersectionObserver = null;
+        }
+      }
+    }
+  }
+
+  /**
+   * Internal: Sets up detection for when an element is removed from the DOM
+   * Uses a shared MutationObserver on document with childList + subtree
+   * @private
+   */
+  private _setupDomRemovalDetection(element: Element, onRemoved: () => void): void {
+    // Lazy-create a shared DOM removal detector
     if (!this.mutationObserver && 'MutationObserver' in window) {
+      // We'll reuse the existing mutationObserver if possible, but ensure it watches the document
       this.mutationObserver = new MutationObserver((mutations: MutationRecord[]) => {
-        // Group mutations by target element
+        // First: handle normal per-element mutation callbacks
         const grouped = new Map<Element, MutationRecord[]>();
         mutations.forEach((mutation) => {
           const target = mutation.target;
@@ -105,14 +161,80 @@ class AcElementObserver {
           }
         });
 
-        // Dispatch grouped mutations to per-element callbacks
         grouped.forEach((muts, target) => {
           const cbs = this.mutationCallbacks.get(target);
           if (cbs) {
             cbs.forEach((cb) => cb(muts));
           }
         });
+
+        // Second: check for removed nodes that we are tracking
+        for (const mutation of mutations) {
+          if (mutation.type === 'childList') {
+            mutation.removedNodes.forEach((node) => {
+              if (node instanceof Element) {
+                // Check if this exact element or any of its descendants were removed
+                if (node === element || node.contains(element)) {
+                  onRemoved();
+                  return;
+                }
+              }
+            });
+          }
+        }
       });
+
+      // Observe the entire document for childList changes (subtree)
+      this.mutationObserver.observe(document, {
+        childList: true,
+        subtree: true
+      });
+    } else if (this.mutationObserver) {
+      // Already exists — we assume it's already observing document
+      // (we set it up once)
+    }
+  }
+
+  /**
+   * Internal: Completely remove element from mutation observing
+   * @private
+   */
+  private _removeMutationElement(element: Element): void {
+    this.mutationCallbacks.delete(element);
+    this.mutationConfigs.delete(element);
+
+    if (this.mutationConfigs.size === 0) {
+      if (this.mutationObserver) {
+        this.mutationObserver.disconnect();
+        this.mutationObserver = null;
+      }
+    } else if (this.mutationObserver) {
+      // Reconnect only remaining elements
+      this.mutationObserver.disconnect();
+      this.mutationConfigs.forEach((cfg, el) => {
+        this.mutationObserver!.observe(el, cfg);
+      });
+      // Also re-observe document for removal detection if anything is still registered
+      if (this.mutationConfigs.size > 0) {
+        this.mutationObserver.observe(document, { childList: true, subtree: true });
+      }
+    }
+  }
+
+  /**
+   * Internal: Register mutation callback for element.
+   * @private
+   */
+  private _registerMutation(
+    element: Element,
+    callback: (mutations: MutationRecord[]) => void,
+    config: MutationObserverInit
+  ): () => void {
+    // Ensure shared observer exists
+    if (!this.mutationObserver) {
+      this._setupDomRemovalDetection(element, () => {
+        //
+      }); // dummy call to init
     }
 
     // Add callback
@@ -121,11 +243,9 @@ class AcElementObserver {
       cbs = new Set();
       this.mutationCallbacks.set(element, cbs);
     }
-    if (!cbs.has(callback)) {
-      cbs.add(callback);
-    }
+    cbs.add(callback);
 
-    // Observe if not already (uses first config; later registrations ignore config changes)
+    // Observe element if not already
     if (!this.mutationConfigs.has(element)) {
       this.mutationConfigs.set(element, config);
       if (this.mutationObserver) {
@@ -136,10 +256,6 @@ class AcElementObserver {
     return () => this._unsubscribeMutation(element, callback);
   }
 
-  /**
-   * Internal: Unsubscribe mutation callback.
-   * @private
-   */
   private _unsubscribeMutation(
     element: Element,
     callback: (mutations: MutationRecord[]) => void
@@ -149,89 +265,49 @@ class AcElementObserver {
 
     cbs.delete(callback);
     if (cbs.size === 0) {
-      this.mutationCallbacks.delete(element);
-      this.mutationConfigs.delete(element);
-      if (this.mutationConfigs.size === 0) {
-        if (this.mutationObserver) {
-          this.mutationObserver.disconnect();
-          this.mutationObserver = null;
-        }
-      } else {
-        // Disconnect and re-observe remaining elements (no unobserve available)
-        if (this.mutationObserver) {
-          this.mutationObserver.disconnect();
-          this.mutationConfigs.forEach((cfg, el) => {
-            this.mutationObserver!.observe(el, cfg);
-          });
-        }
-      }
+      this._removeMutationElement(element);
     }
   }
 
-  /**
-   * Internal: Register resize callback for element.
-   * @private
-   */
+  // Resize and Intersection registration remain unchanged
   private _registerResize(
     element: Element,
     callback: (entries: ResizeObserverEntry[]) => void
   ): () => void {
-    // Lazy init shared observer
     if (!this.resizeObserver && 'ResizeObserver' in window) {
-      this.resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-        // Group/filter entries by target
+      this.resizeObserver = new ResizeObserver((entries) => {
         const grouped = new Map<Element, ResizeObserverEntry[]>();
         entries.forEach((entry) => {
           const target = entry.target as Element;
-          if (!grouped.has(target)) {
-            grouped.set(target, []);
-          }
+          if (!grouped.has(target)) grouped.set(target, []);
           grouped.get(target)!.push(entry);
         });
-
-        // Dispatch to per-element callbacks
         grouped.forEach((targetEntries, target) => {
           const cbs = this.resizeCallbacks.get(target);
-          if (cbs) {
-            cbs.forEach((cb) => cb(targetEntries));
-          }
+          if (cbs) cbs.forEach((cb) => cb(targetEntries));
         });
       });
     }
 
-    // Observe element if not already
     if (!this.observedResizeElements.has(element)) {
-      if (this.resizeObserver) {
-        this.resizeObserver.observe(element);
-        this.observedResizeElements.add(element);
-        this.observedResizeCount++;
-      }
+      this.resizeObserver?.observe(element);
+      this.observedResizeElements.add(element);
+      this.observedResizeCount++;
     }
 
-    // Add callback
-    let cbs = this.resizeCallbacks.get(element);
-    if (!cbs) {
-      cbs = new Set();
-      this.resizeCallbacks.set(element, cbs);
-    }
-    if (!cbs.has(callback)) {
-      cbs.add(callback);
-    }
+    const cbs = this.resizeCallbacks.get(element) ?? new Set();
+    cbs.add(callback);
+    this.resizeCallbacks.set(element, cbs);
 
     return () => this._unsubscribeResize(element, callback);
   }
 
-  /**
-   * Internal: Unsubscribe resize callback.
-   * @private
-   */
   private _unsubscribeResize(
     element: Element,
     callback: (entries: ResizeObserverEntry[]) => void
   ): void {
     const cbs = this.resizeCallbacks.get(element);
     if (!cbs) return;
-
     cbs.delete(callback);
     if (cbs.size === 0) {
       this.resizeCallbacks.delete(element);
@@ -239,8 +315,6 @@ class AcElementObserver {
         this.resizeObserver.unobserve(element);
         this.observedResizeElements.delete(element);
         this.observedResizeCount--;
-
-        // Disconnect shared observer if no elements left
         if (this.observedResizeCount === 0) {
           this.resizeObserver.disconnect();
           this.resizeObserver = null;
@@ -249,70 +323,44 @@ class AcElementObserver {
     }
   }
 
-  /**
-   * Internal: Register intersection callback for element.
-   * @private
-   */
   private _registerIntersection(
     element: Element,
     callback: (entries: IntersectionObserverEntry[]) => void
   ): () => void {
-    // Lazy init shared observer (default root/threshold)
     if (!this.intersectionObserver && 'IntersectionObserver' in window) {
-      this.intersectionObserver = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
-        // Group/filter entries by target
+      this.intersectionObserver = new IntersectionObserver((entries) => {
         const grouped = new Map<Element, IntersectionObserverEntry[]>();
         entries.forEach((entry) => {
           const target = entry.target as Element;
-          if (!grouped.has(target)) {
-            grouped.set(target, []);
-          }
+          if (!grouped.has(target)) grouped.set(target, []);
           grouped.get(target)!.push(entry);
         });
-
-        // Dispatch to per-element callbacks
         grouped.forEach((targetEntries, target) => {
           const cbs = this.intersectionCallbacks.get(target);
-          if (cbs) {
-            cbs.forEach((cb) => cb(targetEntries));
-          }
+          if (cbs) cbs.forEach((cb) => cb(targetEntries));
         });
       });
     }
 
-    // Observe element if not already
     if (!this.observedIntersectionElements.has(element)) {
-      if (this.intersectionObserver) {
-        this.intersectionObserver.observe(element);
-        this.observedIntersectionElements.add(element);
-        this.observedIntersectionCount++;
-      }
+      this.intersectionObserver?.observe(element);
+      this.observedIntersectionElements.add(element);
+      this.observedIntersectionCount++;
     }
 
-    // Add callback
-    let cbs = this.intersectionCallbacks.get(element);
-    if (!cbs) {
-      cbs = new Set();
-      this.intersectionCallbacks.set(element, cbs);
-    }
-    if (!cbs.has(callback)) {
-      cbs.add(callback);
-    }
+    const cbs = this.intersectionCallbacks.get(element) ?? new Set();
+    cbs.add(callback);
+    this.intersectionCallbacks.set(element, cbs);
 
     return () => this._unsubscribeIntersection(element, callback);
   }
 
-  /**
-   * Internal: Unsubscribe intersection callback.
-   * @private
-   */
   private _unsubscribeIntersection(
     element: Element,
     callback: (entries: IntersectionObserverEntry[]) => void
   ): void {
     const cbs = this.intersectionCallbacks.get(element);
     if (!cbs) return;
-
     cbs.delete(callback);
     if (cbs.size === 0) {
       this.intersectionCallbacks.delete(element);
@@ -320,8 +368,6 @@ class AcElementObserver {
         this.intersectionObserver.unobserve(element);
         this.observedIntersectionElements.delete(element);
         this.observedIntersectionCount--;
-
-        // Disconnect shared observer if no elements left
         if (this.observedIntersectionCount === 0) {
           this.intersectionObserver.disconnect();
           this.intersectionObserver = null;
@@ -330,12 +376,7 @@ class AcElementObserver {
     }
   }
 
-  /**
-   * Disconnects all observers and clears all registrations.
-   * Useful for global cleanup.
-   */
   public disconnectAll(): void {
-    // Mutations
     if (this.mutationObserver) {
       this.mutationObserver.disconnect();
       this.mutationObserver = null;
@@ -343,7 +384,6 @@ class AcElementObserver {
     this.mutationCallbacks = new WeakMap();
     this.mutationConfigs.clear();
 
-    // Resize
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
       this.resizeObserver = null;
@@ -352,7 +392,6 @@ class AcElementObserver {
     this.observedResizeElements = new WeakSet();
     this.observedResizeCount = 0;
 
-    // Intersection
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();
       this.intersectionObserver = null;
@@ -362,17 +401,10 @@ class AcElementObserver {
     this.observedIntersectionCount = 0;
   }
 
-  /**
-   * Hook for adding custom shared observers (e.g., for other types).
-   * Override or extend as needed.
-   * @protected
-   */
   protected initCustomObservers(): void {
-    // Example: Add shared observer for scroll events or other
-    // Implement per-type registration similar to above
+    //
   }
 }
-
 
 export const acElementObserver = new AcElementObserver();
 const _window: any = window;

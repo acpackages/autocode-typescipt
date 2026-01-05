@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
+import { AcDelayedCallback, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { AC_DATAGRID_ATTRIBUTE, IAcDatagridColumn, AC_DATAGRID_HOOK, IAcDatagridCellHookArgs, IAcDatagridColumnEvent, IAcDatagridPaginationChangeEvent, IAcDatagridSortOrderChangeEvent, IAcDatagridCell } from "../_ac-datagrid.export";
 import { AC_DATAGRID_EVENT } from "../consts/ac-datagrid-event.const";
 import { IAcDatagridRow } from "../interfaces/ac-datagrid-row.interface";
@@ -8,14 +8,15 @@ import { IAcDatagridCellEvent } from "../interfaces/event-args/ac-datagrid-cell-
 import { IAcDatagridRowEvent } from "../interfaces/event-args/ac-datagrid-row-event.interface";
 import { IAcDatagridStateChangeEvent } from "../interfaces/event-args/ac-datagrid-state-change-event.interface";
 import { AcDatagridApi } from "./ac-datagrid-api";
-import { objectIsSame } from "@autocode-ts/ac-extensions";
 
 export class AcDatagridEventHandler {
   columnResizeTimeouts: any = {};
   datagridApi?: AcDatagridApi;
   previousNotifiedState: any = {};
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   destroy() {
+    this.delayedCallback.destroy();
     acNullifyInstanceProperties({ instance: this });
   }
 
@@ -286,7 +287,7 @@ export class AcDatagridEventHandler {
     if (this.columnResizeTimeouts[datagridColumn.columnId]) {
       clearTimeout(this.columnResizeTimeouts[datagridColumn.columnId]);
     }
-    this.columnResizeTimeouts[datagridColumn.columnId] = setTimeout(() => {
+    this.columnResizeTimeouts[datagridColumn.columnId] = this.delayedCallback.add({callback:() => {
       const eventArgs: IAcDatagridColumnEvent = {
         datagridApi: this.datagridApi!,
         datagridColumn: datagridColumn,
@@ -295,7 +296,7 @@ export class AcDatagridEventHandler {
       this.datagridApi!.events.execute({ event: AC_DATAGRID_EVENT.ColumnResize, args: eventArgs });
       delete this.columnResizeTimeouts[datagridColumn.columnId];
       this.notifyStateChange();
-    }, 300);
+    }, duration:300});
   }
 
   handleColumnDataChange({ datagridColumn, event }: { datagridColumn: IAcDatagridColumn, event?: any }) {

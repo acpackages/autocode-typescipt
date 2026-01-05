@@ -23,7 +23,7 @@ import { AC_DDE_TAG } from '../../_ac-data-dictionary-editor.export';
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDataDictionaryEditor extends AcElementBase{
   activeDataDictionary?: IAcDDEDataDictionary;
-  editorApi!: AcDDEApi;
+  editorApi?: AcDDEApi;
 
   bodyElement: HTMLElement = document.createElement('div');
   tabsContainer:HTMLElement = document.createElement('div');
@@ -39,10 +39,8 @@ export class AcDataDictionaryEditor extends AcElementBase{
   triggersDatagrid?: AcDDETriggersDatagrid;
   viewsDatagrid?: AcDDEViewsDatagrid;
   viewColumnsDatagrid?: AcDDEViewColumnsDatagrid;
-
-  constructor() {
-    super();
-    acInit();
+  override init() {
+    super.init();
     this.editorApi = new AcDDEApi({editor:this});
 
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
@@ -52,8 +50,7 @@ export class AcDataDictionaryEditor extends AcElementBase{
     const hookArgs: IAcDDEHookArgs = {
       editorApi: this.editorApi,
     };
-
-    this.initElement();
+    acInit({element:this});
 
     this.editorApi.hooks.execute({ hook: AcEnumDDEHook.EditorInit, args: hookArgs });
     this.editorApi.hooks.subscribe({hook:AcEnumDDEHook.EditorTabChange,callback:(args:IAcDDEHookArgs)=>{
@@ -61,9 +58,6 @@ export class AcDataDictionaryEditor extends AcElementBase{
     }});
 
     this.setActiveTab({tab:this.editorApi.activeEditorTab});
-  }
-
-  private initElement() {
     acAddClassToElement({ class_: AcDDECssClassName.acDataDictionaryEditor, element: this });
     // acAddClassToElement({ class_: AcDDECssClassName.acDDEDatagridWrapper, element: this.element });
 
@@ -104,6 +98,7 @@ export class AcDataDictionaryEditor extends AcElementBase{
       tabElement.appendChild(element);
       return element;
     }
+    if(this.editorApi){
     if(tab == AcEnumDDETab.TableEditor){
       if(this.tableEditor == undefined){
         this.tableEditor = new AcDDETableEditor({editorApi:this.editorApi});
@@ -178,6 +173,7 @@ export class AcDataDictionaryEditor extends AcElementBase{
       const element = el as HTMLElement;
       element.style.display = 'none';
     });
+  }
     const tabElement:HTMLElement= this.bodyElement.getElementsByClassName(`.ac-dde-tab-${tab}`)![0] as HTMLElement;
     tabElement.style.display = '';
   }

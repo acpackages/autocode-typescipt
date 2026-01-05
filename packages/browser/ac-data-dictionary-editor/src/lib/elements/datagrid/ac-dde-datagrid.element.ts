@@ -1,6 +1,7 @@
 import { AcDatagrid, AcDatagridAfterRowsFooterExtension, AcDatagridApi, AcDatagridAutoAddNewRowExtension, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumnDefinition } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AcDatagridOnAgGridExtension } from "@autocode-ts/ac-datagrid-on-ag-grid";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 export class AcDDEDatagrid {
   get columnDefinitions(): IAcDatagridColumnDefinition[] {
@@ -25,6 +26,8 @@ export class AcDDEDatagrid {
   private rowSelectionExtension!: AcDatagridRowSelectionExtension;
   private rowDraggingExtension!: AcDatagridRowDraggingExtension;
   private agGridExtension!: AcDatagridOnAgGridExtension;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
+
   newRowDataFunction: Function = () => {
     return {};
   };
@@ -43,7 +46,7 @@ export class AcDDEDatagrid {
         addNewButton.setAttribute('type', 'button');
         addNewButton.setAttribute('style', 'height:28px;');
         addNewButton.innerHTML = 'Add New';
-        this.datagrid.datagridFooter.append(addNewButton);
+        this.datagrid.datagridFooter?.append(addNewButton);
         addNewButton.addEventListener('click', (event: MouseEvent) => {
           this.datagridApi.addRow({ data: this.newRowDataFunction() });
         });
@@ -67,7 +70,7 @@ export class AcDDEDatagrid {
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
     this.autoAddNewRowExtension.autoAddNewRow = false;
     this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
 
       this.afterRowsExtension.footerElement = this.footerElement;
       this.datagridApi.on({
@@ -75,7 +78,7 @@ export class AcDDEDatagrid {
           //
         }
       })
-    }, 500);
+    }, duration:500});
 
     //
   }

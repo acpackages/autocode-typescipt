@@ -9,9 +9,11 @@ import { IAcDDEExtension } from "../../../interfaces/ac-dde-extension.interface"
 import { IAcDDEDatagridBeforeColumnsSetInitHookArgs } from "../../../interfaces/hook-args/ac-dde-datagrid-before-columns-set-hook-args.interface";
 import { AcDDESqlAnalyzer } from "./ac-dde-sql-analyzer";
 import { AcSqlParser } from "@autocode-ts/ac-sql-parser";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
   analyzer!: AcDDESqlAnalyzer;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   override init(): void {
     this.analyzer = new AcDDESqlAnalyzer({ extension: this });
@@ -39,8 +41,8 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
   }
 
   handleCellRendererInit(args: IAcDDEDatagridCellInitHookArgs) {
-    if (args.datagridCell.columnKey == 'action') {
-      setTimeout(() => {
+    if (args.datagridCell.datagridColumn.columnKey == 'action') {
+      this.delayedCallback.add({callback:() => {
         const instance = args.datagridCell.element;
         const actionElement: AcDDEDatagridRowAction = instance!.cellRenderer as AcDDEDatagridRowAction;
         const analyzeButton = document.createElement('button');
@@ -53,7 +55,7 @@ export class AcDDESqlAnalyzerExtension extends AcDDEExtension {
           const query = args.datagridCell.datagridRow.data[AcEnumDDEView.ViewQuery];
           new AcSqlParser().parse({sql:query});
         });
-      }, 10);
+      }, duration:10});
     }
   }
 }

@@ -1,3 +1,4 @@
+import { AcDelayedCallback, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_TOOLTIP_TAG } from "../_ac-tooltip.export";
 
@@ -16,8 +17,9 @@ export class AcTooltip {
   private tooltipEl: HTMLDivElement;
   private options: AcTooltipOptions;
   private isVisible = false;
-  private showTimeout?: number;
-  private hideTimeout?: number;
+  private showTimeout?: any;
+  private hideTimeout?: any;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ element, options = {} }: { element: HTMLElement, options?: AcTooltipOptions }) {
     this.anchor = element;
@@ -56,6 +58,11 @@ export class AcTooltip {
     // Handle scroll/resize → hide tooltip if element not visible
     window.addEventListener('scroll', () => this.checkVisibility(), true);
     window.addEventListener('resize', () => this.checkVisibility());
+  }
+
+  destroy(){
+    this.delayedCallback.destroy();
+    acNullifyInstanceProperties({instance:this});
   }
 
   private setContent(content: string | HTMLElement) {
@@ -163,24 +170,24 @@ export class AcTooltip {
 
   private scheduleShow() {
     this.cancelHide();
-    this.showTimeout = window.setTimeout(() => this.show(), this.options.delay);
+    this.showTimeout = this.delayedCallback.add({callback:() => this.show(), duration:this.options.delay});
   }
 
   private scheduleHide() {
     this.cancelShow();
-    this.hideTimeout = window.setTimeout(() => this.hide(), this.options.delay);
+    this.hideTimeout = this.delayedCallback.add({callback:() => this.hide(), duration:this.options.delay});
   }
 
   private cancelShow() {
     if (this.showTimeout) {
-      clearTimeout(this.showTimeout);
+      this.delayedCallback.remove({key:this.showTimeout});
       this.showTimeout = undefined;
     }
   }
 
   private cancelHide() {
     if (this.hideTimeout) {
-      clearTimeout(this.hideTimeout);
+      this.delayedCallback.remove({key:this.hideTimeout});
       this.hideTimeout = undefined;
     }
   }

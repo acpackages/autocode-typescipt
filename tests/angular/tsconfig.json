@@ -9,7 +9,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "declaration": false,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": false,
+    "lib": ["es2021", "DOM", "WebWorker"]
+    // "moduleResolution": "bundler"
   },
   "files": [],
   "include": [],

@@ -175,14 +175,14 @@ export class AcPopoutTextareaInput extends AcInputBase {
     this.textarea.style.opacity = "0";
     this.textarea.style.pointerEvents = "none";
     const duration = this.opts.animationDurationMs;
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.teardownTextarea();
       this.isOpen = false;
       window.removeEventListener("scroll", this.boundScroll, true);
       window.removeEventListener("resize", this.boundResize, true);
       this.ownerDocument.removeEventListener("mousedown", this.boundDocMouseDown, true);
       this.ownerDocument.removeEventListener("keydown", this.boundKeydown, true);
-    }, duration);
+    }, duration});
   }
 
   override destroy() {

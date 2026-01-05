@@ -22,9 +22,9 @@ export class AcDatagridRowElement extends AcElementBase {
     //       if (event.datagridRow.instance && event.oldDatagridRow.instance) {
     //         this.swappingRowPosition = true;
     //         acSwapElementsWithAnimation({ element1: event.datagridRow.instance.rowWrapper, element2: event.oldDatagridRow.instance.rowWrapper, duration: 300 });
-    //         setTimeout(() => {
+    //         this.delayedCallback.add({callback:() => {
     //           this.swappingRowPosition = false;
-    //         }, 500);
+    //         }, duration:500});
     //       }
     //     }
     //   }

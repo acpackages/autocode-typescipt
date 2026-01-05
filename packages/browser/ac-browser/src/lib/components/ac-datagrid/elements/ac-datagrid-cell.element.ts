@@ -62,7 +62,6 @@ export class AcDatagridCellElement extends AcElementBase {
   cellEditor?: AcDatagridCellEditor;
   cellRenderer!: IAcDatagridCellRenderer;
   activeComponent?: IAcDatagridCellRenderer | IAcDatagridCellEditor;
-  checkCellValueChangeTimeout: any;
   datagridCell!: IAcDatagridCell;
   isEditing: boolean = false;
   swappingColumpPosition: boolean = false;
@@ -85,10 +84,6 @@ export class AcDatagridCellElement extends AcElementBase {
 
   override destroy(): void {
     super.destroy();
-    if (this.checkCellValueChangeTimeout) {
-      clearTimeout(this.checkCellValueChangeTimeout);
-      this.checkCellValueChangeTimeout = null;
-    }
     if (this.cellRenderer && this.cellRenderer.destroy) {
       this.cellRenderer.destroy();
     }
@@ -409,11 +404,8 @@ export class AcDatagridCellElement extends AcElementBase {
         this.datagridRow.data[this.datagridColumn.columnKey] = this.cellEditor.getValue();
       }
     };
-    if (this.checkCellValueChangeTimeout) {
-      clearTimeout(this.checkCellValueChangeTimeout);
-    }
     if (delayCheck) {
-      this.checkCellValueChangeTimeout = setTimeout(checkFunction, 500);
+      this.delayedCallback.add({callback:checkFunction, duration:500,key:'checkCellValue'});
     }
     else {
       checkFunction();

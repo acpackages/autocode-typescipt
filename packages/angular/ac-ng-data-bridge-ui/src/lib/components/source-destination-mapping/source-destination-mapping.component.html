@@ -1,0 +1,65 @@
+<ng-container *ngIf="isDetailSet">
+  <p>Following worksheets has been extracted from the uploaded sheet and each sheet and its columns has been
+    mapped. Check and verify the mapping to continue import process.</p>
+  <div class="flex-fill">
+    <div class="sheet-data">
+      <ng-container *ngFor="let entity of dataBridge.sourceEntities">
+        <ng-container *ngIf="entity.fields.length > 0">
+          <div class="card mb-4">
+            <div class="card-header px-2 py-1">
+              <div class="d-inline-block">
+                <b>{{ entity.sourceName }} ({{ entity.fields.length }} columns, {{ entity.rowsCount }}
+                  rows)</b>
+                sheet will be
+                imported into
+              </div>
+              <div class="d-inline-block ms-2">
+                <select class="form-select py-1 fw-bold" [name]="`${entity.sourceName}`"
+                  [(ngModel)]="entity.templateName">
+                  <option value="" readonly>Select table</option>
+                  <ng-container *ngFor="let item of templatesList">
+                    <option [attr.value]="item.value">{{item.label}}</option>
+                  </ng-container>
+                </select>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <table class="table table-striped mb-0">
+                <thead>
+                  <tr>
+                    <th style="width:500px;">
+                      Sheet column
+                    </th>
+                    <th>
+                      Mapped to column
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let col of entity.fields">
+                    <td class="pe-4 pt-2">{{col.sourceFieldName}}</td>
+                    <td>
+                      <div class="d-inline-block ms-0">
+                        <select class="form-select py-1" [name]="`${col.sourceName}_${col.sourceFieldName}`"
+                          [(ngModel)]="col.templateFieldName">
+                          <ng-container
+                            *ngFor="let tableCol of getColumnsForTemplate({templateName:entity.templateName})">
+                            <option [attr.value]="tableCol.vaue">{{tableCol.label}}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <div class="pt-3">
+    <button type="button" class="btn btn-dark" (click)="handleConvertData()">Confirm and Start Converting data for
+      Accountea</button>
+  </div>
+</ng-container>

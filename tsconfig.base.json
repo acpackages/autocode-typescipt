@@ -18,9 +18,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@autocode-ts/ac-ng-report-engine": [
-        "packages/angular/ac-ng-report-engine/src/index.ts"
-      ],
       "@autocode-ts/ac-angular": [
         "packages/angular/ac-angular/src/ac-angular.ts"
       ],
@@ -35,7 +32,10 @@
         "packages/browser/extensions/report-engine/ac-bwipjs-pipe/src/ac-bwipjs-pipe.ts"
       ],
       "@autocode-ts/ac-data-bridge": [
-        "packages/common/ac-data-bridge/src/index.ts"
+        "packages/common/ac-data-bridge/src/ac-data-bridge.ts"
+      ],
+      "@autocode-ts/ac-data-bridge-ui": [
+        "packages/browser/ac-data-bridge-ui/src/ac-data-bridge-ui.ts"
       ],
       "@autocode-ts/ac-data-dictionary": [
         "packages/common/ac-data-dictionary/src/ac-data-dictionary.ts"
@@ -66,6 +66,12 @@
         "packages/common/ac-extensions/src/ac-extensions.ts"
       ],
       "@autocode-ts/ac-icons": ["packages/browser/ac-icons/src/ac-icons.ts"],
+      "@autocode-ts/ac-ng-data-bridge-ui": [
+        "packages/angular/ac-ng-data-bridge-ui/src/index.ts"
+      ],
+      "@autocode-ts/ac-ng-report-engine": [
+        "packages/angular/ac-ng-report-engine/src/index.ts"
+      ],
       "@autocode-ts/ac-ng-runtime": [
         "packages/angular/ac-ng-runtime/src/ac-ng-runtime.ts"
       ],

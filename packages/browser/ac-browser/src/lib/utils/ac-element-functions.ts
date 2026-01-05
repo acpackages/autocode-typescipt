@@ -5,6 +5,7 @@
 
 import { arrayRemove } from "@autocode-ts/ac-extensions";
 import { AC_DOM_EVENT_TYPES } from "../consts/ac-dom-event-typess.const";
+import { acDelayedCallback } from "@autocode-ts/autocode";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export function acAddClassToElement({ class_, element }: { class_: string, element: Element }) {
@@ -173,21 +174,6 @@ export function acListenElementEvents(options: {
   };
 }
 
-// export function acListenAllElementEvents({ element, callback }: { element: HTMLElement, callback: ({ name, event }: { name: string, event: Event }) => void }) {
-
-//   const proto = HTMLElement.prototype as any;
-//   for (const key in proto) {
-//     if (key.startsWith("on")) {
-//       const eventName = key.slice(2);
-//       element.addEventListener(eventName, (e) => {
-//         setTimeout(() => {
-//           callback({ name: eventName, event: e });
-//         }, 1);
-//       },{passive:true});
-//     }
-//   }
-// }
-
 export function acMorphElement({ source, destination, sourceColor, destinationColor, duration = 300 }: { source: HTMLElement, destination: HTMLElement, sourceColor?: string; destinationColor?: string; duration?: number }): void {
   // Get bounding client rectangles
   const sourceRect = source.getBoundingClientRect();
@@ -263,10 +249,10 @@ export function acMorphElement({ source, destination, sourceColor, destinationCo
   });
 
   // Cleanup after animation
-  setTimeout(() => {
+  acDelayedCallback.add({callback:() => {
     sourceClone.remove();
     destClone.remove();
-  }, duration);
+  }, duration});
 }
 
 export function acRegisterCustomElement({ tag, type }: { tag: string, type: any }) {
@@ -413,13 +399,13 @@ export function acSwapElementsWithAnimation({
   });
 
   // After animation, do the real swap
-  setTimeout(() => {
+  acDelayedCallback.add({callback:() => {
     placeholder1.replaceWith(element2);
     placeholder2.replaceWith(element1);
     anim1.remove();
     anim2.remove();
     onComplete?.();
-  }, duration);
+  }, duration});
 }
 
 export function acShowElement({

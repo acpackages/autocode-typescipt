@@ -22,9 +22,9 @@ export class AcRepeaterRowElement {
     //       if (event.repeaterRow.instance && event.oldRepeaterRow.instance) {
     //         this.swappingRowPosition = true;
     //         acSwapElementsWithAnimation({ element1: event.repeaterRow.instance.rowWrapper, element2: event.oldRepeaterRow.instance.rowWrapper, duration: 300 });
-    //         setTimeout(() => {
+    //         this.delayedCallback.add({callback:() => {
     //           this.swappingRowPosition = false;
-    //         }, 500);
+    //         }, duration:500});
     //       }
     //     }
     //   }

@@ -1,7 +1,7 @@
 import { AcTextareaInput } from "@autocode-ts/ac-browser";
 import { AcDDEAttributeName, AcDDECssClassName, IAcDDETrigger } from "../../_ac-data-dictionary-editor.export";
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { AcEvents } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcEvents } from "@autocode-ts/autocode";
 
 export class AcDDETriggerMaster {
   private _trigger: IAcDDETrigger | any;
@@ -17,6 +17,7 @@ export class AcDDETriggerMaster {
   element: HTMLElement = document.createElement('div');
   queryInput: AcTextareaInput;
   events: AcEvents = new AcEvents();
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.element.classList.add(AcDDECssClassName.acDDEMasterContainer);
@@ -45,10 +46,10 @@ export class AcDDETriggerMaster {
     if (this.changeTimeout) {
       clearTimeout(this.changeTimeout);
     }
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.trigger.triggerCode = this.queryInput.value;
       this.events.execute({ event: 'change', args: { trigger: this.trigger } });
-    }, 300);
+    }, duration:300});
   }
 
   on({ event, callback }: { event: string, callback: Function }) {

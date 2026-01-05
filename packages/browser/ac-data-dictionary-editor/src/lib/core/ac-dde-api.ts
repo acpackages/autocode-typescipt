@@ -50,7 +50,7 @@ export class AcDDEApi {
   }
 
   dataStorage: AcDDEDataStorage;
-  editor!: AcDataDictionaryEditor;
+  editor: AcDataDictionaryEditor;
   editorState: AcDDEState;
   events: AcEvents = new AcEvents();
   eventHandler: AcDDEEventHandler;
@@ -60,7 +60,7 @@ export class AcDDEApi {
   sqlParser: AcSqlParser = new AcSqlParser();
 
   constructor({ editor }: { editor: AcDataDictionaryEditor }) {
-    editor = this.editor;
+    this.editor = editor;
     this.eventHandler = new AcDDEEventHandler({ editorApi: this });
     this.dataStorage = new AcDDEDataStorage({ editorApi: this });
     this.editorState = new AcDDEState({ editorApi: this });

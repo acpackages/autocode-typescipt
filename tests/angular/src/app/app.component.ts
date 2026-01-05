@@ -6,7 +6,7 @@ import { AcNgMultiRouterComponent, IAcNgRouterOutlet } from '@autocode-ts/ac-ang
 import { acInit, AcWindowTabs } from '@autocode-ts/ac-browser';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { dataDictionaryJson as actDataDictionary } from './../../../data/act-data-dictionary-v1';
-import { AppInputFieldElement } from '../components/input-elements/app-input-field-element';
+import { AppInputFieldElement } from './components/input-elements/app-input-field-element';
 import { AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';
 import { Router } from '@angular/router';
 import { AC_DATAGRID_AGGRID_DEFAULT_OPTIONS } from '@autocode-ts/ac-datagrid-on-ag-grid';

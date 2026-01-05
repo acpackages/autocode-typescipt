@@ -193,10 +193,10 @@ export class AcTagsInput extends AcInputBase {
     });
 
     this.textInputElement.addEventListener('blur', () => {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         if (this.textInputElement.value.trim()) this.addTag(this.textInputElement.value.trim());
         this.closeDropdown();
-      }, 150);
+      }, duration:150});
     });
 
     window.addEventListener('scroll', () => { if (this.isDropdownOpen) this.positionDropdown(); }, true);
@@ -313,7 +313,7 @@ export class AcTagsInput extends AcInputBase {
   }
 
   private positionDropdown() {
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       const rect = this.inputElement.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const spaceBelow = viewportHeight - rect.bottom;
@@ -323,7 +323,7 @@ export class AcTagsInput extends AcInputBase {
       this.dropdownContainer.style.left = rect.left + 'px';
       this.dropdownContainer.style.top = showAbove ? `${rect.top - dropdownHeight}px` : `${rect.bottom}px`;
       this.dropdownContainer.style.overflowY = 'auto';
-    }, 10);
+    },duration:10});
   }
 
   private renderVirtualList() {
@@ -334,7 +334,7 @@ export class AcTagsInput extends AcInputBase {
       this.listEl.innerHTML = `<div style="text-align:center;padding:4px;">No matching options!</div>`;
     }
     this.scrollable.registerExistingElements();
-    setTimeout(() => this.applyHighlightStyles(), 0);
+    this.delayedCallback.add({callback:() => this.applyHighlightStyles()});
     this.positionDropdown();
   }
 

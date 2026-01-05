@@ -6,6 +6,7 @@
 }
 ac-datagrid{
   height: 100%;
+  width: 100%;
 }
 .ag-row-even {
   background-color: #f1f1f1!important;

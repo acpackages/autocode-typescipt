@@ -2,7 +2,7 @@
 import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, AcResizablePanels, IAcDatagridActiveRowChangeEvent, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDDTrigger, AcEnumDDRowOperation } from "@autocode-ts/ac-data-dictionary";
-import { AC_DATA_MANAGER_EVENT, AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
+import { AC_DATA_MANAGER_EVENT, AcDelayedCallback, AcHooks, IAcContextEvent } from "@autocode-ts/autocode";
 import { AcDDEDatagridTextInput } from "../cell-editors/ac-dde-datagrid-text-input.element";
 import { AcDDEDatagrid } from "./ac-dde-datagrid.element";
 import { AcDDEDatagridRowAction } from "../shared/ac-dde-datagrid-row-action.element";
@@ -30,6 +30,7 @@ export class AcDDETriggersDatagrid {
   triggerMaster: AcDDETriggerMaster;
   hooks: AcHooks = new AcHooks();
   data: any[] = [];
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   editorPanels: AcResizablePanels = new AcResizablePanels();
 
@@ -37,11 +38,11 @@ export class AcDDETriggersDatagrid {
     this.ddeDatagrid = new AcDDEDatagrid({ editorApi: editorApi });
     this.ddeDatagrid.datagridApi.on({
       event: AC_DATAGRID_EVENT.ActiveRowChange, callback: (args: IAcDatagridActiveRowChangeEvent) => {
-        setTimeout(() => {
+        this.delayedCallback.add({callback:() => {
           this.editorApi.hooks.execute({ hook: AcEnumDDEHook.TableEditorActiveTableChange });
           this.activeTrigger = this.ddeDatagrid.datagridApi!.activeDatagridRow!.data;
           this.triggerMaster.trigger = this.activeTrigger!;
-        }, 10);
+        }, duration:10});
       }
     });
     this.ddeDatagrid.datagridApi.on({
@@ -196,14 +197,14 @@ export class AcDDETriggersDatagrid {
     </ac-resizable-panels>`;
     this.editorPanels = this.element.querySelector('.editor-resizable-panels') as AcResizablePanels;
 
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.editorPanels.setPanelSizes({
         panelSizes: [
           { size: 60, index: 0 },
           { size: 40, index: 1 }
         ]
       });
-    }, 50);
+    }, duration:50});
 
     const datagridWrapper = this.element.querySelector('[ac-dde-triggers-wrapper]') as HTMLElement;
     datagridWrapper.append(this.ddeDatagrid.element);

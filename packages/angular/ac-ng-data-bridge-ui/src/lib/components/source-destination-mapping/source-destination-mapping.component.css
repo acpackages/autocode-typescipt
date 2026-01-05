@@ -1,0 +1,5 @@
+.mapping-container{
+  display: flex;
+  flex-direction: column;
+  height: -webkit-fill-available;
+}

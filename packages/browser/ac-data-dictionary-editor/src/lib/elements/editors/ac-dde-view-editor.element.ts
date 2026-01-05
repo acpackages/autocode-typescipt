@@ -9,7 +9,7 @@ import { AcEnumDDEEvent } from '../../enums/ac-enum-dde-event.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
 import { AcDDEViewColumnsDatagrid, AcDDEViewsDatagrid, IAcDDEView, IAcDDEViewColumn, IAcDDEViewEditorState } from '../../_ac-data-dictionary-editor.export';
 import { AcDDEViewMaster } from '../masters/ac-dde-view-master.element';
-import { AC_DATA_MANAGER_EVENT } from '@autocode-ts/autocode';
+import { AC_DATA_MANAGER_EVENT, AcDelayedCallback } from '@autocode-ts/autocode';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDDEViewEditor {
@@ -29,7 +29,7 @@ export class AcDDEViewEditor {
   state: IAcDDEViewEditorState = {};
 
   editorInitialized: boolean = false;
-
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;
@@ -117,7 +117,7 @@ export class AcDDEViewEditor {
     this.editorPanels = this.element.querySelector('.editor-resizable-panels') as AcResizablePanels;
 
     this.detailPanels = this.element.querySelector('.detail-resizable-panels') as AcResizablePanels;
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.editorPanels.setPanelSizes({
         panelSizes: [
           { size: 30, index: 0 },
@@ -130,7 +130,7 @@ export class AcDDEViewEditor {
           { size: 70, index: 1 }
         ]
       });
-    }, 50);
+    }, duration:50});
 
 
     const viewsWrapper = this.element.querySelector('[ac-dde-views-wrapper]') as HTMLElement;
@@ -143,9 +143,9 @@ export class AcDDEViewEditor {
     columnsWrapper.append(this.viewColumnsDatagrid.element);
 
     this.refreshEditorState();
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.editorInitialized = true;
-    }, 500);
+    }, duration:500});
   }
 
 

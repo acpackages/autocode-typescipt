@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Autocode } from "@autocode-ts/autocode";
+import { AcDelayedCallback, Autocode } from "@autocode-ts/autocode";
 import { IAcScrollableOptions } from "../interfaces/ac-scrollable-options.inteface";
 import { IAcScrollingElement } from "../interfaces/ac-scrolling-element.interface";
 import { AcScrollableAttributeName } from "../consts/ac-scrollable-attribute-name.const";
@@ -17,6 +17,7 @@ export class AcScrollable {
   private scrollTop = 0;
   private isRendering: boolean = false;
   private isWorking: boolean = true;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor({ element, options = {} }: { element: HTMLElement, options?: IAcScrollableOptions }) {
     this.element = element;
@@ -229,9 +230,9 @@ export class AcScrollable {
     bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerAfter, '');
     bottomSpacer.style.height = this.scrollingElements.slice(endIndex + 1).reduce((sum, el) => sum + el.height, 0) + "px";
     this.element.appendChild(bottomSpacer);
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.isRendering = false;
-    }, 10);
+    }, duration:10});
   }
 
   replaceElementAt({ index, newElement }: { index: number, newElement: HTMLElement }) {

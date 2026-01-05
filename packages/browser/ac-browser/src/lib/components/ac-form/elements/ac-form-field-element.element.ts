@@ -46,9 +46,9 @@ export class AcFormField extends AcElementBase {
       this.updateState();
     }
     if(!foundInput){
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.bindInput();
-      }, 50);
+      }, duration:50});
     }
   }
 

@@ -39,9 +39,9 @@ export class AcDatagrid extends AcElementBase {
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagrid, element: this });
     // acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridContainer, element: this.containerElement });
     this.datagridApi.hooks.execute({hook:AC_DATAGRID_HOOK.DatagridInit});
-    setTimeout(() => {
-      // this.datagridApi.dataManager.getData();
-    }, 50);
+    // this.delayedCallback.add({callback:() => {
+    //   // this.datagridApi.dataManager.getData();
+    // }, duration:50});
   }
 
 }

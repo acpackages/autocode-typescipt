@@ -103,9 +103,9 @@ export class AcDrawer extends AcElementBase{
 
     if (this.showBackdrop && this.backdropEl) {
       this.ownerDocument.body.appendChild(this.backdropEl);
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.backdropEl!.style.opacity = '1';
-      }, 10);
+      }, duration:10});
     }
 
     requestAnimationFrame(() => {
@@ -130,11 +130,11 @@ export class AcDrawer extends AcElementBase{
 
     if (this.showBackdrop && this.backdropEl) {
       this.backdropEl.style.opacity = '0';
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         if (this.backdropEl && this.backdropEl.parentElement) {
           this.backdropEl.parentElement.removeChild(this.backdropEl);
         }
-      }, this.animationDuration);
+      }, duration:this.animationDuration});
     }
     this.events.execute({event:AcEnumDrawerEvent.Close});
     this.events.execute({event:AcEnumDrawerEvent.Toggle});

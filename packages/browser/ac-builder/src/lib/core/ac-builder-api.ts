@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcFilterableElementsAttributeName } from "@autocode-ts/ac-browser";
 import { stringToCamelCase } from "@autocode-ts/ac-extensions";
-import { AcEvents, AcHooks } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcEvents, AcHooks } from "@autocode-ts/autocode";
 import { Editor } from "grapesjs";
 import { AcBuilder } from "../elements/ac-builder.element";
 import { AC_BUILDER_ELEMENT_ATTRIBUTE } from "../consts/ac-builder-element-attribute.const";
@@ -30,6 +30,7 @@ export class AcBuilderApi {
 
   builder: AcBuilder;
   builderState: AcBuilderState;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   eventHandler: AcBuilderEventsHandler;
   events: AcEvents = new AcEvents();
   extensions: any = {};
@@ -83,7 +84,7 @@ export class AcBuilderApi {
           }
         },
         view: {
-          init(args: any) {
+          init(args: any){
             let currentCount: number = 0;
             if (instance.component && instance.component.elements) {
               currentCount = Object.values(instance.component.elements).filter((el) => { return el.name == element.name }).length - 1;
@@ -105,13 +106,13 @@ export class AcBuilderApi {
               }
             }
             instance.component.elements![instanceName] = componentElement;
-            setTimeout(() => {
-              this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementAdded, 'true');
-              setTimeout(() => {
-                this.el.removeAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementAdded);
-              }, 1500);
-              this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName, instanceName);
-            }, 1);
+            // this.delayedCallback.add({callback:() => {
+            //   this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementAdded, 'true');
+            //   this.delayedCallback.add({callback:() => {
+            //     this.el.removeAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementAdded);
+            //   }, duration:1500});
+            //   this.el.setAttribute(AC_BUILDER_ELEMENT_ATTRIBUTE.acBuilderElementInstanceName, instanceName);
+            // }, duration:1});
           },
 
         },

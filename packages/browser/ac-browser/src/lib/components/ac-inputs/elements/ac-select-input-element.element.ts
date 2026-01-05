@@ -157,7 +157,7 @@ export class AcSelectInput extends AcInputBase {
     });
 
     this.textInputElement.addEventListener("blur", () => {
-      setTimeout(() => this.closeDropdown(), 150);
+      this.delayedCallback.add({callback:() => this.closeDropdown(), duration:150});
     });
 
     this.textInputElement.addEventListener("keydown", async (e) => {
@@ -274,7 +274,7 @@ export class AcSelectInput extends AcInputBase {
   private ensureHighlightInView() {
     if (this.highlightingIndex < 0) return;
     this.scrollToIndex(this.highlightingIndex);
-    setTimeout(() => this.applyHighlightStyles(), 0);
+    this.delayedCallback.add({callback:() => this.applyHighlightStyles(), duration:0});
   }
 
   override focus(): void {
@@ -381,9 +381,9 @@ export class AcSelectInput extends AcInputBase {
       });
 
       this.dropdownContainer.style.display = "block";
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.renderVirtualList();
-      }, 1);
+      }, duration:1});
     }
   }
 
@@ -420,7 +420,7 @@ export class AcSelectInput extends AcInputBase {
 
     this.popper?.update();
 
-    setTimeout(() => this.applyHighlightStyles(), 0);
+    this.delayedCallback.add({callback:() => this.applyHighlightStyles()});
   }
 
   setValueLabel() {

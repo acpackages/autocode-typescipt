@@ -1,12 +1,23 @@
 {
   "name": "@autocode-ts/ac-data-bridge",
   "version": "0.0.1",
-  "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-data-bridge.js",
+  "module": "./ac-data-bridge.js",
+  "browser": "./ac-data-bridge.umd.cjs",
+  "types": "./ac-data-bridge.d.ts",
+  "exports": {
+    "import": "./ac-data-bridge.js",
+    "require": "./ac-data-bridge.cjs"
+  },
   "dependencies": {
     "comlink": "^4.4.2",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "@autocode-ts/ac-data-dictionary":"0.0.1",
+    "@autocode-ts/ac-extensions":"0.0.1",
+    "@autocode-ts/autocode":"0.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

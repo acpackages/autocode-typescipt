@@ -2,7 +2,7 @@
 import { AcTextareaInput } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { IAcDDEView, IAcDDEViewColumn } from "../../_ac-data-dictionary-editor.export";
-import { AcEvents } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcEvents } from "@autocode-ts/autocode";
 
 export class AcDDEViewMaster {
   private _view: IAcDDEView | any;
@@ -20,6 +20,7 @@ export class AcDDEViewMaster {
   btnSetColumns!: HTMLButtonElement;
   events: AcEvents = new AcEvents();
   changeTimeout: any;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor() {
     this.element.style.display = 'contents';
@@ -107,10 +108,10 @@ export class AcDDEViewMaster {
     if (this.changeTimeout) {
       clearTimeout(this.changeTimeout);
     }
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.view.viewQuery = this.queryInput.value;
       this.events.execute({ event: 'change', args: { view: this.view } });
-    }, 300);
+    }, duration:300});
   }
 
   on({ event, callback }: { event: string, callback: Function }) {

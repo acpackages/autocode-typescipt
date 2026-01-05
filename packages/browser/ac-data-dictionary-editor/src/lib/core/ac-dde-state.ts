@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcJsonUtils } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcJsonUtils, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { IAcDatagridState } from "@autocode-ts/ac-browser";
 import { IAcDDEState } from "../interfaces/ac-dde-state.interface";
 import { AcDDEApi } from "./ac-dde-api";
@@ -23,7 +23,6 @@ export class AcDDEState {
   static readonly KeyViewColumnssDatagrid = "viewColumnsDatagrid";
 
   editorApi!:AcDDEApi;
-  notifyTimeout:any;
 
   private _dataDictionariesDatagrid:IAcDatagridState  = {};
   get dataDictionariesDatagrid():IAcDatagridState {
@@ -157,6 +156,8 @@ export class AcDDEState {
     }
   }
 
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
+
   constructor({editorApi}:{editorApi:AcDDEApi}){
     this.editorApi = editorApi;
   }
@@ -196,13 +197,15 @@ export class AcDDEState {
     }
   }
 
+  destroy(){
+    this.delayedCallback.destroy();
+    acNullifyInstanceProperties({instance:this})
+  }
+
   notifyChange(source:string){
-    if(this.notifyTimeout){
-      clearTimeout(this.notifyTimeout);
-    }
-    this.notifyTimeout = setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.editorApi.eventHandler.handleStateChange();
-    }, 500);
+    }, duration:500,key:'notifyChange'});
   }
 
   refresh(){

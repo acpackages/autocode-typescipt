@@ -60,7 +60,7 @@ export class AcModal extends AcElementBase {
     this.style.opacity = "0";
     if (this.backdrop) this.backdrop.style.opacity = "0";
 
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.style.display = "none";
       if (this.backdrop && this.backdrop.parentElement) {
         this.backdrop.parentElement.removeChild(this.backdrop);
@@ -70,7 +70,7 @@ export class AcModal extends AcElementBase {
       this.ownerDocument.removeEventListener("keydown", this.handleEscape);
       this.style.transition = "";
       this.style.opacity = "";
-    }, this.animationDuration);
+    }, duration:this.animationDuration});
   }
 
   private handleEscape = (e: KeyboardEvent) => {
@@ -124,13 +124,13 @@ export class AcModal extends AcElementBase {
 
     acMorphElement({ source: triggerElement, destination: this, duration: this.animationDuration, sourceColor: morphTriggerColor, destinationColor: morphModalColor });
 
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.style.visibility = "visible";
       this.style.opacity = "1";
       this.style.pointerEvents = "";
       if (this.backdrop) this.backdrop.style.opacity = "1";
       this.events.execute({ event: AcEnumModalEvent.Open });
-    }, this.animationDuration);
+    }, duration:this.animationDuration});
 
     this.backdrop.addEventListener("click", () => {
       if (this.closeOnOutsideClick) {

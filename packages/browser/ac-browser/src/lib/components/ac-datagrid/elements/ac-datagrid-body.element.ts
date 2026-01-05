@@ -22,9 +22,9 @@ export class AcDatagridBody extends AcElementBase {
       hook: AC_DATAGRID_HOOK.DisplayedRowsChange,
       callback: (event: IAcDatagridDisplayedRowsChangeEvent) => {
         if (!this.isRendering) {
-          setTimeout(() => {
+          this.delayedCallback.add({callback:() => {
             this.setDisplayRows();
-          }, 1);
+          }, duration:1});
         }
       }
     });

@@ -12,7 +12,7 @@ import { AcDatagridTreeTableExtensionOnAgGrid } from './ac-datagrid-tree-table-e
 import { AcDatagridRowDraggingExtensionOnAgGrid } from './ac-datagrid-row-dragging-extension-on-ag-grid';
 import { IAcDatagriOnAgGridRowAddHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface';
 import { IAcDatagriOnAgGridRowUpdateHookArgs } from '../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface';
-import { AcEnumConditionOperator, AC_DATA_MANAGER_HOOK, AcEnumLogicalOperator, AcFilterGroup, AcLogger, AcSortOrder, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs, acNullifyInstanceProperties } from '@autocode-ts/autocode';
+import { AcEnumConditionOperator, AC_DATA_MANAGER_HOOK, AcEnumLogicalOperator, AcFilterGroup, AcLogger, AcSortOrder, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs, acNullifyInstanceProperties, AcDelayedCallback } from '@autocode-ts/autocode';
 import { AcDatagridOnAgGridEventHandler } from './ac-datagrid-on-ag-grid-event-handler';
 import { stringEqualsIgnoreCase } from '@autocode-ts/ac-extensions';
 import { AC_DATAGRID_AGGRID_DEFAULT_OPTIONS } from '../const/ac-datagrid-aggrid-default-options.const';
@@ -109,6 +109,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   isFirstDataRendered: boolean = false;
   leftFooterContainer?: HTMLElement;
   rightFooterContainer?: HTMLElement;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   private agGridEventHandler = new AcDatagridOnAgGridEventHandler();
   private agGridRowDragExt = new AcDatagridRowDraggingExtensionOnAgGrid();
@@ -492,15 +493,15 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
               const pageSize = this.gridApi.paginationGetPageSize();
               const page = Math.floor(datagridRow.index / pageSize);
               this.gridApi.paginationGoToPage(page);
-              setTimeout(() => {
+              this.delayedCallback.add({callback:() => {
                 this.gridApi!.ensureIndexVisible(datagridRow.index);
-              });
+              }});
             }
           }
           else {
-            timeout = setTimeout(() => {
+            timeout = this.delayedCallback.add({callback:() => {
               handleEnsureRow();
-            }, 10);
+            }, duration:10});
           }
         }
         handleEnsureRow();
@@ -725,14 +726,11 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.searchInputContainer.innerHTML = `<input type="text" class="input-ac-datagrid-search" placeholder="Search..."/>`;
     const searchInput: HTMLInputElement = this.searchInputContainer.querySelector('input') as HTMLInputElement;
     searchInput.addEventListener('input', (event: any) => {
-      if (this.searchInputTimeout) {
-        clearTimeout(this.searchInputTimeout);
-      }
-      this.searchInputTimeout = setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         if(this.datagridApi){
           this.datagridApi.dataManager.searchQuery = searchInput.value;
         }
-      }, 300);
+      }, duration:300,key:'searchInput'});
     });
 
     this.setDataSourceType();
@@ -828,9 +826,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         containerElement.append(this.afterRowsFooterExtension.footerElement);
       }
       if (retryOperation) {
-        setTimeout(() => {
+        this.delayedCallback.add({callback:() => {
           this.setAfterRowsFooter();
-        }, 100);
+        }, duration:100});
       }
     }
   }
@@ -997,9 +995,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     if (state && this.gridApi) {
       this.agGridEventHandler.pauseEvents = true;
       this.gridApi.setState(state);
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.agGridEventHandler.pauseEvents = false;
-      }, 100);
+      }, duration:100});
     }
   }
 

@@ -93,9 +93,9 @@ export class AcResizablePanel extends AcElementBase {
       this.resizablePanels.registerResizablePanel(this);
     }
     else {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.notifyResizablePanels();
-      }, 50);
+      }, duration:50});
     }
   }
 
@@ -175,33 +175,33 @@ export class AcResizablePanel extends AcElementBase {
       this.style.flexShrink = "0";
       // this.style.transition = "flex-basis 0.3s ease";
       this.style.flexBasis = `${this.size}%`;
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         if (this.isHorizontal) {
           this.style.minWidth = `${this.size}%`;
           this.style.maxWidth = `${this.size}%`;
-          setTimeout(() => {
+          this.delayedCallback.add({callback:() => {
             this.resizablePanels!.updateAllowed = false;
             this.style.minWidth = ``;
             this.style.maxWidth = ``;
-            setTimeout(() => {
+            this.delayedCallback.add({callback:() => {
               this.resizablePanels!.updateAllowed = true;
-            }, 100);
-          }, 500);
+            },duration: 100});
+          }, duration:500});
         }
         else {
           this.style.minHeight = `${this.size}%`;
           this.style.maxHeight = `${this.size}%`;
-          setTimeout(() => {
+          this.delayedCallback.add({callback:() => {
             this.resizablePanels!.updateAllowed = false;
             this.style.minHeight = ``;
             this.style.maxHeight = ``;
-            setTimeout(() => {
+            this.delayedCallback.add({callback:() => {
               this.resizablePanels!.updateAllowed = true;
-            }, 100);
-          }, 100);
+            }, duration:100});
+          }, duration:100});
         }
         this.style.transition = "";
-      }, 300);
+      }, duration:300});
     }
   }
 

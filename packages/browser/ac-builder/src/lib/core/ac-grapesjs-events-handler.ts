@@ -6,6 +6,7 @@ import { AC_BUILDER_ELEMENT_ATTRIBUTE } from "../consts/ac-builder-element-attri
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { AcBuilderElementsManager } from "./ac-builder-elements-manager";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 export class AcGrapesJSEventsHandler {
   builderApi: AcBuilderApi;
@@ -13,6 +14,7 @@ export class AcGrapesJSEventsHandler {
   grapesJSApi: Editor;
   builderIframe?: HTMLIFrameElement;
   builderRoot?: HTMLElement;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
     this.eventsHandler = builderApi.eventHandler;
@@ -57,9 +59,9 @@ export class AcGrapesJSEventsHandler {
             setInteractive(cmp);
           }
           else {
-            setTimeout(() => {
+            this.delayedCallback.add({callback:() => {
               createComponent();
-            }, 1);
+            }, duration:1});
           }
         }
         createComponent();
@@ -109,9 +111,9 @@ export class AcGrapesJSEventsHandler {
   registerBlockListeners() {
     const editor = this.grapesJSApi;
     editor.on('block:add', (args) => {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.builderApi.builder.setFilterableElementsGroups();
-      }, 1);
+      }, duration:1});
     });
     editor.on('block:remove', (args) => {
       //
@@ -163,9 +165,9 @@ export class AcGrapesJSEventsHandler {
           this.eventsHandler.handleElementAdd({ element: args.view.el });
         }
         else {
-          setTimeout(() => {
+          this.delayedCallback.add({callback:() => {
             handleFunction();
-          }, 10);
+          }, duration:10});
         }
       }
       handleFunction();
@@ -394,14 +396,14 @@ export class AcGrapesJSEventsHandler {
       menuElement.addEventListener('click', () => { callback(menuElement) });
       return menuElement;
     };
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       toolbarEl.innerHTML = '';
       toolbarEl.style.background = '#303030ff';
       toolbarEl.style.color = '#fff';
       toolbarEl.style.borderRadius = '4px';
       toolbarEl.style.padding = '2px';
       toolbarEl.style.border = 'solid 1px #555'
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
 
         if (componentElement && componentElement.instance) {
           const builderElement = AcBuilderElementsManager.getElement({ name: componentElement.name });
@@ -446,8 +448,8 @@ export class AcGrapesJSEventsHandler {
             comp.remove();
           }
         }));
-      }, 1);
-    }, 1);
+      }, duration:1});
+    }, duration:1});
   }
 
 }

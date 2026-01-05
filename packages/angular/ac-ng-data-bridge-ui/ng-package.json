@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/packages/angular/ac-ng-data-bridge-ui",
+  "lib": {
+    "entryFile": "src/ac-ng-data-bridge-ui.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@angular/cdk",
+    "@autocode-ts/ac-browser",
+    "@autocode-ts/ac-extensions",
+    "@autocode-ts/ac-ng-runtime",
+    "@autocode-ts/autocode",
+    "@primeng/themes",
+    "tslib"
+  ],
+  "deleteDestPath": true
+}

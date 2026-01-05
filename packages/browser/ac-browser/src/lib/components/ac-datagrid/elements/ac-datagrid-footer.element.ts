@@ -17,11 +17,6 @@ export class AcDatagridFooter extends AcElementBase {
   searchInput:HTMLInputElement = this.ownerDocument.createElement('input');
   paginationContainer: HTMLElement = this.ownerDocument.createElement('div');
   searchContainer: HTMLElement = this.ownerDocument.createElement('div');
-  searchTimeout:any;
-
-  constructor(){
-    super();
-  }
 
   override init(): void {
     super.init();
@@ -50,14 +45,11 @@ export class AcDatagridFooter extends AcElementBase {
     this.searchInput.classList.add('ac-datagrid-search-input');
     this.searchInput.placeholder = "Search rows...";
     this.searchInput.addEventListener('input',(event)=>{
-      if(this.searchTimeout){
-        clearTimeout(this.searchTimeout);
-      }
-      this.searchTimeout = setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         if(this.datagridApi){
           this.datagridApi.dataManager.searchQuery = this.searchInput.value;
         }
-      }, 300);
+      }, duration:300,key:'searchInput'});
     });
   }
 }

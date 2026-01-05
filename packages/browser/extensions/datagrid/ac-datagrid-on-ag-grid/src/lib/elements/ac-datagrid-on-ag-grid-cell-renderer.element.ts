@@ -3,7 +3,7 @@
 import { AcDatagridApi, IAcDatagridCell, IAcDatagridColumn, IAcDatagridCellRenderer, IAcDatagridRow, IAcDatagridCellElementArgs, AC_DATAGRID_EVENT, AC_DATAGRID_HOOK } from "@autocode-ts/ac-browser";
 import { AgPromise, ICellRendererComp, ICellRendererParams } from "ag-grid-community";
 import { AcDatagridOnAgGridExtension } from "../core/ac-datagrid-on-ag-grid-extension";
-import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
+import { AcDelayedCallback, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   datagridApi?: AcDatagridApi;
@@ -15,16 +15,16 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
   params: any;
   element: HTMLElement = document.createElement('div');
   renderer: any;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   private isFocused: boolean = false;
-  private blurTimeout: any;
 
   handleBlur: Function = () => {
     if (this.datagridCell && this.datagridCell.element) {
       this.datagridCell.element.blur();
     }
-    this.blurTimeout = setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.isFocused = false;
-    }, 50);
+    }, duration:50});
   };
 
   handleFocus: Function = () => {
@@ -50,11 +50,11 @@ export class AcDatagridOnAgGridCellRenderer implements ICellRendererComp {
       }
     }
     this.element.remove();
-    clearTimeout(this.blurTimeout);
     if(this.datagridApi){
       this.datagridApi.hooks.execute({hook:AC_DATAGRID_EVENT.CellRendererElementDestroy,args:{datagridCell:this.datagridCell}});
       this.datagridApi.events.execute({event:AC_DATAGRID_EVENT.CellRendererElementDestroy,args:{datagridCell:this.datagridCell}});
     }
+    this.delayedCallback.destroy();
     acNullifyInstanceProperties({ instance: this });
   }
 

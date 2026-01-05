@@ -5,7 +5,7 @@ type TimeoutHandle = ReturnType<typeof setTimeout>;
 export class AcDelayedCallback {
   private timeouts: Record<string, TimeoutHandle> = {};
 
-  add({ callback, key, duration = 0 }: { callback: Function, key?: string, duration?: number }) {
+  add({ callback, key, duration = 0 }: { callback: Function, key?: string, duration?: number }):string {
     if (!key) {
       key = Autocode.uuid();
     }
@@ -16,6 +16,7 @@ export class AcDelayedCallback {
       delete this.timeouts[key];
       callback();
     }, duration);
+    return key;
   }
 
   clearAll() {
@@ -35,6 +36,10 @@ export class AcDelayedCallback {
   destroy(){
     this.clearAll();
     acNullifyInstanceProperties({instance:this});
+  }
+
+  remove({key}:{key:string}){
+    this.clearTimeoutSafe(key);
   }
 
   reset({ callback, key, duration = 0 }: { callback: Function, key: string, duration?: number }) {

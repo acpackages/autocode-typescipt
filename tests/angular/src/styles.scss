@@ -3,6 +3,8 @@
 
 @use "./../../../packages/browser/ac-browser/src/lib/components/ac-pagination/css/ac-pagination.css";
 @use "./../../../packages/browser/ac-browser/src/lib/components/ac-datagrid/css/ac-datagrid.css";
+@use "./../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css";
+@use "./../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css";
 @use "./scss/window-tabs.scss";
 
 .ag-side-buttons {

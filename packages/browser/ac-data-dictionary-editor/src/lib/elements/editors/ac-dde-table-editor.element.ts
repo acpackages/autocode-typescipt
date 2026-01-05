@@ -15,7 +15,7 @@ import { IAcDDETrigger } from '../../interfaces/ac-dde-trigger.inteface';
 import { AcEnumDDEEvent } from '../../enums/ac-enum-dde-event.enum';
 import { AcDDECssClassName } from '../../consts/ac-dde-css-class-name.const';
 import { IAcDDETableEditorState } from '../../interfaces/ac-dde-table-editor-state.interface';
-import { AC_DATA_MANAGER_EVENT } from '@autocode-ts/autocode';
+import { AC_DATA_MANAGER_EVENT, AcDelayedCallback } from '@autocode-ts/autocode';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 export class AcDDETableEditor {
@@ -31,6 +31,7 @@ export class AcDDETableEditor {
 
   editorPanels!: AcResizablePanels;
   detailPanels!: AcResizablePanels;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   state: IAcDDETableEditorState = {};
 
@@ -154,7 +155,7 @@ export class AcDDETableEditor {
     this.editorPanels = this.element.querySelector('.editor-resizable-panels') as AcResizablePanels;
 
     this.detailPanels = this.element.querySelector('.detail-resizable-panels') as AcResizablePanels;
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.editorPanels.setPanelSizes({
       panelSizes: [
         { size: 35, index: 0 },
@@ -168,7 +169,7 @@ export class AcDDETableEditor {
         { size: 20, index: 1 }
       ]
     });
-    }, 5);
+    }, duration:5});
 
 
     const tablesWrapper = this.element.querySelector('[ac-dde-tables-wrapper]') as HTMLElement;
@@ -184,9 +185,9 @@ export class AcDDETableEditor {
     triggersWrapper.append(this.tableTriggersDatagrid.element);
 
     this.refreshEditorState();
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.editorInitialized = true;
-    }, 50);
+    }, duration:50});
   }
 
   refreshEditorState() {

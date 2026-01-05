@@ -86,9 +86,9 @@ export class AcDatagridSelectInput extends AcInputBase {
       this.datagrid.datagridApi.dataManager.searchQuery = val;
       const event: CustomEvent = new CustomEvent('searchQueryChange', { detail: { searchQuery: this.searchQuery } });
       this.dispatchEvent(event);
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.highlightRow();
-      }, 100);
+      }, duration:100});
     }
   }
 
@@ -105,35 +105,24 @@ export class AcDatagridSelectInput extends AcInputBase {
       !this.textInputElement.contains(target) &&
       !this.dropdownContainer.contains(target)
     ) {
-      if (this.outsideCloseTimeout) {
-        clearTimeout(this.outsideCloseTimeout);
-      }
-      this.outsideCloseTimeout = setTimeout(() => {
-        clearTimeout(this.outsideCloseTimeout);
+      this.delayedCallback.add({callback:() => {
         if (!this.isFocused) {
           this.closeDropdown();
         }
-      }, 10);
+      }, duration:10,key:'outsideCloseTimeout'});
     }
   };
   private visibilityObserver?: IntersectionObserver | null;
   private resizeObserver?: ResizeObserver | null;
-  private resizeTimeout: any;
   selectedRows: any[] = [];
   previousState: any = {};
   dropdownSize: { height: number, width: number } = { height: 300, width: 600 };
-  private searchInputTimeout: any;
-  private outsideCloseTimeout: any;
   isFocused: boolean = false;
 
   override destroy(): void {
-    console.log("Destroying datagrid dropdown");
     if(this.isDropdownOpen){
       this.closeDropdown();
     }
-    clearTimeout(this.searchInputTimeout);
-    clearTimeout(this.resizeTimeout);
-    clearTimeout(this.outsideCloseTimeout);
     if (this.datagrid) {
       this.datagrid.destroy();
     }
@@ -143,15 +132,12 @@ export class AcDatagridSelectInput extends AcInputBase {
   private attachEvents() {
     this.textInputElement.addEventListener("input", (event) => {
       this.dispatchEvent(acCloneEvent(event));
-      if (this.searchInputTimeout) {
-        clearTimeout(this.searchInputTimeout);
-      }
-      this.searchInputTimeout = setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         const term = this.textInputElement.value.toLowerCase();
         if (term != this.searchQuery) {
           this.searchQuery = term;
         }
-      }, 100);
+      }, duration:100,key:'searchInputTimeout'});
 
       this.openDropdown();
     });
@@ -161,7 +147,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     });
     this.textInputElement.addEventListener("click", (event) => {
       this.dispatchEvent(acCloneEvent(event));
-      setTimeout(() => this.openDropdown(), 150);
+      this.delayedCallback.add({callback:() => this.openDropdown(), duration:150});
     });
     this.textInputElement.addEventListener("keydown", (e: any) => {
       this.dispatchEvent(acCloneEvent(e));
@@ -333,28 +319,24 @@ export class AcDatagridSelectInput extends AcInputBase {
       ],
     });
 
-    setTimeout(() => this.popper?.update(), 0);
+    this.delayedCallback.add({callback:() => this.popper?.update(), duration:0});
 
     this.resizeObserver = new ResizeObserver(entries => {
       const rect = (entries[0].target as HTMLElement).getBoundingClientRect();
       this.dropdownSize.width = rect.width;
       this.dropdownSize.height = rect.height;
       this.popper?.update();
-      if (this.resizeTimeout) {
-        clearTimeout(this.resizeTimeout);
-      }
-      this.resizeTimeout = setTimeout(() => {
-        clearTimeout(this.resizeTimeout);
+      this.delayedCallback.add({callback:() => {
         const resizeEvent: CustomEvent = new CustomEvent('dropdownResize', { detail: { dropdownSize: this.dropdownSize } });
         this.dispatchEvent(resizeEvent);
         this.notifyState();
-      }, 300);
+      }, duration:300,key:'resizeCallback'});
     });
 
     this.resizeObserver.observe(this.dropdownContainer);
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.ownerDocument.addEventListener('click', this.clickOutsideListener);
-    }, 350);
+    }, duration:350,key:'outsideClickListerner'});
 
     this.visibilityObserver = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting && this.isDropdownOpen) this.closeDropdown();
@@ -364,9 +346,9 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.datagrid.datagridApi.dataManager.getData();
     const event: CustomEvent = new CustomEvent('dropdownOpen', {});
     this.dispatchEvent(event);
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       this.textInputElement.focus();
-    }, 0);
+    }, duration:0});
   }
 
   private setSelectedRows({ rows }: { rows: any[] }) {
@@ -429,7 +411,7 @@ export class AcDatagridSelectInput extends AcInputBase {
 
     retry = !this.datagrid.datagridApi.dataManager.isFirstRowsSet;
     if (retry) {
-      setTimeout(() => this.setSelectedRowsFromValue(), 1);
+      this.delayedCallback.add({callback:() => this.setSelectedRowsFromValue(), duration:1});
       return;
     }
 

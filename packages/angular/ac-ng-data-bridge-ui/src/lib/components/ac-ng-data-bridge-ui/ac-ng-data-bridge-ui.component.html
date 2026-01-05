@@ -1,0 +1,11 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+
+<ng-container *ngIf="dataBridge.currentStage == 'NONE'">
+  <upload-file [dataBridge]="dataBridge"></upload-file>
+</ng-container>
+<ng-container *ngIf="dataBridge.currentStage == 'DATA_SET'">
+  <source-destination-mapping [dataBridge]="dataBridge"></source-destination-mapping>
+</ng-container>
+<ng-container *ngIf="dataBridge.currentStage == 'PROCESSING'">
+  <data-processing [dataBridge]="dataBridge"></data-processing>
+</ng-container>

@@ -8,6 +8,7 @@
     "build:ac-browser": "nx run ac-browser:build",
     "build:ac-builder": "nx run ac-builder:build",
     "build:ac-bwipjs-pipe": "nx run ac-bwipjs-pipe:build",
+    "build:ac-data-bridge": "nx run ac-data-bridge:build",
     "build:ac-data-dictionary": "nx run ac-data-dictionary:build",
     "build:ac-data-dictionary-components": "nx run ac-data-dictionary-components:build",
     "build:ac-data-dictionary-editor": "nx run ac-data-dictionary-editor:build",

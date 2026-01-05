@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 // ac-message.ts
 type ToastPosition =
@@ -77,6 +78,7 @@ export class AcMessage {
   // track active toasts by id for closeAll
   private static activeToasts = new Map<number, HTMLElement>();
   private static toastIdCounter = 1;
+  private static delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   // CSS injected once
   private static cssInjected = false;
@@ -135,7 +137,7 @@ export class AcMessage {
     opts.onOpen?.(toast);
 
     // timer and progress
-    let timerId: number | null = null;
+    let timerId: string | null = null;
     let start = Date.now();
     let remaining = opts.timer ?? 0;
     let paused = false;
@@ -144,14 +146,14 @@ export class AcMessage {
     const startTimer = () => {
       if (!remaining || remaining <= 0) return;
       start = Date.now();
-      timerId = window.setTimeout(() => close('timer'), remaining);
+      timerId = this.delayedCallback.add({callback:() => close('timer'), duration:remaining});
       if (progressBar && opts.progressBar) this.animateProgress(progressBar, remaining);
     };
 
     const pauseTimer = () => {
       if (!timerId) return;
       paused = true;
-      clearTimeout(timerId);
+      this.delayedCallback.remove({key:timerId});
       timerId = null;
       remaining = remaining - (Date.now() - start);
       if (progressBar) progressBar.style.transition = '';
@@ -179,15 +181,15 @@ export class AcMessage {
       opts.onClose?.(toast);
       toast.classList.add('acmsg-hide');
       // wait animation then remove
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         container.removeChild(toast);
         this.activeToasts.delete(id);
         if (!container.children.length) {
           container.remove();
           this.containers.delete(pos);
         }
-      }, 260);
-      if (timerId) { clearTimeout(timerId); timerId = null; }
+      }, duration:260});
+      if (timerId) { this.delayedCallback.remove({key:timerId}); timerId = null; }
     };
 
     // close button

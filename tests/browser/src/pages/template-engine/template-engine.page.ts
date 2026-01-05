@@ -1,4 +1,4 @@
-import { AcTemplateEngine } from '@autocode-ts/ac-template-engine';
+// import { AcTemplateEngine } from '@autocode-ts/ac-template-engine';
 
 export class TemplateEnginePage extends HTMLElement {
   public static observedAttributes = [];
@@ -82,9 +82,9 @@ export class TemplateEnginePage extends HTMLElement {
         console.log('AppElement destroyed');
       },
     };
-    const engine = new AcTemplateEngine({context:ctx,element:this});
-    engine.render();
-    console.log(engine);
-    btnShow?.addEventListener('click',()=>{engine.elementContext.setContextValue({key:'show',value:false})})
+    // const engine = new AcTemplateEngine({context:ctx,element:this});
+    // engine.render();
+    // console.log(engine);
+    // btnShow?.addEventListener('click',()=>{engine.elementContext.setContextValue({key:'show',value:false})})
   }
 }

@@ -4,29 +4,24 @@ import { AcDataDictionaryEditor } from "./ac-data-dictionary-editor.element";
 import { AC_DDE_TAG } from "../../_ac-data-dictionary-editor.export";
 
 export class AcDDEBase extends AcElementBase{
-  editorApi!: AcDDEApi;
-  editor!:AcDataDictionaryEditor;
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.autoSetEditor();
-  }
+  editorApi?: AcDDEApi;
+  editor?:AcDataDictionaryEditor;
 
   private autoSetEditor(){
     const editor = this.closest(AC_DDE_TAG.dataDictionaryEditor);
     if(editor){
       this.editor = editor as AcDataDictionaryEditor;
       this.editorApi = this.editor.editorApi;
-      this.init();
     }
     else{
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.autoSetEditor();
-      }, 10);
+      }, duration:10});
     }
   }
 
-  protected init(){
-    //
+  override init(){
+    super.init();
+    this.autoSetEditor();
   }
 }

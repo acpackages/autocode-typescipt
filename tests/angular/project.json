@@ -22,7 +22,8 @@
           }
         ],
         "styles": ["tests/angular/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "webWorkerTsConfig": "tests/angular/tsconfig.worker.json"
       },
       "configurations": {
         "production": {

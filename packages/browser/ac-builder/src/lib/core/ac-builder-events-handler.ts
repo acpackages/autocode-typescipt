@@ -8,9 +8,11 @@ import { IAcBuilderElementEventArgs } from "../interfaces/event-args/ac-builder-
 import { AcBuilderElementsManager } from "./ac-builder-elements-manager";
 import { IAcComponentElement } from "../interfaces/ac-component-element.interface";
 import { IAcBuilderElement } from "../interfaces/ac-builder-element.interface";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 export class AcBuilderEventsHandler {
   builderApi: AcBuilderApi;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
   }
@@ -113,9 +115,9 @@ export class AcBuilderEventsHandler {
       }
     }
     else {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.initBuilderElementInstance({ componentElement, builderElement });
-      }, 5);
+      }, duration:5});
     }
   }
 

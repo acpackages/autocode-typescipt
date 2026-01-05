@@ -200,7 +200,7 @@ export class AcCollapse extends AcElementBase{
     this.contentElement.style.overflow = "hidden";
     this.contentElement.style.opacity = "0";
 
-    setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       if (this.contentElement) {
         this.contentElement.style.opacity = "1";
       }
@@ -209,7 +209,7 @@ export class AcCollapse extends AcElementBase{
       } else {
         this.close({ skipAnimation: true });
       }
-    }, 100);
+    }, duration:100});
   }
 
   setToggleElement({ element }: { element: HTMLElement }) {

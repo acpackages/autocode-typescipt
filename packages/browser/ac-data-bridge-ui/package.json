@@ -1,0 +1,21 @@
+{
+  "name": "@autocode-ts/ac-data-bridge-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./ac-data-bridge-ui.js",
+  "types": "./ac-data-bridge-ui.d.ts",
+  "exports":{
+    ".":{
+      "import": "./ac-data-bridge-ui.js",
+      "require": "./ac-data-bridge-ui.cjs"
+    }
+  },
+  "dependencies": {
+    "@autocode-ts/autocode": "^0.0.1",
+    "@autocode-ts/ac-browser": "^0.0.1",
+    "@autocode-ts/ac-data-bridge": "^0.0.1",
+    "@autocode-ts/ac-extensions": "^0.0.1",
+    "@autocode-ts/ac-icons": "^0.0.1"
+  }
+}

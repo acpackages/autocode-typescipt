@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 import { AcBuilderApi } from "../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../enums/ac-enum-builder-hook.enum";
 import { AcBuilderRuntimeComponent } from "./ac-builder-runtime-component";
@@ -6,6 +7,7 @@ import { AcBuilderRuntimeComponent } from "./ac-builder-runtime-component";
 export class AcBuilderDevelopmentRuntime {
   builderApi: AcBuilderApi;
   runtimeComponent?: AcBuilderRuntimeComponent;
+  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   constructor({ builderApi }: { builderApi: AcBuilderApi }) {
     this.builderApi = builderApi;
     this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ActiveComponentChange,callback:()=>{
@@ -26,9 +28,9 @@ export class AcBuilderDevelopmentRuntime {
 
   private refreshPage() {
     if(this.runtimeComponent){
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.runtimeComponent!.render();
-      }, 10);
+      }, duration:10});
     }
   }
 
