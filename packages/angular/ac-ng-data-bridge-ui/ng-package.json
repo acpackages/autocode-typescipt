@@ -6,8 +6,11 @@
   },
   "allowedNonPeerDependencies": [
     "@angular/cdk",
+    "@autocode-ts/ac-angular",
     "@autocode-ts/ac-browser",
+    "@autocode-ts/ac-data-bridge",
     "@autocode-ts/ac-extensions",
+    "@autocode-ts/ac-icons",
     "@autocode-ts/ac-ng-runtime",
     "@autocode-ts/autocode",
     "@primeng/themes",

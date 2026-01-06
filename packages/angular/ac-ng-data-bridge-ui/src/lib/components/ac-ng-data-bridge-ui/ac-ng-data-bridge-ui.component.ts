@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
 
 @Component({
@@ -12,6 +12,7 @@ import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
 })
 export class AcNgDataBridgeUiComponent {
   @Input() dataBridge?:AcDataBridge;
+  @Output() downloadTemplate:EventEmitter<any> = new EventEmitter();
 
   get currentStage():string {
     let result = '';
@@ -20,4 +21,10 @@ export class AcNgDataBridgeUiComponent {
     }
     return result;
   }
+
+
+  handleDownloadTemplate(){
+    this.downloadTemplate.emit();
+  }
+
 }

@@ -8,8 +8,11 @@
     "skipLibCheck": true,
     "paths": {
       "@autocode-ts/autocode": ["dist/packages/common/autocode"],
+      "@autocode-ts/ac-angular": ["dist/packages/angular/ac-angular"],
       "@autocode-ts/ac-browser": ["dist/packages/browser/ac-browser"],
+      "@autocode-ts/ac-data-bridge": ["dist/packages/common/ac-data-bridge"],
       "@autocode-ts/ac-extensions": ["dist/packages/common/ac-extensions"],
+      "@autocode-ts/ac-icons": ["dist/packages/browser/ac-icons"],
       "@autocode-ts/ac-ng-runtime": ["dist/packages/angular/ac-ng-runtime"],
     }
   },

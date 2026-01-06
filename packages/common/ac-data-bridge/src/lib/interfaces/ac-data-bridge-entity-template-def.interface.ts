@@ -12,7 +12,7 @@ export interface IAcDataBridgeEntityTemplateExtend{
 
 export interface IAcDataBridgeEntityTemplateDef{
   templateName: string;
-  destinationName?: string;
+  destinationName: string;
   templateFields: IAcDataBridgeField[],
   extendChildTemplates?:IAcDataBridgeEntityTemplateExtend[],
   extendParentTemplates?:IAcDataBridgeEntityTemplateExtend[]

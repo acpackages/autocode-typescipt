@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
@@ -10,15 +11,29 @@ import { IAcDataBridgeExistingEntity } from "../interfaces/ac-data-bridge-existi
 import { IAcDataBridgeField } from "../interfaces/ac-data-bridge-field.interface";
 import { IAcDataBridgeEntityTemplateDef } from "../interfaces/ac-data-bridge-entity-template-def.interface";
 import { AC_DATA_BRIDGE_DEFAULTS, IAcDataBridgeProcesedRow } from "@autocode-ts/ac-data-bridge";
-import { Autocode } from "@autocode-ts/autocode";
+import { AcEnumConditionOperator, AcEnumLogicalOperator, acEvaluateFilterGroup, Autocode, IAcFilterGroup } from "@autocode-ts/autocode";
 
 class EntityWorker {
   private worker: AcDataBridgeWorker;
   logMessages: boolean = false;
   entity?: IAcDataBridgeEntity;
   progress?: IAcDataBridgeProgress;
-  processedRows:IAcDataBridgeProcesedRow[] = [];
-  templateDef?:IAcDataBridgeEntityTemplateDef;
+  processedRows: IAcDataBridgeProcesedRow[] = [];
+  templateDef?: IAcDataBridgeEntityTemplateDef;
+  private dataKeys: string[] = [];
+
+  get primaryKeyFieldName(): string | undefined {
+    let result: any;
+    if (this.templateDef) {
+      const primaryField = this.templateDef.templateFields.find((field) => {
+        return field.isDestinationPrimaryKey
+      });
+      if (primaryField) {
+        result = primaryField.destinationFieldName;
+      }
+    }
+    return result;
+  }
 
   constructor({ worker }: { worker: AcDataBridgeWorker }) {
     this.worker = worker;
@@ -34,36 +49,41 @@ class EntityWorker {
   }
 
   addRow({ row, sourceRow }: { row: any, sourceRow?: any }): any {
-    let primaryKeyValue:any;
-    let primaryKeyField:any;
-    let templateUniqueKeyField:string|undefined;
-    let sourceUniqueValue:string = '';
-    const saveRow:any = {...row};
-    if(this.templateDef){
-      for(const field of this.templateDef.templateFields){
-        if(field.isDestinationPrimaryKey && field.destinationFieldName && field.destinationName == this.templateDef.destinationName){
+    let primaryKeyValue: any;
+    let primaryKeyField: any;
+    let templateUniqueKeyField: string | undefined;
+    let sourceUniqueValue: string = '';
+    const saveRow: any = { ...row };
+    if (this.templateDef) {
+      for (const field of this.templateDef.templateFields) {
+        if (field.isDestinationPrimaryKey && field.destinationFieldName && field.destinationName == this.templateDef.destinationName) {
           primaryKeyField = field.destinationFieldName;
-          if(saveRow[field.destinationFieldName]){
+          if (saveRow[field.destinationFieldName]) {
             primaryKeyValue = saveRow[field.destinationFieldName];
           }
         }
-        if(field.isTemplatePrimaryKey && field.templateFieldName){
+        if (field.isTemplatePrimaryKey && field.templateFieldName) {
           templateUniqueKeyField = field.templateFieldName;
         }
       }
     }
-    if(primaryKeyValue == undefined || primaryKeyValue == null){
+    if (primaryKeyValue == undefined || primaryKeyValue == null) {
       primaryKeyValue = Autocode.uuid();
     }
-    if(primaryKeyField){
+    if (primaryKeyField) {
       saveRow[primaryKeyField] = primaryKeyValue;
     }
-    if(templateUniqueKeyField){
-      if(sourceRow[templateUniqueKeyField]){
+    if (templateUniqueKeyField) {
+      if (sourceRow[templateUniqueKeyField]) {
         sourceUniqueValue = sourceRow[templateUniqueKeyField];
       }
     }
-    this.processedRows.push({data:saveRow,operation:'INSERT',rowId:primaryKeyValue,sourceRow,sourceRowId:sourceUniqueValue,status:'PENDING'});
+    for (const key of Object.keys(saveRow)) {
+      if (!this.dataKeys.includes(key)) {
+        this.dataKeys.push(key);
+      }
+    }
+    this.processedRows.push({ data: saveRow, operation: 'INSERT', rowId: primaryKeyValue, sourceRow, sourceRowId: sourceUniqueValue, status: 'PENDING' });
   }
 
   checkRowIsEmpty({ row }: { row: any }) {
@@ -98,270 +118,193 @@ class EntityWorker {
     return result;
   }
 
+  getDestinationEntity(): IAcDataBridgeEntity {
+    const processedRows: Record<string, IAcDataBridgeProcesedRow> = {};
+    for (const row of this.processedRows) {
+      processedRows[row.rowId] = row;
+    }
+    const fields: IAcDataBridgeField[] = [];
+    for (const field of this.templateDef!.templateFields) {
+      if (field.destinationName && field.destinationFieldName && field.destinationName == this.templateDef?.destinationName && this.dataKeys.includes(field.destinationFieldName)) {
+        fields.push(field);
+      }
+    }
+    return {
+      destinationName: this.templateDef!.destinationName,
+      rows: [],
+      fields: fields,
+      processedCount: 0,
+      completedCount: 0,
+      errorCount: 0,
+      rowsCount: this.processedRows.length,
+      templateName: this.templateDef!.templateName,
+      sourceName: '',
+      processedRows
+    }
+  }
+
+  async getRows({ sourceRowId, rowId, rowFilters, sourceRowFilters }: { sourceRowId?: string, rowId?: string, rowFilters?: IAcFilterGroup, sourceRowFilters?: IAcFilterGroup }): Promise<any[]> {
+    let result: any[] = [];
+    for (const processedRow of this.processedRows) {
+      if (rowId && processedRow.rowId == rowId) {
+        result.push(processedRow.data);
+      }
+      else if (sourceRowId && processedRow.sourceRowId == sourceRowId) {
+        result.push(processedRow.data);
+      }
+      else if (rowFilters) {
+        if (acEvaluateFilterGroup({ group: rowFilters, data: processedRow.data })) {
+          result.push(processedRow.data);
+        }
+      }
+      else if (sourceRowFilters) {
+        if (acEvaluateFilterGroup({ group: sourceRowFilters, data: processedRow.sourceRow })) {
+          result.push(processedRow.data);
+        }
+      }
+    }
+    return result;
+  }
+
   getTableRowFromMappedColumn({ row, tableName, skipTempValueKey = false }: { row: any, tableName: string, skipTempValueKey?: boolean },) {
     const result: any = {};
     // for (const col of sheetDefinition.sheetColumns) {
-      // const appColumn = appDefinition.columns.find((appDefCol) => { return appDefCol?.title == col.defColumnTitle });
-      // if (appColumn) {
-      //   if (appColumn.dbColumnName && appColumn.dbTableName && appColumn.dbTableName == tableName) {
-      //     const value = row[col.sheetColumnName];
-      //     if (value != null && value != undefined) {
-      //       result[appColumn.dbColumnName] = value;
-      //     }
-      //   }
-      // }
-      // if (row[CUSTOM_UNIQUE_FIELD_TITLE] && !skipTempValueKey) {
-      //   result[TEMP_UNIQUE_VALUE_KEY] = row[CUSTOM_UNIQUE_FIELD_TITLE];
-      // }
+    // const appColumn = appDefinition.columns.find((appDefCol) => { return appDefCol?.title == col.defColumnTitle });
+    // if (appColumn) {
+    //   if (appColumn.dbColumnName && appColumn.dbTableName && appColumn.dbTableName == tableName) {
+    //     const value = row[col.sheetColumnName];
+    //     if (value != null && value != undefined) {
+    //       result[appColumn.dbColumnName] = value;
+    //     }
+    //   }
+    // }
+    // if (row[CUSTOM_UNIQUE_FIELD_TITLE] && !skipTempValueKey) {
+    //   result[TEMP_UNIQUE_VALUE_KEY] = row[CUSTOM_UNIQUE_FIELD_TITLE];
+    // }
     // }
     return result
   }
 
-  processRows(){
-    if(this.entity){
+  async processRows() {
+    if (this.entity && this.templateDef) {
+      // console.warn(`Processing rows for template : ${this.templateDef.templateName}`)
       let previousRow: any;
       let originalRow: any;
-      let uniqueCheckKeys:string[] = [];
+      let uniqueCheckKeys: string[] = [];
+      if (this.progress) {
+        this.progress.completedCount++;
+      }
+      if (this.worker.taskProgress) {
+        this.worker.taskProgress.completedCount++;
+      }
+      const setValueInTargetDestinationField: Function = ({ target, destination, key, value }: { target: any, destination: string, key: string, value: any }) => {
+        if (!target[destination]) {
+          target[destination] = {};
+        }
+        target[destination][key] = value;
+      };
       for (const row of this.entity.rows) {
         if (!this.checkRowIsEmpty({ row })) {
-          const destinationsRow:any = {};
+          const destinationsRow: any = {};
           const isDuplicate: boolean = this.checkRowValuesMatch({ previousRow, originalRow, row, keys: uniqueCheckKeys });
           if (!isDuplicate) {
-            for(const field of this.entity.fields){
-              if(field.destinationName && field.destinationFieldName && field.templateFieldName){
+            for (const field of this.entity.fields) {
+              if (field.templateFieldName) {
                 const value = row[field.templateFieldName];
-                if(value){
-                  if(!destinationsRow[field.destinationName]){
-                    destinationsRow[field.destinationName] = {};
+                if (value) {
+                  if (field.foreignKeyTemplateName && field.foreignKeyTemplateFieldName) {
+                    // console.log(`Found foreign key template ${field.foreignKeyTemplateName} and field ${field.foreignKeyTemplateFieldName} with value : ${value}`);
+                    const referencingTemplate = this.worker.templateEntities.find((templateEntity) => {
+                      return templateEntity.templateName == field.foreignKeyTemplateName;
+                    });
+                    if (referencingTemplate && referencingTemplate.destinationName) {
+                      // console.log(`Found referencing template for ${field.foreignKeyTemplateName} and field ${field.foreignKeyTemplateFieldName}`)
+                      if (this.worker.entityWorkers.has(referencingTemplate.destinationName)) {
+                        // console.log(`Worker for referencing template destination ${referencingTemplate.destinationName} found`);
+                        const referencingWorker: EntityWorker = this.worker.entityWorkers.get(referencingTemplate.destinationName)!;
+                        const getRowParams = {
+                          sourceRowFilters: {
+                            operator: AcEnumLogicalOperator.And, filters: [
+                              { key: field.foreignKeyTemplateFieldName, operator: AcEnumConditionOperator.EqualTo, value: value }
+                            ]
+                          }
+                        };
+                        const referenceRows = await referencingWorker.getRows(getRowParams);
+                        // console.log(`Referencing rows count for field ${field.foreignKeyTemplateFieldName} with value ${value} = ${referenceRows.length}`);
+                        if (referenceRows.length > 0) {
+                          const referenceData = referenceRows[0];
+                          if (referenceData) {
+                            // console.log(referenceData);
+                            let lookupDestinationField: string | undefined;
+                            const primaryKeyFieldName = referencingWorker.primaryKeyFieldName;
+                            if (primaryKeyFieldName) {
+                              lookupDestinationField = referencingWorker.primaryKeyFieldName;
+                            }
+                            if (field.isLookupTemplateField && field.lookupForTemplateField && field.lookupForTemplateField != '') {
+                              lookupDestinationField = "";
+                              const lookupField = this.templateDef.templateFields.find((templateField) => {
+                                return templateField.templateFieldName == field.lookupForTemplateField;
+                              });
+                              if (lookupField) {
+                                lookupDestinationField = lookupField.destinationFieldName;
+                              }
+                            }
+                            if (lookupDestinationField && lookupDestinationField != "" && primaryKeyFieldName) {
+                              setValueInTargetDestinationField({ target: destinationsRow, destination: this.templateDef.destinationName, key: lookupDestinationField, value: referenceData[primaryKeyFieldName] });
+                            }
+                          }
+                          else {
+                            // console.log(getRowParams,referenceData);
+                          }
+                        }
+                      }
+                    }
                   }
-                  destinationsRow[field.destinationName][field.destinationFieldName] = row[field.templateFieldName];
+                  else if (field.destinationName && field.destinationFieldName && field.templateFieldName) {
+                    setValueInTargetDestinationField({ target: destinationsRow, destination: field.destinationName, key: field.destinationFieldName, value: row[field.templateFieldName] });
+                  }
                 }
               }
             }
-            for(const key of Object.keys(destinationsRow)){
-              if(this.worker.entityWorkers.has(key)){
-                const entityWorker = this.worker.entityWorkers.get(key);
-                entityWorker?.addRow({row:destinationsRow[key],sourceRow:row});
-              }
-            }
-            originalRow = row;
           }
-          previousRow = row;
+          for (const key of Object.keys(destinationsRow)) {
+            if (this.worker.entityWorkers.has(key)) {
+              const entityWorker = this.worker.entityWorkers.get(key);
+              // console.log(`Adding row in worker ${key}`);
+              entityWorker?.addRow({ row: destinationsRow[key], sourceRow: row });
+            }
+          }
+          originalRow = row;
         }
-        if(this.progress){
+        previousRow = row;
+        if (this.progress) {
           this.progress.completedCount++;
+          this.progress.percentage = Math.round((this.progress.completedCount / this.progress.totalCount) * 100);
+          if (this.worker.taskProgress) {
+            this.worker.taskProgress.completedCount++;
+            this.worker.taskProgress.percentage = Math.round((this.worker.taskProgress.completedCount / this.worker.taskProgress.totalCount) * 100)
+          }
+          this.worker.notifyProgress();
         }
       }
+      this.worker.notifyProgress(true);
     }
   }
-
-  // addRow({ row, sheetRow }: { row: any, sheetRow?: any }): any {
-  //   const uniqueIds: any[] = [];
-  //   if (row[TEMP_UNIQUE_VALUE_KEY]) {
-  //     uniqueIds.push(row[TEMP_UNIQUE_VALUE_KEY]);
-  //   }
-  //   const existingConvertedRow = this.worker.convertedData[Tables.ActProductCategories]?.rows.find((r) => {
-  //     return stringEqualsIgnoreCase(r.data[TblActProductCategories.ProductCategoryName], row[TblActProductCategories.ProductCategoryName]!);
-  //   });
-  //   if(existingConvertedRow){
-  //     row = existingConvertedRow.data;
-  //     existingConvertedRow.uniqueIds = [...existingConvertedRow.uniqueIds,...uniqueIds];
-  //   }
-  //   else{
-
-  //   let existingRow: any;
-  //   if (this.worker.existingData && this.worker.existingData[Tables.ActProductCategories]) {
-  //     existingRow = this.worker.existingData[Tables.ActProductCategories].find((r: any) => {
-  //       return stringEqualsIgnoreCase(r[TblActProductCategories.ProductCategoryName], row[TblActProductCategories.ProductCategoryName]);
-  //     });
-  //   }
-  //   if (!existingRow) {
-  //     row[TblActProductCategories.ProductCategoryId] = Autocode.uuid();
-  //     const rowKeys = Object.keys(row);
-  //     if (!rowKeys.includes(TblActProductCategories.AccounteeId)) {
-  //       row[TblActProductCategories.AccounteeId] = this.worker.accounteeId;
-  //     }
-  //     this.worker.convertedData[Tables.ActProductCategories]?.rows.push({ data: row, operation: 'INSERT', sheetRow, uniqueIds });
-  //   }
-  //   else {
-  //     row = existingRow;
-  //     this.worker.convertedData[Tables.ActProductCategories]?.rows.push({ data: row, operation: 'SKIP', sheetRow, uniqueIds });
-  //   }
-  //   this.setKeys({ row });
-  // }
-  //   return row;
-  // }
-
-  // getRow(args: { [TblActProductCategories.ProductCategoryName]?: string, sheetUniqueId?: string }): any {
-  //   let row = this.worker.convertedData[Tables.ActProductCategories]?.rows.find((r) => {
-  //     if (args[TblActProductCategories.ProductCategoryName]) {
-  //       return stringEqualsIgnoreCase(r.data[TblActProductCategories.ProductCategoryName], args[TblActProductCategories.ProductCategoryName]!);
-  //     }
-  //     else if (args.sheetUniqueId) {
-  //       return r.uniqueIds.includes(args.sheetUniqueId);
-  //     }
-  //     return false;
-  //   });
-  //   if (!row) {
-  //     let existingRow: any;
-  //     if (this.worker.existingData && this.worker.existingData[Tables.ActProductCategories]) {
-  //       existingRow = this.worker.existingData[Tables.ActProductCategories].find((row: any) => {
-  //         if (args[TblActProductCategories.ProductCategoryName]) {
-  //           return stringEqualsIgnoreCase(row[TblActProductCategories.ProductCategoryName], args[TblActProductCategories.ProductCategoryName]!);
-  //         }
-  //         return false;
-  //       });
-  //     }
-  //     if (existingRow) {
-  //       row = existingRow;
-  //     }
-  //     else {
-  //       if (args[TblActProductCategories.ProductCategoryName]) {
-  //         row = this.addRow({
-  //           row: {
-  //             [TblActProductCategories.ProductCategoryName]: args[TblActProductCategories.ProductCategoryName]
-  //           }
-  //         });
-  //       }
-  //     }
-  //   }
-  //   else {
-  //     row = row.data
-  //   }
-  //   return row;
-  // }
-
-  // notifyProgress() {
-  //   if (this.userSheetMapping && this.worker.sheetProgress && this.worker.sheetProgress.tasks) {
-  //     this.worker.sheetProgress.tasks[this.appImportSheetDef!.name].totalCount = this.totalRows;
-  //     this.worker.sheetProgress.tasks[this.appImportSheetDef!.name].completedCount = this.processedRows;
-  //   }
-  //   this.worker.notifyProgress();
-  // }
-
-  // processSheetRows() {
-  //   if (this.appImportSheetDef && this.userSheetMapping) {
-  //     console.log("Found productCategoriesSheet");
-  //     let uniqueCheckKeys = [];
-  //     const uniqueColumn = this.userSheetColumns.find((sheetCol) => {
-  //       return sheetCol.defColumnTitle === CUSTOM_UNIQUE_FIELD_TITLE
-  //     });
-  //     console.log("Unique column for categories:", uniqueColumn);
-  //     if (uniqueColumn) {
-  //       uniqueCheckKeys.push(CUSTOM_UNIQUE_FIELD_TITLE);
-  //     }
-  //     else {
-  //       uniqueCheckKeys.push(TblActProductCategories.ProductCategoryName);
-  //     }
-  //     console.log("Unique check keys for ProductCategories:", uniqueCheckKeys);
-  //     console.log("Initialized convertedData for ProductCategories");
-
-  //     let previousRow: any
-  //     let originalRow: any;
-  //     console.log("Starting row processing loop for ProductCategories, total rows:", this.userSheetMapping.rows.length);
-
-  //     for (const row of this.userSheetMapping.rows) {
-  //       if (!this.worker.checkRowIsEmpty({ row })) {
-  //         const isDuplicate: boolean = this.worker.checkRowValuesMatch({ previousRow, originalRow, row, keys: uniqueCheckKeys });
-  //         console.log(`Row is not duplicate`);
-  //         if (!isDuplicate) {
-  //           console.log(`Adding row to converted data`);
-  //           const tableRow = this.worker.getTableRowFromMappedColumn({ tableName: Tables.ActProductCategories, row, appDefinition: this.appImportSheetDef, sheetDefinition: this.userSheetMapping });
-  //           this.addRow({ row: tableRow, sheetRow: row });
-  //           originalRow = row;
-  //         }
-  //         previousRow = row;
-  //       }
-  //       this.processedRows++;
-  //     }
-  //     const convertedRows = (this.worker.convertedData as any)[Tables.ActProductCategories].rows;
-  //     this.totalRows++;
-  //     for (const row of convertedRows) {
-  //       if (row.operation != 'SKIP') {
-  //         const data = row.data;
-  //         let parentCategoryId;
-  //         if (data[CUSTOM_COLUMN_TITLES[Tables.ActProductCategories].parentCategoryUniqueId]) {
-  //           const parentRow = this.getRow({ sheetUniqueId: data[CUSTOM_COLUMN_TITLES[Tables.ActProductCategories].parentCategoryUniqueId] });
-  //           if (parentRow) {
-  //             parentCategoryId = parentRow[TblActProductCategories.ProductCategoryId];
-  //           }
-  //         }
-  //         else if (data[CUSTOM_COLUMN_TITLES[Tables.ActProductCategories].parentCategoryName]) {
-  //           const parentRow = this.getRow({ sheetUniqueId: data[CUSTOM_COLUMN_TITLES[Tables.ActProductCategories].parentCategoryName] });
-  //           if (parentRow) {
-  //             parentCategoryId = parentRow[TblActProductCategories.ProductCategoryId];
-  //           }
-  //         }
-  //         if (parentCategoryId) {
-  //           row.data[TblActProductCategories.ProductCategoryName] = parentCategoryId;
-  //         }
-  //       }
-  //     }
-  //     this.totalRows--;
-  //   } else {
-  //     console.log("No productCategoriesSheet found");
-  //   }
-  // }
-
-  // setWorksheetMapping() {
-  //   if (this.appImportSheetDef) {
-  //     this.userSheetMapping = this.worker.sheets.find((sheet: ISheetMapping) => {
-  //       return sheet.appDefTitle === this.appImportSheetDef!.title;
-  //     });
-  //     if (this.userSheetMapping) {
-  //       this.totalRows = this.userSheetMapping!.rows.length;
-  //       this.processedRows = 0;
-  //       this.userSheetColumns = this.userSheetMapping.sheetColumns;
-  //       if (this.worker && this.worker.sheetProgress.tasks) {
-  //         this.worker.sheetProgress.tasks[this.appImportSheetDef!.name].title = this.userSheetMapping.sheetName;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // setKeys({ row, additionalName, convertedData }: { row: any, convertedData?: IConvertedDataDetails, additionalName?: string }) {
-  //   if (!convertedData) {
-  //     convertedData = this.convertedData;
-  //   }
-  //   if (convertedData) {
-  //     const rowKeys = Object.keys(row);
-  //     const setKeysInArray: Function = (arr: string[]) => {
-  //       for (const key of rowKeys) {
-  //         if (!arr.includes(key)) {
-  //           arr.push(key);
-  //         }
-  //       }
-  //     }
-  //     if (additionalName) {
-  //       if (!convertedData.additionalRowKeys) {
-  //         convertedData.additionalRowKeys = {};
-  //       }
-  //       if (!convertedData.additionalRowKeys[additionalName]) {
-  //         convertedData.additionalRowKeys[additionalName] = [];
-  //       }
-  //       setKeysInArray(convertedData.additionalRowKeys[additionalName]);
-  //     }
-  //     else {
-  //       setKeysInArray(convertedData.keys);
-  //     }
-  //   }
-
-  // }
 }
 
 export class AcDataBridgeWorker {
   private data?: Uint8Array;
   private progressCallback?: (progress: IAcDataBridgeProgress) => void;
-  private destinationEntities: IAcDataBridgeEntity[] = [];
+  private destinationEntities: Record<string, IAcDataBridgeEntity> = {};
   private processingEntities: IAcDataBridgeEntity[] = [];
   private sourceEntities: IAcDataBridgeEntity[] = [];
-  private templateEntities: IAcDataBridgeEntityTemplateDef[] = []
   private existingEntities: IAcDataBridgeExistingEntity[] = [];
-
-  private taskProgress?: IAcDataBridgeProgress;
   private dataDictionary?: AcDataDictionary;
-  private notifyInterval:any;
+  private lastNotificationTime: number = Date.now();
+
   entityWorkers: Map<string, EntityWorker> = new Map();
+  taskProgress?: IAcDataBridgeProgress;
+  templateEntities: IAcDataBridgeEntityTemplateDef[] = [];
 
   constructor() {
     //
@@ -392,9 +335,12 @@ export class AcDataBridgeWorker {
     return result;
   }
 
-  private notifyProgress() {
+  notifyProgress(force: boolean = false) {
     if (this.progressCallback && this.taskProgress) {
-      this.progressCallback(this.taskProgress);
+      if (Date.now() - this.lastNotificationTime >= 500 || force) {
+        this.lastNotificationTime = Date.now();
+        this.progressCallback(this.taskProgress);
+      }
     }
   }
 
@@ -412,11 +358,11 @@ export class AcDataBridgeWorker {
           let pendingReferencedTemplate: boolean = false;
           // console.log(`Checking ${entity.templateName} for foreign key refereneces...`);
           for (const field of entity.fields) {
-            if(field.destinationName){
-                if (!destinations.includes(field.destinationName)) {
-                  destinations.push(field.destinationName);
-                }
+            if (field.destinationName) {
+              if (!destinations.includes(field.destinationName)) {
+                destinations.push(field.destinationName);
               }
+            }
             if (field.foreignKeyTemplateName && field.foreignKeyTemplateName != '' && field.foreignKeyTemplateFieldName && field.foreignKeyTemplateFieldName != '') {
               const templateName = field.foreignKeyTemplateName;
               // console.log(`Foreign key template found ${templateName} for field ${field.templateFieldName}`);
@@ -439,7 +385,7 @@ export class AcDataBridgeWorker {
             this.processingEntities.push(entity);
             const worker = new EntityWorker({ worker: this });
             worker.entity = entity;
-            worker.templateDef = this.templateEntities.find((templateEntity)=>{
+            worker.templateDef = this.templateEntities.find((templateEntity) => {
               return templateEntity.destinationName == entity.destinationName;
             });
             this.entityWorkers.set(entity.destinationName, worker);
@@ -465,21 +411,21 @@ export class AcDataBridgeWorker {
     for (const destination of destinations) {
       if (!this.entityWorkers.has(destination)) {
         const worker = new EntityWorker({ worker: this });
-            worker.templateDef = this.templateEntities.find((templateEntity)=>{
-              return templateEntity.destinationName == destination;
-            });
+        worker.templateDef = this.templateEntities.find((templateEntity) => {
+          return templateEntity.destinationName == destination;
+        });
         this.entityWorkers.set(destination, worker);
       }
     }
     return this.processingEntities;
   }
 
-  async processEntities() {
+  async processEntities(): Promise<Record<string, IAcDataBridgeEntity>> {
     let totalCount: number = 0;
     const entityWorkers: EntityWorker[] = [];
     const subTasksProgress: IAcDataBridgeProgress[] = [];
     for (const worker of this.entityWorkers.values()) {
-      if(worker.entity){
+      if (worker.entity) {
         totalCount += worker.entity.rowsCount;
         worker.progress = {
           id: `${worker.entity.destinationName}Worker`,
@@ -495,20 +441,37 @@ export class AcDataBridgeWorker {
     this.taskProgress = {
       id: 'processEntities',
       completedCount: 0,
-      totalCount: 0,
+      totalCount: totalCount,
       percentage: 0,
       title: `Processing ${this.sourceEntities.length} worksheets`,
       description: `Processing ${totalCount} rows across ${this.sourceEntities.length} worksheets`,
       subTasksProgress: subTasksProgress
     };
-    this.notifyInterval = setInterval(()=>{this.notifyProgress();},500);
+    this.notifyProgress(true);
     for (const worker of this.entityWorkers.values()) {
-      if(worker.entity){
+      if (worker.entity) {
         await worker.processRows();
       }
     }
-    clearInterval(this.notifyInterval);
-    this.notifyProgress();
+    this.notifyProgress(true);
+    let convertingRows: number = 0;
+    for (const worker of this.entityWorkers.values()) {
+      const destinationEntity = worker.getDestinationEntity();
+      if (destinationEntity.rowsCount > 0) {
+        convertingRows += destinationEntity.rowsCount;
+        this.destinationEntities[destinationEntity.templateName!] = destinationEntity;
+      }
+    }
+    this.taskProgress = {
+      id: 'convertEntities',
+      completedCount: 0,
+      totalCount: convertingRows,
+      percentage: 0,
+      title: `Data ready to convert`,
+      description: `${convertingRows} data rows across ${Object.keys(this.destinationEntities).length} templates are ready to convert`,
+    };
+    this.notifyProgress(true);
+    return this.destinationEntities;
   }
 
   registerProgressCallback(cb: (progress: IAcDataBridgeProgress) => void) {
@@ -638,6 +601,7 @@ export class AcDataBridgeWorker {
     const totalChunks = Math.ceil(totalSize / chunkSize);
     this.taskProgress.totalCount = totalChunks;
     let chunkCount = 0;
+    this.notifyProgress(true);
     while (offset < totalSize) {
       const end = Math.min(offset + chunkSize, totalSize);
       const chunk = fullData.slice(offset, end);
@@ -655,18 +619,17 @@ export class AcDataBridgeWorker {
       id: 'setData',
       completedCount: 100,
       totalCount: 100,
-      percentage: 1000,
+      percentage: 100,
       description: `Reading worksheets...`,
       title: 'Extracting data'
     };
-    this.notifyProgress();
     this.setSourceEntities();
+    this.notifyProgress(true);
     return this.sourceEntities;
   }
 
   async setTemplateEntities({ entities }: { entities: IAcDataBridgeEntityTemplateDef[] }) {
     this.templateEntities = entities;
-    console.log(this);
   }
 
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 
@@ -13,6 +13,8 @@ import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 })
 export class UploadFileComponent {
   @Input() dataBridge:AcDataBridge;
+
+  @Output() downloadTemplate:EventEmitter<any> = new EventEmitter();
 
   ACI_SVG_SOLID = ACI_SVG_SOLID;
   isDragging = signal(false);
@@ -45,7 +47,7 @@ export class UploadFileComponent {
   }
 
   handleDownloadXlsxTemplate() {
-    // this.appService.openModal({ component: ImportColumnsSelectionComponent });
+    this.downloadTemplate.emit()
   }
 
    private async processFile(file: File) {

@@ -1,5 +1,9 @@
-.mapping-container{
+:host {
   display: flex;
   flex-direction: column;
   height: -webkit-fill-available;
+}
+.flex-fill {
+  flex: 1 1 auto !important;
+  overflow: auto;
 }

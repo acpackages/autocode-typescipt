@@ -3,6 +3,7 @@ import { AcBindJsonProperty } from "../annotations/ac-bind-json-property.annotat
 import { AcEvents } from "../core/ac-events";
 import { AcEnumConditionOperator } from "../enums/ac-enum-condition-operator.enum";
 import { AcEnumLogicalOperator } from "../enums/ac-enum-logical-operator.enum";
+import { IAcFilterGroup } from "../interfaces/ac-filter-group.interface";
 import { AcJsonUtils } from "../utils/ac-json-utils";
 import { AcFilter } from "./ac-filter.model";
 
@@ -114,8 +115,8 @@ export class AcFilterGroup {
     return this.events.subscribe({ event, callback });
   }
 
-  toJson(): Record<string, any> {
-    return AcJsonUtils.getJsonDataFromInstance({ instance: this });
+  toJson(): IAcFilterGroup {
+    return AcJsonUtils.getJsonDataFromInstance({ instance: this }) as any;
   }
 
   toString(): string {

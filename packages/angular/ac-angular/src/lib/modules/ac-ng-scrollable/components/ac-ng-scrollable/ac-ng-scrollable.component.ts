@@ -147,6 +147,7 @@ export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit,
   }
 
   ngAfterContentInit() {
+    console.log(this);
     if (this.bodyComponent) {
       this.bodyComponent.scrollable = this;
       this.bodyComponent.items = this.items;

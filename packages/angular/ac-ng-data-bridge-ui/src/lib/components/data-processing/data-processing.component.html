@@ -1,36 +1,36 @@
-Data Processing;
 <ng-container *ngIf="dataBridge && dataBridge.taskProgress">
-<div class="flex-fill">
-  <ng-container *ngTemplateOutlet="progressTemplate; context: { progress: dataBridge.taskProgress }"></ng-container>
-</div>
-<ng-template let-progress="progress" #progressTemplate>
-  <div class="card my-2">
-    <div class="card-body p-2 progress-body">
-      <h5 class="mb-0">{{progress.title}}</h5>
-      <div>{{progress.description}}</div>
-      <ng-container *ngIf="progress.percentage<100">
-        <div class="my-1">
-          <c-progress [animated]="true" [value]="progress.percentage" color="danger" variant="striped">
-            {{progress.percentage}}
-          </c-progress>
-        </div>
-      </ng-container>
-      <p class="mb-1">{{progress.completedCount}} of {{progress.totalCount}}</p>
-      <ng-container *ngIf="progress.percentage == 100">
-        <span class="badge bg-success text-white mb-1"><ac-svg-icon [attr.svg-code]="ACI_SVG_SOLID.check"></ac-svg-icon>
-          Completed</span>
-      </ng-container>
-      <ng-container *ngIf="progress.subTasksProgress">
-        <ng-container *ngFor="let item of Object.values(progress.subTasksProgress)">
-          <ng-container *ngIf="item && item['title']">
-            <div class="ms-4 mt-4">
-              <ng-container
-                *ngTemplateOutlet="progressTemplate; context: { $implicit: item, progress: item }"></ng-container>
-            </div>
+  <div class="flex-fill">
+    <ng-container *ngTemplateOutlet="progressTemplate; context: { progress: dataBridge.taskProgress }"></ng-container>
+  </div>
+  <ng-template let-progress="progress" #progressTemplate>
+    <div class="card my-2">
+      <div class="card-body p-2 progress-body">
+        <h5 class="mb-0">{{progress.title}}</h5>
+        <div>{{progress.description}}</div>
+        <ng-container *ngIf="progress.percentage<100">
+          <div class="my-1">
+            <c-progress [animated]="true" [value]="progress.percentage" color="danger" variant="striped">
+              {{progress.percentage}}
+            </c-progress>
+          </div>
+        </ng-container>
+        <p class="mb-1">{{progress.completedCount}} of {{progress.totalCount}}</p>
+        <ng-container *ngIf="progress.percentage >= 100">
+          <span class="badge bg-success text-white mb-1"><ac-svg-icon
+              [attr.svg-code]="ACI_SVG_SOLID.check"></ac-svg-icon>
+            Completed</span>
+        </ng-container>
+        <ng-container *ngIf="progress.subTasksProgress">
+          <ng-container *ngFor="let item of Object.values(progress.subTasksProgress)">
+            <ng-container *ngIf="item && item['title']">
+              <div class="ms-4 mt-4">
+                <ng-container
+                  *ngTemplateOutlet="progressTemplate; context: { $implicit: item, progress: item }"></ng-container>
+              </div>
+            </ng-container>
           </ng-container>
         </ng-container>
-      </ng-container>
+      </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
 </ng-container>

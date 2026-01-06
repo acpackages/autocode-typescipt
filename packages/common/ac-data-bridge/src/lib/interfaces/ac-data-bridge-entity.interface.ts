@@ -1,4 +1,5 @@
 import { IAcDataBridgeField } from "./ac-data-bridge-field.interface";
+import { IAcDataBridgeProcesedRow } from "./ac-data-bridge-processed-row.interface";
 
 export interface IAcDataBridgeEntity{
   sourceName: string;
@@ -9,6 +10,7 @@ export interface IAcDataBridgeEntity{
   errorCount:number,
   processedCount:number,
   completedCount:number,
+  percentage?:number,
   rows: any[],
-  parentTemplateEntityName?:Record<string,IAcDataBridgeEntity>
+  processedRows?:Record<string,IAcDataBridgeProcesedRow>
 }

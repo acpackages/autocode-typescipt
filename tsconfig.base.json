@@ -67,7 +67,7 @@
       ],
       "@autocode-ts/ac-icons": ["packages/browser/ac-icons/src/ac-icons.ts"],
       "@autocode-ts/ac-ng-data-bridge-ui": [
-        "packages/angular/ac-ng-data-bridge-ui/src/index.ts"
+        "packages/angular/ac-ng-data-bridge-ui/src/ac-ng-data-bridge-ui.ts"
       ],
       "@autocode-ts/ac-ng-report-engine": [
         "packages/angular/ac-ng-report-engine/src/index.ts"

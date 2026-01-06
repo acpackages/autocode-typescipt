@@ -141,7 +141,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     templateName: "Customers",
     templateFields: [
       { templateFieldName: "Customer Unique Id",isTemplatePrimaryKey:true },
-      { templateFieldName: "Customer Id",isDestinationPrimaryKey:true },
+      { templateFieldName: "Customer Id",destinationName: Tables.ActCustomers, destinationFieldName: TblActCustomers.CustomerId,isDestinationPrimaryKey:true },
       { templateFieldName: "Category", destinationName: Tables.ActCustomers, destinationFieldName: TblActCustomers.CustomerCategory },
       { templateFieldName: "Remarks", destinationName: Tables.ActCustomers, destinationFieldName: TblActCustomers.CustomerRemarks },
       { templateFieldName: "Is Active", destinationName: Tables.ActCustomers, destinationFieldName: TblActCustomers.IsActive },
@@ -593,7 +593,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     templateName: "Purchase Invoice Payments",
     templateFields: [
       { templateFieldName: "Payment Unique Id",isTemplatePrimaryKey:true },
-      { templateFieldName: "Purchase Invoice Unique Id",foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Unique Id', isLookupReferenceField:true },
+      { templateFieldName: "Purchase Invoice Unique Id",foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Unique Id', isLookupTemplateField:true },
       { templateFieldName: "Purchase Invoice Id", destinationName: Tables.ActPurchaseInvoicePayments, destinationFieldName: TblActPurchaseInvoicePayments.PurchaseInvoiceId,foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Id' },
       { templateFieldName: "Payment Id",destinationName: Tables.ActPurchaseInvoicePayments, destinationFieldName: TblActPurchaseInvoicePayments.PurchaseInvoicePaymentId,isDestinationPrimaryKey:true },
       { templateFieldName: "Payment Method Name", foreignKeyTemplateName: "Payment Methods", destinationFieldName: "Payment Method Name" },
@@ -610,7 +610,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     templateName: "Purchase Invoice Products",
     templateFields: [
       { templateFieldName: "Product Detail Unique Id",isTemplatePrimaryKey:true },
-      { templateFieldName: "Purchase Invoice Unique Id",foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Unique Id', isLookupReferenceField:true },
+      { templateFieldName: "Purchase Invoice Unique Id",foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Unique Id', isLookupTemplateField:true },
       { templateFieldName: "Purchase Invoice Id", destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.PurchaseInvoiceId,foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Id' },
       { templateFieldName: "Product Detail Id",destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.PurchaseInvoiceProductId,isDestinationPrimaryKey:true },
       { templateFieldName: "Product Unique Id", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Unique Id" },
@@ -665,7 +665,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     templateName: "Sale Invoice Products",
     templateFields: [
       { templateFieldName: "Product Detail Unique Id",isTemplatePrimaryKey:true },
-      { templateFieldName: "Sale Invoice Unique Id",foreignKeyTemplateName:'Sale Invoices' ,foreignKeyTemplateFieldName:'Sale Invoice Unique Id', isLookupReferenceField:true },
+      { templateFieldName: "Sale Invoice Unique Id",foreignKeyTemplateName:'Sale Invoices' ,foreignKeyTemplateFieldName:'Sale Invoice Unique Id', isLookupTemplateField:true },
       { templateFieldName: "Sale Invoice Id", destinationName: Tables.ActSaleInvoiceProducts, destinationFieldName: TblActSaleInvoiceProducts.SaleInvoiceId,foreignKeyTemplateName:'Sale Invoices' ,foreignKeyTemplateFieldName:'Sale Invoice Id' },
       { templateFieldName: "Product Detail Id",destinationName: Tables.ActSaleInvoiceProducts, destinationFieldName: TblActSaleInvoiceProducts.SaleInvoiceProductId,isDestinationPrimaryKey:true },
       { templateFieldName: "Product Unique Id", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Unique Id" },
@@ -731,7 +731,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     templateFields: [
       { templateFieldName: "Tax Rate Unique Id", isTemplatePrimaryKey:true },
       { templateFieldName: "Tax Rate Id",destinationName: Tables.ActTaxRates, destinationFieldName: TblActTaxRates.TaxRateId,isDestinationPrimaryKey:true },
-      { templateFieldName: "Taxing Scheme Name", foreignKeyTemplateName:'Taxing Schemes', foreignKeyTemplateFieldName:'Taxing Scheme Name', isLookupReferenceField:true },
+      { templateFieldName: "Taxing Scheme Name", foreignKeyTemplateName:'Taxing Schemes', foreignKeyTemplateFieldName:'Taxing Scheme Name', isLookupTemplateField:true },
       { templateFieldName: "Taxing Scheme Id", foreignKeyTemplateName:'Taxing Schemes', foreignKeyTemplateFieldName:'Taxing Scheme Id',destinationName: Tables.ActTaxRates, destinationFieldName: TblActTaxRates.TaxingSchemeId },
       { templateFieldName: "Tax Name", destinationName: Tables.ActTaxRates, destinationFieldName: TblActTaxRates.TaxRateName },
       { templateFieldName: "Tax Percentage", destinationName: Tables.ActTaxRates, destinationFieldName: TblActTaxRates.TaxRatePercentage },
@@ -742,7 +742,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     templateName: "Transaction Entries",
     templateFields: [
       { templateFieldName: "Transaction Entry Unique Id", isTemplatePrimaryKey:true },
-      { templateFieldName: "Transaction Unique Id", foreignKeyTemplateName:'Transactions', foreignKeyTemplateFieldName:'Transaction Unique id', isLookupReferenceField:true },
+      { templateFieldName: "Transaction Unique Id", foreignKeyTemplateName:'Transactions', foreignKeyTemplateFieldName:'Transaction Unique id', isLookupTemplateField:true },
       { templateFieldName: "Transaction Id", foreignKeyTemplateName:'Transactions', foreignKeyTemplateFieldName:'Transaction Unique id', destinationName:Tables.ActTransactionEntries,destinationFieldName:TblActTransactionEntries.TransactionId },
       { templateFieldName: "Transaction Entry Id", destinationName: Tables.ActTransactionEntries, destinationFieldName: TblActTransactionEntries.TransactionEntryId, isDestinationPrimaryKey:true },
       { templateFieldName: "Ledger Account Name", foreignKeyTemplateName: 'Ledger Accounts', foreignKeyTemplateFieldName: 'Ledger Account Name' },

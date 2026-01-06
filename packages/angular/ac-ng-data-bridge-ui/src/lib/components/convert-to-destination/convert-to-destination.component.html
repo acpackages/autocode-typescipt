@@ -1,0 +1,131 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<ng-container *ngIf="dataBridge">
+  <div class="d-flex flex-fill flex-column">
+    <div>
+      <ng-container *ngTemplateOutlet="progressTemplate; context: { progress: dataBridge.taskProgress }"></ng-container>
+    </div>
+    <div class="flex-fill">
+      <ng-container *ngIf="dataBridge.destinationEntities">
+        <ng-container *ngFor="let importDetails of (Object.values(dataBridge.destinationEntities))">
+          <div class="card my-4">
+            <div class="card-header p-2">
+              <ac-svg-icon
+                [attr.svg-code]="showRows[importDetails.templateName]?ACI_SVG_SOLID.chevronDown:ACI_SVG_SOLID.chevronRight"
+                class="me-2 toggle-icon"
+                (click)="showRows[importDetails.templateName] = showRows[importDetails.templateName]?false:true"></ac-svg-icon><b>{{importDetails.templateName}}</b>
+              <div class="import-table-progress float-right" *ngIf="importDetails.rowsCount > 0">
+                {{importDetails.completedCount}} of {{importDetails.rowsCount}}
+                <ng-container *ngIf="importDetails.errorCount > 0">
+                  <b class="text-danger">{{importDetails.errorCount}} Errors</b>
+                </ng-container>
+                <ng-container *ngIf="importDetails.percentage < 100">
+                  <c-progress [animated]="true" [value]="importDetails.percentage" color="danger" variant="striped">
+                    {{importDetails.percentage}}
+                  </c-progress>
+                </ng-container>
+                <ng-container *ngIf="importDetails.percentage >= 100">
+                  <span class="badge bg-success text-white "><ac-svg-icon
+                      [attr.svg-code]="ACI_SVG_SOLID.check"></ac-svg-icon>
+                    Completed</span>
+                </ng-container>
+              </div>
+            </div>
+            <ng-container *ngIf="showRows[importDetails.templateName]">
+              <div class="card-body p-0">
+                <ng-container
+                          *ngTemplateOutlet="importRowsTemplate; context: { $implicit: importDetails,importDetails:importDetails }"></ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    <span class="mt-4">
+      <button type="button" class="btn btn-dark" (click)="handleStartConverting()">Start Converting</button>
+    </span>
+  </div>
+
+  <ng-template let-progress="progress" #progressTemplate>
+    <div class="card my-2">
+      <div class="card-body p-2 progress-body">
+        <h5 class="mb-0">{{progress.title}}</h5>
+        <div>{{progress.description}}</div>
+        <ng-container *ngIf="progress.percentage<100">
+          <div class="my-1">
+            <c-progress [animated]="true" [value]="progress.percentage" color="danger" variant="striped">
+              {{progress.percentage}}
+            </c-progress>
+          </div>
+        </ng-container>
+        <p class="mb-1">{{progress.completedCount}} of {{progress.totalCount}}</p>
+        <ng-container *ngIf="progress.percentage >= 100">
+          <span class="badge bg-success text-white mb-1"><ac-svg-icon
+              [attr.svg-code]="ACI_SVG_SOLID.check"></ac-svg-icon>
+            Completed</span>
+        </ng-container>
+        <ng-container *ngIf="progress.subTasksProgress">
+          <ng-container *ngFor="let item of Object.values(progress.subTasksProgress)">
+            <ng-container *ngIf="item && item['title']">
+              <div class="ms-4 mt-4">
+                <ng-container
+                  *ngTemplateOutlet="progressTemplate; context: { $implicit: item, progress: item }"></ng-container>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>
+<ng-template #importRowsTemplate let-importDetails="importDetails">
+  <div class="import-rows-container" ac-ng-scrollable [items]="Object.values(importDetails.processedRows)">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width:25px;"></th>
+          <ng-container *ngFor="let col of importDetails.fields">
+            <th>{{col.templateFieldName}}</th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tr>
+        <td ac-ng-scrollable-top-spacer colspan="100" class="p-0"></td>
+      </tr>
+      <tbody ac-ng-scrollable-body>
+        <ng-template let-row let-index>
+          <tr>
+            <td>
+              <div class="import-status-div">
+                <ng-container *ngIf="row.operation!='SKIP'">
+                  <ng-container *ngIf="row.status=='PENDING'||row.status == undefined">
+                    <span class="badge text-white bg-primary">Pending</span>
+                  </ng-container>
+                  <ng-container *ngIf="row.status=='UPLOADED'">
+                    <span class="badge text-white bg-success">Imported</span>
+                  </ng-container>
+                  <ng-container *ngIf="row.status=='STARTED'">
+                    <span class="badge text-white bg-info">Importing</span>
+                  </ng-container>
+                  <ng-container *ngIf="row.status=='ERROR'">
+                    <span class="badge text-white bg-danger">Error</span>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="row.operation=='SKIP'">
+                  <span class="badge text-white bg-secondary">Skipping</span>
+                </ng-container>
+              </div>
+            </td>
+            <ng-container *ngFor="let field of importDetails.fields">
+              <td>{{row.data[field.destinationFieldName]??''}}</td>
+            </ng-container>
+          </tr>
+        </ng-template>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td ac-ng-scrollable-bottom-spacer colspan="100" class="p-0"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</ng-template>

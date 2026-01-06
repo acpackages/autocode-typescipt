@@ -1,4 +1,5 @@
 import { AcEnumConditionOperator } from "../enums/ac-enum-condition-operator.enum";
+import { IAcFilter } from "../interfaces/ac-filter.interface";
 import { AcJsonUtils } from "../utils/ac-json-utils";
 
 export class AcFilter {
@@ -44,8 +45,8 @@ export class AcFilter {
     return this;
   }
 
-  toJson(): Record<string, any> {
-    return AcJsonUtils.getJsonDataFromInstance({ instance: this });
+  toJson(): IAcFilter {
+    return AcJsonUtils.getJsonDataFromInstance({ instance: this }) as any;
   }
 
   toString(): string {

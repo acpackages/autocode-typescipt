@@ -28,8 +28,11 @@ export default defineConfig({
         "@angular/cdk",
         "@angular/core",
         "@angular/common",
+        "@autocode-ts/ac-angular",
         "@autocode-ts/ac-browser",
+        "@autocode-ts/ac-data-bridge",
         "@autocode-ts/ac-extensions",
+        "@autocode-ts/ac-icons",
         "@autocode-ts/autocode",
         "@primeng/themes",
         "tslib"

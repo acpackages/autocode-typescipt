@@ -6,18 +6,19 @@ import { AcDataBridge, IAcDataBridgeProgress } from '@autocode-ts/ac-data-bridge
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 
 @Component({
-  selector: 'data-processing',
+  selector: 'convert-to-destination',
   standalone:false,
-  templateUrl: './data-processing.component.html',
-  styleUrl: './data-processing.component.css',
+  templateUrl: './convert-to-destination.component.html',
+  styleUrl: './convert-to-destination.component.css',
 })
-export class DataProccesingComponent {
+export class ConvertToDestinationComponent {
   @Input() dataBridge?:AcDataBridge;
 
   ACI_SVG_SOLID = ACI_SVG_SOLID;
   Object = Object;
+  showRows:Record<string,boolean> = {};
 
-  getPercentage(progress:IAcDataBridgeProgress):number{
-    return Math.round((progress.completedCount / progress.totalCount) * 100);
+  handleStartConverting(){
+    //
   }
 }

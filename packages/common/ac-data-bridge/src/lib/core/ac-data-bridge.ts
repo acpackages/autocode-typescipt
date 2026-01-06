@@ -9,7 +9,7 @@ import { IAcDataBridgeExistingEntity } from '../interfaces/ac-data-bridge-existi
 import { IAcDataBridgeEntityTemplateDef, IAcDataBridgeEntityTemplateExtend } from '../interfaces/ac-data-bridge-entity-template-def.interface';
 import { IAcDataBridgeProgress } from '../interfaces/ac-data-bridge-progress.interface';
 import { IAcDataBridgeField } from '@autocode-ts/ac-data-bridge';
-export type AcDataBridgeStage = 'NONE' | 'DATA_SET' | 'PROCESSING';
+export type AcDataBridgeStage = 'NONE' | 'DATA_SET' | 'PROCESSING'|'READY_TO_CONVERT'|'CONVERTING'|'COMPLETED';
 
 export class AcDataBridge {
   private _currentStage: AcDataBridgeStage = 'NONE';
@@ -27,7 +27,9 @@ export class AcDataBridge {
   private api: AcDataBridgeWorker | any;
 
   sourceEntities: IAcDataBridgeEntity[] = [];
+  templateEntities:IAcDataBridgeEntityTemplateDef[] = [];
   processingEntities: IAcDataBridgeEntity[] = [];
+  destinationEntities: Record<string,IAcDataBridgeEntity> = {};
   events: AcEvents = new AcEvents();
   destinationTables: { label: string, value: string }[] = [];
   getExistingEntitiesFunction?: Function;
@@ -56,14 +58,11 @@ export class AcDataBridge {
     return this.api.getTemplatesList();
   }
 
-  async startProcessingEntities() {
-    this.processingEntities = await this.api.orderEntitiesForProcessing();
-    if (this.getExistingEntitiesFunction) {
-      this.setExistingEntities({ entities: await this.getExistingEntitiesFunction() });
-    }
-    this.currentStage = 'PROCESSING';
-    this.api.processEntities();
+  handleDownloadXlsxTemplate() {
+    // this.appService.openModal({ component: ImportColumnsSelectionComponent });
   }
+
+
 
   async setData({ buffer }: { buffer: ArrayBuffer }) {
     this.sourceEntities = await this.api.setData({ buffer });
@@ -122,7 +121,7 @@ export class AcDataBridge {
                       // console.log("Found lookup field",referenceField);
                       field.foreignKeyTemplateFieldName = field.templateFieldName;
                       field.foreignKeyTemplateName = templateEntity.templateName;
-                      field.isLookupReferenceField = true;
+                      field.isLookupTemplateField = true;
                       field.isDestinationPrimaryKey = undefined;
                       field.isTemplatePrimaryKey = undefined;
                       field.destinationName = undefined;
@@ -179,6 +178,18 @@ export class AcDataBridge {
       }
       templates.push(template);
     }
+    this.templateEntities = templates;
     await this.api.setTemplateEntities({ entities: templates });
   }
+
+  async startProcessingEntities() {
+    this.processingEntities = await this.api.orderEntitiesForProcessing();
+    if (this.getExistingEntitiesFunction) {
+      this.setExistingEntities({ entities: await this.getExistingEntitiesFunction() });
+    }
+    this.currentStage = 'PROCESSING';
+    this.destinationEntities = await this.api.processEntities();
+    this.currentStage = 'READY_TO_CONVERT';
+  }
+
 }

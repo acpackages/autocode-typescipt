@@ -6,6 +6,23 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "project": "packages/angular/ac-ng-data-bridge-ui/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/angular/ac-ng-data-bridge-ui/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/angular/ac-ng-data-bridge-ui/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "showCircularDependencies": false
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
