@@ -185,7 +185,8 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Ledger Account Id",destinationName: Tables.ActLedgerAccounts, destinationFieldName: TblActLedgerAccounts.LedgerAccountId,isDestinationPrimaryKey:true },
       { templateFieldName: "Ledger Account Unique Id", foreignKeyTemplateName:"Ledger Account Types",foreignKeyTemplateFieldName:"Ledger Account Unique Id" },
       { templateFieldName: "Ledger Account Type Name", foreignKeyTemplateName:"Ledger Account Types",foreignKeyTemplateFieldName:"Ledger Account Type Name" },
-      { templateFieldName: "Ledger Account Name", destinationName: Tables.ActLedgerAccounts, destinationFieldName: TblActLedgerAccounts.LedgerAccountName },
+      { templateFieldName: "Ledger Account Type Id", foreignKeyTemplateName:"Ledger Account Types",foreignKeyTemplateFieldName:"Ledger Account Type Id",destinationFieldName:TblActLedgerAccounts.LedgerAccountTypeId },
+      { templateFieldName: "Ledger Account Name", destinationName: Tables.ActLedgerAccounts, destinationFieldName: TblActLedgerAccounts.LedgerAccountName,isUniqueValue:true },
       { templateFieldName: "Reflecting Statement", destinationName: Tables.ActLedgerAccounts, destinationFieldName: TblActLedgerAccounts.ReflectingStatement },
     ]
   },
@@ -196,7 +197,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Ledger Account Type Unique Id", isTemplatePrimaryKey:true },
       { templateFieldName: "Ledger Account Type Id",destinationName: Tables.ActLedgerAccountTypes, destinationFieldName: TblActLedgerAccountTypes.LedgerAccountTypeId,isDestinationPrimaryKey:true },
       { templateFieldName: "Parent Type Unique Id", foreignKeyTemplateName:"Ledger Account Types",foreignKeyTemplateFieldName:"Ledger Account Type Unique Id" },
-      { templateFieldName: "Ledger Account Type Name", destinationName: Tables.ActLedgerAccountTypes, destinationFieldName: TblActLedgerAccountTypes.LedgerAccountTypeName },
+      { templateFieldName: "Ledger Account Type Name", destinationName: Tables.ActLedgerAccountTypes, destinationFieldName: TblActLedgerAccountTypes.LedgerAccountTypeName,isUniqueValue:true },
       { templateFieldName: "Parent Type Name", foreignKeyTemplateName:"Ledger Account Types",foreignKeyTemplateFieldName:"Ledger Account Type Name" }
     ]
   },
@@ -357,7 +358,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Phone Number Id",
           templateDestinationFieldName:TblActPhoneNumbers.PhoneNumberId,
           lookupFields:["Phone Number Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyPhoneNumbers.PhoneNumberId,
+        parentDestinationField:TblActPhoneNumbers.PhoneNumberId
       }
     ]
   },
@@ -560,13 +563,13 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Is Product Active", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.IsActive },
     ],
     extendChildTemplates:[
-      {templateName:"Product Attributes",excludeFields:["Product id","Product Unique Id","Product Name"]},
-      {templateName:"Product Prices",excludeFields:["Product id","Product Unique Id","Product Name"]},
-      {templateName:"Product Sale Details",excludeFields:["Product id","Product Unique Id","Product Name"]},
-      {templateName:"Product Purchase Details",excludeFields:["Product id","Product Unique Id","Product Name"]},
-      {templateName:"Product Stock Details",excludeFields:["Product id","Product Unique Id","Product Name"]},
-      {templateName:"Product UOMs",excludeFields:["Product id","Product Unique Id","Product Name"]},
-      {templateName:"Product Barcodes",excludeFields:["Product id","Product Unique Id","Product Name"]},
+      {templateName:"Product Attributes",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Prices",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Sale Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Purchase Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Stock Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product UOMs",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Barcodes",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
     ]
   },
   {

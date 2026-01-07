@@ -7,14 +7,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
+import { AcDataBridge, IAcDataBridgeEntity } from '@autocode-ts/ac-data-bridge';
 import { AcNgDataBridgeUiModule } from '@autocode-ts/ac-ng-data-bridge-ui';
 import { IMPORT_SHEET_DEFINITIONS } from './consts/source-def.const';
 import { dataDictionaryJson } from 'tests/data/act-data-dictionary-v1';
+import { AcEnumHttpResponseCode, AcHttp, IAcHttpResponse } from '@autocode-ts/autocode';
+import { AcMessage } from '@autocode-ts/ac-browser';
 
 @Component({
   selector: 'app-xlsx-data-bridge',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule,AcNgDataBridgeUiModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, AcNgDataBridgeUiModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './xlsx-data-bridge.component.html',
   styleUrl: './xlsx-data-bridge.component.scss',
@@ -29,12 +31,36 @@ export class XLSXDataBridgeComponent implements OnDestroy {
       { type: 'module' }
     );
     this.dataBridge = new AcDataBridge({ worker });
-    console.log(this);
-    this.dataBridge.setTemplateEntities({entities:IMPORT_SHEET_DEFINITIONS});
-    this.dataBridge.setDataDictionary({dataDictionaryJson:dataDictionaryJson});
+    this.dataBridge.getExistingEntitiesDataFunction = async ({ destinations }: { destinations: string[] }): Promise<Record<string, any[]>> => {
+      const entities: Record<string, any[]> = {};
+      const httpResponse: IAcHttpResponse = await AcHttp.postPromise({
+        url: 'http://localhost:8081/api/data/get-existing-data-for-import', data: {
+          'accountee_id':"3af0bc61-5161-4f43-bf9a-c45f9b7d457b",
+          'tables':destinations
+        }
+      });
+      if (httpResponse.status == AcEnumHttpResponseCode.Ok) {
+        const apiResponse: any = httpResponse.data;
+        if (apiResponse.status == 'success') {
+          const data: any = apiResponse.data.import_data;
+          for(const key of Object.keys(data)){
+            entities[key] = data[key];
+          }
+        }
+        else {
+          AcMessage.error({ message: apiResponse.message ?? 'Error getting existing data' });
+        }
+      }
+      else {
+        AcMessage.error({ message: `${httpResponse.status}` });
+      }
+      return entities;
+    }
+    this.dataBridge.setTemplateEntities({ entities: IMPORT_SHEET_DEFINITIONS });
+    this.dataBridge.setDataDictionary({ dataDictionaryJson: dataDictionaryJson });
   }
 
-  async test(){
+  async test() {
     //
   }
 

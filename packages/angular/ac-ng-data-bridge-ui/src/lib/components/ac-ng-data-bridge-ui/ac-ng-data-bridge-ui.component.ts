@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
 
 @Component({
@@ -10,7 +10,7 @@ import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
   templateUrl: './ac-ng-data-bridge-ui.component.html',
   styleUrl: './ac-ng-data-bridge-ui.component.css',
 })
-export class AcNgDataBridgeUiComponent {
+export class AcNgDataBridgeUiComponent{
   @Input() dataBridge?:AcDataBridge;
   @Output() downloadTemplate:EventEmitter<any> = new EventEmitter();
 
@@ -26,5 +26,4 @@ export class AcNgDataBridgeUiComponent {
   handleDownloadTemplate(){
     this.downloadTemplate.emit();
   }
-
 }

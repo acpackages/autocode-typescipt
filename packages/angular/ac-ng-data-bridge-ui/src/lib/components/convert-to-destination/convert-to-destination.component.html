@@ -33,7 +33,7 @@
             <ng-container *ngIf="showRows[importDetails.templateName]">
               <div class="card-body p-0">
                 <ng-container
-                          *ngTemplateOutlet="importRowsTemplate; context: { $implicit: importDetails,importDetails:importDetails }"></ng-container>
+                  *ngTemplateOutlet="importRowsTemplate; context: { $implicit: importDetails,importDetails:importDetails,cssClass:'import-rows-container' }"></ng-container>
               </div>
             </ng-container>
           </div>
@@ -77,8 +77,8 @@
     </div>
   </ng-template>
 </ng-container>
-<ng-template #importRowsTemplate let-importDetails="importDetails">
-  <div class="import-rows-container" ac-ng-scrollable [items]="Object.values(importDetails.processedRows)">
+<ng-template #importRowsTemplate let-importDetails="importDetails" let-cssClass="cssClass">
+  <div [attr.class]="cssClass" ac-ng-scrollable [items]="Object.values(importDetails.processedRows)">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -94,6 +94,12 @@
       <tbody ac-ng-scrollable-body>
         <ng-template let-row let-index>
           <tr>
+            <ng-container *ngIf="row.childTemplates && row.childTemplates.length>0 && importDetails">
+              <ac-svg-icon
+                [attr.svg-code]="showAdditionalRows[row.rowId]?ACI_SVG_SOLID.chevronDown:ACI_SVG_SOLID.chevronRight"
+                class="me-2 toggle-icon"
+                (click)="showAdditionalRows[row.rowId] = showAdditionalRows[row.rowId]?false:true"></ac-svg-icon>
+            </ng-container>
             <td>
               <div class="import-status-div">
                 <ng-container *ngIf="row.operation!='SKIP'">
@@ -119,6 +125,27 @@
               <td>{{row.data[field.destinationFieldName]??''}}</td>
             </ng-container>
           </tr>
+          <!-- Child Rows Start-->
+          <ng-container *ngIf="row.childTemplates && row.childTemplates.length>0 && showAdditionalRows[row.rowId]">
+            <ng-container *ngFor="let templateName of row .childTemplates">
+              <tr style="display: none;">
+                <td colspan="100" class="p-0"></td>
+              </tr>
+              <tr>
+                <td colspan="100">
+                  <div class="card my-1 ms-4">
+                    <div class="card-header p-2"><b>{{templateName}}</b></div>
+                    <div class="card-body p-0">
+                      <ng-container
+                        *ngTemplateOutlet="importRowsTemplate; context: { importDetails: getChildTemplateDetails(templateName,row,importDetails),cssClas:'child-import-rows-container' }"></ng-container>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+          <!-- Child Rows End -->
         </ng-template>
       </tbody>
       <tfoot>

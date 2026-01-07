@@ -2,7 +2,7 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { Component,Input, OnInit } from '@angular/core';
-import { AcDataBridge, IAcDataBridgeProgress } from '@autocode-ts/ac-data-bridge';
+import { AcDataBridge, IAcDataBridgeEntity, IAcDataBridgeProcesedRow, IAcDataBridgeProgress } from '@autocode-ts/ac-data-bridge';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 
 @Component({
@@ -17,6 +17,22 @@ export class ConvertToDestinationComponent {
   ACI_SVG_SOLID = ACI_SVG_SOLID;
   Object = Object;
   showRows:Record<string,boolean> = {};
+  showAdditionalRows:Record<string,boolean> = {};
+
+  getChildTemplateDetails(templateName:string,rowDetails:IAcDataBridgeProcesedRow,entityDetails:IAcDataBridgeEntity){
+    const destinationTemplate = this.dataBridge.destinationEntities[templateName];
+    const clonedTemplate = {...destinationTemplate};
+    clonedTemplate.completedCount = 0;
+    clonedTemplate.rowsCount = 0;
+    const processedRows:Record<string,IAcDataBridgeProcesedRow> = {};
+    for(const row of Object.values(destinationTemplate.processedRows)){
+      if(row.parentRowId == rowDetails.rowId && row.parentTemplateName == entityDetails.templateName!){
+        processedRows[row.rowId] = row;
+      }
+    }
+    clonedTemplate.processedRows = processedRows;
+    return clonedTemplate;
+  }
 
   handleStartConverting(){
     //

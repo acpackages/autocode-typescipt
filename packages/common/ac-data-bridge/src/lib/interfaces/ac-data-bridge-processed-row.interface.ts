@@ -4,5 +4,8 @@ export interface IAcDataBridgeProcesedRow{
   operation: 'INSERT' | 'UPDATE' | 'SKIP',
   rowId: string;
   sourceRowId:string;
-  status: 'PENDING'|'COMPLETED'|'STARTED'|'ERROR'
+  status: 'PENDING'|'COMPLETED'|'STARTED'|'ERROR',
+  childTemplates?:string[],
+  parentTemplateName?:string,
+  parentRowId?:string,
 }

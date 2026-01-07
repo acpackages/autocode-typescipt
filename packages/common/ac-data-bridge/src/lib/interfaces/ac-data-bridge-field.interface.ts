@@ -7,8 +7,10 @@ export interface IAcDataBridgeField{
   destinationFieldName?: string,
   isLookupTemplateField?:boolean,
   isTemplatePrimaryKey?:boolean,
+  isUniqueValue?:boolean,
   lookupForTemplateField?:string,
   isDestinationPrimaryKey?:boolean,
+  extensionTemplateHierarchy?:string[],
   foreignKeyTemplateName?:string,
   foreignKeyTemplateFieldName?:string
 }
