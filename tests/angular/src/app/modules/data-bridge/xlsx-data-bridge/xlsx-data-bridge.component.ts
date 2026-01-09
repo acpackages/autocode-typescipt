@@ -69,6 +69,18 @@ export class XLSXDataBridgeComponent implements OnDestroy {
   }
 
   handleConvertedOutput(data:any){
+    const phoneNumbers = data['act_phone_numbers'];
+    const partyPhoneNumbers:any[] = data['act_party_phone_numbers'];
+    for(const phoneNumber of phoneNumbers){
+      const phoneData = phoneNumber.data;
+      const phoneNumberId = phoneData['phone_number_id'];
+      const found = partyPhoneNumbers.find((p)=>{
+        return p.data.phone_number_id == phoneNumberId;
+      })
+      if(!found){
+        console.log(phoneNumber);
+      }
+    }
     console.log(data);
   }
 

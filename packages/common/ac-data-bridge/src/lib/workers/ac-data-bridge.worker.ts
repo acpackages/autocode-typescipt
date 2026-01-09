@@ -475,6 +475,7 @@ class AcDataBridgeEntityWorker {
             previousEntityProcessedRow = entityProcessedRow;
           }
           else {
+            destSavedRow[this.templateDef.destinationName] = previousEntityProcessedRow.data;
             // console.log("Found duplicate row",this.templateDef.templateName);
           }
           let childTemplates: string[] = [];

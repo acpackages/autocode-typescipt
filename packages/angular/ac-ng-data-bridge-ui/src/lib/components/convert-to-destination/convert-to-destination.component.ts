@@ -39,7 +39,7 @@ export class ConvertToDestinationComponent {
   async handleStartConverting(){
     if(this.dataBridge){
       const result = await this.dataBridge.convertRowsForSqlOperations()
-      console.log(result);
+      // console.log(result);
       this.convertedOutput.emit(result);
     }
   }

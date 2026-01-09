@@ -27,7 +27,6 @@ export class AcNgDataBridgeUiComponent{
   }
 
   handleConvertedOutput(data:any){
-    console.log(data);
     this.convertedOutput.emit(data);
   }
 
