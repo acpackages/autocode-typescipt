@@ -27,8 +27,8 @@ export class AcDataBridge {
   private api: AcDataBridgeWorker | any;
 
   sourceEntities: IAcDataBridgeEntity[] = [];
-  templateEntities: Record<string,IAcDataBridgeEntityTemplateDef> = {};
-  processingEntities: Record<string,IAcDataBridgeEntity> = {};
+  templateEntities: Record<string, IAcDataBridgeEntityTemplateDef> = {};
+  processingEntities: Record<string, IAcDataBridgeEntity> = {};
   destinationEntities: Record<string, IAcDataBridgeEntity> = {};
   events: AcEvents = new AcEvents();
   destinationTables: { label: string, value: string }[] = [];
@@ -42,6 +42,13 @@ export class AcDataBridge {
       this.taskProgress = progress;
       // this.updateProgressThrottled(progress);
     }));
+  }
+
+  async convertRowsForSqlOperations():Promise<any>{
+    this.currentStage = 'CONVERTING';
+    const result = await this.api.convertRowsForSqlOperations();
+    this.currentStage = 'COMPLETED';
+    return result;
   }
 
   destroy() {
@@ -76,7 +83,7 @@ export class AcDataBridge {
   }
 
   async setTemplateEntities({ entities }: { entities: IAcDataBridgeEntityTemplateDef[] }) {
-    const resolveExtendedTemplateFields: Function = ({ extendDetails, entity, isChildTemplate = false,extensionTemplateHierarchy }: { extendDetails: IAcDataBridgeEntityTemplateExtend, entity: IAcDataBridgeEntity, isChildTemplate?: boolean,extensionTemplateHierarchy:string[] }): IAcDataBridgeField[] => {
+    const resolveExtendedTemplateFields: Function = ({ extendDetails, entity, isChildTemplate = false, extensionTemplateHierarchy }: { extendDetails: IAcDataBridgeEntityTemplateExtend, entity: IAcDataBridgeEntity, isChildTemplate?: boolean, extensionTemplateHierarchy: string[] }): IAcDataBridgeField[] => {
       let extendingFields: IAcDataBridgeField[] = [];
       // console.log(`Resolving extended fields for ${entity.templateName}`,extendDetails);
       const templateName: string = extendDetails.templateName;
@@ -99,7 +106,7 @@ export class AcDataBridge {
               }
             }
             if (includeField) {
-              const field = { ...templateField,extensionTemplateHierarchy:[templateName,...extensionTemplateHierarchy] };
+              const field = { ...templateField, extensionTemplateHierarchy: [templateName, ...extensionTemplateHierarchy] };
               if (extendDetails.referencingFields && field.templateFieldName) {
                 for (const referenceField of extendDetails.referencingFields) {
                   if (referenceField.extendingTemplateFieldName == field.templateFieldName) {
@@ -121,8 +128,10 @@ export class AcDataBridge {
                       field.isLookupTemplateField = true;
                       field.isDestinationPrimaryKey = undefined;
                       field.isTemplatePrimaryKey = undefined;
-                      field.destinationName = undefined;
-                      field.destinationFieldName = undefined;
+                      field.destinationName = entity.destinationName;
+                      if (referenceField.templateDestinationFieldName) {
+                        field.destinationFieldName = referenceField.templateDestinationFieldName;
+                      }
                     }
                   }
                 }
@@ -135,6 +144,12 @@ export class AcDataBridge {
                 }
               }
               if (includeField) {
+                if (!field.destinationName || field.destinationName == "") {
+                  if (!field.isTemplatePrimaryKey) {
+                    // console.log(`Setting destination name  : ${templateEntity.destinationName} in entity ${entity.templateName}`);
+                    field.destinationName = templateEntity.destinationName;
+                  }
+                }
                 extendingFields.push(field);
               }
             }
@@ -143,14 +158,14 @@ export class AcDataBridge {
         if (templateEntity.extendChildTemplates) {
           if (templateEntity.extendChildTemplates) {
             for (const templateExtendDetails of templateEntity.extendChildTemplates) {
-              extendingFields = [...extendingFields, ...resolveExtendedTemplateFields({ extendDetails: templateExtendDetails, entity: templateEntity, isChildTemplate: true,extensionTemplateHierarchy:[templateEntity.templateName,...extensionTemplateHierarchy] })];
+              extendingFields = [...extendingFields, ...resolveExtendedTemplateFields({ extendDetails: templateExtendDetails, entity: templateEntity, isChildTemplate: true, extensionTemplateHierarchy: [templateEntity.templateName, ...extensionTemplateHierarchy] })];
             }
           }
         }
         if (templateEntity.extendParentTemplates) {
           if (templateEntity.extendParentTemplates) {
             for (const templateExtendDetails of templateEntity.extendParentTemplates) {
-              extendingFields = [...extendingFields, ...resolveExtendedTemplateFields({ extendDetails: templateExtendDetails, entity: templateEntity,extensionTemplateHierarchy:[templateEntity.templateName,...extensionTemplateHierarchy] })];
+              extendingFields = [...extendingFields, ...resolveExtendedTemplateFields({ extendDetails: templateExtendDetails, entity: templateEntity, extensionTemplateHierarchy: [templateEntity.templateName, ...extensionTemplateHierarchy] })];
             }
           }
         }
@@ -162,17 +177,24 @@ export class AcDataBridge {
         templateName: entity.templateName,
         destinationName: entity.destinationName,
         templateFields: [...entity.templateFields],
-        extendChildTemplates:entity.extendChildTemplates,
-        extendParentTemplates:entity.extendParentTemplates,
+        extendChildTemplates: entity.extendChildTemplates,
+        extendParentTemplates: entity.extendParentTemplates,
       };
+      for (const templateField of template.templateFields) {
+        if (!templateField.destinationName || templateField.destinationName == "") {
+          if (!templateField.isTemplatePrimaryKey) {
+            templateField.destinationName = entity.destinationName;
+          }
+        }
+      }
       if (entity.extendChildTemplates) {
         for (const extendDetails of entity.extendChildTemplates) {
-          template.templateFields = [...template.templateFields, ...resolveExtendedTemplateFields({ extendDetails, entity, isChildTemplate: true,extensionTemplateHierarchy:[entity.templateName] })];
+          template.templateFields = [...template.templateFields, ...resolveExtendedTemplateFields({ extendDetails, entity, isChildTemplate: true, extensionTemplateHierarchy: [entity.templateName] })];
         }
       }
       if (entity.extendParentTemplates) {
         for (const extendDetails of entity.extendParentTemplates) {
-          template.templateFields = [...template.templateFields, ...resolveExtendedTemplateFields({ extendDetails, entity,extensionTemplateHierarchy:[entity.templateName] })];
+          template.templateFields = [...template.templateFields, ...resolveExtendedTemplateFields({ extendDetails, entity, extensionTemplateHierarchy: [entity.templateName] })];
         }
       }
       this.templateEntities[entity.destinationName] = template;
@@ -184,8 +206,8 @@ export class AcDataBridge {
     this.processingEntities = await this.api.orderEntitiesForProcessing();
     if (this.getExistingEntitiesDataFunction) {
       this.currentStage = 'GETTING_EXISTING_DATA';
-      const existingEntitiesData = await this.getExistingEntitiesDataFunction({ destinations:await this.api.getWorkerEntityDestinations() });
-      this.api.setExistingData({data:existingEntitiesData});
+      const existingEntitiesData = await this.getExistingEntitiesDataFunction({ destinations: await this.api.getWorkerEntityDestinations() });
+      this.api.setExistingData({ data: existingEntitiesData });
     }
     this.currentStage = 'PROCESSING';
     this.destinationEntities = await this.api.processEntities();

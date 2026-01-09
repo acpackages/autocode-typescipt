@@ -121,10 +121,22 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Is Active", destinationName: Tables.ActChargeableServices, destinationFieldName: TblActChargeableServices.IsActive },
     ],
     extendChildTemplates:[
-      {templateName:"Service Charges",excludeFields:["Service Name","Service Unique Id"]},
-      {templateName:"Service Sale Details",excludeFields:["Service Name","Service Unique Id"]},
-      {templateName:"Service Purchase Details",excludeFields:["Service Name","Service Unique Id"]},
-      {templateName:"Service UOMs",excludeFields:["Service Name","Service Unique Id"]}
+      {templateName:"Service Charges",excludeFields:["Service Name","Service Unique Id"],
+        childDestinationField:TblActChargeableServiceCharges.ChargeableServiceId,
+        parentDestinationField:TblActChargeableServices.ChargeableServiceId
+      },
+      {templateName:"Service Sale Details",excludeFields:["Service Name","Service Unique Id"],
+        childDestinationField:TblActChargeableServiceSaleDetails.ChargeableServiceId,
+        parentDestinationField:TblActChargeableServices.ChargeableServiceId
+      },
+      {templateName:"Service Purchase Details",excludeFields:["Service Name","Service Unique Id"],
+        childDestinationField:TblActChargeableServicePurchaseDetails.ChargeableServiceId,
+        parentDestinationField:TblActChargeableServices.ChargeableServiceId
+      },
+      {templateName:"Service UOMs",excludeFields:["Service Name","Service Unique Id"],
+        childDestinationField:TblActChargeableServiceUoms.ChargeableServiceId,
+        parentDestinationField:TblActChargeableServices.ChargeableServiceId
+      }
     ]
   },
   {
@@ -153,7 +165,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Party Id",
           templateDestinationFieldName:TblActCustomers.PartyId,
           lookupFields:['Party Name',"Party Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActCustomers.PartyId,
+        parentDestinationField:TblActParties.PartyId
       },
     ]
   },
@@ -225,15 +239,42 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Ledger Account Unique Id", foreignKeyTemplateName:'Ledger Accounts',foreignKeyTemplateFieldName:'Ledger Account Unique Id' }
     ],
     extendChildTemplates:[
-      {templateName:"Party Contact Persons",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Email Addresses",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Phone Numbers",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Addresses",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Fax Numbers",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Websites",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Social Medias",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Legal Documents",excludeFields:["Party Id","Party Unique Id","Party Name"]},
-      {templateName:"Party Bank Accounts",excludeFields:["Party Id","Party Unique Id","Party Name"]},
+      {templateName:"Party Contact Persons",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyContactPersons.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Email Addresses",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyEmailAddresses.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Phone Numbers",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyPhoneNumbers.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Addresses",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyAddresses.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Fax Numbers",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyFaxNumbers.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Websites",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyWebsites.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Social Medias",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartySocialMedias.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Legal Documents",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyLegalDocuments.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
+      {templateName:"Party Bank Accounts",excludeFields:["Party Id","Party Unique Id","Party Name"],
+        childDestinationField:TblActPartyBankAccounts.PartyId,
+        parentDestinationField:TblActParties.PartyId
+      },
     ]
   },
   {
@@ -250,7 +291,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Address Id",
           templateDestinationFieldName:TblActAddresses.AddressId,
           lookupFields:["Address Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyAddresses.AddressId,
+        parentDestinationField:TblActAddresses.AddressId
       }
     ]
   },
@@ -268,7 +311,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Bank Account Id",
           templateDestinationFieldName:TblActBankAccounts.BankAccountId,
           lookupFields:["Bank Account Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyBankAccounts.BankAccountId,
+        parentDestinationField:TblActBankAccounts.BankAccountId
       }
     ]
   },
@@ -286,7 +331,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Contact Person Id",
           templateDestinationFieldName:TblActContactPersons.ContactPersonId,
           lookupFields:["Contact Person Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyContactPersons.ContactPersonId,
+        parentDestinationField:TblActContactPersons.ContactPersonId
       }
     ]
   },
@@ -304,7 +351,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Email Address Id",
           templateDestinationFieldName:TblActEmailAddresses.EmailAddressId,
           lookupFields:["Email Address Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyEmailAddresses.EmailAddressId,
+        parentDestinationField:TblActEmailAddresses.EmailAddressId
       }
     ]
   },
@@ -322,7 +371,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Fax Number Id",
           templateDestinationFieldName:TblActFaxNumbers.FaxNumberId,
           lookupFields:["Fax Number Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyFaxNumbers.FaxNumberId,
+        parentDestinationField:TblActFaxNumbers.FaxNumberId
       }
     ]
   },
@@ -378,7 +429,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Social Media Id",
           templateDestinationFieldName:TblActSocialMedias.SocialMediaId,
           lookupFields:["Social Media Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartySocialMedias.SocialMediaId,
+        parentDestinationField:TblActSocialMedias.SocialMediaId
       }
     ]
   },
@@ -396,7 +449,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
           extendingTemplateFieldName:"Website Id",
           templateDestinationFieldName:TblActWebsites.WebsiteId,
           lookupFields:["Website Unique Id"]
-        }]
+        }],
+        childDestinationField:TblActPartyWebsites.WebsiteId,
+        parentDestinationField:TblActWebsites.WebsiteId
       }
     ]
   },
@@ -407,8 +462,8 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Payment Method Unique Id", isTemplatePrimaryKey:true },
       { templateFieldName: "Payment Method Id", destinationName: Tables.ActPaymentMethods, destinationFieldName: TblActPaymentMethods.PaymentMethodId, isDestinationPrimaryKey:true },
       { templateFieldName: "Is Active", destinationName: Tables.ActPaymentMethods, destinationFieldName: TblActPaymentMethods.IsActive },
-      { templateFieldName: "Ledger Account Unique Id", foreignKeyTemplateName:'Ledger Accounts', foreignKeyTemplateFieldName:AC_DATA_BRIDGE_DEFAULTS.sourceColumnUidLabel },
-      { templateFieldName: "Ledger Account", destinationName: Tables.ActLedgerAccounts, foreignKeyTemplateName:'Ledger Accounts', foreignKeyTemplateFieldName:'Ledger Account Name' },
+      { templateFieldName: "Ledger Account Unique Id",destinationName: Tables.ActPaymentMethods,destinationFieldName:TblActPaymentMethods.LedgerAccountId, foreignKeyTemplateName:'Ledger Accounts', foreignKeyTemplateFieldName:"Ledger Account Unique Id" },
+      { templateFieldName: "Ledger Account", destinationName: Tables.ActPaymentMethods,destinationFieldName:TblActPaymentMethods.LedgerAccountId, foreignKeyTemplateName:'Ledger Accounts', foreignKeyTemplateFieldName:'Ledger Account Name' },
       { templateFieldName: "Payment Method Name", destinationName: Tables.ActPaymentMethods, destinationFieldName: TblActPaymentMethods.PaymentMethodName },
       { templateFieldName: "Use For Expenses", destinationName: Tables.ActPaymentMethods, destinationFieldName: TblActPaymentMethods.UseForExpenses },
       { templateFieldName: "Use For Incomes", destinationName: Tables.ActPaymentMethods, destinationFieldName: TblActPaymentMethods.UseForIncomes },
@@ -553,8 +608,8 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Product SKU", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.ProductSku },
       { templateFieldName: "HSN Code", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.HsnCode },
       { templateFieldName: "Brand Name", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.BrandName },
-      { templateFieldName: "Category Name", destinationName: Tables.ActProductCategories, foreignKeyTemplateName:'Product Categories', foreignKeyTemplateFieldName: "Category Name" },
-      { templateFieldName: "Category Unique Id", foreignKeyTemplateName:'Product Categories', foreignKeyTemplateFieldName: "Category Unique Id" },
+      { templateFieldName: "Category Name", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.ProductCategoryId, foreignKeyTemplateName:'Product Categories', foreignKeyTemplateFieldName: "Category Name" },
+      { templateFieldName: "Category Unique Id",destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.ProductCategoryId, foreignKeyTemplateName:'Product Categories', foreignKeyTemplateFieldName: "Category Unique Id" },
       { templateFieldName: "Product Quick Description", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.ProductQuickDescription },
       { templateFieldName: "Product Full Description", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.ProductFullDescription },
       { templateFieldName: "Product Tags", destinationName: Tables.ActProducts, destinationFieldName: TblActProducts.ProductTags },
@@ -564,12 +619,12 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
     ],
     extendChildTemplates:[
       {templateName:"Product Attributes",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
-      {templateName:"Product Prices",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
-      {templateName:"Product Sale Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
-      {templateName:"Product Purchase Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
-      {templateName:"Product Stock Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
-      {templateName:"Product UOMs",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
-      {templateName:"Product Barcodes",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductAttributes.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Prices",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductPrices.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Sale Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductSaleDetails.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Purchase Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductPurchaseDetails.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Stock Details",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductStockDetails.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product UOMs",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductUoms.ProductId,parentDestinationField:TblActProducts.ProductId},
+      {templateName:"Product Barcodes",excludeFields:["Product id","Product Unique Id","Product Name"],childDestinationField:TblActProductBarcodes.ProductId,parentDestinationField:TblActProducts.ProductId},
     ]
   },
   {
@@ -587,8 +642,14 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Invoice Remarks", destinationName: Tables.ActPurchaseInvoices, destinationFieldName: TblActPurchaseInvoices.PurchaseInvoiceRemarks },
     ],
     extendChildTemplates:[
-      {templateName:"Purchase Invoice Products",excludeFields:["Purchase Invoice Unique Id","Purchase Invoice Id"]},
-      {templateName:"Purchase Invoice Payments",excludeFields:["Purchase Invoice Unique Id","Purchase Invoice Id"]},
+      {templateName:"Purchase Invoice Products",excludeFields:["Purchase Invoice Unique Id","Purchase Invoice Id"],
+        childDestinationField:TblActPurchaseInvoiceProducts.PurchaseInvoiceId,
+        parentDestinationField:TblActPurchaseInvoices.PurchaseInvoiceId
+      },
+      {templateName:"Purchase Invoice Payments",excludeFields:["Purchase Invoice Unique Id","Purchase Invoice Id"],
+        childDestinationField:TblActPurchaseInvoicePayments.PurchaseInvoiceId,
+        parentDestinationField:TblActPurchaseInvoices.PurchaseInvoiceId
+      },
     ]
   },
   {
@@ -616,9 +677,9 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Purchase Invoice Unique Id",foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Unique Id', isLookupTemplateField:true },
       { templateFieldName: "Purchase Invoice Id", destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.PurchaseInvoiceId,foreignKeyTemplateName:'Purchase Invoices' ,foreignKeyTemplateFieldName:'Purchase Invoice Id' },
       { templateFieldName: "Product Detail Id",destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.PurchaseInvoiceProductId,isDestinationPrimaryKey:true },
-      { templateFieldName: "Product Unique Id", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Unique Id" },
-      { templateFieldName: "Product Name", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Name" },
-      { templateFieldName: "Product UOM Name", foreignKeyTemplateName:'Product UOMs', foreignKeyTemplateFieldName: "UOM Name" },
+      { templateFieldName: "Product Unique Id", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Unique Id",destinationFieldName: TblActPurchaseInvoiceProducts.ProductId },
+      { templateFieldName: "Product Name", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Name",destinationFieldName: TblActPurchaseInvoiceProducts.ProductId },
+      { templateFieldName: "Product UOM Name", foreignKeyTemplateName:'Product UOMs', foreignKeyTemplateFieldName: "UOM Name", foreignKeyIncludeFieldsInFilter:[TblActProducts.ProductId] },
       { templateFieldName: "Product Description", destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.ProductDescription },
       { templateFieldName: "Product Quantity", destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.ProductQuantity },
       { templateFieldName: "Product TD%", destinationName: Tables.ActPurchaseInvoiceProducts, destinationFieldName: TblActPurchaseInvoiceProducts.DiscountTradePercentage },
@@ -644,8 +705,14 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Invoice Remarks", destinationName: Tables.ActSaleInvoices, destinationFieldName: TblActSaleInvoices.SaleInvoiceRemarks },
     ],
     extendChildTemplates:[
-      {templateName:"Sale Invoice Products",excludeFields:["Sale Invoice Unique Id","Sale Invoice Id"]},
-      {templateName:"Sale Invoice Payments",excludeFields:["Sale Invoice Unique Id","Sale Invoice Id"]},
+      {templateName:"Sale Invoice Products",excludeFields:["Sale Invoice Unique Id","Sale Invoice Id"],
+        childDestinationField:TblActSaleInvoicePayments.SaleInvoiceId,
+        parentDestinationField:TblActSaleInvoices.SaleInvoiceId
+      },
+      {templateName:"Sale Invoice Payments",excludeFields:["Sale Invoice Unique Id","Sale Invoice Id"],
+        childDestinationField:TblActSaleInvoicePayments.SaleInvoiceId,
+        parentDestinationField:TblActSaleInvoices.SaleInvoiceId
+      },
     ]
   },
   {
@@ -673,7 +740,7 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Product Detail Id",destinationName: Tables.ActSaleInvoiceProducts, destinationFieldName: TblActSaleInvoiceProducts.SaleInvoiceProductId,isDestinationPrimaryKey:true },
       { templateFieldName: "Product Unique Id", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Unique Id" },
       { templateFieldName: "Product Name", foreignKeyTemplateName:'Products', foreignKeyTemplateFieldName: "Product Name" },
-      { templateFieldName: "Product UOM Name", foreignKeyTemplateName:'Product UOMs', foreignKeyTemplateFieldName: "UOM Name" },
+      { templateFieldName: "Product UOM Name", foreignKeyTemplateName:'Product UOMs', foreignKeyTemplateFieldName: "UOM Name",foreignKeyIncludeFieldsInFilter:[TblActProducts.ProductId] },
       { templateFieldName: "Product Description", destinationName: Tables.ActSaleInvoiceProducts, destinationFieldName: TblActSaleInvoiceProducts.ProductDescription },
       { templateFieldName: "Product Quantity", destinationName: Tables.ActSaleInvoiceProducts, destinationFieldName: TblActSaleInvoiceProducts.ProductQuantity },
       { templateFieldName: "Product TD%", destinationName: Tables.ActSaleInvoiceProducts, destinationFieldName: TblActSaleInvoiceProducts.DiscountTradePercentage },
@@ -725,7 +792,10 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Taxing Scheme Name", destinationName: Tables.ActTaxingSchemes, destinationFieldName: TblActTaxingSchemes.TaxingSchemeName },
     ],
     extendChildTemplates:[
-      {templateName:"Tax Rates",excludeFields:["Taxing Scheme Name","Taxing Scheme Id"]},
+      {templateName:"Tax Rates",excludeFields:["Taxing Scheme Name","Taxing Scheme Id"],
+        childDestinationField:TblActTaxRates.TaxingSchemeId,
+        parentDestinationField:TblActTaxingSchemes.TaxingSchemeId
+      },
     ]
   },
   {
@@ -768,7 +838,10 @@ export const IMPORT_SHEET_DEFINITIONS: IAcDataBridgeEntityTemplateDef[] = [
       { templateFieldName: "Remarks", destinationName: Tables.ActTransactions, destinationFieldName: TblActTransactions.TransactionRemarks },
     ],
     extendChildTemplates:[
-      {'templateName':'Transaction Entries',excludeFields:["Transaction Id", "Transaction Unique Id"]}
+      {'templateName':'Transaction Entries',excludeFields:["Transaction Id", "Transaction Unique Id"],
+        childDestinationField:TblActTransactionEntries.TransactionId,
+        parentDestinationField:TblActTransactions.TransactionId
+      }
     ]
   },
   {

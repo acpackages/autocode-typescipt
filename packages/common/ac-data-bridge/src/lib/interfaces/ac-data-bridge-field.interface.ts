@@ -12,5 +12,6 @@ export interface IAcDataBridgeField{
   isDestinationPrimaryKey?:boolean,
   extensionTemplateHierarchy?:string[],
   foreignKeyTemplateName?:string,
-  foreignKeyTemplateFieldName?:string
+  foreignKeyTemplateFieldName?:string,
+  foreignKeyIncludeFieldsInFilter?:string[]
 }

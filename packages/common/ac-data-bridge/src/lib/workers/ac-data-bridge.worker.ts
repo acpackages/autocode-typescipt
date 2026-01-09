@@ -7,12 +7,11 @@ import * as XLSX from "xlsx";
 import { AcDataDictionary } from "@autocode-ts/ac-data-dictionary";
 import { IAcDataBridgeProgress } from "../interfaces/ac-data-bridge-progress.interface";
 import { IAcDataBridgeEntity } from "../interfaces/ac-data-bridge-entity.interface";
-import { IAcDataBridgeExistingEntity } from "../interfaces/ac-data-bridge-existing-entity.interface";
 import { IAcDataBridgeField } from "../interfaces/ac-data-bridge-field.interface";
 import { IAcDataBridgeEntityTemplateDef } from "../interfaces/ac-data-bridge-entity-template-def.interface";
 import { AC_DATA_BRIDGE_DEFAULTS, IAcDataBridgeProcesedRow } from "@autocode-ts/ac-data-bridge";
 import { AcEnumConditionOperator, AcEnumLogicalOperator, acEvaluateFilterGroup, Autocode, IAcFilterGroup } from "@autocode-ts/autocode";
-import { objectIsSame } from "@autocode-ts/ac-extensions";
+import { arrayRemove, objectIsSame } from "@autocode-ts/ac-extensions";
 
 class AcDataBridgeEntityWorker {
   private worker: AcDataBridgeWorker;
@@ -22,7 +21,8 @@ class AcDataBridgeEntityWorker {
   processedRows: IAcDataBridgeProcesedRow[] = [];
   allData: { rowId: string, sourceRowId?: string, data: any, sourceRow?: any }[] = [];
   templateDef!: IAcDataBridgeEntityTemplateDef;
-  dataKeys:string[] = [];
+  dataKeys: string[] = [];
+  referencingDestinations: string[] = [];
 
   get primaryKeyFieldName(): string {
     let result: string = '';
@@ -74,23 +74,6 @@ class AcDataBridgeEntityWorker {
     //   this.appImportSheetDefColumns = this.appImportSheetDef.columns;
     // }
   }
-
-  // addReferencingRow({
-  //   row,
-  //   sourceRow,
-  //   referencingRowId,
-  //   referencingDestinationName,
-  //   isParent:boolean
-  // }: {
-  //   row: any;
-  //   sourceRow?: any;
-  //   referencingRowId?: string;
-  //   referencingDestinationName?: string,
-  //   isParent:boolean,
-  // }): IAcDataBridgeProcesedRow {
-
-  //   // return processedRow;
-  // }
 
   addRow({
     row,
@@ -202,7 +185,7 @@ class AcDataBridgeEntityWorker {
         parentTemplateName
       };
       this.processedRows.push(processedRow);
-      this.allData.push({rowId:primaryKeyValue,data:saveRow,sourceRow,sourceRowId:sourceUniqueValue});
+      this.allData.push({ rowId: primaryKeyValue, data: saveRow, sourceRow, sourceRowId: sourceUniqueValue });
       // console.log('✅ Row INSERTED into processedRows', { rowId: primaryKeyValue, sourceRowId: sourceUniqueValue });
     } else {
       // SKIP case: find or create processed row
@@ -232,11 +215,11 @@ class AcDataBridgeEntityWorker {
         // console.log('➕ New SKIP processed row added:', { rowId: primaryKeyValue });
       }
     }
-    for(const key of Object.keys(saveRow)){
-        if(!this.dataKeys.includes(key)){
-          this.dataKeys.push(key);
-        }
+    for (const key of Object.keys(saveRow)) {
+      if (!this.dataKeys.includes(key)) {
+        this.dataKeys.push(key);
       }
+    }
     // console.log('🏁 addRow completed:', { operation, rowId: primaryKeyValue, totalProcessed: this.processedRows.length },sourceRow,row);
 
     return processedRow;
@@ -303,21 +286,21 @@ class AcDataBridgeEntityWorker {
   async getRows({ sourceRowId, rowId, rowFilters, sourceRowFilters }: { sourceRowId?: string, rowId?: string, rowFilters?: IAcFilterGroup, sourceRowFilters?: IAcFilterGroup }): Promise<any[]> {
     let result: any[] = [];
     for (const row of this.allData) {
-      if (rowId && row.rowId == rowId) {
+      let isValid: boolean = true;
+      if (isValid && rowId && row.rowId != rowId) {
+        isValid = false;
+      }
+      if (isValid && sourceRowId && row.sourceRowId != sourceRowId) {
         result.push(row.data);
       }
-      else if (sourceRowId && row.sourceRowId == sourceRowId) {
+      if (isValid && rowFilters) {
+        isValid = acEvaluateFilterGroup({ group: rowFilters, data: row.data });
+      }
+      if (isValid && sourceRowFilters) {
+        isValid = acEvaluateFilterGroup({ group: sourceRowFilters, data: row.sourceRow });
+      }
+      if (isValid) {
         result.push(row.data);
-      }
-      else if (rowFilters) {
-        if (acEvaluateFilterGroup({ group: rowFilters, data: row.data })) {
-          result.push(row.data);
-        }
-      }
-      else if (sourceRowFilters) {
-        if (acEvaluateFilterGroup({ group: sourceRowFilters, data: row.sourceRow })) {
-          result.push(row.data);
-        }
       }
     }
     return result;
@@ -371,10 +354,19 @@ class AcDataBridgeEntityWorker {
           const destinationsRow: any = {
             [this.templateDef.destinationName]: {}
           };
-          const multiHiererchyTemplates:string[] = [];
+          const destSavedRow: any = {};
+          const multiHiererchyTemplates: string[][] = [];
+          const pendingForeignKeyFields: any = [];
           for (const field of this.entity.fields) {
             if (field.templateFieldName) {
-              const value = row[field.templateFieldName];
+              let value = row[field.templateFieldName];
+              if (typeof value == 'string') {
+                value = value.trim();
+              }
+              let destName = this.templateDef.destinationName;
+              if (field.destinationName) {
+                destName = field.destinationName;
+              }
               if (value != undefined && value != '') {
                 if (field.foreignKeyTemplateName && field.foreignKeyTemplateFieldName) {
                   // console.log(`Found foreign key template ${field.foreignKeyTemplateName} and field ${field.foreignKeyTemplateFieldName} with value : ${value}`);
@@ -384,31 +376,56 @@ class AcDataBridgeEntityWorker {
                   if (referencingTemplate && referencingTemplate.destinationName) {
                     // console.log(`Found referencing template for ${field.foreignKeyTemplateName} and field ${field.foreignKeyTemplateFieldName}`)
                     if (this.worker.entityWorkers[referencingTemplate.destinationName]) {
+                      if (!this.referencingDestinations.includes(referencingTemplate.destinationName)) {
+                        this.referencingDestinations.push(referencingTemplate.destinationName);
+                      }
                       // console.log(`Worker for referencing template destination ${referencingTemplate.destinationName} found`);
                       const referencingWorker: AcDataBridgeEntityWorker = this.worker.entityWorkers[referencingTemplate.destinationName];
 
                       let lookupDestinationField: string | undefined;
-                          const primaryKeyFieldName = referencingWorker.primaryKeyFieldName;
-                          if (primaryKeyFieldName) {
-                            lookupDestinationField = referencingWorker.primaryKeyFieldName;
-                          }
-                          if (field.isLookupTemplateField && field.lookupForTemplateField && field.lookupForTemplateField != '') {
-                            lookupDestinationField = "";
-                            const lookupField = this.templateDef.templateFields.find((templateField) => {
-                              return templateField.templateFieldName == field.lookupForTemplateField;
-                            });
-                            if (lookupField) {
-                              lookupDestinationField = lookupField.destinationFieldName;
-                            }
-                          }
-
-                      const getRowParams = {
+                      const primaryKeyFieldName = referencingWorker.primaryKeyFieldName;
+                      if (primaryKeyFieldName) {
+                        lookupDestinationField = referencingWorker.primaryKeyFieldName;
+                      }
+                      if (field.isLookupTemplateField && field.lookupForTemplateField && field.lookupForTemplateField != '') {
+                        lookupDestinationField = "";
+                        const lookupField = this.templateDef.templateFields.find((templateField) => {
+                          return templateField.templateFieldName == field.lookupForTemplateField;
+                        });
+                        if (lookupField) {
+                          lookupDestinationField = lookupField.destinationFieldName;
+                        }
+                      }
+                      const getRowParams: any = {
                         sourceRowFilters: {
                           operator: AcEnumLogicalOperator.And, filters: [
                             { key: field.foreignKeyTemplateFieldName, operator: AcEnumConditionOperator.EqualTo, value: value }
                           ]
-                        }
+                        },
                       };
+                      let foundAllFilterParams: boolean = true;
+                      if (field.foreignKeyIncludeFieldsInFilter) {
+                        const rowFilters: any = { operator: AcEnumLogicalOperator.And, filters: [] };
+                        for (const fieldName of field.foreignKeyIncludeFieldsInFilter) {
+                          let foundField: boolean = false;
+                          for (const key of Object.keys(destinationsRow)) {
+                            if (destinationsRow[key][fieldName]) {
+                              foundField = true;
+                              rowFilters.filters.push({ key: fieldName, operator: AcEnumConditionOperator.EqualTo, value: destinationsRow[key][fieldName] });
+                            }
+                          }
+                          if (!foundField) {
+                            foundAllFilterParams = false;
+                          }
+                        }
+                        if (foundAllFilterParams) {
+                          getRowParams['rowFilters'] = rowFilters;
+                        }
+                        else {
+                          pendingForeignKeyFields.push(field);
+                        }
+                      }
+
                       const referenceRows = await referencingWorker.getRows(getRowParams);
 
                       // console.log(`Referencing rows count for field ${field.foreignKeyTemplateFieldName} with value ${value} = ${referenceRows.length}`);
@@ -416,24 +433,25 @@ class AcDataBridgeEntityWorker {
                         const referenceData = referenceRows[0];
                         if (referenceData) {
                           if (lookupDestinationField && lookupDestinationField != "" && primaryKeyFieldName) {
-                            setValueInTargetDestinationField({ target: destinationsRow, destination: this.templateDef.destinationName, key: lookupDestinationField, value: referenceData[primaryKeyFieldName] });
+                            // console.log(destName,field);
+                            setValueInTargetDestinationField({ target: destinationsRow, destination: destName, key: lookupDestinationField, value: referenceData[primaryKeyFieldName] });
                           }
                         }
                         else {
                           // console.log(getRowParams,referenceData);
                         }
                       }
-                      else{
+                      else {
                         let destinationFieldNameForRef = '';
-                        for(const refTempField of referencingWorker.templateDef.templateFields){
-                          if(refTempField.templateFieldName == field.foreignKeyTemplateFieldName){
-                            if(refTempField.destinationFieldName){
+                        for (const refTempField of referencingWorker.templateDef.templateFields) {
+                          if (refTempField.templateFieldName == field.foreignKeyTemplateFieldName) {
+                            if (refTempField.destinationFieldName) {
                               destinationFieldNameForRef = refTempField.destinationFieldName;
                               break;
                             }
                           }
                         }
-                        if(destinationFieldNameForRef!=''){
+                        if (destinationFieldNameForRef != '' && value) {
                           setValueInTargetDestinationField({ target: destinationsRow, destination: referencingWorker.templateDef.destinationName, key: destinationFieldNameForRef, value: value });
                         }
                       }
@@ -443,24 +461,17 @@ class AcDataBridgeEntityWorker {
                 else if (field.destinationName && field.destinationFieldName && field.templateFieldName) {
                   setValueInTargetDestinationField({ target: destinationsRow, destination: field.destinationName, key: field.destinationFieldName, value: row[field.templateFieldName] });
                 }
-                if(field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2){
-                  let index = 0;
-                  for(const extTempName of field.extensionTemplateHierarchy){
-                    if(index != 0 && index != field.extensionTemplateHierarchy.length - 1){
-                      if(!multiHiererchyTemplates.includes(extTempName)){
-                        multiHiererchyTemplates.push(extTempName);
-                      }
-                    }
-                    index++;
-                  }
+                if (field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2) {
+                  multiHiererchyTemplates.push(field.extensionTemplateHierarchy);
                 }
               }
             }
           }
           let entityProcessedRow: IAcDataBridgeProcesedRow = previousEntityProcessedRow;
-          if (!isDuplicateParentRow) {
+          if (!isDuplicateParentRow && Object.keys(destinationsRow[this.templateDef.destinationName]).length > 0) {
             // console.log(`Adding row for destination ${this.templateDef.destinationName}`,destinationsRow[this.templateDef.destinationName]);
             entityProcessedRow = this.addRow({ row: destinationsRow[this.templateDef.destinationName], sourceRow: row });
+            destSavedRow[this.templateDef.destinationName] = entityProcessedRow.data;
             previousEntityProcessedRow = entityProcessedRow;
           }
           else {
@@ -468,34 +479,76 @@ class AcDataBridgeEntityWorker {
           }
           let childTemplates: string[] = [];
           for (const key of Object.keys(destinationsRow)) {
-            if (this.worker.entityWorkers[key] && key != this.templateDef.destinationName) {
-              const entityWorker = this.worker.entityWorkers[key];
-              if (entityWorker) {
-                if(this.templateDef.extendChildTemplates){
-                 const childTemplateDetails = this.templateDef.extendChildTemplates.find((e)=>{return e.templateName == entityWorker.templateDef.templateName});
-                 if(childTemplateDetails && childTemplateDetails.childDestinationField && childTemplateDetails.parentDestinationField){
-                  if(entityProcessedRow.data[childTemplateDetails.parentDestinationField]){
-                    destinationsRow[key][childTemplateDetails.childDestinationField] = entityProcessedRow.data[childTemplateDetails.parentDestinationField];
+            if (Object.keys(destinationsRow[key] > 0) && entityProcessedRow) {
+              if (this.worker.entityWorkers[key] && key != this.templateDef.destinationName) {
+                const entityWorker = this.worker.entityWorkers[key];
+                if (entityWorker) {
+                  if (this.templateDef.extendChildTemplates) {
+                    const childTemplateDetails = this.templateDef.extendChildTemplates.find((e) => { return e.templateName == entityWorker.templateDef.templateName });
+                    if (childTemplateDetails && childTemplateDetails.childDestinationField && childTemplateDetails.parentDestinationField) {
+                      if (entityProcessedRow.data[childTemplateDetails.parentDestinationField]) {
+                        destinationsRow[key][childTemplateDetails.childDestinationField] = entityProcessedRow.data[childTemplateDetails.parentDestinationField];
+                      }
+                    }
                   }
-                 }
-                }
-                let isDuplicate: boolean = false;
-                if (previousDestinationsRow[key] && isDuplicateParentRow) {
-                  isDuplicate = objectIsSame(previousDestinationsRow[key], destinationsRow[key]);
-                }
-                if (!isDuplicate) {
-                  entityWorker?.addRow({ row: destinationsRow[key], sourceRow: row, parentRowId: entityProcessedRow.rowId, parentTemplateName: this.templateDef.templateName });
-                  childTemplates.push(entityWorker.templateDef.templateName);
-                }
-                else {
-                  // console.log("Found duplicate destination row",destinationsRow[key]);
+                  let isDuplicate: boolean = false;
+                  if (previousDestinationsRow[key] && isDuplicateParentRow) {
+                    isDuplicate = objectIsSame(previousDestinationsRow[key], destinationsRow[key]);
+                  }
+                  if (!isDuplicate) {
+                    const savedProcessedRow = entityWorker?.addRow({ row: destinationsRow[key], sourceRow: row, parentRowId: entityProcessedRow.rowId, parentTemplateName: this.templateDef.templateName });
+                    destSavedRow[entityWorker.templateDef.destinationName] = savedProcessedRow.data;
+                    if (!entityWorker.referencingDestinations.includes(this.templateDef.destinationName)) {
+                      if (!this.referencingDestinations.includes(entityWorker.templateDef.destinationName)) {
+                        entityWorker.referencingDestinations.push(this.templateDef.destinationName);
+                      }
+                    }
+                    childTemplates.push(entityWorker.templateDef.templateName);
+                  }
+                  else {
+                    // console.log("Found duplicate destination row",destinationsRow[key]);
+                  }
                 }
               }
             }
           }
-          for(const extTemplate of multiHiererchyTemplates){
+          // console.log(destSavedRow);
+          for (const templates of multiHiererchyTemplates) {
+            for (let i = 1; i <= templates.length - 2; i++) {
+              const extTemplate = templates[i];
+              const prevTemplate = templates[i - 1];
+              const nextTemplate = templates[i + 1];
+              const extInterWorker = Object.values(this.worker.entityWorkers).find((w) => { return w.templateDef.templateName == extTemplate; });
+              const prevInterWorker = Object.values(this.worker.entityWorkers).find((w) => { return w.templateDef.templateName == prevTemplate; });
+              const nextInterWorker = Object.values(this.worker.entityWorkers).find((w) => { return w.templateDef.templateName == nextTemplate; });
 
+              if (extInterWorker && prevInterWorker && nextInterWorker) {
+                if (!destSavedRow[extInterWorker.templateDef.destinationName] && destSavedRow[prevInterWorker.templateDef.destinationName] && destSavedRow[nextInterWorker.templateDef.destinationName]) {
+                  const nextToExtChildDetails = nextInterWorker.templateDef.extendChildTemplates?.find((t) => { return t.templateName == extTemplate });
+                  const extToPrevParentDetails = extInterWorker.templateDef.extendParentTemplates?.find((t) => { return t.templateName == prevTemplate });
+                  if (
+                    nextToExtChildDetails && nextToExtChildDetails.childDestinationField && nextToExtChildDetails.parentDestinationField &&
+                    extToPrevParentDetails && extToPrevParentDetails.childDestinationField && extToPrevParentDetails.parentDestinationField
+                  ) {
+                    if (!destSavedRow[extInterWorker.templateDef.destinationName]) {
+                      if (destSavedRow[prevInterWorker.templateDef.destinationName][extToPrevParentDetails.parentDestinationField] && destSavedRow[nextInterWorker.templateDef.destinationName][nextToExtChildDetails.parentDestinationField]) {
+                        const extDestRow: any = {
+                          [nextToExtChildDetails.childDestinationField]: destSavedRow[nextInterWorker.templateDef.destinationName][nextToExtChildDetails.parentDestinationField],
+                          [extToPrevParentDetails.childDestinationField]: destSavedRow[prevInterWorker.templateDef.destinationName][extToPrevParentDetails.parentDestinationField],
+                        };
+                        const extProcessedRow = extInterWorker.addRow({ row: extDestRow });
+                        destSavedRow[extInterWorker.templateDef.destinationName] = extProcessedRow.data;
+                        if (!extInterWorker.referencingDestinations.includes(this.templateDef.destinationName)) {
+                          extInterWorker.referencingDestinations.push(this.templateDef.destinationName);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
+
           if (childTemplates.length > 0) {
             if (!entityProcessedRow.childTemplates) {
               entityProcessedRow.childTemplates = [];
@@ -542,7 +595,24 @@ export class AcDataBridgeWorker {
   templateEntities: Record<string, IAcDataBridgeEntityTemplateDef> = {};
 
   constructor() {
-    // console.log(this);
+    console.log(this);
+  }
+
+  async convertRowsForSqlOperations() {
+    const destinationSqlOperations:any = {};
+    for(const key of Object.keys(this.destinationEntities)){
+      const operations:{operation:string,data:any}[] = [];
+      for(const row of Object.values(this.destinationEntities[key].processedRows!)){
+        if(row.operation == 'INSERT'){
+          operations.push({operation:row.operation,data:row.data});
+        }
+        row.status = 'COMPLETED';
+      }
+      if(operations.length > 0){
+        destinationSqlOperations[key] = operations;
+      }
+    }
+    return destinationSqlOperations;
   }
 
   async getTemplateFieldsList({ templateName }: { templateName: string }): Promise<{ label: string, value: string }[]> {
@@ -585,6 +655,7 @@ export class AcDataBridgeWorker {
 
   async orderEntitiesForProcessing(): Promise<Record<string, IAcDataBridgeEntity>> {
     let pendingEntities: IAcDataBridgeEntity[] = [...Object.values(this.sourceEntities)];
+    // let pendingEntityDestinations:string[] = [];
     this.processingEntities = {};
     let destinations: string[] = [];
     const maxIteration: number = 10;
@@ -624,11 +695,11 @@ export class AcDataBridgeWorker {
                 }
               }
             }
-            if(field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2){
+            if (field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2) {
               let index = 0;
-              for(const templateName of field.extensionTemplateHierarchy){
+              for (const templateName of field.extensionTemplateHierarchy) {
                 // console.log(`Found intermediate template ${templateName}`);
-                if(index != 0 && index != field.extensionTemplateHierarchy.length-1){
+                if (index != 0 && index != field.extensionTemplateHierarchy.length - 1) {
                   // console.log(`Getting intermediate templete def for ${templateName}`);
                   const intermediateTemplate = Object.values(this.templateEntities).find((t) => { return t.templateName == templateName });
                   if (intermediateTemplate && intermediateTemplate.destinationName) {
@@ -650,7 +721,6 @@ export class AcDataBridgeWorker {
             this.entityWorkers[entity.destinationName] = worker;
           }
         }
-
       }
       // console.log(`Removing finalized entitities for next iteration`);
       pendingEntities = pendingEntities.filter((pendingEntity) => {
@@ -704,12 +774,29 @@ export class AcDataBridgeWorker {
     }
     this.notifyProgress(true);
     let convertingRows: number = 0;
-    for (const worker of Object.values(this.entityWorkers)) {
-      const destinationEntity = worker.getDestinationEntity();
-      if (destinationEntity.rowsCount > 0) {
-        convertingRows += destinationEntity.rowsCount;
-        this.destinationEntities[destinationEntity.destinationName] = destinationEntity;
+    let destinationNames = Object.keys(this.entityWorkers);
+    const maxIteration = destinationNames.length;
+    let iteration = 0;
+    while (destinationNames.length > 0 && iteration <= maxIteration) {
+      for (const worker of Object.values(this.entityWorkers)) {
+        if (destinationNames.includes(worker.templateDef.destinationName)) {
+          const destinationEntity = worker.getDestinationEntity();
+          let allRefFound: boolean = true;
+          for (const refDest of worker.referencingDestinations) {
+            if (destinationNames.includes(refDest)) {
+              allRefFound = false;
+            }
+          }
+          if (allRefFound) {
+            if (destinationEntity.rowsCount > 0) {
+              convertingRows += destinationEntity.rowsCount;
+              this.destinationEntities[destinationEntity.destinationName] = destinationEntity;
+            }
+            arrayRemove(destinationNames, worker.templateDef.destinationName);
+          }
+        }
       }
+      iteration++;
     }
     this.taskProgress = {
       id: 'convertEntities',

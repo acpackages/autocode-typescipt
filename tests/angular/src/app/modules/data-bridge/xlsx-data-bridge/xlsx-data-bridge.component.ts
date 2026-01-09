@@ -68,5 +68,9 @@ export class XLSXDataBridgeComponent implements OnDestroy {
     this.dataBridge.destroy();
   }
 
+  handleConvertedOutput(data:any){
+    console.log(data);
+  }
+
 
 }

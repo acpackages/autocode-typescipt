@@ -20,13 +20,11 @@ export class SourceDestinationMappingComponent implements OnInit {
   isDetailSet:boolean = false;
 
   ngOnInit(){
-    console.log(this);
     this.setDestinationDetails();
   }
 
   async setDestinationDetails(){
     if(this.dataBridge){
-      console.log("Found data bridge");
       this.templatesList = await this.dataBridge.getTemplatesList();
       for(const source of this.templatesList){
         this.templateFieldsList[source.value] = await this.dataBridge.getTemplateFieldsList({templateName:source.value});

@@ -1,7 +1,7 @@
 /* eslint-disable @angular-eslint/prefer-standalone */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { Component,Input, OnInit } from '@angular/core';
+import { Component,EventEmitter,Input, OnInit, Output } from '@angular/core';
 import { AcDataBridge, IAcDataBridgeEntity, IAcDataBridgeProcesedRow, IAcDataBridgeProgress } from '@autocode-ts/ac-data-bridge';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 
@@ -13,6 +13,8 @@ import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
 })
 export class ConvertToDestinationComponent {
   @Input() dataBridge?:AcDataBridge;
+
+  @Output() convertedOutput:EventEmitter<any> = new EventEmitter<any>();
 
   ACI_SVG_SOLID = ACI_SVG_SOLID;
   Object = Object;
@@ -34,7 +36,11 @@ export class ConvertToDestinationComponent {
     return clonedTemplate;
   }
 
-  handleStartConverting(){
-    //
+  async handleStartConverting(){
+    if(this.dataBridge){
+      const result = await this.dataBridge.convertRowsForSqlOperations()
+      console.log(result);
+      this.convertedOutput.emit(result);
+    }
   }
 }
