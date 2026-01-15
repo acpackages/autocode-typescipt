@@ -12,10 +12,11 @@ export class AcReportPage {
     if (this.isFixedHeight) {
       if (this.element) {
         const pageHeight = this.element.getBoundingClientRect().height;
+        console.log(pageHeight,this.report.pageHeight);
         result = pageHeight > this.report.pageHeight
       }
     }
-
+    console.log(result);
     return result;
   }
 

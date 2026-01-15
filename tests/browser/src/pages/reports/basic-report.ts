@@ -5,6 +5,9 @@ export class BasicReportPage extends HTMLElement {
   data: any = {};
 
   async connectedCallback() {
+    // this.setFinalReportData();
+    // this.setFinalReportHtml();
+
     this.setStatementData();
     this.setStatementHtml();
 
@@ -1556,6 +1559,1674 @@ export class BasicReportPage extends HTMLElement {
     `;
   }
 
+  setFinalReportData() {
+    this.data = {
+      "base_url": "http://localhost:8081",
+      "type": "BALANCE SHEET",
+      "end_date": "2026-01-15",
+      "decimal_places": 3,
+      "debit_balances": [
+        {
+          "ledger_account_balance": 620,
+          "ledger_account_id": "005feae5-3e32-453c-983e-b040c32f0ae9",
+          "ledger_account_name": "PRASHANTBHAI PRAJAPATI",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3650,
+          "ledger_account_id": "02dca618-0ff9-4ff2-9e21-5763a8b7069a",
+          "ledger_account_name": "Shreeji Darshan Flat",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 7495,
+          "ledger_account_id": "05ecc170-62f7-4c3a-8dfd-bd0d7751e940",
+          "ledger_account_name": "EARTH RMC DEVELOPERS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 15510,
+          "ledger_account_id": "08353cd3-f710-41f7-a710-133122de2271",
+          "ledger_account_name": "Jayeshbhai Prajapati",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1046000,
+          "ledger_account_id": "0af3cdef-cd9f-4db0-b373-2d4b6368947a",
+          "ledger_account_name": "Land & Building",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 1360,
+          "ledger_account_id": "0b348138-6ad3-4e67-acda-a8eb854b51c6",
+          "ledger_account_name": "NAVDEEP TRAVELLS",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 0.5,
+          "ledger_account_id": "0c25ebec-de8e-4aae-862f-310b7040d579",
+          "ledger_account_name": "DEVI ASSOCIATES",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 0.5,
+          "ledger_account_id": "0d79a446-1c12-4ca2-827e-205f3c90da89",
+          "ledger_account_name": "Mayank Traders",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 900,
+          "ledger_account_id": "0dcf1fbd-035e-4550-859c-7072df9c31d3",
+          "ledger_account_name": "Fashion Street",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 2685,
+          "ledger_account_id": "0eed55a9-6ad2-4f27-8f8f-e85f9d300549",
+          "ledger_account_name": "PIONEER FABREELS",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 122150,
+          "ledger_account_id": "10fd8fa8-5a4a-4cda-bcd7-2a1f9af6ffb3",
+          "ledger_account_name": "Aashtha Developers",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 1361011,
+          "ledger_account_id": "11cc3e02-31d2-4ccd-b991-cafe0649da6b",
+          "ledger_account_name": "HOUSE",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 9950,
+          "ledger_account_id": "122f182e-4eab-423b-953f-316a074f47cf",
+          "ledger_account_name": "Surya Trade Link",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 11625,
+          "ledger_account_id": "135b21e4-a81b-4ae7-b976-fc4300f78820",
+          "ledger_account_name": "SHAH RASIKLAL KESHAVLAL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 333210,
+          "ledger_account_id": "144bdd2b-d120-435f-bb31-405b12f1b690",
+          "ledger_account_name": "ShreeHari Wood Works",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 665,
+          "ledger_account_id": "15e7b009-6e2f-4da6-9a42-49d59e38c865",
+          "ledger_account_name": "SAILESHBHAI AMRUTBHAI PATEL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 25000,
+          "ledger_account_id": "1786fb42-931e-4188-b1c2-07574c0f43e8",
+          "ledger_account_name": "Uma Co Operative Credit Soc Ltd (Share)",
+          "ledger_account_type_name": "Investments"
+        },
+        {
+          "ledger_account_balance": 8520,
+          "ledger_account_id": "1b6845de-d01f-4c76-a84c-25ca4c24b031",
+          "ledger_account_name": "BABLI SHETH (HARIKRISHNA MISTRY)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 7734,
+          "ledger_account_id": "1ff50867-1cc7-4c07-81ab-2bb95b3739cb",
+          "ledger_account_name": "PAYAL ELECTRONICS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 19374,
+          "ledger_account_id": "20fa072e-7f29-4081-9ea7-ee2ed046158a",
+          "ledger_account_name": "TRISHOOLIN METALISTS LLP",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 11000,
+          "ledger_account_id": "230f716a-cfe0-42ab-a3fd-5ebf2d762b38",
+          "ledger_account_name": "Uma Co Operative Mrutyu Sahay Yojna",
+          "ledger_account_type_name": "Investments"
+        },
+        {
+          "ledger_account_balance": 96446,
+          "ledger_account_id": "257b7c13-3d84-40b7-b70a-a5644cd2db72",
+          "ledger_account_name": "Ashiyana Green Valley",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 70350.5,
+          "ledger_account_id": "29ecd8e8-1cc6-4201-8761-5c56844122eb",
+          "ledger_account_name": "Air Conditioner",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 3043,
+          "ledger_account_id": "2ac3c611-cf44-43cf-b935-956b408ef599",
+          "ledger_account_name": "Active Cleaing And Testing",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 219427,
+          "ledger_account_id": "2af60c57-92a5-4d2d-a1ec-7973315b1bdd",
+          "ledger_account_name": "VEHICLE CAR",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 4956,
+          "ledger_account_id": "2b0fc2f1-6ee6-4e14-ba3e-d9c591ca113c",
+          "ledger_account_name": "Subhash Yadav",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 925,
+          "ledger_account_id": "2c0d149c-9dc2-4be2-89b0-77d5f49d86b7",
+          "ledger_account_name": "Nareshbhai M Patel",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1440,
+          "ledger_account_id": "2c69b5b6-6faf-4576-aa72-924be7e36bb4",
+          "ledger_account_name": "SHIVRATNA INDUSTRIES",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 394000,
+          "ledger_account_id": "2cfd312a-3c92-4b91-bc37-bfdaef3019b1",
+          "ledger_account_name": "Nilkanth R Patel",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 2940,
+          "ledger_account_id": "2dbe466c-073d-4226-98ec-bf7f0072c548",
+          "ledger_account_name": "MAHALAXMI TRADERS",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 2860,
+          "ledger_account_id": "2e42d7b1-f177-4e1a-ba4d-951e8d62c403",
+          "ledger_account_name": "J K PATEL (JAYANTIBHAI)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 950,
+          "ledger_account_id": "2fea9d7c-55fe-477e-afc0-802d9a5f8436",
+          "ledger_account_name": "VIVEK PANCHAL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3345,
+          "ledger_account_id": "30a3eb52-26a3-469e-834a-e74678385dc0",
+          "ledger_account_name": "Girishchandra R Patel",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 5760,
+          "ledger_account_id": "322f4ae3-85e6-4c02-aa5a-03a20257a6da",
+          "ledger_account_name": "SHIVRTNA STEEL PVT LTD",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 2080,
+          "ledger_account_id": "334bfdb5-98df-47d2-8877-a30fb4132f2d",
+          "ledger_account_name": "SHYAM FEBRICEATIN",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 6520,
+          "ledger_account_id": "35bb974e-6011-4fa6-9b56-1a92519adce4",
+          "ledger_account_name": "Dharmesh Pandya",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 24410,
+          "ledger_account_id": "39658162-7b62-445f-a8ba-966e4e9e4d63",
+          "ledger_account_name": "NEW FITNESS POINT",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 524546,
+          "ledger_account_id": "39f99387-fb31-4d4a-a6e3-3f256a201ed5",
+          "ledger_account_name": "PALLAVIBEN RAMESHBHAI PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 5544,
+          "ledger_account_id": "41258afd-b2de-4152-9ae5-a38f9a727bdb",
+          "ledger_account_name": "SWAMINARAYAN TEMPLE",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 16970,
+          "ledger_account_id": "41854213-ad11-486e-8a2a-9c68d206e239",
+          "ledger_account_name": "SHREE SWAMINARAYAN MANDIR KALALI",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 95,
+          "ledger_account_id": "41c48ce5-28e0-4029-a202-9e53668e5488",
+          "ledger_account_name": "SHREE SAGAR TIMBER TRADERS",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 7845,
+          "ledger_account_id": "4279906f-3b47-421b-8535-2adfd60a60b1",
+          "ledger_account_name": "PNTR SOHAN PAINTER",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3630,
+          "ledger_account_id": "42b802a7-d8dd-4b25-afda-dfc8e137f52d",
+          "ledger_account_name": "MODERN ROAD MAKERS PVT LTD",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 23055,
+          "ledger_account_id": "43fe611e-f432-427a-a248-222da12d2485",
+          "ledger_account_name": "UTSAV FOOD PRODUCTS.",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3310,
+          "ledger_account_id": "4408cdb1-4b9e-4598-9f3a-f47dabcdd7bd",
+          "ledger_account_name": "M V PATEL TRADERS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 10000,
+          "ledger_account_id": "4483b84a-c264-4f74-bdd1-2d69e96e20c2",
+          "ledger_account_name": "FASHION SUITINGS PVT LTD",
+          "ledger_account_type_name": "DEPOSITS"
+        },
+        {
+          "ledger_account_balance": 6994,
+          "ledger_account_id": "45352ac5-b674-49cd-a917-4e1f882f41af",
+          "ledger_account_name": "Aruna Engineering Works",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 4315,
+          "ledger_account_id": "48d417e8-bf1e-400b-b8a7-27a899ec274c",
+          "ledger_account_name": "Jitendrabhai Ambalalbhai Sodha (Dr S V Vasani)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 12892,
+          "ledger_account_id": "4a4b4469-0fe0-41f9-86c7-1aa0bed4435d",
+          "ledger_account_name": "PNTR SANJAY AMBUBHAI TALPADA",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 4460,
+          "ledger_account_id": "4b0d720b-a26c-4ea5-a66b-9c7053ed3d76",
+          "ledger_account_name": "SANJAY R PATEL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 190,
+          "ledger_account_id": "4b7e3669-4579-4b64-82a7-9224078567fd",
+          "ledger_account_name": "SIRISHBHAI",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 6959.24999999999,
+          "ledger_account_id": "4cdaf64a-1ec6-436c-924e-32f17f59f851",
+          "ledger_account_name": "IMERYS CERAMICS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 5710,
+          "ledger_account_id": "4dc03752-036a-4eb6-bc69-643a7ef2a4b9",
+          "ledger_account_name": "Bholabhai (Kamleshbhai Talpada)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 17770,
+          "ledger_account_id": "4e7ea23d-f6f6-4e3a-839c-2fa1a3ca1922",
+          "ledger_account_name": "Vrunda Hostel",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 18460,
+          "ledger_account_id": "4f9a7f6c-780a-4d7b-a0fe-80e27359fb7c",
+          "ledger_account_name": "Office and Furniture Eqipments",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 1260,
+          "ledger_account_id": "510f3e90-6dd5-4f8b-804e-15036ca80376",
+          "ledger_account_name": "Pavan Swami(Vadtal)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 3950,
+          "ledger_account_id": "511345d1-5d34-4b55-ba59-c3329eca5f02",
+          "ledger_account_name": "Appolo Sesame Industries",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 5280,
+          "ledger_account_id": "523f01a9-b3fe-44e9-8082-b78be9355386",
+          "ledger_account_name": "DIPESHBHAI V PATEL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 100000,
+          "ledger_account_id": "52d87254-5c11-4b2a-bff9-333016b63e5f",
+          "ledger_account_name": "DR SHIVJIBHAI  VASANI",
+          "ledger_account_type_name": "Loans & Advances"
+        },
+        {
+          "ledger_account_balance": 42,
+          "ledger_account_id": "599c398d-11fb-4972-ad37-c64c7a4bc6d6",
+          "ledger_account_name": "Hemitaben Ashishkumar Shah",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 110,
+          "ledger_account_id": "5a1928f3-63bf-4e5f-bba0-26c0c00b4800",
+          "ledger_account_name": "HASMUKHBHAI (MARSHAL)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 2630,
+          "ledger_account_id": "5add4fd5-62f7-4d83-8d37-b91aca479367",
+          "ledger_account_name": "Dhavalbhai Sargara",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1012000.85,
+          "ledger_account_id": "5d093f62-a31c-4fe0-bf08-a48e58cf5091",
+          "ledger_account_name": "Land Purchase",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 25000,
+          "ledger_account_id": "605e7554-a53d-4d63-b306-d8371c34c65b",
+          "ledger_account_name": "Uma Co Operative Credit Soc Ltd (FD)",
+          "ledger_account_type_name": "Investments"
+        },
+        {
+          "ledger_account_balance": 1185,
+          "ledger_account_id": "60f2349d-bff0-46b4-b64b-4fff79cecfe3",
+          "ledger_account_name": "SCORPIO PRINTER",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1130,
+          "ledger_account_id": "62f35572-cdeb-4b39-bee0-43dccec18a3d",
+          "ledger_account_name": "Piyushbhai (Madhiyabhai)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 6370,
+          "ledger_account_id": "63de751b-1caa-48c8-af86-dbc5d48f4ca5",
+          "ledger_account_name": "Pntr Sanjaybhai Machii",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1907792.5070840588,
+          "ledger_account_id": "666f6e6e-0259-4f36-afb4-3c73d66b60c6",
+          "ledger_account_name": "Input Tax",
+          "ledger_account_type_name": "Duties & Taxes"
+        },
+        {
+          "ledger_account_balance": 7075,
+          "ledger_account_id": "669ddfe2-ecaf-4c64-afb5-0fd83cf8254e",
+          "ledger_account_name": "PNTR RAVIBHAI M BHOI",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 4425,
+          "ledger_account_id": "683ab7a5-9bdc-43e4-9a2d-f00fbaa6e066",
+          "ledger_account_name": "BHAVESHBHAI MISTRY",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 17179.989999999998,
+          "ledger_account_id": "69979a42-947c-4eda-94dd-0a2c4796c131",
+          "ledger_account_name": "Sanjay Developers",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 2380,
+          "ledger_account_id": "69c4b622-a353-4164-a175-b0425bb027ae",
+          "ledger_account_name": "RAMANBHAI (SURYA DEVELOPERS)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 10265,
+          "ledger_account_id": "6a192a73-bbd2-47f9-bb7f-fa202a7432d3",
+          "ledger_account_name": "SHREE HARI  INDUSTRIES",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 14220,
+          "ledger_account_id": "6a370880-52f7-4e64-8b8b-946ddfea3ba9",
+          "ledger_account_name": "JAYA GARMENT",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 11400,
+          "ledger_account_id": "6b30ef4a-0efa-460e-95eb-5025c776edd8",
+          "ledger_account_name": "ENG.CHINTUBHAI (MEHULBHAI PATEL)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 10580,
+          "ledger_account_id": "6bb19851-9e75-4242-a8b5-b09e9bab7019",
+          "ledger_account_name": "Asian Food Industries",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 165,
+          "ledger_account_id": "6da1c8ac-7566-457f-9b5e-1f31a63db21a",
+          "ledger_account_name": "KALPESHBHAI MISTRY",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 47700,
+          "ledger_account_id": "6df76cf1-ea11-4428-91a6-d6759109d06c",
+          "ledger_account_name": "DINESHBHAI L THAKRANI",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 4025,
+          "ledger_account_id": "6f765db8-61d5-4fd6-b149-ca5bfe4243c2",
+          "ledger_account_name": "GAYATRI ELECTRONIC AND ELECTRICALS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 1315,
+          "ledger_account_id": "72e91f07-0cb2-4724-b05d-7f38fe81f985",
+          "ledger_account_name": "Acme Enterprise",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3010,
+          "ledger_account_id": "731ebc96-0d36-417f-b609-15f2f4e5110f",
+          "ledger_account_name": "PRABHUBHAI PASWAN",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 7780,
+          "ledger_account_id": "743370a5-7561-4a8a-9616-60a051082709",
+          "ledger_account_name": "HARESHBHAI (UMA CERAMIC)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 6560,
+          "ledger_account_id": "74d0ad1a-f704-4f00-aa59-c6b1d5057561",
+          "ledger_account_name": "PARAMHANS ENTERPRISE",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 670,
+          "ledger_account_id": "74d85c9a-46a2-491c-997f-ccd1dd2eb951",
+          "ledger_account_name": "ZERRY SHETH",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 18,
+          "ledger_account_id": "75d23198-f503-49da-9c82-163b8dce8a6b",
+          "ledger_account_name": "BE COLOUR CARE",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 224413.73,
+          "ledger_account_id": "760c8fb1-07f6-4a1d-bfa1-01c03ec4af82",
+          "ledger_account_name": "MGVCL",
+          "ledger_account_type_name": "DEPOSITS"
+        },
+        {
+          "ledger_account_balance": 19242.90999999994,
+          "ledger_account_id": "767c3145-3a37-49b2-ae0a-186077adea21",
+          "ledger_account_name": "SB -5909",
+          "ledger_account_type_name": "Cash & Equivalents"
+        },
+        {
+          "ledger_account_balance": 15525,
+          "ledger_account_id": "77f3e8ca-18ec-40e3-be2c-16d1a5199c8b",
+          "ledger_account_name": "S S Buildcon",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 950,
+          "ledger_account_id": "786c9813-0dfc-4a69-8861-adc92cf40728",
+          "ledger_account_name": "GIRISHBHAI P MISTRY",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 3995,
+          "ledger_account_id": "78ec3801-bbcd-4da4-83e6-3d7b75257df1",
+          "ledger_account_name": "Amarsingh M Bariya",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 7052,
+          "ledger_account_id": "794186f3-125e-4f0a-8b26-8c7f14b4c06a",
+          "ledger_account_name": "A S Wooden Furniture",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 10215,
+          "ledger_account_id": "798ac065-fb7b-4e7f-ba9d-f427cfe30679",
+          "ledger_account_name": "Raza Civil Consultancy",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 220,
+          "ledger_account_id": "7a75f101-4612-4039-a58e-46c9788838c7",
+          "ledger_account_name": "YOGESHBHAI",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 125526,
+          "ledger_account_id": "7bb1557d-b698-43be-9b29-3967b080e453",
+          "ledger_account_name": "Ashiyana Green Valley (Denisbhai)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 195,
+          "ledger_account_id": "7cebd1c7-e017-4386-bef0-438013c2012e",
+          "ledger_account_name": "MONTUBHAI ( PIJ )",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 770,
+          "ledger_account_id": "7e1f208f-c8db-49c2-8740-05bf86ac627c",
+          "ledger_account_name": "KIRANBHAI (VIKAS SALES)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 91000,
+          "ledger_account_id": "7fceb1b8-e8c6-4c46-8406-bfe1c3bbd7ab",
+          "ledger_account_name": "HARIBHAI P PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 11650,
+          "ledger_account_id": "80d29a33-c69b-4f26-960a-07235c9e19c9",
+          "ledger_account_name": "Hareshbhai Laljibhai Vasani (Home)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 5.5933924159035087e-11,
+          "ledger_account_id": "82b376be-f8e3-4783-95f6-a10444171178",
+          "ledger_account_name": "IOB GL 092603214000030",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 325.0100000000002,
+          "ledger_account_id": "8345458b-f350-4716-af5b-46df595f5dab",
+          "ledger_account_name": "Nayan Sikaji Marvadi",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 10,
+          "ledger_account_id": "840b792c-6e91-43d3-b9a4-00b922198217",
+          "ledger_account_name": "Pntr Gopalbhai V Raval",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 10,
+          "ledger_account_id": "84d51612-34e8-424b-9999-82b14a29d7d8",
+          "ledger_account_name": "SHREEJI COLOURS AND TEXTURES",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 4310,
+          "ledger_account_id": "87627b0c-bf46-4a82-a456-1eabc98e03c7",
+          "ledger_account_name": "UMESHBHAI GOHEL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 0.07999999999992724,
+          "ledger_account_id": "88c149f2-fa9b-4961-9f7e-7a4fe96ffd60",
+          "ledger_account_name": "UNIVERSAL INDUSTRIES",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 3000,
+          "ledger_account_id": "8aa448fa-1284-4134-bfdb-1ce74107b042",
+          "ledger_account_name": "Rambhai Lalwani(Kishorbhai Fix)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 6465,
+          "ledger_account_id": "8ab0b5a6-6e6d-482b-bbcb-8ac9f59c2f0b",
+          "ledger_account_name": "PARAS TRADERS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 9880,
+          "ledger_account_id": "8efa2c48-b355-43a3-838a-ba2d1732f386",
+          "ledger_account_name": "INDRAVADAN J RAVAL",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 3345,
+          "ledger_account_id": "92961962-b15d-4c48-99d7-11c215acd438",
+          "ledger_account_name": "S K K P SATSANG SAMAJ NADIAD",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 34660,
+          "ledger_account_id": "92a8d158-cdf9-47ca-b3a2-7681c1ac18fa",
+          "ledger_account_name": "Ashiyana Green Valley (Kheda Camp)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 8740,
+          "ledger_account_id": "983b0ae6-aed0-4d10-b23f-d9432c03891f",
+          "ledger_account_name": "Shree Swaminarayan Mandir Vadtal(Petlad,Bandhni Chokdi)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 3327.65,
+          "ledger_account_id": "9add7de7-d366-46c6-b71a-26e3ec9e6f3b",
+          "ledger_account_name": "TCS",
+          "ledger_account_type_name": "Duties & Taxes"
+        },
+        {
+          "ledger_account_balance": 160,
+          "ledger_account_id": "9c1bbeaa-fd4b-4a2d-80e8-0ddfe27b19c9",
+          "ledger_account_name": "USMAN PNTR",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 1500,
+          "ledger_account_id": "9cfb6c1c-6927-4a18-8707-2ae8dd6d9216",
+          "ledger_account_name": "VAJERAMBHAI MISTRY",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 20945,
+          "ledger_account_id": "9cfd2111-cffa-4e14-81ae-220ae33d0dfb",
+          "ledger_account_name": "RAJKUMAR CHAOUDHARI",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 40562,
+          "ledger_account_id": "9f60b960-ff1c-40dd-8126-8271a325da04",
+          "ledger_account_name": "PATEL CONTROL PANEL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 15599,
+          "ledger_account_id": "a2883e32-ea94-4271-835f-d7413e0218d5",
+          "ledger_account_name": "TUSHARBHAI ( CHANCHAL MEDICAL)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 9715,
+          "ledger_account_id": "a4042a8b-90e1-4511-a339-ed1bd84adefc",
+          "ledger_account_name": "NILRAJ ENTERPRISE",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 4225,
+          "ledger_account_id": "a783ef7e-f110-4251-b899-fa5c54a4f0b5",
+          "ledger_account_name": "Shreyash (Rambhai Lalwani)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 0.10000000000002274,
+          "ledger_account_id": "a88b37aa-402b-43bd-8c4f-20a74df690a6",
+          "ledger_account_name": "HARI OM SALES",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 10455,
+          "ledger_account_id": "ab645d53-cbfc-49e3-ad05-163d76814b81",
+          "ledger_account_name": "RAJUBHAI (PIJ)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 601,
+          "ledger_account_id": "ac7f69c5-ea54-41ec-908a-430d12ce9142",
+          "ledger_account_name": "SGST",
+          "ledger_account_type_name": "Duties & Taxes"
+        },
+        {
+          "ledger_account_balance": 13902,
+          "ledger_account_id": "ae854f19-8081-4309-9461-3779f1293a6f",
+          "ledger_account_name": "DHARMESHBHAI PARMAR",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 265,
+          "ledger_account_id": "aea512ae-6662-4171-8df5-48e287b947f4",
+          "ledger_account_name": "Imranbhai (Farhan Park)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 397128,
+          "ledger_account_id": "b05a6b53-00e5-401f-bf05-492ea4a0fa6c",
+          "ledger_account_name": "Creditor on land purchase",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 22,
+          "ledger_account_id": "b079ee76-e33d-4dac-829f-dfd7c661757c",
+          "ledger_account_name": "Avenue Super Mart Ltd (8801)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 12530,
+          "ledger_account_id": "b10b55f8-be77-43bf-99c6-e96498faf5b9",
+          "ledger_account_name": "LOYOLA FEBRICATIAN & WELDING",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 5144.999999999999,
+          "ledger_account_id": "b45f3abe-fc85-4b63-ab19-0de89136cbb3",
+          "ledger_account_name": "Avenue Super Mart Ltd (1031)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 2428,
+          "ledger_account_id": "b7e2e8bf-0f9c-414c-9eee-112e9990f534",
+          "ledger_account_name": "CGST",
+          "ledger_account_type_name": "Duties & Taxes"
+        },
+        {
+          "ledger_account_balance": 307394,
+          "ledger_account_id": "b97a056d-bca2-4d5d-8abd-f0078fba697a",
+          "ledger_account_name": "Shree Arun Engineering",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 136636,
+          "ledger_account_id": "bdad991c-00a2-46eb-a348-721992294a25",
+          "ledger_account_name": "Shree Jala Infra",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3016,
+          "ledger_account_id": "beac1f15-8f65-4c9a-a792-e1eb03ae59ad",
+          "ledger_account_name": "HERO HONDA SPLENDAR",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 19755,
+          "ledger_account_id": "bfd2a6da-eb53-4877-867b-715858573169",
+          "ledger_account_name": "VISHWAKARMA TRADING COMPANY",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3561.9700000000003,
+          "ledger_account_id": "c013342e-42ab-4a17-a1f4-3bc63e4c8244",
+          "ledger_account_name": "TDS",
+          "ledger_account_type_name": "Duties & Taxes"
+        },
+        {
+          "ledger_account_balance": 1605,
+          "ledger_account_id": "c01b9a66-2441-464f-9d36-b3995b3dd90b",
+          "ledger_account_name": "pntr Jagabhai",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 13560,
+          "ledger_account_id": "c0f47313-8cf0-458b-9205-a6818424ef83",
+          "ledger_account_name": "Varshaben Kiritbhai Patel",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 52623.19,
+          "ledger_account_id": "c27edd48-79c0-4675-aa13-5c5c99c6f602",
+          "ledger_account_name": "CREDIT CARD 4709630200319242",
+          "ledger_account_type_name": "Cash & Equivalents"
+        },
+        {
+          "ledger_account_balance": 16560,
+          "ledger_account_id": "c44b0cc4-8069-4138-9828-332a20e5cf1e",
+          "ledger_account_name": "SHALIGRAM RESIDANCY",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 140,
+          "ledger_account_id": "c537bf1f-52ed-43b6-a880-77bbe9936138",
+          "ledger_account_name": "PATEL BUILDERS & DEVELOPMENT",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 675,
+          "ledger_account_id": "c538777d-6493-4b3f-8660-e8f2e6d4c937",
+          "ledger_account_name": "EKTA HARI ART",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3710,
+          "ledger_account_id": "c870502b-c3f0-40f9-b661-fd5c2c001150",
+          "ledger_account_name": "KARMVIR LAND DEVELOPERS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 170,
+          "ledger_account_id": "c891080e-8d94-444c-811b-775b113f5947",
+          "ledger_account_name": "MARUTI MARBLE AND BUILDING MATERIALS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 480,
+          "ledger_account_id": "ca099eac-138c-425d-9ea3-d453bd3456ae",
+          "ledger_account_name": "VISHWAKARMA FURNITURE & FEBRICATION",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 21265,
+          "ledger_account_id": "ce8331c2-c3a3-4947-93ec-18bb8bcd60f0",
+          "ledger_account_name": "Bharvinbhai Ashwinbhai Patel (Montubhai)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 10585.24,
+          "ledger_account_id": "cff1d624-b1f7-4c7d-8852-6983c47e0534",
+          "ledger_account_name": "Computer",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 22970.010000000002,
+          "ledger_account_id": "d20b3e42-d5f6-481c-8748-05c4c50e3937",
+          "ledger_account_name": "Shree Ashapura Saw Mill",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 215.09999999999854,
+          "ledger_account_id": "d2296009-e49e-40de-b63f-9b206d69c2ce",
+          "ledger_account_name": "RCM Consumer Products Pvt Ltd",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 0.009999999999990905,
+          "ledger_account_id": "d233a423-4698-4b0a-8258-81264490ea37",
+          "ledger_account_name": "TULSI CONSTRUCTION",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 5,
+          "ledger_account_id": "d63bf803-b4dd-4919-9434-509c2002fb03",
+          "ledger_account_name": "OM Lamination",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1.2745360322696797e-13,
+          "ledger_account_id": "d6f3b2e4-2dc4-465b-b34b-297dc6d4ef06",
+          "ledger_account_name": "Avenue Super Mart Ltd (1010)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 6325,
+          "ledger_account_id": "d8c49437-3312-4b87-8eca-06c44c077032",
+          "ledger_account_name": "Kamleshbhai Chahan",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 13955,
+          "ledger_account_id": "dc347c49-edf8-4331-99c2-4bacb875f289",
+          "ledger_account_name": "SHYAM FIBERS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 3440,
+          "ledger_account_id": "dd164ebd-c612-437f-b9db-3fd634957d37",
+          "ledger_account_name": "Zahir Baug",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 7587,
+          "ledger_account_id": "e044758e-8c3a-442c-ba1e-248bb60d1b7c",
+          "ledger_account_name": "MACHINERY",
+          "ledger_account_type_name": "Fixed Assets"
+        },
+        {
+          "ledger_account_balance": 3275,
+          "ledger_account_id": "e1175cb3-ce4f-4677-bbd2-d78994277730",
+          "ledger_account_name": "U TECH INDUSTRIES",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 320,
+          "ledger_account_id": "e2de123a-5dff-45f0-b190-4fc3078e6787",
+          "ledger_account_name": "SHREE YANTRA PANELS PVT LTD",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 2362,
+          "ledger_account_id": "e8490806-8213-4dfc-b4eb-68c7921fd403",
+          "ledger_account_name": "LALWANI HARDWARE",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 28030,
+          "ledger_account_id": "e8e525a6-a368-4e87-bbb7-40618c138649",
+          "ledger_account_name": "PARESHBHAI ( MANJIPURA)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 290,
+          "ledger_account_id": "e8fb4dfa-a781-48a0-ae72-40c3b4309135",
+          "ledger_account_name": "Virendrasinh Kiransinh Ravalji (THS)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 1121.52,
+          "ledger_account_id": "e9485f6c-55a3-4cd6-b6c8-858b00a0345e",
+          "ledger_account_name": "BOB SB Account",
+          "ledger_account_type_name": "Bank Accounts"
+        },
+        {
+          "ledger_account_balance": 580,
+          "ledger_account_id": "eda9cd9e-3c89-4032-859f-da911cbcd54d",
+          "ledger_account_name": "ELESHBHAI (MUNNABHAI RTO)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 26093,
+          "ledger_account_id": "ef0e10c3-8da6-4380-8351-fe513f06f58a",
+          "ledger_account_name": "BALDEVBHAI ( KAMLA )",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 410,
+          "ledger_account_id": "ef16e5bc-8079-4b27-a5cb-17f8010b9b5e",
+          "ledger_account_name": "SHIV AGENCY",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 31870,
+          "ledger_account_id": "f1a6d02a-0019-4648-b9a6-dd10fa6940e1",
+          "ledger_account_name": "VIRAL CONSTRUCTION",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 50525,
+          "ledger_account_id": "f20eeec9-c38d-4d2a-a9c2-7e9fb8b7c4cf",
+          "ledger_account_name": "Virendrasinh Kiransinh Ravalji",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 22865,
+          "ledger_account_id": "f5706f39-9bf5-4520-a05c-7e8d5a5d1aad",
+          "ledger_account_name": "Arihant Sanitory And Pipe Fitting",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 27000,
+          "ledger_account_id": "f724bbda-ab5e-4724-aad7-6183e99bb95c",
+          "ledger_account_name": "HARDIK PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 12885,
+          "ledger_account_id": "f84e03a4-d9c8-42b3-85be-653f1a3b2e43",
+          "ledger_account_name": "Ashapura Timbers",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 8115,
+          "ledger_account_id": "f8bc103f-bbc0-4261-bf14-fcd6bb4df981",
+          "ledger_account_name": "PNTR MOJISBHAI CHRISTIAN",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 2550,
+          "ledger_account_id": "fbbebba6-bd56-4532-a8dc-54e145b8a382",
+          "ledger_account_name": "SHREEJI PARK SOCIETY (VIRAL CONTRUCTION)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 14170,
+          "ledger_account_id": "fe07feee-e639-4942-b95a-e5c9942f10ea",
+          "ledger_account_name": "VASUDEV TIMBERS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 58600,
+          "ledger_account_id": "ffc00900-a9c0-4723-96bf-4ac73134ba21",
+          "ledger_account_name": "SH MART",
+          "ledger_account_type_name": "Unsecured Loans"
+        }
+      ],
+      page: {
+        marginTop: "25px",
+        marginBottom: "25px",
+        marginLeft: "25px",
+        marginRight: "25px",
+      },
+      "credit_balances": [
+        {
+          "ledger_account_balance": 123000,
+          "ledger_account_id": "062afe83-dc37-4108-b535-d9f9e95ef580",
+          "ledger_account_name": "Shreehari Timbers",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 0.010000000000218279,
+          "ledger_account_id": "0bf7190b-f264-4bb0-a5e6-ca5977ee0dde",
+          "ledger_account_name": "Pntr Deepakbhai (Mai Mandir)",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 539346,
+          "ledger_account_id": "0c9dede9-7540-4111-aa0e-76e95bef5083",
+          "ledger_account_name": "SANKET H PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 440,
+          "ledger_account_id": "175f7642-0396-44c7-b713-7e9e13a8131b",
+          "ledger_account_name": "RAMBHAI LALWANI",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 241500,
+          "ledger_account_id": "1ff4037a-ff97-4698-b642-ae3e0c7722cf",
+          "ledger_account_name": "NANJIBHAI K NAKRANI",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 886500,
+          "ledger_account_id": "202d8070-a05e-402a-b75a-44e70c054414",
+          "ledger_account_name": "ShreeHari Invest And Profits",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 23000,
+          "ledger_account_id": "26b85a91-5fe0-4204-9d31-95990d760d78",
+          "ledger_account_name": "Shreehari Wood Products",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 9071.49,
+          "ledger_account_id": "331b31cd-09e2-4e7e-970c-842e745f1bd2",
+          "ledger_account_name": "UTTAM LOGISTICS",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 44000,
+          "ledger_account_id": "376f26b0-6fe6-498d-8bee-ee294b9b3505",
+          "ledger_account_name": "DHARMADEV SAW MILL USL",
+          "ledger_account_type_name": "Loans & Advances"
+        },
+        {
+          "ledger_account_balance": 510,
+          "ledger_account_id": "3893c00e-f442-4ca8-b041-b82dda196c96",
+          "ledger_account_name": "Parvati Timbers",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 160,
+          "ledger_account_id": "3a604c75-44dd-4267-9003-95b0fb54bd66",
+          "ledger_account_name": "CHANDRESHBHAI (HARITAGE)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 4513.26,
+          "ledger_account_id": "3f2a87f5-dfc5-44cd-94d0-61246c469452",
+          "ledger_account_name": "GALAXY COMFORT",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 37825.29000000001,
+          "ledger_account_id": "4694d1e9-fecc-4af3-85d1-ae6b3ca83ff3",
+          "ledger_account_name": "ECO PAINTS PVT LTD",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 13144.2,
+          "ledger_account_id": "48b9b358-544f-4e85-89c2-d7bc14e214bb",
+          "ledger_account_name": "UMA SALES AGENCY",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 82392.64,
+          "ledger_account_id": "4915e37c-ed81-41c1-ad0e-7bf642de6276",
+          "ledger_account_name": "IOB (C19-2)092603510000045",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 318000,
+          "ledger_account_id": "4cb2a380-6bfb-4bc5-892a-85056a50183b",
+          "ledger_account_name": "Shreehari Wood Industries USL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 7164,
+          "ledger_account_id": "5247ed5a-64c3-46c1-84bf-664983835d68",
+          "ledger_account_name": "RAMANBHAI MANGALBHAI VANKAR",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 524407,
+          "ledger_account_id": "59199613-e9c9-4480-888f-12efd979491f",
+          "ledger_account_name": "Parvati Timber Mart USL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 0.3400000000001455,
+          "ledger_account_id": "5b1e4205-a7e1-4024-9cbc-8d171f6f60d0",
+          "ledger_account_name": "Kishanbhai Sankhala",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 13780,
+          "ledger_account_id": "5e94149f-4cab-40e4-aeb4-524b46b81ed1",
+          "ledger_account_name": "PIYUSH PANCHAL",
+          "ledger_account_type_name": "Provisions"
+        },
+        {
+          "ledger_account_balance": 622000,
+          "ledger_account_id": "61f8e201-a5b4-4080-a1f5-4448072805c2",
+          "ledger_account_name": "IOB GL 092603462000159",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 254900,
+          "ledger_account_id": "64175519-2295-4e09-9a34-8fbd44f9df2b",
+          "ledger_account_name": "Shreehari Wood Products USL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 14305.21,
+          "ledger_account_id": "6e775d94-8ba2-4495-aa51-62327cd28f8b",
+          "ledger_account_name": "Krishna Enterprise",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 21334,
+          "ledger_account_id": "6edbb90f-59d6-4923-8409-044f28a17764",
+          "ledger_account_name": "Green India Brush Corporation",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 178724.26999999996,
+          "ledger_account_id": "763457d0-0caa-4e08-883e-3c42e77f54a0",
+          "ledger_account_name": "Grasim Industries Limited",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 3961657.5399999996,
+          "ledger_account_id": "78cfe3cb-93e1-4d25-8502-9e9afebb409a",
+          "ledger_account_name": "IOB-A/C. 092602000000576",
+          "ledger_account_type_name": null
+        },
+        {
+          "ledger_account_balance": 2867677,
+          "ledger_account_id": "793165c1-1afd-4362-8599-51fd15fcfe9c",
+          "ledger_account_name": "UPI",
+          "ledger_account_type_name": "Bank Accounts"
+        },
+        {
+          "ledger_account_balance": 6607.56,
+          "ledger_account_id": "7b241676-336a-4970-82a0-fc5f857bffa0",
+          "ledger_account_name": "K CHANDRAKANT & CO.",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 99178.82999999999,
+          "ledger_account_id": "7b951aec-46eb-4797-9d20-20150fef8007",
+          "ledger_account_name": "Narsinhbhai L Patel",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 2131903.701527,
+          "ledger_account_id": "7f6f2578-db4c-4038-8697-a62f82f9bc4d",
+          "ledger_account_name": "Output Tax",
+          "ledger_account_type_name": "Duties & Taxes"
+        },
+        {
+          "ledger_account_balance": 12743.72,
+          "ledger_account_id": "7f7601f3-2b63-4a95-b353-6ab1c4bcee50",
+          "ledger_account_name": "NATIONAL TRADING COMPANY",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 16282.170000000004,
+          "ledger_account_id": "881f8f8f-4c5e-4b65-a959-0bf8ed159ecb",
+          "ledger_account_name": "TARA PAINTS PVT LTD",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 14048.299999999997,
+          "ledger_account_id": "8964267a-c240-4352-a08d-89ac7c74c5f8",
+          "ledger_account_name": "M H ENTERPRISES",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 1643789,
+          "ledger_account_id": "95ebab07-c8aa-429e-b62d-2672bf5fdc86",
+          "ledger_account_name": "Uma Co Operative Credit Soc Ltd (Ln)",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 364475.97000000003,
+          "ledger_account_id": "99a7217d-62a5-48d2-90ea-b1deb628f474",
+          "ledger_account_name": "IOB. A/C-092603351400013",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 0.25,
+          "ledger_account_id": "9d7c6bbc-0382-477a-86f6-0d24df2c4dd2",
+          "ledger_account_name": "PAVAN MINERALS",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 404910.72000000015,
+          "ledger_account_id": "a4551431-d72c-4626-8f65-e8566e8e58b2",
+          "ledger_account_name": "AsianPaints Ltd",
+          "ledger_account_type_name": null
+        },
+        {
+          "ledger_account_balance": 5885.03,
+          "ledger_account_id": "a962e5f7-2916-4980-8cac-f6a0f4670a01",
+          "ledger_account_name": "H K FURNITURE",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 98505,
+          "ledger_account_id": "af635b3e-a90c-46d2-982e-047f55ba3d60",
+          "ledger_account_name": "Shreehari Wood Process",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 843000,
+          "ledger_account_id": "affe1194-2eee-489b-9d00-f53f7473a038",
+          "ledger_account_name": "Dharm Enterprise",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 13130,
+          "ledger_account_id": "b31a41e3-648c-4181-80fa-e43b0526fc0b",
+          "ledger_account_name": "KRUSHIL VINODBHAI PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 3480457.06,
+          "ledger_account_id": "b60d43ba-85e5-4426-aa55-55af3bfcb618",
+          "ledger_account_name": "Prop. Rameshbhai P Patel",
+          "ledger_account_type_name": "Capital"
+        },
+        {
+          "ledger_account_balance": 5278,
+          "ledger_account_id": "b750c3bd-8a04-4b80-95fe-e188757e0838",
+          "ledger_account_name": "JAYESH HARDWARE MART",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 180,
+          "ledger_account_id": "b7be08b1-bc40-47eb-96ce-59cdbf2fbb5e",
+          "ledger_account_name": "Shreehari Wood Packers",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 20709,
+          "ledger_account_id": "bdccb19e-ee81-42ea-8790-b6703c8ebbf3",
+          "ledger_account_name": "Solchem Enterprise",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 1377996.3,
+          "ledger_account_id": "c3492bc6-13e9-49d7-a117-c0ca1d7c743b",
+          "ledger_account_name": "Cash",
+          "ledger_account_type_name": "Cash & Equivalents"
+        },
+        {
+          "ledger_account_balance": 316788,
+          "ledger_account_id": "c519a85f-f16e-483d-b9da-2999b1af79ab",
+          "ledger_account_name": "IOB. A/C-092603452000040",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 7719.419999999999,
+          "ledger_account_id": "cbc3590c-9c80-433b-84f2-77a3fad24001",
+          "ledger_account_name": "Angel Coating",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 90,
+          "ledger_account_id": "ce3f81aa-1285-4e35-8b22-eea4faeb9b2a",
+          "ledger_account_name": "S K MOBILE",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 11108.130000000001,
+          "ledger_account_id": "ce8c9cab-f9a6-468f-9a9c-0c00b9750144",
+          "ledger_account_name": "EVEREST TRADING CO.",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 40000,
+          "ledger_account_id": "d10afc06-5515-4b6a-9384-ace9b7de1b48",
+          "ledger_account_name": "KUTCHH KADVA PATIDAR SATSANG SAMAJ",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 300000,
+          "ledger_account_id": "d164beb4-3676-4f35-a132-642493a2d80e",
+          "ledger_account_name": "Gold Loan 0926032000000013",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 120,
+          "ledger_account_id": "d499314d-a818-46a7-a9a5-65e98ed64dc5",
+          "ledger_account_name": "RAVIKANTBHAI PARIS PARK (MUKESHBHAI PAINTER)",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 400000,
+          "ledger_account_id": "d4a87f6e-a0de-423b-b531-01b40a551292",
+          "ledger_account_name": "IOB GL 092632000000031",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 263000,
+          "ledger_account_id": "d6e582cc-0868-475e-9925-b8a22981bd17",
+          "ledger_account_name": "Shreehari Wood Pack USL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 0.010000000000218279,
+          "ledger_account_id": "d8c12368-af9e-4c2f-b6b2-d5a77ce0741b",
+          "ledger_account_name": "National Industries",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 14190,
+          "ledger_account_id": "d8d0e7fa-c011-436f-84da-c5f38e70a882",
+          "ledger_account_name": "Shree Dharmadev Saw Mill",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 250,
+          "ledger_account_id": "dab50d2a-5dbd-4758-8eb4-e62ac0175aba",
+          "ledger_account_name": "SHILPA BAG HOUSE",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 90,
+          "ledger_account_id": "e054a938-dd99-4298-9b0a-f1a683b182d6",
+          "ledger_account_name": "Shreehari Wood Pack",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 32000,
+          "ledger_account_id": "e2681cad-9d35-43ed-97b2-7239076298fa",
+          "ledger_account_name": "PRATHAM RAMESHBHAI PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 60749.270000000004,
+          "ledger_account_id": "e918b889-9dde-4ceb-9985-9613a919dc32",
+          "ledger_account_name": "MAHESH VIDHYUT INTERIOR GALLERY",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 70,
+          "ledger_account_id": "eb125a98-9e04-4c6d-8961-a0794c22b07d",
+          "ledger_account_name": "Parvati Timber Mart",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 1.7621459846850485e-12,
+          "ledger_account_id": "ec66863e-3c1e-4f14-8fe5-4f3e69b723da",
+          "ledger_account_name": "IOB GL 092632000000020",
+          "ledger_account_type_name": "Secured Loans"
+        },
+        {
+          "ledger_account_balance": 1960,
+          "ledger_account_id": "edb98d81-dba2-4db8-93f2-38e8e7aec819",
+          "ledger_account_name": "DHARMADEV SAW MILL",
+          "ledger_account_type_name": "Debtor/Creditor"
+        },
+        {
+          "ledger_account_balance": 252479.99,
+          "ledger_account_id": "f081a091-2eb6-4ca0-9e1c-dcba309d503a",
+          "ledger_account_name": "VISHAL BALDEVBHAI BRAHMBHATT",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 440835,
+          "ledger_account_id": "f43c5755-5370-4a5b-a516-d13932423601",
+          "ledger_account_name": "ShreeHari Wood Works USL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 606472.54,
+          "ledger_account_id": "f6acab4f-5dfa-4ada-9b93-07f460b19669",
+          "ledger_account_name": "Krishiv Enterprise",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        },
+        {
+          "ledger_account_balance": 150,
+          "ledger_account_id": "f98c7efb-c19f-4c91-9e8d-8d032da01435",
+          "ledger_account_name": "PARVATI SAW MILL",
+          "ledger_account_type_name": "SUNDRY DEBTOR"
+        },
+        {
+          "ledger_account_balance": 105000,
+          "ledger_account_id": "fb22aadb-b9dd-4ff7-8daf-c820b83c5346",
+          "ledger_account_name": "HIMANSHI S PATEL",
+          "ledger_account_type_name": "Unsecured Loans"
+        },
+        {
+          "ledger_account_balance": 73000,
+          "ledger_account_id": "fea4c855-7063-4eb2-89cd-8278e3914a54",
+          "ledger_account_name": "Shreehari Wood Industries",
+          "ledger_account_type_name": "SUNDRY CREDITOR"
+        }
+      ],
+      "debit_total": 9773480.617084058,
+      "credit_total": 24254505.221527003,
+      "balance": -14481024.604442945,
+      "accountee": {
+        "accountee_image_media": {
+          "media_path": null,
+          "media_details": null
+        },
+        "accountee_id": "49f7c12d-9e4e-4822-895a-5266dad1d0dc",
+        "accountee_image_media_id": null,
+        "accountee_name": "ShreeHari Enterprise",
+        "financial_year_end": "2026-03-31",
+        "financial_year_start": "2025-04-01",
+        "is_active": 1,
+        "accountee_remarks": null,
+        "accountee_type": "TRADING",
+        "email_addresses": null,
+        "phone_numbers": null,
+        "addresses": null,
+        "fax_numbers": null,
+        "websites": null,
+        "bank_accounts": null,
+        "currency_code": "INR",
+        "legal_identifier": null
+      },
+      "accountee_addresses": [],
+      "accountee_bank_accounts": [],
+      "accountee_phone_numbers": [],
+      "accountee_email_addresses": [],
+      "accountee_fax_numbers": [],
+      "accountee_legal_documents": [],
+      "accountee_medias": [],
+      "accountee_websites": [],
+      "accountee_social_medias": []
+    };
+  }
+
+  setFinalReportHtml() {
+    this.innerHTML = `
+    <style>
+      .report-side-head {
+        text-align: left;
+        border-bottom: none;
+      }
+
+      .no-top-border {
+        border-top-style: none;
+      }
+
+      .no-bottom-border {
+        border-top-style: none;
+      }
+
+      .border-bottom {
+        border-bottom: solid 1px black !important;
+      }
+
+      .balance {
+        padding: 2px 5px !important;
+        width: 120px;
+      }
+
+      .account {
+        padding: 2px 5px !important;
+      }
+
+      [ac-report]{
+        border:solid 1px #555;
+      }
+    </style>
+    <div class="report" style="margin:auto;width:fit-content;font:arial;" ac-report>
+      <div class="page" ac:style:padding-top="data.page.marginTop" ac:style:padding-left="data.page.marginLeft"
+        ac:style:padding-bottom="data.page.marginBottom" ac:style:padding-right="data.page.marginRight" ac-page
+        ac-page-size="A4" ac-page-orientation="portrait">
+        <table style="height:-webkit-fill-available;width:100%;">
+          <tr>
+            <td ac-page-header style="vertical-align: top;text-align: center;height:10px;">
+              <h3 style="margin-bottom:0px;" class="accountee-name">{{data.accountee.accountee_name}}</h3><span
+                class="report-title" style="text-transform:capitalize;">{{data.report_title}}</span> as on
+              <b>{{data.end_date | date:'dd-MM-yyyy'}}</b>
+              <table class="mt-3" style="width:100%;border-top:solid 1px black;border-bottom:solid 1px black;"
+                cellspacing="0">
+                <thead>
+                  <tr class="side-container">
+                    <th class="side-debit report-side-head pb-1 debit-title"
+                      style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <span ac:if="data.type == 'BALANCE SHEET'">Liabilities</span>
+                      <span ac:if="['TRADING ACCOUNT','TRAIAL BALANCE'].includes(data.type)">Debit</span>
+                      <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Expenses</span>
+                    </th>
+                    <th class="side-credit pb-1 credit-title"
+                      style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <span ac:if="data.type == 'BALANCE SHEET'">Assets</span>
+                      <span ac:if="['TRADING ACCOUNT','TRIAL BALANCE'].includes(data.type)">Credit</span>
+                      <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Incomes</span>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td ac-page-body style="vertical-align: top;">
+              <table style="width:100%;height: 100%;" cellspacing="0">
+                <tbody>
+                  <tr class="side-container">
+                    <td class="side-debit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <table class="table table-striped mb-0" style="width:100%;">
+                        <thead>
+                          <tr>
+                            <th class="text-left balance">Balance</th>
+                            <th class="text-left account">Account</th>
+                          </tr>
+                        </thead>
+                        <tbody ac:for="let item of data.debit_balances;let index;">
+                          <tr class="tr-record-row" style="font-size:14px;">
+                            <td class="balance ps-4">{{item.ledger_account_balance | currency:'INR'}}</td>
+                            <td class="account">{{item.ledger_account_name}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                    <td class="side-credit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <table class="table table-striped mb-0" style="width:100%;">
+                          <thead>
+                            <tr>
+                              <th class="text-left balance">Balance</th>
+                              <th class="text-left account">Account</th>
+                            </tr>
+                          </thead>
+                          <tbody ac:for="let item of data.credit_balances;let index;">
+                            <tr class="tr-record-row" style="font-size:14px;">
+                              <td class="balance ps-4">{{item.ledger_account_balance | currency:'INR'}}</td>
+                              <td class="account">{{item.ledger_account_name}}</td>
+                            </tr>
+                          </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td ac-page-footer style="vertical-align: top;height:10px;font-size:14px;">
+              <table style="width:100%;height: 100%;border-top:solid 1px black;" cellspacing="0">
+                <tfoot>
+                  <tr class="side-container">
+                    <td class="side-debit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <table style="width:100%;font-weight: bold;" cellspacing="0">
+                        <tfoot>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance debit-total-amount border-bottom">0.0</td>
+                            <td class="account_name border-bottom">
+                              <span ac:if="data.type == 'BALANCE SHEET'">Liabilities</span>
+                              <span ac:if="['TRADING ACCOUNT','TRAIAL BALANCE'].includes(data.type)">Debit</span>
+                              <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Expenses</span>
+                              Total
+                            </td>
+                          </tr>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance debit-balance-amount border-bottom">&nbsp;</td>
+                            <td class="account_name debit-balance-label border-bottom">&nbsp;</td>
+                          </tr>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance total-amount border-bottom">0.0</td>
+                            <td class="account_name total_text border-bottom">Total</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </td>
+                    <td class="side-credit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <table style="width:100%;font-weight: bold;" cellspacing="0">
+                        <tfoot>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance credit-total-amount border-bottom">0.0</td>
+                            <td class="account_name border-bottom"><span
+                                ac:if="data.type == 'BALANCE SHEET'">Assets</span>
+                              <span ac:if="['TRADING ACCOUNT','TRAIAL BALANCE'].includes(data.type)">Credit</span>
+                              <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Incomes</span> Total
+                            </td>
+                          </tr>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance credit-balance-amount border-bottom">&nbsp;</td>
+                            <td class="account_name credit-balance-label border-bottom">&nbsp;</td>
+                          </tr>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance total-amount border-bottom">0.0</td>
+                            <td class="account_name total_text border-bottom">Total</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div><span class="float-start">Generated using <b>Accountea</b></span><span class="float-end">Page
+                  {{page.number}} of {{report.pages}}</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>`
+  }
+
   setStatementData() {
     this.data = {
       "base_url": "http://localhost:8081",
@@ -1575,8 +3246,8 @@ export class BasicReportPage extends HTMLElement {
         "is_income": 0,
         "ledger_account_description": "Cash on hand."
       },
-      "start_date":"2025-04-01",
-      "end_date":"2026-03-31",
+      "start_date": "2025-04-01",
+      "end_date": "2026-03-31",
       "transaction_entries": [
         {
           "debit_ledger_account_name": "Cash",
@@ -12179,7 +13850,7 @@ export class BasicReportPage extends HTMLElement {
                                         <td class="text-center balance">{{item.balance | currency:'INR'}}</td>
                                     </tr>
                                 </tbody>
-                                <tfoot>
+                                <tfoot ac-report-footer>
                                     <tr style="font-size:13px;">
                                         <th></th>
                                         <th></th>

@@ -75,7 +75,7 @@ export class AcLoopBinding {
         const iteratorData = await AcExpression.evaluate({ expression: contextKey, context: context });
         if (iteratorData != '' && Array.isArray(iteratorData)) {
           const iteratorValues = Object.values(iteratorData);
-
+          const previousActivePage = this.report.activePage;
           for (let i = 0; i < iteratorValues.length; i++) {
             const itemContext = { ...this.context, [varKey]: iteratorValues[i] };
             if (indexKey) {
@@ -86,17 +86,28 @@ export class AcLoopBinding {
               this.element.append(childEl);
               if (this.page.isContentOverflow) {
                 childEl.remove();
-                const newPage = this.report.addPage();
+                const newPage = this.report.getNextPage();
                 if (newPage) {
                   this.page = newPage;
                   itemContext.page = this.page.toJson();
                   this.element = this.page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${elementId}"]`) as HTMLElement;
+                  this.element.innerHTML = '';
                   this.element.append(childEl);
                 }
               }
               itemContext.page = this.page.toJson();
               const processor = new AcTemplateProcessor({ context: itemContext, element: childEl, page: this.processor.page });
               await processor.process();
+            }
+          }
+          const activePageIndex = this.report.activePage!.index;
+          this.report.activePage = previousActivePage;
+          for(const page of this.report.pages){
+            if(page.index > activePageIndex){
+              const loopElement = page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${elementId}"]`) as HTMLElement;
+              if(loopElement){
+                loopElement.remove();
+              }
             }
           }
         }

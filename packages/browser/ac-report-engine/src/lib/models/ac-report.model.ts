@@ -58,6 +58,14 @@ export class AcReport {
     if (this.pages.length > 0) {
       const lastPageEl = this.pages[this.pages.length - 1].element as HTMLElement;
       const cloneEl = lastPageEl.cloneNode(true) as HTMLElement;
+      const reportHeader = cloneEl.querySelector(`[${AC_REPORT_ATTRIBUTE.reportHeader}]`) as HTMLElement;
+      if(reportHeader){
+        reportHeader.remove();
+      }
+      const reportFooter = lastPageEl.querySelector(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`) as HTMLElement;
+      if(reportFooter){
+        reportFooter.remove();
+      }
       const page = new AcReportPage({ element: cloneEl, index: this.pages.length, report: this });
       this.pages.push(page);
       this.activePage = page;
@@ -88,6 +96,11 @@ export class AcReport {
     }
     else {
       const page = new AcReportPage({ element: this.pageElClone!.cloneNode(true) as HTMLElement, index: this.pages.length, report: this });
+      const reportFooter = page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`) as HTMLElement;
+      if(reportFooter){
+        reportFooter.setAttribute('ac-temp-style-display',reportFooter.style.display);
+        reportFooter.style.display = 'none';
+      }
       this.element.append(page.element);
       this.pages.push(page);
       this.activePage = page;
@@ -102,11 +115,45 @@ export class AcReport {
     }
   }
 
-  private setTempIdsToElement({ element }: { element: HTMLElement }) {
-    element.setAttribute(AC_REPORT_ATTRIBUTE.tempId, Autocode.uuid());
-    for (const child of Array.from(element.children) as HTMLElement[]) {
-      this.setTempIdsToElement({ element: child });
+  finalizePages() {
+    const lastPage = this.pages[this.pages.length - 1];
+    const reportFooter = lastPage.element.querySelector(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`) as HTMLElement;
+    if(reportFooter){
+      reportFooter.style.display = reportFooter.getAttribute('ac-temp-style-display')!;
     }
+    for (const page of Array.from(this.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.page}]`)) as HTMLElement[]) {
+      page.style.maxHeight = `${this.pageHeight}px`;
+      page.style.minHeight = `${this.pageHeight}px`;
+      page.style.height = `${this.pageHeight}px`;
+
+      page.style.maxWidth = `${this.pageWidth}px`;
+      page.style.minWidth = `${this.pageWidth}px`;
+      page.style.width = `${this.pageWidth}px`;
+    }
+    for (const page of this.pages) {
+      this.processPageReportDataBindings(page.element, page);
+    }
+    this.clearTempIdsFromElement({ element: this.element });
+  }
+
+  async generate({ data }: { data: any }) {
+    if (this.pageElClone) {
+      this.addPage();
+    }
+    const context = { data: data, report: {}, page: this.activePage?.toJson() };
+    const processor = new AcTemplateProcessor({ context: context, element: this.element, page: this.activePage! });
+    await processor.process();
+    this.finalizePages();
+  }
+
+  getNextPage() {
+    if(this.activePage!.index < this.pages.length-1){
+      this.activePage = this.pages[this.activePage!.index + 1];
+    }
+    else{
+      this.addPage();
+    }
+    return this.activePage;
   }
 
   async processPageReportDataBindings(node: Node, page: AcReportPage) {
@@ -182,32 +229,6 @@ export class AcReport {
     }
   }
 
-  finalizePages() {
-    for (const page of Array.from(this.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.page}]`)) as HTMLElement[]) {
-      page.style.maxHeight = `${this.pageHeight}px`;
-      page.style.minHeight = `${this.pageHeight}px`;
-      page.style.height = `${this.pageHeight}px`;
-
-      page.style.maxWidth = `${this.pageWidth}px`;
-      page.style.minWidth = `${this.pageWidth}px`;
-      page.style.width = `${this.pageWidth}px`;
-    }
-    for (const page of this.pages) {
-      this.processPageReportDataBindings(page.element, page);
-    }
-    this.clearTempIdsFromElement({ element: this.element });
-  }
-
-  async generate({ data }: { data: any }) {
-    if (this.pageElClone) {
-      this.addPage();
-    }
-    const context = { data: data, report: {}, page: this.activePage?.toJson() };
-    const processor = new AcTemplateProcessor({ context: context, element: this.element, page: this.activePage! });
-    await processor.process();
-    this.finalizePages();
-  }
-
   setPageHeightWidth() {
     if (this.pageElClone) {
       const measureElement = this.pageElClone.cloneNode(true) as HTMLElement;
@@ -234,6 +255,13 @@ export class AcReport {
       this.pageHeight = measureElement.getBoundingClientRect().height;
       this.pageWidth = measureElement.getBoundingClientRect().width;
       measureElement.remove();
+    }
+  }
+
+  private setTempIdsToElement({ element }: { element: HTMLElement }) {
+    element.setAttribute(AC_REPORT_ATTRIBUTE.tempId, Autocode.uuid());
+    for (const child of Array.from(element.children) as HTMLElement[]) {
+      this.setTempIdsToElement({ element: child });
     }
   }
 

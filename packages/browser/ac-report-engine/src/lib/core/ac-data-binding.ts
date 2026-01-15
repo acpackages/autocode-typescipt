@@ -49,7 +49,9 @@ export class AcDataBinding {
       else if (attr.name.toLowerCase().startsWith(AC_REPORT_ATTRIBUTE.templateStyle)) {
         const attrName = attr.name.slice(AC_REPORT_ATTRIBUTE.templateStyle.length+1);
         const result = await AcExpression.evaluate({expression:expr,context:this.context});
-        (this.element.style as any)[stringToCamelCase(attrName)] = result;
+        const propertyName = stringToCamelCase(attrName);
+        console.log(propertyName);
+        (this.element.style as any)[propertyName] = result;
         attrToRemove.push(attr.name);
       }
       else if (attr.name.startsWith('[') && attr.name.endsWith(']')) {
