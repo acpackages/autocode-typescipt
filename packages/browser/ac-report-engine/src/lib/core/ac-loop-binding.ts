@@ -89,10 +89,12 @@ export class AcLoopBinding {
                 const newPage = this.report.addPage();
                 if (newPage) {
                   this.page = newPage;
-                  this.element = this.page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}=${elementId}]`) as HTMLElement;
+                  itemContext.page = this.page.toJson();
+                  this.element = this.page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${elementId}"]`) as HTMLElement;
                   this.element.append(childEl);
                 }
               }
+              itemContext.page = this.page.toJson();
               const processor = new AcTemplateProcessor({ context: itemContext, element: childEl, page: this.processor.page });
               await processor.process();
             }

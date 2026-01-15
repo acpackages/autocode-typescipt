@@ -9,7 +9,9 @@ import { IAcDataBridgeExistingEntity } from '../interfaces/ac-data-bridge-existi
 import { IAcDataBridgeEntityTemplateDef, IAcDataBridgeEntityTemplateExtend } from '../interfaces/ac-data-bridge-entity-template-def.interface';
 import { IAcDataBridgeProgress } from '../interfaces/ac-data-bridge-progress.interface';
 import { IAcDataBridgeField } from '@autocode-ts/ac-data-bridge';
-export type AcDataBridgeStage = 'NONE' | 'GETTING_EXISTING_DATA' | 'DATA_SET' | 'PROCESSING' | 'READY_TO_CONVERT' | 'CONVERTING' | 'COMPLETED';
+import { IAcDataBridgeBeforeAddRequestArgs } from '../interfaces/ac-data-bridge-before-add-request-args.interface';
+import { IAcDataBridgeBeforeAddResponse } from '../interfaces/ac-data-bridge-before-add-response.interface';
+export type AcDataBridgeStage = 'NONE' | 'GETTING_EXISTING_DATA' | 'DATA_SET' | 'PROCESSING' | 'READY_TO_CONVERT' | 'CONVERTING' | 'COMPLETED' | 'ERROR';
 
 export class AcDataBridge {
   private _currentStage: AcDataBridgeStage = 'NONE';
@@ -20,6 +22,19 @@ export class AcDataBridge {
     if (val != this._currentStage) {
       this._currentStage = val;
       this.events.execute({ event: 'currentStageChange' });
+    }
+  }
+
+  private _beforeAddEntityRow: ((args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>)|undefined;
+  get beforeAddEntityRow(): ((args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>)|undefined {
+    return this._beforeAddEntityRow;
+  }
+  set beforeAddEntityRow(val: ((args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>)|undefined) {
+    if (val != this._beforeAddEntityRow) {
+      this._beforeAddEntityRow = val;
+      this.api!.registerBeforeAddEntityRowCallback(Comlink.proxy(async (args:IAcDataBridgeBeforeAddRequestArgs): Promise<IAcDataBridgeBeforeAddResponse> => {
+      return this._beforeAddEntityRow!(args);
+    }));
     }
   }
 

@@ -6,6 +6,7 @@ import { AC_REPORT_ATTRIBUTE } from '../consts/ac-report-html-attributes.const';
 import { AcEnumPageOrientation } from '../enums/ac-enum-page-orientations.enum';
 import { AcTemplateProcessor } from '../core/ac-template-processor';
 import { AcReportEngine } from '../core/ac-report-engine';
+import { AcExpression } from '../core/ac-expression';
 
 export class AcReport {
   reportElClone!: HTMLElement;
@@ -23,8 +24,9 @@ export class AcReport {
   activeLoopElementIds: string[] = [];
 
   constructor({ element }: { element: HTMLElement }) {
-    AcReportEngine.init();
+
     this.setTempIdsToElement({ element: element });
+    AcReportEngine.init();
     this.reportElClone = element.cloneNode(true) as HTMLElement;
     this.element = element;
 
@@ -45,7 +47,7 @@ export class AcReport {
       this.setPageHeightWidth();
       this.element.querySelector(`[${AC_REPORT_ATTRIBUTE.page}]`)?.remove();
     }
-    else{
+    else {
       const page = new AcReportPage({ element: this.element, index: this.pages.length, report: this });
       this.pages.push(page);
       this.activePage = page;
@@ -60,51 +62,123 @@ export class AcReport {
       this.pages.push(page);
       this.activePage = page;
       this.element.append(cloneEl);
-      if(this.activeLoopElementIds.length > 0){
-        for(let i=0;i<this.activeLoopElementIds.length ;i++){
+      if (this.activeLoopElementIds.length > 0) {
+        for (let i = 0; i < this.activeLoopElementIds.length; i++) {
           const tempId = this.activeLoopElementIds[i];
-          const loopEl = cloneEl.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}=${tempId}]`);
-          if(loopEl){
-            if(i<this.activeLoopElementIds.length-1){
-              const subLoopId = this.activeLoopElementIds[i+1] ;
-              const subLoopEl = loopEl.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}=${subLoopId}]`);
-              if(subLoopEl){
-                const clone = subLoopEl.cloneNode(true);
+          const loopEl = cloneEl.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${tempId}"]`) as HTMLElement;
+          if (loopEl) {
+            if (i < this.activeLoopElementIds.length - 1) {
+              const subLoopId = this.activeLoopElementIds[i + 1];
+              const subLoopEl = loopEl.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${subLoopId}"]`) as HTMLElement;
+              if (subLoopEl) {
+                const clone = subLoopEl.cloneNode(true) as HTMLElement;
                 loopEl.innerHTML = '';
                 loopEl.append(clone);
               }
-              else{
+              else {
                 loopEl.innerHTML = '';
               }
             }
-            else{
+            else {
               loopEl.innerHTML = '';
             }
           }
         }
       }
-      return this.activePage;
     }
-    else{
+    else {
       const page = new AcReportPage({ element: this.pageElClone!.cloneNode(true) as HTMLElement, index: this.pages.length, report: this });
       this.element.append(page.element);
       this.pages.push(page);
       this.activePage = page;
-      return this.activePage;
     }
+    return this.activePage;
   }
 
-  clearTempIdsFromElement({ element }: { element: HTMLElement }) {
-    element.removeAttribute('ac-temp-id');
+  private clearTempIdsFromElement({ element }: { element: HTMLElement }) {
+    element.removeAttribute(AC_REPORT_ATTRIBUTE.tempId);
     for (const child of Array.from(element.children) as HTMLElement[]) {
       this.clearTempIdsFromElement({ element: child });
     }
   }
 
-  setTempIdsToElement({ element }: { element: HTMLElement }) {
-    element.setAttribute('ac-temp-id', Autocode.uuid());
+  private setTempIdsToElement({ element }: { element: HTMLElement }) {
+    element.setAttribute(AC_REPORT_ATTRIBUTE.tempId, Autocode.uuid());
     for (const child of Array.from(element.children) as HTMLElement[]) {
       this.setTempIdsToElement({ element: child });
+    }
+  }
+
+  async processPageReportDataBindings(node: Node, page: AcReportPage) {
+    const el = node as HTMLElement;
+    if (node.nodeType == Node.TEXT_NODE) {
+      if (node.nodeValue) {
+        const original = node.nodeValue;
+        const regex = /{{\s*(.*?)\s*}}/g; // match all {{ expression }}
+
+        // Find all matches
+        const matches: { fullMatch: string; expression: string; start: number; end: number }[] = [];
+        let match;
+        while ((match = regex.exec(original)) !== null) {
+          matches.push({
+            fullMatch: match[0],
+            expression: match[1],
+            start: match.index,
+            end: regex.lastIndex,
+          });
+        }
+
+        if (matches.length === 0) {
+          return; // No expressions to evaluate
+        }
+
+        // Evaluate all expressions in parallel (async)
+        const results = await Promise.all(
+          matches.map(async ({ expression }) => {
+            try {
+              return await AcExpression.evaluate({
+                expression,
+                context: {
+                  page: page.toJson(),
+                  report: this.toJson()
+                },
+              });
+            } catch (e) {
+              AcReportEngine.logError("Expression error:", expression, e);
+              return "";
+            }
+          })
+        );
+
+        // Build the final string by replacing matches
+        let result = '';
+        let lastIndex = 0;
+
+        matches.forEach((match, i) => {
+          // Add text before the match
+          result += original.slice(lastIndex, match.start);
+          // Add evaluated result
+          result += results[i] ?? '';
+          // Update cursor
+          lastIndex = match.end;
+        });
+
+        // Add remaining text after last match
+        result += original.slice(lastIndex);
+        node.nodeValue = result;
+      }
+    }
+    for (const subNode of Array.from(node.childNodes)) {
+      let continueOperation = true;
+      if (subNode.nodeType === Node.ELEMENT_NODE) {
+        const el: HTMLElement = subNode as HTMLElement;
+        if (el.hasAttribute(AC_REPORT_ATTRIBUTE.templateFor)) {
+          continueOperation = false;
+        }
+      }
+      if (continueOperation) {
+        await this.processPageReportDataBindings(subNode, page);
+      }
     }
   }
 
@@ -118,14 +192,17 @@ export class AcReport {
       page.style.minWidth = `${this.pageWidth}px`;
       page.style.width = `${this.pageWidth}px`;
     }
-    this.clearTempIdsFromElement({element:this.element});
+    for (const page of this.pages) {
+      this.processPageReportDataBindings(page.element, page);
+    }
+    this.clearTempIdsFromElement({ element: this.element });
   }
 
   async generate({ data }: { data: any }) {
-    if(this.pageElClone){
+    if (this.pageElClone) {
       this.addPage();
     }
-    const context = { data: data, report: {}, page: {} };
+    const context = { data: data, report: {}, page: this.activePage?.toJson() };
     const processor = new AcTemplateProcessor({ context: context, element: this.element, page: this.activePage! });
     await processor.process();
     this.finalizePages();
@@ -158,5 +235,11 @@ export class AcReport {
       this.pageWidth = measureElement.getBoundingClientRect().width;
       measureElement.remove();
     }
+  }
+
+  toJson() {
+    return {
+      pages:this.pages.length
+    };
   }
 }

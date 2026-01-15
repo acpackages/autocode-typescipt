@@ -32,6 +32,10 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       AcDDEExtensionManager.register(AcBrowserStorageDDEExtension);
       AcDDEExtensionManager.register(AcCodeGeneratorDDEExtension);
       this.dataDictionaryEditor = new AcDataDictionaryEditor();
+
+      gridDiv.append(this.dataDictionaryEditor);
+
+      console.dir(this.dataDictionaryEditor);
       this.editorApi = this.dataDictionaryEditor.editorApi;
       this.editorApi.hooks.subscribeAllHooks({callback:(hookName:string,hookArgs:any)=>{
         // console.log(`Found hook : ${hookName}`,hookArgs);
@@ -46,7 +50,6 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:unifiDataDictionary});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:ddeDataDictionary});
       console.log(this.editorApi);
-      gridDiv.append(this.dataDictionaryEditor);
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:dataDictionaryJson,dataDictionaryName:'accountea'});
 
 

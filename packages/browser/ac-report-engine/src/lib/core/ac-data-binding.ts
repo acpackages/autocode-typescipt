@@ -21,6 +21,7 @@ export class AcDataBinding {
       if (attr.name.toLowerCase().startsWith(AC_REPORT_ATTRIBUTE.templateBindAttribute)) {
         const attrName = attr.name.slice(AC_REPORT_ATTRIBUTE.templateBindAttribute.length+1);
         try {
+          console.log(expr);
           const value = await AcExpression.evaluate({expression:expr, context:this.context});
           if (value !== undefined) {
             if(attrName.toLowerCase() == 'innerhtml'){

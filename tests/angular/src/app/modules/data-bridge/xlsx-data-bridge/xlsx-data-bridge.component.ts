@@ -7,7 +7,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AcDataBridge, IAcDataBridgeEntity } from '@autocode-ts/ac-data-bridge';
+import { AcDataBridge, IAcDataBridgeBeforeAddRequestArgs, IAcDataBridgeBeforeAddResponse, IAcDataBridgeEntity } from '@autocode-ts/ac-data-bridge';
 import { AcNgDataBridgeUiModule } from '@autocode-ts/ac-ng-data-bridge-ui';
 import { IMPORT_SHEET_DEFINITIONS } from './consts/source-def.const';
 import { dataDictionaryJson } from 'tests/data/act-data-dictionary-v1';
@@ -58,6 +58,10 @@ export class XLSXDataBridgeComponent implements OnDestroy {
     }
     this.dataBridge.setTemplateEntities({ entities: IMPORT_SHEET_DEFINITIONS });
     this.dataBridge.setDataDictionary({ dataDictionaryJson: dataDictionaryJson });
+    this.dataBridge.beforeAddEntityRow = async (args:IAcDataBridgeBeforeAddRequestArgs):Promise<IAcDataBridgeBeforeAddResponse> =>{
+      args.data['accountee_id'] = 'Modified from before add fun';
+      return {data:args.data}
+    }
   }
 
   async test() {

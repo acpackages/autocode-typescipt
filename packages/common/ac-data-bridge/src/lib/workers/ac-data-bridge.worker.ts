@@ -12,6 +12,8 @@ import { IAcDataBridgeEntityTemplateDef } from "../interfaces/ac-data-bridge-ent
 import { AC_DATA_BRIDGE_DEFAULTS, IAcDataBridgeProcesedRow } from "@autocode-ts/ac-data-bridge";
 import { AcEnumConditionOperator, AcEnumLogicalOperator, acEvaluateFilterGroup, Autocode, IAcFilterGroup } from "@autocode-ts/autocode";
 import { arrayRemove, objectIsSame } from "@autocode-ts/ac-extensions";
+import { IAcDataBridgeBeforeAddRequestArgs } from "../interfaces/ac-data-bridge-before-add-request-args.interface";
+import { IAcDataBridgeBeforeAddResponse } from "../interfaces/ac-data-bridge-before-add-response.interface";
 
 class AcDataBridgeEntityWorker {
   private worker: AcDataBridgeWorker;
@@ -75,7 +77,7 @@ class AcDataBridgeEntityWorker {
     // }
   }
 
-  addRow({
+  async addRow({
     row,
     sourceRow,
     parentRowId,
@@ -85,7 +87,7 @@ class AcDataBridgeEntityWorker {
     sourceRow?: any;
     parentRowId?: string;
     parentTemplateName?: string
-  }): IAcDataBridgeProcesedRow {
+  }): Promise<IAcDataBridgeProcesedRow> {
 
     // console.log('🔄 addRow called with:', { row, sourceRow, parentRowId, parentTemplateName });
 
@@ -94,7 +96,7 @@ class AcDataBridgeEntityWorker {
     let templateUniqueKeyField: string | undefined;
     let sourceUniqueValue: string = '';
 
-    const saveRow: any = { ...row };
+    let saveRow: any = { ...row };
 
     // Extract primary key and template unique field from templateDef
     if (this.templateDef) {
@@ -169,6 +171,10 @@ class AcDataBridgeEntityWorker {
     if (primaryKeyField) {
       saveRow[primaryKeyField] = primaryKeyValue;
       // console.log(`✏️  Assigned primary key to row: ${primaryKeyField} = ${primaryKeyValue}`);
+    }
+    if(this.worker.beforeAddEntityRowCallback){
+      const beforeAddResponse = await this.worker.beforeAddEntityRowCallback({data:saveRow,destination:this.templateDef.destinationName,operation:operation})
+      saveRow = beforeAddResponse.data;
     }
 
     let processedRow: any;
@@ -470,7 +476,7 @@ class AcDataBridgeEntityWorker {
           let entityProcessedRow: IAcDataBridgeProcesedRow = previousEntityProcessedRow;
           if (!isDuplicateParentRow && Object.keys(destinationsRow[this.templateDef.destinationName]).length > 0) {
             // console.log(`Adding row for destination ${this.templateDef.destinationName}`,destinationsRow[this.templateDef.destinationName]);
-            entityProcessedRow = this.addRow({ row: destinationsRow[this.templateDef.destinationName], sourceRow: row });
+            entityProcessedRow = await this.addRow({ row: destinationsRow[this.templateDef.destinationName], sourceRow: row });
             destSavedRow[this.templateDef.destinationName] = entityProcessedRow.data;
             previousEntityProcessedRow = entityProcessedRow;
           }
@@ -497,7 +503,7 @@ class AcDataBridgeEntityWorker {
                     isDuplicate = objectIsSame(previousDestinationsRow[key], destinationsRow[key]);
                   }
                   if (!isDuplicate) {
-                    const savedProcessedRow = entityWorker?.addRow({ row: destinationsRow[key], sourceRow: row, parentRowId: entityProcessedRow.rowId, parentTemplateName: this.templateDef.templateName });
+                    const savedProcessedRow = await entityWorker?.addRow({ row: destinationsRow[key], sourceRow: row, parentRowId: entityProcessedRow.rowId, parentTemplateName: this.templateDef.templateName });
                     destSavedRow[entityWorker.templateDef.destinationName] = savedProcessedRow.data;
                     if (!entityWorker.referencingDestinations.includes(this.templateDef.destinationName)) {
                       if (!this.referencingDestinations.includes(entityWorker.templateDef.destinationName)) {
@@ -537,7 +543,7 @@ class AcDataBridgeEntityWorker {
                           [nextToExtChildDetails.childDestinationField]: destSavedRow[nextInterWorker.templateDef.destinationName][nextToExtChildDetails.parentDestinationField],
                           [extToPrevParentDetails.childDestinationField]: destSavedRow[prevInterWorker.templateDef.destinationName][extToPrevParentDetails.parentDestinationField],
                         };
-                        const extProcessedRow = extInterWorker.addRow({ row: extDestRow });
+                        const extProcessedRow = await extInterWorker.addRow({ row: extDestRow });
                         destSavedRow[extInterWorker.templateDef.destinationName] = extProcessedRow.data;
                         if (!extInterWorker.referencingDestinations.includes(this.templateDef.destinationName)) {
                           extInterWorker.referencingDestinations.push(this.templateDef.destinationName);
@@ -591,6 +597,7 @@ export class AcDataBridgeWorker {
   private dataDictionary?: AcDataDictionary;
   private lastNotificationTime: number = Date.now();
 
+  beforeAddEntityRowCallback: ((args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>)|undefined;
   entityWorkers: Record<string, AcDataBridgeEntityWorker> = {};
   taskProgress?: IAcDataBridgeProgress;
   templateEntities: Record<string, IAcDataBridgeEntityTemplateDef> = {};
@@ -813,6 +820,10 @@ export class AcDataBridgeWorker {
 
   registerProgressCallback(cb: (progress: IAcDataBridgeProgress) => void) {
     this.progressCallback = cb;
+  }
+
+  registerBeforeAddEntityRowCallback(cb: (args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>){
+    this.beforeAddEntityRowCallback = cb;
   }
 
   async setDataDictionary({ dataDictionaryJson }: { dataDictionaryJson: any }) {

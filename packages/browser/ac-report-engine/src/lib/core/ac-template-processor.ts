@@ -57,10 +57,16 @@ export class AcTemplateProcessor {
         const results = await Promise.all(
           matches.map(async ({ expression }) => {
             try {
-              return await AcExpression.evaluate({
+              if(expression.startsWith('page.') || expression.startsWith('report.')){
+                return `{{${expression}}}`;
+              }
+              else{
+                return await AcExpression.evaluate({
                 expression,
                 context: this.context,
               });
+              }
+
             } catch (e) {
               AcReportEngine.logError("Expression error:", expression, e);
               return "";

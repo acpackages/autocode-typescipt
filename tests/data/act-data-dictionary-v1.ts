@@ -1083,6 +1083,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Label"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -2171,16 +2175,7 @@ export const dataDictionaryJson = {
             },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
-              "propertyValue": [
-                {
-                  "label": "ACTIVE",
-                  "value": "ACTIVE"
-                },
-                {
-                  "label": "INACTIVE",
-                  "value": "INACTIVE"
-                }
-              ]
+              "propertyValue": []
             }
           }
         },
@@ -2474,13 +2469,17 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "bank_label": {
-          "columnName": "bank_label",
+        "bank_account_label": {
+          "columnName": "bank_account_label",
           "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Label"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
             }
           }
         }
@@ -2538,6 +2537,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -2743,6 +2746,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2767,6 +2774,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -2941,6 +2952,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2951,6 +2966,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3066,6 +3085,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Active?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -3076,6 +3099,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3804,6 +3831,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Label"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -4301,6 +4332,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Label"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -7728,6 +7763,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -7835,6 +7874,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -7848,6 +7891,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Current?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -8051,6 +8098,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Default UOM"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "NOS"
             }
           }
         }
@@ -8379,6 +8430,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -8521,6 +8576,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -8744,6 +8803,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -8928,6 +8991,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -9117,6 +9184,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "NOS"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -9137,7 +9208,7 @@ export const dataDictionaryJson = {
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "0"
+              "propertyValue": "1"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -10763,13 +10834,13 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
             },
-            "REQUIRED": {
-              "propertyName": "REQUIRED",
-              "propertyValue": true
-            },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "CREATED"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
@@ -27204,7 +27275,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "product_uom_name"
         }
       },
-      "viewQuery": "SELECT act_product_uoms.product_uom_name AS purchase_uom_name, order_uoms.uom_name AS minimum_order_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT act_product_uoms.product_uom_name AS purchase_uom_name, order_uoms.product_uom_name AS minimum_order_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
     },
     "act_vw_product_sale_details": {
       "viewName": "act_vw_product_sale_details",
@@ -27465,7 +27536,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "product_uom_name"
         }
       },
-      "viewQuery": "SELECT act_product_uoms.product_uom_name AS stock_uom_name, \nmin_uoms.product_uom_name AS minimum_stock_uom_name,\nmax_uoms.product_uom_name AS maximum_stock_uom_name,\nreorder_uoms.uom_name AS reorder_level_uom_name,\nact_product_stock_details.* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
+      "viewQuery": "SELECT act_product_uoms.product_uom_name AS stock_uom_name, \nmin_uoms.product_uom_name AS minimum_stock_uom_name,\nmax_uoms.product_uom_name AS maximum_stock_uom_name,\nreorder_uoms.product_uom_name AS reorder_level_uom_name,\nact_product_stock_details.* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
     },
     "act_vw_products": {
       "viewName": "act_vw_products",
@@ -32355,9 +32426,20 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "reflecting_statement"
+        },
+        "transaction_entry_narration": {
+          "columnName": "transaction_entry_narration",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Narration"
+            }
+          },
+          "columnSource": "function"
         }
       },
-      "viewQuery": "SELECT \nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS debit_ledger_account_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS debit_ledger_account_type_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS debit_reflecting_statement,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS debit_ledger_account_balance,\nCASE WHEN is_credit = 0 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS debit_amount,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS credit_ledger_account_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS credit_ledger_account_type_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS credit_reflecting_statement,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS credit_ledger_account_balance,\nCASE WHEN is_credit = 1 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS credit_amount,\nact_vw_ledger_accounts.ledger_account_name,\nact_vw_ledger_accounts.ledger_account_type_name,\nact_vw_ledger_accounts.reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts ON act_transaction_entries.ledger_account_id = act_vw_ledger_accounts.ledger_account_id"
+      "viewQuery": "SELECT \nCASE WHEN act_transaction_entries.transaction_entry_description IS NULL OR act_transaction_entries.transaction_entry_description = '' THEN act_transactions.transaction_narration ELSE act_transaction_entries.transaction_entry_description END AS transaction_entry_narration, \nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS debit_ledger_account_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS debit_ledger_account_type_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS debit_reflecting_statement,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS debit_ledger_account_balance,\nCASE WHEN is_credit = 0 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS debit_amount,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS credit_ledger_account_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS credit_ledger_account_type_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS credit_reflecting_statement,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS credit_ledger_account_balance,\nCASE WHEN is_credit = 1 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS credit_amount,\nact_vw_ledger_accounts.ledger_account_name,\nact_vw_ledger_accounts.ledger_account_type_name,\nact_vw_ledger_accounts.reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts ON act_transaction_entries.ledger_account_id = act_vw_ledger_accounts.ledger_account_id"
     },
     "act_vw_users": {
       "viewName": "act_vw_users",
@@ -34387,7 +34469,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_asset_depreciations",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "destinationColumn": "transaction_entry_id",
@@ -34405,7 +34487,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_purchase_invoices",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "destinationColumn": "transaction_entry_id",
@@ -34423,7 +34505,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_purchase_orders",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "destinationColumn": "transaction_entry_id",
@@ -34441,7 +34523,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_purchase_returns",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "destinationColumn": "transaction_entry_id",
@@ -34465,7 +34547,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_sale_invoices",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "destinationColumn": "transaction_entry_id",
@@ -34483,7 +34565,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_sale_maintenances",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "destinationColumn": "transaction_entry_id",
@@ -34507,7 +34589,7 @@ export const dataDictionaryJson = {
       "destinationColumn": "transaction_id",
       "destinationTable": "act_sale_returns",
       "sourceColumn": "transaction_id",
-      "sourceTable": "act_transaction_entries"
+      "sourceTable": "act_transactions"
     },
     {
       "cascadeDeleteDestination": true,
@@ -35514,6 +35596,27 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_set_party_bank_accounts_on_update",
       "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
+    "act_trg_set_party_customer_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customers",
+      "triggerName": "act_trg_set_party_customer_on_delete",
+      "triggerCode": "UPDATE act_parties SET is_customer = 0 WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_party_customer_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customers",
+      "triggerName": "act_trg_set_party_customer_on_insert",
+      "triggerCode": "UPDATE act_parties SET is_customer = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_set_party_customer_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customers",
+      "triggerName": "act_trg_set_party_customer_on_update",
+      "triggerCode": "UPDATE act_parties SET is_customer = 1 WHERE party_id = NEW.party_id;"
+    },
     "act_trg_set_party_email_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -35534,6 +35637,27 @@ export const dataDictionaryJson = {
       "tableName": "act_party_email_addresses",
       "triggerName": "act_trg_set_party_email_addresses_on_update",
       "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_party_employee_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employees",
+      "triggerName": "act_trg_set_party_employee_on_delete",
+      "triggerCode": "UPDATE act_parties SET is_employee = 0 WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_party_employee_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employees",
+      "triggerName": "act_trg_set_party_employee_on_insert",
+      "triggerCode": "UPDATE act_parties SET is_employee = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_set_party_employee_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employees",
+      "triggerName": "act_trg_set_party_employee_on_update",
+      "triggerCode": "UPDATE act_parties SET is_employee = 1 WHERE party_id = NEW.party_id;"
     },
     "act_trg_set_party_fax_numbers_on_delete": {
       "triggerExecution": "AFTER",
@@ -35577,6 +35701,27 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_set_party_phone_numbers_on_update",
       "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
     },
+    "act_trg_set_party_supplier_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_suppliers",
+      "triggerName": "act_trg_set_party_supplier_on_delete",
+      "triggerCode": "UPDATE act_parties SET is_supplier = 0 WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_party_supplier_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_suppliers",
+      "triggerName": "act_trg_set_party_supplier_on_insert",
+      "triggerCode": "UPDATE act_parties SET is_supplier = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_set_party_supplier_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_suppliers",
+      "triggerName": "act_trg_set_party_supplier_on_update",
+      "triggerCode": "UPDATE act_parties SET is_supplier = 1 WHERE party_id = NEW.party_id;"
+    },
     "act_trg_set_party_websites_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -35597,6 +35742,27 @@ export const dataDictionaryJson = {
       "tableName": "act_party_websites",
       "triggerName": "act_trg_set_party_websites_on_update",
       "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_prd_stock_on_inv_track_on_delete": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_inventory_tracking_entries",
+      "triggerName": "act_trg_set_prd_stock_on_inv_track_on_delete",
+      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) - IFNULL(OLD.in_total_quantity,0) + IFNULL(OLD.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = OLD.inventory_tracking_id);"
+    },
+    "act_trg_set_prd_stock_on_inv_track_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_inventory_tracking_entries",
+      "triggerName": "act_trg_set_prd_stock_on_inv_track_on_insert",
+      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) + IFNULL(NEW.in_total_quantity,0) - IFNULL(NEW.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = NEW.inventory_tracking_id);"
+    },
+    "act_trg_set_prd_stock_on_inv_track_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_inventory_tracking_entries",
+      "triggerName": "act_trg_set_prd_stock_on_inv_track_on_update",
+      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) + IFNULL(NEW.in_total_quantity,0) - IFNULL(NEW.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = NEW.inventory_tracking_id);\nUPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) - IFNULL(OLD.in_total_quantity,0) + IFNULL(OLD.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = OLD.inventory_tracking_id);"
     },
     "act_trg_set_pur_amt_on_prod_delete": {
       "triggerExecution": "AFTER",

@@ -37,7 +37,7 @@ export class AcConditionBinding {
       const chain: HTMLElement[] = [];
 
       let started = false;
-      const context = this.context.getContextValueObject();
+      const context = {...this.context};
       for (const sibling of siblings) {
         const s = sibling as HTMLElement;
 
@@ -88,6 +88,7 @@ export class AcConditionBinding {
       return true;
     }
     catch (ex) {
+      console.error(ex);
       AcReportEngine.logError(`Error processing condition chain`, ex);
       return false;
     }
