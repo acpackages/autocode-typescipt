@@ -7955,8 +7955,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "parent_product_categroy_id": {
-          "columnName": "parent_product_categroy_id",
+        "parent_product_category_id": {
+          "columnName": "parent_product_category_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -26735,13 +26735,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_product_categories",
           "columnSourceOriginalColumn": "is_active"
         },
-        "parent_product_categroy_id": {
-          "columnName": "parent_product_categroy_id",
+        "parent_product_category_id": {
+          "columnName": "parent_product_category_id",
           "columnType": "UUID",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_product_categories",
-          "columnSourceOriginalColumn": "parent_product_categroy_id"
+          "columnSourceOriginalColumn": "parent_product_category_id"
         },
         "product_category_full_description": {
           "columnName": "product_category_full_description",
@@ -34803,7 +34803,7 @@ export const dataDictionaryJson = {
       "sourceTable": "act_medias"
     },
     {
-      "destinationColumn": "parent_product_categroy_id",
+      "destinationColumn": "parent_product_category_id",
       "destinationTable": "act_product_categories",
       "sourceColumn": "product_category_id",
       "sourceTable": "act_product_categories"
