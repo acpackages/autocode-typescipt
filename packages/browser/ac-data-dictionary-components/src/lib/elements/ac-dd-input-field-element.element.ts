@@ -26,15 +26,6 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.setAttribute('table-name', value);
     this.setDDInput();
   }
-
-  get inputName(): string {
-    return this.getAttribute('input-name') ?? '';
-  }
-  set inputName(value: string) {
-    this.setAttribute('input-name', value);
-    this.setDDInput();
-  }
-
   get label(): string {
     return this.getAttribute('label') ?? '';
   }
@@ -72,14 +63,67 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.ddInput.disabled = this.disabled;
   }
 
+  get inputClass(): any {
+    return this.getAttribute('input-class');
+  }
+  set inputClass(value: any) {
+    if(value){
+      this.setAttribute('input-class', value);
+    }
+    else{
+      this.removeAttribute('input-class');
+    }
+    this.setDDInputClass();
+  }
+
+  get inputName(): string {
+    return this.getAttribute('input-name') ?? '';
+  }
+  set inputName(value: string) {
+    if(value){
+      this.setAttribute('input-name', value);
+    }
+    else{
+      this.removeAttribute('input-name');
+    }
+    this.setDDInputName();
+  }
+
+  get inputStyle(): any {
+    return this.getAttribute('input-style');
+  }
+  set inputStyle(value: any) {
+    if(value){
+      this.setAttribute('input-style', value);
+    }
+    else{
+      this.removeAttribute('input-style');
+    }
+    this.setDDInputStyle();
+  }
+
   private _inputProperties: any = {};
   get inputProperties(): any {
     return this._inputProperties;
   }
   set inputProperties(value: any) {
     this._inputProperties = value;
-    this.setDDInput();
+    this.setDDInputProperties();
   }
+
+  override get placeholder(): any {
+    return this.getAttribute('placeholder');
+  }
+  override set placeholder(value: any) {
+    if(value){
+      this.setAttribute('placeholder', value);
+    }
+    else{
+      this.removeAttribute('placeholder');
+    }
+    this.setDDInputPlaceholder();
+  }
+
 
   override get readonly(): boolean {
     return super.readonly;
@@ -129,13 +173,17 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.inputElement = this.ddInput;
     this.ddInputField = new AcDDInputManager.inputFieldElementClass();
     this.ddInputField.ddInputFieldElement = this;
-    this.ddInput.on({event:'change',callback:()=>{
-      this.value = this.ddInput.value;
-    }});
-    this.ddInput.on({event:'inputElementSet',callback:(args:any)=>{
-      const event = new CustomEvent('inputElementSet',{detail:{inputElement:this.ddInput.inputElement}});
-      this.dispatchEvent(event);
-    }});
+    this.ddInput.on({
+      event: 'change', callback: () => {
+        this.value = this.ddInput.value;
+      }
+    });
+    this.ddInput.on({
+      event: 'inputElementSet', callback: (args: any) => {
+        const event = new CustomEvent('inputElementSet', { detail: { inputElement: this.ddInput.inputElement } });
+        this.dispatchEvent(event);
+      }
+    });
   }
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -180,7 +228,7 @@ export class AcDDInputFieldElement extends AcInputBase {
       if (this.label) {
         this.ddInputField.ddInputLabel = this.label;
       }
-      if(this.ddInput){
+      if (this.ddInput) {
         this.required = this.ddInput.required;
       }
       const container = this.querySelector('ac-dd-input-container');
@@ -188,8 +236,43 @@ export class AcDDInputFieldElement extends AcInputBase {
         container.innerHTML = '';
         container.append(this.ddInput);
       }
-      const event = new CustomEvent('ddInputSet',{detail:{ddInput:this.ddInput}});
+      this.setDDInputClass();
+      this.setDDInputName();
+      this.setDDInputPlaceholder();
+      this.setDDInputProperties();
+      this.setDDInputStyle();
+      const event = new CustomEvent('ddInputSet', { detail: { ddInput: this.ddInput } });
       this.dispatchEvent(event);
+    }
+  }
+
+  private setDDInputClass() {
+    if (this.ddInput) {
+      this.ddInput.inputClass = this.inputClass;
+    }
+  }
+
+  private setDDInputName() {
+    if (this.ddInput) {
+      this.ddInput.inputName = this.inputName;
+    }
+  }
+
+  private setDDInputPlaceholder() {
+    if (this.ddInput && this.placeholder) {
+      this.ddInput.placeholder = this.placeholder;
+    }
+  }
+
+  private setDDInputProperties() {
+    if (this.ddInput && this.inputProperties) {
+      this.ddInput.inputProperties = this.inputProperties;
+    }
+  }
+
+  private setDDInputStyle() {
+    if (this.ddInput) {
+      this.ddInput.inputStyle = this.inputStyle;
     }
   }
 }

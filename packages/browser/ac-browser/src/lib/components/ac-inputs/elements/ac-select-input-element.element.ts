@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { stringIsJson } from "@autocode-ts/ac-extensions";
@@ -128,21 +129,6 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private attachEvents() {
-    this.textInputElement.addEventListener("keyup", async () => {
-      const term = this.textInputElement.value.trim().toLowerCase();
-      if (this.value && term != this.previousSearchTerm) {
-        this.value = null;
-      }
-      this.previousSearchTerm = term;
-      this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
-      this.openDropdown();
-
-      this.highlightingIndex = this.dataManager.displayedRows.length ? 0 : -1;
-      if (this.dataManager.type === 'ondemand') this.loadedCount = 0;
-      await this.renderVirtualList();
-      this.ensureHighlightInView();
-    });
-
     this.textInputElement.addEventListener("focus", async () => {
       const term = this.textInputElement.value.trim().toLowerCase();
       this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
@@ -157,9 +143,25 @@ export class AcSelectInput extends AcInputBase {
     });
 
     this.textInputElement.addEventListener("blur", () => {
-      this.delayedCallback.add({callback:() => this.closeDropdown(), duration:150});
+      this.delayedCallback.add({ callback: () => this.closeDropdown(), duration: 150 });
     });
 
+    this.textInputElement.addEventListener("keyup", async (e) => {
+      if(["ArrowDown","ArrowUp","ArrowLeft","ArrowRight","Tab","Enter","Escape"].includes(e.key)){
+        return;
+      }
+      const term = this.textInputElement.value.trim().toLowerCase();
+        if (this.value && term != this.previousSearchTerm) {
+          this.value = null;
+        }
+        this.previousSearchTerm = term;
+        this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
+        this.openDropdown();
+        this.highlightingIndex = this.dataManager.rows.length ? 0 : -1;
+        if (this.dataManager.type === 'ondemand') this.loadedCount = 0;
+        await this.renderVirtualList();
+        this.ensureHighlightInView();
+    });
     this.textInputElement.addEventListener("keydown", async (e) => {
       if (!this.isDropdownOpen) {
         if (e.key === "F2") {
@@ -168,7 +170,9 @@ export class AcSelectInput extends AcInputBase {
           this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
           this.openDropdown();
         }
-        return;
+        if(["ArrowDown","ArrowUp","ArrowLeft","ArrowRight","Tab"].includes(e.key)){
+          return;
+        }
       }
       if (e.key === "ArrowDown") {
         e.preventDefault();
@@ -204,6 +208,10 @@ export class AcSelectInput extends AcInputBase {
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     if (name === 'label-key') this.labelKey = newValue;
+    else if (name === 'class') {
+      this.className = newValue;
+      this.textInputElement.className = newValue;
+    }
     else if (name === 'value-key') this.valueKey = newValue;
     else if (name === 'select-options') {
       if (stringIsJson(newValue)) this.options = JSON.parse(newValue);
@@ -272,9 +280,11 @@ export class AcSelectInput extends AcInputBase {
   }
 
   private ensureHighlightInView() {
-    if (this.highlightingIndex < 0) return;
+    if (this.highlightingIndex < 0) {
+      return;
+    }
     this.scrollToIndex(this.highlightingIndex);
-    this.delayedCallback.add({callback:() => this.applyHighlightStyles(), duration:0});
+    this.applyHighlightStyles();
   }
 
   override focus(): void {
@@ -290,6 +300,9 @@ export class AcSelectInput extends AcInputBase {
   override init() {
     super.init();
     this.innerHTML = '';
+    if (this.hasAttribute('class')) {
+      this.textInputElement.setAttribute('class', this.getAttribute('class')!);
+    }
     this.append(this.selectContainer);
     if (!this.hasAttribute('label-key')) this.labelKey = 'label';
     if (!this.hasAttribute('value-key')) this.valueKey = 'value';
@@ -299,16 +312,6 @@ export class AcSelectInput extends AcInputBase {
     this.selectContainer.style.width = "-webkit-fill-available";
     this.textInputElement.type = "text";
     this.textInputElement.autocomplete = "off";
-    Object.assign(this.textInputElement.style, {
-      width: "100%",
-      height: "100%",
-      border: "none",
-      outline: "none",
-      boxSizing: "border-box",
-      background: 'transparent',
-      paddingLeft: '5px',
-      paddingRight: '3px'
-    });
     this.selectContainer.appendChild(this.textInputElement);
 
     this.dropdownContainer = this.ownerDocument.createElement("div");
@@ -319,6 +322,7 @@ export class AcSelectInput extends AcInputBase {
       minWidth: "max-content",
       maxHeight: `${this.maxDropdownHeight}px`,
       border: "1px solid #ccc",
+      borderRadius:'5px',
       background: "#fff",
       boxSizing: "border-box",
       overflow: 'auto'
@@ -381,9 +385,11 @@ export class AcSelectInput extends AcInputBase {
       });
 
       this.dropdownContainer.style.display = "block";
-      this.delayedCallback.add({callback:() => {
-        this.renderVirtualList();
-      }, duration:1});
+      this.delayedCallback.add({
+        callback: () => {
+          this.renderVirtualList();
+        }, duration: 1
+      });
     }
   }
 
@@ -394,19 +400,17 @@ export class AcSelectInput extends AcInputBase {
     let rows: IAcDataRow[] = [];
     const startIndex = 0;
     let rowsCount = -1;
+    const term = this.textInputElement.value.trim();
     if (this.dataManager.type === 'ondemand') rowsCount = this.batchSize;
-
+    this.dataManager.searchQuery = term;
+    await this.dataManager.processRows();
     rows = await this.dataManager.getRows({ startIndex, rowsCount });
     this.loadedCount = rows.length;
     if (this.dataManager.type === 'offline') this.loadedCount = this.dataManager.totalRows;
-
-    const term = this.textInputElement.value.trim();
     const hasMatch = rows.some(r => String(r.data[this.labelKey]).toLowerCase() === term.toLowerCase());
-
     if (rows.length > 0) {
       for (const row of rows) this.listEl.appendChild(this.buildOptionElement(row));
     }
-
 
     if (rows.length === 0 && !term) {
       this.listEl.innerHTML = `<div style="text-align:center;">No records!</div>`;
@@ -420,7 +424,7 @@ export class AcSelectInput extends AcInputBase {
 
     this.popper?.update();
 
-    this.delayedCallback.add({callback:() => this.applyHighlightStyles()});
+    this.delayedCallback.add({ callback: () => this.applyHighlightStyles() });
   }
 
   setValueLabel() {

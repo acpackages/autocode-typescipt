@@ -1,10 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../../tsconfig.base.build.json",
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
     "declaration": true,
-    "paths": {
-    },
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
     "skipLibCheck": true,

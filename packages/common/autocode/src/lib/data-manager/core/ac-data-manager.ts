@@ -735,4 +735,10 @@ export class AcDataManager {
     this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
   }
+
+  private unsetRowIndexes(){
+    for(const row of this.allRows){
+      row.index = -1;
+    }
+  }
 }

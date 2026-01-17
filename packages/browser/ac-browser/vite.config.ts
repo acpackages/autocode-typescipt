@@ -66,6 +66,13 @@ export default defineConfig(({ command }) => {
           "@autocode-ts/ac-icons",
           "@popperjs/core"
         ],
+        output:{
+          globals:{
+            "@autocode-ts/autocode":"autocode",
+            "@autocode-ts/ac-extensions":"acExtensions",
+            "@autocode-ts/ac-icons":"acIcons"
+          }
+      }
       },
     },
   };

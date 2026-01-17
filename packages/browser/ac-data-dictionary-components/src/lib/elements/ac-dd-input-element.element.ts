@@ -29,12 +29,43 @@ export class AcDDInputElement extends AcInputBase {
     this.inputElement.disabled = this.disabled;
   }
 
+  get inputClass(): any {
+    return this.getAttribute('input-class');
+  }
+  set inputClass(value: any) {
+    if(value){
+      this.setAttribute('input-class', value);
+    }
+    else{
+      this.removeAttribute('input-class');
+    }
+    this.setInputElementClass();
+  }
+
   get inputName(): string {
     return this.getAttribute('input-name') ?? '';
   }
   set inputName(value: string) {
-    this.setAttribute('input-name', value);
-    this.setInputElement();
+    if(value){
+      this.setAttribute('input-name', value);
+    }
+    else{
+      this.removeAttribute('input-name');
+    }
+    this.setInputElementName();
+  }
+
+  get inputStyle(): any {
+    return this.getAttribute('input-style');
+  }
+  set inputStyle(value: any) {
+    if(value){
+      this.setAttribute('input-style', value);
+    }
+    else{
+      this.removeAttribute('input-style');
+    }
+    this.setInputElementStyle();
   }
 
   private _inputProperties: any = {};
@@ -43,7 +74,20 @@ export class AcDDInputElement extends AcInputBase {
   }
   set inputProperties(value: any) {
     this._inputProperties = value;
-    this.setInputElement();
+    this.setInputElementProperties();
+  }
+
+  override get placeholder(): any {
+    return this.getAttribute('placeholder');
+  }
+  override set placeholder(value: any) {
+    if(value){
+      this.setAttribute('placeholder', value);
+    }
+    else{
+      this.removeAttribute('placeholder');
+    }
+    this.setInputElementPlaceholder();
   }
 
   override get readonly(): boolean {
@@ -72,6 +116,7 @@ export class AcDDInputElement extends AcInputBase {
     this.inputElement.required = value;
   }
 
+
   get tableName(): string {
     return this.getAttribute('table-name') ?? '';
   }
@@ -81,14 +126,14 @@ export class AcDDInputElement extends AcInputBase {
   }
 
   override get validity() {
-    if(this.inputElement){
+    if (this.inputElement) {
       return this.inputElement.validity;
     }
-    return {valid:true};
+    return { valid: true };
   }
 
   override get validationMessage() {
-    if(this.inputElement){
+    if (this.inputElement) {
       return this.inputElement.validationMessage;
     }
     return '';
@@ -104,14 +149,23 @@ export class AcDDInputElement extends AcInputBase {
     super();
   }
 
-   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
+  override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     switch (name) {
       case 'column-name':
         this.columnName = newValue;
         break;
+      case 'input-class':
+        this.inputClass = newValue;
+        break;
       case 'input-name':
         this.inputName = newValue;
+        break;
+      case 'input-style':
+        this.inputStyle = newValue;
+        break;
+      case 'placeholder':
+        this.placeholder = newValue;
         break;
       case 'table-name':
         this.tableName = newValue;
@@ -123,7 +177,8 @@ export class AcDDInputElement extends AcInputBase {
   }
 
   override connectedCallback(): void {
-    this.innerHTML = "ACDDInputElement";
+    super.connectedCallback();
+    this.innerHTML = "";
     this.setInputElement();
   }
 
@@ -147,24 +202,74 @@ export class AcDDInputElement extends AcInputBase {
             this.inputElement[key] = inputDefinition.defaultProperties[key];
           }
         }
-        if(this.ddTableColumn){
-          if(this.ddTableColumn.isRequired()){
-            this.setAttribute('required',`true`);
+        if (this.ddTableColumn) {
+          if (this.ddTableColumn.isRequired()) {
+            this.setAttribute('required', `true`);
           }
         }
         this.innerHTML = "";
         this.append(this.inputElement);
-        this.inputElement.addEventListener('input', ()=>{
+        this.inputElement.addEventListener('input', () => {
           this.value = this.inputElement.value;
         });
-        this.inputElement.addEventListener('change', ()=>{
+        this.inputElement.addEventListener('change', () => {
           this.value = this.inputElement.value;
         });
-        if(this.value){
+        if (this.value) {
           this.inputElement.value = this.value;
         }
-        const event = new CustomEvent('inputElementSet',{detail:{inputElement:this.inputElement}});
+        if (this.disabled) {
+          this.inputElement.disabled = this.disabled;
+        }
+        this.setInputElementClass();
+        this.setInputElementName();
+        this.setInputElementPlaceholder();
+        this.setInputElementProperties();
+        this.setInputElementStyle();
+        const event = new CustomEvent('inputElementSet', { detail: { inputElement: this.inputElement } });
         this.dispatchEvent(event);
+      }
+    }
+  }
+
+  private setInputElementClass() {
+    if (this.inputElement) {
+      const cssClass = this.inputClass ?? '';
+      if (cssClass && cssClass != '') {
+        this.inputElement.setAttribute('class', cssClass);
+      }
+    }
+  }
+
+  private setInputElementName() {
+    if (this.inputElement) {
+      const name = this.inputName ?? '';
+      if (name && name != '') {
+        this.inputElement.setAttribute('name', name);
+      }
+    }
+  }
+
+  private setInputElementPlaceholder() {
+    if (this.inputElement && this.placeholder) {
+      this.inputElement.setAttribute('placeholder', this.placeholder);
+    }
+  }
+
+  private setInputElementProperties() {
+    if (this.inputElement && this.inputProperties) {
+      const properties = this.inputProperties;
+      for (const propertyName in Object.keys(properties)) {
+        (this.inputElement as any)[propertyName] = properties[propertyName];
+      }
+    }
+  }
+
+  private setInputElementStyle() {
+    if (this.inputElement) {
+      const style = this.inputStyle ?? '';
+      if (style && style != '') {
+        // this.inputElement.setAttribute('style', style);
       }
     }
   }
