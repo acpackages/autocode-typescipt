@@ -21,7 +21,6 @@ export class AcDataBinding {
       if (attr.name.toLowerCase().startsWith(AC_REPORT_ATTRIBUTE.templateBindAttribute)) {
         const attrName = attr.name.slice(AC_REPORT_ATTRIBUTE.templateBindAttribute.length+1);
         try {
-          console.log(expr);
           const value = await AcExpression.evaluate({expression:expr, context:this.context});
           if (value !== undefined) {
             if(attrName.toLowerCase() == 'innerhtml'){
@@ -50,7 +49,6 @@ export class AcDataBinding {
         const attrName = attr.name.slice(AC_REPORT_ATTRIBUTE.templateStyle.length+1);
         const result = await AcExpression.evaluate({expression:expr,context:this.context});
         const propertyName = stringToCamelCase(attrName);
-        console.log(propertyName);
         (this.element.style as any)[propertyName] = result;
         attrToRemove.push(attr.name);
       }

@@ -94,8 +94,6 @@ export class AcDatagridSelectInput extends AcInputBase {
 
   private dropdownContainer!: HTMLDivElement;
   private isDropdownOpen = false;
-  // private dropdownHeight = 400;
-  // private dropdownWidth = 700;
   private popper!: PopperInstance | null;
   textInputElement: HTMLInputElement = this.ownerDocument.createElement('input');
   datagrid: AcDatagrid = new AcDatagrid();
@@ -284,7 +282,7 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   openDropdown() {
-    if (this.isDropdownOpen) return;
+    if (this.isDropdownOpen && this.isConnected) return;
     this.isDropdownOpen = true;
     this.dropdownContainer = this.ownerDocument.createElement("div");
     this.dropdownContainer.classList.add('ac-datagrid-select-dropdown');

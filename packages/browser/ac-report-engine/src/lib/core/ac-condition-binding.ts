@@ -88,7 +88,6 @@ export class AcConditionBinding {
       return true;
     }
     catch (ex) {
-      console.error(ex);
       AcReportEngine.logError(`Error processing condition chain`, ex);
       return false;
     }

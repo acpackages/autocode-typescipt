@@ -58,12 +58,12 @@ export class AcReport {
     if (this.pages.length > 0) {
       const lastPageEl = this.pages[this.pages.length - 1].element as HTMLElement;
       const cloneEl = lastPageEl.cloneNode(true) as HTMLElement;
-      const reportHeader = cloneEl.querySelector(`[${AC_REPORT_ATTRIBUTE.reportHeader}]`) as HTMLElement;
-      if(reportHeader){
+      const reportHeaderEls = Array.from(cloneEl.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.reportHeader}]`)) as HTMLElement[];
+      for (const reportHeader of reportHeaderEls) {
         reportHeader.remove();
       }
-      const reportFooter = lastPageEl.querySelector(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`) as HTMLElement;
-      if(reportFooter){
+      const reportFootererEls = Array.from(lastPageEl.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`)) as HTMLElement[];
+      for (const reportFooter of reportFootererEls) {
         reportFooter.remove();
       }
       const page = new AcReportPage({ element: cloneEl, index: this.pages.length, report: this });
@@ -96,9 +96,9 @@ export class AcReport {
     }
     else {
       const page = new AcReportPage({ element: this.pageElClone!.cloneNode(true) as HTMLElement, index: this.pages.length, report: this });
-      const reportFooter = page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`) as HTMLElement;
-      if(reportFooter){
-        reportFooter.setAttribute('ac-temp-style-display',reportFooter.style.display);
+      const reportFooterEls = Array.from(page.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`)) as HTMLElement[];
+      for (const reportFooter of reportFooterEls) {
+        reportFooter.setAttribute('ac-temp-style-display', reportFooter.style.display);
         reportFooter.style.display = 'none';
       }
       this.element.append(page.element);
@@ -117,8 +117,8 @@ export class AcReport {
 
   finalizePages() {
     const lastPage = this.pages[this.pages.length - 1];
-    const reportFooter = lastPage.element.querySelector(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`) as HTMLElement;
-    if(reportFooter){
+    const reportFootererEls = Array.from(lastPage.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`)) as HTMLElement[];
+    for (const reportFooter of reportFootererEls) {
       reportFooter.style.display = reportFooter.getAttribute('ac-temp-style-display')!;
     }
     for (const page of Array.from(this.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.page}]`)) as HTMLElement[]) {
@@ -136,7 +136,7 @@ export class AcReport {
     this.clearTempIdsFromElement({ element: this.element });
   }
 
-  async generate({ data }: { data: any }) {
+  async generate({ data, callback }: { data: any, callback: Function | undefined }) {
     if (this.pageElClone) {
       this.addPage();
     }
@@ -144,13 +144,16 @@ export class AcReport {
     const processor = new AcTemplateProcessor({ context: context, element: this.element, page: this.activePage! });
     await processor.process();
     this.finalizePages();
+    if (callback) {
+      callback();
+    }
   }
 
   getNextPage() {
-    if(this.activePage!.index < this.pages.length-1){
+    if (this.activePage!.index < this.pages.length - 1) {
       this.activePage = this.pages[this.activePage!.index + 1];
     }
-    else{
+    else {
       this.addPage();
     }
     return this.activePage;
@@ -267,7 +270,7 @@ export class AcReport {
 
   toJson() {
     return {
-      pages:this.pages.length
+      pages: this.pages.length
     };
   }
 }

@@ -45,6 +45,6 @@ export const percentPipe: AcPipe = {
       style: 'percent',
       minimumFractionDigits: fractionDigits,
       maximumFractionDigits: fractionDigits,
-    }).format(num);
+    }).format(num / 100);
   }
 }

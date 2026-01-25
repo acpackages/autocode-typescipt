@@ -9626,6 +9626,20 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "product_stock_price": {
+          "columnName": "product_stock_price",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock Price"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -25254,9 +25268,17 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_uom_id"
+        },
+        "net_total_quantity": {
+          "columnName": "net_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
+      "viewQuery": "SELECT (CASE WHEN act_inventory_tracking_entries.in_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.in_total_quantity END - CASE WHEN act_inventory_tracking_entries.out_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.out_total_quantity END) AS net_total_quantity,act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
     },
     "act_vw_ledger_account_types": {
       "viewName": "act_vw_ledger_account_types",
@@ -27705,6 +27727,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "brand_name"
+        },
+        "product_stock_price": {
+          "columnName": "product_stock_price",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_stock_price"
         }
       },
       "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,\njson_object('media_path', media_path,'media_details', media_details) AS product_image_media,\nact_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id\nLEFT JOIN act_medias ON act_products.product_image_media_id = act_medias.media_id"
@@ -28571,9 +28601,17 @@ export const dataDictionaryJson = {
           "columnSource": "function",
           "columnSourceName": "",
           "columnSourceOriginalColumn": ""
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "hsn_code"
         }
       },
-      "viewQuery": "SELECT (COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_purchase_invoice_products.* FROM act_purchase_invoice_products \nLEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_purchase_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_purchase_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_purchase_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT (COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_products.hsn_code,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_purchase_invoice_products.* FROM act_purchase_invoice_products \nLEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_purchase_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_purchase_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_purchase_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
     },
     "act_vw_purchase_invoices": {
       "viewName": "act_vw_purchase_invoices",
@@ -30310,9 +30348,17 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "hsn_code"
         }
       },
-      "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_sale_invoice_products.* FROM act_sale_invoice_products \nLEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_sale_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_sale_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_sale_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_products.hsn_code,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_sale_invoice_products.* FROM act_sale_invoice_products \nLEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_sale_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_sale_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_sale_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
     },
     "act_vw_sale_invoices": {
       "viewName": "act_vw_sale_invoices",
@@ -32436,7 +32482,9 @@ export const dataDictionaryJson = {
               "propertyValue": "Narration"
             }
           },
-          "columnSource": "function"
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
         }
       },
       "viewQuery": "SELECT \nCASE WHEN act_transaction_entries.transaction_entry_description IS NULL OR act_transaction_entries.transaction_entry_description = '' THEN act_transactions.transaction_narration ELSE act_transaction_entries.transaction_entry_description END AS transaction_entry_narration, \nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS debit_ledger_account_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS debit_ledger_account_type_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS debit_reflecting_statement,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS debit_ledger_account_balance,\nCASE WHEN is_credit = 0 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS debit_amount,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS credit_ledger_account_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS credit_ledger_account_type_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS credit_reflecting_statement,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS credit_ledger_account_balance,\nCASE WHEN is_credit = 1 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS credit_amount,\nact_vw_ledger_accounts.ledger_account_name,\nact_vw_ledger_accounts.ledger_account_type_name,\nact_vw_ledger_accounts.reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts ON act_transaction_entries.ledger_account_id = act_vw_ledger_accounts.ledger_account_id"
@@ -35742,6 +35790,20 @@ export const dataDictionaryJson = {
       "tableName": "act_party_websites",
       "triggerName": "act_trg_set_party_websites_on_update",
       "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_set_prd_stk_prc_on_insert": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_product_prices",
+      "triggerName": "act_trg_set_prd_stk_prc_on_insert",
+      "triggerCode": "UPDATE act_products SET product_stock_price = act_product_prices.price_purchase FROM act_product_prices WHERE act_products.product_id = act_product_prices.product_id AND act_product_prices.is_current = 1 AND act_products.product_id = NEW.product_id;"
+    },
+    "act_trg_set_prd_stk_prc_on_update": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_product_prices",
+      "triggerName": "act_trg_set_prd_stk_prc_on_update",
+      "triggerCode": "UPDATE act_products SET product_stock_price = act_product_prices.price_purchase FROM act_product_prices WHERE act_products.product_id = act_product_prices.product_id AND act_product_prices.is_current = 1 AND act_products.product_id = NEW.product_id;"
     },
     "act_trg_set_prd_stock_on_inv_track_on_delete": {
       "triggerExecution": "AFTER",
