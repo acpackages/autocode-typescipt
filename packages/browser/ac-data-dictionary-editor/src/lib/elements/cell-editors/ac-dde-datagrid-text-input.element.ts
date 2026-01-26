@@ -4,7 +4,7 @@ export class AcDDEDatagridTextInput implements IAcDatagridCellEditor{
   textInput:AcTextInput = new AcTextInput();
 
   destroy(): void {
-    // this.textInput.destroy();
+    this.textInput.destroy();
   }
 
   focus(): void {

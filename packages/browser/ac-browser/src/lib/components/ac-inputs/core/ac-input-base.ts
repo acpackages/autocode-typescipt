@@ -261,13 +261,17 @@ export class AcInputBase extends AcElementBase {
 
   handleChange(e: Event) {
     this.setValue(this.inputElement.value);
-    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    if(this.dispatchEvent){
+      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+    }
     this.events.execute({ event: AcEnumInputEvent.Change, args: this.value });
   }
 
   handleInput(e: Event) {
     this.setValue(this.inputElement.value);
-    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    if(this.dispatchEvent){
+      this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    }
     this.events.execute({ event: AcEnumInputEvent.Input, args: this.value });
   }
 
@@ -296,7 +300,9 @@ export class AcInputBase extends AcElementBase {
     this.inputElement.addEventListener('change', this.handleChange);
     this.appendChild(this.inputElement);
     acListenElementEvents({element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
+      if(this.dispatchEvent){
         this.dispatchEvent(event);
+      }
       },mouse:true,keyboard:true,pointer:true,focus:true,form:true,touch:true,viewport:true
     });
   }
@@ -316,7 +322,9 @@ export class AcInputBase extends AcElementBase {
         this.setValueToAcContext();
       }
       this.elementInternals.setFormValue(this.value);
-      this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      if(this.dispatchEvent){
+        this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      }
       this.events.execute({ event: AcEnumInputEvent.Change, args: this.value });
       this.validate();
     }
@@ -349,11 +357,13 @@ export class AcInputBase extends AcElementBase {
       this
     );
     if (!validityState.valid) {
-      this.dispatchEvent(new CustomEvent('invalid', {
-        detail: { message: this.validationMessage, validity: this.validity },
-        bubbles: true,
-        composed: true
-      }));
+      if(this.dispatchEvent){
+        this.dispatchEvent(new CustomEvent('invalid', {
+          detail: { message: this.validationMessage, validity: this.validity },
+          bubbles: true,
+          composed: true
+        }));
+      }
     }
   }
 

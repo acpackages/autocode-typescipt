@@ -4810,8 +4810,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "ledger_account_types_description": {
-          "columnName": "ledger_account_types_description",
+        "ledger_account_type_description": {
+          "columnName": "ledger_account_type_description",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -25331,13 +25331,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_ledger_account_types",
           "columnSourceOriginalColumn": "ledger_account_type_remarks"
         },
-        "ledger_account_types_description": {
-          "columnName": "ledger_account_types_description",
+        "ledger_account_type_description": {
+          "columnName": "ledger_account_type_description",
           "columnType": "TEXT",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_ledger_account_types",
-          "columnSourceOriginalColumn": "ledger_account_types_description"
+          "columnSourceOriginalColumn": "ledger_account_type_description"
         }
       },
       "viewQuery": "SELECT * FROM act_ledger_account_types"
@@ -25348,7 +25348,12 @@ export const dataDictionaryJson = {
         "ledger_account_type_name": {
           "columnName": "ledger_account_type_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Type"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_ledger_account_types",
           "columnSourceOriginalColumn": "ledger_account_type_name"
@@ -26479,7 +26484,12 @@ export const dataDictionaryJson = {
         "ledger_account_name": {
           "columnName": "ledger_account_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ledger Account"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_name"
@@ -26856,7 +26866,12 @@ export const dataDictionaryJson = {
         "purchase_taxing_scheme_name": {
           "columnName": "purchase_taxing_scheme_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Taxing Scheme"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_taxing_schemes",
           "columnSourceOriginalColumn": "taxing_scheme_name"
@@ -26864,7 +26879,12 @@ export const dataDictionaryJson = {
         "sale_taxing_scheme_name": {
           "columnName": "sale_taxing_scheme_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Taxing Scheme"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_taxing_schemes",
           "columnSourceOriginalColumn": "taxing_scheme_name"
@@ -26872,7 +26892,12 @@ export const dataDictionaryJson = {
         "purchase_tax_rate_name": {
           "columnName": "purchase_tax_rate_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Tax Rate"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_tax_rates",
           "columnSourceOriginalColumn": "tax_rate_name"
@@ -26880,7 +26905,12 @@ export const dataDictionaryJson = {
         "purchase_tax_rate_percentage": {
           "columnName": "purchase_tax_rate_percentage",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Purchase Tax%"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_tax_rates",
           "columnSourceOriginalColumn": "tax_rate_percentage"
@@ -26888,7 +26918,12 @@ export const dataDictionaryJson = {
         "sale_tax_rate_name": {
           "columnName": "sale_tax_rate_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Tax Rate"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_tax_rates",
           "columnSourceOriginalColumn": "tax_rate_name"
@@ -26896,7 +26931,12 @@ export const dataDictionaryJson = {
         "sale_tax_rate_percentage": {
           "columnName": "sale_tax_rate_percentage",
           "columnType": "DOUBLE",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Tax%"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_tax_rates",
           "columnSourceOriginalColumn": "tax_rate_percentage"
@@ -27579,7 +27619,12 @@ export const dataDictionaryJson = {
         "product_category_name": {
           "columnName": "product_category_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Category"
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_product_categories",
           "columnSourceOriginalColumn": "product_category_name"

@@ -1,41 +1,6 @@
-:root{
-  --ag-pagination-panel-height:30px;
-  --ag-wrapper-border-radius:0px;
-  --ag-border-width:0px;
-  --ag-spacing:4px;
-}
 ac-datagrid{
   height: 100%;
   width: 100%;
-}
-.ag-row-even {
-  background-color: #f1f1f1!important;
-}
-
-.ag-row-odd {
-  background-color: #ffffff!important;
-}
-
-.ag-row-focus {
-  background-color:#c7c7c7!important;
-}
-
-.ag-header {
-  background-color: #181818!important;
-  color: white !important;
-}
-.ag-paging-panel{
-  border-top-width:1px!important;
-  gap:10px;
-  justify-content: space-between;
-  padding:0px;
-}
-.ag-picker-field-wrapper{
-  min-height: 25px;
-  border:solid 1px #cccccc;
-}
-.ag-header-cell-resize::after{
-  background-color: #3a3a3a;
 }
 .datagrid-card{
   height: 100%;
@@ -45,11 +10,7 @@ ac-datagrid{
   padding:2px 8px;
   border-radius: 5px;
 }
-.ag-row-number-cell{
-  background-color: inherit;
-  text-align: center;
-  border-right: solid 1px hsla(0, 0%, 0%, 0.1)!important;
-}
+
 .btn-ac-datagrid-add{
   border: solid 1px #c2c2c2;
   border-radius: 5px;
@@ -68,18 +29,4 @@ ac-datagrid{
 }
 .ac-datagrid-footer-right-container{
   padding-right: 3px;
-}
-.ag-side-buttons{
-  display: none;
-}
-.ag-side-bar-right{
-  border-left: solid 1px hsla(0, 0, 0, 0.1)!important;;
-}
-.text-center{
-  .ag-header-cell-text{
-    width: -webkit-fill-available;
-  }
-}
-.ag-row-last{
-  border-bottom: solid 1px hsla(0,0,0,0.05);
 }

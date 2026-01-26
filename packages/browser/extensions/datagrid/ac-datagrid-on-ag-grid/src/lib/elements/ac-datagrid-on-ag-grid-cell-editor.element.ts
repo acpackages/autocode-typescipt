@@ -18,6 +18,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   private isFocused: boolean = false;
   editor: any;
   previousValue:any;
+  private isValueChanged = false;
 
 
   handleBlur: Function = () => {
@@ -27,7 +28,8 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
       if (!this.isFocused) {
         if (this.datagridRow && this.datagridColumn && this.datagridApi) {
           if (this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
-            if (this.datagridRow.data[this.datagridColumn.columnKey] != cellValue) {
+            if (this.isValueChanged || this.datagridRow.data[this.datagridColumn.columnKey] != cellValue) {
+              this.isValueChanged = false;
               this.datagridRow.data[this.datagridColumn.columnKey] = cellValue;
               this.datagridApi.eventHandler.handleCellValueChange({ datagridCell: this.datagridCell! });
               this.refresh(this.params);
@@ -44,6 +46,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
         const previousValue = this.datagridRow.data[this.datagridColumn.columnKey];
         const currentValue = this.getValue();
         if (previousValue != currentValue) {
+          this.isValueChanged = true;
           this.datagridRow.data[this.datagridColumn.columnKey] = currentValue;
         }
         this.datagridApi!.eventHandler.handleCellKeyUp({ datagridCell: this.datagridCell, event: event as any });
