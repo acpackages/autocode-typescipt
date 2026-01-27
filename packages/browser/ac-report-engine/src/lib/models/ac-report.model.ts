@@ -24,7 +24,6 @@ export class AcReport {
   activeLoopElementIds: string[] = [];
 
   constructor({ element }: { element: HTMLElement }) {
-
     this.setTempIdsToElement({ element: element });
     AcReportEngine.init();
     this.reportElClone = element.cloneNode(true) as HTMLElement;

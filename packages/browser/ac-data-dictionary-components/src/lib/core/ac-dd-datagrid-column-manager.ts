@@ -17,7 +17,7 @@ export class AcDDDatagridColumnManager {
     [AcEnumDDColumnType.Password]: { visible: false, allowSort: false },
   };
 
-  static getTableColumns({ tableName, excludeColumns, includeColumns, hiddenColumns, visibleColumns, columnDefinitions,defaultValues = {},dataDictionaryName = 'default',flexColumns,defaultColumnOrder,defaultColumnIndexes }: { tableName: string,flexColumns?: string[], excludeColumns?: string[], includeColumns?: string[], hiddenColumns?: string[], visibleColumns?: string[],defaultValues?:Partial<IAcDDColumnDefinition>, columnDefinitions?: IAcDatagridColumnDefinition[],dataDictionaryName?:string,defaultColumnOrder?:string[],defaultColumnIndexes?:{columnName:string,index:number}[] }):IAcDatagridColumnDefinition[] {
+  static getTableColumns({ tableName, excludeColumns, includeColumns, hiddenColumns, visibleColumns, columnDefinitions,defaultValues = {},dataDictionaryName = 'default',flexColumns,defaultColumnOrder }: { tableName: string,flexColumns?: string[], excludeColumns?: string[], includeColumns?: string[], hiddenColumns?: string[], visibleColumns?: string[],defaultValues?:Partial<IAcDDColumnDefinition>, columnDefinitions?: IAcDatagridColumnDefinition[],dataDictionaryName?:string,defaultColumnOrder?:string[] }):IAcDatagridColumnDefinition[] {
     if (columnDefinitions == undefined) {
       columnDefinitions = [];
     }
@@ -81,15 +81,7 @@ export class AcDDDatagridColumnManager {
           index++;
         }
       }
-      if(defaultColumnIndexes){
-        for(const columnIndex of defaultColumnIndexes){
-          const col = result.find((col) => { return col.field == columnIndex.columnName });
-          if(col){
-            col.index = columnIndex.index;
-          }
-        }
-      }
-      if(defaultColumnIndexes == undefined && defaultColumnOrder == undefined && visibleColumns){
+      if(defaultColumnOrder == undefined && visibleColumns){
         let index:number = 0;
         for(const columnName of visibleColumns){
           const col = result.find((col) => { return col.field == columnName });
@@ -160,7 +152,7 @@ export class AcDDDatagridColumnManager {
     return result;
   }
 
-  static getViewColumns({ viewName, excludeColumns, includeColumns, hiddenColumns, visibleColumns, columnDefinitions,defaultValues = {},dataDictionaryName = 'default',flexColumns,defaultColumnOrder,defaultColumnIndexes }: { viewName: string,flexColumns?: string[], excludeColumns?: string[], includeColumns?: string[], hiddenColumns?: string[], visibleColumns?: string[],defaultValues?:Partial<IAcDDColumnDefinition>, columnDefinitions?: IAcDatagridColumnDefinition[],dataDictionaryName?:string,defaultColumnOrder?:string[],defaultColumnIndexes?:{columnName:string,index:number}[] }):IAcDatagridColumnDefinition[] {
+  static getViewColumns({ viewName, excludeColumns, includeColumns, hiddenColumns, visibleColumns, columnDefinitions,defaultValues = {},dataDictionaryName = 'default',flexColumns,defaultColumnOrder }: { viewName: string,flexColumns?: string[], excludeColumns?: string[], includeColumns?: string[], hiddenColumns?: string[], visibleColumns?: string[],defaultValues?:Partial<IAcDDColumnDefinition>, columnDefinitions?: IAcDatagridColumnDefinition[],dataDictionaryName?:string,defaultColumnOrder?:string[] }):IAcDatagridColumnDefinition[] {
     if (columnDefinitions == undefined) {
       columnDefinitions = [];
     }
@@ -224,15 +216,7 @@ export class AcDDDatagridColumnManager {
           index++;
         }
       }
-      if(defaultColumnIndexes){
-        for(const columnIndex of defaultColumnIndexes){
-          const col = result.find((col) => { return col.field == columnIndex.columnName });
-          if(col){
-            col.index = columnIndex.index;
-          }
-        }
-      }
-      if(defaultColumnIndexes == undefined && defaultColumnOrder == undefined && visibleColumns){
+      if(defaultColumnOrder == undefined && visibleColumns){
         let index:number = 0;
         for(const columnName of visibleColumns){
           const col = result.find((col) => { return col.field == columnName });

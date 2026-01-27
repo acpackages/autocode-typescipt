@@ -1032,6 +1032,33 @@ export const dataDictionaryJson = {
               "propertyValue": "GST No."
             }
           }
+        },
+        "accountee_taxing_type": {
+          "columnName": "accountee_taxing_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxing Scheme"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "REGULAR"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "value": "REGULAR",
+                  "label": "Regular"
+                },
+                {
+                  "value": "COMPOSITION",
+                  "label": "Composition"
+                }
+              ]
+            }
+          }
         }
       },
       "tableProperties": {
@@ -10368,13 +10395,17 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "purchase_invoice_payments"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "purchase_invoice_payment"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "purchase_invoice_payments"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_purchase_invoice_payments"
         }
       }
     },
@@ -12719,13 +12750,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "purchase_debit_note_payment"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "purchase_debit_note_payments"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "purchase_debit_note_payment"
         }
       }
     },
@@ -12964,13 +12995,13 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "purchase_debit_note_product"
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "purchase_debit_note_products"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "purchase_debit_note_product"
         }
       }
     },
@@ -21667,6 +21698,33 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "tax_part_type": {
+          "columnName": "tax_part_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Type"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "REGULAR"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "value": "REGULAR",
+                  "label": "Regular"
+                },
+                {
+                  "value": "ADDITIONAL",
+                  "label": "Cess"
+                }
+              ]
+            }
+          }
         }
       },
       "tableProperties": {
@@ -21782,6 +21840,41 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Tax Rate Flags"
+            }
+          }
+        },
+        "tax_rate_type": {
+          "columnName": "tax_rate_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Type"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "REGULAR"
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "value": "REGULAR",
+                  "label": "Regular"
+                },
+                {
+                  "value": "EXEMPTED",
+                  "label": "Exempted"
+                },
+                {
+                  "value": "NIL_RATED",
+                  "label": "Nil Rated"
+                },
+                {
+                  "value": "NON_GST",
+                  "label": "Non GST"
+                }
+              ]
             }
           }
         }
@@ -23636,6 +23729,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_accountees",
           "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "accountee_taxing_type": {
+          "columnName": "accountee_taxing_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_accountees",
+          "columnSourceOriginalColumn": "accountee_taxing_type"
         }
       },
       "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS accountee_image_media,act_accountees.* FROM act_accountees LEFT JOIN act_medias ON act_accountees.accountee_image_media_id = act_medias.media_id"
@@ -31061,8 +31162,8 @@ export const dataDictionaryJson = {
     "act_vw_stock": {
       "viewName": "act_vw_stock",
       "viewColumns": {
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31074,8 +31175,8 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31087,21 +31188,26 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_products",
-          "columnSourceOriginalColumn": "stock_quantity"
-        },
-        "stock_in_hand_quantity": {
-          "columnName": "stock_in_hand_quantity",
+        "closing_stock": {
+          "columnName": "closing_stock",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Stock"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "total_closing_stock": {
+          "columnName": "total_closing_stock",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Stock"
             }
           },
           "columnSource": "function",
@@ -31111,7 +31217,6 @@ export const dataDictionaryJson = {
         "stock_uom_id": {
           "columnName": "stock_uom_id",
           "columnType": "UUID",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_stock_details",
           "columnSourceOriginalColumn": "stock_uom_id"
@@ -31119,7 +31224,6 @@ export const dataDictionaryJson = {
         "stock_uom_name": {
           "columnName": "stock_uom_name",
           "columnType": "STRING",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_stock_details",
           "columnSourceOriginalColumn": "stock_uom_name"
@@ -31127,7 +31231,6 @@ export const dataDictionaryJson = {
         "stock_uom_quantity": {
           "columnName": "stock_uom_quantity",
           "columnType": "DOUBLE",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_stock_details",
           "columnSourceOriginalColumn": "stock_uom_quantity"
@@ -31135,7 +31238,6 @@ export const dataDictionaryJson = {
         "product_image_media": {
           "columnName": "product_image_media",
           "columnType": "JSON",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_image_media"
@@ -31143,7 +31245,6 @@ export const dataDictionaryJson = {
         "product_category_name": {
           "columnName": "product_category_name",
           "columnType": "STRING",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_category_name"
@@ -31151,7 +31252,6 @@ export const dataDictionaryJson = {
         "product_category_tree": {
           "columnName": "product_category_tree",
           "columnType": "JSON",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_category_tree"
@@ -31159,7 +31259,6 @@ export const dataDictionaryJson = {
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "accountee_id"
@@ -31167,7 +31266,6 @@ export const dataDictionaryJson = {
         "delivery_available": {
           "columnName": "delivery_available",
           "columnType": "YES_NO",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "delivery_available"
@@ -31175,7 +31273,6 @@ export const dataDictionaryJson = {
         "pickup_available": {
           "columnName": "pickup_available",
           "columnType": "YES_NO",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "pickup_available"
@@ -31183,7 +31280,6 @@ export const dataDictionaryJson = {
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "is_active"
@@ -31191,7 +31287,6 @@ export const dataDictionaryJson = {
         "product_category_id": {
           "columnName": "product_category_id",
           "columnType": "UUID",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_category_id"
@@ -31199,7 +31294,6 @@ export const dataDictionaryJson = {
         "product_details": {
           "columnName": "product_details",
           "columnType": "JSON",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_details"
@@ -31207,7 +31301,6 @@ export const dataDictionaryJson = {
         "product_full_description": {
           "columnName": "product_full_description",
           "columnType": "TEXT",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_full_description"
@@ -31215,7 +31308,6 @@ export const dataDictionaryJson = {
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_id"
@@ -31223,7 +31315,6 @@ export const dataDictionaryJson = {
         "product_image_media_id": {
           "columnName": "product_image_media_id",
           "columnType": "UUID",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_image_media_id"
@@ -31231,7 +31322,6 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
@@ -31239,7 +31329,6 @@ export const dataDictionaryJson = {
         "product_quick_description": {
           "columnName": "product_quick_description",
           "columnType": "TEXT",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_quick_description"
@@ -31247,7 +31336,6 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_sku"
@@ -31255,15 +31343,20 @@ export const dataDictionaryJson = {
         "product_tags": {
           "columnName": "product_tags",
           "columnType": "TEXT",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_tags"
         },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
         "waitlist_quantity": {
           "columnName": "waitlist_quantity",
           "columnType": "DOUBLE",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "waitlist_quantity"
@@ -31271,7 +31364,6 @@ export const dataDictionaryJson = {
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "hsn_code"
@@ -31279,23 +31371,16 @@ export const dataDictionaryJson = {
         "brand_name": {
           "columnName": "brand_name",
           "columnType": "STRING",
-          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "brand_name"
         },
-        "stock_in_hand_uom_quantity": {
-          "columnName": "stock_in_hand_uom_quantity",
+        "product_stock_price": {
+          "columnName": "product_stock_price",
           "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
-            }
-          },
-          "columnSource": "",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_stock_price"
         }
       },
       "viewQuery": "SELECT \nSUM(in_total_quantity) AS in_total_quantity, \nSUM(out_total_quantity) AS out_total_quantity, \nSUM(IIF(in_total_quantity IS NULL,0,in_total_quantity) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) AS total_closing_stock, \n(SUM(IIF(in_total_quantity IS NULL,0,in_quantity) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS closing_stock,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.* FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id"
@@ -31303,8 +31388,8 @@ export const dataDictionaryJson = {
     "act_vw_stock_at_location": {
       "viewName": "act_vw_stock_at_location",
       "viewColumns": {
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31316,8 +31401,8 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31329,8 +31414,8 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "stock_in_hand_quantity": {
-          "columnName": "stock_in_hand_quantity",
+        "closing_stock": {
+          "columnName": "closing_stock",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31342,17 +31427,17 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "stock_in_hand_uom_quantity": {
-          "columnName": "stock_in_hand_uom_quantity",
+        "total_closing_stock": {
+          "columnName": "total_closing_stock",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
+              "propertyValue": "Total Stock"
             }
           },
           "columnSource": "function",
-          "columnSourceName": "",
+          "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
         "stock_uom_id": {
@@ -31553,8 +31638,8 @@ export const dataDictionaryJson = {
     "act_vw_stock_at_storage_location": {
       "viewName": "act_vw_stock_at_storage_location",
       "viewColumns": {
-        "total_in_quantity": {
-          "columnName": "total_in_quantity",
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31566,8 +31651,8 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "total_out_quantity": {
-          "columnName": "total_out_quantity",
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31579,8 +31664,8 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "stock_in_hand_quantity": {
-          "columnName": "stock_in_hand_quantity",
+        "closing_stock": {
+          "columnName": "closing_stock",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -31592,17 +31677,17 @@ export const dataDictionaryJson = {
           "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
-        "stock_in_hand_uom_quantity": {
-          "columnName": "stock_in_hand_uom_quantity",
+        "total_closing_stock": {
+          "columnName": "total_closing_stock",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock"
+              "propertyValue": "Total Stock"
             }
           },
           "columnSource": "function",
-          "columnSourceName": "",
+          "columnSourceName": "SUM",
           "columnSourceOriginalColumn": ""
         },
         "stock_uom_id": {
@@ -35883,14 +35968,14 @@ export const dataDictionaryJson = {
       "rowOperation": "INSERT",
       "tableName": "act_purchase_invoice_products",
       "triggerName": "act_trg_set_pur_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0), products_count = IFNULL(products_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0), products_count = IFNULL(products_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;\nUPDATE act_purchase_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_purchase_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_purchase_invoice_products.purchase_invoice_product_id = NEW.purchase_invoice_product_id AND act_product_uoms.product_uom_id = act_purchase_invoice_products.product_uom_id;"
     },
     "act_trg_set_pur_amt_on_prod_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_purchase_invoice_products",
       "triggerName": "act_trg_set_pur_amt_on_prod_update",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;\nUPDATE act_purchase_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_purchase_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_purchase_invoice_products.purchase_invoice_product_id = NEW.purchase_invoice_product_id AND act_product_uoms.product_uom_id = act_purchase_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
     },
     "act_trg_set_pur_amt_on_ser_delete": {
       "triggerExecution": "AFTER",
@@ -35925,14 +36010,14 @@ export const dataDictionaryJson = {
       "rowOperation": "INSERT",
       "tableName": "act_sale_invoice_products",
       "triggerName": "act_trg_set_sale_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0),products_count = IFNULL(products_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0),products_count = IFNULL(products_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id;"
     },
     "act_trg_set_sale_amt_on_prod_update": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_sale_invoice_products",
       "triggerName": "act_trg_set_sale_amt_on_prod_update",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
     },
     "act_trg_set_sale_amt_on_ser_delete": {
       "triggerExecution": "AFTER",
