@@ -15033,13 +15033,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "paid_amount": {
-          "columnName": "paid_amount",
+        "received_amount": {
+          "columnName": "received_amount",
           "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Paid"
+              "propertyValue": "Received"
             }
           }
         },
@@ -30757,13 +30757,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "products_count"
         },
-        "paid_amount": {
-          "columnName": "paid_amount",
+        "received_amount": {
+          "columnName": "received_amount",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
-          "columnSourceOriginalColumn": "paid_amount"
+          "columnSourceOriginalColumn": "received_amount"
         },
         "chargeable_services_count": {
           "columnName": "chargeable_services_count",
@@ -31217,6 +31217,7 @@ export const dataDictionaryJson = {
         "stock_uom_id": {
           "columnName": "stock_uom_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_stock_details",
           "columnSourceOriginalColumn": "stock_uom_id"
@@ -31224,6 +31225,7 @@ export const dataDictionaryJson = {
         "stock_uom_name": {
           "columnName": "stock_uom_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_stock_details",
           "columnSourceOriginalColumn": "stock_uom_name"
@@ -31231,6 +31233,7 @@ export const dataDictionaryJson = {
         "stock_uom_quantity": {
           "columnName": "stock_uom_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_current_product_stock_details",
           "columnSourceOriginalColumn": "stock_uom_quantity"
@@ -31238,6 +31241,7 @@ export const dataDictionaryJson = {
         "product_image_media": {
           "columnName": "product_image_media",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_image_media"
@@ -31245,6 +31249,7 @@ export const dataDictionaryJson = {
         "product_category_name": {
           "columnName": "product_category_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_category_name"
@@ -31252,6 +31257,7 @@ export const dataDictionaryJson = {
         "product_category_tree": {
           "columnName": "product_category_tree",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_category_tree"
@@ -31259,6 +31265,7 @@ export const dataDictionaryJson = {
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "accountee_id"
@@ -31266,6 +31273,7 @@ export const dataDictionaryJson = {
         "delivery_available": {
           "columnName": "delivery_available",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "delivery_available"
@@ -31273,6 +31281,7 @@ export const dataDictionaryJson = {
         "pickup_available": {
           "columnName": "pickup_available",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "pickup_available"
@@ -31280,6 +31289,7 @@ export const dataDictionaryJson = {
         "is_active": {
           "columnName": "is_active",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "is_active"
@@ -31287,6 +31297,7 @@ export const dataDictionaryJson = {
         "product_category_id": {
           "columnName": "product_category_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_category_id"
@@ -31294,6 +31305,7 @@ export const dataDictionaryJson = {
         "product_details": {
           "columnName": "product_details",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_details"
@@ -31301,6 +31313,7 @@ export const dataDictionaryJson = {
         "product_full_description": {
           "columnName": "product_full_description",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_full_description"
@@ -31308,6 +31321,7 @@ export const dataDictionaryJson = {
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_id"
@@ -31315,6 +31329,7 @@ export const dataDictionaryJson = {
         "product_image_media_id": {
           "columnName": "product_image_media_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_image_media_id"
@@ -31322,6 +31337,7 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
@@ -31329,6 +31345,7 @@ export const dataDictionaryJson = {
         "product_quick_description": {
           "columnName": "product_quick_description",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_quick_description"
@@ -31336,6 +31353,7 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_sku"
@@ -31343,6 +31361,7 @@ export const dataDictionaryJson = {
         "product_tags": {
           "columnName": "product_tags",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_tags"
@@ -31350,6 +31369,7 @@ export const dataDictionaryJson = {
         "stock_quantity": {
           "columnName": "stock_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "stock_quantity"
@@ -31357,6 +31377,7 @@ export const dataDictionaryJson = {
         "waitlist_quantity": {
           "columnName": "waitlist_quantity",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "waitlist_quantity"
@@ -31364,6 +31385,7 @@ export const dataDictionaryJson = {
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "hsn_code"
@@ -31371,6 +31393,7 @@ export const dataDictionaryJson = {
         "brand_name": {
           "columnName": "brand_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "brand_name"
@@ -31378,6 +31401,7 @@ export const dataDictionaryJson = {
         "product_stock_price": {
           "columnName": "product_stock_price",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_stock_price"
@@ -35585,6 +35609,83 @@ export const dataDictionaryJson = {
   "storedProcedures": {},
   "functions": {},
   "triggers": {
+    "act_trg_purchase_invoice_payment_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_purchase_invoice_payments",
+      "triggerName": "act_trg_purchase_invoice_payment_delete_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET paid_amount = IFNULL(act_purchase_invoice_payments.total_paid,0) FROM (SELECT SUM(purchase_invoice_payment_amount) AS total_paid FROM act_purchase_invoice_payments WHERE purchase_invoice_id = OLD.purchase_invoice_id AND purchase_invoice_payment_status = 'PAID') AS act_purchase_invoice_payments WHERE purchase_invoice_id = OLD.purchase_invoice_id ;"
+    },
+    "act_trg_purchase_invoice_payment_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_purchase_invoice_payments",
+      "triggerName": "act_trg_purchase_invoice_payment_insert_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET paid_amount = IFNULL(act_purchase_invoice_payments.total_paid,0) FROM (SELECT SUM(purchase_invoice_payment_amount) AS total_paid FROM act_purchase_invoice_payments WHERE purchase_invoice_id = NEW.purchase_invoice_id AND purchase_invoice_payment_status = 'PAID') AS act_purchase_invoice_payments WHERE purchase_invoice_id = NEW.purchase_invoice_id ;"
+    },
+    "act_trg_purchase_invoice_payment_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_purchase_invoice_payments",
+      "triggerName": "act_trg_purchase_invoice_payment_update_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET paid_amount = IFNULL(act_purchase_invoice_payments.total_paid,0) FROM (SELECT SUM(purchase_invoice_payment_amount) AS total_paid FROM act_purchase_invoice_payments WHERE purchase_invoice_id = NEW.purchase_invoice_id AND purchase_invoice_payment_status = 'PAID') AS act_purchase_invoice_payments WHERE purchase_invoice_id = NEW.purchase_invoice_id ;"
+    },
+    "act_trg_purchase_invoice_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_purchase_invoices",
+      "triggerName": "act_trg_purchase_invoice_update_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET payment_status = CASE WHEN purchase_invoice_amount = paid_amount THEN 'PAID' ELSE 'PENDING' END WHERE purchase_invoice_id =  NEW.purchase_invoice_id AND NEW.paid_amount != OLD.paid_amount;"
+    },
+    "act_trg_sale_invoice_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_sale_invoices",
+      "triggerName": "act_trg_sale_invoice_update_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET payment_status = CASE WHEN sale_invoice_amount = received_amount THEN 'RECEIVED' ELSE 'PENDING' END WHERE sale_invoice_id =  NEW.sale_invoice_id AND NEW.received_amount != OLD.received_amount;"
+    },
+    "act_trg_sale_payment_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_sale_invoice_payments",
+      "triggerName": "act_trg_sale_payment_delete_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET received_amount = IFNULL(act_sale_invoice_payments.total_received,0) FROM (SELECT SUM(sale_invoice_payment_amount) AS total_received FROM act_sale_invoice_payments WHERE sale_invoice_id = OLD.sale_invoice_id AND sale_invoice_payment_status = 'RECEIVED') AS act_sale_invoice_payments WHERE sale_invoice_id = OLD.sale_invoice_id ;"
+    },
+    "act_trg_sale_payment_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_sale_invoice_payments",
+      "triggerName": "act_trg_sale_payment_insert_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET received_amount = IFNULL(act_sale_invoice_payments.total_received,0) FROM (SELECT SUM(sale_invoice_payment_amount) AS total_received FROM act_sale_invoice_payments WHERE sale_invoice_id = NEW.sale_invoice_id AND sale_invoice_payment_status = 'RECEIVED') AS act_sale_invoice_payments WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_sale_payment_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_sale_invoice_payments",
+      "triggerName": "act_trg_sale_payment_update_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET received_amount = IFNULL(act_sale_invoice_payments.total_received,0) FROM (SELECT SUM(sale_invoice_payment_amount) AS total_received FROM act_sale_invoice_payments WHERE sale_invoice_id = NEW.sale_invoice_id AND sale_invoice_payment_status = 'RECEIVED') AS act_sale_invoice_payments WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_sale_product_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_sale_invoice_products",
+      "triggerName": "act_trg_sale_product_delete_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0),products_count = IFNULL(products_count,0) - 1 WHERE sale_invoice_id = OLD.sale_invoice_id ;"
+    },
+    "act_trg_sale_product_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_sale_invoice_products",
+      "triggerName": "act_trg_sale_product_insert_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0),products_count = IFNULL(products_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id;"
+    },
+    "act_trg_sale_product_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_sale_invoice_products",
+      "triggerName": "act_trg_sale_product_update_actions",
+      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
+    },
     "act_trg_set_accountee_addresses_on_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -35710,27 +35811,6 @@ export const dataDictionaryJson = {
       "tableName": "act_accountee_websites",
       "triggerName": "act_trg_set_accountee_websites_on_update",
       "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_led_bal_on_trns_entry_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_transaction_entries",
-      "triggerName": "act_trg_set_led_bal_on_trns_entry_delete",
-      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) - \n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = OLD.transaction_id;"
-    },
-    "act_trg_set_led_bal_on_trns_entry_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_transaction_entries",
-      "triggerName": "act_trg_set_led_bal_on_trns_entry_insert",
-      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) + \n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = NEW.transaction_id;"
-    },
-    "act_trg_set_led_bal_on_trns_entry_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_transaction_entries",
-      "triggerName": "act_trg_set_led_bal_on_trns_entry_update",
-      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) - \n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) - \n  CASE\n    WHEN OLD.is_credit = 0 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = OLD.transaction_id;\n\nUPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET credit_total =\n  IFNULL(credit_total  , 0) + \n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ndebit_total =\n  IFNULL(debit_total , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END,\ntransaction_amount =\n  IFNULL(transaction_amount , 0) + \n  CASE\n    WHEN NEW.is_credit = 0 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE 0\n  END\nWHERE transaction_id = NEW.transaction_id;"
     },
     "act_trg_set_party_addresses_on_delete": {
       "triggerExecution": "AFTER",
@@ -35998,27 +36078,6 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_set_pur_amt_on_ser_update",
       "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
     },
-    "act_trg_set_sale_amt_on_prod_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_sale_invoice_products",
-      "triggerName": "act_trg_set_sale_amt_on_prod_delete",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0),products_count = IFNULL(products_count,0) - 1 WHERE sale_invoice_id = OLD.sale_invoice_id ;"
-    },
-    "act_trg_set_sale_amt_on_prod_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_sale_invoice_products",
-      "triggerName": "act_trg_set_sale_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0),products_count = IFNULL(products_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id;"
-    },
-    "act_trg_set_sale_amt_on_prod_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_sale_invoice_products",
-      "triggerName": "act_trg_set_sale_amt_on_prod_update",
-      "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
-    },
     "act_trg_set_sale_amt_on_ser_delete": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -36039,6 +36098,27 @@ export const dataDictionaryJson = {
       "tableName": "act_sale_invoice_chargeable_services",
       "triggerName": "act_trg_set_sale_amt_on_ser_update",
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_transaction_entry_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_transaction_entry_delete_actions",
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = OLD.transaction_id\n) AS transactions_total \nWHERE transaction_id = OLD.transaction_id;"
+    },
+    "act_trg_transaction_entry_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_transaction_entry_insert_actions",
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
+    },
+    "act_trg_transaction_entry_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_transaction_entries",
+      "triggerName": "act_trg_transaction_entry_update_actions",
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
     }
   }
 };
