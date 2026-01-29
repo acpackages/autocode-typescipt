@@ -135,7 +135,7 @@ export class AcReport {
     this.clearTempIdsFromElement({ element: this.element });
   }
 
-  async generate({ data, callback }: { data: any, callback: Function | undefined }) {
+  async generate({ data, callback }: { data: any, callback?: Function }) {
     if (this.pageElClone) {
       this.addPage();
     }
