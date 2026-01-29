@@ -493,19 +493,24 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
               const pageSize = this.gridApi.paginationGetPageSize();
               const page = Math.floor(datagridRow.index / pageSize);
               this.gridApi.paginationGoToPage(page);
-              this.delayedCallback.add({callback:() => {
-                this.gridApi!.ensureIndexVisible(datagridRow.index);
-              }});
+              if(this.delayedCallback){
+                this.delayedCallback.add({callback:() => {
+                  if(this.gridApi){
+                    this.gridApi!.ensureIndexVisible(datagridRow.index);
+                  }
+                }});
+              }
             }
           }
           else {
-            timeout = this.delayedCallback.add({callback:() => {
-              handleEnsureRow();
-            }, duration:10});
+            if(this.delayedCallback){
+              timeout = this.delayedCallback.add({callback:() => {
+                handleEnsureRow();
+              }, duration:10});
+            }
           }
         }
         handleEnsureRow();
-
       }
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.ExtensionEnable)) {

@@ -118,9 +118,7 @@ export class AcDatagridSelectInput extends AcInputBase {
   isFocused: boolean = false;
 
   override destroy(): void {
-    if(this.isDropdownOpen){
-      this.closeDropdown();
-    }
+    this.closeDropdown();
     if (this.datagrid) {
       this.datagrid.destroy();
     }

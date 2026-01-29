@@ -3,11 +3,7 @@ import { AcDatagridApi, AcDatagridTreeTableExtension, AC_DATAGRID_EXTENSION_NAME
 import { AcDatagridOnAgGridExtension } from "./ac-datagrid-on-ag-grid-extension";
 import { GridApi } from "ag-grid-community";
 import { AcEnumDatagridOnAgGridHook } from "../enums/ac-enum-datagrid-on-ag-grid-hook.enum";
-import { IAcDatagriOnAgGridColDefsChangeHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-col-defs-set-hook-args.interface";
 import { arrayRemove, stringEqualsIgnoreCase } from "@autocode-ts/ac-extensions";
-import { IAcDatagriOnAgGridDataChangeHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-data-set-hook-args.interface";
-import { IAcDatagriOnAgGridRowAddHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-row-add-hook-args.interface";
-import { IAcDatagriOnAgGridRowUpdateHookArgs } from "../interfaces/ac-datagrid-on-ag-grid-row-update-hook-args.interface";
 import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridTreeTableExtensionOnAgGrid {

@@ -62,9 +62,7 @@ export class AcNgDatagridCellEditor implements IAcDatagridCellEditor {
       (this.datagridCell.element as any) = null;
     }
     if(this.templateElements){
-      console.log("Found Cell Editor Template Elements");
       for(const el of this.templateElements){
-        console.log(el);
         if(el.destroy != undefined){
           el.destroy();
         }
