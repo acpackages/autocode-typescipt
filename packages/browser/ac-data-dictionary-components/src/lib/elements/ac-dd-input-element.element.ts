@@ -197,6 +197,12 @@ export class AcDDInputElement extends AcInputBase {
       }
       if (inputDefinition) {
         this.inputElement = new inputDefinition.inputElement();
+        if(this.ddTableColumn){
+          const defaultValue:any = this.ddTableColumn.getDefaultValue();
+          if(defaultValue && !this.value){
+            this.inputElement.value = defaultValue;
+          }
+        }
         if (inputDefinition.defaultProperties) {
           for (const key in inputDefinition.defaultProperties) {
             this.inputElement[key] = inputDefinition.defaultProperties[key];

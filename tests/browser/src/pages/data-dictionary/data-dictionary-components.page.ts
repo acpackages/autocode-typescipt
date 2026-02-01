@@ -49,6 +49,12 @@ export class DataDictionaryComponentsPage extends HTMLElement {
         inputElement:ProductCategorySelectInput
       }
     });
+    AcDDInputManager.registerForeignKeyInput({
+      primaryTableName:'act_product_categories',
+      inputDefinition:{
+        inputElement:ProductCategorySelectInput
+      }
+    });
     const trnsEntiresView = AcDataDictionary.getView({viewName:'act_vw_transaction_entries'});
     for(const col of trnsEntiresView!.viewColumns){
       console.log(`${col.columnName} => ${col.getColumnTitle()}`);
@@ -66,6 +72,7 @@ export class DataDictionaryComponentsPage extends HTMLElement {
     this.innerHTML = `
     <ac-form id="test-form">
     <ac-dd-input-field class="account-target-input" table-name="act_ledger_accounts" column-name="reflecting_statement" name="reflecting_statement" value="ADJUSTMENT"></ac-dd-input-field>
+    <ac-dd-input-field class="account-target-input" table-name="act_sale_invoices" column-name="sale_invoice_status" name="sale_invoice_status" value="SETTLED"></ac-dd-input-field>
     <ac-dd-input-field class="account-target-input" table-name="act_products" column-name="product_category_id" name="product_category_id"></ac-dd-input-field>
     <button type="submit">Submit</button>
     </ac-form>

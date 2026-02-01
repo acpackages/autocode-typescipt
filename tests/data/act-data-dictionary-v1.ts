@@ -3645,6 +3645,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Category"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -11026,6 +11030,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Supply Mode"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -14939,6 +14947,10 @@ export const dataDictionaryJson = {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "CREATED"
             },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
               "propertyValue": [
@@ -14997,6 +15009,10 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "TAX"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
@@ -15080,6 +15096,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Supply Mode"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -21587,6 +21607,35 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Type"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "VALUE_OPTIONS": {
+              "propertyName": "VALUE_OPTIONS",
+              "propertyValue": [
+                {
+                  "value": "Wholesaler",
+                  "label": "Wholesaler"
+                },
+                {
+                  "value": "Retailer",
+                  "label": "Retailer"
+                },
+                {
+                  "value": "Manufacturer",
+                  "label": "Manufacturer"
+                },
+                {
+                  "value": "Exporter",
+                  "label": "Exporter"
+                },
+                {
+                  "value": "Importer",
+                  "label": "Importer"
+                }
+              ]
             }
           }
         },

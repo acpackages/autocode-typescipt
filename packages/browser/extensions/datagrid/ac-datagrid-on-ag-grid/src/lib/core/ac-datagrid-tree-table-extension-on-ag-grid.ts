@@ -14,6 +14,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
   treeDataChildKey: string = '';
   treeDataDisplayKey: string = '';
   treeDataParentKey: string = '';
+  treeLevelExpanded: number = 0;
   treeTableExtension?: AcDatagridTreeTableExtension|null;
 
   private handleHook:Function = (hook: string, args: any): void => {
@@ -25,6 +26,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
       stringEqualsIgnoreCase(hook,AcEnumDatagridTreeTableHook.TreeDataChildKeyChange)
       || stringEqualsIgnoreCase(hook,AcEnumDatagridTreeTableHook.TreeDataDisplayKeyChange)
       || stringEqualsIgnoreCase(hook,AcEnumDatagridTreeTableHook.TreeDataParentKeyChange)
+      || stringEqualsIgnoreCase(hook,AcEnumDatagridTreeTableHook.TreeLevelExpandedChange)
     ) {
       this.handleTreeDataKeyChangeChange();
     }
@@ -46,6 +48,7 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
       this.treeDataChildKey = this.treeTableExtension.treeDataChildKey;
       this.treeDataDisplayKey = this.treeTableExtension.treeDataDisplayKey;
       this.treeDataParentKey = this.treeTableExtension.treeDataParentKey;
+      this.treeLevelExpanded = this.treeTableExtension.treeLevelExpanded;
       if (this.treeDataChildKey !== '' && this.treeDataDisplayKey !== '' && this.treeDataParentKey !== '') {
         this.isTreeTable = true;
         this.datagridApi.dataManager.assignUniqueIdToData = true;
@@ -68,7 +71,9 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     this.removeListeners();
     this.agGridExtension = agGridExtension;
     this.datagridApi = agGridExtension.datagridApi;
-    this.datagridApi!.hooks.subscribeAllHooks({callback: this.handleHook});
+    if(this.datagridApi){
+      this.datagridApi.hooks.subscribeAllHooks({callback: this.handleHook});
+    }
     if(this.agGridExtension.gridApi){
       this.gridApi = this.agGridExtension.gridApi;
     }
@@ -93,7 +98,13 @@ export class AcDatagridTreeTableExtensionOnAgGrid {
     if (this.agGridExtension && this.agGridExtension.colDefs.length > 0 && this.isTreeTable) {
       for (const colDef of this.agGridExtension.colDefs) {
         if (colDef.field === this.treeDataDisplayKey) {
+          if(colDef.cellRendererParams == undefined){
+            colDef.cellRendererParams = {};
+          }
+          colDef.cellRendererParams['innerRenderer'] = colDef.cellRenderer;
+          colDef.cellRenderer = 'agGroupCellRenderer';
           this.agGridExtension.gridOptions['autoGroupColumnDef'] = colDef;
+          this.agGridExtension.gridOptions['groupDefaultExpanded'] = this.treeLevelExpanded;
           this.agGridExtension.colDefs = arrayRemove(this.agGridExtension.colDefs, colDef);
           if(this.gridApi){
             this.gridApi.setGridOption('autoGroupColumnDef', colDef);

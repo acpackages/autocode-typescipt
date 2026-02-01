@@ -66,6 +66,22 @@ export class AcDatagridTreeTableExtension extends AcDatagridExtension {
     }
   }
 
+  private _treeLevelExpanded: number = 0;
+  get treeLevelExpanded(): number {
+    return this._treeLevelExpanded;
+  }
+  set treeLevelExpanded(value: number) {
+    this._treeLevelExpanded = value;
+    if (this.datagridApi) {
+      const hookArgs: IAcDatagridTreeTableHookArgs = {
+        datagridApi: this.datagridApi,
+        datagridTreeTableExtension: this,
+        value: value
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridTreeTableHook.TreeLevelExpandedChange, args: hookArgs });
+    }
+  }
+
   datagridInternalColumn: AcDatagridInternalColumn = new AcDatagridInternalColumn({
     width: 35,
   });

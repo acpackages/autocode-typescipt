@@ -26,7 +26,7 @@ import { AcLogger } from "../../core/ac-logger";
 import { IAcDataManagerDataEvent, IAcDataManagerEvent } from "../_data-manager.export";
 import { IAcDataRow } from "../interfaces/ac-data-row.interface";
 import { Autocode } from "../../core/autocode";
-import { acEvaluateFilter, acEvaluateFilterGroup, acEvaluateSearch, acNullifyInstanceProperties } from "../../utils/ac-utility-functions";
+import { acEvaluateFilterGroup, acEvaluateSearch, acNullifyInstanceProperties } from "../../utils/ac-utility-functions";
 
 export class AcDataManager {
   private _assignUniqueIdToData: boolean = true;
@@ -658,6 +658,7 @@ export class AcDataManager {
       this.totalRows = totalCount;
       this.processRows();
     }
+    this.setFirstAndLastRow();
     this.isFirstRowsSet = true;
   }
 
@@ -728,12 +729,26 @@ export class AcDataManager {
     this.displayStartIndex = startIndex;
     this.displayEndIndex = (startIndex + rowsCount) - 1;
     this.displayCount = rowsCount;
+    this.setFirstAndLastRow();
     const eventArgs: IAcDataManagerDisplayedRowsChangeEvent = {
       displayedRows: this.displayedRows,
       dataManager: this
     };
     this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
+  }
+
+  private setFirstAndLastRow(){
+    for(const row of this.rows){
+      row.isFirst = undefined;
+      row.isLast = undefined;
+      if(row.index == 0){
+        row.isFirst = true;
+      }
+      if(row.index == this.rows.length - 1){
+        row.isLast = true;
+      }
+    }
   }
 
   private unsetRowIndexes(){

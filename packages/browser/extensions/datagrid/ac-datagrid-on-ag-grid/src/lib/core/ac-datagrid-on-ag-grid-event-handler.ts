@@ -29,9 +29,12 @@ import {
   RowValueChangedEvent,
   SortChangedEvent,
   CellFocusedEvent,
-  StateUpdatedEvent
+  StateUpdatedEvent,
+  ViewportChangedEvent,
+  AsyncTransactionsFlushedEvent,
+  DisplayedRowsChangedEvent
 } from "ag-grid-community";
-import { AcEnumSortOrder, acNullifyInstanceProperties } from "@autocode-ts/autocode";
+import { AcDelayedCallback, AcEnumSortOrder, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
 export class AcDatagridOnAgGridEventHandler {
   agGridExtension?: AcDatagridOnAgGridExtension | null;
@@ -43,6 +46,7 @@ export class AcDatagridOnAgGridEventHandler {
     return this.pauseEvents || this.agGridExtension == undefined || this.agGridExtension == null;
   };
   previousState: boolean = false;
+  delayedCallback: AcDelayedCallback = new AcDelayedCallback();
 
   private onCellClicked = (event: CellClickedEvent) => {
     if (this.ignoreEvents) return;
@@ -52,6 +56,10 @@ export class AcDatagridOnAgGridEventHandler {
     if (datagridCell && this.datagridApi) {
       this.datagridApi.eventHandler.handleCellClick({ datagridCell, event: event.event as any });
     }
+  };
+
+  private onAsyncTransactionsFlushed = (event: AsyncTransactionsFlushedEvent) => {
+    console.log("Async Transaction Flushed");
   };
 
   private onCellDoubleClicked = (event: CellDoubleClickedEvent) => {
@@ -85,13 +93,19 @@ export class AcDatagridOnAgGridEventHandler {
   };
 
   private onCellFocused = (event: CellFocusedEvent) => {
-    if (this.ignoreEvents) return;
-    if (!this.checkEventHasColumnDetail(event)) return;
-
-    const datagridCell = this.agGridExtension!.getDatagridCellFromEvent({ event });
-    if (datagridCell && this.datagridApi) {
-      this.datagridApi.setActiveCell({ datagridCell });
+    if (this.delayedCallback) {
+      this.delayedCallback.add({
+        callback: () => {
+          if (this.ignoreEvents) return;
+          if (!this.checkEventHasColumnDetail(event)) return;
+          const datagridCell = this.agGridExtension!.getDatagridCellFromEvent({ event });
+          if (datagridCell && this.datagridApi) {
+            this.datagridApi.setActiveCell({ datagridCell });
+          }
+        }, duration: 300, key: 'cellFocused'
+      });
     }
+
   };
 
   private onCellKeyDown = (event: CellKeyDownEvent | FullWidthCellKeyDownEvent) => {
@@ -195,6 +209,10 @@ export class AcDatagridOnAgGridEventHandler {
     }
   };
 
+  private onDisplayedRowsChanged = (event:DisplayedRowsChangedEvent) => {
+    console.log('Displayed rows updated');
+  }
+
   private onPaginationChanged = (event: PaginationChangedEvent) => {
     if (this.ignoreEvents) return;
     if (!this.datagridApi?.pagination || !this.gridApi) return;
@@ -214,8 +232,11 @@ export class AcDatagridOnAgGridEventHandler {
   };
 
   private onRowDataUpdated = (event: RowDataUpdatedEvent) => {
+    console.log("Row data updated");
+    if(this.datagridApi){
+      this.datagridApi.datagrid.afterRowsContainer.style.visibility ='hidden';
+    }
     if (this.ignoreEvents) return;
-
     const datagridRow = this.agGridExtension!.getDatagridRowFromEvent({ event });
     if (datagridRow && this.datagridApi) {
       this.datagridApi.eventHandler.handleRowDataChange({ datagridRow, event: event as any });
@@ -294,6 +315,13 @@ export class AcDatagridOnAgGridEventHandler {
     }
   };
 
+  private onViewportChanged = (event: ViewportChangedEvent) => {
+    console.log("Viewport updated");
+    if(this.datagridApi){
+      this.datagridApi.datagrid.afterRowsContainer.style.visibility ='';
+    }
+  };
+
   private checkEventHasColumnDetail(event: any): boolean {
     let isValid: boolean = false;
     if (event.colDef && event.colDef.field && event.colDef.field !== '_ac_internal_actions') {
@@ -306,6 +334,7 @@ export class AcDatagridOnAgGridEventHandler {
 
   destroy() {
     this.removeListeners();
+    this.delayedCallback.destroy();
     acNullifyInstanceProperties({ instance: this });
   }
 
@@ -316,6 +345,7 @@ export class AcDatagridOnAgGridEventHandler {
     if (this.agGridExtension.gridApi) {
       this.gridApi = agGridExtension.gridApi;
       if (this.gridApi) {
+        this.gridApi.addEventListener('asyncTransactionsFlushed', this.onAsyncTransactionsFlushed);
         this.gridApi.addEventListener('cellClicked', this.onCellClicked);
         this.gridApi.addEventListener('cellDoubleClicked', this.onCellDoubleClicked);
         this.gridApi.addEventListener('cellEditingStarted', this.onCellEditingStarted);
@@ -341,6 +371,7 @@ export class AcDatagridOnAgGridEventHandler {
         this.gridApi.addEventListener('rowValueChanged', this.onRowValueChanged);
         this.gridApi.addEventListener('sortChanged', this.onSortChanged);
         this.gridApi.addEventListener('stateUpdated', this.onStateUpdated);
+        // this.gridApi.addEventListener('viewportChanged', this.onViewportChanged);
       }
     }
   }
@@ -372,6 +403,7 @@ export class AcDatagridOnAgGridEventHandler {
       this.gridApi.removeEventListener('rowValueChanged', this.onRowValueChanged);
       this.gridApi.removeEventListener('sortChanged', this.onSortChanged);
       this.gridApi.removeEventListener('stateUpdated', this.onStateUpdated);
+      this.gridApi.removeEventListener('viewportChanged', this.onViewportChanged);
     }
   }
 }

@@ -154,7 +154,7 @@ export class InputBasicPage extends HTMLElement {
     this.rowSelectionExtension.allowSelection = true;
     this.rowSelectionExtension.allowMultipleSelection = true;
     datagridSelectInput.columnDefinitions = [
-      { field: 'action', title: "", allowSort: false, cellRendererElement: ActionsDatagridColumn, width: 65 },
+      // { field: 'action', title: "", allowSort: false, cellRendererElement: ActionsDatagridColumn, width: 65 },
       { field: 'customer_id', title: "Id" },
       { field: 'first_name', title: "First Name", allowEdit: true },
       { field: 'last_name', title: "Last Name" },

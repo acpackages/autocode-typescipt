@@ -7,6 +7,4 @@ export interface IAcDatagridRow extends IAcDataRow {
   isActive?:boolean;
   element?: AcDatagridRowElement;
   datagridCells?: IAcDatagridCell[];
-  isLast?:boolean;
-  isFirst?:boolean;
 }

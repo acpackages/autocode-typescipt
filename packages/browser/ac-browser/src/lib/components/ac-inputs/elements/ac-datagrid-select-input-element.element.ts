@@ -12,6 +12,19 @@ export class AcDatagridSelectInput extends AcInputBase {
     return [... super.observedAttributes, 'value-key'];
   }
 
+  get addRow(): boolean {
+    return this.getAttribute('add-row') ? this.getAttribute('add-row') == 'true' : true;
+  }
+  set addRow(value: boolean) {
+    this.setAttribute('add-row', `${value}`);
+    if(value){
+      this.addNewButton.style.display = '';
+    }
+    else{
+      this.addNewButton.style.display = 'none';
+    }
+  }
+
   get columnDefinitions(): any {
     return this.datagrid.datagridApi.columnDefinitions;
   }
@@ -82,11 +95,16 @@ export class AcDatagridSelectInput extends AcInputBase {
   get searchQuery(): string { return this._searchQuery; }
   set searchQuery(val: string) {
     this._searchQuery = val;
+    this.addNewButton.textContent = `Add "${this.textInputElement.value}"`;
     if (this.datagrid) {
+      this.datagrid.afterRowsContainer.style.visibility = 'hidden';
       this.datagrid.datagridApi.dataManager.searchQuery = val;
       const event: CustomEvent = new CustomEvent('searchQueryChange', { detail: { searchQuery: this.searchQuery } });
       this.dispatchEvent(event);
       this.delayedCallback.add({callback:() => {
+        if(val){
+          this.datagrid.afterRowsContainer.style.visibility = '';
+        }
         this.highlightRow();
       }, duration:100});
     }
@@ -95,7 +113,9 @@ export class AcDatagridSelectInput extends AcInputBase {
   private dropdownContainer!: HTMLDivElement;
   private isDropdownOpen = false;
   private popper!: PopperInstance | null;
+  private addNewButton:HTMLButtonElement;
   textInputElement: HTMLInputElement = this.ownerDocument.createElement('input');
+  addNewContainer: HTMLElement = this.ownerDocument.createElement('div');
   datagrid: AcDatagrid = new AcDatagrid();
   private clickOutsideListener?: any = (event: Event) => {
     const target = event.target as HTMLElement;
@@ -116,16 +136,37 @@ export class AcDatagridSelectInput extends AcInputBase {
   previousState: any = {};
   dropdownSize: { height: number, width: number } = { height: 300, width: 600 };
   isFocused: boolean = false;
+  addRowCallback: (({ query, callback }: { query: string, callback: Function }) => void) = ({ query, callback }: { query: string, callback: Function }): void => {
+    const newOption = { [this.labelKey]: query, [this.valueKey]: query };
+    callback(newOption);
+  };
 
-  override destroy(): void {
-    this.closeDropdown();
-    if (this.datagrid) {
-      this.datagrid.destroy();
-    }
-    super.destroy();
+  private addNewOption(label: string) {
+    this.addRowCallback({
+      query: label, callback: (option: any) => {
+        const row = this.datagrid.datagridApi.dataManager.addData({ data: option });
+        this.datagrid.datagridApi.focusRow({index:row.index});
+      }
+    });
   }
 
   private attachEvents() {
+    this.addNewButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.addNewOption(this.textInputElement.value);
+    });
+    this.addNewButton.addEventListener("keydown", (e: any) => {
+      if (e.key === "ArrowUp") {
+        if(this.datagrid.datagridApi.dataManager.totalRows == 0){
+          this.textInputElement.focus();
+          return;
+        }
+        else{
+          const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
+          this.highlightRow({rowIndex:activeDatagridCell.datagridRow.index});
+        }
+      }
+    });
     this.textInputElement.addEventListener("input", (event) => {
       this.dispatchEvent(acCloneEvent(event));
       this.delayedCallback.add({callback:() => {
@@ -150,12 +191,21 @@ export class AcDatagridSelectInput extends AcInputBase {
       if (!this.isDropdownOpen) return;
       if (e.key === "ArrowDown") {
         e.preventDefault();
+        if(this.datagrid.datagridApi.dataManager.totalRows == 0){
+          this.addNewButton.focus();
+          return;
+        }
         let rowIndex: number = 0;
         const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
         if (activeDatagridCell) {
           rowIndex = activeDatagridCell.datagridRow.index + 1;
         }
-        this.highlightRow({ rowIndex });
+        if(activeDatagridCell.datagridRow.isLast){
+          this.addNewButton.focus();
+        }
+        else{
+          this.highlightRow({ rowIndex });
+        }
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         let rowIndex: number = 0;
@@ -227,6 +277,14 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.dispatchEvent(event);
   }
 
+  override destroy(): void {
+    this.closeDropdown();
+    if (this.datagrid) {
+      this.datagrid.destroy();
+    }
+    super.destroy();
+  }
+
   override focus(): void {
     super.focus();
     this.isFocused = true;
@@ -253,6 +311,14 @@ export class AcDatagridSelectInput extends AcInputBase {
 
   override init() {
     super.init();
+    this.addNewContainer.innerHTML = `<div><button type="button">Add New Row</button></div>`;
+    this.addNewButton = this.addNewContainer.querySelector('button');
+    this.addNewButton.style.padding = "4px 8px";
+    this.addNewButton.style.cursor = "pointer";
+    this.addNewButton.style.color = "#0078d7";
+    this.addNewButton.style.fontStyle = "italic";
+    this.addNewButton.textContent = `Add "${this.searchQuery}"`;
+    this.datagrid.afterRowsContainer.append(this.addNewContainer);
     if (!this.hasAttribute('label-key')) {
       this.labelKey = 'label';
     }
@@ -264,6 +330,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.textInputElement.type = "text";
     this.textInputElement.autocomplete = "off";
     this.attachEvents();
+    this.addRow = this.getAttribute('add-row') != 'false';
   }
 
   private notifyState() {

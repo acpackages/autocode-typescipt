@@ -15,6 +15,7 @@ export class AcDatagrid extends AcElementBase {
   datagridApi: AcDatagridApi = new AcDatagridApi({ datagrid: this });
   datagridBody?: AcDatagridBody;
   datagridFooter?: AcDatagridFooter;
+  afterRowsContainer:HTMLElement = this.ownerDocument.createElement('div');
   datagridHeader?: AcDatagridHeader;
 
   constructor() {

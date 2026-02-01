@@ -5,4 +5,6 @@ export interface IAcDataRow {
   index: number;
   extensionData: Record<string, any>;
   isPlaceholder?: boolean;
+  isFirst?: boolean;
+  isLast?: boolean;
 }

@@ -47,7 +47,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         params.fail();
         return;
       }
-
       const agGridRequest: IServerSideGetRowsRequest = params.request;
       let startIndex: number = 0;
       let rowsCount: number = 100;
@@ -696,7 +695,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
   override init(): void {
     if (!this.datagridApi) return;
-
+    const datagrid = this.datagridApi.datagrid;
+    datagrid.afterRowsContainer.setAttribute('style',"position:absolute;bottom:0px;height:0px;");
     this.datagridApi.dataManager.assignUniqueIdToData = true;
     this.rowKey = this.datagridApi.dataManager.uniqueIdKey;
     this.rowParentKey = this.datagridApi.dataManager.uniqueIdParentKey;
@@ -706,6 +706,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.rightFooterContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.rightFooterContainer.style.display = 'flex';
     this.rightFooterContainer.classList.add("ac-datagrid-footer-right-container");
+    datagrid.afterRowsContainer.classList.add("ac-datagrid-after-rows-container");
 
     this.columnsCustomizerButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.columnsCustomizerButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-columns-customizer"><ac-svg-icon>${ACI_SVG_SOLID.gear}</ac-svg-icon></button>`;
@@ -783,13 +784,15 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       pagingPanel.append(this.leftFooterContainer!);
       pagingPanel.append(this.rightFooterContainer!);
     }
+    const fullWidthContainer = this.agGridElement.querySelector('.ag-full-width-container') as HTMLElement;
+    fullWidthContainer.append(this.datagridApi.datagrid.afterRowsContainer!);
     this.agGridEventHandler.init({ agGridExtension: this });
     this.agGridRowDragExt.init({ agGridExtension: this });
     this.agGridSelectionExt.init({ agGridExtension: this });
   }
 
   refreshRows() {
-    if (!this.gridApi) return;
+    if (!this.gridApi || !this.datagridApi) return;
 
     if (this.isClientSideData) {
       this.gridApi.setGridOption('quickFilterText', this.datagridApi?.dataManager.searchQuery ?? '');

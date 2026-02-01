@@ -65,6 +65,7 @@ export class DatagridTreeComponent implements OnDestroy, AfterViewInit{
     this.treeTableExtension.treeDataParentKey = 'parent_category_id';
     this.treeTableExtension.treeDataChildKey = 'category_id';
     this.treeTableExtension.treeDataDisplayKey = 'name';
+    this.treeTableExtension.treeLevelExpanded = 1;
 
     this.agGridExtension = this.datagrid.datagridApi.enableExtension({extensionName:AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME}) as any;
     console.log(this);
