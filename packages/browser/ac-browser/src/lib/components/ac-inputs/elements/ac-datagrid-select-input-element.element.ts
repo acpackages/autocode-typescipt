@@ -94,6 +94,7 @@ export class AcDatagridSelectInput extends AcInputBase {
   private _searchQuery: string = '';
   get searchQuery(): string { return this._searchQuery; }
   set searchQuery(val: string) {
+    val = val.trim();
     this._searchQuery = val;
     this.addNewButton.textContent = `Add "${this.textInputElement.value}"`;
     if (this.datagrid) {
@@ -106,6 +107,7 @@ export class AcDatagridSelectInput extends AcInputBase {
           this.datagrid.afterRowsContainer.style.visibility = '';
         }
         this.highlightRow();
+        this.textInputElement.focus();
       }, duration:100});
     }
   }
@@ -113,16 +115,13 @@ export class AcDatagridSelectInput extends AcInputBase {
   private dropdownContainer!: HTMLDivElement;
   private isDropdownOpen = false;
   private popper!: PopperInstance | null;
-  private addNewButton:HTMLButtonElement;
+  private addNewButton:HTMLButtonElement|any;
   textInputElement: HTMLInputElement = this.ownerDocument.createElement('input');
   addNewContainer: HTMLElement = this.ownerDocument.createElement('div');
   datagrid: AcDatagrid = new AcDatagrid();
   private clickOutsideListener?: any = (event: Event) => {
     const target = event.target as HTMLElement;
-    if (
-      !this.textInputElement.contains(target) &&
-      !this.dropdownContainer.contains(target)
-    ) {
+    if (this.textInputElement && !this.textInputElement.contains(target) && this.dropdownContainer && !this.dropdownContainer.contains(target)) {
       if (!this.isFocused) {
           this.closeDropdown();
         }
@@ -149,7 +148,7 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 
   private attachEvents() {
-    this.addNewButton.addEventListener("click", (e) => {
+    this.addNewButton.addEventListener("click", (e:any) => {
       e.preventDefault();
       this.addNewOption(this.textInputElement.value);
     });
@@ -161,7 +160,9 @@ export class AcDatagridSelectInput extends AcInputBase {
         }
         else{
           const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
-          this.highlightRow({rowIndex:activeDatagridCell.datagridRow.index});
+          if(activeDatagridCell){
+            this.highlightRow({rowIndex:activeDatagridCell.datagridRow.index});
+          }
         }
       }
     });
@@ -183,10 +184,10 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.textInputElement.addEventListener("blur", (event: any) => {
       this.dispatchEvent(acCloneEvent(event));
       this.delayedCallback.add({callback:()=>{
-        if(!this.dropdownContainer.contains(this.ownerDocument.activeElement)){
+        if(!this.dropdownContainer.contains(this.ownerDocument.activeElement) && this.ownerDocument.activeElement != this.textInputElement){
           this.closeDropdown();
         }
-      },duration:150,key:'inputBlurCloseDropdown'})
+      },duration:50,key:'inputBlurCloseDropdown'})
     });
     this.textInputElement.addEventListener("click", (event) => {
       this.dispatchEvent(acCloneEvent(event));
@@ -324,6 +325,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.addNewButton.style.color = "#0078d7";
     this.addNewButton.style.fontStyle = "italic";
     this.addNewButton.textContent = `Add "${this.searchQuery}"`;
+    this.datagrid.datagridApi.dataManager.refreshRowsTimeoutDuration = 300;
     this.datagrid.afterRowsContainer.append(this.addNewContainer);
     if (!this.hasAttribute('label-key')) {
       this.labelKey = 'label';

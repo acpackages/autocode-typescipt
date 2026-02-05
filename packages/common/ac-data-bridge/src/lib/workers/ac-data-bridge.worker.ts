@@ -748,7 +748,6 @@ export class AcDataBridgeWorker {
         this.entityWorkers[destination] = worker;
       }
     }
-    console.log(this.processingEntities)
     return this.processingEntities;
   }
 
