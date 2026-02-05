@@ -1,5 +1,6 @@
 import { AC_REPORT_ATTRIBUTE, AcReport } from '@autocode-ts/ac-report-engine';
 import { acInitBwipjsPipe } from '@autocode-ts/ac-bwipjs-pipe';
+import { acInitNumberToWordsPipe } from '@autocode-ts/ac-number-to-words-pipe';
 export class BasicReportPage extends HTMLElement {
   public static observedAttributes = [];
   data: any = {};
@@ -8,10 +9,14 @@ export class BasicReportPage extends HTMLElement {
     // this.setFinalReportData();
     // this.setFinalReportHtml();
 
-    this.setStatementData();
-    this.setStatementHtml();
+    this.setInvoiceData();
+    this.setInvoiceHtml();
+
+    // this.setStatementData();
+    // this.setStatementHtml();
 
     acInitBwipjsPipe();
+    acInitNumberToWordsPipe();
 
     const report: AcReport = new AcReport({ element: this.querySelector('[ac-report]') as HTMLElement });
     report.generate({
@@ -1492,7 +1497,7 @@ export class BasicReportPage extends HTMLElement {
                         <table width="100%">
                             <tr>
                                 <table style="width:100%;">
-                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total</th><th class="text-right py-1" >{{data.record.amount | currency:'INR'}}</th></tr>
+                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total : {{data.record.amount | numberToWords}}</th><th class="text-right py-1" >{{data.record.amount | currency:'INR'}}</th></tr>
                                 </table>
                             </tr>
                             <tr>
@@ -1500,7 +1505,7 @@ export class BasicReportPage extends HTMLElement {
                                     <table style="width:100%;">
                                         <tr>
                                             <td style="padding:5px 0px;padding-right: 5px;width:110px;">
-                                                <div style="height:100px;width:100px;margin-left:5px;" ac:bind:innerHTML="data.record.document_number | bwipjs:{height:100,width:100}">
+                                                <div style="height:100px;width:100px;margin-left:5px;" ac:bind:innerHTML="data.record.document_number | bwipjs:{bcid:'code128','height':100,'width':100}">
                                                 </div>
                                             </td>
                                             <td style="border-left: solid 1px;vertical-align:middle;">

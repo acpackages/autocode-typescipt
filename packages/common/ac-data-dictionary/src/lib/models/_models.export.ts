@@ -1,6 +1,7 @@
 export * from './ac-data-dictionary.model';
 export * from './ac-dd-condition-group.model';
 export * from './ac-dd-condition.model';
+export * from './ac-dd-config.model';
 export * from './ac-dd-function.model';
 export * from './ac-dd-relationship.model';
 export * from './ac-dd-select-statement.model';

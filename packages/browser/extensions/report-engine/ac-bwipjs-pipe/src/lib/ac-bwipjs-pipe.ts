@@ -45,22 +45,21 @@ const bwipjsPipe: AcPipe = {
       paddingheight: 0,
       ...options, // User options override defaults
     };
-
     try {
       return await bwipjs.toSVG(bwipOptions);
     } catch (err) {
       console.error(`QR code generation failed for "${text}"`, err);
       return `
-<svg width="150" height="80" viewBox="0 0 150 80" xmlns="http://www.w3.org/2000/svg">
-  <rect width="150" height="80" fill="#ffeeee"/>
-  <text x="75" y="40" font-family="sans-serif" font-size="12" fill="#990000" text-anchor="middle" dominant-baseline="middle">
-    Error
-  </text>
-</svg>`.trim();
+        <svg width="150" height="80" viewBox="0 0 150 80" xmlns="http://www.w3.org/2000/svg">
+          <rect width="150" height="80" fill="#ffeeee"/>
+          <text x="75" y="40" font-family="sans-serif" font-size="12" fill="#990000" text-anchor="middle" dominant-baseline="middle">
+            Error
+          </text>
+        </svg>`.trim();
     }
   },
 };
 
-export function acInitBwipjsPipe(){
-  AcReportEngine.registerPipe({pipe:bwipjsPipe});
+export function acInitBwipjsPipe() {
+  AcReportEngine.registerPipe({ pipe: bwipjsPipe });
 }

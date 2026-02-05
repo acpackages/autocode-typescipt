@@ -1,6 +1,6 @@
 export const dataDictionaryJson = {
   "name": "Accountea - Pro",
-  "version": 1,
+  "version": 2,
   "tables": {
     "act_access_groups": {
       "tableName": "act_access_groups",
@@ -3716,6 +3716,308 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_delivery_note_products": {
+      "tableName": "act_delivery_note_products",
+      "tableColumns": {
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Index"
+            }
+          }
+        },
+        "product_description": {
+          "columnName": "product_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product"
+            }
+          }
+        },
+        "product_quantity": {
+          "columnName": "product_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Quantity"
+            }
+          }
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "UOM"
+            }
+          }
+        },
+        "product_total_quantity": {
+          "columnName": "product_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Quantity"
+            }
+          }
+        },
+        "sale_invoice_product_id": {
+          "columnName": "sale_invoice_product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Invoice Product"
+            }
+          }
+        },
+        "delivery_note_id": {
+          "columnName": "delivery_note_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Delivery Note"
+            }
+          }
+        },
+        "product_status": {
+          "columnName": "product_status",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Status"
+            }
+          }
+        },
+        "delivery_note_product_id": {
+          "columnName": "delivery_note_product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "delivery_note_products"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "delivery_note_product"
+        }
+      }
+    },
+    "act_delivery_notes": {
+      "tableName": "act_delivery_notes",
+      "tableColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Customer"
+            }
+          }
+        },
+        "device_id": {
+          "columnName": "device_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Device"
+            }
+          }
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Draft?"
+            }
+          }
+        },
+        "delivery_note_remarks": {
+          "columnName": "delivery_note_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
+        },
+        "delivery_note_datetime": {
+          "columnName": "delivery_note_datetime",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Date/Time"
+            }
+          }
+        },
+        "delivery_note_id": {
+          "columnName": "delivery_note_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "delivery_note_number": {
+          "columnName": "delivery_note_number",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Note#"
+            }
+          }
+        },
+        "delivery_note_status": {
+          "columnName": "delivery_note_status",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Status"
+            }
+          }
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User"
+            }
+          }
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Products"
+            }
+          }
+        },
+        "received_by": {
+          "columnName": "received_by",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "String"
+            }
+          }
+        },
+        "vehicle_number": {
+          "columnName": "vehicle_number",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Vehicle No."
+            }
+          }
+        },
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Sale Invoice"
+            }
+          }
+        },
+        "delivery_address_id": {
+          "columnName": "delivery_address_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Delivery Address"
+            }
+          }
+        },
+        "lr_no": {
+          "columnName": "lr_no",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "LR No"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "delivery_notes"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "delivery_note"
+        }
+      }
+    },
     "act_devices": {
       "tableName": "act_devices",
       "tableColumns": {
@@ -5070,15 +5372,6 @@ export const dataDictionaryJson = {
         }
       },
       "tableProperties": {
-        "CONSTRAINTS": {
-          "propertyName": "CONSTRAINTS",
-          "propertyValue": [
-            {
-              "type": "COMPOSITE_UNIQUE_KEY",
-              "value": "accountee_id,ledger_account_name"
-            }
-          ]
-        },
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "ledger_accounts"
@@ -15155,6 +15448,28 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Address"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
+            }
+          }
+        },
+        "is_credit": {
+          "columnName": "is_credit",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Is Credit?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
             }
           }
         }
@@ -22052,6 +22367,10 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -22182,6 +22501,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Description"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -22408,6 +22731,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Narration"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -30869,6 +31196,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "address_id"
+        },
+        "is_credit": {
+          "columnName": "is_credit",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoices",
+          "columnSourceOriginalColumn": "is_credit"
         }
       },
       "viewQuery": "SELECT \nact_vw_customers.customer_category,\nact_vw_customers.party_name,\nact_vw_customers.party_id,\nact_vw_customers.legal_identifier,\nact_addresses.address_line_1,\nact_addresses.address_line_2,\nact_addresses.landmark,\nact_addresses.latitude,\nact_addresses.longitude,\nact_addresses.city_name,\nact_addresses.postal_code,\nact_addresses.state_name,\nact_addresses.country_name,\nact_sale_invoices.* \nFROM act_sale_invoices \nLEFT JOIN act_vw_customers ON act_sale_invoices.customer_id = act_vw_customers.customer_id \nLEFT JOIN act_addresses ON act_sale_invoices.address_id = act_addresses.address_id"
@@ -35653,11 +35988,394 @@ export const dataDictionaryJson = {
       "destinationTable": "act_sale_return_payments",
       "sourceColumn": "transaction_entry_id",
       "sourceTable": "act_transaction_entries"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_delivery_notes",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "customer_id",
+      "destinationTable": "act_delivery_notes",
+      "sourceColumn": "customer_id",
+      "sourceTable": "act_customers"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "act_delivery_notes",
+      "sourceColumn": "device_id",
+      "sourceTable": "act_devices"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "act_delivery_notes",
+      "sourceColumn": "user_id",
+      "sourceTable": "act_users"
+    },
+    {
+      "destinationColumn": "sale_invoice_id",
+      "destinationTable": "act_delivery_notes",
+      "sourceColumn": "sale_invoice_id",
+      "sourceTable": "act_sale_invoices"
+    },
+    {
+      "destinationColumn": "delivery_address_id",
+      "destinationTable": "act_delivery_notes",
+      "sourceColumn": "address_id",
+      "sourceTable": "act_addresses"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_delivery_note_products",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_uom_id",
+      "destinationTable": "act_delivery_note_products",
+      "sourceColumn": "product_uom_id",
+      "sourceTable": "act_product_uoms"
+    },
+    {
+      "destinationColumn": "sale_invoice_product_id",
+      "destinationTable": "act_delivery_note_products",
+      "sourceColumn": "sale_invoice_product_id",
+      "sourceTable": "act_sale_invoice_products"
     }
   ],
   "storedProcedures": {},
   "functions": {},
   "triggers": {
+    "act_trg_accountee_address_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_addresses",
+      "triggerName": "act_trg_accountee_address_delete_actions",
+      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_address_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_addresses",
+      "triggerName": "act_trg_accountee_address_insert_actions",
+      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_accountee_address_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_addresses",
+      "triggerName": "act_trg_accountee_address_update_actions",
+      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_bank_account_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_bank_accounts",
+      "triggerName": "act_trg_accountee_bank_account_delete_actions",
+      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_bank_account_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_bank_accounts",
+      "triggerName": "act_trg_accountee_bank_account_insert_actions",
+      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_accountee_bank_account_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_bank_accounts",
+      "triggerName": "act_trg_accountee_bank_account_update_actions",
+      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_email_address_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_email_addresses",
+      "triggerName": "act_trg_accountee_email_address_delete_actions",
+      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_email_address_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_email_addresses",
+      "triggerName": "act_trg_accountee_email_address_insert_actions",
+      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_accountee_email_address_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_email_addresses",
+      "triggerName": "act_trg_accountee_email_address_update_actions",
+      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_fax_number_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_fax_numbers",
+      "triggerName": "act_trg_accountee_fax_number_delete_actions",
+      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_fax_number_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_fax_numbers",
+      "triggerName": "act_trg_accountee_fax_number_insert_actions",
+      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_accountee_fax_number_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_fax_numbers",
+      "triggerName": "act_trg_accountee_fax_number_update_actions",
+      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_phone_number_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_phone_numbers",
+      "triggerName": "act_trg_accountee_phone_number_delete_actions",
+      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_phone_number_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_phone_numbers",
+      "triggerName": "act_trg_accountee_phone_number_insert_actions",
+      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_accountee_phone_number_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_phone_numbers",
+      "triggerName": "act_trg_accountee_phone_number_update_actions",
+      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_website_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_accountee_websites",
+      "triggerName": "act_trg_accountee_website_delete_actions",
+      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_accountee_website_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_accountee_websites",
+      "triggerName": "act_trg_accountee_website_insert_actions",
+      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
+    },
+    "act_trg_accountee_website_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_accountee_websites",
+      "triggerName": "act_trg_accountee_website_update_actions",
+      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
+    },
+    "act_trg_customer_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_customers",
+      "triggerName": "act_trg_customer_delete_actions",
+      "triggerCode": "UPDATE act_parties SET is_customer = 0 WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_customer_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_customers",
+      "triggerName": "act_trg_customer_insert_actions",
+      "triggerCode": "UPDATE act_parties SET is_customer = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_customer_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_customers",
+      "triggerName": "act_trg_customer_update_actions",
+      "triggerCode": "UPDATE act_parties SET is_customer = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_employee_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_employees",
+      "triggerName": "act_trg_employee_delete_actions",
+      "triggerCode": "UPDATE act_parties SET is_employee = 0 WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_employee_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_employees",
+      "triggerName": "act_trg_employee_insert_actions",
+      "triggerCode": "UPDATE act_parties SET is_employee = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_employee_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_employees",
+      "triggerName": "act_trg_employee_update_actions",
+      "triggerCode": "UPDATE act_parties SET is_employee = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_inventory_tracking_entry_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_inventory_tracking_entries",
+      "triggerName": "act_trg_inventory_tracking_entry_delete_actions",
+      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) - IFNULL(OLD.in_total_quantity,0) + IFNULL(OLD.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = OLD.inventory_tracking_id);"
+    },
+    "act_trg_inventory_tracking_entry_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_inventory_tracking_entries",
+      "triggerName": "act_trg_inventory_tracking_entry_insert_actions",
+      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) + IFNULL(NEW.in_total_quantity,0) - IFNULL(NEW.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = NEW.inventory_tracking_id);"
+    },
+    "act_trg_inventory_tracking_entry_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_inventory_tracking_entries",
+      "triggerName": "act_trg_inventory_tracking_entry_update_actions",
+      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) + IFNULL(NEW.in_total_quantity,0) - IFNULL(NEW.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = NEW.inventory_tracking_id);\nUPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) - IFNULL(OLD.in_total_quantity,0) + IFNULL(OLD.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = OLD.inventory_tracking_id);"
+    },
+    "act_trg_party_addresse_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_party_addresses",
+      "triggerName": "act_trg_party_addresse_delete_actions",
+      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_addresse_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_party_addresses",
+      "triggerName": "act_trg_party_addresse_insert_actions",
+      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_party_addresse_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_party_addresses",
+      "triggerName": "act_trg_party_addresse_update_actions",
+      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_bank_account_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_party_bank_accounts",
+      "triggerName": "act_trg_party_bank_account_delete_actions",
+      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_bank_account_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_party_bank_accounts",
+      "triggerName": "act_trg_party_bank_account_insert_actions",
+      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_party_bank_account_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_party_bank_accounts",
+      "triggerName": "act_trg_party_bank_account_update_actions",
+      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_email_addresse_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_party_email_addresses",
+      "triggerName": "act_trg_party_email_addresse_delete_actions",
+      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_email_addresse_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_party_email_addresses",
+      "triggerName": "act_trg_party_email_addresse_insert_actions",
+      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_party_email_addresse_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_party_email_addresses",
+      "triggerName": "act_trg_party_email_addresse_update_actions",
+      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_fax_number_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_party_fax_numbers",
+      "triggerName": "act_trg_party_fax_number_delete_actions",
+      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_fax_number_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_party_fax_numbers",
+      "triggerName": "act_trg_party_fax_number_insert_actions",
+      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_party_fax_number_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_party_fax_numbers",
+      "triggerName": "act_trg_party_fax_number_update_actions",
+      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_phone_number_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_party_phone_numbers",
+      "triggerName": "act_trg_party_phone_number_delete_actions",
+      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_phone_number_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_party_phone_numbers",
+      "triggerName": "act_trg_party_phone_number_insert_actions",
+      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_party_phone_number_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_party_phone_numbers",
+      "triggerName": "act_trg_party_phone_number_update_actions",
+      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_website_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_party_websites",
+      "triggerName": "act_trg_party_website_delete_actions",
+      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_party_website_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_party_websites",
+      "triggerName": "act_trg_party_website_insert_actions",
+      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_party_website_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_party_websites",
+      "triggerName": "act_trg_party_website_update_actions",
+      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_product_price_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_product_prices",
+      "triggerName": "act_trg_product_price_insert_actions",
+      "triggerCode": "UPDATE act_products SET product_stock_price = act_product_prices.price_purchase FROM act_product_prices WHERE act_products.product_id = act_product_prices.product_id AND act_product_prices.is_current = 1 AND act_products.product_id = NEW.product_id;"
+    },
+    "act_trg_product_price_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_product_prices",
+      "triggerName": "act_trg_product_price_update_actions",
+      "triggerCode": "UPDATE act_products SET product_stock_price = act_product_prices.price_purchase FROM act_product_prices WHERE act_products.product_id = act_product_prices.product_id AND act_product_prices.is_current = 1 AND act_products.product_id = NEW.product_id;"
+    },
     "act_trg_purchase_invoice_payment_delete_actions": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
@@ -35678,6 +36396,41 @@ export const dataDictionaryJson = {
       "tableName": "act_purchase_invoice_payments",
       "triggerName": "act_trg_purchase_invoice_payment_update_actions",
       "triggerCode": "UPDATE act_purchase_invoices SET paid_amount = IFNULL(act_purchase_invoice_payments.total_paid,0) FROM (SELECT SUM(purchase_invoice_payment_amount) AS total_paid FROM act_purchase_invoice_payments WHERE purchase_invoice_id = NEW.purchase_invoice_id AND purchase_invoice_payment_status = 'PAID') AS act_purchase_invoice_payments WHERE purchase_invoice_id = NEW.purchase_invoice_id ;"
+    },
+    "act_trg_purchase_invoice_product_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_purchase_invoice_products",
+      "triggerName": "act_trg_purchase_invoice_product_delete_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0), products_count = IFNULL(products_count,0) - 1  WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
+    },
+    "act_trg_purchase_invoice_product_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_purchase_invoice_products",
+      "triggerName": "act_trg_purchase_invoice_product_insert_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0), products_count = IFNULL(products_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;\nUPDATE act_purchase_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_purchase_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_purchase_invoice_products.purchase_invoice_product_id = NEW.purchase_invoice_product_id AND act_product_uoms.product_uom_id = act_purchase_invoice_products.product_uom_id;"
+    },
+    "act_trg_purchase_invoice_product_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_purchase_invoice_products",
+      "triggerName": "act_trg_purchase_invoice_product_update_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;\nUPDATE act_purchase_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_purchase_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_purchase_invoice_products.purchase_invoice_product_id = NEW.purchase_invoice_product_id AND act_product_uoms.product_uom_id = act_purchase_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
+    },
+    "act_trg_purchase_invoice_service_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_purchase_invoice_chargeable_services",
+      "triggerName": "act_trg_purchase_invoice_service_delete_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
+    },
+    "act_trg_purchase_invoice_service_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_purchase_invoice_chargeable_services",
+      "triggerName": "act_trg_purchase_invoice_service_update_actions",
+      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
     },
     "act_trg_purchase_invoice_update_actions": {
       "triggerExecution": "AFTER",
@@ -35735,418 +36488,47 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_sale_product_update_actions",
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;\nUPDATE act_sale_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_sale_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_sale_invoice_products.sale_invoice_product_id = NEW.sale_invoice_product_id AND act_product_uoms.product_uom_id = act_sale_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
     },
-    "act_trg_set_accountee_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_accountee_addresses",
-      "triggerName": "act_trg_set_accountee_addresses_on_delete",
-      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_accountee_addresses",
-      "triggerName": "act_trg_set_accountee_addresses_on_insert",
-      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
-    },
-    "act_trg_set_accountee_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_accountee_addresses",
-      "triggerName": "act_trg_set_accountee_addresses_on_update",
-      "triggerCode": "UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_accountee_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_bank_accounts_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_accountee_bank_accounts",
-      "triggerName": "act_trg_set_accountee_bank_accounts_on_delete",
-      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_bank_accounts_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_accountee_bank_accounts",
-      "triggerName": "act_trg_set_accountee_bank_accounts_on_insert",
-      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
-    },
-    "act_trg_set_accountee_bank_accounts_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_accountee_bank_accounts",
-      "triggerName": "act_trg_set_accountee_bank_accounts_on_update",
-      "triggerCode": "UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_accountee_bank_accounts WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_email_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_accountee_email_addresses",
-      "triggerName": "act_trg_set_accountee_email_addresses_on_delete",
-      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_email_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_accountee_email_addresses",
-      "triggerName": "act_trg_set_accountee_email_addresses_on_insert",
-      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
-    },
-    "act_trg_set_accountee_email_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_accountee_email_addresses",
-      "triggerName": "act_trg_set_accountee_email_addresses_on_update",
-      "triggerCode": "UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_accountee_email_addresses WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_fax_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_accountee_fax_numbers",
-      "triggerName": "act_trg_set_accountee_fax_numbers_on_delete",
-      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_fax_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_accountee_fax_numbers",
-      "triggerName": "act_trg_set_accountee_fax_numbers_on_insert",
-      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
-    },
-    "act_trg_set_accountee_fax_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_accountee_fax_numbers",
-      "triggerName": "act_trg_set_accountee_fax_numbers_on_update",
-      "triggerCode": "UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_accountee_fax_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_phone_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_accountee_phone_numbers",
-      "triggerName": "act_trg_set_accountee_phone_numbers_on_delete",
-      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_phone_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_accountee_phone_numbers",
-      "triggerName": "act_trg_set_accountee_phone_numbers_on_insert",
-      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
-    },
-    "act_trg_set_accountee_phone_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_accountee_phone_numbers",
-      "triggerName": "act_trg_set_accountee_phone_numbers_on_update",
-      "triggerCode": "UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_accountee_phone_numbers WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_websites_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_accountee_websites",
-      "triggerName": "act_trg_set_accountee_websites_on_delete",
-      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_accountee_websites_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_accountee_websites",
-      "triggerName": "act_trg_set_accountee_websites_on_insert",
-      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id;"
-    },
-    "act_trg_set_accountee_websites_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_accountee_websites",
-      "triggerName": "act_trg_set_accountee_websites_on_update",
-      "triggerCode": "UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = NEW.accountee_id; UPDATE act_accountees SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_accountee_websites WHERE accountee_id = act_accountees.accountee_id)) WHERE accountee_id = OLD.accountee_id;"
-    },
-    "act_trg_set_party_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_party_addresses",
-      "triggerName": "act_trg_set_party_addresses_on_delete",
-      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_party_addresses",
-      "triggerName": "act_trg_set_party_addresses_on_insert",
-      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_party_addresses",
-      "triggerName": "act_trg_set_party_addresses_on_update",
-      "triggerCode": "UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET addresses = (SELECT GROUP_CONCAT(DISTINCT TRIM(COALESCE(address_line_1, '') || CASE WHEN TRIM(COALESCE(address_line_2, '')) <> '' THEN ', ' || TRIM(address_line_2) ELSE '' END || CASE WHEN TRIM(COALESCE(postal_code, '')) <> '' THEN ', ' || TRIM(postal_code) ELSE '' END || CASE WHEN TRIM(COALESCE(city_name, '')) <> '' THEN ', ' || TRIM(city_name) ELSE '' END || CASE WHEN TRIM(COALESCE(state_name, '')) <> '' THEN ', ' || TRIM(state_name) ELSE '' END || CASE WHEN TRIM(COALESCE(country_name, '')) <> '' THEN ', ' || TRIM(country_name) ELSE '' END )) FROM act_addresses WHERE address_line_1 IS NOT NULL AND TRIM(address_line_1) <> '' AND address_id IN (SELECT address_id FROM act_party_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_bank_accounts_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_party_bank_accounts",
-      "triggerName": "act_trg_set_party_bank_accounts_on_delete",
-      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_bank_accounts_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_party_bank_accounts",
-      "triggerName": "act_trg_set_party_bank_accounts_on_insert",
-      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_bank_accounts_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_party_bank_accounts",
-      "triggerName": "act_trg_set_party_bank_accounts_on_update",
-      "triggerCode": "UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET bank_accounts = (SELECT GROUP_CONCAT(DISTINCT account_number || '[' || bank_name || ']') FROM act_bank_accounts WHERE account_number IS NOT NULL AND TRIM(account_number) <> '' AND bank_account_id IN (SELECT bank_account_id FROM act_party_bank_accounts WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_customer_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_customers",
-      "triggerName": "act_trg_set_party_customer_on_delete",
-      "triggerCode": "UPDATE act_parties SET is_customer = 0 WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_customer_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_customers",
-      "triggerName": "act_trg_set_party_customer_on_insert",
-      "triggerCode": "UPDATE act_parties SET is_customer = 1 WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_customer_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_customers",
-      "triggerName": "act_trg_set_party_customer_on_update",
-      "triggerCode": "UPDATE act_parties SET is_customer = 1 WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_email_addresses_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_party_email_addresses",
-      "triggerName": "act_trg_set_party_email_addresses_on_delete",
-      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_email_addresses_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_party_email_addresses",
-      "triggerName": "act_trg_set_party_email_addresses_on_insert",
-      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_email_addresses_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_party_email_addresses",
-      "triggerName": "act_trg_set_party_email_addresses_on_update",
-      "triggerCode": "UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET email_addresses = (SELECT GROUP_CONCAT(DISTINCT email_address_value) FROM act_email_addresses WHERE email_address_value IS NOT NULL AND TRIM(email_address_value) <> '' AND email_address_id IN (SELECT email_address_id FROM act_party_email_addresses WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_employee_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_employees",
-      "triggerName": "act_trg_set_party_employee_on_delete",
-      "triggerCode": "UPDATE act_parties SET is_employee = 0 WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_employee_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_employees",
-      "triggerName": "act_trg_set_party_employee_on_insert",
-      "triggerCode": "UPDATE act_parties SET is_employee = 1 WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_employee_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_employees",
-      "triggerName": "act_trg_set_party_employee_on_update",
-      "triggerCode": "UPDATE act_parties SET is_employee = 1 WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_fax_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_party_fax_numbers",
-      "triggerName": "act_trg_set_party_fax_numbers_on_delete",
-      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_fax_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_party_fax_numbers",
-      "triggerName": "act_trg_set_party_fax_numbers_on_insert",
-      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_fax_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_party_fax_numbers",
-      "triggerName": "act_trg_set_party_fax_numbers_on_update",
-      "triggerCode": "UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET fax_numbers = (SELECT GROUP_CONCAT(DISTINCT fax_number_value) FROM act_fax_numbers WHERE fax_number_value IS NOT NULL AND TRIM(fax_number_value) <> '' AND fax_number_id IN (SELECT fax_number_id FROM act_party_fax_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_phone_numbers_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_party_phone_numbers",
-      "triggerName": "act_trg_set_party_phone_numbers_on_delete",
-      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_phone_numbers_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_party_phone_numbers",
-      "triggerName": "act_trg_set_party_phone_numbers_on_insert",
-      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_phone_numbers_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_party_phone_numbers",
-      "triggerName": "act_trg_set_party_phone_numbers_on_update",
-      "triggerCode": "UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET phone_numbers = (SELECT GROUP_CONCAT(DISTINCT phone_number_value) FROM act_phone_numbers WHERE phone_number_value IS NOT NULL AND TRIM(phone_number_value) <> '' AND phone_number_id IN (SELECT phone_number_id FROM act_party_phone_numbers WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_supplier_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_suppliers",
-      "triggerName": "act_trg_set_party_supplier_on_delete",
-      "triggerCode": "UPDATE act_parties SET is_supplier = 0 WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_supplier_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_suppliers",
-      "triggerName": "act_trg_set_party_supplier_on_insert",
-      "triggerCode": "UPDATE act_parties SET is_supplier = 1 WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_supplier_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_suppliers",
-      "triggerName": "act_trg_set_party_supplier_on_update",
-      "triggerCode": "UPDATE act_parties SET is_supplier = 1 WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_websites_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_party_websites",
-      "triggerName": "act_trg_set_party_websites_on_delete",
-      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_party_websites_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_party_websites",
-      "triggerName": "act_trg_set_party_websites_on_insert",
-      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;"
-    },
-    "act_trg_set_party_websites_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_party_websites",
-      "triggerName": "act_trg_set_party_websites_on_update",
-      "triggerCode": "UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = NEW.party_id;   UPDATE act_parties SET websites = (SELECT GROUP_CONCAT(DISTINCT website_value) FROM act_websites WHERE website_value IS NOT NULL AND TRIM(website_value) <> '' AND website_id IN (SELECT website_id FROM act_party_websites WHERE party_id = act_parties.party_id)) WHERE party_id = OLD.party_id;"
-    },
-    "act_trg_set_prd_stk_prc_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_product_prices",
-      "triggerName": "act_trg_set_prd_stk_prc_on_insert",
-      "triggerCode": "UPDATE act_products SET product_stock_price = act_product_prices.price_purchase FROM act_product_prices WHERE act_products.product_id = act_product_prices.product_id AND act_product_prices.is_current = 1 AND act_products.product_id = NEW.product_id;"
-    },
-    "act_trg_set_prd_stk_prc_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_product_prices",
-      "triggerName": "act_trg_set_prd_stk_prc_on_update",
-      "triggerCode": "UPDATE act_products SET product_stock_price = act_product_prices.price_purchase FROM act_product_prices WHERE act_products.product_id = act_product_prices.product_id AND act_product_prices.is_current = 1 AND act_products.product_id = NEW.product_id;"
-    },
-    "act_trg_set_prd_stock_on_inv_track_on_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_inventory_tracking_entries",
-      "triggerName": "act_trg_set_prd_stock_on_inv_track_on_delete",
-      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) - IFNULL(OLD.in_total_quantity,0) + IFNULL(OLD.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = OLD.inventory_tracking_id);"
-    },
-    "act_trg_set_prd_stock_on_inv_track_on_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_inventory_tracking_entries",
-      "triggerName": "act_trg_set_prd_stock_on_inv_track_on_insert",
-      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) + IFNULL(NEW.in_total_quantity,0) - IFNULL(NEW.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = NEW.inventory_tracking_id);"
-    },
-    "act_trg_set_prd_stock_on_inv_track_on_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_inventory_tracking_entries",
-      "triggerName": "act_trg_set_prd_stock_on_inv_track_on_update",
-      "triggerCode": "UPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) + IFNULL(NEW.in_total_quantity,0) - IFNULL(NEW.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = NEW.inventory_tracking_id);\nUPDATE act_products SET stock_total_quantity = IFNULL(stock_total_quantity,0) - IFNULL(OLD.in_total_quantity,0) + IFNULL(OLD.out_total_quantity,0) WHERE product_id IN (SELECT product_id FROM act_inventory_trackings WHERE inventory_tracking_id = OLD.inventory_tracking_id);"
-    },
-    "act_trg_set_pur_amt_on_prod_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_purchase_invoice_products",
-      "triggerName": "act_trg_set_pur_amt_on_prod_delete",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0), products_count = IFNULL(products_count,0) - 1  WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
-    },
-    "act_trg_set_pur_amt_on_prod_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_purchase_invoice_products",
-      "triggerName": "act_trg_set_pur_amt_on_prod_insert",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0), products_count = IFNULL(products_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;\nUPDATE act_purchase_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_purchase_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_purchase_invoice_products.purchase_invoice_product_id = NEW.purchase_invoice_product_id AND act_product_uoms.product_uom_id = act_purchase_invoice_products.product_uom_id;"
-    },
-    "act_trg_set_pur_amt_on_prod_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_purchase_invoice_products",
-      "triggerName": "act_trg_set_pur_amt_on_prod_update",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.product_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.product_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;\nUPDATE act_purchase_invoice_products SET product_total_quantity = act_product_uoms.product_uom_quantity * act_purchase_invoice_products.product_quantity FROM act_product_uoms WHERE NEW.product_uom_id IS NOT NULL AND act_purchase_invoice_products.purchase_invoice_product_id = NEW.purchase_invoice_product_id AND act_product_uoms.product_uom_id = act_purchase_invoice_products.product_uom_id AND (OLD.product_quantity <> NEW.product_quantity OR OLD.product_uom_id <> NEW.product_uom_id );"
-    },
-    "act_trg_set_pur_amt_on_ser_delete": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "DELETE",
-      "tableName": "act_purchase_invoice_chargeable_services",
-      "triggerName": "act_trg_set_pur_amt_on_ser_delete",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) - 1 WHERE purchase_invoice_id = OLD.purchase_invoice_id;"
-    },
-    "act_trg_set_pur_amt_on_ser_insert": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "INSERT",
-      "tableName": "act_purchase_invoice_chargeable_services",
-      "triggerName": "act_trg_set_pur_amt_on_ser_insert",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) + 1 WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
-    },
-    "act_trg_set_pur_amt_on_ser_update": {
-      "triggerExecution": "AFTER",
-      "rowOperation": "UPDATE",
-      "tableName": "act_purchase_invoice_chargeable_services",
-      "triggerName": "act_trg_set_pur_amt_on_ser_update",
-      "triggerCode": "UPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE purchase_invoice_id = OLD.purchase_invoice_id;\nUPDATE act_purchase_invoices SET purchase_invoice_amount = IFNULL(purchase_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE purchase_invoice_id = NEW.purchase_invoice_id;"
-    },
-    "act_trg_set_sale_amt_on_ser_delete": {
+    "act_trg_sale_service_delete_actions": {
       "triggerExecution": "AFTER",
       "rowOperation": "DELETE",
       "tableName": "act_sale_invoice_chargeable_services",
-      "triggerName": "act_trg_set_sale_amt_on_ser_delete",
+      "triggerName": "act_trg_sale_service_delete_actions",
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0),chargeable_services_count = IFNULL(chargeable_services_count,0) - 1 WHERE sale_invoice_id = OLD.sale_invoice_id ;"
     },
-    "act_trg_set_sale_amt_on_ser_insert": {
+    "act_trg_sale_service_insert_actions": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_sale_invoice_chargeable_services",
-      "triggerName": "act_trg_set_sale_amt_on_ser_insert",
+      "triggerName": "act_trg_sale_service_insert_actions",
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0), chargeable_services_count = IFNULL(chargeable_services_count,0) + 1 WHERE sale_invoice_id = NEW.sale_invoice_id ;"
     },
-    "act_trg_set_sale_amt_on_ser_update": {
+    "act_trg_sale_service_update_actions": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_sale_invoice_chargeable_services",
-      "triggerName": "act_trg_set_sale_amt_on_ser_update",
+      "triggerName": "act_trg_sale_service_update_actions",
       "triggerCode": "UPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) - IFNULL(OLD.chargeable_service_amount,0) WHERE sale_invoice_id = OLD.sale_invoice_id ;\nUPDATE act_sale_invoices SET sale_invoice_amount = IFNULL(sale_invoice_amount,0) + IFNULL(NEW.chargeable_service_amount,0) WHERE sale_invoice_id = NEW.sale_invoice_id ;"
+    },
+    "act_trg_supplier_delete_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "DELETE",
+      "tableName": "act_suppliers",
+      "triggerName": "act_trg_supplier_delete_actions",
+      "triggerCode": "UPDATE act_parties SET is_supplier = 0 WHERE party_id = OLD.party_id;"
+    },
+    "act_trg_supplier_insert_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "INSERT",
+      "tableName": "act_suppliers",
+      "triggerName": "act_trg_supplier_insert_actions",
+      "triggerCode": "UPDATE act_parties SET is_supplier = 1 WHERE party_id = NEW.party_id;"
+    },
+    "act_trg_supplier_update_actions": {
+      "triggerExecution": "AFTER",
+      "rowOperation": "UPDATE",
+      "tableName": "act_suppliers",
+      "triggerName": "act_trg_supplier_update_actions",
+      "triggerCode": "UPDATE act_parties SET is_supplier = 1 WHERE party_id = NEW.party_id;"
     },
     "act_trg_transaction_entry_delete_actions": {
       "triggerExecution": "AFTER",
@@ -36169,5 +36551,10 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_transaction_entry_update_actions",
       "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
     }
+  },
+  "config":{
+    "insertTimestampColumnKey":'created_at',
+    "updateTimestampColumnKey":'updated_at',
+    "deleteTimestampColumnKey":'deleted_at'
   }
 };

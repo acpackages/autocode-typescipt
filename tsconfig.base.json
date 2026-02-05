@@ -78,6 +78,9 @@
       "@autocode-ts/ac-nodeflow-designer": [
         "packages/browser/ac-nodeflow-designer/src/index.ts"
       ],
+      "@autocode-ts/ac-number-to-words-pipe": [
+        "packages/browser/extensions/report-engine/ac-number-to-words-pipe/src/ac-number-to-words-pipe.ts"
+      ],
       "@autocode-ts/ac-quill-editor-input": [
         "packages/browser/ac-quill-editor-input/src/ac-quill-editor-input.ts"
       ],

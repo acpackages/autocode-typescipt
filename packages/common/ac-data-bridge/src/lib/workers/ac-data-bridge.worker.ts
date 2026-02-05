@@ -666,7 +666,7 @@ export class AcDataBridgeWorker {
     // let pendingEntityDestinations:string[] = [];
     this.processingEntities = {};
     let destinations: string[] = [];
-    const maxIteration: number = 10;
+    const maxIteration: number = 100;
     let currentIteration: number = 0;
     // console.log("Ordering entities for processing");
     while (pendingEntities.length > 0 && currentIteration < maxIteration) {
@@ -681,7 +681,7 @@ export class AcDataBridgeWorker {
                 destinations.push(field.destinationName);
               }
             }
-            if (field.foreignKeyTemplateName && field.foreignKeyTemplateName != '' && field.foreignKeyTemplateFieldName && field.foreignKeyTemplateFieldName != '') {
+            if (field.foreignKeyTemplateName && field.foreignKeyTemplateName != '' && field.foreignKeyTemplateName != entity.templateName && field.foreignKeyTemplateFieldName && field.foreignKeyTemplateFieldName != '') {
               const templateName = field.foreignKeyTemplateName;
               // console.log(`Foreign key template found ${templateName} for field ${field.templateFieldName}`);
               const foreignKeyTemplate = Object.values(this.templateEntities).find((t) => { return t.templateName == templateName });
@@ -732,12 +732,15 @@ export class AcDataBridgeWorker {
       }
       // console.log(`Removing finalized entitities for next iteration`);
       pendingEntities = pendingEntities.filter((pendingEntity) => {
-        return this.processingEntities[pendingEntity.destinationName] == undefined;;
+        return this.processingEntities[pendingEntity.destinationName] == undefined;
       });
       // console.log(`New iteration has ${pendingEntities.length} pending entities`);
       currentIteration++;
     }
 
+    if(pendingEntities.length > 0){
+      console.warn("Following pending entities not added to processing list",pendingEntities);
+    }
     for (const destination of destinations) {
       if (!this.entityWorkers[destination]) {
         const worker = new AcDataBridgeEntityWorker({ worker: this });
@@ -745,6 +748,7 @@ export class AcDataBridgeWorker {
         this.entityWorkers[destination] = worker;
       }
     }
+    console.log(this.processingEntities)
     return this.processingEntities;
   }
 

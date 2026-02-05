@@ -52,7 +52,7 @@ interface ConfirmResult {
 
 export class AcMessage {
   // --- Global config ---
-  private static defaultConfig: Partial<BaseOptions> = {
+  static defaultConfig: Partial<BaseOptions> = {
     timer: 3000,
     toast: true,
     position: 'top-right',

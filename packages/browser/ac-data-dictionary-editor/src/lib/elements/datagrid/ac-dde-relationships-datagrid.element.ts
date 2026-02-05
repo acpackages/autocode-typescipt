@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
 import { AcDDEApi } from "../../core/ac-dde-api";
-import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent } from "@autocode-ts/ac-browser";
+import { acAddClassToElement, AcDatagridApi, AC_DATAGRID_EVENT, IAcDatagridCellEditorElementInitEvent, IAcDatagridCellRendererElementInitEvent, IAcDatagridColumnDefinition, IAcDatagridRowEvent, IAcDatagridCell, IAcDatagridRow, IAcDatagridColumn } from "@autocode-ts/ac-browser";
 import { AcDDEDatagridSelectTableInput } from "../cell-editors/ac-dde-datagrid-select-table-input.element";
 import { AcDDEDatagridSelectTableColumnInput } from "../cell-editors/ac-dde-datagrid-select-table-column-input.element";
 import { AcDDEDatagridYesNoInput } from "../cell-editors/ac-dde-datagrid-yes-no-input.element";
@@ -125,25 +125,31 @@ export class AcDDERelationshipsDatagrid {
       }
     });
     this.datagridApi.on({
-      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: IAcDatagridCellEditorElementInitEvent) => {
-        const datagridRow = args.datagridCell.datagridRow;
-        if (args.datagridCell.datagridColumn.columnKey == AcEnumDDERelationship.DestinationColumnId) {
-          const selectColumnInput: AcDDEDatagridSelectTableColumnInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableColumnInput;
+      event: AC_DATAGRID_EVENT.CellEditorElementInit, callback: (args: any) => {
+        const editor = args.editor;
+
+        console.log(args);
+        const datagridCell:IAcDatagridCell = editor.datagridCell;
+        const datagridRow:IAcDatagridRow = datagridCell.datagridRow;
+        const datagridColumn:IAcDatagridColumn = datagridCell.datagridColumn;
+        if (datagridColumn.columnKey == AcEnumDDERelationship.DestinationColumnId) {
+          const selectColumnInput: AcDDEDatagridSelectTableColumnInput = editor.editor;
           selectColumnInput.filter = (row: IAcDDETableColumn) => {
             return row.tableId == datagridRow.data[AcEnumDDERelationship.DestinationTableId];
           };
           selectColumnInput.setOptions();
         }
-        else if (args.datagridCell.datagridColumn.columnKey == AcEnumDDERelationship.SourceColumnId) {
-          const selectColumnInput: AcDDEDatagridSelectTableColumnInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableColumnInput;
+        else if (datagridColumn.columnKey == AcEnumDDERelationship.SourceColumnId) {
+          const selectColumnInput: AcDDEDatagridSelectTableColumnInput = editor.editor as AcDDEDatagridSelectTableColumnInput;
           selectColumnInput.selectInput.name = AcEnumDDERelationship.SourceColumnId;
           selectColumnInput.filter = (row: IAcDDETableColumn) => {
             return row.tableId == datagridRow.data[AcEnumDDERelationship.SourceTableId];
           };
           selectColumnInput.setOptions();
         }
-        else if (args.datagridCell.datagridColumn.columnKey == AcEnumDDERelationship.SourceTableId) {
-          const selectTableInput: AcDDEDatagridSelectTableInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableInput;
+        else if (datagridColumn.columnKey == AcEnumDDERelationship.SourceTableId) {
+          const selectTableInput: AcDDEDatagridSelectTableInput = editor.editor as AcDDEDatagridSelectTableInput;
+          console.log(selectTableInput);
           // args.datagridCell.on({
           //   event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: any) => {
           //     const sourceColumnCell = datagridRow.datagridCells.find((cell) => {
@@ -156,8 +162,8 @@ export class AcDDERelationshipsDatagrid {
           //   }
           // });
         }
-        else if (args.datagridCell.datagridColumn.columnKey == AcEnumDDERelationship.DestinationTableId) {
-          const selectTableInput: AcDDEDatagridSelectTableInput = args.cellEditorElementInstance as AcDDEDatagridSelectTableInput;
+        else if (datagridColumn.columnKey == AcEnumDDERelationship.DestinationTableId) {
+          const selectTableInput: AcDDEDatagridSelectTableInput = editor.editor as AcDDEDatagridSelectTableInput;
           // args.datagridCell.on({
           //   event: AC_DATAGRID_EVENT.CellValueChange, callback: (args: any) => {
           //     const destinationColumnCell = datagridRow.datagridCells.find((cell) => {

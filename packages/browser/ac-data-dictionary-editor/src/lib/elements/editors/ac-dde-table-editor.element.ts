@@ -91,24 +91,18 @@ export class AcDDETableEditor {
         this.updateEditorState();
       }
     });
-    this.tableRelationshipsDatagrid.ddeDatagrid.newRowDataFunction = () => {
-      const row: any = {};
-      if (this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow) {
-        const activeRow: IAcDDETable = this.tablesDatagrid.datagridApi.activeDatagridRow.data;
-        row[AcEnumDDERelationship.DestinationTableId] = activeRow.tableId;
+    this.tableRelationshipsDatagrid.datagridApi.on({
+      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+        args.datagridRow.data[AcEnumDDERelationship.DestinationTableId] = this.activeTable!.tableId;
       }
-      return row;
-    };
+    });
 
     this.tableTriggersDatagrid = new AcDDETriggersDatagrid({ editorApi: this.editorApi });
-    this.tableTriggersDatagrid.ddeDatagrid.newRowDataFunction = () => {
-      const row: any = {};
-      if (this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow) {
-        const activeRow: IAcDDETable = this.tablesDatagrid.datagridApi.activeDatagridRow.data;
-        row[AcEnumDDETrigger.TableId] = activeRow.tableId;
+    this.tableTriggersDatagrid.datagridApi.on({
+      event: AC_DATA_MANAGER_EVENT.RowAdd, callback: (args: IAcDatagridRowEvent) => {
+        args.datagridRow.data[AcEnumDDETrigger.TableId] = this.activeTable!.tableId;
       }
-      return row;
-    };
+    });
     this.tableTriggersDatagrid.filterFunction = (row: IAcDDETrigger) => {
       let tableId: any = undefined;
       if (this.tablesDatagrid && this.tablesDatagrid.datagridApi && this.tablesDatagrid.datagridApi.activeDatagridRow) {

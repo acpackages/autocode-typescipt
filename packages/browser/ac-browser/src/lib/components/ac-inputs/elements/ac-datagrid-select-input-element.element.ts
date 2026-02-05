@@ -123,11 +123,9 @@ export class AcDatagridSelectInput extends AcInputBase {
       !this.textInputElement.contains(target) &&
       !this.dropdownContainer.contains(target)
     ) {
-      this.delayedCallback.add({callback:() => {
-        if (!this.isFocused) {
+      if (!this.isFocused) {
           this.closeDropdown();
         }
-      }, duration:10,key:'outsideCloseTimeout'});
     }
   };
   private visibilityObserver?: IntersectionObserver | null;
@@ -182,6 +180,14 @@ export class AcDatagridSelectInput extends AcInputBase {
       this.dispatchEvent(acCloneEvent(event));
       this.openDropdown();
     });
+    this.textInputElement.addEventListener("blur", (event: any) => {
+      this.dispatchEvent(acCloneEvent(event));
+      this.delayedCallback.add({callback:()=>{
+        if(!this.dropdownContainer.contains(this.ownerDocument.activeElement)){
+          this.closeDropdown();
+        }
+      },duration:150,key:'inputBlurCloseDropdown'})
+    });
     this.textInputElement.addEventListener("click", (event) => {
       this.dispatchEvent(acCloneEvent(event));
       this.delayedCallback.add({callback:() => this.openDropdown(), duration:150});
@@ -193,19 +199,19 @@ export class AcDatagridSelectInput extends AcInputBase {
         e.preventDefault();
         if(this.datagrid.datagridApi.dataManager.totalRows == 0){
           this.addNewButton.focus();
+          console.log("Focusing on add ne button");
           return;
         }
         let rowIndex: number = 0;
         const activeDatagridCell = this.datagrid.datagridApi.activeDatagridCell;
         if (activeDatagridCell) {
           rowIndex = activeDatagridCell.datagridRow.index + 1;
+          if(activeDatagridCell.datagridRow.isLast){
+            this.addNewButton.focus();
+            return;
+          }
         }
-        if(activeDatagridCell.datagridRow.isLast){
-          this.addNewButton.focus();
-        }
-        else{
-          this.highlightRow({ rowIndex });
-        }
+        this.highlightRow({ rowIndex });
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         let rowIndex: number = 0;
@@ -219,7 +225,7 @@ export class AcDatagridSelectInput extends AcInputBase {
         e.preventDefault();
         this.setValueFromDatagridData();
         this.closeDropdown();
-      } else if (e.key === "Escape") {
+      } else if (e.key === "Escape" || e.key === "Tab") {
         this.closeDropdown();
       }
     });
@@ -399,7 +405,7 @@ export class AcDatagridSelectInput extends AcInputBase {
     this.resizeObserver.observe(this.dropdownContainer);
     this.delayedCallback.add({callback:() => {
       this.ownerDocument.addEventListener('click', this.clickOutsideListener);
-    }, duration:350,key:'outsideClickListerner'});
+    }, duration:50,key:'outsideClickListerner'});
 
     this.visibilityObserver = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting && this.isDropdownOpen) this.closeDropdown();

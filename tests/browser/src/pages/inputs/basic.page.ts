@@ -31,7 +31,7 @@ export class InputBasicPage extends HTMLElement {
       user_password: 'Secret123!',
       age: 29,
       favorite_color: '#007bff',
-      customer_id: '97667fd4-fbd2-48ea-a42f-6391505370e7',
+      // customer_id: '97667fd4-fbd2-48ea-a42f-6391505370e7',
       birth_date: '1996-05-12',
       preferred_time: '09:30',
       meeting_datetime: '2025-08-15T14:30',

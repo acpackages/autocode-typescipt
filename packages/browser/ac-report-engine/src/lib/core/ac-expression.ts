@@ -1,4 +1,5 @@
 // ac-expression.ts
+import { stringIsJson } from "@autocode-ts/ac-extensions";
 import { AcPipe } from "./ac-pipe";
 import { AcReportEngine } from "./ac-report-engine";
 
@@ -34,8 +35,6 @@ export class AcExpression {
           AcReportEngine.logWarn(`Unknown pipe: ${name}`);
           continue;
         }
-
-        // Evaluate all arguments (support nested {{ }} expressions → recursive async eval)
         const evaluatedArgs = await Promise.all(
           args.map(async (arg: any) => {
             if (typeof arg === 'string' && arg.startsWith('{{') && arg.endsWith('}}')) {
@@ -45,8 +44,6 @@ export class AcExpression {
             return arg;
           })
         );
-
-        // Apply pipe — supports both sync and async transform
         const result = pipe.transform(value, ...evaluatedArgs);
         value = result instanceof Promise ? await result : result;
       }
@@ -95,6 +92,7 @@ export class AcExpression {
   private static parsePipeChain(
     expression: string
   ): { base: string; pipes: { name: string; args: any[] }[] } {
+    // ── Step 1: Split top-level pipes ────────────────────────────────
     const parts: string[] = [];
     let current = '';
     let depth = 0;
@@ -119,11 +117,11 @@ export class AcExpression {
         continue;
       }
 
-      if (char === '(' || char === '{' || char === '[') depth++;
-      if (char === ')' || char === '}' || char === ']') depth--;
+      if ('([{'.includes(char)) depth++;
+      if (')]}'.includes(char)) depth--;
 
       if (char === '|' && depth === 0 && !inString) {
-        parts.push(current.trim());
+        if (current.trim()) parts.push(current.trim());
         current = '';
       } else {
         current += char;
@@ -133,40 +131,150 @@ export class AcExpression {
     if (current.trim()) parts.push(current.trim());
 
     if (parts.length === 0) {
-      return { base: expression, pipes: [] };
+      return { base: expression.trim(), pipes: [] };
     }
 
-    const base = parts[0];
-    const pipes = parts.slice(1).map((part) => {
-      const [pipeName, ...argStrs] = part.split(':').map((s) => s.trim());
+    const base = parts[0].trim();
 
-      const args = argStrs.map((arg) => {
-        // String literals
-        if (
-          (arg.startsWith("'") && arg.endsWith("'")) ||
-          (arg.startsWith('"') && arg.endsWith('"'))
-        ) {
-          return arg.slice(1, -1);
+    // ── Step 2: Parse each pipe ──────────────────────────────────────
+    const pipes = parts.slice(1).map((pipePart) => {
+      // Find pipe name (before first top-level colon)
+      let nameEnd = 0;
+      depth = 0;
+      inString = false;
+      quoteChar = '';
+
+      while (nameEnd < pipePart.length) {
+        const c = pipePart[nameEnd];
+
+        if (inString) {
+          if (c === quoteChar && pipePart[nameEnd - 1] !== '\\') inString = false;
+          nameEnd++;
+          continue;
         }
 
-        // Literals
-        if (arg === 'true') return true;
-        if (arg === 'false') return false;
-        if (arg === 'null') return null;
-        if (arg === 'undefined') return undefined;
+        if (c === "'" || c === '"') {
+          inString = true;
+          quoteChar = c;
+          nameEnd++;
+          continue;
+        }
 
-        // Numbers
-        if (!isNaN(Number(arg)) && arg !== '') return Number(arg);
+        if ('([{'.includes(c)) depth++;
+        if (')]}'.includes(c)) depth--;
 
-        // Nested expressions (will be evaluated async later)
-        if (arg.startsWith('{{') && arg.endsWith('}}')) return arg;
+        if (c === ':' && depth === 0 && !inString) {
+          break;
+        }
 
-        // Objects/arrays (raw string, will be parsed by pipe if needed)
-        // Or plain identifier
-        return arg;
+        nameEnd++;
+      }
+
+      const pipeName = pipePart.slice(0, nameEnd).trim();
+      const argsStr = pipePart.slice(nameEnd + 1).trim();
+
+      if (!argsStr) {
+        return { name: pipeName, args: [] };
+      }
+
+      // ── Step 3: Split arguments on top-level commas ────────────────
+      const rawArgs: string[] = [];
+      current = '';
+      depth = 0;
+      inString = false;
+      quoteChar = '';
+
+      for (let i = 0; i < argsStr.length; i++) {
+        const char = argsStr[i];
+
+        if (inString) {
+          current += char;
+          if (char === quoteChar && argsStr[i - 1] !== '\\') {
+            inString = false;
+          }
+          continue;
+        }
+
+        if (char === "'" || char === '"') {
+          inString = true;
+          quoteChar = char;
+          current += char;
+          continue;
+        }
+
+        if ('([{'.includes(char)) depth++;
+        if (')]}'.includes(char)) depth--;
+
+        if (char === ',' && depth === 0 && !inString) {
+          if (current.trim()) rawArgs.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+
+      if (current.trim()) rawArgs.push(current.trim());
+
+      // ── Step 4: Parse each argument into real value ────────────────
+      const parsedArgs = rawArgs.map((raw) => {
+        const s = raw.trim();
+
+        // 1. Quoted string
+        if (
+          (s.startsWith("'") && s.endsWith("'")) ||
+          (s.startsWith('"') && s.endsWith('"'))
+        ) {
+          return s.slice(1, -1).replace(/\\(.)/g, '$1'); // unescape
+        }
+
+        // 2. Special literals
+        if (s === 'true') return true;
+        if (s === 'false') return false;
+        if (s === 'null') return null;
+        if (s === 'undefined') return undefined;
+
+        // 3. Number
+        if (/^-?\d*\.?\d+(?:[eE][+-]?\d+)?$/.test(s)) {
+          return Number(s);
+        }
+
+        // 4. Object / Array literal → try JSON parse
+        if ((s.startsWith('{') && s.endsWith('}')) || (s.startsWith('[') && s.endsWith(']'))) {
+          try {
+            return JSON.parse(s);
+          } catch {
+            // console.error('Error parsing ',s);
+            const fixed = s
+              .replace(/'/g, '"')                    // ' → "
+              .replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3'); // {abc:1} → {"abc":1}
+
+            try {
+              return JSON.parse(fixed);
+            } catch (e) {
+              console.warn("Failed to parse object:", s, e);
+              return null; // or throw, or return original string
+            }
+            // fall through
+          }
+        }
+
+        // 5. Nested expression / Angular interpolation / pipe chain
+        if (s.includes('|') || (s.startsWith('{{') && s.endsWith('}}'))) {
+          // You can either:
+          // A. Keep as string and evaluate later (recommended)
+          return s;
+          // B. Recursively parse nested pipes here (more advanced)
+          // return this.parsePipeChain(s.replace(/^{{|}}$/g, '').trim());
+        }
+
+        // 6. Otherwise: treat as identifier / path / raw string
+        return s;
       });
 
-      return { name: pipeName, args };
+      return {
+        name: pipeName,
+        args: parsedArgs,
+      };
     });
 
     return { base, pipes };

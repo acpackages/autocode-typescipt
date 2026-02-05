@@ -2,7 +2,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { stringToCamelCase, stringToPascalCase } from '@autocode-ts/ac-extensions';
-import { AcDataDictionary, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTableProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType, AcEnumDDTableProperty } from '@autocode-ts/ac-data-dictionary';
+import { AcDataDictionary,AcDDConfig, AcDDFunction, AcDDRelationship, AcDDStoredProcedure, AcDDTable, AcDDTableColumn, AcDDTableColumnProperty, AcDDTableProperty, AcDDTrigger, AcDDView, AcDDViewColumn, AcEnumDDColumnProperty, AcEnumDDColumnType, AcEnumDDTableProperty } from '@autocode-ts/ac-data-dictionary';
 import { AcDDECodeGeneratorDefaultConfig } from '../consts/ac-dde-code-generator-default-config.const';
 import { arrayColumnProperties, boolColumnProperties, numberColumnProperties, stringColumnProperties } from '../consts/ac-dde-property-groups.const';
 
@@ -241,6 +241,18 @@ export class AcDataDictionaryDartCodeGenerator {
           for (const columnName of Object.keys(tableDetails[AcDDTable.KeyTableColumns])) {
             columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(columnName)} = "${columnName}";`);
           }
+          if (this.dataDictionaryJson[AcDataDictionary.KeyConfig]) {
+            const config = this.dataDictionaryJson[AcDataDictionary.KeyConfig];
+            if (config[AcDDConfig.KeyDeleteTimestampColumnKey] && config[AcDDConfig.KeyDeleteTimestampColumnKey] != "") {
+              columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(config[AcDDConfig.KeyDeleteTimestampColumnKey])} = "${config[AcDDConfig.KeyDeleteTimestampColumnKey]}";`);
+            }
+            if (config[AcDDConfig.KeyInsertTimestampColumnKey] && config[AcDDConfig.KeyInsertTimestampColumnKey] != "") {
+              columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(config[AcDDConfig.KeyInsertTimestampColumnKey])} = "${config[AcDDConfig.KeyInsertTimestampColumnKey]}";`);
+            }
+            if (config[AcDDConfig.KeyDeleteTimestampColumnKey] && config[AcDDConfig.KeyUpdateTimestampColumnKey] != "") {
+              columnKeys.push(`${this.tabs}static const String ${stringToCamelCase(config[AcDDConfig.KeyUpdateTimestampColumnKey])} = "${config[AcDDConfig.KeyUpdateTimestampColumnKey]}";`);
+            }
+          }
           this.tabsCount--;
 
           let tableColumnsKeyString = this.tabs + `class ${AcDDECodeGeneratorDefaultConfig.tableNameColumnClassPrefix}${stringToPascalCase(tableName)} {\n`;
@@ -432,7 +444,7 @@ export class AcDataDictionaryDartCodeGenerator {
             propertyValue = `[${constraints.join(',')}\n${this.tabs}]`;
             this.tabsCount--;
           }
-          else{
+          else {
             validProperty = false;
           }
         }

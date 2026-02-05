@@ -10,8 +10,10 @@ import { AcEnumDDColumnRelationType } from "../enums/ac-enum-dd-column-relation-
 import { AcDDTrigger } from "./ac-dd-trigger.model";
 import { AcDDView } from "./ac-dd-view.model";
 import { AcDDViewColumn } from "./ac-dd-view-column.model";
+import { AcDDConfig } from "./ac-dd-config.model";
 
 export class AcDataDictionary {
+  static readonly KeyConfig = "config";
   static readonly KeyDataDictionaries = "dataDictionaries";
   static readonly KeyFunctions = "functions";
   static readonly KeyName = "name";
@@ -31,6 +33,7 @@ export class AcDataDictionary {
   @AcBindJsonProperty({ key: AcDataDictionary.KeyStoredProcedures })
   storedProcedures: Record<string, any> = {};
 
+  config: any = {};
   tables: any = {};
   triggers: Record<string, any> = {};
   version = 0;
@@ -43,6 +46,13 @@ export class AcDataDictionary {
   static fromJsonString({ jsonString }: { jsonString: string }): AcDataDictionary {
     const jsonData = JSON.parse(jsonString);
     return new AcDataDictionary().fromJson({ jsonData });
+  }
+
+  static getConfig({ dataDictionaryName = "default" }: {
+    dataDictionaryName?: string
+  }): AcDDConfig {
+    const acDataDictionary = this.getInstance({ dataDictionaryName });
+    return AcDDConfig.instanceFromJson({jsonData:acDataDictionary.config});
   }
 
   static getFunctions({ dataDictionaryName = "default" }:{dataDictionaryName?:string} = {}): Record<string, AcDDFunction> {
