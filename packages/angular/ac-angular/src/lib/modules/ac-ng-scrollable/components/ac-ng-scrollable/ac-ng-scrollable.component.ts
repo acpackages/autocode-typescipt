@@ -32,6 +32,7 @@ import { TrackByFunction } from '@angular/core';
 import { AcNgScrollableBodyComponent } from '../ac-ng-scrollable-body/ac-ng-scrollable-body.component';
 import { AcNgScrollableTopSpacerComponent } from '../ac-ng-scrollable-top-spacer/ac-ng-scrollable-top-spacer.component';
 import { AcNgScrollableBottomSpacerComponent } from '../ac-ng-scrollable-bottom-spacer/ac-ng-scrollable-bottom-spacer.component';
+import { AcDelayedCallback } from '@autocode-ts/autocode';
 
 export interface IAcNgScrollableOptions {
   bufferCount?: number;
@@ -111,7 +112,7 @@ export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit,
   hasTopSpacerTemplate: boolean = false;
   private resizeObserver?: ResizeObserver;
   private rafId?: number;
-
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
 
   constructor(
@@ -147,7 +148,6 @@ export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit,
   }
 
   ngAfterContentInit() {
-    console.log(this);
     if (this.bodyComponent) {
       this.bodyComponent.scrollable = this;
       this.bodyComponent.items = this.items;
@@ -165,12 +165,12 @@ export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit,
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.elementHeight = this.scrollableElement.clientHeight || 400;
         this.initResizeObserver();
         this.onItemsChange();
         this.cdr.detectChanges(); // Force render after init
-      }, 0);
+      }, duration:0});
     }
   }
 
@@ -185,6 +185,7 @@ export class AcNgScrollableComponent implements AfterViewInit, AfterContentInit,
   }
 
   ngOnDestroy() {
+    this.delayedCallback.destroy();
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }

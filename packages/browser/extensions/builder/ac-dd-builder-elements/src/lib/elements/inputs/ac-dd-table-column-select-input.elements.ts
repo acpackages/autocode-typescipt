@@ -38,9 +38,9 @@ export class AcDDTableColumnSelectInput extends AcBuilderPropertySelectInput{
       this.options = options;
     }
     else if(retry){
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.setTableColumns(true);
-      }, 150);
+      }, duration:150});
     }
   }
 

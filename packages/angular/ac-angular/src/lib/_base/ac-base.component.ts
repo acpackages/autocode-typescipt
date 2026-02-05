@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { AcEvents, AcLogger } from '@autocode-ts/autocode';
+import { AcDelayedCallback, AcEvents, AcLogger } from '@autocode-ts/autocode';
 import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AutocodeService } from '../services/autocode.service';
 @Directive()
@@ -17,6 +17,7 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
   logger:AcLogger = new AcLogger();
   instanceInitialized:boolean = false;
   instanceViewInitialized:boolean = false;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor(protected elementRef:ElementRef,protected autocodeService:AutocodeService){
   }
@@ -62,9 +63,9 @@ export class AcBase implements AfterViewInit,OnDestroy,OnInit {
       this.events.execute({event:"elementTagCommented"});
     }
     else{
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.commentTag();
-      }, 100);
+      }, duration:100,key:'commentTag'});
     }
   }
 

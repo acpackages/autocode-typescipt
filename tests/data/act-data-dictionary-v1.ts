@@ -22046,6 +22046,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
             }
           }
         },
@@ -25289,7 +25293,12 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -25321,7 +25330,12 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -25385,7 +25399,12 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "legal_identifier"
@@ -25511,7 +25530,12 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -25543,7 +25567,12 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -25787,7 +25816,12 @@ export const dataDictionaryJson = {
         "ledger_account_type_name": {
           "columnName": "ledger_account_type_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_ledger_account_types",
           "columnSourceOriginalColumn": "ledger_account_type_name"
@@ -25886,7 +25920,12 @@ export const dataDictionaryJson = {
         "ledger_account_name": {
           "columnName": "ledger_account_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_name"
@@ -25972,7 +26011,12 @@ export const dataDictionaryJson = {
         "location_name": {
           "columnName": "location_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_locations",
           "columnSourceOriginalColumn": "location_name"
@@ -26047,7 +26091,12 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -26079,7 +26128,12 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -26143,7 +26197,12 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "legal_identifier"
@@ -26181,7 +26240,12 @@ export const dataDictionaryJson = {
         "address_label": {
           "columnName": "address_label",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_label"
@@ -26189,7 +26253,12 @@ export const dataDictionaryJson = {
         "address_line_1": {
           "columnName": "address_line_1",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_line_1"
@@ -26197,7 +26266,12 @@ export const dataDictionaryJson = {
         "address_line_2": {
           "columnName": "address_line_2",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_line_2"
@@ -26253,7 +26327,12 @@ export const dataDictionaryJson = {
         "postal_code": {
           "columnName": "postal_code",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "postal_code"
@@ -26299,7 +26378,12 @@ export const dataDictionaryJson = {
         "account_holder_name": {
           "columnName": "account_holder_name",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "account_holder_name"
@@ -26307,7 +26391,12 @@ export const dataDictionaryJson = {
         "account_number": {
           "columnName": "account_number",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "account_number"
@@ -26465,7 +26554,12 @@ export const dataDictionaryJson = {
         "contact_person_name": {
           "columnName": "contact_person_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_contact_persons",
           "columnSourceOriginalColumn": "contact_person_name"
@@ -26519,7 +26613,12 @@ export const dataDictionaryJson = {
         "email_address_value": {
           "columnName": "email_address_value",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_email_addresses",
           "columnSourceOriginalColumn": "email_address_value"
@@ -26581,7 +26680,12 @@ export const dataDictionaryJson = {
         "fax_number_value": {
           "columnName": "fax_number_value",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_fax_numbers",
           "columnSourceOriginalColumn": "fax_number_value"
@@ -26675,7 +26779,12 @@ export const dataDictionaryJson = {
         "legal_document_value": {
           "columnName": "legal_document_value",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_legal_documents",
           "columnSourceOriginalColumn": "legal_document_value"
@@ -26683,7 +26792,12 @@ export const dataDictionaryJson = {
         "legal_document_label": {
           "columnName": "legal_document_label",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_legal_documents",
           "columnSourceOriginalColumn": "legal_document_label"
@@ -26823,7 +26937,12 @@ export const dataDictionaryJson = {
         "phone_number_value": {
           "columnName": "phone_number_value",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_phone_numbers",
           "columnSourceOriginalColumn": "phone_number_value"
@@ -26877,7 +26996,12 @@ export const dataDictionaryJson = {
         "social_media_type": {
           "columnName": "social_media_type",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_social_medias",
           "columnSourceOriginalColumn": "social_media_type"
@@ -26885,7 +27009,12 @@ export const dataDictionaryJson = {
         "social_media_value": {
           "columnName": "social_media_value",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_social_medias",
           "columnSourceOriginalColumn": "social_media_value"
@@ -26939,7 +27068,12 @@ export const dataDictionaryJson = {
         "website_label": {
           "columnName": "website_label",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_websites",
           "columnSourceOriginalColumn": "website_label"
@@ -26947,7 +27081,12 @@ export const dataDictionaryJson = {
         "website_value": {
           "columnName": "website_value",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_websites",
           "columnSourceOriginalColumn": "website_value"
@@ -27038,7 +27177,12 @@ export const dataDictionaryJson = {
         "payment_method_name": {
           "columnName": "payment_method_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_payment_methods",
           "columnSourceOriginalColumn": "payment_method_name"
@@ -28189,7 +28333,12 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_name"
@@ -28205,7 +28354,12 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_sku"
@@ -29157,7 +29311,12 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_suppliers",
           "columnSourceOriginalColumn": "party_name"
@@ -29165,7 +29324,12 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_suppliers",
           "columnSourceOriginalColumn": "legal_identifier"
@@ -29317,7 +29481,12 @@ export const dataDictionaryJson = {
         "purchase_invoice_number": {
           "columnName": "purchase_invoice_number",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoices",
           "columnSourceOriginalColumn": "purchase_invoice_number"
@@ -29515,7 +29684,12 @@ export const dataDictionaryJson = {
         "purchase_order_number": {
           "columnName": "purchase_order_number",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_purchase_orders",
           "columnSourceOriginalColumn": "purchase_order_number"
@@ -30896,7 +31070,12 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_customers",
           "columnSourceOriginalColumn": "party_name"
@@ -30912,7 +31091,12 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_customers",
           "columnSourceOriginalColumn": "legal_identifier"
@@ -31072,7 +31256,12 @@ export const dataDictionaryJson = {
         "sale_invoice_number": {
           "columnName": "sale_invoice_number",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_number"
@@ -31294,7 +31483,12 @@ export const dataDictionaryJson = {
         "sale_quotation_number": {
           "columnName": "sale_quotation_number",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_number"
@@ -31721,7 +31915,12 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
@@ -31737,7 +31936,12 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_sku"
@@ -31971,7 +32175,12 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
@@ -31987,7 +32196,12 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_sku"
@@ -32347,7 +32561,12 @@ export const dataDictionaryJson = {
         "storage_location_code": {
           "columnName": "storage_location_code",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_storage_locations",
           "columnSourceOriginalColumn": "storage_location_code"
@@ -32379,7 +32598,12 @@ export const dataDictionaryJson = {
         "storage_location_name": {
           "columnName": "storage_location_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_storage_locations",
           "columnSourceOriginalColumn": "storage_location_name"
@@ -32473,7 +32697,12 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -32505,7 +32734,12 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -32569,7 +32803,12 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "legal_identifier"
@@ -32615,7 +32854,12 @@ export const dataDictionaryJson = {
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
           "columnType": "STRING",
-          "columnProperties": {},
+          "columnProperties": {
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": true
+            }
+          },
           "columnSource": "table",
           "columnSourceName": "act_taxing_schemes",
           "columnSourceOriginalColumn": "taxing_scheme_name"
@@ -36551,10 +36795,5 @@ export const dataDictionaryJson = {
       "triggerName": "act_trg_transaction_entry_update_actions",
       "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
     }
-  },
-  "config":{
-    "insertTimestampColumnKey":'created_at',
-    "updateTimestampColumnKey":'updated_at',
-    "deleteTimestampColumnKey":'deleted_at'
   }
 };

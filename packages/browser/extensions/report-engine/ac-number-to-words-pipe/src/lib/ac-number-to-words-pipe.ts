@@ -45,7 +45,7 @@ export const numberToWordsPipe: AcPipe = {
   ): Promise<string> => {
     const config = {
       system: 'indian' as const,
-      useAnd: true,
+      useAnd: false,
       decimalPlaces: 2,
       placeholder: PLACEHOLDER,
       ...options,

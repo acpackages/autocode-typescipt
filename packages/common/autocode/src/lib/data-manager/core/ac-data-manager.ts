@@ -27,6 +27,7 @@ import { IAcDataManagerDataEvent, IAcDataManagerEvent } from "../_data-manager.e
 import { IAcDataRow } from "../interfaces/ac-data-row.interface";
 import { Autocode } from "../../core/autocode";
 import { acEvaluateFilterGroup, acEvaluateSearch, acNullifyInstanceProperties } from "../../utils/ac-utility-functions";
+import { AcDelayedCallback } from "../../core/ac-delayed-callback";
 
 export class AcDataManager {
   private _assignUniqueIdToData: boolean = true;
@@ -216,6 +217,7 @@ export class AcDataManager {
   isWorking: boolean = false;
   lastRowsCount: number = 0;
   lastStartIndex: number = 0;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   displayStartIndex: number = -1;
   displayEndIndex: number = -1;
   displayCount: number = 0;
@@ -380,8 +382,8 @@ export class AcDataManager {
 
   destroy() {
     this.hooks.destroy();
-
     this.events.destroy();
+    this.delayedCallback.destroy();
 
     acNullifyInstanceProperties({instance:this});
   }
@@ -530,7 +532,7 @@ export class AcDataManager {
     if (this.refreshRowsTimeout) {
       clearTimeout(this.refreshRowsTimeout);
     }
-    this.refreshRowsTimeout = setTimeout(async () => {
+    this.refreshRowsTimeout = this.delayedCallback.add({callback:async () => {
       if (this.type == "offline") {
         this.processRows();
       }
@@ -541,7 +543,7 @@ export class AcDataManager {
         this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
         this.isWorking = false;
       }
-    }, this.refreshRowsTimeoutDuration);
+    },duration: this.refreshRowsTimeoutDuration,'key':'refreshRows'});
   }
 
   reset() {

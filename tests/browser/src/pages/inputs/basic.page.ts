@@ -7,7 +7,7 @@ import { PageHeader } from "../../components/page-header/page-header.component";
 import { customersData } from './../../../../data/customers-data';
 import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
 import { AcDatagridOnAgGridExtension, AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME, AgGridOnAcDatagrid } from "@autocode-ts/ac-datagrid-on-ag-grid";
-import { AcDataManager, IAcOnDemandRequestArgs,AcContext } from "@autocode-ts/autocode";
+import { AcDataManager, IAcOnDemandRequestArgs, AcContext } from "@autocode-ts/autocode";
 import { acInitTipTapEditor } from "@autocode-ts/ac-tiptap-editor-input";
 import { AcQuillEditorInput, acInitQuillEditor } from "@autocode-ts/ac-quill-editor-input";
 
@@ -26,7 +26,7 @@ export class InputBasicPage extends HTMLElement {
   context: AcContext = new AcContext({
     value: {
       full_name: 'Alice Johnson',
-      bio:"This is bio of the element",
+      bio: "This is bio of the element",
       personal_email: 'alice.j@example.com',
       user_password: 'Secret123!',
       age: 29,
@@ -136,12 +136,175 @@ export class InputBasicPage extends HTMLElement {
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
     this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
+    // datagridSelectInput.setState();
+    setTimeout(() => {
+      console.log(datagridSelectInput.getState());
+    }, 7500);
+
+    datagridSelectInput.setState({
+      state: {
+    "datagridState": {
+        "columns": [
+            {
+                "field": "customer_id",
+                "width": 200,
+                "index": 0
+            },
+            {
+                "field": "first_name",
+                "width": 200,
+                "index": 1
+            },
+            {
+                "field": "last_name",
+                "width": 200,
+                "index": 2
+            },
+            {
+                "field": "company",
+                "width": 200,
+                "index": 3
+            },
+            {
+                "field": "city",
+                "width": 200,
+                "index": 4
+            },
+            {
+                "field": "country",
+                "width": 200,
+                "index": 5
+            },
+            {
+                "field": "phone_1",
+                "width": 200,
+                "index": 6
+            },
+            {
+                "field": "phone_2",
+                "width": 200,
+                "index": 7
+            },
+            {
+                "field": "email",
+                "width": 200,
+                "index": 8
+            },
+            {
+                "field": "subscription_date",
+                "width": 200,
+                "index": 9
+            },
+            {
+                "field": "website",
+                "width": 200,
+                "index": 10
+            }
+        ],
+        "extensionStates": {
+            "agGridOnAcDatagrid": {
+                "columnOrder": {
+                    "orderedColIds": [
+                        "ag-Grid-SelectionColumn",
+                        "__internal_ac_datagrid__",
+                        "first_name",
+                        "customer_id",
+                        "last_name",
+                        "company",
+                        "city",
+                        "country",
+                        "phone_1",
+                        "phone_2",
+                        "email",
+                        "subscription_date",
+                        "website"
+                    ]
+                },
+                "columnPinning": {
+                    "leftColIds": [
+                        "__internal_ac_datagrid__"
+                    ],
+                    "rightColIds": []
+                },
+                "columnSizing": {
+                    "columnSizingModel": [
+                        {
+                            "colId": "ag-Grid-SelectionColumn",
+                            "width": 25
+                        },
+                        {
+                            "colId": "__internal_ac_datagrid__",
+                            "width": 36
+                        },
+                        {
+                            "colId": "first_name",
+                            "width": 200
+                        },
+                        {
+                            "colId": "customer_id",
+                            "width": 200
+                        },
+                        {
+                            "colId": "last_name",
+                            "width": 200
+                        },
+                        {
+                            "colId": "company",
+                            "width": 200
+                        },
+                        {
+                            "colId": "city",
+                            "width": 200
+                        },
+                        {
+                            "colId": "country",
+                            "width": 200
+                        },
+                        {
+                            "colId": "phone_1",
+                            "width": 200
+                        },
+                        {
+                            "colId": "phone_2",
+                            "width": 200
+                        },
+                        {
+                            "colId": "email",
+                            "width": 200
+                        },
+                        {
+                            "colId": "subscription_date",
+                            "width": 200
+                        },
+                        {
+                            "colId": "website",
+                            "width": 200
+                        }
+                    ]
+                },
+                "columnVisibility": {
+                    "hiddenColIds": [
+                        "customer_id"
+                    ]
+                },
+                "version": "34.0.1"
+            }
+        },
+        "pagination": {},
+        "sortOrder": {}
+    },
+    "dropdownSize": {
+        "height": 300,
+        "width": 600
+    }
+}
+    });
 
     this.setOnDemandData(this.datagridApi);
     this.datagridApi.usePagination = true;
     datagridSelectInput.acContextKey = 'customer_id';
     datagridSelectInput.acContext = this.context;
-    datagridSelectInput.addEventListener('change',()=>{
+    datagridSelectInput.addEventListener('change', () => {
       console.log("Datagrid value change");
       console.dir(datagridSelectInput);
     })
@@ -347,7 +510,7 @@ export class InputBasicPage extends HTMLElement {
     select.name = 'preferred_framework';
     select.acContext = this.context;
     select.options = ['Angular', 'React', 'Vue.js', 'Svelte'];
-    select.setAttribute('class','form-select');
+    select.setAttribute('class', 'form-select');
     select.addOption = true;
     select.addOptionCallback = ({ query, callback }: { query: string, callback: Function }) => {
       alert(`Adding option : ${query}`);
@@ -417,11 +580,11 @@ export class InputBasicPage extends HTMLElement {
       interested_fruits: ['Banana', 'Orange'],
       preferred_framework: 'React',
       languages: 'Telgu,English,Hindi,Sanskrit',
-      customer_id:'a680504b-8b54-4b1e-85a1-65d8eeafdcde'
+      customer_id: 'a680504b-8b54-4b1e-85a1-65d8eeafdcde'
     });
   }
 
-  setLocalData(datagridApi:AcDatagridApi) {
+  setLocalData(datagridApi: AcDatagridApi) {
     const data: any[] = [];
     const multiplier = 1;
     let index: number = 0;
@@ -434,7 +597,7 @@ export class InputBasicPage extends HTMLElement {
     datagridApi.data = data;
   }
 
-  setOnDemandData(datagridApi:AcDatagridApi) {
+  setOnDemandData(datagridApi: AcDatagridApi) {
     const onDemandProxyDataManager: AcDataManager = new AcDataManager();
     onDemandProxyDataManager.logger.logMessages = false;
     const data: any[] = [];

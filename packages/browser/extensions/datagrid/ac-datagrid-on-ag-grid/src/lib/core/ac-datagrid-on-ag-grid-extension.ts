@@ -116,6 +116,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   private agGridTreeTableExt = new AcDatagridTreeTableExtensionOnAgGrid();
 
   private searchInputTimeout: any;
+  private state:any;
 
   constructor() {
     super();
@@ -130,6 +131,11 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     };
     this.gridOptions['rowModelType'] = 'serverSide';
     this.gridOptions['serverSideDatasource'] = this.onDemandDataSource;
+    this.gridOptions['onGridReady'] = ()=>{
+      if(this.state){
+        this.setState({state:this.state});
+      }
+    };
   }
 
   override destroy(): void {
@@ -789,6 +795,9 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.agGridEventHandler.init({ agGridExtension: this });
     this.agGridRowDragExt.init({ agGridExtension: this });
     this.agGridSelectionExt.init({ agGridExtension: this });
+    if(this.state){
+      this.setState({state:this.state});
+    }
   }
 
   refreshRows() {
@@ -1000,6 +1009,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
   }
 
   override setState({ state }: { state: any; }): void {
+    this.state = state;
     if (state && this.gridApi) {
       this.agGridEventHandler.pauseEvents = true;
       this.gridApi.setState(state);

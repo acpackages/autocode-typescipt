@@ -16,6 +16,7 @@ import { AcEnumDDEEntity } from "../../enums/ac-enum-dde-entity.enum";
 import { IAcDDETableColumn } from "../../interfaces/ac-dde-table-column.inteface";
 import { AcDDECssClassName } from "../../consts/ac-dde-css-class-name.const";
 import { IAcDDEActiveDataDictionaryChangeHookArgs } from "../../interfaces/hook-args/ac-dde-active-data-dictionary-change-hook-args.interface";
+import { AcDDEDatagridYesNoInput } from "../cell-editors/ac-dde-datagrid-yes-no-input.element";
 
 export class AcDDEViewColumnsDatagrid {
   data: any[] = [];
@@ -52,6 +53,8 @@ export class AcDDEViewColumnsDatagrid {
       { 'field': AcDDViewColumn.KeyColumnSourceName, 'title': 'Source Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
       { 'field': AcDDViewColumn.KeyColumnSourceOriginalColumn, 'title': 'Original Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
       { 'field': AcEnumDDColumnProperty.ColumnTitle, 'title': 'Column Title', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcEnumDDColumnProperty.UseForRowLikeFilter, 'title': 'In Search Query', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true, allowFilter: true },
+      { 'field': AcEnumDDColumnProperty.IsSelectDistinct, 'title': 'Is Select Distinct?', cellEditorElement: AcDDEDatagridYesNoInput, useCellEditorForRenderer: true, allowFilter: true },
       // { 'field': AcDDViewColumn.KeyColumnSource, 'title': 'Original Column Name', cellEditorElement: AcDDEDatagridTextInput, useCellEditorForRenderer: true,allowFilter:true },
     ];
     const colSetHookArgs: IAcDDEDatagridBeforeColumnsSetInitHookArgs = {

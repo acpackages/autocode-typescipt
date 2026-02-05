@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 import { Component, ComponentRef, Input, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
-import { acNullifyInstanceProperties, Autocode } from '@autocode-ts/autocode';
+import { AcDelayedCallback, acNullifyInstanceProperties, Autocode } from '@autocode-ts/autocode';
 
 @Component({
   selector: 'ac-ng-router',
@@ -21,10 +21,10 @@ export class AcNgRouterComponent implements OnDestroy {
   @Input() visible: boolean = true;
   componentRef?: ComponentRef<any>;
   componentInstance?: any;
-  createTimeout: any;
+  delayedCallback: AcDelayedCallback = new AcDelayedCallback();
 
   ngOnDestroy(): void {
-    clearTimeout(this.createTimeout);
+    this.delayedCallback.destroy();
     this.renderingContainer?.clear();
 
     if (this.componentRef) {
@@ -46,9 +46,9 @@ export class AcNgRouterComponent implements OnDestroy {
         this.componentInstance = this.componentRef.instance;
       }
       else {
-        this.createTimeout = setTimeout(() => {
+        this.delayedCallback.add({callback:() => {
           this.createComponent(type);
-        }, 1);
+        }, duration:1});
       }
     }
   }

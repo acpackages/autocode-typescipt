@@ -22,7 +22,7 @@ import {
 } from '@angular/core';
 import { AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { IAcNgDatagridColumnDefinition } from '../../../ac-ng-datagrid/interfaces/ac-datagrid-column-definition.interface';
-import { AcDataManager, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { AcDataManager, AcDelayedCallback, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { AcNgDatagridCellRenderer } from '../../../ac-ng-datagrid/elements/ac-ng-datagrid-cell-renderer.element';
 import { AcNgDatagridCellEditor } from '../../../ac-ng-datagrid/elements/ac-ng-datagrid-cell-editor.element';
@@ -87,6 +87,7 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy
   datagrid: AcDatagrid;
   datagridApi!: AcDatagridApi;
   selectInput!: AcDatagridSelectInput;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   columnDraggingExtension!: AcDatagridColumnDraggingExtension;
   columnsCustomizerExtension!: AcDatagridColumnsCustomizerExtension;
@@ -110,6 +111,7 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy
   }
 
   ngOnDestroy(): void {
+    this.delayedCallback.destroy();
     acNullifyInstanceProperties({instance:this});
   }
 
@@ -153,9 +155,9 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy
       this.onDatagridInit.emit();
     }
     else {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.initDatagrid();
-      }, 10);
+      }, duration:10});
     }
   }
 
@@ -247,9 +249,9 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy
       }
     }
     if (continueOperation) {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.initSelectInput();
-      }, 10);
+      }, duration:10});
     }
   }
 

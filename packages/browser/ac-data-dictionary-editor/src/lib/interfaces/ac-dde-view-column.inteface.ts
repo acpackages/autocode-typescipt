@@ -7,6 +7,8 @@ export interface IAcDDEViewColumn {
   columnSourceOriginalColumn?:string;
   columnType?:string;
   columnTitle?: string;
+  inSearchKey?: boolean;
+  isSelectDistinct?: boolean;
   dataDictionaryId:string;
   viewId?:string;
   extensionsData?:any;

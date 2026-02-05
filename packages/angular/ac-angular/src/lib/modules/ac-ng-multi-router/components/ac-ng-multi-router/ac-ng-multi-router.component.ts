@@ -8,7 +8,7 @@ import { Component, OnInit, ViewContainerRef, ViewChild, Output, EventEmitter, C
 import { IAcNgRouterOutlet } from '../../_ac-ng-mutli-router.export';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { acNullifyInstanceProperties, Autocode } from '@autocode-ts/autocode';
+import { AcDelayedCallback, acNullifyInstanceProperties, Autocode } from '@autocode-ts/autocode';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
 import { AcNgRouterComponent } from '../ac-ng-router/ac-ng-router.component';
 
@@ -30,14 +30,12 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
 
-  activateTimeout:any;
-  addTimeout:any;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor(private elementRef: ElementRef, private router: Router, private runtimeService: AcRuntimeService) { }
 
   ngOnDestroy(): void {
-    clearTimeout(this.activateTimeout);
-    clearTimeout(this.addTimeout);
+    this.delayedCallback.destroy();
     this.sub.unsubscribe();
 
     this.panels?.clear();
@@ -68,13 +66,13 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
     this.onAdd.emit(newRouter);
     this.setActive({ id });
     this.router.navigateByUrl(route);
-    this.addTimeout = setTimeout(() => {
+    this.delayedCallback.add({callback:() => {
       if (!this.activeRouterOutlet.routerComponent.componentRef) {
         if (this.routerOutlet && this.routerOutlet.activatedRoute) {
           this.activeRouterOutlet.routerComponent.createComponent(this.routerOutlet.component.constructor);
         }
       }
-    }, 50);
+    }, duration:50,key:'addTab'});
     return newRouter;
   }
 
@@ -83,9 +81,9 @@ export class AcNgMultiRouterComponent implements OnInit,OnDestroy {
       this.activeRouterOutlet.routerComponent.createComponent(event.constructor);
     }
     else {
-      this.activateTimeout = setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.handleActivate(event);
-      }, 1);
+      }, duration:1});
     }
     if (this.routerOutlet) {
       (this.routerOutlet as any).location.clear();

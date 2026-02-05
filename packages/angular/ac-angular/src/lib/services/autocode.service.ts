@@ -1,12 +1,14 @@
 /* eslint-disable @angular-eslint/prefer-inject */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { ElementRef, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { AcDelayedCallback } from '@autocode-ts/autocode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AutocodeService {
   private renderer: Renderer2;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   constructor(rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
@@ -47,9 +49,9 @@ export class AutocodeService {
       }
     }
     if(!initialized){
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.commentElementTag(elementRef);
-      }, 100);
+      }, duration:100});
     }
   }
 

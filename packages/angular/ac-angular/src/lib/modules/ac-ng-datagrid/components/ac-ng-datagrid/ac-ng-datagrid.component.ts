@@ -8,7 +8,7 @@
 import { ApplicationRef, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
-import { AC_DATA_MANAGER_EVENT, AcDataManager, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
+import { AC_DATA_MANAGER_EVENT, AcDataManager, AcDelayedCallback, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { IAcNgDatagridColumnDefinition } from '../../interfaces/ac-datagrid-column-definition.interface';
 import { AcNgDatagridCellRenderer } from '../../elements/ac-ng-datagrid-cell-renderer.element';
 import { AcNgDatagridCellEditor } from '../../elements/ac-ng-datagrid-cell-editor.element';
@@ -674,6 +674,7 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
   columnsCustomizerExtension?: AcDatagridColumnsCustomizerExtension;
   dataExportXlsxExtension?: AcDatagridDataExportXlsxExtension;
   dataManager?: AcDataManager;
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   rowDraggingExtension?: AcDatagridRowDraggingExtension;
   rowNumbersExtension?: AcDatagridRowNumbersExtension;
   rowSelectionExtension?: AcDatagridRowSelectionExtension;
@@ -715,6 +716,9 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
     if (this.datagrid) {
       this.datagrid.destroy();
       this.datagrid.remove();
+    }
+    if(this.delayedCallback){
+      this.delayedCallback.destroy();
     }
     acNullifyInstanceProperties({instance:this});
   }
@@ -758,9 +762,9 @@ export class AcNgDatagridComponent extends AcNgDatagridEvents implements OnChang
       this.datagridInit.emit();
     }
     else {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.initDatagrid();
-      }, 10);
+      }, duration:10});
     }
   }
 

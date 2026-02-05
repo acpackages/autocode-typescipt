@@ -12,9 +12,11 @@ import {
   ViewEncapsulation,
   ElementRef,
   ViewChild,
-  OnInit
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 import { AcReport } from '@autocode-ts/ac-report-engine';
+import { AcDelayedCallback, acNullifyInstanceProperties } from '@autocode-ts/autocode';
 
 
 @Component({
@@ -25,11 +27,17 @@ import { AcReport } from '@autocode-ts/ac-report-engine';
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AcNgReportComponent implements OnInit {
+export class AcNgReportComponent implements OnInit, OnDestroy {
   @Input() data: any = {};
+  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   constructor(private elementRef: ElementRef) {
     //
+  }
+
+  ngOnDestroy(): void {
+    this.delayedCallback.destroy();
+    acNullifyInstanceProperties({instance:this});
   }
 
   ngOnInit() {
@@ -53,9 +61,9 @@ export class AcNgReportComponent implements OnInit {
       });
     }
     else {
-      setTimeout(() => {
+      this.delayedCallback.add({callback:() => {
         this.setReportContent();
-      }, 10);
+      }, duration:10});
     }
   }
 }
