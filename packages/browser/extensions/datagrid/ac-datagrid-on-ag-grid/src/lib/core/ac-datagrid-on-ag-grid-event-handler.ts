@@ -32,7 +32,8 @@ import {
   StateUpdatedEvent,
   ViewportChangedEvent,
   AsyncTransactionsFlushedEvent,
-  DisplayedRowsChangedEvent
+  DisplayedRowsChangedEvent,
+  FilterChangedEvent
 } from "ag-grid-community";
 import { AcDelayedCallback, AcEnumSortOrder, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 
@@ -209,8 +210,17 @@ export class AcDatagridOnAgGridEventHandler {
     }
   };
 
-  private onDisplayedRowsChanged = (event:DisplayedRowsChangedEvent) => {
+  private onDisplayedRowsChanged = (event: DisplayedRowsChangedEvent) => {
     console.log('Displayed rows updated');
+  }
+
+  private onFilterChanged = (event: FilterChangedEvent) => {
+    if (this.datagridApi && this.agGridExtension && this.gridApi) {
+      if (!this.agGridExtension.isClientSideData) {
+        this.datagridApi.dataManager.reset();
+        this.gridApi.refreshServerSide({ purge: true });
+      }
+    }
   }
 
   private onPaginationChanged = (event: PaginationChangedEvent) => {
@@ -233,8 +243,8 @@ export class AcDatagridOnAgGridEventHandler {
 
   private onRowDataUpdated = (event: RowDataUpdatedEvent) => {
     console.log("Row data updated");
-    if(this.datagridApi){
-      this.datagridApi.datagrid.afterRowsContainer.style.visibility ='hidden';
+    if (this.datagridApi) {
+      this.datagridApi.datagrid.afterRowsContainer.style.visibility = 'hidden';
     }
     if (this.ignoreEvents) return;
     const datagridRow = this.agGridExtension!.getDatagridRowFromEvent({ event });
@@ -317,8 +327,8 @@ export class AcDatagridOnAgGridEventHandler {
 
   private onViewportChanged = (event: ViewportChangedEvent) => {
     console.log("Viewport updated");
-    if(this.datagridApi){
-      this.datagridApi.datagrid.afterRowsContainer.style.visibility ='';
+    if (this.datagridApi) {
+      this.datagridApi.datagrid.afterRowsContainer.style.visibility = '';
     }
   };
 
@@ -361,6 +371,7 @@ export class AcDatagridOnAgGridEventHandler {
         this.gridApi.addEventListener('columnResized', this.onColumnResized);
         this.gridApi.addEventListener('columnValueChanged', this.onColumnValueChanged);
         this.gridApi.addEventListener('columnVisible', this.onColumnVisible);
+        this.gridApi.addEventListener('filterChanged', this.onFilterChanged);
         this.gridApi.addEventListener('paginationChanged', this.onPaginationChanged);
         this.gridApi.addEventListener('rowClicked', this.onRowClicked);
         this.gridApi.addEventListener('rowDataUpdated', this.onRowDataUpdated);
@@ -393,6 +404,7 @@ export class AcDatagridOnAgGridEventHandler {
       this.gridApi.removeEventListener('columnResized', this.onColumnResized);
       this.gridApi.removeEventListener('columnValueChanged', this.onColumnValueChanged);
       this.gridApi.removeEventListener('columnVisible', this.onColumnVisible);
+      this.gridApi.removeEventListener('filterChanged', this.onFilterChanged);
       this.gridApi.removeEventListener('paginationChanged', this.onPaginationChanged);
       this.gridApi.removeEventListener('rowClicked', this.onRowClicked);
       this.gridApi.removeEventListener('rowDataUpdated', this.onRowDataUpdated);

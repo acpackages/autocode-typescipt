@@ -41,5 +41,13 @@ export function acGetColDefFromAcDataGridColumn({ datagridColDef }: { datagridCo
     flex: datagridColDef.flexSize,
     columnDefinition:datagridColDef,
   };
+  if(colDef.filter){
+    colDef.filter = 'agTextColumnFilter';
+    colDef.filterParams = {
+      buttons:['apply','clear','reset'],
+      trimInput: true,
+      maxNumConditions:1
+    }
+  }
   return colDef;
 }

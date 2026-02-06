@@ -2,6 +2,8 @@
 [columnRendererTemplates]="{
   'index':idTemplate,
   'action':actionTemplate,
+  'first_name':valueTemplate,
+  'lastname':valueTemplate
 }"
 [columnEditorTemplates]="{
   'first_name':nameTemplate,
@@ -30,4 +32,10 @@
     {{datagridRow.extensionData['autoSaveRow'].status}}
   </ng-container>
   <!-- <action-column (onEdit)="handleEdit(datagridRow)" [showDelete]="false" /> -->
+</ng-template>
+<ng-template #valueTemplate let-value="value" let-datagridRow="datagridRow">
+  Val : {{value}}
+</ng-template>
+<ng-template #idTemplate let-value="value" let-datagridRow="datagridRow">
+  {{value}}
 </ng-template>
