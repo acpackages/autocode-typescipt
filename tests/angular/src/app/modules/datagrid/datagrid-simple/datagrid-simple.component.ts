@@ -155,7 +155,7 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
   setOnDemandData() {
     const onDemandProxyDataManager: AcDataManager = new AcDataManager();
     const data: any[] = [];
-    const multiplier = 1;
+    const multiplier = 100;
     let index: number = 0;
     for (let i = 0; i < multiplier; i++) {
       for (const row of customersData) {
@@ -166,7 +166,6 @@ export class DatagridSimpleComponent implements OnDestroy, AfterViewInit{
     onDemandProxyDataManager.data = data;
 
     this.onDemandFunction = async (args: IAcOnDemandRequestArgs) => {
-      console.log(args);
       if (args.filterGroup) {
         onDemandProxyDataManager.filterGroup = args.filterGroup;
       }

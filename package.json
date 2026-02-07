@@ -170,7 +170,6 @@
     "@types/backbone": "^1.4.23",
     "ag-charts-community": "^11.3.2",
     "ag-charts-types": "^11.3.2",
-    "ag-grid-angular": "^34.0.1",
     "ag-grid-community": "file:F:/ThirdPartyResources/NodeModules/AgGrid/ag-grid-community",
     "ag-grid-enterprise": "file:F:/ThirdPartyResources/NodeModules/AgGrid/ag-grid-enterprise",
     "axios": "^1.6.0",

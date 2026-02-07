@@ -211,13 +211,13 @@ export class AcDataManager {
   allRows: IAcDataRow[] = [];
   autoSetUniqueIdToData: boolean = false;
   firstDataNotified: boolean = false;
-  isFirstRowsSet:boolean = false;
+  isFirstRowsSet: boolean = false;
   events: AcEvents = new AcEvents();
   hooks: AcHooks = new AcHooks();
   isWorking: boolean = false;
   lastRowsCount: number = 0;
   lastStartIndex: number = 0;
-  delayedCallback:AcDelayedCallback = new AcDelayedCallback();
+  delayedCallback: AcDelayedCallback = new AcDelayedCallback();
   displayStartIndex: number = -1;
   displayEndIndex: number = -1;
   displayCount: number = 0;
@@ -320,7 +320,13 @@ export class AcDataManager {
     let index: number = 0;
     for (const row of rows) {
       row.index = index;
+      row.isFirst = false;
+      row.isLast = false;
       index++;
+    }
+    if (rows.length > 0) {
+      rows[0].isFirst = true;
+      rows[rows.length - 1].isLast = true;
     }
   }
 
@@ -385,15 +391,15 @@ export class AcDataManager {
     this.events.destroy();
     this.delayedCallback.destroy();
 
-    acNullifyInstanceProperties({instance:this});
+    acNullifyInstanceProperties({ instance: this });
   }
 
   private evaluateFilterGroup(group: AcFilterGroup, row: IAcDataRow): boolean {
-    return acEvaluateFilterGroup({group:group.toJson(),data:row.data});
+    return acEvaluateFilterGroup({ group: group.toJson(), data: row.data });
   }
 
   private evaluateSearch(searchQuery: string, row: IAcDataRow, searchKeys: string[]): boolean {
-    return acEvaluateSearch({searchQuery,data:row.data,searchKeys});
+    return acEvaluateSearch({ searchQuery, data: row.data, searchKeys });
   }
 
   async getData({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}): Promise<any[]> {
@@ -532,18 +538,20 @@ export class AcDataManager {
     if (this.refreshRowsTimeout) {
       clearTimeout(this.refreshRowsTimeout);
     }
-    this.refreshRowsTimeout = this.delayedCallback.add({callback:async () => {
-      if (this.type == "offline") {
-        this.processRows();
-      }
-      else {
-        this.isWorking = true;
-        this.reset();
-        await this.getRows({ rowsCount: this.lastRowsCount });
-        this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
-        this.isWorking = false;
-      }
-    },duration: this.refreshRowsTimeoutDuration,'key':'refreshRows'});
+    this.refreshRowsTimeout = this.delayedCallback.add({
+      callback: async () => {
+        if (this.type == "offline") {
+          this.processRows();
+        }
+        else {
+          this.isWorking = true;
+          this.reset();
+          await this.getRows({ rowsCount: this.lastRowsCount });
+          this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
+          this.isWorking = false;
+        }
+      }, duration: this.refreshRowsTimeoutDuration, 'key': 'refreshRows'
+    });
   }
 
   reset() {
@@ -587,7 +595,7 @@ export class AcDataManager {
           data: row,
           originalIndex: index,
           index: index,
-          extensionData:{}
+          extensionData: {}
         };
         if (this.assignUniqueIdToData) {
           dataRow.data[this.uniqueIdKey] = dataRow.rowId;
@@ -600,6 +608,10 @@ export class AcDataManager {
         this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
         this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
         index++;
+      }
+      if (allRows.length > 0) {
+        allRows[0].isFirst = true;
+        allRows[allRows.length - 1].isLast = true;
       }
       if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
         for (const row of allRows) {
@@ -636,9 +648,19 @@ export class AcDataManager {
             isPlaceholder: true,
             index: index,
             originalIndex: index,
-            extensionData:{}
+            extensionData: {}
           };
+          if (index == 0) {
+            dataRow.isFirst = true;
+          }
+          if (index == totalCount - 1) {
+            dataRow.isLast = true;
+          }
           this.allRows[index] = dataRow;
+        }
+        if (this.allRows) {
+          this.allRows[0].isFirst = true;
+          this.allRows[this.allRows.length - 1].isLast = true;
         }
       }
       for (let index = startIndex; index <= endIndex; index++) {
@@ -660,7 +682,6 @@ export class AcDataManager {
       this.totalRows = totalCount;
       this.processRows();
     }
-    this.setFirstAndLastRow();
     this.isFirstRowsSet = true;
   }
 
@@ -682,7 +703,7 @@ export class AcDataManager {
       return valid;
     });
     if (dataRow) {
-      if(this.assignUniqueIdToData){
+      if (this.assignUniqueIdToData) {
         data[this.uniqueIdKey] = dataRow.rowId;
       }
       if (this.assignUniqueParentIdToData && this.dataParentUniqueValueKey && this.dataUniqueValueKey) {
@@ -731,7 +752,6 @@ export class AcDataManager {
     this.displayStartIndex = startIndex;
     this.displayEndIndex = (startIndex + rowsCount) - 1;
     this.displayCount = rowsCount;
-    this.setFirstAndLastRow();
     const eventArgs: IAcDataManagerDisplayedRowsChangeEvent = {
       displayedRows: this.displayedRows,
       dataManager: this
@@ -740,21 +760,8 @@ export class AcDataManager {
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
   }
 
-  private setFirstAndLastRow(){
-    for(const row of this.rows){
-      row.isFirst = undefined;
-      row.isLast = undefined;
-      if(row.index == 0){
-        row.isFirst = true;
-      }
-      if(row.index == this.rows.length - 1){
-        row.isLast = true;
-      }
-    }
-  }
-
-  private unsetRowIndexes(){
-    for(const row of this.allRows){
+  private unsetRowIndexes() {
+    for (const row of this.allRows) {
       row.index = -1;
     }
   }
