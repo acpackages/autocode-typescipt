@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
+import { acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { acAddClassToElement } from "../../../utils/ac-element-functions";
 import { AcDatagridApi, IAcDatagridColumn, IAcDatagridRow, AC_DATAGRID_HOOK, IAcDatagridCellEditor, IAcDatagridCellElementArgs, IAcDatagridColumnDefinition } from "../_ac-datagrid.export";
 import { AcDatagridAttributeName } from "../consts/ac-datagrid-attribute-name.const";
@@ -22,6 +23,7 @@ export class AcDatagridCellEditor implements IAcDatagridCellEditor {
   destroy(): void {
     this.element.remove();
     Object.freeze(this);
+    acNullifyInstanceProperties({instance:this});
   }
 
   focus() {

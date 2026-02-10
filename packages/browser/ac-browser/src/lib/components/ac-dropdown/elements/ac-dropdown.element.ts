@@ -127,7 +127,6 @@ export class AcDropdown extends AcElementBase {
   }
 
   override destroy(): void {
-    super.destroy();
     window.removeEventListener("scroll", this.scrollHandler, true);
     window.removeEventListener("resize", this.resizeHandler);
 
@@ -143,6 +142,8 @@ export class AcDropdown extends AcElementBase {
       this.observer.disconnect();
     }
     document.removeEventListener("click", this.outsideClickHandler);
+
+    super.destroy();
   }
 
   setDropdownItemElement({ element }: { element: HTMLElement }): void {

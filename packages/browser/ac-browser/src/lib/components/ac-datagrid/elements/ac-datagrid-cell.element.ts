@@ -83,7 +83,6 @@ export class AcDatagridCellElement extends AcElementBase {
   }
 
   override destroy(): void {
-    super.destroy();
     if (this.cellRenderer && this.cellRenderer.destroy) {
       this.cellRenderer.destroy();
     }
@@ -118,6 +117,7 @@ export class AcDatagridCellElement extends AcElementBase {
       }
       this._eventHandlers.clear();
     }
+    super.destroy();
   }
 
   override disconnectedCallback(): void {

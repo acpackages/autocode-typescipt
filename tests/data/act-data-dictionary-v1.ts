@@ -1,6 +1,6 @@
 export const dataDictionaryJson = {
   "name": "Accountea - Pro",
-  "version": 2,
+  "version": 3,
   "tables": {
     "act_access_groups": {
       "tableName": "act_access_groups",
@@ -1245,6 +1245,16 @@ export const dataDictionaryJson = {
               "propertyValue": "City"
             }
           }
+        },
+        "address_remarks": {
+          "columnName": "address_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -1318,10 +1328,6 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Value"
-            },
-            "is_select_distinct": {
-              "propertyName": "is_select_distinct",
-              "propertyValue": true
             },
             "USE_FOR_ROW_LIKE_FILTER": {
               "propertyName": "USE_FOR_ROW_LIKE_FILTER",
@@ -1585,6 +1591,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Transaction"
+            }
+          }
+        },
+        "asset_depreciation_remarks": {
+          "columnName": "asset_depreciation_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -2206,8 +2222,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "task_remarks": {
-          "columnName": "task_remarks",
+        "automated_task_remarks": {
+          "columnName": "automated_task_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -2509,6 +2525,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Default"
             }
           }
+        },
+        "bank_account_remarks": {
+          "columnName": "bank_account_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -2694,6 +2720,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Category Tree"
             }
           }
+        },
+        "chargeable_service_category_remarks": {
+          "columnName": "chargeable_service_category_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -2849,6 +2885,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Standard Charge"
+            }
+          }
+        },
+        "chargeable_service_charge_remarks": {
+          "columnName": "chargeable_service_charge_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -3029,6 +3075,11 @@ export const dataDictionaryJson = {
               "propertyValue": "Tax Rate"
             }
           }
+        },
+        "chargeable_service_purchase_detail_remarks": {
+          "columnName": "chargeable_service_purchase_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {}
         }
       },
       "tableProperties": {
@@ -3162,6 +3213,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Tax Rate"
             }
           }
+        },
+        "chargeable_service_sale_detail_remarks": {
+          "columnName": "chargeable_service_sale_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -3271,6 +3332,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "chargeable_service_uom_remarks": {
+          "columnName": "chargeable_service_uom_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -3517,6 +3588,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "contact_person_remarks": {
+          "columnName": "contact_person_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -3820,6 +3901,16 @@ export const dataDictionaryJson = {
             "PRIMARY_KEY": {
               "propertyName": "PRIMARY_KEY",
               "propertyValue": true
+            }
+          }
+        },
+        "delivery_note_product_remarks": {
+          "columnName": "delivery_note_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -4219,6 +4310,16 @@ export const dataDictionaryJson = {
               "propertyValue": "1"
             }
           }
+        },
+        "email_address_remarks": {
+          "columnName": "email_address_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -4459,6 +4560,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "employee_contract_remarks": {
+          "columnName": "employee_contract_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rearks"
             }
           }
         }
@@ -4721,6 +4832,16 @@ export const dataDictionaryJson = {
               "propertyValue": "1"
             }
           }
+        },
+        "fax_number_remarks": {
+          "columnName": "fax_number_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -4886,6 +5007,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Out UOM"
             }
           }
+        },
+        "inventory_tacking_entry_remarks": {
+          "columnName": "inventory_tacking_entry_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -4947,6 +5078,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Product"
+            }
+          }
+        },
+        "inventory_tracking_remarks": {
+          "columnName": "inventory_tracking_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -5036,6 +5177,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Description"
+            }
+          }
+        },
+        "ledger_account_mapping_remarks": {
+          "columnName": "ledger_account_mapping_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -5557,6 +5708,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "legal_document_remarks": {
+          "columnName": "legal_document_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -6055,6 +6216,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "location_remarks": {
+          "columnName": "location_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -6158,6 +6329,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            }
+          }
+        },
+        "media_remarks": {
+          "columnName": "media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -6724,6 +6905,16 @@ export const dataDictionaryJson = {
             "USE_FOR_ROW_LIKE_FILTER": {
               "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
+            }
+          }
+        },
+        "party_remarks": {
+          "columnName": "party_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -7489,6 +7680,16 @@ export const dataDictionaryJson = {
               "propertyValue": "0"
             }
           }
+        },
+        "payment_method_remarks": {
+          "columnName": "payment_method_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -7580,6 +7781,16 @@ export const dataDictionaryJson = {
             "USE_FOR_ROW_LIKE_FILTER": {
               "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
+            }
+          }
+        },
+        "phone_number_remarks": {
+          "columnName": "phone_number_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -8009,6 +8220,16 @@ export const dataDictionaryJson = {
               "propertyValue": "1"
             }
           }
+        },
+        "product_attribute_remarks": {
+          "columnName": "product_attribute_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -8108,6 +8329,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "product_barcode_link_remarks": {
+          "columnName": "product_barcode_link_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -8219,6 +8450,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            }
+          }
+        },
+        "product_barcode_remarks": {
+          "columnName": "product_barcode_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -8426,6 +8667,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "NOS"
+            }
+          }
+        },
+        "product_category_remarks": {
+          "columnName": "product_category_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -8781,6 +9032,16 @@ export const dataDictionaryJson = {
               "propertyValue": "0"
             }
           }
+        },
+        "product_price_remarks": {
+          "columnName": "product_price_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -8938,6 +9199,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Price"
             }
           }
+        },
+        "product_purchase_detail_remarks": {
+          "columnName": "product_purchase_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -9029,6 +9300,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "product_reference_url_remarks": {
+          "columnName": "product_reference_url_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -9162,6 +9443,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Price"
+            }
+          }
+        },
+        "product_sale_detail_remarks": {
+          "columnName": "product_sale_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -9341,6 +9632,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "1"
+            }
+          }
+        },
+        "product_stock_detail_remarks": {
+          "columnName": "product_stock_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -9539,6 +9840,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "product_uom_remarks": {
+          "columnName": "product_uom_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -9628,6 +9939,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "product_variant_group_remarks": {
+          "columnName": "product_variant_group_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -9711,6 +10032,16 @@ export const dataDictionaryJson = {
             "PRIMARY_KEY": {
               "propertyName": "PRIMARY_KEY",
               "propertyValue": true
+            }
+          }
+        },
+        "product_variant_remarks": {
+          "columnName": "product_variant_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -9962,6 +10293,16 @@ export const dataDictionaryJson = {
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "0"
+            }
+          }
+        },
+        "product_remarks": {
+          "columnName": "product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -10241,6 +10582,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "purchase_invoice_chargeable_service_remarks": {
+          "columnName": "purchase_invoice_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -10980,6 +11331,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "purchase_invoice_product_remarks": {
+          "columnName": "purchase_invoice_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -11669,6 +12030,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "purchase_order_chargeable_service_remarks": {
+          "columnName": "purchase_order_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -12284,6 +12655,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "purchase_order_product_remarks": {
+          "columnName": "purchase_order_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -12714,6 +13095,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "purchase_return_chargeable_service_remarks": {
+          "columnName": "purchase_return_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -13291,6 +13682,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "purchase_return_product_remarks": {
+          "columnName": "purchase_return_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -14301,6 +14702,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Standard Charge"
             }
           }
+        },
+        "sale_invoice_chargeable_service_remarks": {
+          "columnName": "sale_invoice_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -15056,6 +15467,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "sale_invoice_product_remarks": {
+          "columnName": "sale_invoice_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -15711,6 +16132,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "sale_maintenance_chargeable_service_remarks": {
+          "columnName": "sale_maintenance_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -16284,6 +16715,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Currency"
             }
           }
+        },
+        "sale_maintenance_product_remarks": {
+          "columnName": "sale_maintenance_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -16647,6 +17088,12 @@ export const dataDictionaryJson = {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "YES"
             },
+            "FORMAT": {
+              "propertyName": "FORMAT",
+              "propertyValue": [
+                "UPPERCASE"
+              ]
+            },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
               "propertyValue": [
@@ -16658,12 +17105,6 @@ export const dataDictionaryJson = {
                   "label": "NO",
                   "value": "NO"
                 }
-              ]
-            },
-            "FORMAT": {
-              "propertyName": "FORMAT",
-              "propertyValue": [
-                "UPPERCASE"
               ]
             }
           }
@@ -16808,6 +17249,12 @@ export const dataDictionaryJson = {
               "propertyName": "DEFAULT_VALUE",
               "propertyValue": "ALL ITEMS"
             },
+            "FORMAT": {
+              "propertyName": "FORMAT",
+              "propertyValue": [
+                "UPPERCASE"
+              ]
+            },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
               "propertyValue": [
@@ -16823,12 +17270,6 @@ export const dataDictionaryJson = {
                   "label": "EXCLUDE SELECTED ITEMS",
                   "value": "EXCLUDE SELECTED ITEMS"
                 }
-              ]
-            },
-            "FORMAT": {
-              "propertyName": "FORMAT",
-              "propertyValue": [
-                "UPPERCASE"
               ]
             }
           }
@@ -17253,6 +17694,11 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "sale_quotation_chargeable_service_remarks": {
+          "columnName": "sale_quotation_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {}
         }
       },
       "tableProperties": {
@@ -17645,6 +18091,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "sale_quotation_product_remarks": {
+          "columnName": "sale_quotation_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -18101,6 +18557,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "sale_return_chargeable_service_remarks": {
+          "columnName": "sale_return_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -18671,6 +19137,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Exchange Rate"
             }
           }
+        },
+        "sale_return_product_remarks": {
+          "columnName": "sale_return_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -19123,6 +19599,16 @@ export const dataDictionaryJson = {
               "propertyValue": "User"
             }
           }
+        },
+        "signature_remarks": {
+          "columnName": "signature_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -19206,6 +19692,16 @@ export const dataDictionaryJson = {
             "USE_FOR_ROW_LIKE_FILTER": {
               "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
+            }
+          }
+        },
+        "social_media_remarks": {
+          "columnName": "social_media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -19376,6 +19872,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Storage Location"
+            }
+          }
+        },
+        "stock_audit_product_storage_location_remarks": {
+          "columnName": "stock_audit_product_storage_location_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -19855,6 +20361,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Transfer Item"
             }
           }
+        },
+        "stock_transfer_packing_product_remarks": {
+          "columnName": "stock_transfer_packing_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -19919,13 +20435,13 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "packing_remarks": {
-          "columnName": "packing_remarks",
+        "stock_transfer_packing_remarks": {
+          "columnName": "stock_transfer_packing_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Packing Remarks"
+              "propertyValue": "Remarks"
             }
           }
         },
@@ -20034,8 +20550,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "unpacking_remarks": {
-          "columnName": "unpacking_remarks",
+        "stock_transfer_unpacking_remarks": {
+          "columnName": "stock_transfer_unpacking_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20228,8 +20744,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "packing_remarks": {
-          "columnName": "packing_remarks",
+        "stock_transfer_product_packing_remarks": {
+          "columnName": "stock_transfer_product_packing_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20512,8 +21028,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "unpacking_remarks": {
-          "columnName": "unpacking_remarks",
+        "stock_transfer_unpacking_remarks": {
+          "columnName": "stock_transfer_unpacking_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20630,8 +21146,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "destination_remarks": {
-          "columnName": "destination_remarks",
+        "stock_transfer_destination_remarks": {
+          "columnName": "stock_transfer_destination_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -20716,8 +21232,8 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "source_remarks": {
-          "columnName": "source_remarks",
+        "stock_transfer_source_remarks": {
+          "columnName": "stock_transfer_source_remarks",
           "columnType": "TEXT",
           "columnProperties": {
             "COLUMN_TITLE": {
@@ -22093,6 +22609,16 @@ export const dataDictionaryJson = {
               ]
             }
           }
+        },
+        "tax_part_remarks": {
+          "columnName": "tax_part_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -22243,6 +22769,16 @@ export const dataDictionaryJson = {
                   "label": "Non GST"
                 }
               ]
+            }
+          }
+        },
+        "tax_rate_remarks": {
+          "columnName": "tax_rate_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -22537,6 +23073,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
+            }
+          }
+        },
+        "transaction_entry_remarks": {
+          "columnName": "transaction_entry_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -23034,6 +23580,16 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "user_accountee_remarks": {
+          "columnName": "user_accountee_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -23107,6 +23663,16 @@ export const dataDictionaryJson = {
             "USE_FOR_ROW_LIKE_FILTER": {
               "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
+            }
+          }
+        },
+        "user_remarks": {
+          "columnName": "user_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -23188,6 +23754,16 @@ export const dataDictionaryJson = {
             "USE_FOR_ROW_LIKE_FILTER": {
               "propertyName": "USE_FOR_ROW_LIKE_FILTER",
               "propertyValue": true
+            }
+          }
+        },
+        "website_remarks": {
+          "columnName": "website_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
             }
           }
         }
@@ -23327,6 +23903,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "city_name"
+        },
+        "address_remarks": {
+          "columnName": "address_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_addresses.accountee_address_id,act_accountee_addresses.accountee_id,act_addresses.* FROM act_accountee_addresses LEFT JOIN act_addresses ON act_accountee_addresses.address_id = act_addresses.address_id"
@@ -23486,13 +24070,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "swift_bic"
         },
-        "bank_label": {
-          "columnName": "bank_label",
+        "bank_account_label": {
+          "columnName": "bank_account_label",
           "columnType": "STRING",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
-          "columnSourceOriginalColumn": "bank_label"
+          "columnSourceOriginalColumn": "bank_account_label"
+        },
+        "bank_account_remarks": {
+          "columnName": "bank_account_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_account_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_bank_accounts.accountee_bank_account_id,act_accountee_bank_accounts.accountee_id,act_bank_accounts.* FROM act_accountee_bank_accounts LEFT JOIN act_bank_accounts ON act_accountee_bank_accounts.bank_account_id = act_bank_accounts.bank_account_id"
@@ -23555,6 +24147,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_email_addresses",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "email_address_remarks": {
+          "columnName": "email_address_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_email_addresses.accountee_email_address_id,act_accountee_email_addresses.accountee_id,act_email_addresses.* FROM act_accountee_email_addresses LEFT JOIN act_email_addresses ON act_accountee_email_addresses.email_address_id = act_email_addresses.email_address_id"
@@ -23617,6 +24217,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_fax_numbers",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "fax_number_remarks": {
+          "columnName": "fax_number_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_fax_numbers.accountee_fax_number_id,act_accountee_fax_numbers.accountee_id,act_fax_numbers.* FROM act_accountee_fax_numbers LEFT JOIN act_fax_numbers ON act_accountee_fax_numbers.fax_number_id = act_fax_numbers.fax_number_id"
@@ -23703,6 +24311,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_legal_documents",
           "columnSourceOriginalColumn": "legal_document_label"
+        },
+        "legal_document_remarks": {
+          "columnName": "legal_document_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_legal_documents.accountee_legal_document_id,act_accountee_legal_documents.accountee_id,act_legal_documents.* FROM act_accountee_legal_documents LEFT JOIN act_legal_documents ON act_accountee_legal_documents.legal_document_id = act_legal_documents.legal_document_id"
@@ -23781,6 +24397,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_medias",
           "columnSourceOriginalColumn": "media_type"
+        },
+        "media_remarks": {
+          "columnName": "media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_medias.accountee_media_id,act_accountee_medias.accountee_id,act_medias.* FROM act_accountee_medias LEFT JOIN act_medias ON act_accountee_medias.media_id = act_medias.media_id"
@@ -23843,6 +24467,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_phone_numbers",
           "columnSourceOriginalColumn": "phone_number_value"
+        },
+        "phone_number_remarks": {
+          "columnName": "phone_number_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_phone_numbers.accountee_phone_number_id,act_accountee_phone_numbers.accountee_id,act_phone_numbers.* FROM act_accountee_phone_numbers LEFT JOIN act_phone_numbers ON act_accountee_phone_numbers.phone_number_id = act_phone_numbers.phone_number_id"
@@ -23905,6 +24537,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_social_medias",
           "columnSourceOriginalColumn": "social_media_value"
+        },
+        "social_media_remarks": {
+          "columnName": "social_media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_social_medias.accountee_social_media_id,act_accountee_social_medias.accountee_id,act_social_medias.* FROM act_accountee_social_medias LEFT JOIN act_social_medias ON act_accountee_social_medias.social_media_id = act_social_medias.social_media_id"
@@ -23967,6 +24607,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_websites",
           "columnSourceOriginalColumn": "website_value"
+        },
+        "website_remarks": {
+          "columnName": "website_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_remarks"
         }
       },
       "viewQuery": "SELECT act_accountee_websites.accountee_website_id,act_accountee_websites.accountee_id,act_websites.* FROM act_accountee_websites LEFT JOIN act_websites ON act_accountee_websites.website_id = act_websites.website_id"
@@ -24374,6 +25022,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_categories",
           "columnSourceOriginalColumn": "chargeable_service_category_tree"
+        },
+        "chargeable_service_category_remarks": {
+          "columnName": "chargeable_service_category_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_categories",
+          "columnSourceOriginalColumn": "chargeable_service_category_remarks"
         }
       },
       "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\njson_object('media_path', media_path,'media_details', media_details) AS chargeable_service_category_image_media,\nact_chargeable_service_categories.* FROM act_chargeable_service_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_chargeable_service_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_chargeable_service_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_chargeable_service_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_chargeable_service_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id \nLEFT JOIN act_medias ON act_chargeable_service_categories.chargeable_service_category_image_media_id = act_medias.media_id"
@@ -24484,6 +25140,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_purchase_details",
           "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "chargeable_service_purchase_detail_remarks": {
+          "columnName": "chargeable_service_purchase_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_purchase_details",
+          "columnSourceOriginalColumn": "chargeable_service_purchase_detail_remarks"
         }
       },
       "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_purchase_details.* FROM act_chargeable_service_purchase_details \nLEFT JOIN act_chargeable_service_uoms ON act_chargeable_service_purchase_details.purchase_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
@@ -24594,6 +25258,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_chargeable_service_sale_details",
           "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "chargeable_service_sale_detail_remarks": {
+          "columnName": "chargeable_service_sale_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_chargeable_service_sale_details",
+          "columnSourceOriginalColumn": "chargeable_service_sale_detail_remarks"
         }
       },
       "viewQuery": "SELECT act_chargeable_service_uoms.chargeable_service_uom_name,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_tax_rates.tax_rate_percentage,\nact_chargeable_service_sale_details.* FROM act_chargeable_service_sale_details \nLEFT JOIN act_chargeable_service_uoms ON act_chargeable_service_sale_details.sale_uom_id=act_chargeable_service_uoms.chargeable_service_uom_id\nLEFT JOIN act_taxing_schemes ON act_chargeable_service_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_chargeable_service_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
@@ -24787,9 +25459,25 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_barcodes",
           "columnSourceOriginalColumn": "is_current"
+        },
+        "product_barcode_remarks": {
+          "columnName": "product_barcode_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcodes",
+          "columnSourceOriginalColumn": "product_barcode_remarks"
+        },
+        "row_number": {
+          "columnName": "row_number",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_barcode_id ) AS rn FROM act_product_barcodes WHERE is_active = 1 ) WHERE rn = 1;"
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_barcode_id ) AS row_number FROM act_product_barcodes WHERE is_active = 1 ) AS act_product_barcodes WHERE row_number = 1;"
     },
     "act_vw_current_product_prices": {
       "viewName": "act_vw_current_product_prices",
@@ -24889,9 +25577,25 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_prices",
           "columnSourceOriginalColumn": "is_current"
+        },
+        "product_price_remarks": {
+          "columnName": "product_price_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_prices",
+          "columnSourceOriginalColumn": "product_price_remarks"
+        },
+        "row_number": {
+          "columnName": "row_number",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_price_id ) AS rn FROM act_product_prices WHERE is_active = 1 ) WHERE rn = 1;"
+      "viewQuery": "SELECT * FROM (SELECT *,ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY product_price_id ) AS row_number FROM act_product_prices WHERE is_active = 1 ) AS act_product_prices WHERE row_number = 1;"
     },
     "act_vw_current_product_purchase_details": {
       "viewName": "act_vw_current_product_purchase_details",
@@ -24983,6 +25687,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_purchase_details",
           "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_purchase_detail_remarks": {
+          "columnName": "product_purchase_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_remarks"
         },
         "purchase_uom_name": {
           "columnName": "purchase_uom_name",
@@ -25077,6 +25789,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_sale_details",
           "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_sale_detail_remarks": {
+          "columnName": "product_sale_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_remarks"
         },
         "sale_uom_name": {
           "columnName": "sale_uom_name",
@@ -25196,6 +25916,14 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_product_stock_details",
           "columnSourceOriginalColumn": "is_active"
         },
+        "product_stock_detail_remarks": {
+          "columnName": "product_stock_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_stock_detail_remarks"
+        },
         "stock_uom_name": {
           "columnName": "stock_uom_name",
           "columnType": "STRING",
@@ -25293,12 +26021,7 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -25330,12 +26053,7 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -25399,15 +26117,18 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "party_remarks": {
+          "columnName": "party_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "party_remarks"
         }
       },
       "viewQuery": "SELECT act_customers.customer_id,act_customers.customer_category,act_customers.customer_remarks, act_vw_parties.* FROM act_customers LEFT JOIN act_vw_parties ON act_customers.party_id = act_vw_parties.party_id"
@@ -25462,6 +26183,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_employees",
           "columnSourceOriginalColumn": "employee_designation"
+        },
+        "employee_remarks": {
+          "columnName": "employee_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_employees",
+          "columnSourceOriginalColumn": "employee_remarks"
         },
         "employee_salary_amount": {
           "columnName": "employee_salary_amount",
@@ -25530,12 +26259,7 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -25567,12 +26291,7 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -25640,13 +26359,29 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "party_remarks": {
+          "columnName": "party_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "party_remarks"
         }
       },
-      "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_salary_amount, act_employees.employee_gender, act_vw_parties.* FROM act_employees LEFT JOIN act_vw_parties ON act_employees.party_id = act_vw_parties.party_id"
+      "viewQuery": "SELECT act_employees.employee_id,act_employees.employee_code, act_employees.date_of_birth, act_employees.date_of_joining, act_employees.salary_duration, act_employees.employee_designation, act_employees.employee_remarks, act_employees.employee_salary_amount, act_employees.employee_gender, act_vw_parties.* FROM act_employees LEFT JOIN act_vw_parties ON act_employees.party_id = act_vw_parties.party_id"
     },
     "act_vw_inventory_tracking_entries": {
       "viewName": "act_vw_inventory_tracking_entries",
       "viewColumns": {
+        "net_total_quantity": {
+          "columnName": "net_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
@@ -25775,16 +26510,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_uom_id"
         },
-        "net_total_quantity": {
-          "columnName": "net_total_quantity",
-          "columnType": "DOUBLE",
+        "inventory_tacking_entry_remarks": {
+          "columnName": "inventory_tacking_entry_remarks",
+          "columnType": "TEXT",
           "columnProperties": {},
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
         }
       },
       "viewQuery": "SELECT (CASE WHEN act_inventory_tracking_entries.in_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.in_total_quantity END - CASE WHEN act_inventory_tracking_entries.out_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.out_total_quantity END) AS net_total_quantity,act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
+    },
+    "act_vw_ledger_account_summary": {
+      "viewName": "act_vw_ledger_account_summary",
+      "viewColumns": {},
+      "viewQuery": "SELECT SUM(CASE WHEN is_credit = 1 THEN  transaction_entry_amount * -1 ELSE transaction_entry_amount END) AS balance,\nSUM(CASE WHEN is_credit = 1 THEN  0 ELSE 1 END) AS debit_entries_count,\nSUM(CASE WHEN is_credit = 0 THEN  0 ELSE 1 END) AS credit_entries_count,\nledger_account_id\n FROM act_transaction_entries GROUP BY ledger_account_id"
     },
     "act_vw_ledger_account_types": {
       "viewName": "act_vw_ledger_account_types",
@@ -25816,12 +26556,7 @@ export const dataDictionaryJson = {
         "ledger_account_type_name": {
           "columnName": "ledger_account_type_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_ledger_account_types",
           "columnSourceOriginalColumn": "ledger_account_type_name"
@@ -26011,12 +26746,7 @@ export const dataDictionaryJson = {
         "location_name": {
           "columnName": "location_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_locations",
           "columnSourceOriginalColumn": "location_name"
@@ -26028,6 +26758,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_locations",
           "columnSourceOriginalColumn": "location_type"
+        },
+        "location_remarks": {
+          "columnName": "location_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_locations",
+          "columnSourceOriginalColumn": "location_remarks"
         }
       },
       "viewQuery": "SELECT * FROM act_locations"
@@ -26091,12 +26829,7 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -26128,12 +26861,7 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -26197,15 +26925,18 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_parties",
           "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "party_remarks": {
+          "columnName": "party_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_parties",
+          "columnSourceOriginalColumn": "party_remarks"
         }
       },
       "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS party_image_media,act_parties.* FROM act_parties LEFT JOIN act_medias ON act_parties.party_image_media_id = act_medias.media_id"
@@ -26240,12 +26971,7 @@ export const dataDictionaryJson = {
         "address_label": {
           "columnName": "address_label",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": false
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_label"
@@ -26253,12 +26979,7 @@ export const dataDictionaryJson = {
         "address_line_1": {
           "columnName": "address_line_1",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_line_1"
@@ -26266,12 +26987,7 @@ export const dataDictionaryJson = {
         "address_line_2": {
           "columnName": "address_line_2",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_line_2"
@@ -26327,12 +27043,7 @@ export const dataDictionaryJson = {
         "postal_code": {
           "columnName": "postal_code",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "postal_code"
@@ -26352,6 +27063,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "city_name"
+        },
+        "address_remarks": {
+          "columnName": "address_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_addresses",
+          "columnSourceOriginalColumn": "address_remarks"
         }
       },
       "viewQuery": "SELECT act_party_addresses.party_address_id,act_party_addresses.party_id,act_addresses.* FROM act_party_addresses LEFT JOIN act_addresses ON act_party_addresses.address_id = act_addresses.address_id"
@@ -26359,6 +27078,14 @@ export const dataDictionaryJson = {
     "act_vw_party_bank_accounts": {
       "viewName": "act_vw_party_bank_accounts",
       "viewColumns": {
+        "bank_label": {
+          "columnName": "bank_label",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_label"
+        },
         "party_bank_account_id": {
           "columnName": "party_bank_account_id",
           "columnType": "UUID",
@@ -26378,12 +27105,7 @@ export const dataDictionaryJson = {
         "account_holder_name": {
           "columnName": "account_holder_name",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "account_holder_name"
@@ -26391,12 +27113,7 @@ export const dataDictionaryJson = {
         "account_number": {
           "columnName": "account_number",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "account_number"
@@ -26449,6 +27166,14 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "branch_name"
         },
+        "branch_address": {
+          "columnName": "branch_address",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "branch_address"
+        },
         "country_code": {
           "columnName": "country_code",
           "columnType": "STRING",
@@ -26472,6 +27197,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "iban"
+        },
+        "ifsc": {
+          "columnName": "ifsc",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "ifsc"
         },
         "display_index": {
           "columnName": "display_index",
@@ -26505,13 +27238,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_bank_accounts",
           "columnSourceOriginalColumn": "swift_bic"
         },
-        "bank_label": {
-          "columnName": "bank_label",
+        "bank_account_label": {
+          "columnName": "bank_account_label",
           "columnType": "STRING",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_bank_accounts",
-          "columnSourceOriginalColumn": "bank_label"
+          "columnSourceOriginalColumn": "bank_account_label"
+        },
+        "bank_account_remarks": {
+          "columnName": "bank_account_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_bank_accounts",
+          "columnSourceOriginalColumn": "bank_account_remarks"
         }
       },
       "viewQuery": "SELECT act_party_bank_accounts.party_bank_account_id,act_party_bank_accounts.party_id,act_bank_accounts.* FROM act_party_bank_accounts LEFT JOIN act_bank_accounts ON act_party_bank_accounts.bank_account_id = act_bank_accounts.bank_account_id"
@@ -26554,12 +27295,7 @@ export const dataDictionaryJson = {
         "contact_person_name": {
           "columnName": "contact_person_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_contact_persons",
           "columnSourceOriginalColumn": "contact_person_name"
@@ -26571,6 +27307,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_contact_persons",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "contact_person_remarks": {
+          "columnName": "contact_person_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_contact_persons",
+          "columnSourceOriginalColumn": "contact_person_remarks"
         }
       },
       "viewQuery": "SELECT act_party_contact_persons.party_contact_person_id,act_party_contact_persons.party_id,act_contact_persons.* FROM act_party_contact_persons LEFT JOIN act_contact_persons ON act_party_contact_persons.contact_person_id = act_contact_persons.contact_person_id"
@@ -26613,12 +27357,7 @@ export const dataDictionaryJson = {
         "email_address_value": {
           "columnName": "email_address_value",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_email_addresses",
           "columnSourceOriginalColumn": "email_address_value"
@@ -26638,6 +27377,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_email_addresses",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "email_address_remarks": {
+          "columnName": "email_address_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_email_addresses",
+          "columnSourceOriginalColumn": "email_address_remarks"
         }
       },
       "viewQuery": "SELECT act_party_email_addresses.party_email_address_id,act_party_email_addresses.party_id,act_email_addresses.* FROM act_party_email_addresses LEFT JOIN act_email_addresses ON act_party_email_addresses.email_address_id = act_email_addresses.email_address_id"
@@ -26680,12 +27427,7 @@ export const dataDictionaryJson = {
         "fax_number_value": {
           "columnName": "fax_number_value",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_fax_numbers",
           "columnSourceOriginalColumn": "fax_number_value"
@@ -26705,6 +27447,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_fax_numbers",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "fax_number_remarks": {
+          "columnName": "fax_number_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_fax_numbers",
+          "columnSourceOriginalColumn": "fax_number_remarks"
         }
       },
       "viewQuery": "SELECT act_party_fax_numbers.party_fax_number_id,act_party_fax_numbers.party_id,act_fax_numbers.* FROM act_party_fax_numbers LEFT JOIN act_fax_numbers ON act_party_fax_numbers.fax_number_id = act_fax_numbers.fax_number_id"
@@ -26779,12 +27529,7 @@ export const dataDictionaryJson = {
         "legal_document_value": {
           "columnName": "legal_document_value",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_legal_documents",
           "columnSourceOriginalColumn": "legal_document_value"
@@ -26792,15 +27537,18 @@ export const dataDictionaryJson = {
         "legal_document_label": {
           "columnName": "legal_document_label",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_legal_documents",
           "columnSourceOriginalColumn": "legal_document_label"
+        },
+        "legal_document_remarks": {
+          "columnName": "legal_document_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_legal_documents",
+          "columnSourceOriginalColumn": "legal_document_remarks"
         }
       },
       "viewQuery": "SELECT act_party_legal_documents.party_legal_document_id,act_party_legal_documents.party_id,act_legal_documents.* FROM act_party_legal_documents LEFT JOIN act_legal_documents ON act_party_legal_documents.legal_document_id = act_legal_documents.legal_document_id"
@@ -26879,6 +27627,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_medias",
           "columnSourceOriginalColumn": "media_type"
+        },
+        "media_remarks": {
+          "columnName": "media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_remarks"
         }
       },
       "viewQuery": "SELECT act_party_medias.party_media_id,act_party_medias.party_id,act_medias.* FROM act_party_medias LEFT JOIN act_medias ON act_party_medias.media_id = act_medias.media_id"
@@ -26937,15 +27693,18 @@ export const dataDictionaryJson = {
         "phone_number_value": {
           "columnName": "phone_number_value",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_phone_numbers",
           "columnSourceOriginalColumn": "phone_number_value"
+        },
+        "phone_number_remarks": {
+          "columnName": "phone_number_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_phone_numbers",
+          "columnSourceOriginalColumn": "phone_number_remarks"
         }
       },
       "viewQuery": "SELECT act_party_phone_numbers.party_phone_number_id,act_party_phone_numbers.party_id,act_phone_numbers.* FROM act_party_phone_numbers LEFT JOIN act_phone_numbers ON act_party_phone_numbers.phone_number_id = act_phone_numbers.phone_number_id"
@@ -26996,12 +27755,7 @@ export const dataDictionaryJson = {
         "social_media_type": {
           "columnName": "social_media_type",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_social_medias",
           "columnSourceOriginalColumn": "social_media_type"
@@ -27009,15 +27763,18 @@ export const dataDictionaryJson = {
         "social_media_value": {
           "columnName": "social_media_value",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_social_medias",
           "columnSourceOriginalColumn": "social_media_value"
+        },
+        "social_media_remarks": {
+          "columnName": "social_media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_social_medias",
+          "columnSourceOriginalColumn": "social_media_remarks"
         }
       },
       "viewQuery": "SELECT act_party_social_medias.party_social_media_id,act_party_social_medias.party_id,act_social_medias.* FROM act_party_social_medias LEFT JOIN act_social_medias ON act_party_social_medias.social_media_id = act_social_medias.social_media_id"
@@ -27068,12 +27825,7 @@ export const dataDictionaryJson = {
         "website_label": {
           "columnName": "website_label",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_websites",
           "columnSourceOriginalColumn": "website_label"
@@ -27081,15 +27833,18 @@ export const dataDictionaryJson = {
         "website_value": {
           "columnName": "website_value",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_websites",
           "columnSourceOriginalColumn": "website_value"
+        },
+        "website_remarks": {
+          "columnName": "website_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_websites",
+          "columnSourceOriginalColumn": "website_remarks"
         }
       },
       "viewQuery": "SELECT act_party_websites.party_website_id,act_party_websites.party_id,act_websites.* FROM act_party_websites LEFT JOIN act_websites ON act_party_websites.website_id = act_websites.website_id"
@@ -27097,15 +27852,23 @@ export const dataDictionaryJson = {
     "act_vw_payment_methods": {
       "viewName": "act_vw_payment_methods",
       "viewColumns": {
-        "ledger_account_name": {
-          "columnName": "ledger_account_name",
-          "columnType": "STRING",
+        "payment_method_image_media": {
+          "columnName": "payment_method_image_media",
+          "columnType": "JSON",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Ledger Account"
+              "propertyValue": "Image"
             }
           },
+          "columnSource": "function",
+          "columnSourceName": "json_object",
+          "columnSourceOriginalColumn": ""
+        },
+        "ledger_account_name": {
+          "columnName": "ledger_account_name",
+          "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_name"
@@ -27177,12 +27940,7 @@ export const dataDictionaryJson = {
         "payment_method_name": {
           "columnName": "payment_method_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_payment_methods",
           "columnSourceOriginalColumn": "payment_method_name"
@@ -27219,18 +27977,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_payment_methods",
           "columnSourceOriginalColumn": "use_for_sales"
         },
-        "payment_method_image_media": {
-          "columnName": "payment_method_image_media",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Image"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "json_object",
-          "columnSourceOriginalColumn": ""
+        "payment_method_remarks": {
+          "columnName": "payment_method_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_payment_methods",
+          "columnSourceOriginalColumn": "payment_method_remarks"
         }
       },
       "viewQuery": "SELECT act_ledger_accounts.ledger_account_name,act_ledger_accounts.reflecting_statement,act_ledger_accounts.ledger_account_balance,json_object('media_path', media_path,'media_details', media_details) AS payment_method_image_media,act_payment_methods.* FROM act_payment_methods LEFT JOIN act_ledger_accounts ON act_payment_methods.ledger_account_id = act_ledger_accounts.ledger_account_id LEFT JOIN act_medias ON act_payment_methods.payment_method_image_media_id = act_medias.media_id"
@@ -27357,6 +28110,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_barcode_links",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "product_barcode_link_remarks": {
+          "columnName": "product_barcode_link_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_barcode_links",
+          "columnSourceOriginalColumn": "product_barcode_link_remarks"
         }
       },
       "viewQuery": "SELECT \nact_product_barcodes.product_barcode_name,act_product_barcodes.barcode_value,\nact_product_purchase_details.product_purchase_detail_name ,\nact_product_sale_details.product_sale_detail_name ,\nact_product_prices.product_price_name,act_product_prices.price_sale ,act_product_prices.price_purchase,act_product_prices.price_mrp,\nact_product_barcode_links.* FROM act_product_barcode_links LEFT JOIN act_product_barcodes ON act_product_barcode_links.product_barcode_id = act_product_barcodes.product_barcode_id LEFT JOIN act_product_purchase_details ON act_product_barcode_links.product_purchase_detail_id = act_product_purchase_details.product_purchase_detail_id LEFT JOIN act_product_sale_details ON act_product_barcode_links.product_sale_detail_id= act_product_sale_details.product_sale_detail_id LEFT JOIN act_product_prices ON act_product_barcode_links.product_price_id= act_product_prices.product_price_id"
@@ -27364,6 +28125,19 @@ export const dataDictionaryJson = {
     "act_vw_product_categories": {
       "viewName": "act_vw_product_categories",
       "viewColumns": {
+        "product_category_image_media": {
+          "columnName": "product_category_image_media",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Image"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "json_object",
+          "columnSourceOriginalColumn": ""
+        },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
@@ -27484,97 +28258,6 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_product_categories",
           "columnSourceOriginalColumn": "sale_taxing_scheme_id"
         },
-        "purchase_taxing_scheme_name": {
-          "columnName": "purchase_taxing_scheme_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Taxing Scheme"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_taxing_schemes",
-          "columnSourceOriginalColumn": "taxing_scheme_name"
-        },
-        "sale_taxing_scheme_name": {
-          "columnName": "sale_taxing_scheme_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale Taxing Scheme"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_taxing_schemes",
-          "columnSourceOriginalColumn": "taxing_scheme_name"
-        },
-        "purchase_tax_rate_name": {
-          "columnName": "purchase_tax_rate_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Tax Rate"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_tax_rates",
-          "columnSourceOriginalColumn": "tax_rate_name"
-        },
-        "purchase_tax_rate_percentage": {
-          "columnName": "purchase_tax_rate_percentage",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase Tax%"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_tax_rates",
-          "columnSourceOriginalColumn": "tax_rate_percentage"
-        },
-        "sale_tax_rate_name": {
-          "columnName": "sale_tax_rate_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale Tax Rate"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_tax_rates",
-          "columnSourceOriginalColumn": "tax_rate_name"
-        },
-        "sale_tax_rate_percentage": {
-          "columnName": "sale_tax_rate_percentage",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale Tax%"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_tax_rates",
-          "columnSourceOriginalColumn": "tax_rate_percentage"
-        },
-        "product_category_image_media": {
-          "columnName": "product_category_image_media",
-          "columnType": "JSON",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Image"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "json_object",
-          "columnSourceOriginalColumn": ""
-        },
         "default_uom_name": {
           "columnName": "default_uom_name",
           "columnType": "STRING",
@@ -27582,6 +28265,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_categories",
           "columnSourceOriginalColumn": "default_uom_name"
+        },
+        "product_category_remarks": {
+          "columnName": "product_category_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_categories",
+          "columnSourceOriginalColumn": "product_category_remarks"
         }
       },
       "viewQuery": "SELECT \npurchase_taxing_schemes.taxing_scheme_name AS purchase_taxing_scheme_name,\nsale_taxing_schemes.taxing_scheme_name AS sale_taxing_scheme_name,\npurchase_tax_rates.tax_rate_name AS purchase_tax_rate_name,\npurchase_tax_rates.tax_rate_percentage AS purchase_tax_rate_percentage,\nsale_tax_rates.tax_rate_name AS sale_tax_rate_name,\nsale_tax_rates.tax_rate_percentage AS sale_tax_rate_percentage,\njson_object('media_path', media_path,'media_details', media_details) AS product_category_image_media,\nact_product_categories.* FROM act_product_categories \nLEFT JOIN act_taxing_schemes as purchase_taxing_schemes ON act_product_categories.purchase_taxing_scheme_id = purchase_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_taxing_schemes as sale_taxing_schemes ON act_product_categories.sale_taxing_scheme_id = sale_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates as purchase_tax_rates ON act_product_categories.purchase_tax_rate_id = purchase_tax_rates.tax_rate_id\nLEFT JOIN act_tax_rates as sale_tax_rates ON act_product_categories.sale_tax_rate_id = sale_tax_rates.tax_rate_id \nLEFT JOIN act_medias ON act_product_categories.product_category_image_media_id = act_medias.media_id"
@@ -27589,22 +28280,6 @@ export const dataDictionaryJson = {
     "act_vw_product_orders": {
       "viewName": "act_vw_product_orders",
       "viewColumns": {
-        "minimum_order_quantity": {
-          "columnName": "minimum_order_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_current_product_purchase_details",
-          "columnSourceOriginalColumn": "minimum_order_quantity"
-        },
-        "minimum_order_quantity_uom_id": {
-          "columnName": "minimum_order_quantity_uom_id",
-          "columnType": "UUID",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_current_product_purchase_details",
-          "columnSourceOriginalColumn": "minimum_order_quantity_uom_id"
-        },
         "total_out_quantity": {
           "columnName": "total_out_quantity",
           "columnType": "DOUBLE",
@@ -27621,14 +28296,6 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "total_in_quantity"
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
-          "columnType": "DOUBLE",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_stock",
-          "columnSourceOriginalColumn": "stock_quantity"
-        },
         "stock_in_hand_quantity": {
           "columnName": "stock_in_hand_quantity",
           "columnType": "DOUBLE",
@@ -27636,6 +28303,62 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "stock_in_hand_quantity"
+        },
+        "stock_in_hand_uom_quantity": {
+          "columnName": "stock_in_hand_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "stock_in_hand_uom_quantity"
+        },
+        "minimum_order_quantity": {
+          "columnName": "minimum_order_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity"
+        },
+        "minimum_order_quantity_uom_id": {
+          "columnName": "minimum_order_quantity_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_current_product_purchase_details",
+          "columnSourceOriginalColumn": "minimum_order_quantity_uom_id"
+        },
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "out_total_quantity"
+        },
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "in_total_quantity"
+        },
+        "closing_stock": {
+          "columnName": "closing_stock",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "closing_stock"
+        },
+        "total_closing_stock": {
+          "columnName": "total_closing_stock",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "total_closing_stock"
         },
         "stock_uom_id": {
           "columnName": "stock_uom_id",
@@ -27789,6 +28512,14 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "product_tags"
         },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_stock",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
         "waitlist_quantity": {
           "columnName": "waitlist_quantity",
           "columnType": "DOUBLE",
@@ -27813,13 +28544,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_vw_stock",
           "columnSourceOriginalColumn": "brand_name"
         },
-        "stock_in_hand_uom_quantity": {
-          "columnName": "stock_in_hand_uom_quantity",
+        "product_stock_price": {
+          "columnName": "product_stock_price",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_stock",
-          "columnSourceOriginalColumn": "stock_in_hand_uom_quantity"
+          "columnSourceOriginalColumn": "product_stock_price"
         }
       },
       "viewQuery": "SELECT \nact_vw_current_product_purchase_details.minimum_order_quantity, act_vw_current_product_purchase_details.minimum_order_quantity_uom_id,\nact_vw_stock.* FROM act_vw_stock \nLEFT JOIN act_vw_current_product_purchase_details ON act_vw_stock.product_id = act_vw_current_product_purchase_details.product_id"
@@ -27830,12 +28561,7 @@ export const dataDictionaryJson = {
         "purchase_uom_name": {
           "columnName": "purchase_uom_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Purchase UOM"
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
           "columnSourceOriginalColumn": "product_uom_name"
@@ -27944,18 +28670,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_product_purchase_details",
           "columnSourceOriginalColumn": "is_active"
         },
-        "minimum_order_uom_name": {
-          "columnName": "minimum_order_uom_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Min Order UOM"
-            }
-          },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_name"
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_purchase_detail_remarks": {
+          "columnName": "product_purchase_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_purchase_details",
+          "columnSourceOriginalColumn": "product_purchase_detail_remarks"
         }
       },
       "viewQuery": "SELECT act_product_uoms.product_uom_name AS purchase_uom_name, order_uoms.product_uom_name AS minimum_order_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_purchase_details.* FROM act_product_purchase_details \nLEFT JOIN act_product_uoms ON act_product_purchase_details.purchase_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS order_uoms ON act_product_purchase_details.minimum_order_quantity_uom_id=order_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_purchase_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_purchase_details.tax_rate_id=act_tax_rates.tax_rate_id"
@@ -27966,12 +28695,7 @@ export const dataDictionaryJson = {
         "sale_uom_name": {
           "columnName": "sale_uom_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Sale UOM"
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
           "columnSourceOriginalColumn": "product_uom_name"
@@ -28063,6 +28787,22 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_product_sale_details",
           "columnSourceOriginalColumn": "is_active"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_sale_detail_remarks": {
+          "columnName": "product_sale_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_sale_details",
+          "columnSourceOriginalColumn": "product_sale_detail_remarks"
         }
       },
       "viewQuery": "SELECT act_product_uoms.product_uom_name AS sale_uom_name,\nact_taxing_schemes.taxing_scheme_name,act_tax_rates.tax_rate_name,act_tax_rates.tax_rate_percentage,\nact_product_sale_details.* FROM act_product_sale_details\nLEFT JOIN act_product_uoms ON act_product_sale_details.sale_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON act_product_sale_details.taxing_scheme_id=act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_product_sale_details.tax_rate_id=act_tax_rates.tax_rate_id"
@@ -28073,15 +28813,10 @@ export const dataDictionaryJson = {
         "stock_uom_name": {
           "columnName": "stock_uom_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Stock UOM"
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "ptroduct_uom_name"
+          "columnSourceOriginalColumn": "product_uom_name"
         },
         "product_stock_detail_id": {
           "columnName": "product_stock_detail_id",
@@ -28179,44 +28914,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_product_stock_details",
           "columnSourceOriginalColumn": "is_active"
         },
-        "minimum_stock_uom_name": {
-          "columnName": "minimum_stock_uom_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Minimum Stock UOM"
-            }
-          },
+        "product_stock_detail_remarks": {
+          "columnName": "product_stock_detail_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_name"
-        },
-        "maximum_stock_uom_name": {
-          "columnName": "maximum_stock_uom_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Maximum Stock UOM"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_name"
-        },
-        "reorder_level_uom_name": {
-          "columnName": "reorder_level_uom_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Reorder Level UOM"
-            }
-          },
-          "columnSource": "table",
-          "columnSourceName": "act_product_uoms",
-          "columnSourceOriginalColumn": "product_uom_name"
+          "columnSourceName": "act_product_stock_details",
+          "columnSourceOriginalColumn": "product_stock_detail_remarks"
         }
       },
       "viewQuery": "SELECT act_product_uoms.product_uom_name AS stock_uom_name, \nmin_uoms.product_uom_name AS minimum_stock_uom_name,\nmax_uoms.product_uom_name AS maximum_stock_uom_name,\nreorder_uoms.product_uom_name AS reorder_level_uom_name,\nact_product_stock_details.* FROM act_product_stock_details \nLEFT JOIN act_product_uoms ON act_product_stock_details.stock_uom_id=act_product_uoms.product_uom_id\nLEFT JOIN act_product_uoms AS min_uoms ON act_product_stock_details.minimum_stock_uom_id=min_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS max_uoms ON act_product_stock_details.maximum_stock_uom_id=max_uoms .product_uom_id\nLEFT JOIN act_product_uoms AS reorder_uoms ON act_product_stock_details.reorder_level_uom_id=reorder_uoms.product_uom_id"
@@ -28237,15 +28941,26 @@ export const dataDictionaryJson = {
           "columnSourceName": "json_object",
           "columnSourceOriginalColumn": ""
         },
+        "stock_quantity": {
+          "columnName": "stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "stock_quantity"
+        },
+        "waitlist_quantity": {
+          "columnName": "waitlist_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "waitlist_quantity"
+        },
         "product_category_name": {
           "columnName": "product_category_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Category"
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_product_categories",
           "columnSourceOriginalColumn": "product_category_name"
@@ -28333,12 +29048,7 @@ export const dataDictionaryJson = {
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_name"
@@ -28354,12 +29064,7 @@ export const dataDictionaryJson = {
         "product_sku": {
           "columnName": "product_sku",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_sku"
@@ -28372,21 +29077,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_tags"
         },
-        "stock_quantity": {
-          "columnName": "stock_quantity",
+        "stock_total_quantity": {
+          "columnName": "stock_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_products",
-          "columnSourceOriginalColumn": "stock_quantity"
+          "columnSourceOriginalColumn": "stock_total_quantity"
         },
-        "waitlist_quantity": {
-          "columnName": "waitlist_quantity",
+        "waitlist_total_quantity": {
+          "columnName": "waitlist_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_products",
-          "columnSourceOriginalColumn": "waitlist_quantity"
+          "columnSourceOriginalColumn": "waitlist_total_quantity"
         },
         "hsn_code": {
           "columnName": "hsn_code",
@@ -28411,6 +29116,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_stock_price"
+        },
+        "product_remarks": {
+          "columnName": "product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "product_remarks"
         }
       },
       "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,\njson_object('media_path', media_path,'media_details', media_details) AS product_image_media,\nact_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id\nLEFT JOIN act_medias ON act_products.product_image_media_id = act_medias.media_id"
@@ -28577,6 +29290,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_chargeable_services",
           "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "purchase_invoice_chargeable_service_remarks": {
+          "columnName": "purchase_invoice_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_purchase_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "purchase_invoice_chargeable_service_remarks"
         }
       },
       "viewQuery": "SELECT act_purchase_invoice_chargeable_services.* FROM act_purchase_invoice_chargeable_services LEFT JOIN act_chargeable_services ON act_purchase_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id"
@@ -28655,6 +29376,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_medias",
           "columnSourceOriginalColumn": "media_type"
+        },
+        "media_remarks": {
+          "columnName": "media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_remarks"
         }
       },
       "viewQuery": "SELECT act_purchase_invoice_medias.purchase_invoice_media_id,act_purchase_invoice_medias.purchase_invoice_id,act_medias.* FROM act_purchase_invoice_medias LEFT JOIN act_medias ON act_medias.media_id = act_purchase_invoice_medias.media_id"
@@ -28804,6 +29533,14 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "purchase_invoice_product_id"
         },
+        "net_total_quantity": {
+          "columnName": "net_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "net_total_quantity"
+        },
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
@@ -28931,6 +29668,14 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_uom_id"
+        },
+        "inventory_tacking_entry_remarks": {
+          "columnName": "inventory_tacking_entry_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
         }
       },
       "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_vw_inventory_tracking_entries LEFT JOIN act_purchase_invoice_products ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id"
@@ -28985,6 +29730,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_inventory_trackings",
           "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_remarks": {
+          "columnName": "inventory_tracking_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_remarks"
         }
       },
       "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_inventory_trackings.* FROM act_inventory_trackings LEFT JOIN act_purchase_invoice_products ON act_inventory_trackings.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id"
@@ -28992,6 +29745,84 @@ export const dataDictionaryJson = {
     "act_vw_purchase_invoice_products": {
       "viewName": "act_vw_purchase_invoice_products",
       "viewColumns": {
+        "gross_amount": {
+          "columnName": "gross_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_trade_amount": {
+          "columnName": "discount_trade_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "TD Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_cash_amount": {
+          "columnName": "discount_cash_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "CD Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_rebate_amount": {
+          "columnName": "discount_rebate_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rebate Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
         "product_name": {
           "columnName": "product_name",
           "columnType": "TEXT",
@@ -28999,6 +29830,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_name"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "hsn_code"
         },
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
@@ -29200,94 +30039,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "exchange_rate"
         },
-        "gross_amount": {
-          "columnName": "gross_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Gross Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_trade_amount": {
-          "columnName": "discount_trade_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "TD Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_cash_amount": {
-          "columnName": "discount_cash_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "CD Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_rebate_amount": {
-          "columnName": "discount_rebate_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Rebate Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "taxable_amount": {
-          "columnName": "taxable_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Taxable Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "tax_amount": {
-          "columnName": "tax_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Tax Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "hsn_code": {
-          "columnName": "hsn_code",
-          "columnType": "STRING",
+        "purchase_invoice_product_remarks": {
+          "columnName": "purchase_invoice_product_remarks",
+          "columnType": "TEXT",
           "columnProperties": {},
           "columnSource": "table",
-          "columnSourceName": "act_products",
-          "columnSourceOriginalColumn": "hsn_code"
+          "columnSourceName": "act_purchase_invoice_products",
+          "columnSourceOriginalColumn": "purchase_invoice_product_remarks"
         }
       },
-      "viewQuery": "SELECT (COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_purchase_invoice_products.product_quantity, 0) * COALESCE(act_purchase_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_purchase_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_purchase_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_purchase_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_products.hsn_code,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_purchase_invoice_products.* FROM act_purchase_invoice_products \nLEFT JOIN act_products ON act_purchase_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_purchase_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_purchase_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_purchase_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT\n    ROUND(\n        COALESCE(pip.product_quantity, 0) * \n        COALESCE(pip.product_price_gross, 0),\n        2\n    ) AS gross_amount,\n\n    ROUND(\n        ROUND(\n            COALESCE(pip.product_quantity, 0) * \n            COALESCE(pip.product_price_gross, 0),\n            2\n        ) * (COALESCE(pip.discount_trade_percentage, 0) / 100),\n        2\n    ) AS discount_trade_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                COALESCE(pip.product_quantity, 0) * \n                COALESCE(pip.product_price_gross, 0),\n                2\n            ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100)),\n            2\n        ) * (COALESCE(pip.discount_cash_percentage, 0) / 100),\n        2\n    ) AS discount_cash_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                ROUND(\n                    COALESCE(pip.product_quantity, 0) * \n                    COALESCE(pip.product_price_gross, 0),\n                    2\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100)),\n                2\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100)),\n            2\n        ) * (COALESCE(pip.discount_rebate_percentage, 0) / 100),\n        2\n    ) AS discount_rebate_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                ROUND(\n                    COALESCE(pip.product_quantity, 0) * \n                    COALESCE(pip.product_price_gross, 0),\n                    2\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100)),\n                2\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100)),\n            2\n        ) * (1 - (COALESCE(pip.discount_rebate_percentage, 0) / 100)),\n        2\n    ) AS taxable_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                ROUND(\n                    COALESCE(pip.product_quantity, 0) * \n                    COALESCE(pip.product_price_gross, 0),\n                    2\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100)),\n                2\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100)),\n            2\n        ) * (1 - (COALESCE(pip.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(pip.tax_rate_percentage, 0) / 100),\n        2\n    ) AS tax_amount,\n\n    act_products.product_name,\n    act_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    pip.*\n\nFROM act_purchase_invoice_products pip\nLEFT JOIN act_products ON pip.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON pip.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes ON pip.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON pip.tax_rate_id = act_tax_rates.tax_rate_id;"
+    },
+    "act_vw_purchase_invoice_summary": {
+      "viewName": "act_vw_purchase_invoice_summary",
+      "viewColumns": {},
+      "viewQuery": "SELECT\n    pi.purchase_invoice_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount,\n\n    ROUND(IFNULL(pay.total_paid_amount, 0), 2) AS total_paid_amount\n\nFROM act_purchase_invoices pi\n\nLEFT JOIN (\n    SELECT\n        purchase_invoice_id,\n        COUNT(purchase_invoice_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_purchase_invoice_products\n    GROUP BY purchase_invoice_id\n) p ON p.purchase_invoice_id = pi.purchase_invoice_id\n\nLEFT JOIN (\n    SELECT\n        purchase_invoice_id,\n        SUM(purchase_invoice_payment_amount) AS total_paid_amount\n    FROM act_purchase_invoice_payments\n    WHERE purchase_invoice_payment_status = 'PAID'\n    GROUP BY purchase_invoice_id\n) pay ON pay.purchase_invoice_id = pi.purchase_invoice_id;"
     },
     "act_vw_purchase_invoices": {
       "viewName": "act_vw_purchase_invoices",
@@ -29756,6 +30522,97 @@ export const dataDictionaryJson = {
     "act_vw_purchase_register": {
       "viewName": "act_vw_purchase_register",
       "viewColumns": {
+        "gross_amount": {
+          "columnName": "gross_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_trade_amount": {
+          "columnName": "discount_trade_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "TD Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_cash_amount": {
+          "columnName": "discount_cash_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "CD Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_rebate_amount": {
+          "columnName": "discount_rebate_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rebate Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
         "purchase_invoice_id": {
           "columnName": "purchase_invoice_id",
           "columnType": "UUID",
@@ -29851,6 +30708,20 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_purchase_invoices",
           "columnSourceOriginalColumn": "city_name"
+        }
+      },
+      "viewQuery": "SELECT \nact_vw_purchase_invoice_products.purchase_invoice_id,\nact_vw_purchase_invoice_products.tax_rate_percentage,\nact_vw_purchase_invoice_products.tax_rate_name,\nact_vw_purchase_invoice_products.tax_rate_id,\nact_vw_purchase_invoices.purchase_invoice_amount,\nact_vw_purchase_invoices.purchase_invoice_datetime,\nact_vw_purchase_invoices.purchase_invoice_number,\nact_vw_purchase_invoices.party_id,\nact_vw_purchase_invoices.party_name,\nact_vw_purchase_invoices.supply_mode,\nact_vw_purchase_invoices.legal_identifier,\nact_vw_purchase_invoices.city_name,\nSUM(act_vw_purchase_invoice_products.gross_amount) as gross_amount,\nSUM(act_vw_purchase_invoice_products.discount_trade_amount) as discount_trade_amount,\nSUM(act_vw_purchase_invoice_products.discount_cash_amount) as discount_cash_amount,\nSUM(act_vw_purchase_invoice_products.discount_rebate_amount) as discount_rebate_amount,\nSUM(act_vw_purchase_invoice_products.taxable_amount) as taxable_amount,\nSUM(act_vw_purchase_invoice_products.tax_amount) as tax_amount,\nSUM(act_vw_purchase_invoice_products.product_amount) as product_amount\nFROM act_vw_purchase_invoice_products\nLEFT JOIN act_vw_purchase_invoices ON act_vw_purchase_invoices.purchase_invoice_id = act_vw_purchase_invoice_products.purchase_invoice_id\nGROUP BY act_vw_purchase_invoice_products.tax_rate_percentage,act_vw_purchase_invoice_products.tax_rate_id,act_vw_purchase_invoice_products.purchase_invoice_id\nORDER BY act_vw_purchase_invoices.purchase_invoice_number"
+    },
+    "act_vw_sale_invoice_chargeable_services": {
+      "viewName": "act_vw_sale_invoice_chargeable_services",
+      "viewColumns": {
+        "chargeable_service_uom_quantity": {
+          "columnName": "chargeable_service_uom_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "chargeable_service_uom_quantity"
         },
         "gross_amount": {
           "columnName": "gross_amount",
@@ -29862,7 +30733,7 @@ export const dataDictionaryJson = {
             }
           },
           "columnSource": "function",
-          "columnSourceName": "sum",
+          "columnSourceName": "",
           "columnSourceOriginalColumn": ""
         },
         "discount_trade_amount": {
@@ -29875,7 +30746,7 @@ export const dataDictionaryJson = {
             }
           },
           "columnSource": "function",
-          "columnSourceName": "sum",
+          "columnSourceName": "",
           "columnSourceOriginalColumn": ""
         },
         "discount_cash_amount": {
@@ -29888,7 +30759,7 @@ export const dataDictionaryJson = {
             }
           },
           "columnSource": "function",
-          "columnSourceName": "sum",
+          "columnSourceName": "",
           "columnSourceOriginalColumn": ""
         },
         "discount_rebate_amount": {
@@ -29901,7 +30772,7 @@ export const dataDictionaryJson = {
             }
           },
           "columnSource": "function",
-          "columnSourceName": "sum",
+          "columnSourceName": "",
           "columnSourceOriginalColumn": ""
         },
         "taxable_amount": {
@@ -29914,7 +30785,7 @@ export const dataDictionaryJson = {
             }
           },
           "columnSource": "function",
-          "columnSourceName": "sum",
+          "columnSourceName": "",
           "columnSourceOriginalColumn": ""
         },
         "tax_amount": {
@@ -29927,28 +30798,9 @@ export const dataDictionaryJson = {
             }
           },
           "columnSource": "function",
-          "columnSourceName": "sum",
+          "columnSourceName": "",
           "columnSourceOriginalColumn": ""
         },
-        "product_amount": {
-          "columnName": "product_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        }
-      },
-      "viewQuery": "SELECT \nact_vw_purchase_invoice_products.purchase_invoice_id,\nact_vw_purchase_invoice_products.tax_rate_percentage,\nact_vw_purchase_invoice_products.tax_rate_name,\nact_vw_purchase_invoice_products.tax_rate_id,\nact_vw_purchase_invoices.purchase_invoice_amount,\nact_vw_purchase_invoices.purchase_invoice_datetime,\nact_vw_purchase_invoices.purchase_invoice_number,\nact_vw_purchase_invoices.party_id,\nact_vw_purchase_invoices.party_name,\nact_vw_purchase_invoices.supply_mode,\nact_vw_purchase_invoices.legal_identifier,\nact_vw_purchase_invoices.city_name,\nSUM(act_vw_purchase_invoice_products.gross_amount) as gross_amount,\nSUM(act_vw_purchase_invoice_products.discount_trade_amount) as discount_trade_amount,\nSUM(act_vw_purchase_invoice_products.discount_cash_amount) as discount_cash_amount,\nSUM(act_vw_purchase_invoice_products.discount_rebate_amount) as discount_rebate_amount,\nSUM(act_vw_purchase_invoice_products.taxable_amount) as taxable_amount,\nSUM(act_vw_purchase_invoice_products.tax_amount) as tax_amount,\nSUM(act_vw_purchase_invoice_products.product_amount) as product_amount\nFROM act_vw_purchase_invoice_products\nLEFT JOIN act_vw_purchase_invoices ON act_vw_purchase_invoices.purchase_invoice_id = act_vw_purchase_invoice_products.purchase_invoice_id\nGROUP BY act_vw_purchase_invoice_products.tax_rate_percentage,act_vw_purchase_invoice_products.tax_rate_id,act_vw_purchase_invoice_products.purchase_invoice_id\nORDER BY act_vw_purchase_invoices.purchase_invoice_number"
-    },
-    "act_vw_sale_invoice_chargeable_services": {
-      "viewName": "act_vw_sale_invoice_chargeable_services",
-      "viewColumns": {
         "chargeable_service_name": {
           "columnName": "chargeable_service_name",
           "columnType": "STRING",
@@ -30029,13 +30881,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_uom_id"
         },
-        "chargeable_service_uom_quantity": {
-          "columnName": "chargeable_service_uom_quantity",
+        "chargeable_service_total_quantity": {
+          "columnName": "chargeable_service_total_quantity",
           "columnType": "DOUBLE",
           "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_chargeable_services",
-          "columnSourceOriginalColumn": "chargeable_service_uom_quantity"
+          "columnSourceOriginalColumn": "chargeable_service_total_quantity"
         },
         "discount_cash_percentage": {
           "columnName": "discount_cash_percentage",
@@ -30149,83 +31001,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_chargeable_services",
           "columnSourceOriginalColumn": "chargeable_service_charge_standard"
         },
-        "gross_amount": {
-          "columnName": "gross_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Gross Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_trade_amount": {
-          "columnName": "discount_trade_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "TD Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_cash_amount": {
-          "columnName": "discount_cash_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "CD Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_rebate_amount": {
-          "columnName": "discount_rebate_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Rebate Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "taxable_amount": {
-          "columnName": "taxable_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Taxable Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
-        },
-        "tax_amount": {
-          "columnName": "tax_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Tax Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
+        "sale_invoice_chargeable_service_remarks": {
+          "columnName": "sale_invoice_chargeable_service_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_sale_invoice_chargeable_services",
+          "columnSourceOriginalColumn": "sale_invoice_chargeable_service_remarks"
         }
       },
       "viewQuery": "SELECT  (COALESCE(act_sale_invoice_chargeable_services.chargeable_service_quantity, 0) * COALESCE(act_sale_invoice_chargeable_services.chargeable_service_charge_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_chargeable_services.chargeable_service_quantity, 0) * COALESCE(act_sale_invoice_chargeable_services.chargeable_service_charge_gross, 0)) * (COALESCE(act_sale_invoice_chargeable_services.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_chargeable_services.chargeable_service_quantity, 0) * COALESCE(act_sale_invoice_chargeable_services.chargeable_service_charge_gross, 0)) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_chargeable_services.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_chargeable_services.chargeable_service_quantity, 0) * COALESCE(act_sale_invoice_chargeable_services.chargeable_service_charge_gross, 0)) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_chargeable_services.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_chargeable_services.chargeable_service_quantity, 0) * COALESCE(act_sale_invoice_chargeable_services.chargeable_service_charge_gross, 0)) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_chargeable_services.chargeable_service_quantity, 0) * COALESCE(act_sale_invoice_chargeable_services.chargeable_service_charge_gross, 0)) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_chargeable_services.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_chargeable_services.tax_rate_percentage, 0) / 100)) AS tax_amount,act_chargeable_services.chargeable_service_name, \nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_chargeable_service_uoms.chargeable_service_uom_name,\nact_sale_invoice_chargeable_services.* FROM act_sale_invoice_chargeable_services \nLEFT JOIN act_chargeable_services ON act_sale_invoice_chargeable_services.chargeable_service_id= act_chargeable_services.chargeable_service_id\nLEFT JOIN act_chargeable_service_uoms ON act_sale_invoice_chargeable_services.chargeable_service_uom_id = act_chargeable_service_uoms.chargeable_service_uom_id \nLEFT JOIN act_taxing_schemes ON act_sale_invoice_chargeable_services.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_sale_invoice_chargeable_services.tax_rate_id = act_tax_rates.tax_rate_id"
@@ -30422,6 +31204,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_medias",
           "columnSourceOriginalColumn": "media_type"
+        },
+        "media_remarks": {
+          "columnName": "media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_medias",
+          "columnSourceOriginalColumn": "media_remarks"
         }
       },
       "viewQuery": "SELECT act_sale_invoice_medias.sale_invoice_media_id,act_sale_invoice_medias.sale_invoice_id,act_medias.* FROM act_sale_invoice_medias LEFT JOIN act_medias ON act_medias.media_id = act_sale_invoice_medias.media_id"
@@ -30571,6 +31361,14 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "sale_invoice_product_id"
         },
+        "net_total_quantity": {
+          "columnName": "net_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "net_total_quantity"
+        },
         "product_id": {
           "columnName": "product_id",
           "columnType": "UUID",
@@ -30698,6 +31496,14 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_inventory_tracking_entries",
           "columnSourceOriginalColumn": "out_uom_id"
+        },
+        "inventory_tacking_entry_remarks": {
+          "columnName": "inventory_tacking_entry_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
         }
       },
       "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_vw_inventory_tracking_entries LEFT JOIN act_sale_invoice_products ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id"
@@ -30752,6 +31558,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_inventory_trackings",
           "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_remarks": {
+          "columnName": "inventory_tracking_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_remarks"
         }
       },
       "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_inventory_trackings.* FROM act_inventory_trackings LEFT JOIN act_sale_invoice_products ON act_inventory_trackings.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id"
@@ -30844,6 +31658,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_products",
           "columnSourceOriginalColumn": "product_name"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_products",
+          "columnSourceOriginalColumn": "hsn_code"
         },
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
@@ -31045,16 +31867,21 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "exchange_rate"
         },
-        "hsn_code": {
-          "columnName": "hsn_code",
-          "columnType": "STRING",
+        "sale_invoice_product_remarks": {
+          "columnName": "sale_invoice_product_remarks",
+          "columnType": "TEXT",
           "columnProperties": {},
           "columnSource": "table",
-          "columnSourceName": "act_products",
-          "columnSourceOriginalColumn": "hsn_code"
+          "columnSourceName": "act_sale_invoice_products",
+          "columnSourceOriginalColumn": "sale_invoice_product_remarks"
         }
       },
-      "viewQuery": "SELECT (COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) AS gross_amount, ((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100)) AS discount_trade_amount, (((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100)) AS discount_cash_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100)) AS discount_rebate_amount, ((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) AS taxable_amount, (((((COALESCE(act_sale_invoice_products.product_quantity, 0) * COALESCE(act_sale_invoice_products.product_price_gross, 0)) * (1 - (COALESCE(act_sale_invoice_products.discount_trade_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_cash_percentage, 0) / 100))) * (1 - (COALESCE(act_sale_invoice_products.discount_rebate_percentage, 0) / 100))) * (COALESCE(act_sale_invoice_products.tax_rate_percentage, 0) / 100)) AS tax_amount,\nact_products.product_name,\nact_products.hsn_code,\nact_taxing_schemes.taxing_scheme_name,\nact_tax_rates.tax_rate_name,\nact_product_uoms.product_uom_name,\nact_sale_invoice_products.* FROM act_sale_invoice_products \nLEFT JOIN act_products ON act_sale_invoice_products.product_id = act_products.product_id\nLEFT JOIN act_product_uoms ON act_sale_invoice_products.product_uom_id = act_product_uoms.product_uom_id \nLEFT JOIN act_taxing_schemes ON act_sale_invoice_products.taxing_scheme_id= act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates ON act_sale_invoice_products.tax_rate_id = act_tax_rates.tax_rate_id"
+      "viewQuery": "SELECT\n    ROUND(\n        COALESCE(sip.product_quantity, 0) *\n        COALESCE(sip.product_price_gross, 0),\n        2\n    ) AS gross_amount,\n\n    ROUND(\n        ROUND(\n            COALESCE(sip.product_quantity, 0) *\n            COALESCE(sip.product_price_gross, 0),\n            2\n        ) * (COALESCE(sip.discount_trade_percentage, 0) / 100),\n        2\n    ) AS discount_trade_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                COALESCE(sip.product_quantity, 0) *\n                COALESCE(sip.product_price_gross, 0),\n                2\n            ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100)),\n            2\n        ) * (COALESCE(sip.discount_cash_percentage, 0) / 100),\n        2\n    ) AS discount_cash_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                ROUND(\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0),\n                    2\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100)),\n                2\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100)),\n            2\n        ) * (COALESCE(sip.discount_rebate_percentage, 0) / 100),\n        2\n    ) AS discount_rebate_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                ROUND(\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0),\n                    2\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100)),\n                2\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100)),\n            2\n        ) * (1 - (COALESCE(sip.discount_rebate_percentage, 0) / 100)),\n        2\n    ) AS taxable_amount,\n\n    ROUND(\n        ROUND(\n            ROUND(\n                ROUND(\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0),\n                    2\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100)),\n                2\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100)),\n            2\n        ) * (1 - (COALESCE(sip.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(sip.tax_rate_percentage, 0) / 100),\n        2\n    ) AS tax_amount,\n\n    act_products.product_name,\n    act_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    sip.*\n\nFROM act_sale_invoice_products sip\nLEFT JOIN act_products\n    ON sip.product_id = act_products.product_id\nLEFT JOIN act_product_uoms\n    ON sip.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON sip.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON sip.tax_rate_id = act_tax_rates.tax_rate_id;"
+    },
+    "act_vw_sale_invoice_summary": {
+      "viewName": "act_vw_sale_invoice_summary",
+      "viewColumns": {},
+      "viewQuery": "SELECT\n    si.sale_invoice_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount,\n\n    ROUND(IFNULL(r.total_received_amount, 0), 2) AS total_received_amount\n\nFROM act_sale_invoices si\n\nLEFT JOIN (\n    SELECT\n        sale_invoice_id,\n        COUNT(sale_invoice_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_sale_invoice_products\n    GROUP BY sale_invoice_id\n) p ON p.sale_invoice_id = si.sale_invoice_id\n\nLEFT JOIN (\n    SELECT\n        sale_invoice_id,\n        SUM(sale_invoice_payment_amount) AS total_received_amount\n    FROM act_sale_invoice_payments\n    WHERE sale_invoice_payment_status = 'RECEIVED'\n    GROUP BY sale_invoice_id\n) r ON r.sale_invoice_id = si.sale_invoice_id;"
     },
     "act_vw_sale_invoices": {
       "viewName": "act_vw_sale_invoices",
@@ -31547,6 +32374,97 @@ export const dataDictionaryJson = {
     "act_vw_sale_register": {
       "viewName": "act_vw_sale_register",
       "viewColumns": {
+        "gross_amount": {
+          "columnName": "gross_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_trade_amount": {
+          "columnName": "discount_trade_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "TD Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_cash_amount": {
+          "columnName": "discount_cash_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "CD Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "discount_rebate_amount": {
+          "columnName": "discount_rebate_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Rebate Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        },
         "sale_invoice_id": {
           "columnName": "sale_invoice_id",
           "columnType": "UUID",
@@ -31642,97 +32560,6 @@ export const dataDictionaryJson = {
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "legal_identifier"
-        },
-        "gross_amount": {
-          "columnName": "gross_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Gross Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_trade_amount": {
-          "columnName": "discount_trade_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "TD Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_cash_amount": {
-          "columnName": "discount_cash_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "CD Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        },
-        "discount_rebate_amount": {
-          "columnName": "discount_rebate_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Rebate Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        },
-        "taxable_amount": {
-          "columnName": "taxable_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Taxable Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        },
-        "tax_amount": {
-          "columnName": "tax_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Tax Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
-        },
-        "product_amount": {
-          "columnName": "product_amount",
-          "columnType": "DOUBLE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Amount"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "sum",
-          "columnSourceOriginalColumn": ""
         }
       },
       "viewQuery": "SELECT \nact_vw_sale_invoice_products.sale_invoice_id,\nact_vw_sale_invoice_products.tax_rate_percentage,\nact_vw_sale_invoice_products.tax_rate_name,\nact_vw_sale_invoice_products.tax_rate_id,\nact_vw_sale_invoices.sale_invoice_amount,\nact_vw_sale_invoices.sale_invoice_datetime,\nact_vw_sale_invoices.sale_invoice_number,\nact_vw_sale_invoices.party_id,\nact_vw_sale_invoices.party_name,\nact_vw_sale_invoices.supply_mode,\nact_vw_sale_invoices.city_name,\nact_vw_sale_invoices.legal_identifier,\nSUM(act_vw_sale_invoice_products.gross_amount) as gross_amount,\nSUM(act_vw_sale_invoice_products.discount_trade_amount) as discount_trade_amount,\nSUM(act_vw_sale_invoice_products.discount_cash_amount) as discount_cash_amount,\nSUM(act_vw_sale_invoice_products.discount_rebate_amount) as discount_rebate_amount,\nSUM(act_vw_sale_invoice_products.taxable_amount) as taxable_amount,\nSUM(act_vw_sale_invoice_products.tax_amount) as tax_amount,\nSUM(act_vw_sale_invoice_products.product_amount) as product_amount\nFROM act_vw_sale_invoice_products\nLEFT JOIN act_vw_sale_invoices ON act_vw_sale_invoices.sale_invoice_id = act_vw_sale_invoice_products.sale_invoice_id\nGROUP BY act_vw_sale_invoice_products.tax_rate_percentage,act_vw_sale_invoice_products.tax_rate_id,act_vw_sale_invoice_products.sale_invoice_id"
@@ -32697,12 +33524,7 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "party_name"
@@ -32734,12 +33556,7 @@ export const dataDictionaryJson = {
         "phone_numbers": {
           "columnName": "phone_numbers",
           "columnType": "TEXT",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "phone_numbers"
@@ -32803,15 +33620,18 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_parties",
           "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "party_remarks": {
+          "columnName": "party_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_parties",
+          "columnSourceOriginalColumn": "party_remarks"
         }
       },
       "viewQuery": "SELECT act_suppliers.supplier_id,act_suppliers.supplier_type, act_vw_parties.* FROM act_suppliers LEFT JOIN act_vw_parties ON act_suppliers.party_id = act_vw_parties.party_id"
@@ -32854,12 +33674,7 @@ export const dataDictionaryJson = {
         "taxing_scheme_name": {
           "columnName": "taxing_scheme_name",
           "columnType": "STRING",
-          "columnProperties": {
-            "USE_FOR_ROW_LIKE_FILTER": {
-              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
-              "propertyValue": true
-            }
-          },
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_taxing_schemes",
           "columnSourceOriginalColumn": "taxing_scheme_name"
@@ -32875,13 +33690,8 @@ export const dataDictionaryJson = {
         "tax_rate_counts": {
           "columnName": "tax_rate_counts",
           "columnType": "INTEGER",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Tax Rates"
-            }
-          },
-          "columnSource": "function",
+          "columnProperties": {},
+          "columnSource": "funtion",
           "columnSourceName": "count",
           "columnSourceOriginalColumn": ""
         }
@@ -33087,6 +33897,43 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_amount"
         },
+        "transaction_entry_narration": {
+          "columnName": "transaction_entry_narration",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Narration"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
+        },
+        "ledger_account_name": {
+          "columnName": "ledger_account_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_name"
+        },
+        "ledger_account_type_name": {
+          "columnName": "ledger_account_type_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "ledger_account_type_name"
+        },
+        "reflecting_statement": {
+          "columnName": "reflecting_statement",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_ledger_accounts",
+          "columnSourceOriginalColumn": "reflecting_statement"
+        },
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
@@ -33231,42 +34078,13 @@ export const dataDictionaryJson = {
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "is_credit"
         },
-        "ledger_account_name": {
-          "columnName": "ledger_account_name",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "acr_vw_ledger_accounts",
-          "columnSourceOriginalColumn": "ledger_account_name"
-        },
-        "ledger_account_type_name": {
-          "columnName": "ledger_account_type_name",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_ledger_accounts",
-          "columnSourceOriginalColumn": "ledger_account_type_name"
-        },
-        "reflecting_statement": {
-          "columnName": "reflecting_statement",
-          "columnType": "STRING",
-          "columnProperties": {},
-          "columnSource": "view",
-          "columnSourceName": "act_vw_ledger_accounts",
-          "columnSourceOriginalColumn": "reflecting_statement"
-        },
-        "transaction_entry_narration": {
-          "columnName": "transaction_entry_narration",
+        "transaction_entry_remarks": {
+          "columnName": "transaction_entry_remarks",
           "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Narration"
-            }
-          },
-          "columnSource": "function",
-          "columnSourceName": "",
-          "columnSourceOriginalColumn": ""
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "transaction_entry_remarks"
         }
       },
       "viewQuery": "SELECT \nCASE WHEN act_transaction_entries.transaction_entry_description IS NULL OR act_transaction_entries.transaction_entry_description = '' THEN act_transactions.transaction_narration ELSE act_transaction_entries.transaction_entry_description END AS transaction_entry_narration, \nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS debit_ledger_account_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS debit_ledger_account_type_name,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS debit_reflecting_statement,\nCASE WHEN is_credit = 0 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS debit_ledger_account_balance,\nCASE WHEN is_credit = 0 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS debit_amount,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_name ELSE '' END AS credit_ledger_account_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_type_name ELSE '' END AS credit_ledger_account_type_name,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.reflecting_statement ELSE '' END AS credit_reflecting_statement,\nCASE WHEN is_credit = 1 THEN  act_vw_ledger_accounts.ledger_account_balance ELSE 0 END AS credit_ledger_account_balance,\nCASE WHEN is_credit = 1 THEN  act_transaction_entries.transaction_entry_amount ELSE 0 END AS credit_amount,\nact_vw_ledger_accounts.ledger_account_name,\nact_vw_ledger_accounts.ledger_account_type_name,\nact_vw_ledger_accounts.reflecting_statement,\nact_transactions.accountee_id,\nact_transactions.transaction_narration,\nact_transactions.transaction_time,\nact_transactions.transaction_type,\nact_transaction_entries.* FROM act_transaction_entries \nLEFT JOIN act_transactions ON act_transactions.transaction_id = act_transaction_entries.transaction_id\nLEFT JOIN act_vw_ledger_accounts ON act_transaction_entries.ledger_account_id = act_vw_ledger_accounts.ledger_account_id"
@@ -33305,6 +34123,14 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_users",
           "columnSourceOriginalColumn": "username"
+        },
+        "user_remarks": {
+          "columnName": "user_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_users",
+          "columnSourceOriginalColumn": "user_remarks"
         }
       },
       "viewQuery": "SELECT * FROM act_users"
@@ -36779,21 +37605,21 @@ export const dataDictionaryJson = {
       "rowOperation": "DELETE",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_transaction_entry_delete_actions",
-      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = OLD.transaction_id\n) AS transactions_total \nWHERE transaction_id = OLD.transaction_id;"
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance = IFNULL(act_vw_ledger_account_summary.balance, 0)\nFROM act_vw_ledger_account_summary\nWHERE act_vw_ledger_account_summary.ledger_account_id = act_ledger_accounts.ledger_account_id\nAND act_ledger_accounts.ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = OLD.transaction_id\n) AS transactions_total \nWHERE transaction_id = OLD.transaction_id;"
     },
     "act_trg_transaction_entry_insert_actions": {
       "triggerExecution": "AFTER",
       "rowOperation": "INSERT",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_transaction_entry_insert_actions",
-      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance = IFNULL(act_vw_ledger_account_summary.balance, 0)\nFROM act_vw_ledger_account_summary\nWHERE act_vw_ledger_account_summary.ledger_account_id = act_ledger_accounts.ledger_account_id\nAND act_ledger_accounts.ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
     },
     "act_trg_transaction_entry_update_actions": {
       "triggerExecution": "AFTER",
       "rowOperation": "UPDATE",
       "tableName": "act_transaction_entries",
       "triggerName": "act_trg_transaction_entry_update_actions",
-      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) +\n  CASE\n    WHEN OLD.is_credit = 1 THEN IFNULL(OLD.transaction_entry_amount, 0)\n    ELSE IFNULL(OLD.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = OLD.ledger_account_id;\n\nUPDATE act_ledger_accounts\nSET ledger_account_balance =\n  IFNULL(ledger_account_balance, 0) -\n  CASE\n    WHEN NEW.is_credit = 1 THEN IFNULL(NEW.transaction_entry_amount, 0)\n    ELSE IFNULL(NEW.transaction_entry_amount, 0) * -1\n  END\nWHERE ledger_account_id = NEW.ledger_account_id;\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
+      "triggerCode": "UPDATE act_ledger_accounts\nSET ledger_account_balance = IFNULL(act_vw_ledger_account_summary.balance, 0)\nFROM act_vw_ledger_account_summary\nWHERE act_vw_ledger_account_summary.ledger_account_id = act_ledger_accounts.ledger_account_id\nAND (act_ledger_accounts.ledger_account_id = NEW.ledger_account_id OR act_ledger_accounts.ledger_account_id = OLD.ledger_account_id);\n\nUPDATE act_transactions \nSET \ncredit_total = IFNULL(transactions_total.credit_total,0),\ndebit_total = IFNULL(transactions_total.debit_total,0),\ntransaction_amount = CASE WHEN transactions_total.credit_total > transactions_total.debit_total\nTHEN transactions_total.credit_total ELSE  transactions_total.debit_total END \nFROM (SELECT SUM(\nCASE\n    WHEN is_credit = 1 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS credit_total,\nSUM(\nCASE\n    WHEN is_credit = 0 THEN IFNULL(transaction_entry_amount, 0)\n    ELSE 0\n  END) AS debit_total\nFROM act_transaction_entries WHERE transaction_id = NEW.transaction_id\n) AS transactions_total \nWHERE transaction_id = NEW.transaction_id;"
     }
   }
 };

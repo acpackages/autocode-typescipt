@@ -85,7 +85,7 @@ export class AcDatagridBody extends AcElementBase {
     if (this.parentNode) {
       this.remove();
     }
-    Object.freeze(this);
+    super.destroy();
   }
 
   override disconnectedCallback(): void {

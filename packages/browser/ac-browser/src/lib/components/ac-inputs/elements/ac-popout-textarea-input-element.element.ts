@@ -186,7 +186,6 @@ export class AcPopoutTextareaInput extends AcInputBase {
   }
 
   override destroy() {
-    super.destroy();
     this.close("api");
     this.io?.disconnect();
     this.inputElement.replaceWith(this.inputElement);
@@ -196,6 +195,8 @@ export class AcPopoutTextareaInput extends AcInputBase {
     if (this.opts.triggerOnDblClick) {
       this.inputElement.removeEventListener("dblclick", () => this.open());
     }
+
+    super.destroy();
   }
 
   private ensureTextarea() {

@@ -102,10 +102,11 @@ export class AcTabs extends AcElementBase{
   }
 
   override destroy() {
-    super.destroy();
     if (this.boundClick) this.removeEventListener('click', this.boundClick);
     if (this.boundKeydown)
       this.removeEventListener('keydown', this.boundKeydown);
+
+    super.destroy();
   }
 
   public enable({ target, enable = true }: { target: number | string | HTMLElement, enable?: boolean }) {

@@ -544,12 +544,14 @@ export class AcDataDictionaryDartCodeGenerator {
     const columnName = columnDetails[AcDDViewColumn.KeyColumnName];
     const columnSource = columnDetails[AcDDViewColumn.KeyColumnSource];
     const columnSourceName = columnDetails[AcDDViewColumn.KeyColumnSourceName];
+    const columnSourceOriginalColumn = columnDetails[AcDDViewColumn.KeyColumnSourceOriginalColumn];
     const keyName = `${AcDDECodeGeneratorDefaultConfig.viewNameColumnClassPrefix}${stringToPascalCase(viewName)}.${stringToCamelCase(columnName)}`;
     result += `${this.tabs}${keyName} : {\n`;
     this.tabsCount++;
     result += `${this.tabs}AcDDViewColumn.keyColumnName : ${keyName},\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnSource : "${columnSource}",\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnSourceName : "${columnSourceName}",\n`;
+    result += `${this.tabs}AcDDViewColumn.keyColumnSourceOriginalColumn : "${columnSourceOriginalColumn}",\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnType : ${this.getDDColumnTypeString({ columnType: columnDetails[AcDDViewColumn.KeyColumnType] })},\n`;
     result += `${this.tabs}AcDDViewColumn.keyColumnProperties : ${this.getDDColumnProperties({ columnDetails: columnDetails })}\n`;
     this.tabsCount--;

@@ -89,12 +89,6 @@ export class AcDatagridHeaderCellElement extends AcElementBase {
     this.registerListeners();
   }
 
-  override destroy(): void {
-    super.destroy();
-    (this._datagridApi as any) = null;
-    (this._datagridColumn as any) = null;
-  }
-
   initHeaderCell(){
     this.setAttribute(AcDatagridAttributeName.acDatagridColumnId, this.datagridColumn.columnId);
     acAddClassToElement({ class_: AcDatagridCssClassName.acDatagridHeaderCellLeftContainer, element: this.leftContainer });

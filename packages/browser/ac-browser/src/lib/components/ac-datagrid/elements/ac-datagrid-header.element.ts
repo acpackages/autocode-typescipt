@@ -32,11 +32,6 @@ export class AcDatagridHeader extends AcElementBase{
     this.style.minHeight = 'max-content';
   }
 
-  override destroy(): void {
-    super.destroy();
-    (this._datagridApi as any) = null;
-  }
-
   override init(): void {
     super.init();
     if(this.datagridApi){

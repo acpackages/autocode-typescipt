@@ -6,7 +6,7 @@ import { AcDatagridExtension } from "../../../core/ac-datagrid-extension";
 import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extension-name.const";
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { AC_DATAGRID_AUTO_SAVE_HOOK_NAME } from "../_auto-save-row.export";
-import { AC_DATA_MANAGER_HOOK, AcDelayedCallback } from "@autocode-ts/autocode";
+import { AC_DATA_MANAGER_HOOK, AcDelayedCallback, acNullifyInstanceProperties } from "@autocode-ts/autocode";
 import { IAcDatagridAutoSaveRowData } from "../interfaces/ac-datagrid-auto-save-row-data.interface";
 import { IAcDatagridAutoSaveRequestArgs } from "../interfaces/ac-datagrid-auto-save-request-args.interface";
 import { IAcDatagridAutoSaveResponseArgs } from "../interfaces/ac-datagrid-auto-save-response-args.interface";
@@ -61,7 +61,7 @@ export class AcDatagridAutoSaveRowExtension extends AcDatagridExtension {
 
   override destroy(): void {
     this.delayedCallback.destroy();
-    this.destroy();
+    acNullifyInstanceProperties({instance:this});
   }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {

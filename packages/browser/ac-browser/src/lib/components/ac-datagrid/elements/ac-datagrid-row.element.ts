@@ -188,10 +188,8 @@ export class AcDatagridRowElement extends AcElementBase {
   }
 
   override destroy(): void {
-    super.destroy();
     this.clearDatagridCells();
-    (this._datagridApi as any) = null;
-    (this._datagridRow as any) = null;
+    super.destroy();
   }
 
   override disconnectedCallback(): void {
