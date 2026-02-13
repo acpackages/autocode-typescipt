@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/ac-data-dictionary-editor.css';
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
@@ -7,6 +8,7 @@ import { AcCodeGeneratorDDEExtension, AcDDECodeGeneratorDefaultConfig } from '@a
 import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storage';
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+import { dataDictionaryJson as communityDataDictionary } from './../../../../data/sst-community';
 import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { dataDictionaryJson as ddeDataDictionary } from './../../../../data/dde-data-dictionary';
 
@@ -36,7 +38,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       gridDiv.append(this.dataDictionaryEditor);
 
       console.dir(this.dataDictionaryEditor);
-      this.editorApi = this.dataDictionaryEditor.editorApi;
+      this.editorApi = this.dataDictionaryEditor.editorApi!;
       this.editorApi.hooks.subscribeAllHooks({callback:(hookName:string,hookArgs:any)=>{
         // console.log(`Found hook : ${hookName}`,hookArgs);
       }});
@@ -46,6 +48,7 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       this.editorApi.enableExtension({extensionName:AcRelationshipsDetectorDDEExtension.extensionName});
       this.editorApi.enableExtension({extensionName:AcSqlAnalyzerDDEExtension.extensionName});
 
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:communityDataDictionary});
       this.editorApi.setDataDictionaryJson({dataDictionaryJson:actDataDictionary});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:unifiDataDictionary});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:ddeDataDictionary});
