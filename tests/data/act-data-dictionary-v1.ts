@@ -31255,6 +31255,387 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT\n    pi.purchase_invoice_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount,\n\n    ROUND(IFNULL(pay.total_paid_amount, 0), 4) AS total_paid_amount\n\nFROM act_purchase_invoices pi\n\nLEFT JOIN (\n    SELECT\n        purchase_invoice_id,\n        COUNT(purchase_invoice_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_purchase_invoice_products\n    GROUP BY purchase_invoice_id\n) p ON p.purchase_invoice_id = pi.purchase_invoice_id\n\nLEFT JOIN (\n    SELECT\n        purchase_invoice_id,\n        SUM(purchase_invoice_payment_amount) AS total_paid_amount\n    FROM act_purchase_invoice_payments\n    WHERE purchase_invoice_payment_status = 'PAID'\n    GROUP BY purchase_invoice_id\n) pay ON pay.purchase_invoice_id = pi.purchase_invoice_id;"
     },
+    "act_vw_purchase_invoice_tax_register": {
+      "viewName": "act_vw_purchase_invoice_tax_register",
+      "viewColumns": {
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "supplier_type": {
+          "columnName": "supplier_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "supplier_type"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "party_name"
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "address_line_1": {
+          "columnName": "address_line_1",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "address_line_1"
+        },
+        "address_line_2": {
+          "columnName": "address_line_2",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "address_line_2"
+        },
+        "landmark": {
+          "columnName": "landmark",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "landmark"
+        },
+        "latitude": {
+          "columnName": "latitude",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "latitude"
+        },
+        "longitude": {
+          "columnName": "longitude",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "longitude"
+        },
+        "city_name": {
+          "columnName": "city_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "city_name"
+        },
+        "postal_code": {
+          "columnName": "postal_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "postal_code"
+        },
+        "state_name": {
+          "columnName": "state_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "state_name"
+        },
+        "country_name": {
+          "columnName": "country_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "country_name"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "device_id": {
+          "columnName": "device_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "device_id"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "profit_margin_percentage": {
+          "columnName": "profit_margin_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "profit_margin_percentage"
+        },
+        "purchase_invoice_amount": {
+          "columnName": "purchase_invoice_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_amount"
+        },
+        "purchase_invoice_datetime": {
+          "columnName": "purchase_invoice_datetime",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_datetime"
+        },
+        "purchase_invoice_id": {
+          "columnName": "purchase_invoice_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "purchase_invoice_number": {
+          "columnName": "purchase_invoice_number",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_number"
+        },
+        "purchase_term_id": {
+          "columnName": "purchase_term_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_term_id"
+        },
+        "purchase_invoice_remarks": {
+          "columnName": "purchase_invoice_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_remarks"
+        },
+        "purchase_invoice_status": {
+          "columnName": "purchase_invoice_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_status"
+        },
+        "supplier_id": {
+          "columnName": "supplier_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "supplier_id"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "purchase_invoice_type": {
+          "columnName": "purchase_invoice_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_type"
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "user_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "products_count"
+        },
+        "paid_amount": {
+          "columnName": "paid_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "paid_amount"
+        },
+        "chargeable_services_count": {
+          "columnName": "chargeable_services_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "chargeable_services_count"
+        },
+        "supply_mode": {
+          "columnName": "supply_mode",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "supply_mode"
+        },
+        "is_finalized": {
+          "columnName": "is_finalized",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "is_finalized"
+        },
+        "address_id": {
+          "columnName": "address_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "address_id"
+        },
+        "purchase_invoice_details": {
+          "columnName": "purchase_invoice_details",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "purchase_invoice_details"
+        },
+        "payment_status": {
+          "columnName": "payment_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoices",
+          "columnSourceOriginalColumn": "payment_status"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_purchase_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        }
+      },
+      "viewQuery": "SELECT act_vw_purchase_invoices.*,\nact_vw_purchase_invoice_products.tax_rate_id,\nact_vw_purchase_invoice_products.tax_rate_name,\nact_vw_purchase_invoice_products.tax_rate_percentage,\nSUM(act_vw_purchase_invoice_products.taxable_amount) AS taxable_amount,\n(act_vw_purchase_invoice_products.tax_amount) AS tax_amount,\nSUM(act_vw_purchase_invoice_products.product_amount) AS total_amount \nFROM act_vw_purchase_invoices \nLEFT JOIN act_vw_purchase_invoice_products ON act_vw_purchase_invoices.purchase_invoice_id = act_vw_purchase_invoice_products.purchase_invoice_id\nGROUP BY act_vw_purchase_invoices.purchase_invoice_id,act_vw_purchase_invoice_products.tax_rate_name"
+    },
     "act_vw_purchase_invoices": {
       "viewName": "act_vw_purchase_invoices",
       "viewColumns": {
@@ -33813,6 +34194,352 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT\n    si.sale_invoice_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount,\n\n    ROUND(IFNULL(r.total_received_amount, 0), 4) AS total_received_amount\n\nFROM act_sale_invoices si\n\nLEFT JOIN (\n    SELECT\n        sale_invoice_id,\n        COUNT(sale_invoice_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_sale_invoice_products\n    GROUP BY sale_invoice_id\n) p ON p.sale_invoice_id = si.sale_invoice_id\n\nLEFT JOIN (\n    SELECT\n        sale_invoice_id,\n        SUM(sale_invoice_payment_amount) AS total_received_amount\n    FROM act_sale_invoice_payments\n    WHERE sale_invoice_payment_status = 'RECEIVED'\n    GROUP BY sale_invoice_id\n) r ON r.sale_invoice_id = si.sale_invoice_id;"
     },
+    "act_vw_sale_invoice_tax_register": {
+      "viewName": "act_vw_sale_invoice_tax_register",
+      "viewColumns": {
+        "taxable_amount": {
+          "columnName": "taxable_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Taxable Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "tax_amount": {
+          "columnName": "tax_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Tax Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Total Amount"
+            }
+          },
+          "columnSource": "function",
+          "columnSourceName": "SUM",
+          "columnSourceOriginalColumn": ""
+        },
+        "customer_category": {
+          "columnName": "customer_category",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "customer_category"
+        },
+        "party_name": {
+          "columnName": "party_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "party_name"
+        },
+        "party_id": {
+          "columnName": "party_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "party_id"
+        },
+        "legal_identifier": {
+          "columnName": "legal_identifier",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "legal_identifier"
+        },
+        "address_line_1": {
+          "columnName": "address_line_1",
+          "columnType": "TEXT",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "address_line_1"
+        },
+        "address_line_2": {
+          "columnName": "address_line_2",
+          "columnType": "TEXT",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "address_line_2"
+        },
+        "landmark": {
+          "columnName": "landmark",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "landmark"
+        },
+        "latitude": {
+          "columnName": "latitude",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "latitude"
+        },
+        "longitude": {
+          "columnName": "longitude",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "longitude"
+        },
+        "city_name": {
+          "columnName": "city_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "city_name"
+        },
+        "postal_code": {
+          "columnName": "postal_code",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "postal_code"
+        },
+        "state_name": {
+          "columnName": "state_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "state_name"
+        },
+        "country_name": {
+          "columnName": "country_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "country_name"
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "customer_id": {
+          "columnName": "customer_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "customer_id"
+        },
+        "device_id": {
+          "columnName": "device_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "device_id"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "sale_invoice_remarks": {
+          "columnName": "sale_invoice_remarks",
+          "columnType": "TEXT",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_remarks"
+        },
+        "sale_invoice_amount": {
+          "columnName": "sale_invoice_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_amount"
+        },
+        "sale_invoice_datetime": {
+          "columnName": "sale_invoice_datetime",
+          "columnType": "DATETIME",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_datetime"
+        },
+        "sale_invoice_id": {
+          "columnName": "sale_invoice_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "sale_invoice_number": {
+          "columnName": "sale_invoice_number",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_number"
+        },
+        "sale_term_id": {
+          "columnName": "sale_term_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_term_id"
+        },
+        "sale_invoice_status": {
+          "columnName": "sale_invoice_status",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_status"
+        },
+        "taxing_scheme_id": {
+          "columnName": "taxing_scheme_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "taxing_scheme_id"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "transaction_id"
+        },
+        "sale_invoice_type": {
+          "columnName": "sale_invoice_type",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_type"
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "user_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "products_count"
+        },
+        "received_amount": {
+          "columnName": "received_amount",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "received_amount"
+        },
+        "chargeable_services_count": {
+          "columnName": "chargeable_services_count",
+          "columnType": "INTEGER",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "chargeable_services_count"
+        },
+        "received_by": {
+          "columnName": "received_by",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "received_by"
+        },
+        "sale_invoice_details": {
+          "columnName": "sale_invoice_details",
+          "columnType": "JSON",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "sale_invoice_details"
+        },
+        "supply_mode": {
+          "columnName": "supply_mode",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "supply_mode"
+        },
+        "is_finalized": {
+          "columnName": "is_finalized",
+          "columnType": "YES_NO",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "is_finalized"
+        },
+        "payment_status": {
+          "columnName": "payment_status",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "payment_status"
+        },
+        "address_id": {
+          "columnName": "address_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "address_id"
+        },
+        "is_credit": {
+          "columnName": "is_credit",
+          "columnType": "YES_NO",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoices",
+          "columnSourceOriginalColumn": "is_credit"
+        },
+        "tax_rate_id": {
+          "columnName": "tax_rate_id",
+          "columnType": "UUID",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_id"
+        },
+        "tax_rate_name": {
+          "columnName": "tax_rate_name",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_name"
+        },
+        "tax_rate_percentage": {
+          "columnName": "tax_rate_percentage",
+          "columnType": "DOUBLE",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_sale_invoice_products",
+          "columnSourceOriginalColumn": "tax_rate_percentage"
+        }
+      },
+      "viewQuery": "SELECT act_vw_sale_invoices.*,\nact_vw_sale_invoice_products.tax_rate_id,\nact_vw_sale_invoice_products.tax_rate_name,\nact_vw_sale_invoice_products.tax_rate_percentage,\nSUM(act_vw_sale_invoice_products.taxable_amount) AS taxable_amount,\n(act_vw_sale_invoice_products.tax_amount) AS tax_amount,\nSUM(act_vw_sale_invoice_products.product_amount) AS total_amount \nFROM act_vw_sale_invoices \nLEFT JOIN act_vw_sale_invoice_products ON act_vw_sale_invoices.sale_invoice_id = act_vw_sale_invoice_products.sale_invoice_id\nGROUP BY act_vw_sale_invoices.sale_invoice_id,act_vw_sale_invoice_products.tax_rate_name"
+    },
     "act_vw_sale_invoices": {
       "viewName": "act_vw_sale_invoices",
       "viewColumns": {
@@ -34814,6 +35541,7 @@ export const dataDictionaryJson = {
         "address_line_2": {
           "columnName": "address_line_2",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "address_line_2"
@@ -34821,6 +35549,7 @@ export const dataDictionaryJson = {
         "landmark": {
           "columnName": "landmark",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "landmark"
@@ -34828,6 +35557,7 @@ export const dataDictionaryJson = {
         "latitude": {
           "columnName": "latitude",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "latitude"
@@ -34835,6 +35565,7 @@ export const dataDictionaryJson = {
         "longitude": {
           "columnName": "longitude",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "longitude"
@@ -34842,6 +35573,7 @@ export const dataDictionaryJson = {
         "city_name": {
           "columnName": "city_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "city_name"
@@ -34849,6 +35581,7 @@ export const dataDictionaryJson = {
         "postal_code": {
           "columnName": "postal_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "postal_code"
@@ -34856,6 +35589,7 @@ export const dataDictionaryJson = {
         "state_name": {
           "columnName": "state_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "state_name"
@@ -34863,6 +35597,7 @@ export const dataDictionaryJson = {
         "country_name": {
           "columnName": "country_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_addresses",
           "columnSourceOriginalColumn": "country_name"
@@ -34870,6 +35605,7 @@ export const dataDictionaryJson = {
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "accountee_id"
@@ -34877,6 +35613,7 @@ export const dataDictionaryJson = {
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "currency_code"
@@ -34884,6 +35621,7 @@ export const dataDictionaryJson = {
         "customer_id": {
           "columnName": "customer_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "customer_id"
@@ -34891,6 +35629,7 @@ export const dataDictionaryJson = {
         "exchange_rate": {
           "columnName": "exchange_rate",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "exchange_rate"
@@ -34898,6 +35637,7 @@ export const dataDictionaryJson = {
         "display_index": {
           "columnName": "display_index",
           "columnType": "INTEGER",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "display_index"
@@ -34905,6 +35645,7 @@ export const dataDictionaryJson = {
         "is_draft": {
           "columnName": "is_draft",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "is_draft"
@@ -34912,6 +35653,7 @@ export const dataDictionaryJson = {
         "sale_quotation_remarks": {
           "columnName": "sale_quotation_remarks",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_remarks"
@@ -34919,6 +35661,7 @@ export const dataDictionaryJson = {
         "sale_quotation_amount": {
           "columnName": "sale_quotation_amount",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_amount"
@@ -34926,6 +35669,7 @@ export const dataDictionaryJson = {
         "sale_quotation_datetime": {
           "columnName": "sale_quotation_datetime",
           "columnType": "DATETIME",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_datetime"
@@ -34933,6 +35677,7 @@ export const dataDictionaryJson = {
         "sale_quotation_id": {
           "columnName": "sale_quotation_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_id"
@@ -34940,6 +35685,7 @@ export const dataDictionaryJson = {
         "sale_quotation_number": {
           "columnName": "sale_quotation_number",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_number"
@@ -34947,6 +35693,7 @@ export const dataDictionaryJson = {
         "sale_term_id": {
           "columnName": "sale_term_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_term_id"
@@ -34954,6 +35701,7 @@ export const dataDictionaryJson = {
         "sale_quotation_status": {
           "columnName": "sale_quotation_status",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_status"
@@ -34961,6 +35709,7 @@ export const dataDictionaryJson = {
         "taxing_scheme_id": {
           "columnName": "taxing_scheme_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "taxing_scheme_id"
@@ -34968,6 +35717,7 @@ export const dataDictionaryJson = {
         "sale_quotation_type": {
           "columnName": "sale_quotation_type",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_type"
@@ -34975,6 +35725,7 @@ export const dataDictionaryJson = {
         "user_id": {
           "columnName": "user_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "user_id"
