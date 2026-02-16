@@ -29,13 +29,16 @@ export interface IAcDatagridColumnDefinition {
   cellEditorElement?:any;
   cellEditorElementAttrs?:any;
   cellEditorElementParams?:any;
+  cellEditorFunction?:any;
 
   cellInputElement?:any;
   cellInputElementAttrs?:any;
+  cellInputFunction?:any;
 
   cellRendererElement?:any;
   cellRendererElementAttrs?:any;
   cellRendererElementParams?:any;
+  cellRendererFunction?:any;
 
   dataType?: "BOOLEAN"|"CUSTOM"|"DATE"|"DATETIME"|"NUMBER"|"OBJECT"|"STRING"|"UNKNOWN";
   /* AcDoc({

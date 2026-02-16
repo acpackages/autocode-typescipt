@@ -95,6 +95,7 @@
       "@autocode-ts/ac-report-engine": [
         "packages/browser/ac-report-engine/src/ac-report-engine.ts"
       ],
+      "@autocode-ts/ac-runtime": ["packages/browser/ac-runtime/src/ac-runtime.ts"],
       "@autocode-ts/ac-runtime-ts": [
         "packages/browser/ac-runtime-ts/src/index.ts"
       ],
@@ -106,9 +107,6 @@
       ],
       "@autocode-ts/ac-sqlite-dao-browser": [
         "packages/browser/ac-sqlite-dao-browser/src/index.ts"
-      ],
-      "@autocode-ts/ac-template-engine": [
-        "packages/browser/ac-template-engine/src/index.ts"
       ],
       "@autocode-ts/ac-tiptap-editor-input": [
         "packages/browser/ac-tiptap-editor-input/src/index.ts"

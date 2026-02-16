@@ -1,0 +1,20 @@
+{
+  "name": "@autocode-ts/ac-runtime",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./ac-runtime.js",
+  "module": "./ac-runtime.js",
+  "types": "./ac-runtime.d.ts",
+  "dependencies": {
+  },
+  "exports": {
+    ".":{
+      "import": "./ac-runtime.js",
+      "require": "./ac-runtime.cjs"
+    }
+  },
+  "files": [
+    "lib"
+  ]
+}

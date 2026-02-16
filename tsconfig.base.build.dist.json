@@ -54,7 +54,6 @@
       "@autocode-ts/ac-sql-node": ["dist/packages/node/ac-sql-node"],
       "@autocode-ts/ac-sql-parser": ["dist/packages/common/ac-sql-parser"],
       "@autocode-ts/ac-sqlite-dao-browser": ["dist/packages/browser/ac-sqlite-dao-browser"],
-      "@autocode-ts/ac-template-engine": ["dist/packages/browser/ac-template-engine"],
       "@autocode-ts/ac-tiptap-editor-input": ["dist/packages/browser/ac-tiptap-editor-input"],
       "@autocode-ts/ac-tom-select-input": ["dist/packages/browser/ac-tom-select-input"],
       "@autocode-ts/ac-vue": ["dist/packages/vue/ac-vue"],

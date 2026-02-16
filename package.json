@@ -23,9 +23,9 @@
     "build:ac-number-to-words-pipe": "nx run ac-number-to-words-pipe:build",
     "build:ac-quill-editor-input": "nx run ac-quill-editor-input:build",
     "build:ac-report-engine": "nx run ac-report-engine:build",
+    "build:ac-runtime": "nx run ac-runtime:build",
     "build:ac-runtime-ts": "nx run ac-runtime-ts:build",
     "build:ac-sql-node": "nx run ac-sql-node:build",
-    "build:ac-template-engine": "nx run ac-template-engine:build",
     "build:autocode": "nx run autocode:build",
     "dev:angular": "npx nx serve test-angular",
     "dev:browser": "npx nx serve test-browser",
@@ -170,8 +170,9 @@
     "@types/backbone": "^1.4.23",
     "ag-charts-community": "^11.3.2",
     "ag-charts-types": "^11.3.2",
-    "ag-grid-community": "file:F:/ThirdPartyResources/NodeModules/AgGrid/ag-grid-community",
-    "ag-grid-enterprise": "file:F:/ThirdPartyResources/NodeModules/AgGrid/ag-grid-enterprise",
+    "ag-grid-angular": "^34.0.1",
+    "ag-grid-community": "35.1.0",
+    "ag-grid-enterprise": "35.1.0",
     "axios": "^1.6.0",
     "bootstrap": "^5.3.6",
     "bwip-js": "^4.8.0",
@@ -220,8 +221,5 @@
   },
   "nx": {
     "includedScripts": []
-  },
-  "workspaces": [
-    "dist/packages/**"
-  ]
+  }
 }
