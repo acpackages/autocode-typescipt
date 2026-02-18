@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { AcContext, AcEnumContextEvent } from "@autocode-ts/autocode";
 import { AcElementBase } from "../../../core/ac-element-base";
@@ -18,7 +19,15 @@ export interface IAcWindowTab {
 export class AcWindowTabs extends AcElementBase {
   public static observedAttributes = [];
   private activeId: string | null = null;
+  keepOne:boolean = true;
   tabs:AcContext|any = new AcContext({value:{}});
+  get activeTab():IAcWindowTab|undefined{
+    let result;
+    if(this.activeId){
+      result = this.tabs[this.activeId];
+    }
+    return result;
+  }
 
   constructor(){
     super();
@@ -37,7 +46,10 @@ export class AcWindowTabs extends AcElementBase {
       tabElement.setAttribute('ac-draggable-element', '');
       tabElement.setAttribute('ac-draggable-target', '');
       tabElement.setAttribute('data-id', tab.id);
-      tabElement.innerHTML = `${tab.icon ? `<div class="ac-window-tab-icon">${tab.icon}</div>` : ''}<div class="ac-window-tab-title">${tab.title}</div>${tab.closeable ? '<div class="ac-window-tab-close">×</div>' : ''}`;
+      tabElement.innerHTML = `
+      <div class="ac-window-tab-icon" style="display:none">${tab.icon}</div>
+      <div class="ac-window-tab-title">${tab.title}</div>
+      <div class="ac-window-tab-close" style="display:none;">×</div>`;
       tabContainer.appendChild(tabElement);
       tabElement.addEventListener('click', (e) => {
         if ((e.target as HTMLElement).classList.contains('ac-window-tab-close')) {
@@ -105,11 +117,27 @@ export class AcWindowTabs extends AcElementBase {
   }
 
   public renderTabs(): void {
-    for(const tab of Object.values(this.tabs.toJson()) as IAcWindowTab[]){
+    const tabs = Object.values(this.tabs.toJson()) as IAcWindowTab[];
+    for(const tab of  tabs){
+      const closeElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-close') as HTMLElement;
       const iconElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-icon') as HTMLElement;
       const titleElement:HTMLElement = tab.element!.querySelector('.ac-window-tab-title') as HTMLElement;
-      if(iconElement && tab.icon){
+      if(tab.icon){
         iconElement.innerHTML = tab.icon;
+        iconElement.style.display = '';
+      }
+      else{
+        iconElement.style.display = 'none';
+      }
+      let closeable:boolean = tab.closeable == true || tab.closeable == undefined;
+      if(closeable && tabs.length == 1 && this.keepOne == true){
+        closeable = false;
+      }
+      if(closeable == true || closeable == undefined){
+        closeElement.style.display = '';
+      }
+      else{
+        closeElement.style.display = 'none';
       }
       if(titleElement && tab.title){
         titleElement.innerHTML = tab.title;
@@ -118,6 +146,7 @@ export class AcWindowTabs extends AcElementBase {
   }
 
   public removeTab({ id }: { id: string }): void {
+    delete this.tabs[id];
     const tab = this.querySelector(`.ac-window-tab-item[data-id="${id}"]`);
     if (tab) {
       const wasActive = tab.classList.contains('active');
@@ -125,12 +154,12 @@ export class AcWindowTabs extends AcElementBase {
       this.dispatchEvent(new CustomEvent('remove', { detail: { id: id } }));
       if (wasActive) {
         const remainingTabs = this.querySelectorAll('.ac-window-tab-item');
+
         if (remainingTabs.length > 0) {
           const newActiveId = remainingTabs[0].getAttribute('data-id')!;
           this.selectTab({ id: newActiveId });
         } else {
           this.activeId = null;
-
         }
       }
     }

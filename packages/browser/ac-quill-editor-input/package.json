@@ -4,11 +4,21 @@
   "private": true,
   "type": "module",
   "main": "./ac-quill-editor-input.js",
+  "module": "./ac-quill-editor-input.js",
   "types": "./ac-quill-editor-input.d.ts",
   "dependencies": {
-    "@autocode-ts/ac-browser": "^0.0.1",
+    "@autocode-ts/ac-quill-editor-input": "^0.0.1",
     "@autocode-ts/ac-extensions": "^0.0.1",
     "@autocode-ts/autocode": "^0.0.1",
     "quill": "^2.0.3"
-  }
+  },
+  "exports": {
+    ".":{
+      "import": "./ac-quill-editor-input.js",
+      "require": "./ac-quill-editor-input.cjs"
+    }
+  },
+  "files": [
+    "lib"
+  ]
 }

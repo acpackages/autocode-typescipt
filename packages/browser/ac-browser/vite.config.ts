@@ -35,9 +35,9 @@ export default defineConfig(({ command }) => {
     // },
     // Configuration for building your library.
     // See: https://vitejs.dev/guide/build.html#library-mode
-    resolve:{
-      preserveSymlinks:true,
-      external:['@autocode-ts/autocode']
+    resolve: {
+      preserveSymlinks: true,
+      external: ['@autocode-ts/autocode']
     },
     build: {
       outDir: '../../../dist/packages/browser/ac-browser',
@@ -66,13 +66,13 @@ export default defineConfig(({ command }) => {
           "@autocode-ts/ac-icons",
           "@popperjs/core"
         ],
-        output:{
-          globals:{
-            "@autocode-ts/autocode":"autocode",
-            "@autocode-ts/ac-extensions":"acExtensions",
-            "@autocode-ts/ac-icons":"acIcons"
+        output: {
+          globals: {
+            "@autocode-ts/autocode": "autocode",
+            "@autocode-ts/ac-extensions": "acExtensions",
+            "@autocode-ts/ac-icons": "acIcons"
           }
-      }
+        }
       },
     },
   };

@@ -42,6 +42,7 @@ export class WindowTabsPage extends HTMLElement {
 
         <div class="buttons">
           <button data-add-tab>Add Tab</button>
+          <button data-set-active-tab-title>Update Active Tab Tile</button>
           <button data-remove-tab>Remove Active Tab</button>
           <button data-select-first>Select First Tab</button>
         </div>
@@ -52,9 +53,9 @@ export class WindowTabsPage extends HTMLElement {
 
     // Preload some tabs
     tabsEl.setTabs({tabs:[
-      { id: 't1', title: 'Welcome', closeable: true, icon: '📘' },
+      { id: 't1', title: 'Welcome',  icon: '📘' },
       { id: 't2', title: 'Home.ts', closeable: true, icon: '📄' },
-      { id: 't3', title: 'About.ts', closeable: true, icon: '📄' },
+      { id: 't3', title: 'About.ts', closeable: false, icon: '📄' },
     ]});
 
     // Listen to events
@@ -66,6 +67,15 @@ export class WindowTabsPage extends HTMLElement {
     );
 
     // Button event handlers
+    this.querySelector('button[data-set-active-tab-title]')?.addEventListener('click', () => {
+      const id = 't' + Math.random().toString(36).slice(2, 6);
+      const activeTab = tabsEl.activeTab;
+      if(activeTab){
+        activeTab.title = id;
+      }
+    });
+
+
     this.querySelector('button[data-add-tab]')?.addEventListener('click', () => {
       const id = 't' + Math.random().toString(36).slice(2, 6);
       tabsEl.addTab({tab:{ id, title: 'New Tab', closeable: true, icon: '✨' }});

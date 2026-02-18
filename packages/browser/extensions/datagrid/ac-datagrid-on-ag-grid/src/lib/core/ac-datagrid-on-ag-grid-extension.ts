@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagridExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, IAcDatagridCell, IAcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridTreeTableExtension } from '@autocode-ts/ac-browser';
+import { AcDatagridExtension, AC_DATAGRID_EXTENSION_NAME, AC_DATAGRID_HOOK, IAcDatagridColumn, IAcDatagridExtension, IAcDatagridExtensionEnabledHookArgs, AcDatagridRowNumbersExtension, AcEnumDatagridRowNumbersHook, AcDatagridColumnsCustomizerExtension, AcEnumDatagridColumnsCustomizerHook, AcDatagridColumnDraggingExtension, AcEnumDatagridColumnDraggingHook, IAcDatagridColumnsCustomizerHookArgs, AcDatagridDataExportXlsxExtension, AcEnumDatagridDataExportXlsxHook, IAcDatagridRowFocusHookArgs, IAcDatagridRowUpdateHookArgs, IAcDatagridRowDeleteHookArgs, AcDatagridApi, IAcDatagridCell, IAcDatagridRow, IAcDatagridDataSourceTypeChangeHookArgs, AcEnumDataSourceType, IAcDatagridBeforeGetOnDemandDataHookArgs, IAcDatagridGetOnDemandDataSuccessCallbackHookArgs, AcDatagridCssClassName, AcDatagridAfterRowsFooterExtension, IAcDatagridDataExportXlsxExportCallHookArgs, IAcDatagridRowAddHookArgs, AcDatagridTreeTableExtension, IAcDatagridCellElementArgs } from '@autocode-ts/ac-browser';
 import { ColDef, createGrid, ModuleRegistry, AllCommunityModule, GridApi, GetRowIdParams, GridOptions, IRowNode, IServerSideGetRowsParams, IServerSideDatasource, SuppressKeyboardEventParams, ClientSideRowModelModule, IServerSideGetRowsRequest, TextFilterModule, NumberFilterModule, DateFilterModule } from 'ag-grid-community';
 import { AllEnterpriseModule, ServerSideRowModelModule, TreeDataModule } from 'ag-grid-enterprise';
 import { AcDatagridRowSelectionExtensionOnAgGrid } from './ac-datagrid-row-selection-extension-on-ag-grid';
@@ -892,10 +892,21 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       for (const column of this.datagridApi.datagridColumns) {
         const colDef: ColDef = acGetColDefFromAcDataGridColumn({ datagridColDef: column.columnDefinition });
         if (column.columnDefinition.cellRendererElement || column.columnDefinition.cellRendererFunction) {
-          if(column.columnDefinition.cellRendererFunction){
-            colDef.cellRenderer = column.columnDefinition.cellRendererFunction;
+          if (column.columnDefinition.cellRendererFunction) {
+            colDef.cellRenderer = (params: any) => {
+              if (this.datagridApi) {
+                const datagridColumn = params.datagridColumn;
+                const datagridCell = this.datagridApi?.getCell({ rowId: params.data[this.rowKey], column: datagridColumn }) as any;
+                const args: IAcDatagridCellElementArgs = {
+                  datagridApi: this.datagridApi!,
+                  datagridCell: datagridCell
+                }
+                return column.columnDefinition.cellRendererFunction(args);
+              }
+              return '';
+            };
           }
-          else{
+          else {
             colDef.cellRenderer = AcDatagridOnAgGridCellRenderer;
           }
           colDef.cellRendererParams = {
@@ -908,10 +919,21 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
         if (column.columnDefinition.allowEdit) {
           if (column.columnDefinition.useCellEditorForRenderer) {
             colDef.editable = false;
-            if(column.columnDefinition.cellEditorFunction){
-              colDef.cellRenderer = column.columnDefinition.cellEditorFunction;
+            if (column.columnDefinition.cellEditorFunction) {
+              colDef.cellRenderer = (params: any) => {
+                if (this.datagridApi) {
+                  const datagridColumn = params.datagridColumn;
+                  const datagridCell = this.datagridApi?.getCell({ rowId: params.data[this.rowKey], column: datagridColumn }) as any;
+                  const args: IAcDatagridCellElementArgs = {
+                    datagridApi: this.datagridApi!,
+                    datagridCell: datagridCell
+                  }
+                  return column.columnDefinition.cellEditorFunction(args);
+                }
+                return '';
+              };
             }
-            else{
+            else {
               colDef.cellRenderer = AcDatagridOnAgGridCellEditor;
             }
             colDef.cellRendererParams = {
@@ -921,10 +943,21 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
             };
           }
           else {
-            if(column.columnDefinition.cellEditorFunction){
-              colDef.cellEditor = column.columnDefinition.cellEditorFunction;
+            if (column.columnDefinition.cellEditorFunction) {
+              colDef.cellEditor = (params: any) => {
+                if (this.datagridApi) {
+                  const datagridColumn = params.datagridColumn;
+                  const datagridCell = this.datagridApi?.getCell({ rowId: params.data[this.rowKey], column: datagridColumn }) as any;
+                  const args: IAcDatagridCellElementArgs = {
+                    datagridApi: this.datagridApi!,
+                    datagridCell: datagridCell
+                  }
+                  return column.columnDefinition.cellEditorFunction(args);
+                }
+                return '';
+              };;
             }
-            else{
+            else {
               colDef.cellEditor = AcDatagridOnAgGridCellEditor;
             }
             colDef.cellEditorParams = {

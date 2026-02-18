@@ -34,10 +34,13 @@ export default defineConfig(() => ({
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/ac-quill-editor-input.ts',
       name: 'acQuillEditorInput',
-      fileName: 'ac-quill-editor-input',
-      // Change this to the formats you want to support.
-      // Don't forget to update your package.json as well.
-      formats: ['es' as const],
+        fileName: (format) => {
+          if (format === 'es') return 'ac-quill-editor-input.js';
+          if (format === 'cjs') return 'ac-quill-editor-input.cjs';
+          if (format === 'umd') return 'ac-quill-editor-input.umd.js';
+          return 'ac-quill-editor-input.js';
+        },
+        formats: ['es' as const, 'cjs' as const, 'umd' as const],
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
@@ -47,6 +50,13 @@ export default defineConfig(() => ({
         "@autocode-ts/autocode",
         "quill"
       ],
+      output: {
+          globals: {
+            "@autocode-ts/autocode": "autocode",
+            "@autocode-ts/ac-browser": "acBrowser",
+            "@autocode-ts/ac-extensions": "acExtensions"
+          }
+        }
     },
   },
 }));
