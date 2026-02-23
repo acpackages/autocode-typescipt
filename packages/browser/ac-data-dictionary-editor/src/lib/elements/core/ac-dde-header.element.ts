@@ -17,7 +17,7 @@ export class AcDDEHeader extends AcDDEBase {
   activeView: AcEnumDDETab = AcEnumDDETab.TableEditor;
   dropdown: HTMLElement = document.createElement('div');
 
-  // selectDataDictionaryInput: AcSelectInput;
+  // selectDataDictionaryInput: AcSelectInputElement;
 
   override init() {
     super.init();

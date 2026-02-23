@@ -31,7 +31,7 @@ const ariaProperties : IAcBuilderElementProperty[] = [
   AC_ARIA_PROPERTIES["aria-disabled"] as IAcBuilderElementProperty,
 ];
 
-export class AcInput extends AcBuilderElement{
+export class AcInputElement extends AcBuilderElement{
   override init({ args }: { args: IAcBuilderElementInitArgs; }): void {
     this.registerListeners();
   }
@@ -87,5 +87,5 @@ export const AC_BUILDER_INPUT_ELEMENT:IAcBuilderElement = {
     ...ariaProperties,
   ],
   mediaSvg:AC_BUILDER_ICON_SVGS.input,
-  instanceClass:AcInput
+  instanceClass:AcInputElement
 }

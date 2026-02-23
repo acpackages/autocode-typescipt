@@ -8,7 +8,7 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcScrollable } from "../../_components.export";
 import { AcInputBase, AC_INPUT_TAG } from "../_ac-inputs.export";
 
-export class AcSelectInput extends AcInputBase {
+export class AcSelectInputElement extends AcInputBase {
   static override get observedAttributes() {
     return [...super.observedAttributes, 'label-key', 'value-key', 'select-options'];
   }
@@ -460,4 +460,4 @@ export class AcSelectInput extends AcInputBase {
   }
 }
 
-acRegisterCustomElement({ tag: AC_INPUT_TAG.selectInput, type: AcSelectInput });
+acRegisterCustomElement({ tag: AC_INPUT_TAG.selectInput, type: AcSelectInputElement });

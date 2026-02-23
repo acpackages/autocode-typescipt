@@ -22,8 +22,8 @@ const AC_INPUT_METADATA_KEY = Symbol('ac_input_metadata');
 const AC_OUTPUT_METADATA_KEY = Symbol('ac_output_metadata');
 const AC_VIEW_CHILD_METADATA_KEY = Symbol('ac_view_child_metadata');
 
-// @AcInput decorator
-export function AcInput(alias?: string) {
+// @AcInputElement decorator
+export function AcInputElement(alias?: string) {
     return function (target: any, propertyKey: string) {
         if (!target.constructor[AC_INPUT_METADATA_KEY]) {
             target.constructor[AC_INPUT_METADATA_KEY] = {};

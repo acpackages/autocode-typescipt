@@ -6,7 +6,7 @@ import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 import { IAcPopoutTextareaOptions } from "../interfaces/input-options/ac-popout-textarea-input-options.interface";
 
-export class AcPopoutTextareaInput extends AcInputBase {
+export class AcPopoutTextareaInputElement extends AcInputBase {
   private textarea: HTMLTextAreaElement | null = null;
 
   private opts!: Required<IAcPopoutTextareaOptions>;
@@ -369,4 +369,4 @@ export class AcPopoutTextareaInput extends AcInputBase {
 
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.popoutTextareaInput,type:AcPopoutTextareaInput});
+acRegisterCustomElement({tag:AC_INPUT_TAG.popoutTextareaInput,type:AcPopoutTextareaInputElement});

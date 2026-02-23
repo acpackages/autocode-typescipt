@@ -54,8 +54,8 @@ export class AcDDInputFieldBaseElement extends AcElementBase {
 
   ddInputFieldElement!:AcDDInputFieldElement;
 
-  constructor() {
-    super();
+  override init() {
+    super.init();
     this.style.display = 'contents';
     this.innerHTML = `Label : <label ac-dd-input-label-conatiner></label><div ac-dd-input-container></div>`;
   }

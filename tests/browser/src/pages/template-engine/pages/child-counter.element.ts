@@ -1,4 +1,4 @@
-import { AcElement, AcInput, AcOutput, AcEventEmitter } from '../core/element.base';
+import { AcElement, AcInputElement, AcOutput, AcEventEmitter } from '../core/element.base';
 
 @AcElement({
   selector: 'app-child-counter, [app-child-counter]',
@@ -7,7 +7,7 @@ import { AcElement, AcInput, AcOutput, AcEventEmitter } from '../core/element.ba
       <h4>Child Counter</h4>
       <p>Count from parent: <strong>{{ count }}</strong></p>
       <p>Message from parent: <em>{{ message }}</em></p>
-      
+
       <button ac:on:click="increment()">Increment in Child</button>
       <button ac:on:click="sendMessage()">Send Message to Parent</button>
     </div>
@@ -39,8 +39,8 @@ import { AcElement, AcInput, AcOutput, AcEventEmitter } from '../core/element.ba
   `]
 })
 export class ChildCounterElement {
-  @AcInput() count: number = 0;
-  @AcInput() message: string = '';
+  @AcInputElement() count: number = 0;
+  @AcInputElement() message: string = '';
 
   @AcOutput() countChange = new AcEventEmitter<number>();
   @AcOutput() messageFromChild = new AcEventEmitter<string>();

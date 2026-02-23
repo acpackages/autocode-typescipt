@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { AcArrayValuesInput, AcDatagrid, AcDatagridSelectInput, AcDatetimeInput, AcFilePreview, AcForm, AcFormField, AcFormFieldErrorMessage, AcInput, AcModal, AcNumberInput, AcOptionInput, AcPagination, AcPopoutTextareaInput, AcResizable, AcResizablePanel, AcResizablePanels, AcSelectInput, AcTextareaInput, AcTextInput, AcTooltip } from "../components/_components.export";
+import { AcArrayValuesInputElement, AcDatagrid, AcDatagridSelectInputElement, AcDatetimeInputElement, AcFilePreview, AcForm, AcFormField, AcFormFieldErrorMessage, AcInputElement, AcModal, AcNumberInput, AcOptionInputElement, AcPagination, AcPopoutTextareaInputElement, AcResizable, AcResizablePanel, AcResizablePanels, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
 import { AcSvgIcon } from "../components/ac-svg-icon/_ac-svg-icon.element";
@@ -60,16 +60,16 @@ AcFormField;
 AcFormFieldErrorMessage;
 
 // Start Input Elements
-AcArrayValuesInput;
-AcDatagridSelectInput;
-AcDatetimeInput;
-AcInput;
+AcArrayValuesInputElement;
+AcDatagridSelectInputElement;
+AcDatetimeInputElement;
+AcInputElement;
 AcNumberInput;
-AcOptionInput;
-AcPopoutTextareaInput;
-AcSelectInput;
-AcTextInput;
-AcTextareaInput;
+AcOptionInputElement;
+AcPopoutTextareaInputElement;
+AcSelectInputElement;
+AcTextInputElement;
+AcTextareaInputElement;
 // End Input Elements
 
 AcResizable;

@@ -1,4 +1,4 @@
-import { AcElement, AcElementManager, AcInput, getAcElementMetadata } from './element.base';
+import { AcElement, AcElementManager, AcInputElement, getAcElementMetadata } from './element.base';
 import { acRouter, AcRouteSnapshot } from './router';
 
 @AcElement({
@@ -6,7 +6,7 @@ import { acRouter, AcRouteSnapshot } from './router';
     template: '', // Empty by default, content injected by router
 })
 export class AcRouterElement {
-    @AcInput() name: string = 'primary';
+    @AcInputElement() name: string = 'primary';
 
     element!: HTMLElement; // Injected by ElementManager
     private currentComponentInstance: any = null;

@@ -1,4 +1,4 @@
-import { AcTextareaInput } from "@autocode-ts/ac-browser";
+import { AcTextareaInputElement } from "@autocode-ts/ac-browser";
 import { AcDDEAttributeName, AcDDECssClassName, IAcDDETrigger } from "../../_ac-data-dictionary-editor.export";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { AcDelayedCallback, AcEvents } from "@autocode-ts/autocode";
@@ -15,7 +15,7 @@ export class AcDDETriggerMaster {
 
   changeTimeout:any;
   element: HTMLElement = document.createElement('div');
-  queryInput: AcTextareaInput;
+  queryInput: AcTextareaInputElement;
   events: AcEvents = new AcEvents();
   delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
@@ -29,7 +29,7 @@ export class AcDDETriggerMaster {
         </div>
       </div>
     `;
-    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInput;
+    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInputElement;
     this.queryInput.on({
       event: 'change', callback: () => {
         this.notifyChange();

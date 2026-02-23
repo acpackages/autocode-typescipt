@@ -1,7 +1,7 @@
-import {  IAcDatagridCellElementArgs, AcSelectInput, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
+import {  IAcDatagridCellElementArgs, AcSelectInputElement, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
 import { AcEnumDDColumnType } from '@autocode-ts/ac-data-dictionary';
 export class AcDDEDatagridSelectColumnTypeInput implements IAcDatagridCellEditor{
-  selectInput:AcSelectInput = new AcSelectInput();
+  selectInput:AcSelectInputElement = new AcSelectInputElement();
 
   destroy(): void {
     // this.selectInput.destroy();

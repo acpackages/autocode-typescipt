@@ -4,12 +4,12 @@
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
 import { acAddClassToElement, acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcInputCssClassName } from "../consts/ac-input-css-class-name.const";
-import { AcInput } from "./ac-input-element.element";
+import { AcInputElement } from "./ac-input-element.element";
 import { arrayRemove } from "@autocode-ts/ac-extensions";
 import { Autocode,AcEnumContextEvent, IAcContextEvent } from "@autocode-ts/autocode";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 
-export class AcOptionInput extends AcInput {
+export class AcOptionInputElement extends AcInputElement {
   static override get observedAttributes() {
     return [... super.observedAttributes, 'is-array', 'label-element', 'value-checked', 'value-unchecked'];
   }
@@ -239,4 +239,4 @@ export class AcOptionInput extends AcInput {
   }
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.optionInput,type:AcOptionInput});
+acRegisterCustomElement({tag:AC_INPUT_TAG.optionInput,type:AcOptionInputElement});

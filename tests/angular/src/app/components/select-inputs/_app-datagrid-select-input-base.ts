@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDatagrid, AcDatagridApi, AcDatagridSelectInput, AcInputBase, AcMessage } from "@autocode-ts/ac-browser";
+import { AcDatagrid, AcDatagridApi, AcDatagridSelectInputElement, AcInputBase, AcMessage } from "@autocode-ts/ac-browser";
 import { AcDataManager, IAcFilterGroup } from "@autocode-ts/autocode";
 import { AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME } from "@autocode-ts/ac-datagrid-on-ag-grid";
 
 export class AppDatagridSelectInputBase extends AcInputBase {
-  override inputElement: AcDatagridSelectInput = new AcDatagridSelectInput();
+  override inputElement: AcDatagridSelectInputElement = new AcDatagridSelectInputElement();
   datagrid?: AcDatagrid;
   datagridApi?: AcDatagridApi;
   dataManager?: AcDataManager;

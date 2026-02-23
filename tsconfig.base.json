@@ -81,6 +81,7 @@
       "@autocode-ts/ac-number-to-words-pipe": [
         "packages/browser/extensions/report-engine/ac-number-to-words-pipe/src/ac-number-to-words-pipe.ts"
       ],
+      "@autocode-ts/ac-pipes": ["packages/common/ac-pipes/src/ac-pipes.ts"],
       "@autocode-ts/ac-quill-editor-input": [
         "packages/browser/ac-quill-editor-input/src/ac-quill-editor-input.ts"
       ],
@@ -95,7 +96,9 @@
       "@autocode-ts/ac-report-engine": [
         "packages/browser/ac-report-engine/src/ac-report-engine.ts"
       ],
-      "@autocode-ts/ac-runtime": ["packages/browser/ac-runtime/src/ac-runtime.ts"],
+      "@autocode-ts/ac-runtime": [
+        "packages/browser/ac-runtime/src/ac-runtime.ts"
+      ],
       "@autocode-ts/ac-runtime-ts": [
         "packages/browser/ac-runtime-ts/src/index.ts"
       ],

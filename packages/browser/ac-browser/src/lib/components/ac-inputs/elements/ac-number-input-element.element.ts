@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
-import { AcInput } from "./ac-input-element.element";
+import { AcInputElement } from "./ac-input-element.element";
 
-export class AcNumberInput extends AcInput {
+export class AcNumberInput extends AcInputElement {
 
   static override get observedAttributes() {
     return [... super.observedAttributes, 'min', 'max', 'step'];

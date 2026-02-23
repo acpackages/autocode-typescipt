@@ -1,0 +1,22 @@
+{
+  "name": "@autocode-ts/ac-pipes",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./ac-pipes.js",
+  "module": "./ac-pipes.js",
+  "browser": "./ac-pipes.umd.cjs",
+  "types": "./ac-pipes.d.ts",
+  "exports": {
+    "import": "./ac-pipes.js",
+    "require": "./ac-pipes.cjs"
+  },
+  "dependencies": {
+    "luxon": "^3.6.1"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

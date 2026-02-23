@@ -83,14 +83,10 @@ export class AcDDDatagridElement extends AcElementBase {
 
   columns?: AcDDTableColumn;
 
-  constructor() {
-    super();
+  override init(): void {
     this.style.display = 'contents';
     this.datagridApi = this.datagrid.datagridApi;
-  }
-
-  override connectedCallback(): void {
-    super.connectedCallback();
+    super.init();
     this.append(this.datagrid);
     this.setDatagridColumns();
   }

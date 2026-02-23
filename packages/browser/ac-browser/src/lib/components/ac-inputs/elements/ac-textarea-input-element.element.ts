@@ -4,7 +4,7 @@ import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcInputBase } from "../core/ac-input-base";
 
-export class AcTextareaInput extends AcInputBase {
+export class AcTextareaInputElement extends AcInputBase {
   static override get observedAttributes() {
     return [... super.observedAttributes, 'minlength', 'maxlength','pattern', 'cols', 'rows'];
   }
@@ -124,4 +124,4 @@ export class AcTextareaInput extends AcInputBase {
   }
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.textareaInput,type:AcTextareaInput});
+acRegisterCustomElement({tag:AC_INPUT_TAG.textareaInput,type:AcTextareaInputElement});

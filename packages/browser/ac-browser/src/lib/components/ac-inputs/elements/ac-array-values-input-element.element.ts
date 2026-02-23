@@ -16,7 +16,7 @@ interface IAcArrayValueItem {
   element?: HTMLElement,
 }
 
-export class AcArrayValuesInput extends AcInputBase {
+export class AcArrayValuesInputElement extends AcInputBase {
 
   override get isValidRequired(): boolean {
     return this.value.length > 0;
@@ -193,4 +193,4 @@ export class AcArrayValuesInput extends AcInputBase {
 
 }
 
-acRegisterCustomElement({ tag: AC_INPUT_TAG.arrayValuesInput, type: AcArrayValuesInput });
+acRegisterCustomElement({ tag: AC_INPUT_TAG.arrayValuesInput, type: AcArrayValuesInputElement });

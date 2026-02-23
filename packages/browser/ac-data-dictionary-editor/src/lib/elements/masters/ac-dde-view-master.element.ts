@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcTextareaInput } from "@autocode-ts/ac-browser";
+import { AcTextareaInputElement } from "@autocode-ts/ac-browser";
 import { AcDDEApi } from "../../core/ac-dde-api";
 import { IAcDDEView, IAcDDEViewColumn } from "../../_ac-data-dictionary-editor.export";
 import { AcDelayedCallback, AcEvents } from "@autocode-ts/autocode";
@@ -16,7 +16,7 @@ export class AcDDEViewMaster {
 
   editorApi!: AcDDEApi;
   element: HTMLElement = document.createElement('div');
-  queryInput: AcTextareaInput;
+  queryInput: AcTextareaInputElement;
   btnSetColumns!: HTMLButtonElement;
   events: AcEvents = new AcEvents();
   changeTimeout: any;
@@ -91,7 +91,7 @@ export class AcDDEViewMaster {
       }
     });
 
-    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInput;
+    this.queryInput = this.element.querySelector('.query-input') as AcTextareaInputElement;
     this.queryInput.on({
       event: 'change', callback: () => {
         this.notifyChange();

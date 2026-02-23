@@ -7,7 +7,7 @@ import { AC_DATAGRID_EVENT, AcDatagrid, IAcDatagridCell } from "../../_component
 import { AcEnumConditionOperator, AcFilterGroup, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from "@autocode-ts/autocode";
 import { createPopper, Instance as PopperInstance, Placement } from '@popperjs/core';
 
-export class AcDatagridSelectInput extends AcInputBase {
+export class AcDatagridSelectInputElement extends AcInputBase {
   static override get observedAttributes() {
     return [... super.observedAttributes, 'value-key'];
   }
@@ -570,4 +570,4 @@ export class AcDatagridSelectInput extends AcInputBase {
   }
 }
 
-acRegisterCustomElement({ tag: AC_INPUT_TAG.datagridSelectInput, type: AcDatagridSelectInput });
+acRegisterCustomElement({ tag: AC_INPUT_TAG.datagridSelectInput, type: AcDatagridSelectInputElement });

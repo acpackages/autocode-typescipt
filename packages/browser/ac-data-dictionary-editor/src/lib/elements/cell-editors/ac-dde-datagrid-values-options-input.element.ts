@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcArrayValuesInput, IAcDatagridCell, AcEnumModalEvent, AcModal, AcTextInput, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
+import { AcArrayValuesInputElement, IAcDatagridCell, AcEnumModalEvent, AcModal, AcTextInputElement, IAcDatagridCellEditor, IAcDatagridCellElementArgs } from "@autocode-ts/ac-browser";
 
 export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditor {
   datagridCell!: IAcDatagridCell;
-  textInput: AcTextInput = new AcTextInput();
+  textInput: AcTextInputElement = new AcTextInputElement();
   isModalOpen: boolean = false;
 
   destroy(): void {
@@ -92,7 +92,7 @@ export class AcDDEDatagridValueOptionsInput  implements IAcDatagridCellEditor {
         </div>
       </div>
       `;
-    const arrayValues = acModal.querySelector('ac-array-values-input') as AcArrayValuesInput;
+    const arrayValues = acModal.querySelector('ac-array-values-input') as AcArrayValuesInputElement;
     acModal.on({
       event: 'close', callback: () => {
         this.datagridCell.datagridRow.data[this.datagridCell.datagridColumn.columnKey] = [...arrayValues.value];

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IAcDatagridCellElementArgs, AcTextInput, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
+import { IAcDatagridCellElementArgs, AcTextInputElement, IAcDatagridCellEditor } from '@autocode-ts/ac-browser';
 export class AcDDEDatagridTextInput implements IAcDatagridCellEditor{
-  textInput:AcTextInput = new AcTextInput();
+  textInput:AcTextInputElement = new AcTextInputElement();
 
   destroy(): void {
     this.textInput.destroy();

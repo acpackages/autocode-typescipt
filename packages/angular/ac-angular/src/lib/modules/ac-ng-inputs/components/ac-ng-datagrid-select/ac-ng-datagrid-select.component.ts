@@ -20,7 +20,7 @@ import {
   SimpleChanges,
   OnDestroy
 } from '@angular/core';
-import { AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
+import { AC_DATAGRID_EVENT, AC_DATAGRID_EXTENSION_NAME, acAddClassToElement, AcDatagrid, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInputElement, IAcDatagridColumnDefinition } from '@autocode-ts/ac-browser';
 import { IAcNgDatagridColumnDefinition } from '../../../ac-ng-datagrid/interfaces/ac-datagrid-column-definition.interface';
 import { AcDataManager, AcDelayedCallback, acNullifyInstanceProperties, IAcOnDemandRequestArgs } from '@autocode-ts/autocode';
 import { AcRuntimeService } from '@autocode-ts/ac-ng-runtime';
@@ -35,7 +35,7 @@ import { AcNgDatagridCellEditor } from '../../../ac-ng-datagrid/elements/ac-ng-d
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy {
-  @ViewChild('selectInput') selectInputsRef: ElementRef<AcDatagridSelectInput>;
+  @ViewChild('selectInput') selectInputsRef: ElementRef<AcDatagridSelectInputElement>;
 
   @Input() inputClass: string = '';
   @Input() labelKey: string = 'label';
@@ -86,7 +86,7 @@ export class AcNgDatagridSelectComponent implements OnChanges, OnInit, OnDestroy
 
   datagrid: AcDatagrid;
   datagridApi!: AcDatagridApi;
-  selectInput!: AcDatagridSelectInput;
+  selectInput!: AcDatagridSelectInputElement;
   delayedCallback:AcDelayedCallback = new AcDelayedCallback();
 
   columnDraggingExtension!: AcDatagridColumnDraggingExtension;

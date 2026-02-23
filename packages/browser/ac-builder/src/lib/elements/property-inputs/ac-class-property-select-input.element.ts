@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { acRegisterCustomElement, AcSelectInput } from "@autocode-ts/ac-browser";
+import { acRegisterCustomElement, AcSelectInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderApi } from "../../core/ac-builder-api";
 import { AcEnumBuilderHook } from "../../enums/ac-enum-builder-hook.enum";
 import { AcBuilderPropertyInput } from "../../core/ac-builder-property-input";
 
 export class AcClassPropertySelectInput extends AcBuilderPropertyInput{
-  override inputElement:AcSelectInput = new AcSelectInput();
+  override inputElement:AcSelectInputElement = new AcSelectInputElement();
 
   override get builderApi():AcBuilderApi|any{
     return super.builderApi;

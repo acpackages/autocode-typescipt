@@ -144,11 +144,6 @@ export class AcDDInputElement extends AcInputBase {
   }
 
   ddTableColumn?: AcDDTableColumn;
-
-  constructor() {
-    super();
-  }
-
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;
     switch (name) {
@@ -176,8 +171,8 @@ export class AcDDInputElement extends AcInputBase {
     }
   }
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  override init(): void {
+    super.init();
     this.innerHTML = "";
     this.setInputElement();
   }

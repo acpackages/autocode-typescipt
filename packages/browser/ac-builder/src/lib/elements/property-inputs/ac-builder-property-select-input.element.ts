@@ -1,4 +1,4 @@
-import { acRegisterCustomElement, AcSelectInput } from "@autocode-ts/ac-browser";
+import { acRegisterCustomElement, AcSelectInputElement } from "@autocode-ts/ac-browser";
 import { AcBuilderPropertyInput } from "../../core/ac-builder-property-input";
 import { stringIsJson } from "@autocode-ts/ac-extensions";
 
@@ -33,7 +33,7 @@ export class AcBuilderPropertySelectInput extends AcBuilderPropertyInput {
     this.setValue(val);
   }
 
-  override inputElement: any = new AcSelectInput();
+  override inputElement: any = new AcSelectInputElement();
 
   override attributeChangedCallback(name: string, oldValue: any, newValue: any) {
     if (oldValue === newValue) return;

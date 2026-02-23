@@ -298,6 +298,7 @@ export class AcInputBase extends AcElementBase {
     this.refreshReflectedAttributes();
     this.inputElement.addEventListener('input', this.handleInput);
     this.inputElement.addEventListener('change', this.handleChange);
+    this.innerHTML = '';
     this.appendChild(this.inputElement);
     acListenElementEvents({element: this.inputElement, callback: ({ name, event }: { name: string, event: Event }) => {
       if(this.dispatchEvent){

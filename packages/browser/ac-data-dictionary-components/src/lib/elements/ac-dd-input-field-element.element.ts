@@ -207,11 +207,12 @@ export class AcDDInputFieldElement extends AcInputBase {
     }
   }
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    this.setDDInput();
+  override init(): void {
+    super.init();
+    this.innerHTML = "";
     this.append(this.ddInputField);
     this.ddInputField.ddInput = this.ddInput;
+    this.setDDInput();
   }
 
   private setDDInput() {

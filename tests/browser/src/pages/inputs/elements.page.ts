@@ -1,4 +1,4 @@
-import { AcInput} from "@autocode-ts/ac-browser";
+import { AcInputElement} from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 
 export class InputElementsPage extends HTMLElement {

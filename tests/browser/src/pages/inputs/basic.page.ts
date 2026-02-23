@@ -2,7 +2,7 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import './../../../../../packages/browser/ac-tiptap-editor-input/src/lib/css/ac-tiptap-editor-simple-editor.css';
 import "./../../../../../node_modules/quill/dist/quill.snow.css";
-import { AcArrayValuesInput, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInput, AC_DATAGRID_EXTENSION_NAME, AcEnumInputType, AcForm, AcOptionInput, AcPopoutTextareaInput, AcSelectInput, AcTagsInput, AcTextareaInput, AcTextInput } from "@autocode-ts/ac-browser";
+import { AcArrayValuesInputElement, AcDatagridApi, AcDatagridColumnDraggingExtension, AcDatagridColumnsCustomizerExtension, AcDatagridDataExportXlsxExtension, AcDatagridExtensionManager, AcDatagridRowDraggingExtension, AcDatagridRowNumbersExtension, AcDatagridRowSelectionExtension, AcDatagridSelectInputElement, AC_DATAGRID_EXTENSION_NAME, AcEnumInputType, AcForm, AcOptionInputElement, AcPopoutTextareaInputElement, AcSelectInputElement, AcTagsInputElement, AcTextareaInputElement, AcTextInputElement } from "@autocode-ts/ac-browser";
 import { PageHeader } from "../../components/page-header/page-header.component";
 import { customersData } from './../../../../data/customers-data';
 import { ActionsDatagridColumn } from "../../components/actions-datagrid-column/actions-datagrid-column.component";
@@ -125,7 +125,7 @@ export class InputBasicPage extends HTMLElement {
     datagridSelectContainer.className = 'mb-3';
     datagridSelectContainer.innerHTML = '<label>Linked Customer</label><ac-datagrid-select-input class="form-control"></ac-datagrid-select-input>';
     allInputsGroup.appendChild(datagridSelectContainer);
-    const datagridSelectInput: AcDatagridSelectInput = datagridSelectContainer.querySelector('ac-datagrid-select-input') as AcDatagridSelectInput;
+    const datagridSelectInput: AcDatagridSelectInputElement = datagridSelectContainer.querySelector('ac-datagrid-select-input') as AcDatagridSelectInputElement;
     datagridSelectInput.labelKey = 'first_name';
     datagridSelectInput.valueKey = 'customer_id';
     this.datagridApi = datagridSelectInput.datagrid.datagridApi;
@@ -338,7 +338,7 @@ export class InputBasicPage extends HTMLElement {
     // onDemandSelectContainer.className = 'mb-3';
     // onDemandSelectContainer.innerHTML = '<label>Linked Customer</label><ac-select-input class="form-control" placeholder="Select Customer"></ac-select-input>';
     // // allInputsGroup.appendChild(onDemandSelectContainer);
-    // const onDemandSelectInput: AcSelectInput = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInput;
+    // const onDemandSelectInput: AcSelectInputElement = onDemandSelectContainer.querySelector('ac-select-input') as AcSelectInputElement;
     // onDemandSelectInput.labelKey = 'first_name';
     // onDemandSelectInput.valueKey = 'customer_id';
     // onDemandSelectInput.acContextKey = 'customer_id';
@@ -366,7 +366,7 @@ export class InputBasicPage extends HTMLElement {
 
 
     const addInput = (type: AcEnumInputType, label: string, key: string) => {
-      const input = new AcTextInput();
+      const input = new AcTextInputElement();
       input.type = type;
       input.name = key;
       input.acContextKey = key;
@@ -386,7 +386,7 @@ export class InputBasicPage extends HTMLElement {
     arrayValuesLabel.className = 'fw-bold mt-3';
     arrayValuesLabel.textContent = 'Phone Numbers';
     allInputsGroup.appendChild(arrayValuesLabel);
-    const arrayValuesElement = new AcArrayValuesInput();
+    const arrayValuesElement = new AcArrayValuesInputElement();
     arrayValuesElement.innerHTML = `
     <table>
     <thead>
@@ -438,14 +438,14 @@ export class InputBasicPage extends HTMLElement {
     addInput(AcEnumInputType.Image, 'Profile Picture', 'profile_picture');
 
     // Textarea: About Me
-    const textarea = new AcTextareaInput();
+    const textarea = new AcTextareaInputElement();
     textarea.acContextKey = 'about_me';
     textarea.name = 'about_me';
     textarea.acContext = this.context;
     textarea.className = 'form-control';
     addField('About Me', textarea, allInputsGroup);
 
-    const popoutTextArea = new AcPopoutTextareaInput();
+    const popoutTextArea = new AcPopoutTextareaInputElement();
     popoutTextArea.acContextKey = 'favourite_quote';
     popoutTextArea.acContext = this.context;
     popoutTextArea.className = 'form-control';
@@ -458,7 +458,7 @@ export class InputBasicPage extends HTMLElement {
     allInputsGroup.appendChild(radioLabel);
 
     ['Email', 'Phone', 'In-app'].forEach((method) => {
-      const radio = new AcOptionInput();
+      const radio = new AcOptionInputElement();
       radio.type = AcEnumInputType.Radio;
       radio.name = 'contact_preference';
       radio.value = method;
@@ -485,7 +485,7 @@ export class InputBasicPage extends HTMLElement {
     allInputsGroup.appendChild(checkboxLabel);
 
     ['Apple', 'Banana', 'Mango', 'Orange'].forEach((fruit) => {
-      const checkbox = new AcOptionInput();
+      const checkbox = new AcOptionInputElement();
       checkbox.type = AcEnumInputType.Checkbox;
       checkbox.value = fruit;
       checkbox.acContextKey = 'interested_fruits';
@@ -505,7 +505,7 @@ export class InputBasicPage extends HTMLElement {
     });
 
     // Select: Preferred Framework
-    const select = new AcSelectInput();
+    const select = new AcSelectInputElement();
     select.acContextKey = 'preferred_framework';
     select.name = 'preferred_framework';
     select.acContext = this.context;
@@ -518,7 +518,7 @@ export class InputBasicPage extends HTMLElement {
     };
     addField('Preferred Framework', select, allInputsGroup);
 
-    const languageTags = new AcTagsInput();
+    const languageTags = new AcTagsInputElement();
     languageTags.acContextKey = 'languages';
     languageTags.name = 'languages';
     languageTags.acContext = this.context;

@@ -17,7 +17,7 @@ export class AcDataDictionaryEditorHeader {
   element: HTMLElement = document.createElement('div');
   dropdown: HTMLElement = document.createElement('div');
 
-  // selectDataDictionaryInput: AcSelectInput;
+  // selectDataDictionaryInput: AcSelectInputElement;
 
   constructor({ editorApi }: { editorApi: AcDDEApi }) {
     this.editorApi = editorApi;

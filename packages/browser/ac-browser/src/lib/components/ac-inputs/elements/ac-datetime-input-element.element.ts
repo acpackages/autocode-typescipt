@@ -3,9 +3,9 @@
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AC_INPUT_TAG } from "../consts/ac-input-tags.const";
 import { AcEnumInputType } from "../enums/ac-enum-input-type.enum";
-import { AcInput } from "./ac-input-element.element";
+import { AcInputElement } from "./ac-input-element.element";
 
-export class AcDatetimeInput extends AcInput{
+export class AcDatetimeInputElement extends AcInputElement{
   static override get observedAttributes() {
     return [... super.observedAttributes, 'type','min','max'];
   }
@@ -74,4 +74,4 @@ export class AcDatetimeInput extends AcInput{
   }
 }
 
-acRegisterCustomElement({tag:AC_INPUT_TAG.dateTimeInput,type:AcDatetimeInput});
+acRegisterCustomElement({tag:AC_INPUT_TAG.dateTimeInput,type:AcDatetimeInputElement});

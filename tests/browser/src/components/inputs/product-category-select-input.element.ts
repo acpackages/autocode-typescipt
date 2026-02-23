@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcMessage, acRegisterCustomElement, AcSelectInput } from "@autocode-ts/ac-browser";
+import { AcMessage, acRegisterCustomElement, AcSelectInputElement } from "@autocode-ts/ac-browser";
 import { AcEnumHttpResponseCode, IAcOnDemandRequestArgs, IAcOnDemandResponseArgs } from "@autocode-ts/autocode";
 
-export class ProductCategorySelectInput extends AcSelectInput {
+export class ProductCategorySelectInput extends AcSelectInputElement {
   // onDemandRowsFunction:Function = async (request:IAcOnDemandRequestArgs)=>{
   //   let pageNumber:number = 0;
   //   const rowsCount:number = request.rowsCount ?? 5000;

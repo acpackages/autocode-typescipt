@@ -1,4 +1,4 @@
-import { AcElement, AcInput, AcOutput, AcViewChild, AcEventEmitter } from '../core/element.base';
+import { AcElement, AcInputElement, AcOutput, AcViewChild, AcEventEmitter } from '../core/element.base';
 import { ChildCounterElement } from './child-counter.element';
 
 @AcElement({
@@ -6,13 +6,13 @@ import { ChildCounterElement } from './child-counter.element';
   template: `
     <div class="parent-container">
       <h3>Nested Components & ViewChild Demo</h3>
-      
+
       <div class="parent-controls">
         <h4>Parent Component State</h4>
         <p>Parent Count: <strong>{{ parentCount }}</strong></p>
         <p>Parent Message: <em>"{{ parentMessage }}"</em></p>
         <p>Last Child Event: <em>{{ childMessage }}</em></p>
-        
+
         <div class="button-group">
           <button ac:on:click="incrementParent()">Increment Parent Count</button>
           <button ac:on:click="updateMessage()">Update Parent Message</button>
@@ -24,8 +24,8 @@ import { ChildCounterElement } from './child-counter.element';
 
       <div class="nested-section">
         <h4>1. Tag-Based Element (&lt;app-child-counter&gt;)</h4>
-        <app-child-counter 
-          [count]="parentCount" 
+        <app-child-counter
+          [count]="parentCount"
           [message]="parentMessage"
           (countChange)="handleCountChange($event)"
           (messageFromChild)="handleChildMessage($event)">
@@ -35,7 +35,7 @@ import { ChildCounterElement } from './child-counter.element';
       <div class="nested-section user-styled">
         <h4>2. Attribute-Based Element (&lt;div app-child-counter&gt;)</h4>
         <div app-child-counter
-          [count]="parentCount" 
+          [count]="parentCount"
           [message]="'Attribute Style: ' + parentMessage"
           (countChange)="handleCountChange($event)"
           (messageFromChild)="handleChildMessage($event)">

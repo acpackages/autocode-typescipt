@@ -2,7 +2,7 @@ import { acReactive } from './reactive';
 import { AcTemplateEngine } from './template-engine';
 import { acElementRegistry } from './element-registry';
 // Re-export decorators for convenience
-export { AcInput, AcOutput, AcViewChild, AcEventEmitter, getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
+export { AcInputElement, AcOutput, AcViewChild, AcEventEmitter, getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
 import { getAcViewChildMetadata } from './decorators';
 export { acElementRegistry } from './element-registry';
 
