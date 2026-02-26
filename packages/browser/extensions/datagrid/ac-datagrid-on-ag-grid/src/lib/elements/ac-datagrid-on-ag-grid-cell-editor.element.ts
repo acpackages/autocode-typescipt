@@ -14,7 +14,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   instance?: IAcDatagridCellRenderer;
   delayedCallback:AcDelayedCallback = new AcDelayedCallback();
   params: any;
-  element: HTMLInputElement = document.createElement('input');
+  element: HTMLInputElement|any = document.createElement('input');
   private isFocused: boolean = false;
   editor: any;
   previousValue:any;
@@ -110,6 +110,9 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
       this.element.removeEventListener('input', this.handleInputAndChange);
       this.element.removeEventListener('keyup', this.handleCellKeyUp);
     }
+    if(this.element.destroy){
+      this.element.destroy();
+    }
     if (this.editor) {
       if (this.editor.destroy != undefined) {
         this.editor.destroy();
@@ -128,7 +131,6 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   }
 
   init?(params: ICellRendererParams | any): AgPromise<void> | void {
-    requestAnimationFrame(() => {
       this.params = params;
       this.agGridExtension = params.agGridExtension;
       this.datagridColumn = params.datagridColumn;
@@ -162,6 +164,28 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
             this.element.addEventListener('input', this.handleInputAndChange);
             this.element.addEventListener('keyup', this.handleCellKeyUp);
             this.datagridCell.extensionData['cellEditingEditor'] = editor;
+          }
+          else if (columnDefinition.cellEditorFunction) {
+            const args: IAcDatagridCellElementArgs = {
+              datagridApi: this.datagridApi!,
+              datagridCell: this.datagridCell
+            }
+            const element = columnDefinition.cellEditorFunction(args);
+            if (this.element) {
+              this.element.replaceWith(element);
+            }
+            this.element = element;
+            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey] ?? null;
+            if (columnDefinition.cellInputElementAttrs) {
+              Object.assign(element, columnDefinition.cellInputElementAttrs);
+            }
+            if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
+              this.element.focus();
+            }
+            this.element.addEventListener('change', this.handleInputAndChange);
+            this.element.addEventListener('input', this.handleInputAndChange);
+            this.element.addEventListener('keyup', this.handleCellKeyUp);
+            this.datagridCell.extensionData['cellEditingElement'] = element;
           }
           else if (columnDefinition.cellInputElement) {
             const element = new columnDefinition.cellInputElement();
@@ -218,7 +242,6 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
         this.params.eGridCell.addEventListener('focusin', this.handleFocus);
         this.params.eGridCell.addEventListener('focusout', this.handleBlur);
       }
-    });
   }
 
   refresh(params: ICellEditorParams<any, any, any>): boolean {

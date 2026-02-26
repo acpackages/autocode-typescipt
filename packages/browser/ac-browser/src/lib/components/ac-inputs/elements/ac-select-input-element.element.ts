@@ -147,20 +147,20 @@ export class AcSelectInputElement extends AcInputBase {
     });
 
     this.textInputElement.addEventListener("keyup", async (e) => {
-      if(["ArrowDown","ArrowUp","ArrowLeft","ArrowRight","Tab","Enter","Escape"].includes(e.key)){
+      if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Tab", "Enter", "Escape"].includes(e.key)) {
         return;
       }
       const term = this.textInputElement.value.trim().toLowerCase();
-        if (this.value && term != this.previousSearchTerm) {
-          this.value = null;
-        }
-        this.previousSearchTerm = term;
-        this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
-        this.openDropdown();
-        this.highlightingIndex = this.dataManager.rows.length ? 0 : -1;
-        if (this.dataManager.type === 'ondemand') this.loadedCount = 0;
-        await this.renderVirtualList();
-        this.ensureHighlightInView();
+      if (this.value && term != this.previousSearchTerm) {
+        this.value = null;
+      }
+      this.previousSearchTerm = term;
+      this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
+      this.openDropdown();
+      this.highlightingIndex = this.dataManager.rows.length ? 0 : -1;
+      if (this.dataManager.type === 'ondemand') this.loadedCount = 0;
+      await this.renderVirtualList();
+      this.ensureHighlightInView();
     });
     this.textInputElement.addEventListener("keydown", async (e) => {
       if (!this.isDropdownOpen) {
@@ -170,7 +170,7 @@ export class AcSelectInputElement extends AcInputBase {
           this.dataManager.filterGroup.setFilter({ key: this.labelKey, operator: AcEnumConditionOperator.Contains, value: term });
           this.openDropdown();
         }
-        if(["ArrowDown","ArrowUp","ArrowLeft","ArrowRight","Tab"].includes(e.key)){
+        if (["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Tab"].includes(e.key)) {
           return;
         }
       }
@@ -322,7 +322,7 @@ export class AcSelectInputElement extends AcInputBase {
       minWidth: "max-content",
       maxHeight: `${this.maxDropdownHeight}px`,
       border: "1px solid #ccc",
-      borderRadius:'5px',
+      borderRadius: '5px',
       background: "#fff",
       boxSizing: "border-box",
       overflow: 'auto'

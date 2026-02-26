@@ -63,6 +63,19 @@ export class AcDDInputFieldElement extends AcInputBase {
     this.ddInput.disabled = this.disabled;
   }
 
+  get formInputName(): string {
+    return this.getAttribute('form-input-name') ?? '';
+  }
+  set formInputName(value: string) {
+    if(value){
+      this.setAttribute('form-input-name', value);
+    }
+    else{
+      this.removeAttribute('form-input-name');
+    }
+    this.setDDFormInputName();
+  }
+
   get inputClass(): any {
     return this.getAttribute('input-class');
   }
@@ -195,6 +208,9 @@ export class AcDDInputFieldElement extends AcInputBase {
       case 'input-name':
         this.inputName = newValue;
         break;
+      case 'form-input-name':
+        this.formInputName = newValue;
+        break;
       case 'label':
         this.label = newValue;
         break;
@@ -239,6 +255,7 @@ export class AcDDInputFieldElement extends AcInputBase {
       }
       this.setDDInputClass();
       this.setDDInputName();
+      this.setDDFormInputName();
       this.setDDInputPlaceholder();
       this.setDDInputProperties();
       this.setDDInputStyle();
@@ -256,6 +273,12 @@ export class AcDDInputFieldElement extends AcInputBase {
   private setDDInputName() {
     if (this.ddInput) {
       this.ddInput.inputName = this.inputName;
+    }
+  }
+
+  private setDDFormInputName() {
+    if (this.ddInput) {
+      this.ddInput.formInputName = this.formInputName;
     }
   }
 

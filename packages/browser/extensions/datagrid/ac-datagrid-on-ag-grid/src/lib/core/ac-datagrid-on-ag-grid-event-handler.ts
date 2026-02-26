@@ -242,7 +242,6 @@ export class AcDatagridOnAgGridEventHandler {
   };
 
   private onRowDataUpdated = (event: RowDataUpdatedEvent) => {
-    console.log("Row data updated");
     if (this.datagridApi) {
       this.datagridApi.datagrid.afterRowsContainer.style.visibility = 'hidden';
     }

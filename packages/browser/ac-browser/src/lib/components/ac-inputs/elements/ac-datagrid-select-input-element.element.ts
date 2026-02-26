@@ -266,6 +266,10 @@ export class AcDatagridSelectInputElement extends AcInputBase {
     this.isFocused = false;
   }
 
+  override disconnectedCallback(): void {
+    this.closeDropdown();
+  }
+
   closeDropdown() {
     this.dropdownContainer.remove();
     this.isDropdownOpen = false;

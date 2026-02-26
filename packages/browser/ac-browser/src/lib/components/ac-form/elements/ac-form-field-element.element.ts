@@ -68,6 +68,7 @@ export class AcFormField extends AcElementBase {
       const validity = (this.inputElement as any).validity;
       const isValid = validity.valid;
       const hasError = !isValid;
+      const name = this.inputElement.getAttribute('name');
       this.setAttribute('is-valid', `${isValid}`);
       const errorMessages: AcFormFieldErrorMessage[] = Array.from(this.querySelectorAll('ac-form-field-error-message'));
       for (const msg of errorMessages) {

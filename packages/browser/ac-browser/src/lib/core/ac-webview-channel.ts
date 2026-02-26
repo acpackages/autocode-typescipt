@@ -129,8 +129,11 @@ export class AcWebviewChannel {
 
 export const acWebviewChannel = new AcWebviewChannel();
 
-// Auto-detect the browser type as soon as possible
+window.addEventListener('acWebviewChannelReady',()=>{
+  acWebviewChannel.isAppBrowser();
+});
 acWebviewChannel.isAppBrowser();
+// Auto-detect the browser type as soon as possible
 
 // Also expose globally for backward compatibility
 const _window: any = window;

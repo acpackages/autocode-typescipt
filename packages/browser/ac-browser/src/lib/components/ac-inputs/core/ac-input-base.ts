@@ -100,7 +100,7 @@ export class AcInputBase extends AcElementBase {
     }
   }
 
-  get validity() { return this.elementInternals.validity; }
+  get validity() { return this.inputElement.validity; }
 
   get isValidRequired(): boolean {
     let value = this.value ?? '';

@@ -943,23 +943,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
             };
           }
           else {
-            if (column.columnDefinition.cellEditorFunction) {
-              colDef.cellEditor = (params: any) => {
-                if (this.datagridApi) {
-                  const datagridColumn = params.datagridColumn;
-                  const datagridCell = this.datagridApi?.getCell({ rowId: params.data[this.rowKey], column: datagridColumn }) as any;
-                  const args: IAcDatagridCellElementArgs = {
-                    datagridApi: this.datagridApi!,
-                    datagridCell: datagridCell
-                  }
-                  return column.columnDefinition.cellEditorFunction(args);
-                }
-                return '';
-              };;
-            }
-            else {
-              colDef.cellEditor = AcDatagridOnAgGridCellEditor;
-            }
+            colDef.cellEditor = AcDatagridOnAgGridCellEditor;
             colDef.cellEditorParams = {
               agGridExtension: this,
               datagridColumn: column,
