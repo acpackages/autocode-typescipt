@@ -1,5 +1,5 @@
 export const dataDictionaryJson = {
-  "name": "Community App",
+  "name": "Samaaj App",
   "version": 0,
   "tables": {
     "addresses": {
