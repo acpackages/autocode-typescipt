@@ -2,12 +2,13 @@ import { AcEventEmitter } from './decorators';
 
 export interface AcRoute {
     path: string;
-    element: any;
+    element?: any;
+    redirectTo?: string;
     outlet?: string; // default: 'primary'
     data?: any;
 }
 
-export interface AcRouteSnapshot {
+export interface IAcRouteSnapshot {
     path: string;
     element: any;
     params: Record<string, string>;
@@ -17,18 +18,27 @@ export interface AcRouteSnapshot {
 
 class AcRouter {
     private routes: AcRoute[] = [];
-    public routeChange = new AcEventEmitter<AcRouteSnapshot>();
-    private currentParams: Record<string, string> = {};
+    public routeChange = new AcEventEmitter<IAcRouteSnapshot>();
+    private isPaused: boolean = false;
+    lastSnapshot?:IAcRouteSnapshot;
 
     constructor() {
         window.addEventListener('hashchange', () => this.handleHashChange());
         window.addEventListener('load', () => this.handleHashChange());
     }
 
+    pause() {
+        this.isPaused = true;
+    }
+
+    resume() {
+        this.isPaused = false;
+    }
+
     registerRoutes(routes: AcRoute[]) {
         this.routes = routes;
         // Trigger initial check if loaded
-        if (document.readyState === 'complete') {
+        if (document.readyState === 'complete' && !this.isPaused) {
             this.handleHashChange();
         }
     }
@@ -38,6 +48,8 @@ class AcRouter {
     }
 
     private handleHashChange() {
+        if (this.isPaused) return;
+
         const hash = window.location.hash.slice(1) || '/'; // Default to '/' if empty
         // Remove query params for matching (basic support)
         const [path] = hash.split('?');
@@ -61,7 +73,8 @@ class AcRouter {
 
         // Let's iterate all routes and find ALL that match the current URL.
 
-        const matchedRoutes = this.routes.filter(route => {
+        let matchedRoutes = this.routes.filter(route => {
+            if (route.path === '**' || route.path === '*') return false;
             // Simple exact match for now, or regex for params
             // Convert route path to regex: /users/:id -> /users/([^/]+)
             const regexPath = route.path.replace(/:([^\/]+)/g, '([^/]+)');
@@ -70,7 +83,18 @@ class AcRouter {
         });
 
         if (matchedRoutes.length === 0) {
-            console.warn(`No route found for ${url}`);
+            // Try fallback
+            matchedRoutes = this.routes.filter(route => route.path === '**' || route.path === '*');
+            if (matchedRoutes.length === 0) {
+                console.warn(`No route found for ${url}`);
+                return;
+            }
+        }
+
+        // Check for redirects
+        const redirectRoute = matchedRoutes.find(r => r.redirectTo !== undefined);
+        if (redirectRoute) {
+            this.navigateTo(redirectRoute.redirectTo!);
             return;
         }
 
@@ -78,29 +102,30 @@ class AcRouter {
         // Actually, `AcRouter` (the component) will subscribe and filter by outlet name.
 
         matchedRoutes.forEach(route => {
-            const regexPath = route.path.replace(/:([^\/]+)/g, '([^/]+)');
-            const regex = new RegExp(`^${regexPath}$`);
-            const match = url.match(regex);
+            let params: Record<string, string> = {};
 
-            const params: Record<string, string> = {};
-            if (match) {
-                // Extract param names
-                const paramNames = (route.path.match(/:([^\/]+)/g) || []).map(s => s.slice(1));
-                // match[0] is full string
-                // match[1].. match[n] are groups
-                paramNames.forEach((name, index) => {
-                    params[name] = match[index + 1];
-                });
+            if (route.path !== '**' && route.path !== '*') {
+                const regexPath = route.path.replace(/:([^\/]+)/g, '([^/]+)');
+                const regex = new RegExp(`^${regexPath}$`);
+                const match = url.match(regex);
+
+                if (match) {
+                    // Extract param names
+                    const paramNames = (route.path.match(/:([^\/]+)/g) || []).map(s => s.slice(1));
+                    paramNames.forEach((name, index) => {
+                        params[name] = match[index + 1];
+                    });
+                }
             }
 
-            const snapshot: AcRouteSnapshot = {
+            const snapshot: IAcRouteSnapshot = {
                 path: url,
                 element: route.element,
                 params: params,
                 data: route.data || {},
                 outlet: route.outlet || 'primary'
             };
-
+            this.lastSnapshot = snapshot;
             this.routeChange.emit(snapshot);
         });
     }

@@ -48,6 +48,9 @@ import { FilePreviewTestPage } from './pages/inputs/file-preview-tests.page';
 import { AcDataCacheTestPage } from './pages/utils/ac-data-cache.tests';
 import { BasicReportPage } from './pages/reports/basic-report';
 import { initAgGrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
+import { WebSocketTestPage } from './pages/web-socket/web-socket.page';
+import { DataBridgeUIPage } from './pages/data-bridge/data-bridge-ui.page';
+
 
 // AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
 // AcPaginationHtmlPlaceholder.previous = `<i class="fa-solid fa-angle-left"></i>`;
@@ -105,6 +108,12 @@ window.addEventListener('DOMContentLoaded', () => {
     ]
   });
   AcRouter.registerRouteGroup({
+    label: 'Data Bridge',
+    routes: [
+      { label: 'UI', path: '/data-bridge-ui', componentTag: 'data-bridge-ui', component: DataBridgeUIPage },
+    ]
+  });
+  AcRouter.registerRouteGroup({
     label: 'Data Dictionary',
     routes: [
       { label: 'Components', path: '/data-dictionary/components', componentTag: 'data-dictionary-components', component: DataDictionaryComponentsPage },
@@ -147,7 +156,7 @@ window.addEventListener('DOMContentLoaded', () => {
       { label: 'Basic', path: '/inputs/basic', componentTag: 'inputs-basic', component: InputBasicPage },
       { label: 'Elements', path: '/inputs/elements', componentTag: 'input-elements', component: InputElementsPage },
       { label: 'Form', path: '/inputs/form', componentTag: 'form-test', component: AcFormTest },
-      { label: 'File Preview', path: '/inputs/file-preview',componentTag: 'file-preview-test',component:FilePreviewTestPage }
+      { label: 'File Preview', path: '/inputs/file-preview', componentTag: 'file-preview-test', component: FilePreviewTestPage }
     ]
   });
   AcRouter.registerRouteGroup({
@@ -222,7 +231,8 @@ window.addEventListener('DOMContentLoaded', () => {
       { label: 'HTTP', path: '/utils/http', componentTag: 'http-test', component: HttpTestPage },
       { label: 'Data Cache', path: '/utils/data-cache', componentTag: 'data-cache', component: AcDataCacheTestPage },
       { label: 'Data Manager', path: '/utils/data-manager', componentTag: 'data-manager', component: AcDataManagerTestPage },
-      { label: 'Storage', path: '/utils/ac-storage', componentTag: 'ac-storage-test', component: AcStorageTestPage }
+      { label: 'Storage', path: '/utils/ac-storage', componentTag: 'ac-storage-test', component: AcStorageTestPage },
+      { label: 'WebSocket', path: '/utils/web-socket', componentTag: 'web-socket-test', component: WebSocketTestPage }
     ]
   });
   window.addEventListener('popstate', () => AcRouter.loadRoute(location.pathname));

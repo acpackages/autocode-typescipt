@@ -13,7 +13,10 @@
     "preserveSymlinks": true,
     "target": "ES2022",
     "module": "ES2022",
-    "lib": ["ES2022", "dom"],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -27,7 +30,9 @@
       "@autocode-ts/ac-browser": [
         "packages/browser/ac-browser/src/ac-browser.ts"
       ],
-      "@autocode-ts/ac-builder": ["packages/browser/ac-builder/src/index.ts"],
+      "@autocode-ts/ac-builder": [
+        "packages/browser/ac-builder/src/index.ts"
+      ],
       "@autocode-ts/ac-bwipjs-pipe": [
         "packages/browser/extensions/report-engine/ac-bwipjs-pipe/src/ac-bwipjs-pipe.ts"
       ],
@@ -49,7 +54,9 @@
       "@autocode-ts/ac-data-dictionary-editor": [
         "packages/browser/ac-data-dictionary-editor/src/index.ts"
       ],
-      "@autocode-ts/ac-datagrid": ["packages/browser/ac-datagrid/src/index.ts"],
+      "@autocode-ts/ac-datagrid": [
+        "packages/browser/ac-datagrid/src/index.ts"
+      ],
       "@autocode-ts/ac-datagrid-on-ag-grid": [
         "packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/ac-datagrid-on-ag-grid.ts"
       ],
@@ -65,7 +72,9 @@
       "@autocode-ts/ac-extensions": [
         "packages/common/ac-extensions/src/ac-extensions.ts"
       ],
-      "@autocode-ts/ac-icons": ["packages/browser/ac-icons/src/ac-icons.ts"],
+      "@autocode-ts/ac-icons": [
+        "packages/browser/ac-icons/src/ac-icons.ts"
+      ],
       "@autocode-ts/ac-ng-data-bridge-ui": [
         "packages/angular/ac-ng-data-bridge-ui/src/ac-ng-data-bridge-ui.ts"
       ],
@@ -81,15 +90,21 @@
       "@autocode-ts/ac-number-to-words-pipe": [
         "packages/browser/extensions/report-engine/ac-number-to-words-pipe/src/ac-number-to-words-pipe.ts"
       ],
-      "@autocode-ts/ac-pipes": ["packages/common/ac-pipes/src/ac-pipes.ts"],
+      "@autocode-ts/ac-pipes": [
+        "packages/common/ac-pipes/src/ac-pipes.ts"
+      ],
       "@autocode-ts/ac-quill-editor-input": [
         "packages/browser/ac-quill-editor-input/src/ac-quill-editor-input.ts"
       ],
-      "@autocode-ts/ac-react": ["packages/react/ac-react/index.ts"],
+      "@autocode-ts/ac-react": [
+        "packages/react/ac-react/index.ts"
+      ],
       "@autocode-ts/ac-remote-dao": [
         "packages/common/ac-remote-dao/src/index.ts"
       ],
-      "@autocode-ts/ac-repeater": ["packages/browser/ac-repeater/src/index.ts"],
+      "@autocode-ts/ac-repeater": [
+        "packages/browser/ac-repeater/src/index.ts"
+      ],
       "@autocode-ts/ac-report-designer": [
         "packages/browser/ac-report-designer/src/index.ts"
       ],
@@ -102,9 +117,15 @@
       "@autocode-ts/ac-runtime-ts": [
         "packages/browser/ac-runtime-ts/src/index.ts"
       ],
-      "@autocode-ts/ac-sql": ["packages/common/ac-sql/src/index.ts"],
-      "@autocode-ts/ac-sql-core": ["packages/common/ac-sql-core/src/index.ts"],
-      "@autocode-ts/ac-sql-node": ["packages/node/ac-sql-node/index.ts"],
+      "@autocode-ts/ac-sql": [
+        "packages/common/ac-sql/src/index.ts"
+      ],
+      "@autocode-ts/ac-sql-core": [
+        "packages/common/ac-sql-core/src/index.ts"
+      ],
+      "@autocode-ts/ac-sql-node": [
+        "packages/node/ac-sql-node/index.ts"
+      ],
       "@autocode-ts/ac-sql-parser": [
         "packages/common/ac-sql-parser/src/index.ts"
       ],
@@ -117,13 +138,24 @@
       "@autocode-ts/ac-tom-select-input": [
         "packages/browser/ac-tom-select-input/src/index.ts"
       ],
-      "@autocode-ts/ac-vue": ["packages/vue/ac-vue/index.ts"],
-      "@autocode-ts/ac-web": ["packages/node/ac-web/index.ts"],
+      "@autocode-ts/ac-vue": [
+        "packages/vue/ac-vue/index.ts"
+      ],
+      "@autocode-ts/ac-web": [
+        "packages/node/ac-web/index.ts"
+      ],
       "@autocode-ts/ac-web-on-express": [
         "packages/node/ac-web-on-express/index.ts"
       ],
-      "@autocode-ts/autocode": ["packages/common/autocode/src/autocode.ts"]
+      "@autocode-ts/ac-ws-client": [
+        "packages/common/ac-ws-client/src/ac-ws-client.ts"
+      ],
+      "@autocode-ts/autocode": [
+        "packages/common/autocode/src/autocode.ts"
+      ]
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

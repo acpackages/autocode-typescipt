@@ -1,5 +1,6 @@
 export * from './ac-browser';
 export * from './ac-element-base';
+export * from './ac-fullscreen';
 export * from './ac-runtime';
 export * from './ac-runtime-declaration';
 export * from './ac-storage';

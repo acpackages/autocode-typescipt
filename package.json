@@ -27,6 +27,7 @@
     "build:ac-runtime": "nx run ac-runtime:build",
     "build:ac-runtime-ts": "nx run ac-runtime-ts:build",
     "build:ac-sql-node": "nx run ac-sql-node:build",
+    "build:ac-ws-client": "nx run ac-ws-client:build",
     "build:autocode": "nx run autocode:build",
     "dev:angular": "npx nx serve test-angular",
     "dev:browser": "npx nx serve test-browser",

@@ -1,0 +1,19 @@
+{
+  "name": "@autocode-ts/ac-ws-client",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./ac-ws-client.js",
+  "module": "./ac-ws-client.js",
+  "browser": "./ac-ws-client.umd.cjs",
+  "types": "./ac-ws-client.d.ts",
+  "exports": {
+    "import": "./ac-ws-client.js",
+    "require": "./ac-ws-client.cjs"
+  },
+  "dependencies": {
+    "@autocode-ts/autocode":"0.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

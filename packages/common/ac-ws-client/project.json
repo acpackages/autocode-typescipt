@@ -1,0 +1,8 @@
+{
+    "name": "ac-ws-client",
+    "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/common/ac-ws-client/src",
+    "projectType": "library",
+    "tags": [],
+    "targets": {}
+}

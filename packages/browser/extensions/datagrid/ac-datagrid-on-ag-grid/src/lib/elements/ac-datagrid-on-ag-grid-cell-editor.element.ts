@@ -59,7 +59,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
   handleFocus: Function = () => {
     this.isFocused = true;
     if (this.datagridRow && this.datagridColumn && this.datagridApi) {
-      this.element.value = this.datagridRow.data[this.datagridColumn.columnKey];
+      this.element.value = this.datagridRow.data[this.datagridColumn.columnKey]??null;
     }
     this.element.focus();
   };
@@ -138,6 +138,10 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
       this.datagridRow = this.datagridApi!.getRow({ rowId: params.data[this.agGridExtension!.rowKey] });
       if (this.datagridRow && this.datagridColumn) {
         this.previousValue = this.datagridRow.data[this.datagridColumn.columnKey];
+        let cellValue:any = this.datagridRow.data[this.datagridColumn.columnKey];
+        if(cellValue == undefined){
+          cellValue = null;
+        }
         this.datagridCell = this.datagridApi?.getCell({ row: this.datagridRow, column: this.datagridColumn });
         if (this.datagridCell) {
           if (this.datagridCell.extensionData == undefined) {
@@ -175,7 +179,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
               this.element.replaceWith(element);
             }
             this.element = element;
-            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey] ?? null;
+            this.element.value = cellValue;
             if (columnDefinition.cellInputElementAttrs) {
               Object.assign(element, columnDefinition.cellInputElementAttrs);
             }
@@ -193,7 +197,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
               this.element.replaceWith(element);
             }
             this.element = element;
-            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey] ?? null;
+            this.element.value = cellValue;
             if (columnDefinition.cellInputElementAttrs) {
               Object.assign(element, columnDefinition.cellInputElementAttrs);
             }
@@ -221,7 +225,7 @@ export class AcDatagridOnAgGridCellEditor implements ICellEditorComp {
             }
             this.element = element;
             this.element.classList.add('ac-datagrid-cell-editor-element');
-            this.element.value = this.datagridRow.data[this.datagridColumn.columnKey] ?? '';
+            this.element.value = cellValue;
             if (!this.datagridColumn.columnDefinition.useCellEditorForRenderer) {
               this.element.focus();
             }

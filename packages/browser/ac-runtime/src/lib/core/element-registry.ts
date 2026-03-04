@@ -1,3 +1,5 @@
+import { AcElementManager } from "./element.base";
+
 // Global registry for AC elements
 interface ElementRegistration {
     selector: string;
@@ -7,6 +9,7 @@ interface ElementRegistration {
 
 class AcElementRegistry {
     private elements = new Map<string, ElementRegistration>();
+    private instances = new Map<string, any>()
 
     register(selector: string, constructor: any, metadata: any) {
         // Split by comma for multiple selectors
@@ -21,13 +24,19 @@ class AcElementRegistry {
                 metadata
             });
 
-            console.log(`Registered element: ${normalizedSelector}`);
+            // console.log(`Registered element: ${normalizedSelector}`);
         });
     }
 
     get(selector: string): ElementRegistration | undefined {
         const normalizedSelector = this.normalizeSelector(selector);
         return this.elements.get(normalizedSelector);
+    }
+
+    getInstance({uuid}:{uuid:string}):any{
+        if(this.instances.has(uuid)){
+            return this.instances.get(uuid);
+        }
     }
 
     getByTagName(tagName: string): ElementRegistration | undefined {
@@ -40,6 +49,22 @@ class AcElementRegistry {
         // Convert attribute to selector format
         // e.g., "app-child-counter" -> "app-child-counter"
         return this.elements.get(attrName.toLowerCase());
+    }
+
+    getByElement(el: HTMLElement): ElementRegistration | undefined {
+        const tagName = el.tagName.toLowerCase();
+        let registration = this.getByTagName(tagName);
+
+        if (!registration) {
+            for (const attr of Array.from(el.attributes)) {
+                const attrRegistration = this.getByAttribute(attr.name);
+                if (attrRegistration) {
+                    registration = attrRegistration;
+                    break;
+                }
+            }
+        }
+        return registration;
     }
 
     private normalizeSelector(selector: string): string {
@@ -57,6 +82,14 @@ class AcElementRegistry {
 
     getAllElements(): ElementRegistration[] {
         return Array.from(this.elements.values());
+    }
+
+    registerInstance({instance,uuid}:{instance:any,uuid:string}){
+        this.instances.set(uuid,instance);
+    }
+
+    removeInstance({uuid}:{uuid:string}){
+        this.instances.delete(uuid);
     }
 }
 

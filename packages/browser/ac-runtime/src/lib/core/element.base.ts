@@ -1,22 +1,39 @@
-import { acReactive } from './reactive';
+import { acMakeReactive } from './reactive';
 import { AcTemplateEngine } from './template-engine';
 import { acElementRegistry } from './element-registry';
-// Re-export decorators for convenience
-export { AcInputElement, AcOutput, AcViewChild, AcEventEmitter, getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
+export { AcInput, AcOutput, AcViewChild, AcEventEmitter, getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
 import { getAcViewChildMetadata } from './decorators';
+import { Autocode } from '@autocode-ts/autocode';
+import { AC_RUNTIME_CONFIG } from '../consts/ac-runtime-config.const';
 export { acElementRegistry } from './element-registry';
 
-export interface AcElementMetadata {
+export interface IAcElementMetadata {
     selector: string;
     template?: string;
     templateUrl?: string;
-    styles?: string[];
+    styles?: string | string[];
     styleUrls?: string[];
 }
 
 const ELEMENT_METADATA_KEY = Symbol('element_metadata');
 
-export function AcElement(metadata: AcElementMetadata) {
+export interface IAcOnInit {
+    acOnInit(): void;
+}
+
+export interface IAcOnDestroy {
+    acOnDestroy(): void;
+}
+
+export interface IAcOnChanges {
+    acOnChanges(changes: Record<string, any>): void;
+}
+
+export interface IAcOnPropertyChanges {
+    acOnPropertyChanges(changes: Record<string, any>): void;
+}
+
+export function AcElement(metadata: IAcElementMetadata) {
     return function (constructor: Function) {
         (constructor as any)[ELEMENT_METADATA_KEY] = metadata;
 
@@ -25,7 +42,7 @@ export function AcElement(metadata: AcElementMetadata) {
     };
 }
 
-export function getAcElementMetadata(target: any): AcElementMetadata {
+export function getIAcElementMetadata(target: any): IAcElementMetadata {
     // Handle both constructor and instance
     const constructor = target.prototype ? target : target.constructor;
     return (constructor as any)[ELEMENT_METADATA_KEY];
@@ -33,9 +50,10 @@ export function getAcElementMetadata(target: any): AcElementMetadata {
 
 export class AcElementManager {
     private element!: HTMLElement;
-    private metadata: AcElementMetadata;
-    private instance: any;
+    private metadata: IAcElementMetadata;
+    instance: any;
     private templateEngine!: AcTemplateEngine;
+    private uuid!: string;
 
     constructor(instance: any, element?: HTMLElement) {
         this.instance = instance;
@@ -57,9 +75,9 @@ export class AcElementManager {
                 throw new Error(`Selector ${this.metadata.selector} not found for element ${this.instance.constructor.name}`);
             }
         }
-
         // Initialize reactivity
-        this.instance = acReactive(this.instance);
+        this.instance = acMakeReactive(this.instance);
+        this.setUUID();
 
         // Initialize template engine with reactive instance
         this.templateEngine = new AcTemplateEngine(this.instance);
@@ -81,31 +99,50 @@ export class AcElementManager {
             await this.loadStyleUrls(this.metadata.styleUrls);
         }
 
-        if (typeof this.instance.onInit === 'function') {
-            this.instance.onInit();
-        }
-
         this.render();
 
-        // Resolve ViewChild references
-        const viewChildMetadata = getAcViewChildMetadata(this.instance.constructor);
+        // Resolve ViewChild references BEFORE acOnInit
+        AcElementManager.resolveViewChild(this.instance, this.templateEngine);
+
+        acInitRuntimeElementInstance(this.instance);
+        acElementRegistry.registerInstance({ instance: this.instance, uuid: this.uuid })
+    }
+
+    public static resolveViewChild(instance: any, templateEngine: AcTemplateEngine) {
+        const viewChildMetadata = getAcViewChildMetadata(instance.constructor);
         if (Object.keys(viewChildMetadata).length > 0) {
-            // We need access to child elements from the template engine
-            // This assumes render() has completed and children are instantiated
-            const childElements = this.templateEngine.getChildElements();
+            const childElements = templateEngine.getChildElements();
+            const templates = templateEngine.getTemplates();
 
             for (const [propertyKey, selector] of Object.entries(viewChildMetadata)) {
-                // Find matching child element instance
-                for (const [el, instance] of childElements.entries()) {
-                    // Check if selector matches (simple tag name check for now)
-                    if (el.tagName.toLowerCase() === selector.toLowerCase()) {
-                        this.instance[propertyKey] = instance;
+                // 1. Try to find in templates first (case-insensitive)
+                const templateName = selector.startsWith('#') ? selector.slice(1).toLowerCase() : selector.toLowerCase();
+                let found = false;
+
+                for (const [name, template] of templates.entries()) {
+                    if (name.toLowerCase() === templateName) {
+                        instance[propertyKey] = template;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) continue;
+
+                // 2. Find matching child element instance or reference (case-insensitive)
+                for (const [el, childInstance] of childElements.entries()) {
+                    const elAttrs = Array.from(el.attributes);
+
+                    // Check if selector matches a reference attribute (e.g. #myRef)
+                    const hasRef = elAttrs.some(attr => attr.name.toLowerCase() === `#${templateName}` || attr.name.toLowerCase() === selector.toLowerCase());
+
+                    if (hasRef) {
+                        instance[propertyKey] = (el as any).acInstance || childInstance;
                         break;
                     }
 
-                    // Check if selector matches attribute
-                    if (el.hasAttribute(selector)) {
-                        this.instance[propertyKey] = instance;
+                    // Check if selector matches tag name (simple fallback)
+                    if (el.tagName.toLowerCase() === selector.toLowerCase()) {
+                        instance[propertyKey] = (el as any).acInstance || childInstance;
                         break;
                     }
                 }
@@ -113,14 +150,8 @@ export class AcElementManager {
         }
     }
 
-    private applyStyles(styles: string[]) {
-        const styleId = `ac-style-${(this.metadata.selector as string).replace(/[^a-zA-Z0-9]/g, '-')}`;
-        if (document.getElementById(styleId)) return;
-
-        const styleEl = document.createElement('style');
-        styleEl.id = styleId;
-        styleEl.textContent = styles.join('\n');
-        document.head.appendChild(styleEl);
+    private applyStyles(styles: string | string[]) {
+        acSetEngineElementStyles(styles, this.uuid);
     }
 
     private async loadStyleUrls(urls: string[]) {
@@ -133,11 +164,18 @@ export class AcElementManager {
     }
 
     private render(): void {
-        this.element.innerHTML = this.metadata.template || '';
+        const template = this.metadata.template || '';
+        this.element.innerHTML = template;
 
-        // this.instance is already a reactive proxy with auto-bound methods
-        const engine = new AcTemplateEngine(this.instance);
-        engine.compile(this.element);
+        // Use the preserved templateEngine
+        this.templateEngine.compile(this.element);
+    }
+
+    private setUUID() {
+        const uuid = acSetEngineElementEngineUUID(this.element, this.instance);
+        if (uuid) {
+            this.uuid = uuid;
+        }
     }
 }
 
@@ -147,42 +185,130 @@ export async function bootstrapAcElement(component: any) {
 }
 
 /**
- * Automatically bootstraps all registered components found in the DOM.
+ * Automatically detects if an element is a registered AcElement and bootstraps it.
+ * @param el The host element to bootstrap
+ * @returns The component instance if bootstrapped, otherwise null
+ */
+export async function acAutoBootstrap(el: HTMLElement): Promise<any> {
+    if (el.hasAttribute('ac-engine-element')) return null;
+
+    const registration = acElementRegistry.getByElement(el);
+    if (registration) {
+        const instance = new registration.constructor();
+        const manager = new AcElementManager(instance, el);
+        await manager.bootstrap();
+        return instance;
+    }
+    return null;
+}
+
+let isGlobalObserverStarted = false;
+
+/**
+ * Automatically bootstraps all registered components found in the DOM and starts a global observer.
  * Call this once after importing your components.
  */
 export async function acBootstrapElements() {
+    if (isGlobalObserverStarted) return;
+    isGlobalObserverStarted = true;
+
     const components = acElementRegistry.getAllElements();
 
+    // Initial scan and bootstrap
     for (const registration of components) {
-        let elements: Element[] = [];
-
-        if (registration.selector.startsWith('#')) {
-            const el = document.getElementById(registration.selector.substring(1));
-            elements = el ? [el] : [];
-        } else if (registration.selector.startsWith('.')) {
-            elements = Array.from(document.querySelectorAll(registration.selector));
-        } else {
-            // Tag name
-            elements = Array.from(document.getElementsByTagName(registration.selector));
-        }
-
-        // Also check if selector matches via querySelectorAll for safety (e.g. strict attribute selectors)
-        // But for auto-bootstrap we prefer explicit ID/Tag matches for roots
-        if (elements.length === 0) {
-            const strictMatches = document.querySelectorAll(registration.selector);
-            if (strictMatches.length > 0) {
-                elements = Array.from(strictMatches);
-            }
-        }
-
-        for (const el of elements) {
-            // We want to instantiate a NEW component for EACH match
-            const instance = new registration.constructor();
-
-            // Pass the specific element to manage
-            const manager = new AcElementManager(instance, el as HTMLElement);
-            await manager.bootstrap();
+        const elements = document.querySelectorAll(registration.selector);
+        for (const el of Array.from(elements)) {
+            await acAutoBootstrap(el as HTMLElement);
         }
     }
-    console.log(`[AcFrontend] Application bootstrapped.`);
+
+    // Start global observer for any future elements
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(async node => {
+                if (node instanceof HTMLElement) {
+                    // 1. Try to bootstrap the node itself
+                    await acAutoBootstrap(node);
+
+                    // 2. Also check all its children in case of bulk insertion (like innerHTML or fragments)
+                    const childElements = node.querySelectorAll('*');
+                    for (const child of Array.from(childElements)) {
+                        await acAutoBootstrap(child as HTMLElement);
+                    }
+                }
+            });
+            mutation.removedNodes.forEach(async node => {
+                if (node instanceof HTMLElement) {
+                    acCheckAndDestroyElementInstances(node);
+                }
+            });
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+export async function acCheckAndDestroyElementInstances(element: HTMLElement) {
+    for (const child of Array.from(element.children)) {
+        if (child instanceof HTMLElement) {
+            acCheckAndDestroyElementInstances(child);
+        }
+    }
+    if (element.hasAttribute('ac-engine-element')) {
+        const instanceId = element.getAttribute('ac-engine-element');
+        if (instanceId) {
+            const instance = acElementRegistry.getInstance({ uuid: instanceId });
+            if (instance) {
+                if (typeof instance.acOnDestroy === 'function') {
+                    instance.acOnDestroy();
+                }
+                const instanceStyle = document.querySelector(`[ac-engine-style-for="${instanceId}"]`);
+                if (instanceStyle) {
+                    instanceStyle.remove();
+                }
+            }
+        }
+    }
+}
+
+export async function acInitRuntimeElementInstance(instance: any) {
+    if (typeof instance.acOnInit === 'function') {
+        try {
+            instance.acOnInit();
+        }
+        catch (ex) {
+            // console.log(instance);
+            AC_RUNTIME_CONFIG.logError(ex);
+        }
+    }
+    instance['__ac_initialized__'] = true;
+}
+
+export function acSetEngineElementEngineUUID(element: HTMLElement, instance: any): string | undefined {
+    if (element && !element.hasAttribute('ac-engine-element')) {
+        const uuid = Autocode.uuid();
+        element.setAttribute('ac-engine-element', uuid);
+        (element as any).acInstance = instance; // Attach instance to element
+        const customEvent: CustomEvent = new CustomEvent('acRuntimeElementIdAttached', { detail: { 'instance': instance } });
+        element.dispatchEvent(customEvent);
+        return uuid;
+    }
+    return undefined;
+}
+
+export function acSetEngineElementStyles(styles: string | string[], uuid: string) {
+    let styleContent: string = '';
+    if (typeof styles == 'string') {
+        styleContent = styles;
+    }
+    else {
+        styleContent = styles.join('\n');
+    }
+    if (styleContent != '') {
+        styleContent = styleContent.replace(/:host\((.*?)\)/g, `&$1`).replace(/:host\b/g, '&');
+        const styleEl = document.createElement('style');
+        styleEl.setAttribute('ac-engine-style-for', uuid);
+        document.head.appendChild(styleEl);
+        styleEl.textContent = `[ac-engine-element="${uuid}"]{\n${styleContent}\n}`;
+    }
 }

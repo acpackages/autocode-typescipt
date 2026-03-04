@@ -1,59 +1,63 @@
-import { AcElement, AcElementManager, AcInputElement, getAcElementMetadata } from './element.base';
-import { acRouter, AcRouteSnapshot } from './router';
+import { AC_RUNTIME_CONFIG } from '../consts/ac-runtime-config.const';
+import { AcElement, AcInput, acAutoBootstrap, acElementRegistry, getIAcElementMetadata } from './element.base';
+import { acRouter, IAcRouteSnapshot } from './router';
 
 @AcElement({
     selector: 'ac-router',
     template: '', // Empty by default, content injected by router
 })
 export class AcRouterElement {
-    @AcInputElement() name: string = 'primary';
+    @AcInput() name?: string;
+    element!: HTMLElement;
+    private isPaused: boolean = false;
+    private lastSnapshot?: IAcRouteSnapshot;
 
-    element!: HTMLElement; // Injected by ElementManager
-    private currentComponentInstance: any = null;
-
-    async onInit() {
+    async acOnInit() {
         // Subscribe to router
-        acRouter.routeChange.subscribe((snapshot: AcRouteSnapshot) => {
-            this.handleRouteChange(snapshot);
+        acRouter.routeChange.subscribe((snapshot: IAcRouteSnapshot) => {
+            if (!this.isPaused) {
+                this.handleRouteChange(snapshot);
+            }
         });
+        if(this.element){
+            if (acRouter.lastSnapshot) {
+                this.handleRouteChange(acRouter.lastSnapshot);
+            }
+        }
     }
 
-    async handleRouteChange(snapshot: AcRouteSnapshot) {
-        if (snapshot.outlet !== this.name) {
-            return; // Not for this outlet
+    async handleRouteChange(snapshot: IAcRouteSnapshot) {
+        if (this.name) {
+            if (snapshot.outlet !== this.name) {
+                return; // Not for this outlet
+            }
         }
-
         // Clear current content
+        if (!this.element) {
+            AC_RUNTIME_CONFIG.logError('[AcRouter] handleRouteChange called but this.element is undefined on instance:', this);
+            return;
+        }
         this.element.innerHTML = '';
-        this.currentComponentInstance = null;
 
         const ComponentClass = snapshot.element;
         if (!ComponentClass) return;
 
         // 1. Instantiate the component container element based on its selector
-        const metadata = getAcElementMetadata(ComponentClass);
+        const metadata = getIAcElementMetadata(ComponentClass);
         if (!metadata) {
-            console.error(`[AcRouter] No metadata found for component ${ComponentClass.name}`);
+            AC_RUNTIME_CONFIG.logError(`[AcRouter] No metadata found for component ${ComponentClass.name}`);
             return;
         }
 
-        // Determine the tag to create
-        // Selectors can be 'my-tag', '[my-attr]', '.my-class', '#my-id'
-        // or comma separated 'my-tag, [my-attr]'
-
+        // Determine the tag or attribute to create
         const selectors = metadata.selector.split(',').map(s => s.trim());
         let hostElement: HTMLElement | null = null;
 
-        // Priority: Tag -> Attribute -> Class -> ID
-        // We prefer creating a semantic custom element tag if available.
-
-        // Check for tag (alphanumeric with dash usually, or just starts with char)
         const tagSelector = selectors.find(s => /^[a-z][a-z0-9-]*$/i.test(s));
         if (tagSelector) {
             hostElement = document.createElement(tagSelector);
         }
 
-        // Check for attribute [attr]
         if (!hostElement) {
             const attrSelector = selectors.find(s => s.startsWith('[') && s.endsWith(']'));
             if (attrSelector) {
@@ -63,39 +67,36 @@ export class AcRouterElement {
             }
         }
 
-        // Check for class .class
+        // Add other selector support if needed (class, ID etc.)
         if (!hostElement) {
-            const classSelector = selectors.find(s => s.startsWith('.'));
-            if (classSelector) {
-                hostElement = document.createElement('div');
-                hostElement.className = classSelector.slice(1);
-            }
+            hostElement = document.createElement('div');
+            // Fallback: use first selector or generic div
+            const first = selectors[0];
+            if (first.startsWith('.')) hostElement.className = first.slice(1);
+            else if (first.startsWith('#')) hostElement.id = first.slice(1);
         }
 
-        // Check for ID #id
-        if (!hostElement) {
-            const idSelector = selectors.find(s => s.startsWith('#'));
-            if (idSelector) {
-                // Creating an element with ID inside a router might duplicate IDs if router is reused?
-                // But usually router outlet switches content.
-                hostElement = document.createElement('div');
-                hostElement.id = idSelector.slice(1);
-            }
+        if (hostElement) {
+            // Append to router - MutationObserver will handle bootstrapping
+            this.element.appendChild(hostElement);
         }
-
-        if (!hostElement) {
-            console.error(`[AcRouter] Cloud not determine how to create element for selector: ${metadata.selector}`);
-            return;
-        }
-
-        // 2. Append to router
-        this.element.appendChild(hostElement);
-
-        // 3. Create component instance and bootstrap
-        const instance = new ComponentClass();
-        const manager = new AcElementManager(instance, hostElement);
-        await manager.bootstrap();
-
-        this.currentComponentInstance = instance;
     }
+
+    pause() {
+        this.isPaused = true;
+    }
+
+    resume() {
+        this.isPaused = false;
+    }
+
+    refresh() {
+        if (this.lastSnapshot) {
+            this.handleRouteChange(this.lastSnapshot);
+        }
+        else if (acRouter.lastSnapshot) {
+            this.handleRouteChange(acRouter.lastSnapshot);
+        }
+    }
+
 }

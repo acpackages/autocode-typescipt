@@ -2,8 +2,8 @@
 export class AcEventEmitter<T = any> {
     private listeners: Array<(value: T) => void> = [];
 
-    emit(value: T) {
-        this.listeners.forEach(listener => listener(value));
+    emit(value?: T) {
+        this.listeners.forEach(listener => listener(value as T));
     }
 
     subscribe(listener: (value: T) => void) {
@@ -22,8 +22,8 @@ const AC_INPUT_METADATA_KEY = Symbol('ac_input_metadata');
 const AC_OUTPUT_METADATA_KEY = Symbol('ac_output_metadata');
 const AC_VIEW_CHILD_METADATA_KEY = Symbol('ac_view_child_metadata');
 
-// @AcInputElement decorator
-export function AcInputElement(alias?: string) {
+// @AcInput decorator
+export function AcInput(alias?: string) {
     return function (target: any, propertyKey: string) {
         if (!target.constructor[AC_INPUT_METADATA_KEY]) {
             target.constructor[AC_INPUT_METADATA_KEY] = {};
