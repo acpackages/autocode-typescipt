@@ -575,6 +575,26 @@ export const dataDictionaryJson = {
               "propertyValue": true
             }
           }
+        },
+        "member_zone_id": {
+          "columnName": "member_zone_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member's Zone"
+            }
+          }
+        },
+        "member_detail": {
+          "columnName": "member_detail",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member Detail"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -748,6 +768,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Governing Body Member Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -853,6 +877,16 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Community"
+            }
+          }
+        },
+        "governing_body_index": {
+          "columnName": "governing_body_index",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Index"
             }
           }
         }
@@ -1273,6 +1307,50 @@ export const dataDictionaryJson = {
               "propertyValue": "Profile Image"
             }
           }
+        },
+        "member_native": {
+          "columnName": "member_native",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member Native"
+            },
+            "USE_FOR_ROW_LIKE_FILTER": {
+              "propertyName": "USE_FOR_ROW_LIKE_FILTER",
+              "propertyValue": false
+            }
+          }
+        },
+        "member_detail": {
+          "columnName": "member_detail",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member Detail"
+            }
+          }
+        },
+        "member_gotra": {
+          "columnName": "member_gotra",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member Gotra"
+            }
+          }
+        },
+        "marital_status": {
+          "columnName": "marital_status",
+          "columnType": null,
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Marital Status"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -1410,7 +1488,52 @@ export const dataDictionaryJson = {
     },
     "user_activities": {
       "tableName": "user_activities",
-      "tableColumns": {},
+      "tableColumns": {
+        "user_activities_id": {
+          "columnName": "user_activities_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User Activities Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User Id"
+            }
+          }
+        },
+        "timestamp": {
+          "columnName": "timestamp",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Timestamp"
+            }
+          }
+        },
+        "activity_type": {
+          "columnName": "activity_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Activity Type"
+            }
+          }
+        }
+      },
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
