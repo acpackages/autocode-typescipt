@@ -84,6 +84,10 @@ export class AcDataBridge {
     // this.appService.openModal({ component: ImportColumnsSelectionComponent });
   }
 
+  on({event,callback}:{event:string,callback:Function}){
+    return this.events.subscribe({event,callback});
+  }
+
   async setData({ buffer }: { buffer: ArrayBuffer }) {
     this.sourceEntities = await this.api.setData({ buffer });
     this.currentStage = 'DATA_SET';

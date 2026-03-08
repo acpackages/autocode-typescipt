@@ -272,7 +272,7 @@ export class AcDDInputElement extends AcInputBase {
   private setInputElementProperties() {
     if (this.inputElement && this.inputProperties) {
       const properties = this.inputProperties;
-      for (const propertyName in Object.keys(properties)) {
+      for (const propertyName of Object.keys(properties)) {
         (this.inputElement as any)[propertyName] = properties[propertyName];
       }
     }

@@ -55,32 +55,44 @@ export class VirtualTestScrollPage extends HTMLElement {
     `;
 
     const container = this.querySelector('.scroll-container') as HTMLElement;
-    this.acScrollable = new AcScrollable({element:container,options:{bufferCount:5}});
+    this.acScrollable = new AcScrollable({
+      element: container,
+      options: {
+        bufferCount: 5,
+        itemTemplate: (item: { text: string, height: number }, index: number) => {
+          const el = document.createElement('div');
+          el.className = 'item';
+          el.style.height = `${item.height}px`;
+          el.textContent = `${item.text} (${index})`;
+          return el;
+        }
+      }
+    });
 
-    // Add initial items
+    // Add initial items data
+    const items = [];
     for (let i = 1; i <= 1000; i++) {
-      this.addRandomHeightItem(i);
+      items.push({
+        text: `Item ${i}`,
+        height: 50 + Math.floor(Math.random() * 100)
+      });
     }
+    this.acScrollable.setItems(items);
 
     // Controls
     this.querySelector('#addBtn')?.addEventListener('click', () => {
-      // this.addRandomHeightItem(this.acScrollable.scrollingElements.length + 1);
+      this.acScrollable.addItem({
+        text: `New Item`,
+        height: 75
+      });
     });
 
     this.querySelector('#scrollTopBtn')?.addEventListener('click', () => {
-      container.scrollTo({ top: 0, behavior: 'smooth' });
+      this.acScrollable.scrollTo({ index: 0 });
     });
 
     this.querySelector('#scrollBottomBtn')?.addEventListener('click', () => {
-      container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+      this.acScrollable.scrollTo({ index: items.length - 1 });
     });
-  }
-
-  private addRandomHeightItem(index: number) {
-    const item = document.createElement('div');
-    item.className = 'item';
-    item.style.height = `${50 + Math.floor(Math.random() * 100)}px`;
-    item.textContent = `Item ${index}`;
-    this.acScrollable.addItem(item);
   }
 }

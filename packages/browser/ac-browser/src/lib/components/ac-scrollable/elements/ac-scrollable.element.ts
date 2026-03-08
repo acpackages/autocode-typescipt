@@ -17,7 +17,10 @@ export class AcScrollable {
   private scrollTop = 0;
   private isRendering: boolean = false;
   private isWorking: boolean = true;
-  private delayedCallback:AcDelayedCallback = new AcDelayedCallback();
+  private delayedCallback: AcDelayedCallback = new AcDelayedCallback();
+  private items: any[] = [];
+  private heightCache = new Map<any, number>();
+  private heights: number[] = [];
 
   constructor({ element, options = {} }: { element: HTMLElement, options?: IAcScrollableOptions }) {
     this.element = element;
@@ -26,13 +29,33 @@ export class AcScrollable {
     this.elementHeightFallback = options.elementHeight ?? 50;
     this.element.style.overflowY = "auto";
     this.element.addEventListener("scroll", () => this.handleScroll());
-    this.registerExistingElements();
+    if (this.element.children.length > 0) {
+      this.registerExistingElements();
+    }
     this.initObservers();
+  }
+
+  setItems(items: any[]) {
+    this.items = items;
+    this.updateHeights();
+    this.render();
+  }
+
+  addItem(item: any) {
+    if (item instanceof HTMLElement) {
+      this.addElement({ element: item });
+    } else {
+      this.items.push(item);
+      this.updateHeights();
+      this.render();
+    }
   }
 
   addElement({ element }: { element: HTMLElement }) {
     const temp = element.cloneNode(true) as HTMLElement;
     temp.style.visibility = "hidden";
+    temp.style.position = "absolute";
+    temp.style.top = "-10000px";
     this.element.appendChild(temp);
     const height = temp.offsetHeight || this.elementHeightFallback;
     this.element.removeChild(temp);
@@ -40,31 +63,68 @@ export class AcScrollable {
     this.render();
   }
 
+  private updateHeights() {
+    if (this.options?.enableFixedHeight && this.options?.itemSize) {
+      this.heights = new Array(this.items.length).fill(this.options.itemSize);
+      return;
+    }
+
+    this.heights = this.items.map((item, index) => {
+      if (this.heightCache.has(item)) {
+        return this.heightCache.get(item)!;
+      }
+      const height = this.measureItemHeight(item, index);
+      this.heightCache.set(item, height);
+      return height;
+    });
+  }
+
+  private measureItemHeight(item: any, index: number): number {
+    if (this.options?.itemSize) return this.options.itemSize;
+    if (!this.options?.itemTemplate) return this.elementHeightFallback;
+
+    const element = this.options.itemTemplate(item, index);
+    const temp = element.cloneNode(true) as HTMLElement;
+    temp.style.visibility = "hidden";
+    temp.style.position = "absolute";
+    temp.style.top = "-10000px";
+    temp.style.width = this.element.clientWidth + "px";
+    this.element.appendChild(temp);
+    const height = temp.offsetHeight || this.elementHeightFallback;
+    this.element.removeChild(temp);
+    return height;
+  }
+
   private getVisibleRange() {
+    const totalCount = this.items.length > 0 ? this.items.length : this.scrollingElements.length;
+    if (totalCount === 0) return { startIndex: 0, endIndex: -1 };
+
+    const heights = this.items.length > 0 ? this.heights : this.scrollingElements.map(el => el.height);
+
     let startIndex = 0;
-    let endIndex = this.scrollingElements.length - 1;
     let y = 0;
-    for (let i = 0; i < this.scrollingElements.length; i++) {
-      if (y + this.scrollingElements[i].height >= this.scrollTop) {
+    for (let i = 0; i < heights.length; i++) {
+      if (y + heights[i] >= this.scrollTop) {
         startIndex = i;
         break;
       }
-      y += this.scrollingElements[i].height;
+      y += heights[i];
     }
+
+    let endIndex = startIndex;
     y = 0;
-    for (let i = startIndex; i < this.scrollingElements.length; i++) {
-      y += this.scrollingElements[i].height;
+    for (let i = startIndex; i < heights.length; i++) {
+      y += heights[i];
       if (y >= this.elementHeight) {
         endIndex = i;
         break;
       }
     }
-    let buffer: number = 2;
-    if (this.options && this.options.bufferCount && this.options.bufferCount > 0) {
-      buffer = this.options.bufferCount;
-    }
+
+    let buffer: number = this.options?.bufferCount ?? 2;
     startIndex = Math.max(0, startIndex - buffer);
-    endIndex = Math.min(this.scrollingElements.length - 1, endIndex + buffer);
+    endIndex = Math.min(totalCount - 1, endIndex + buffer);
+
     return { startIndex, endIndex };
   }
 
@@ -77,7 +137,7 @@ export class AcScrollable {
 
   private initObservers() {
     this.mutationObserver = new MutationObserver((mutations) => {
-      if (!this.isRendering) {
+      if (!this.isRendering && this.items.length === 0) {
         let needsRender = false;
         for (const mutation of mutations) {
           if (mutation.type === "childList") {
@@ -109,7 +169,7 @@ export class AcScrollable {
     });
     this.mutationObserver.observe(this.element, { childList: true });
     this.resizeObserver = new ResizeObserver((entries) => {
-      if (!this.isRendering) {
+      if (!this.isRendering && this.items.length === 0) {
         let needsRender = false;
         for (const entry of entries) {
           const target = entry.target as HTMLElement;
@@ -132,10 +192,9 @@ export class AcScrollable {
     });
     this.elementResizeObserver = new ResizeObserver(() => {
       const newHeight = this.element.clientHeight;
-      const newWidth = this.element.clientWidth;
       if (this.elementHeight != newHeight) {
         this.elementHeight = newHeight;
-        this.render(); // Recalculate visible range
+        this.render();
       }
     });
     this.elementResizeObserver.observe(this.element);
@@ -145,18 +204,23 @@ export class AcScrollable {
   }
 
   moveElement({ fromIndex, toIndex }: { fromIndex: number, toIndex: number }) {
-    if (
-      fromIndex < 0 || fromIndex >= this.scrollingElements.length ||
-      toIndex < 0 || toIndex >= this.scrollingElements.length
-    ) return;
-    const [moved] = this.scrollingElements.splice(fromIndex, 1);
-    this.scrollingElements.splice(toIndex, 0, moved);
-    this.reindexScrollingElements();
+    if (this.items.length > 0) {
+      if (fromIndex < 0 || fromIndex >= this.items.length || toIndex < 0 || toIndex >= this.items.length) return;
+      const [moved] = this.items.splice(fromIndex, 1);
+      this.items.splice(toIndex, 0, moved);
+      const [movedHeight] = this.heights.splice(fromIndex, 1);
+      this.heights.splice(toIndex, 0, movedHeight);
+    } else {
+      if (fromIndex < 0 || fromIndex >= this.scrollingElements.length || toIndex < 0 || toIndex >= this.scrollingElements.length) return;
+      const [moved] = this.scrollingElements.splice(fromIndex, 1);
+      this.scrollingElements.splice(toIndex, 0, moved);
+      this.reindexScrollingElements();
+    }
     this.render();
   }
 
   private registerScrollingElement(data: Partial<IAcScrollingElement> & Pick<IAcScrollingElement, 'element' | 'height'>) {
-    if (this.scrollingElements.findIndex((item:any)=>{return item.element == data.element;}) == -1) {
+    if (this.scrollingElements.findIndex((item: any) => { return item.element == data.element; }) == -1) {
       const id: string = Autocode.uuid();
       data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
       if (data.index == undefined) {
@@ -173,15 +237,16 @@ export class AcScrollable {
         this.resizeObserver.observe(data.element);
       }
     }
-
   }
 
   registerExistingElements() {
     const children = Array.from(this.element.children) as HTMLElement[];
     this.scrollingElements = [];
     children.forEach((el, index) => {
-      const height = el.offsetHeight || this.elementHeightFallback;
-      this.registerScrollingElement({ element: el, height: height, index: index });
+      if (!el.hasAttribute(AcScrollableAttributeName.acScrollingSpacer)) {
+        const height = el.offsetHeight || this.elementHeightFallback;
+        this.registerScrollingElement({ element: el, height: height, index: index });
+      }
     });
     this.element.innerHTML = '';
     this.render();
@@ -194,6 +259,18 @@ export class AcScrollable {
   }
 
   removeElement({ element, id, index }: { index?: number, id?: string, element?: HTMLElement }) {
+    if (this.items.length > 0) {
+      if (index === undefined && element) {
+        index = this.items.indexOf(element);
+      }
+      if (index !== undefined && index >= 0 && index < this.items.length) {
+        this.items.splice(index, 1);
+        this.heights.splice(index, 1);
+        this.render();
+      }
+      return;
+    }
+
     if (index == undefined && element) {
       index = this.scrollingElements.findIndex(se => se.element === element);
     }
@@ -215,27 +292,52 @@ export class AcScrollable {
     this.isRendering = true;
     const { startIndex, endIndex } = this.getVisibleRange();
     this.element.innerHTML = "";
+
+    const heights = this.items.length > 0 ? this.heights : this.scrollingElements.map(el => el.height);
+
     const topSpacer = document.createElement("div");
-    topSpacer.style.height = this.scrollingElements.slice(0, startIndex).reduce((sum, el) => sum + el.height, 0) + "px";
+    topSpacer.style.height = heights.slice(0, startIndex).reduce((sum, h) => sum + h, 0) + "px";
     topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
     topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerBefore, '');
     this.element.appendChild(topSpacer);
+
     this.renderedElements = [];
-    for (let i = startIndex; i <= endIndex; i++) {
-      this.renderedElements.push(this.scrollingElements[i]);
-      this.element.appendChild(this.scrollingElements[i].element);
+    if (this.items.length > 0 && this.options?.itemTemplate) {
+      for (let i = startIndex; i <= endIndex; i++) {
+        const el = this.options.itemTemplate(this.items[i], i);
+        this.element.appendChild(el);
+      }
+    } else {
+      for (let i = startIndex; i <= endIndex; i++) {
+        if (this.scrollingElements[i]) {
+          this.renderedElements.push(this.scrollingElements[i]);
+          this.element.appendChild(this.scrollingElements[i].element);
+        }
+      }
     }
+
     const bottomSpacer = document.createElement("div");
     bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
     bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerAfter, '');
-    bottomSpacer.style.height = this.scrollingElements.slice(endIndex + 1).reduce((sum, el) => sum + el.height, 0) + "px";
+    bottomSpacer.style.height = heights.slice(endIndex + 1).reduce((sum, h) => sum + h, 0) + "px";
     this.element.appendChild(bottomSpacer);
-    this.delayedCallback.add({callback:() => {
-      this.isRendering = false;
-    }, duration:10});
+
+    this.delayedCallback.add({
+      callback: () => {
+        this.isRendering = false;
+      }, duration: 10
+    });
   }
 
-  replaceElementAt({ index, newElement }: { index: number, newElement: HTMLElement }) {
+  replaceElementAt({ index, newElement }: { index: number, newElement: any }) {
+    if (this.items.length > 0) {
+      if (index < 0 || index >= this.items.length) return;
+      this.items[index] = newElement;
+      this.updateHeights();
+      this.render();
+      return;
+    }
+
     if (index < 0 || index >= this.scrollingElements.length) return;
     const old = this.scrollingElements[index];
     this.resizeObserver.unobserve(old.element);
@@ -245,43 +347,39 @@ export class AcScrollable {
       element: newElement,
       height
     };
-    // newElement.setAttribute(AcScrollableAttributeName.acScrollingElementId, this.scrollingElements[index].id);
     this.resizeObserver.observe(newElement);
     this.render();
   }
 
   scrollTo({ element, index }: { index?: number, element?: HTMLElement }) {
+    const heights = this.items.length > 0 ? this.heights : this.scrollingElements.map(el => el.height);
+    const totalCount = this.items.length > 0 ? this.items.length : this.scrollingElements.length;
+
     if (index == undefined && element) {
-      index = this.scrollingElements.findIndex(se => se.element === element);
+      index = this.items.length > 0 ? this.items.indexOf(element) : this.scrollingElements.findIndex(se => se.element === element);
     }
+
     if (index != undefined) {
-      if (index < 0 || index >= this.scrollingElements.length) return;
-      const scrollY = this.scrollingElements.slice(0, index).reduce((sum, el) => sum + el.height, 0);
+      if (index < 0 || index >= totalCount) return;
+      const scrollY = heights.slice(0, index).reduce((sum, h) => sum + h, 0);
       this.element.scrollTop = scrollY;
       this.render();
     }
   }
 
-  /**
- * Clears all elements from DOM and cache.
- * Also unobserves everything to free memory.
- */
   clearAll() {
-    // Stop observers
     if (this.mutationObserver) this.mutationObserver.disconnect();
     if (this.resizeObserver) this.resizeObserver.disconnect();
     if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
 
-    // Remove all elements from DOM
     this.element.innerHTML = "";
-
-    // Clear cache
     this.renderedElements = [];
     this.scrollingElements = [];
+    this.items = [];
+    this.heightCache.clear();
+    this.heights = [];
 
     this.isRendering = false;
-
-    // Reconnect observers if needed
     this.initObservers();
   }
 
