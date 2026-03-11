@@ -1,4 +1,4 @@
-import { AcPipe, AcReportEngine } from '@autocode-ts/ac-report-engine';
+import { IAcPipe, acPipeRegistry } from '@autocode-ts/ac-pipes';
 import bwipjs from 'bwip-js';
 
 const PLACEHOLDER_SVG = `
@@ -10,7 +10,7 @@ const PLACEHOLDER_SVG = `
   </text>
 </svg>`.trim();
 
-const bwipjsPipe: AcPipe = {
+const bwipjsPipe: IAcPipe = {
   name: 'bwipjs',
   pure: true,
   transform: async (
@@ -29,6 +29,7 @@ const bwipjsPipe: AcPipe = {
       [key: string]: any;
     }> = {}
   ): Promise<string> => {
+    console.log("BwipoJS Pipe",value);
     const text = value == null || value === '' ? '' : String(value).trim();
     if (!text) {
       return PLACEHOLDER_SVG;
@@ -61,5 +62,5 @@ const bwipjsPipe: AcPipe = {
 };
 
 export function acInitBwipjsPipe() {
-  AcReportEngine.registerPipe({ pipe: bwipjsPipe });
+  acPipeRegistry.register(bwipjsPipe);
 }

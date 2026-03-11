@@ -65,7 +65,7 @@ export class AcReport {
       for (const reportFooter of reportFootererEls) {
         reportFooter.remove();
       }
-      const page = new AcReportPage({ element: cloneEl, index: this.pages.length, report: this });
+      const page = new AcReportPage({ element: cloneEl, index: this.pages.length, report: this, isFixedHeight:this.pageSize.isRoll != true });
       this.pages.push(page);
       this.activePage = page;
       this.element.append(cloneEl);
@@ -94,7 +94,7 @@ export class AcReport {
       }
     }
     else {
-      const page = new AcReportPage({ element: this.pageElClone!.cloneNode(true) as HTMLElement, index: this.pages.length, report: this });
+      const page = new AcReportPage({ element: this.pageElClone!.cloneNode(true) as HTMLElement, index: this.pages.length, report: this, isFixedHeight:this.pageSize.isRoll != true });
       const reportFooterEls = Array.from(page.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.reportFooter}]`)) as HTMLElement[];
       for (const reportFooter of reportFooterEls) {
         reportFooter.setAttribute('ac-temp-style-display', reportFooter.style.display);
@@ -121,9 +121,11 @@ export class AcReport {
       reportFooter.style.display = reportFooter.getAttribute('ac-temp-style-display')!;
     }
     for (const page of Array.from(this.element.querySelectorAll(`[${AC_REPORT_ATTRIBUTE.page}]`)) as HTMLElement[]) {
-      page.style.maxHeight = `${this.pageHeight}px`;
-      page.style.minHeight = `${this.pageHeight}px`;
-      page.style.height = `${this.pageHeight}px`;
+      if(this.pageSize.isRoll != true){
+        page.style.maxHeight = `${this.pageHeight}px`;
+        page.style.minHeight = `${this.pageHeight}px`;
+        page.style.height = `${this.pageHeight}px`;
+      }
 
       page.style.maxWidth = `${this.pageWidth}px`;
       page.style.minWidth = `${this.pageWidth}px`;
@@ -236,18 +238,21 @@ export class AcReport {
       const measureElement = this.pageElClone.cloneNode(true) as HTMLElement;
       measureElement.style.visibility = 'none';
       if (this.pageOrientation == AcEnumPageOrientation.Portrait) {
-        measureElement.style.maxHeight = `${this.pageSize.heightMm}mm`;
-        measureElement.style.minHeight = `${this.pageSize.heightMm}mm`;
-        measureElement.style.height = `${this.pageSize.heightMm}mm`;
-
+        if(this.pageSize.isRoll != true){
+          measureElement.style.maxHeight = `${this.pageSize.heightMm}mm`;
+          measureElement.style.minHeight = `${this.pageSize.heightMm}mm`;
+          measureElement.style.height = `${this.pageSize.heightMm}mm`;
+        }
         measureElement.style.maxWidth = `${this.pageSize.widthMm}mm`;
         measureElement.style.minWidth = `${this.pageSize.widthMm}mm`;
         measureElement.style.width = `${this.pageSize.widthMm}mm`;
       }
       else {
-        measureElement.style.maxHeight = `${this.pageSize.widthMm}mm`;
-        measureElement.style.minHeight = `${this.pageSize.widthMm}mm`;
-        measureElement.style.height = `${this.pageSize.widthMm}mm`;
+        if(this.pageSize.isRoll != true){
+          measureElement.style.maxHeight = `${this.pageSize.widthMm}mm`;
+          measureElement.style.minHeight = `${this.pageSize.widthMm}mm`;
+          measureElement.style.height = `${this.pageSize.widthMm}mm`;
+        }
 
         measureElement.style.maxWidth = `${this.pageSize.heightMm}mm`;
         measureElement.style.minWidth = `${this.pageSize.heightMm}mm`;

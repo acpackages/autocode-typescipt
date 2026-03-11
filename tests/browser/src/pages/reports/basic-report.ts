@@ -12,11 +12,14 @@ export class BasicReportPage extends HTMLElement {
     // this.setInvoiceData();
     // this.setInvoiceHtml();
 
-    this.setStatementData();
-    this.setStatementHtml();
+    this.setInvoicePosData();
+    this.setInvoicePosHtml();
+
+    // this.setStatementData();
+    // this.setStatementHtml();
 
     acInitBwipjsPipe();
-    acInitNumberToWordsPipe();
+    // acInitNumberToWordsPipe();
 
     const report: AcReport = new AcReport({ element: this.querySelector('[ac-report]') as HTMLElement });
     report.generate({
@@ -1358,146 +1361,167 @@ export class BasicReportPage extends HTMLElement {
   setInvoiceHtml() {
     this.innerHTML = `
     <style type="text/css">
-        .sr_no{
-            min-width: 3.5%;
-            width: 3.5%;
-            max-width: 3.5%;
-        }
-        .item_description
-        {
-            text-align: left;
-        }
-        .item_hsn{
-            text-align: center;
-            min-width: 6%;
-            width: 6%;
-            max-width: 6%;
-        }
-        .item_size{
-            text-align: center;
-            min-width: 8%;
-            width: 8%;
-            max-width: 8%;
-        }
-        .item_nos{
-            text-align: center;
-            min-width: 6%;
-            width: 6%;
-            max-width: 6%;
-        }
-        .item_qty{
-            text-align: right;
-            min-width: 6%;
-            width: 6%;
-            max-width: 6%;
-        }
-        .item_unit{
-            text-align: center;
-            min-width: 6%;
-            width: 6%;
-            max-width: 6%;
-        }
-        .item_rate{
-            text-align: right;
-            min-width: 7%;
-            width: 7%;
-            max-width: 7%;
-        }
-        .item_tax_rate{
-            text-align: right;
-            min-width: 6%;
-            width: 6%;
-            max-width: 6%;
-        }
-        .item_tax_amount{
-            text-align: right;
-            min-width: 14%;
-            width: 14%;
-            max-width: 14%;
-        }
-        .data-row-height{
-            max-height:0.4cm;min-height: 0.4cm;height:0.4cm;
-        }
-        th,td{
-            padding-left: 3px;
-            padding-right: 3px;
-        }
-        table{
-            border-collapse: collapse;
-            font-size:12px;
-        }
-        .text-right{
-            text-align: right;
-        }
-        hr{
-            background-color:black!important;
-        }
+      .sr_no {
+        min-width: 3.5%;
+        width: 3.5%;
+        max-width: 3.5%;
+      }
+
+      .item_description {
+        text-align: left;
+      }
+
+      .item_hsn {
+        text-align: center;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_size {
+        text-align: center;
+        min-width: 8%;
+        width: 8%;
+        max-width: 8%;
+      }
+
+      .item_nos {
+        text-align: center;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_qty {
+        text-align: right;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_unit {
+        text-align: center;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_rate {
+        text-align: right;
+        min-width: 7%;
+        width: 7%;
+        max-width: 7%;
+      }
+
+      .item_tax_rate {
+        text-align: right;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_tax_amount {
+        text-align: right;
+        min-width: 14%;
+        width: 14%;
+        max-width: 14%;
+      }
+
+      .data-row-height {
+        max-height: 0.4cm;
+        min-height: 0.4cm;
+        height: 0.4cm;
+      }
+
+      th,
+      td {
+        padding-left: 3px;
+        padding-right: 3px;
+      }
+
+      table {
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      hr {
+        background-color: black !important;
+      }
     </style>
-    <div class="report" style="margin:auto;width:fit-content;font:arial;" ${AC_REPORT_ATTRIBUTE.report}>
-        <div class="page" ac:style:padding-top="data.page.marginTop" ac:style:padding-left="data.page.marginLeft" ac:style:padding-bottom="data.page.marginBottom" ac:style:padding-right="data.page.marginRight" ${AC_REPORT_ATTRIBUTE.page} ${AC_REPORT_ATTRIBUTE.pageSize}="A5" ${AC_REPORT_ATTRIBUTE.pageOrientation}="portrait" style="border:solid 1px black;">
-            <table style="width:100%;" cellspacing="0" cellpadding="0">
+    <div style="margin:auto;width:fit-content;font:arial;" ac-report>
+      <div class="page" ac:style:padding-top="data.page.margin_top" ac:style:padding-left="data.page.margin_left"
+        ac:style:padding-bottom="data.page.margin_bottom" ac:style:padding-right="data.page.margin_right" ac-page
+        ac-page-size="ROLL_76" ac-page-orientation="portrait">
+        <table style="width:100%;height:-webkit-fill-available;" cellspacing="0" cellpadding="0">
+          <tr>
+            <td ac-page-header style="vertical-align: top;text-align: center;height:10px;">
+              <table width="100%">
                 <tr>
-                    <td ${AC_REPORT_ATTRIBUTE.pageHeader}>
-                        <table width="100%">
-                            <tr $>
-                                <td style="vertical-align: middle;text-align: center;width:80px;">
-                                    <img document-value="accountee_logo" style="max-height:100px;max-width:100%;object-fit: contain;margin-bottom: 10px;"/><br>
-                                </td>
-                                <td style="vertical-align: top;text-align: left;height:10px;font-size:12px;border-left:solid 1px;">
-                                    <strong>{{data.accountee.name}}</strong><br>
-                                    <span>{{data.accountee.address}}</span><br>
-                                    Ph. <span>{{data.accountee.phone_details[0].value}}</span><br>
-                                    <span document-value="business_id_title"></span> <span document-value="accountee_business_id">{{data.accountee.business_id}}</span><br>
-                                </td>
-                            </tr>
-                            <tr style="border-bottom-style: solid;border-bottom-color: black;border-bottom-width: 1px;border-top-style: solid;border-top-color: black;border-top-width: 1px;">
-                                <td class="" colspan="2">
-                                    <div class="mb-0 text-center"><b document-value="document_type" style="font-size: 14px;">{{data.record.sub_type}} INVOICE</b></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="" colspan="2">
-                                    M/S: <strong document-value="account_name">{{data.record.person_associated}}</strong> <div document-value="account_phone"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="" style="text-align: left;">
-                                    No. :  <b><span document-value="document_number">{{data.record.document_number}}</span></b>
-                               </td>
-                               <td class="" style="text-align: right;">
-                                    Date. : <b><span document-value="document_date">{{data.record.date}}</span></b>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+                  <td style="vertical-align: middle;text-align: center;width:80px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/960px-Google_Favicon_2025.svg.png" style="max-height:100px;max-width:100%;object-fit: contain;margin-bottom: 10px;" /><br>
+                  </td>
+                  <td style="vertical-align: top;text-align: left;height:10px;font-size:12px;border-left:solid 1px;">
+                    <b>{{data.accountee.accountee_name}}</b><br>
+                    {{data.accountee_addresses[0].address_line_1}}, {{data.accountee_addresses[0].address_line_2}},<br>
+                    {{data.accountee_addresses[0].city_name}} - {{data.accountee_addresses[0].postal_code}},
+                    {{data.accountee_addresses[0].state_name}}, {{data.accountee_addresses[0].country_name}}<br>
+                    Ph. <span>{{data.accountee_phone_numbers[0].phone_number_value}}</span><br>
+                    GST No. {{data.accountee.legal_identifier}}
+                  </td>
+                </tr>
+                <tr
+                  style="border-bottom-style: solid;border-bottom-color: black;border-bottom-width: 1px;border-top-style: solid;border-top-color: black;border-top-width: 1px;">
+                  <td class="" colspan="2">
+                    <div class="mb-0 text-center"><b style="font-size: 14px;">{{data.sale_invoice_title}}</b></div>
+                  </td>
                 </tr>
                 <tr>
-                    <td ${AC_REPORT_ATTRIBUTE.pageBody} style="vertical-align: top;">
-                        <table height="100%" width="100%" cellspacing="0" style="border-color: black;font-size: 12px;border-width: 1px;">
-                            <tbody ac:for="let item of data.details;let index;">
-                                <div>
-                                    <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;border-top-style: solid;border-bottom-style: none;border-width:1px;font-size:10px;">
+                  <td class="" colspan="2">
+                    M/S: <strong>{{data.display_name}}</strong>
+                    <div>{{data.party_phone_numbers[0].phone_number_value}}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="" style="text-align: left;">
+                    No. :  <b>{{data.sale_invoice.sale_invoice_number}}</b></b>
+                  </td>
+                  <td class="" style="text-align: right;">
+                    Date. : <b>{{data.sale_invoice.sale_invoice_datetime | date:'dd-MM-yyyy'}}</b>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td ac-page-body style="vertical-align: top;">
+              <table height="100%" width="100%" cellspacing="0" style="border-color: black;font-size: 12px;border-width: 1px;">
+                            <tbody ac:for="let item of data.sale_invoice_products;let index;">
+                              <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;border-top-style: solid;border-bottom-style: none;border-width:1px;font-size:10px;">
                                         <td colspan="4">
-                                            <span class="sr_no" srm-value="srno">{{index + 1}}</span>:&nbsp;<span class="item_description">{{item.item_narration}}</span>
+                                            <span class="sr_no">{{index + 1}}</span>:&nbsp;<span class="item_description">{{item.product_description}}</span>
                                         </td>
                                     </tr>
                                     <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;border-top-style: none;border-bottom-style: solid;border-width:1px;font-size:10px;">
-                                        <td class="text-start" style="min-width:20%;max-width: 20%;width: 20%;">Qty: <b ></b>{{item.quantity}}<span sim-data-field="item_unit"></span></td>
-                                        <td class="item_rate text-start" style="min-width:27.5%;max-width: 27.5%;width: 27.5%;"> MRP: <span>{{item.price_mrp}}</span></td>
-                                        <td class="item_rate text-start" style="min-width:27.5%;max-width: 27.5%;width: 27.5%;"> Price: <span>{{item.price_actual}}</span></td>
-                                        <td class="item_tax_amount text-start" style="min-width:25%;max-width: 25%;width: 25%;"> Amt: <b>{{item.amount}}</b></td>
+                                        <td class="text-start" style="min-width:20%;max-width: 20%;width: 20%;">Qty: <b>{{item.product_quantity | number:'2'}}</b>&nbsp;{{item.product_uom_name}}</td>
+                                        <td class="item_rate text-start" style="min-width:27.5%;max-width: 27.5%;width: 27.5%;"> MRP: {{item.product_price_mrp | currency:'INR'}}</td>
+                                        <td class="item_rate text-start" style="min-width:27.5%;max-width: 27.5%;width: 27.5%;"> Price: {{item.product_price_final | currency:'INR'}}</td>
+                                        <td class="item_tax_amount text-start" style="min-width:25%;max-width: 25%;width: 25%;"> Amt: {{item.product_amount | currency:'INR'}}</td>
                                     </tr>
                                 </div>
                             </tbody>
                         </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td ${AC_REPORT_ATTRIBUTE.pageFooter} style="vertical-align: top;height:10px;font-size:14px;">
-                        <table width="100%">
+            </td>
+          </tr>
+          <tr>
+            <td ac-page-footer style="vertical-align: top;height:10px;">
+              <table width="100%">
                             <tr>
                                 <table style="width:100%;">
-                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total : {{data.record.amount | numberToWords}}</th><th class="text-right py-1" >{{data.record.amount | currency:'INR'}}</th></tr>
+                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total</th><th class="text-right py-1">{{data.sale_invoice_summary.total_amount | currency:'INR'}}</th></tr>
                                 </table>
                             </tr>
                             <tr>
@@ -1505,8 +1529,7 @@ export class BasicReportPage extends HTMLElement {
                                     <table style="width:100%;">
                                         <tr>
                                             <td style="padding:5px 0px;padding-right: 5px;width:110px;">
-                                                <div style="height:100px;width:100px;margin-left:5px;" ac:bind:innerHTML="data.record.document_number | bwipjs:{bcid:'code128','height':100,'width':100}">
-                                                </div>
+                                                <div ac:bind:innerHTML="data.qr_code_value | bwipjs:{height:100,width:100,bcid:'qrcode'}" style="height:100px;width:100px;margin-left:5px;"></div>
                                             </td>
                                             <td style="border-left: solid 1px;vertical-align:middle;">
                                                 <table style="width:100%;">
@@ -1515,8 +1538,8 @@ export class BasicReportPage extends HTMLElement {
                                                         <td class="text-end">Saved</td>
                                                     </tr>
                                                     <tr>
-                                                        <td show-tax document-value="total_mrp">0</td>
-                                                        <th class="text-end" show-tax document-value="total_difference_mrp_actual_amount" style="font-size:15px;">0</th>
+                                                        <td show-tax document-value="total_mrp">{{data.sale_invoice_summary.total_mrp_amount | currency:'INR'}}</td>
+                                                        <th class="text-end" show-tax style="font-size:15px;">{{data.sale_invoice_summary.total_savings_on_mrp | currency:'INR'}}</th>
                                                     </tr>
                                                 </table>
                                                 <hr style="margin:2px 0px;">
@@ -1528,10 +1551,10 @@ export class BasicReportPage extends HTMLElement {
                                                         <td>CESS</td>
                                                     </tr>
                                                     <tr>
-                                                        <th show-tax document-value="total_cgst">0</th>
-                                                        <th show-tax document-value="total_sgst">0</th>
-                                                        <th show-tax document-value="total_igst">0</th>
-                                                        <th show-tax document-value="total_cess">0</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_cgst_amount | currency:'INR'}}</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_sgst_amount | currency:'INR'}}</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_igst_amount | currency:'INR'}}</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_cess_amount | currency:'INR'}}</th>
                                                     </tr>
                                                 </table>
                                                 <table class="table-payments" style="width:100%;">
@@ -1543,12 +1566,12 @@ export class BasicReportPage extends HTMLElement {
                             </tr>
                             <tr>
                                 <td class="pt-1" style="text-align:left;border-top: solid 1px;border-bottom: solid 1px;padding-bottom: 2.5px;">
-                                    <div document-value="terms_title"></div>
-                                    <div document-value="terms_content"></div>
+                                    <div ac:bind:innerHTML="data.terms_html"></div>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="text-align: center;font-size: 12px;padding:5px 0px;padding-top: 2.5px;" report-value="document-declaration"></td>
+                                <td style="text-align: center;font-size: 12px;padding:5px 0px;padding-top: 2.5px;">
+                                   This is computer-generated document. Generated with <b>Accountea</b>. For more information visit <b>www.accountea.com</b>.</td>
                             </tr>
                             <tr style="border-style: solid;border-color: black;border-width: 1px;">
                                 <td style="text-align: center;font-size: 12px;">
@@ -1556,13 +1579,247 @@ export class BasicReportPage extends HTMLElement {
                                 </td>
                             </tr>
                         </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
     `;
   }
+
+  setInvoicePosData() {
+    this.data={"base_url":"https://localhost:8082","terms_html":"<p>Notes:</p><p><strong>This is Sale Invoice Terms &amp; Condition/Notes.</strong></p>","sale_invoice":{"customer_category":null,"party_name":null,"party_id":null,"legal_identifier":null,"address_line_1":null,"address_line_2":null,"landmark":null,"latitude":null,"longitude":null,"city_name":null,"postal_code":null,"state_name":null,"country_name":null,"accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","currency_code":"INR","customer_id":null,"device_id":null,"exchange_rate":1.0,"is_draft":0,"sale_invoice_remarks":null,"sale_invoice_amount":12740.0,"sale_invoice_datetime":"2025-10-13T00:00:00.000","sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_number":"3704","sale_term_id":null,"sale_invoice_status":"CREATED","taxing_scheme_id":null,"transaction_id":"f8803e82-7297-4422-b7fd-bcffe9871b47","sale_invoice_type":"TAX","user_id":null,"products_count":60,"received_amount":12740.0,"chargeable_services_count":null,"received_by":"Sanket Patel","sale_invoice_details":null,"supply_mode":"INTRA","is_finalized":1,"payment_status":"RECEIVED","address_id":null,"is_credit":0,"created_at":"2026-02-04T12:27:21.489Z","updated_at":"2026-02-04T12:27:27.935Z","deleted_at":null},"accountee":{"accountee_image_media":{"media_path":null,"media_details":null},"accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","accountee_image_media_id":null,"accountee_name":"ShreeHari Enterprise","financial_year_end":"2026-03-31","financial_year_start":"2025-04-01","is_active":1,"accountee_remarks":"","accountee_type":"TRADING","email_addresses":"shreeharienterprise@gmail.com","phone_numbers":"8128238471","addresses":"Between Both Bus Stand, Station Road, 387001, Nadiad, Gujarat, India","fax_numbers":"","websites":"","bank_accounts":"9877649879898[Indian Overseas Bank]","currency_code":"INR","legal_identifier":"24A6419865SSAS5","accountee_taxing_type":"REGULAR","created_at":"2026-02-04T12:21:30.599Z","updated_at":"2026-02-04T13:48:14.648Z","deleted_at":null},"accountee_addresses":[{"accountee_address_id":"9d6042f4-348b-4790-83af-b76641802b00","accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","address_id":"73e884cc-1460-415c-a84a-69c9c436731c","address_label":"Default","address_line_1":"Between Both Bus Stand","address_line_2":"Station Road","country_name":"India","display_index":0,"is_active":1,"landmark":null,"latitude":null,"longitude":null,"postal_code":"387001","state_name":"Gujarat","city_name":"Nadiad","created_at":"2026-02-04T13:48:14.648Z","updated_at":"2026-03-03T06:06:45.838Z","deleted_at":null,"address_remarks":null}],"accountee_bank_accounts":[{"accountee_bank_account_id":"2006d58e-c223-41c3-acb3-15771d8bd1e0","accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","account_holder_name":"ShreeHari Enterprise","account_number":"9877649879898","account_type":"CURRENT","bank_account_id":"291ddab4-fed9-4411-9fc5-11ca26721d00","bank_code":"IOBA0268","bank_name":"Indian Overseas Bank","branch_code":"NDD0268","branch_name":"Nadiad","branch_address":"","country_code":"","currency_code":"INR","iban":"IOBA09260000","ifsc":"IOBAJKHNSDK","display_index":0,"is_active":1,"is_primary":"","swift_bic":"IOBA09260000","bank_account_label":"Default","created_at":"2026-02-05T06:38:54.384Z","updated_at":"2026-02-05T06:39:09.154Z","deleted_at":null,"bank_account_remarks":null}],"accountee_phone_numbers":[{"accountee_phone_number_id":"a6ea7521-2256-4210-8e0a-7851f3579d29","accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","display_index":0,"is_active":1,"phone_number_id":"5816b7b5-46d6-4e83-9500-8a7240e7186a","phone_number_label":"Mobile","phone_number_value":"8128238471","created_at":"2026-02-04T13:48:28.539Z","updated_at":"2026-03-03T06:06:45.864Z","deleted_at":null,"phone_number_remarks":null}],"accountee_email_addresses":[{"accountee_email_address_id":"7a8541b0-3789-4d66-8774-b889d6cd2148","accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","email_address_id":"89169c8d-0a45-459b-9dd5-f13969889296","email_address_label":"Email","email_address_value":"shreeharienterprise@gmail.com","display_index":0,"is_active":1,"created_at":"2026-03-03T06:06:45.859Z","updated_at":null,"deleted_at":null,"email_address_remarks":null}],"accountee_fax_numbers":[],"accountee_legal_documents":[{"accountee_legal_document_id":"dced2b22-f66a-4dc4-8169-5cab77e7e201","accountee_id":"b7077133-b119-4913-9ee3-68ab3cd868c1","expiry_date":null,"display_index":0,"is_active":1,"is_expired":0,"is_verified":0,"legal_document_id":"d3eb0a35-34c4-40c7-b09d-53ccfcd868da","legal_document_value":"24ACC2525A1","legal_document_label":"PAN No","created_at":"2026-02-05T06:17:00.446Z","updated_at":"2026-03-03T06:06:45.862Z","deleted_at":null,"legal_document_remarks":null}],"accountee_medias":[],"accountee_websites":[],"accountee_social_medias":[],"sale_invoice_products":[{"gross_amount":33.9,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":33.9,"tax_amount":6.101999999999999,"product_name":"AP Apco Phirozi 50ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"95880e4e-cbd7-488b-9e52-4b315cd15484","product_description":"AP Apco Phirozi 50ml","product_id":"5b151548-34fb-41da-aba7-a120c633f11a","product_price_gross":33.9,"product_price_final":40.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"210febb9-3d3c-4ad3-9b3f-464c82132e45","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":40.0,"product_price_mrp":25.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.935Z","updated_at":"2026-02-04T12:27:27.935Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":228.81,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":228.81,"tax_amount":41.1858,"product_name":"AP Apco Sky Blue 1ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"3649221d-6a61-4ae9-82ff-350c71842736","product_description":"AP Apco Sky Blue 1ltr","product_id":"c9cea1e7-b634-4b0c-b4e3-bfd05f1047de","product_price_gross":228.81,"product_price_final":270.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"af8f2101-e22e-4f05-a193-3dd58e58ffe2","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":270.0,"product_price_mrp":412.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.935Z","updated_at":"2026-02-04T12:27:27.935Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":55.08,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":55.08,"tax_amount":9.914399999999999,"product_name":"AP Apco G Yellow 100ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"6c61f0f8-9789-40e1-a7c3-bbbc2737d189","product_description":"AP Apco G Yellow 100ml","product_id":"1bfb473e-9a93-482a-ab73-4fb53ed75019","product_price_gross":55.08,"product_price_final":65.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"01401ae5-d32e-464c-8ced-b06b8326a0ce","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":65.0,"product_price_mrp":69.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.935Z","updated_at":"2026-02-04T12:27:27.935Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":101.69,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":101.69,"tax_amount":18.304199999999998,"product_name":"AP Apco G Yellow 200ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"f764132a-7be4-4412-9bc2-cf59dbb7bcbd","product_description":"AP Apco G Yellow 200ml","product_id":"8e270d94-01ee-4792-9115-3e9dd91acc76","product_price_gross":101.69,"product_price_final":120.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"69c94ad8-2a9f-4cc5-8924-45ecb3aea738","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":120.0,"product_price_mrp":75.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.936Z","updated_at":"2026-02-04T12:27:27.936Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":55.08,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":55.08,"tax_amount":9.914399999999999,"product_name":"AP Apco Brown 100ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"db050adf-ffe3-48ad-a8e3-c209d2862dc2","product_description":"AP Apco Brown 100ml","product_id":"d8c68ad7-2bc1-4c0f-a655-436cc564141f","product_price_gross":55.08,"product_price_final":65.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"bb7dce85-0ae3-4e1d-b3e0-c83134280a5e","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":65.0,"product_price_mrp":40.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.936Z","updated_at":"2026-02-04T12:27:27.936Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":144.07,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":144.07,"tax_amount":25.932599999999997,"product_name":"AP Apco G Brown 500ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"55e1cff5-1279-418c-9d31-a43ee4d918fd","product_description":"AP Apco G Brown 500ml","product_id":"5194eac2-d3c8-424b-babc-05b4e6b81b7a","product_price_gross":144.07,"product_price_final":170.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"7dae077b-8066-4c85-8193-3e14e48a4bc1","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":170.0,"product_price_mrp":216.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.936Z","updated_at":"2026-02-04T12:27:27.936Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":101.69,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":101.69,"tax_amount":18.304199999999998,"product_name":"AP Apco Imp Crimsion 200ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"7c69a8b8-cd77-4ff3-84e0-9bf66f6bf59a","product_description":"AP Apco Imp Crimsion 200ml","product_id":"7cfa978c-9a47-40c0-9340-965c63977b86","product_price_gross":101.69,"product_price_final":120.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"a2f5b1a2-825d-4241-aa91-ee68d325262d","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":120.0,"product_price_mrp":75.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.936Z","updated_at":"2026-02-04T12:27:27.936Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":245.76,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":245.76,"tax_amount":44.236799999999995,"product_name":"AP Apco Imp Crimsion 1ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"29f662fb-b997-470c-a7a2-c9b023914761","product_description":"AP Apco Imp Crimsion 1ltr","product_id":"ac1269e3-13c1-49ae-bd5f-dfdbdd873d13","product_price_gross":245.76,"product_price_final":290.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"50f82d6f-d59d-4d79-8447-4bd1de9e40d7","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":290.0,"product_price_mrp":460.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.937Z","updated_at":"2026-02-04T12:27:27.937Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":228.81,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":228.81,"tax_amount":41.1858,"product_name":"AP Apco Sm Grey 1ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"e6041cff-a145-4f6b-866f-712f38b2f14d","product_description":"AP Apco Sm Grey 1ltr","product_id":"a61eba04-c1bc-4e76-be12-8fb084f267d6","product_price_gross":228.81,"product_price_final":270.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"302b067b-4763-48ab-931c-5c52d0dff104","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":270.0,"product_price_mrp":280.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.937Z","updated_at":"2026-02-04T12:27:27.937Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":110.16,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":110.16,"tax_amount":19.828799999999998,"product_name":"AP Apco Black 100ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"7f8af102-0d20-4d95-a7a0-7a8c89363dfb","product_description":"AP Apco Black 100ml","product_id":"0874e729-aa1e-421a-8a9d-3e2eb1b8aa6e","product_price_gross":55.08,"product_price_final":65.0,"product_quantity":2.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"4e2022da-f9b5-40d2-8e46-1daf79b29013","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":130.0,"product_price_mrp":43.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.938Z","updated_at":"2026-02-04T12:27:27.938Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":165.24,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":165.24,"tax_amount":29.7432,"product_name":"AP Apco Black 100ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"c508501c-8c36-4b7f-acde-fd909aedc0ad","product_description":"AP Apco Black 100ml","product_id":"0874e729-aa1e-421a-8a9d-3e2eb1b8aa6e","product_price_gross":55.08,"product_price_final":65.0,"product_quantity":3.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":3.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"68e02d7d-66dc-416c-9cb4-b39e51c5631e","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":195.0,"product_price_mrp":43.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.938Z","updated_at":"2026-02-04T12:27:27.938Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":144.07,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":144.07,"tax_amount":25.932599999999997,"product_name":"AP Apco Black 500ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"a24b10d1-7d97-483d-9b4e-1748f78ede90","product_description":"AP Apco Black 500ml","product_id":"d161e2a2-98d6-49a4-9f6d-858ea7484d8c","product_price_gross":144.07,"product_price_final":170.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"a86e431d-1686-44bc-8f09-57bff0848dde","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":170.0,"product_price_mrp":216.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.938Z","updated_at":"2026-02-04T12:27:27.938Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":-228.81,"discount_trade_amount":-0.0,"discount_cash_amount":-0.0,"discount_rebate_amount":-0.0,"taxable_amount":-228.81,"tax_amount":-41.1858,"product_name":"AP Apco Black 1Ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"950a0497-04ac-494f-88bd-38c02cef4ce2","product_description":"AP Apco Black 1Ltr","product_id":"2cbc4fc7-5ddc-4ad3-9afc-caefb31ccf7c","product_price_gross":228.81,"product_price_final":270.0,"product_quantity":-1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":-1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"13525b12-ab33-47b2-bb55-8bfb9ea3ea25","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":-270.0,"product_price_mrp":412.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.939Z","updated_at":"2026-02-04T12:27:27.939Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":152.54,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":152.54,"tax_amount":27.457199999999997,"product_name":"AP Apco EB6 500ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"b6e15331-887a-434e-9bd6-4b6103cf53af","product_description":"AP Apco EB6 500ml","product_id":"f2728a18-ab23-40c5-875a-52c48cd9ad26","product_price_gross":152.54,"product_price_final":180.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"3c88f545-b61f-435c-966b-338283f9eb6e","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":180.0,"product_price_mrp":223.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.939Z","updated_at":"2026-02-04T12:27:27.939Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":245.76,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":245.76,"tax_amount":44.236799999999995,"product_name":"AP Apco EB6 1ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"33c62cb8-292f-4484-b554-84da52020d5f","product_description":"AP Apco EB6 1ltr","product_id":"0dc27ca1-9737-4aec-aad0-df6f95d55503","product_price_gross":245.76,"product_price_final":290.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"81374cdf-d062-46b7-99ec-8bab6f569dc3","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":290.0,"product_price_mrp":460.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.939Z","updated_at":"2026-02-04T12:27:27.939Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":567.8,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":567.8,"tax_amount":102.204,"product_name":"AP PE BW1 1ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"26d0ec78-22c4-4c91-ae27-fb1897f050ad","product_description":"AP PE BW1 1ltr","product_id":"63968519-cdeb-4f0b-9e47-a93bcdf924c5","product_price_gross":283.9,"product_price_final":335.0,"product_quantity":2.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"0344ce75-1bce-4604-9302-7fcd6dbb9d24","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":670.0,"product_price_mrp":489.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.940Z","updated_at":"2026-02-04T12:27:27.940Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":309.32,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":309.32,"tax_amount":55.6776,"product_name":"AP PE BW22 1ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"107120d7-a3fc-444f-b474-1478e8805e99","product_description":"AP PE BW22 1ltr","product_id":"d78bc432-7c28-4a72-943d-45dde9766c9a","product_price_gross":309.32,"product_price_final":365.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"20d41832-fc50-4431-8af3-4645e63e4959","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":365.0,"product_price_mrp":440.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.940Z","updated_at":"2026-02-04T12:27:27.940Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":254.24,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":254.24,"tax_amount":45.7632,"product_name":"AP KPF Grey 1Kg","hsn_code":"3214","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"8d397b91-d52a-4f73-be20-46c3a8ca535c","product_description":"AP KPF Grey 1Kg","product_id":"cd28e716-eb39-4db7-a6eb-51a4496b0821","product_price_gross":127.12,"product_price_final":150.0,"product_quantity":2.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"f3dd5592-4a29-4b0e-b794-3e66f40d9df2","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":300.0,"product_price_mrp":null,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.940Z","updated_at":"2026-02-04T12:27:27.940Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":110.17,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":110.17,"tax_amount":19.8306,"product_name":"AP Uni Stnr Y Oxide 100ml","hsn_code":"3213","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"1dd995b5-2631-4ef5-a33f-92ba537ff9f0","product_description":"AP Uni Stnr Y Oxide 100ml","product_id":"1ec18255-c8cc-48bf-9255-f23d87a58a9f","product_price_gross":110.17,"product_price_final":130.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"62638d2c-1627-4c9f-ad54-ccb3dc224015","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":130.0,"product_price_mrp":130.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.940Z","updated_at":"2026-02-04T12:27:27.940Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":110.17,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":110.17,"tax_amount":19.8306,"product_name":"AP Uni Stnr F Red 100ml","hsn_code":"3213","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"8f221440-b8c7-4666-a6be-8fce607167d1","product_description":"AP Uni Stnr F Red 100ml","product_id":"818f790a-63ea-47e7-a37e-d90f09df69fc","product_price_gross":110.17,"product_price_final":130.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"12a491d5-ae0a-4184-b9b5-d217c89090b0","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":130.0,"product_price_mrp":130.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.940Z","updated_at":"2026-02-04T12:27:27.940Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":50.85,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":50.85,"tax_amount":9.153,"product_name":"AP Stnr Orange 50ml","hsn_code":"3213","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"e3febf17-7bc9-4036-b87f-cf380e2ac853","product_description":"AP Stnr Orange 50ml","product_id":"40b3783c-acd7-4e69-a66b-92c433a85033","product_price_gross":50.85,"product_price_final":60.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"e40de2f3-277f-4703-a18f-ed9fdc07e7cc","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":60.0,"product_price_mrp":null,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.941Z","updated_at":"2026-02-04T12:27:27.941Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":84.75,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":84.75,"tax_amount":15.254999999999999,"product_name":"AP Uni Stnr F Violet 100ml","hsn_code":"3213","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"bcfd96c6-5023-4c4f-b30f-b6ecab89cf19","product_description":"AP Uni Stnr F Violet 100ml","product_id":"0de7c896-294a-457f-907e-dad6b66093fd","product_price_gross":84.75,"product_price_final":100.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"0cb867bb-34d7-4fb0-bb17-8d24ecc8c1c8","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":100.0,"product_price_mrp":102.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.941Z","updated_at":"2026-02-04T12:27:27.941Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":59.32,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":59.32,"tax_amount":10.6776,"product_name":"AP Apco Br White 100ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"502dddaf-ed3f-4510-bd52-98fe712e5ad4","product_description":"AP Apco Br White 100ml","product_id":"76c36a85-61f7-45fb-87d7-573df3079c64","product_price_gross":59.32,"product_price_final":70.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"bb70f75d-26a4-4e94-8d48-f5494f9fe6ad","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":70.0,"product_price_mrp":71.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.941Z","updated_at":"2026-02-04T12:27:27.941Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":898.31,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":898.31,"tax_amount":161.6958,"product_name":"AP Apco Br White 4ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"163e0a88-447e-497e-b5b0-bdcd53e8a29a","product_description":"AP Apco Br White 4ltr","product_id":"4e65d209-079d-41ab-8b7c-627760934c0e","product_price_gross":898.31,"product_price_final":1060.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"fa9642b8-1dcd-4864-bf3a-edd172f0bd25","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":1060.0,"product_price_mrp":1685.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.942Z","updated_at":"2026-02-04T12:27:27.942Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":474.58,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":474.58,"tax_amount":85.42439999999999,"product_name":"AP Tractor Uno UD1 10Kg","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"cdd6f349-e9c1-4de5-a968-f8fbd965d0fa","product_description":"AP Tractor Uno UD1 10Kg White","product_id":"3181bbb1-34f5-4b6b-8690-4e27198c1463","product_price_gross":474.58,"product_price_final":560.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"0768fd09-1834-4fda-82a2-3ad8ae6db287","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":560.0,"product_price_mrp":870.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.942Z","updated_at":"2026-02-04T12:27:27.942Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":152.54,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":152.54,"tax_amount":27.457199999999997,"product_name":"AP Tractor TE1 1ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"2ad5b93e-cd46-4ad5-a4b8-b4f842703571","product_description":"AP Tractor TE1 1ltr","product_id":"0c23c294-3b57-4c5a-a85d-c5716468cbaf","product_price_gross":152.54,"product_price_final":180.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"0a0a7bf1-1026-48ae-9b25-a46dbdda421a","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":180.0,"product_price_mrp":258.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.943Z","updated_at":"2026-02-04T12:27:27.943Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":1266.95,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":1266.95,"tax_amount":228.051,"product_name":"AP Tractor TE1 10ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"363dbe5b-c50f-47c9-9c08-ebdf19b7c07b","product_description":"AP Tractor TE1 10ltr","product_id":"76e167c8-7b72-42ec-b85d-4186de7bb5db","product_price_gross":1266.95,"product_price_final":1495.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"1e47ce79-9c7a-444e-b04d-9d6bc5c3b4ab","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":1495.0,"product_price_mrp":2230.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.943Z","updated_at":"2026-02-04T12:27:27.943Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":288.14,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":288.14,"tax_amount":51.865199999999994,"product_name":"AP Touchwood Glossy  500ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"b514a716-0d60-4f55-9510-a7230cdf45cf","product_description":"AP Touchwood Glossy  500ml","product_id":"b8a20f88-203f-4108-81dc-bc473b8a9790","product_price_gross":144.07,"product_price_final":170.0,"product_quantity":2.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"d0ebb108-ce77-4f9d-9d4c-a696c421ea7e","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":340.0,"product_price_mrp":244.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.943Z","updated_at":"2026-02-04T12:27:27.943Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":84.75,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":84.75,"tax_amount":15.254999999999999,"product_name":"AP Clear Varnish 200ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"f9275c00-fd1d-4b1f-8749-bbda3852c0ae","product_description":"AP Clear Varnish 200ml","product_id":"a79dbe65-66b6-42d6-b696-79143ba4230e","product_price_gross":84.75,"product_price_final":100.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"fcdfa53d-15cc-452f-87d8-ee7be5afa333","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":100.0,"product_price_mrp":100.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.943Z","updated_at":"2026-02-04T12:27:27.943Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":84.75,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":84.75,"tax_amount":15.254999999999999,"product_name":"AP  Acry. Wall Putty 1 KG","hsn_code":"3214","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"6a300c35-3b1e-4983-afda-50a02c8a134b","product_description":"AP  Acry. Wall Putty 1 KG","product_id":"fd3c4d8e-c91d-4b5c-bc4e-2b058bf9274d","product_price_gross":84.75,"product_price_final":100.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"07309182-ac64-4ed9-bcdd-2bc9dc633831","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":100.0,"product_price_mrp":112.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.943Z","updated_at":"2026-02-04T12:27:27.943Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":211.86,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":211.86,"tax_amount":38.1348,"product_name":"AP Ace AC21G 1ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"35747075-fe12-4211-b192-7eb16c6033cc","product_description":"AP Ace AC21G 1ltr","product_id":"7d838f7f-23a7-425c-ab1f-09c2c7e10f89","product_price_gross":211.86,"product_price_final":250.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"c22120de-c8af-4617-9d3a-be0d9b393c33","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":250.0,"product_price_mrp":276.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.944Z","updated_at":"2026-02-04T12:27:27.944Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":50.84,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":50.84,"tax_amount":9.151200000000001,"product_name":"AP MASKING TAPE 2.4 CM X 25 M 1 PC","hsn_code":"7326","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"0319c1d2-7bd6-48b5-85fc-b195e27663a7","product_description":"AP MASKING TAPE 2.4 CM X 25 M 1 PC","product_id":"24b722f1-c2b8-4077-a460-bcad942b364b","product_price_gross":25.42,"product_price_final":30.0,"product_quantity":2.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"738750eb-402b-470e-885a-8999a19a71e8","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":60.0,"product_price_mrp":null,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.944Z","updated_at":"2026-02-04T12:27:27.944Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":33.9,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":33.9,"tax_amount":6.101999999999999,"product_name":"Maruti Synthetic Thinner 200ml","hsn_code":"3814","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"fa1abaac-914e-462e-b56c-1d2e5910a7f2","product_description":"Maruti Synthetic Thinner 200ml","product_id":"8817c1a2-0b79-41eb-9ee3-b9c129e0051b","product_price_gross":33.9,"product_price_final":40.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"854900ec-71e4-4bc2-b130-74c0a0c14cde","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":40.0,"product_price_mrp":40.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.944Z","updated_at":"2026-02-04T12:27:27.944Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":59.32,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":59.32,"tax_amount":10.6776,"product_name":"Maruti Synthetic Thinner 450ml","hsn_code":"3814","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"dc65f73a-3962-4202-aa8d-3141261d6b80","product_description":"Maruti Synthetic Thinner 450ml","product_id":"cd23561c-f70e-4ecd-8414-bd5043f6e23a","product_price_gross":59.32,"product_price_final":70.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"9eae5851-5358-4582-957e-3a06ccb22c6b","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":70.0,"product_price_mrp":80.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.945Z","updated_at":"2026-02-04T12:27:27.945Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":101.69,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":101.69,"tax_amount":18.304199999999998,"product_name":"Maruti Synthetic Thinner 900ml","hsn_code":"3814","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"c4477b6f-c650-4629-8dff-d99c60dbe154","product_description":"Maruti Synthetic Thinner 900ml","product_id":"ad89e483-c6bc-4139-b4b8-403541006bcb","product_price_gross":101.69,"product_price_final":120.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"93fb33bd-ec8e-476c-bb33-d9a0196d9ee5","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":120.0,"product_price_mrp":150.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.945Z","updated_at":"2026-02-04T12:27:27.945Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":135.6,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":135.6,"tax_amount":24.407999999999998,"product_name":"N C Retarder Loose","hsn_code":"2942","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"MLT","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"d957b03c-31a8-4eb9-9742-84d3a9c63063","product_description":"N C Retarder Loose","product_id":"383f20ff-b8b7-42c2-988a-e355842c1ef8","product_price_gross":67.8,"product_price_final":80.0,"product_quantity":2.0,"product_uom_id":"6b480732-9c1d-43eb-91f3-6cc7582844b1","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"3b7c1433-e58b-40e0-b911-b64ca270f8f1","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":160.0,"product_price_mrp":80.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.945Z","updated_at":"2026-02-04T12:27:27.945Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":33.88,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":33.88,"tax_amount":6.0984,"product_name":"Norton SukhaPaper 150Grit","hsn_code":"6805","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"86c50e47-0140-4f49-818e-a55a1fb870e2","product_description":"Norton SukhaPaper 150Grit","product_id":"b6dc433d-5c13-49bc-bec4-b672e8798f89","product_price_gross":8.47,"product_price_final":10.0,"product_quantity":4.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":4.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"e3eaba93-3496-4941-bf33-27e3f8f1eae9","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":40.0,"product_price_mrp":10.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.945Z","updated_at":"2026-02-04T12:27:27.945Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":127.12,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":127.12,"tax_amount":22.8816,"product_name":"Polish Thinner 1Ltr","hsn_code":"3814","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"b2d1cf5b-b1f3-4082-984c-31d4497b2aea","product_description":"Polish Thinner 1Ltr","product_id":"915f8b16-3b0e-41bb-b8bf-b442743672c7","product_price_gross":127.12,"product_price_final":150.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"f1bb6329-c902-4fde-9685-09a06d091555","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":150.0,"product_price_mrp":150.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.946Z","updated_at":"2026-02-04T12:27:27.946Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":47.619,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":47.619,"tax_amount":2.38095,"product_name":"Chandrash (Gum Copal)","hsn_code":"1301","taxing_scheme_name":"GST","tax_rate_name":"5.00%","product_uom_name":"KGS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"daebdbe8-eb5b-4186-b6fb-ff065dd7bb65","product_description":"Chandrash (Gum Copal)","product_id":"4a93f021-3729-42b5-b4e3-a50bb0209082","product_price_gross":476.19,"product_price_final":500.0,"product_quantity":0.1,"product_uom_id":"0bb73b2c-1405-4cb0-bc9a-94cb9999f554","product_total_quantity":0.1,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"52f2f2ed-129b-4a4a-a5fa-e6828552db00","product_status":"DELIVERED","tax_rate_id":"86f75d43-244d-49f3-980c-05757f1ec0f2","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":5.0,"product_amount":50.0,"product_price_mrp":500.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.946Z","updated_at":"2026-02-04T12:27:27.946Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":38.1,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":38.1,"tax_amount":1.9050000000000002,"product_name":"Parrot Raw Sieena 400gm","hsn_code":"2518","taxing_scheme_name":"GST","tax_rate_name":"5.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"8e34ca6e-5fbf-45c8-a314-3ef241f2112e","product_description":"Parrot Raw Sieena 400gm","product_id":"a406361a-4bf3-41cf-9d37-756232f3095f","product_price_gross":38.1,"product_price_final":40.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"641d72a3-7b32-41bf-a446-a758a3387faa","product_status":"DELIVERED","tax_rate_id":"86f75d43-244d-49f3-980c-05757f1ec0f2","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":5.0,"product_amount":40.0,"product_price_mrp":40.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.946Z","updated_at":"2026-02-04T12:27:27.946Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":33.9,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":33.9,"tax_amount":6.101999999999999,"product_name":"Utratech Birla Putty 1Kg","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"0ff82abe-0145-4e07-b715-417962f41b93","product_description":"Utratech Birla Putty 1Kg","product_id":"df00e3eb-9448-4347-9a4f-cf7a6c2eae0e","product_price_gross":33.9,"product_price_final":40.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"0a536201-a91e-42ab-9eb3-7a2abc38315c","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":40.0,"product_price_mrp":40.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.947Z","updated_at":"2026-02-04T12:27:27.947Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":8.47,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":8.47,"tax_amount":1.5246,"product_name":"Putty Knife 4\" (Heavy)","hsn_code":"7211","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"0934ccce-2bf0-4abe-84ad-54b8fe4832d3","product_description":"Putty Knife 4\" (Heavy)","product_id":"b42d1827-beef-4519-8c41-1041b82516b1","product_price_gross":8.47,"product_price_final":10.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"33ff9905-0131-468e-bdc4-623497270892","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":10.0,"product_price_mrp":10.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.947Z","updated_at":"2026-02-04T12:27:27.947Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":19.05,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":19.05,"tax_amount":0.9525000000000001,"product_name":"Polish Cloth","hsn_code":"5201","taxing_scheme_name":"GST","tax_rate_name":"5.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"1d37611a-16b1-41fe-a618-67f885fc2ffd","product_description":"Polish Cloth","product_id":"5ebc08d0-6975-4350-822b-b85c984f798a","product_price_gross":19.05,"product_price_final":20.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"7bd31bcd-f7d2-42a3-bee1-eb4f2ff97bea","product_status":"DELIVERED","tax_rate_id":"86f75d43-244d-49f3-980c-05757f1ec0f2","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":5.0,"product_amount":20.0,"product_price_mrp":20.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.947Z","updated_at":"2026-02-04T12:27:27.947Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":16.95,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":16.95,"tax_amount":3.0509999999999997,"product_name":"BRUSH 1''","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"de8070d9-18d8-4af6-af32-92bf17bb22d2","product_description":"BRUSH 1''","product_id":"ff96ebf5-c334-46f0-b786-dde77c12232f","product_price_gross":16.95,"product_price_final":20.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"2f28d4bf-fb0f-4833-87eb-06ef9806b1a6","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":20.0,"product_price_mrp":20.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.947Z","updated_at":"2026-02-04T12:27:27.947Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":33.9,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":33.9,"tax_amount":6.101999999999999,"product_name":"BRUSH 1''","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"22caa0db-18de-4e46-bcb6-db9ce723a70f","product_description":"BRUSH 1''","product_id":"ff96ebf5-c334-46f0-b786-dde77c12232f","product_price_gross":16.95,"product_price_final":20.0,"product_quantity":2.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":2.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"b326d477-299e-4332-b255-6fb4d81dbf93","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":40.0,"product_price_mrp":20.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.948Z","updated_at":"2026-02-04T12:27:27.948Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":25.42,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":25.42,"tax_amount":4.5756000000000006,"product_name":"BRUSH 1.5\"","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"30a583e2-deeb-4abf-af57-22d115dc39fc","product_description":"BRUSH 1.5\"","product_id":"91ceba86-bda6-4b54-8e62-f95a4ee7a82a","product_price_gross":25.42,"product_price_final":30.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"ba0ac8a4-abd1-413f-b1d6-1a404a2aa411","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":30.0,"product_price_mrp":30.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.948Z","updated_at":"2026-02-04T12:27:27.948Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":33.9,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":33.9,"tax_amount":6.101999999999999,"product_name":"BRUSH 2\"","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"88797c48-18d7-432c-bcb3-a8bda0bbe371","product_description":"BRUSH 2\"","product_id":"e602ad1f-ba48-4065-bf16-75efbe0c0985","product_price_gross":33.9,"product_price_final":40.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"ab33f88e-17fa-427f-b79d-9cf2bc11fe53","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":40.0,"product_price_mrp":40.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.948Z","updated_at":"2026-02-04T12:27:27.948Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":50.85,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":50.85,"tax_amount":9.153,"product_name":"BRUSH 3\"(SINGLE)","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"a40ebf60-9c06-4af3-ad81-6a2b237b2881","product_description":"BRUSH 3\"(SINGLE)","product_id":"38e4ea63-0395-49f9-a363-d956c42a6331","product_price_gross":50.85,"product_price_final":60.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"2da6e2c7-505d-4b79-aa47-e8432657b9ad","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":60.0,"product_price_mrp":60.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.949Z","updated_at":"2026-02-04T12:27:27.949Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":67.8,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":67.8,"tax_amount":12.203999999999999,"product_name":"ROLLER 4\"","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"e49ddffc-4dc5-4920-b7d7-055fe8c603eb","product_description":"ROLLER 4\"","product_id":"80e50fc6-c2de-431b-b679-844f02ff0f74","product_price_gross":67.8,"product_price_final":80.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"3c7dfea5-3fbb-46da-bb1d-89878e3d7ade","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":80.0,"product_price_mrp":80.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.949Z","updated_at":"2026-02-04T12:27:27.949Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":169.49,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":169.49,"tax_amount":30.508200000000002,"product_name":"ROLLER 9\" INTERIOR","hsn_code":"9603","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"cb6ff14d-d9be-4cac-a7bc-909d4101afc7","product_description":"ROLLER 9\" INTERIOR","product_id":"5117ce8d-649f-4251-bf39-ca3b4d2f1c19","product_price_gross":169.49,"product_price_final":200.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"75a4bc00-00ae-426f-a06a-22fb5a36af53","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":200.0,"product_price_mrp":250.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.949Z","updated_at":"2026-02-04T12:27:27.949Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":262.71,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":262.71,"tax_amount":47.2878,"product_name":"AP SmCare Dampproof 1Ltr","hsn_code":"3214","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"de2a3c7d-03ba-4277-b673-07b7b9276224","product_description":"AP SmCare Dampproof 1Ltr","product_id":"2db2e4ad-56fb-42de-93aa-9369eca8dd67","product_price_gross":262.71,"product_price_final":310.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"edecff64-8d5c-410a-94ca-7cdfdf52c0fe","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":310.0,"product_price_mrp":453.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.950Z","updated_at":"2026-02-04T12:27:27.950Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":67.8,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":67.8,"tax_amount":12.203999999999999,"product_name":"Eagle Thinner 500ml","hsn_code":"3814","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"f9e8dce6-01d4-4f0d-bda1-a700bd8977ca","product_description":"Eagle Thinner 500ml","product_id":"f9e6e4e7-452c-4193-8027-558d0ddd9338","product_price_gross":67.8,"product_price_final":80.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"fa278042-5f3f-4b75-9655-1fa5d3a84524","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":80.0,"product_price_mrp":80.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.950Z","updated_at":"2026-02-04T12:27:27.950Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":237.29,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":237.29,"tax_amount":42.712199999999996,"product_name":"B Opus Calista Br White 1Ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"4b29a739-119e-438a-833c-4989a465d7fb","product_description":"B Opus Calista Br White 1Ltr","product_id":"1409c593-ff12-4ae7-919f-a4e87897f686","product_price_gross":237.29,"product_price_final":280.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"ef99da6d-8fa2-40e3-a3bf-e692644b6e6f","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":280.0,"product_price_mrp":430.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.950Z","updated_at":"2026-02-04T12:27:27.950Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":1440.68,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":1440.68,"tax_amount":259.3224,"product_name":"B Opus I Style S Bright 20Kg","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"5a0a25c6-0b3e-4c04-9abd-c75043481655","product_description":"B Opus I Style S Bright 20Kg","product_id":"2e092a1d-c89e-427c-bdfe-a23454749ab0","product_price_gross":1440.68,"product_price_final":1700.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"897e0fce-9ccb-4b57-80f8-48e93cd9d24d","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":1700.0,"product_price_mrp":1025.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.950Z","updated_at":"2026-02-04T12:27:27.950Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":182.2,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":182.2,"tax_amount":32.796,"product_name":"B Opus E Style Bright PB1 1Ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"184a278e-7f26-4454-9466-e46f3636c583","product_description":"B Opus E Style Bright PB1 1Ltr","product_id":"430b28b1-b0cb-4f7c-a8d6-471c9322fe9a","product_price_gross":182.2,"product_price_final":215.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"b093f1a0-c406-417e-b36d-10a48b7529d9","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":215.0,"product_price_mrp":null,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.951Z","updated_at":"2026-02-04T12:27:27.951Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":101.69,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":101.69,"tax_amount":18.304199999999998,"product_name":"B Opus Style Enamel BR White 500ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"304c1ee3-421c-4dba-bf04-2712b5421abf","product_description":"B Opus Style Enamel BR White 500ml","product_id":"f1bf4f07-4007-4154-9ff0-9f83cb760a6c","product_price_gross":101.69,"product_price_final":120.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"afbfb22f-6af9-4fbf-9127-79886bd209ba","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":120.0,"product_price_mrp":120.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.951Z","updated_at":"2026-02-04T12:27:27.951Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":228.81,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":228.81,"tax_amount":41.1858,"product_name":"B Opus Calista Sky Blue 1Ltr","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"3cd210bd-965a-4805-8bdb-209a89353c24","product_description":"B Opus Calista Sky Blue 1Ltr","product_id":"22e770a0-7130-4bf7-b3fb-f82b91cb4eae","product_price_gross":228.81,"product_price_final":270.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"aa27410e-ecc9-44c2-83ca-4378b4a67e3a","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":270.0,"product_price_mrp":412.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.951Z","updated_at":"2026-02-04T12:27:27.951Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":84.75,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":84.75,"tax_amount":15.254999999999999,"product_name":"B Opus Smooth Putty 1Kg","hsn_code":"3214","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"dc68dee5-4eb1-41d6-a26f-e681321876f7","product_description":"B Opus Smooth Putty 1Kg","product_id":"00c68179-9c1f-431f-991d-5799cf8a8923","product_price_gross":84.75,"product_price_final":100.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"836abdde-0bac-4933-ae39-a45e0cbd7b45","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":100.0,"product_price_mrp":110.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.952Z","updated_at":"2026-02-04T12:27:27.952Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":169.49,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":169.49,"tax_amount":30.508200000000002,"product_name":"B Opus I Style CSS2 1Ltr","hsn_code":"3209","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"cc692e04-a81e-459f-b81b-e6025f9ca56a","product_description":"B Opus I Style CSS2 1Ltr","product_id":"68360a95-72c0-48fa-bff8-84d432797145","product_price_gross":169.49,"product_price_final":200.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"68c4745f-a6db-4e85-9be3-b07c615e8c4d","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":200.0,"product_price_mrp":190.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.952Z","updated_at":"2026-02-04T12:27:27.952Z","deleted_at":null,"sale_invoice_product_remarks":null},{"gross_amount":152.54,"discount_trade_amount":0.0,"discount_cash_amount":0.0,"discount_rebate_amount":0.0,"taxable_amount":152.54,"tax_amount":27.457199999999997,"product_name":"Ap Apco R Ivory 500ml","hsn_code":"3208","taxing_scheme_name":"GST","tax_rate_name":"18.00%","product_uom_name":"NOS","discount_cash_percentage":0.0,"discount_rebate_percentage":0.0,"discount_trade_percentage":0.0,"display_index":0,"inventory_tracking_id":"899e5125-5700-4d51-9e4e-7fc6b93c496b","product_description":"Ap Apco R Ivory 500ml","product_id":"af55ea8d-14ac-4d5f-9e73-b55860c59735","product_price_gross":152.54,"product_price_final":180.0,"product_quantity":1.0,"product_uom_id":"c03757a9-d27d-4244-8ff3-0ff4060674d8","product_total_quantity":1.0,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_product_id":"36016d9f-9deb-4d10-aa7b-96c1a22bc08a","product_status":"DELIVERED","tax_rate_id":"a3d49268-9120-406c-98bd-3eeb0e290cba","taxing_scheme_id":"706b03d6-a9a9-41b4-a3e2-7dff2b5b1315","tax_rate_percentage":18.0,"product_amount":180.0,"product_price_mrp":240.0,"currency_code":"INR","exchange_rate":1.0,"created_at":"2026-02-04T12:27:27.952Z","updated_at":"2026-02-04T12:27:27.952Z","deleted_at":null,"sale_invoice_product_remarks":null}],"sale_invoice_chargeable_services":[],"sale_invoice_payments":[{"payment_method_name":"Cash","payment_method_image_media":{"media_path":null,"media_details":null},"currency_code":"INR","exchange_rate":1.0,"display_index":0,"payment_method_id":"706ea4c7-b93e-45bd-b5bc-40542cd317c5","reference_number":null,"sale_invoice_payment_remarks":null,"sale_invoice_id":"db007075-f5aa-4783-90b6-fa9e0ef39b12","sale_invoice_payment_amount":12740.0,"sale_invoice_payment_datetime":"2025-10-13T00:00:00.000","sale_invoice_payment_id":"1338d7ec-f296-4f54-bce2-7357120f644f","sale_invoice_payment_status":"RECEIVED","transaction_entry_id":"ff160adf-1cbc-4e22-83ae-f6496e400c95","customer_transaction_entry_id":null,"created_at":"2026-02-04T12:27:30.760Z","updated_at":"2026-02-04T12:40:19.626Z","deleted_at":null}],"sale_invoice_expenses":[]};
+  }
+
+  setInvoicePosHtml() {
+    this.innerHTML = `
+    <style type="text/css">
+      .sr_no {
+        min-width: 3.5%;
+        width: 3.5%;
+        max-width: 3.5%;
+      }
+
+      .item_description {
+        text-align: left;
+      }
+
+      .item_hsn {
+        text-align: center;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_size {
+        text-align: center;
+        min-width: 8%;
+        width: 8%;
+        max-width: 8%;
+      }
+
+      .item_nos {
+        text-align: center;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_qty {
+        text-align: right;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_unit {
+        text-align: center;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_rate {
+        text-align: right;
+        min-width: 7%;
+        width: 7%;
+        max-width: 7%;
+      }
+
+      .item_tax_rate {
+        text-align: right;
+        min-width: 6%;
+        width: 6%;
+        max-width: 6%;
+      }
+
+      .item_tax_amount {
+        text-align: right;
+        min-width: 14%;
+        width: 14%;
+        max-width: 14%;
+      }
+
+      .data-row-height {
+        max-height: 0.4cm;
+        min-height: 0.4cm;
+        height: 0.4cm;
+      }
+
+      th,
+      td {
+        padding-left: 3px;
+        padding-right: 3px;
+      }
+
+      table {
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+
+      .text-right {
+        text-align: right;
+      }
+
+      hr {
+        background-color: black !important;
+      }
+    </style>
+    <div style="margin:auto;width:fit-content;font:arial;" ac-report>
+      <div class="page" ac:style:padding-top="data.page.margin_top" ac:style:padding-left="data.page.margin_left"
+        ac:style:padding-bottom="data.page.margin_bottom" ac:style:padding-right="data.page.margin_right" ac-page
+        ac-page-size="ROLL_76" ac-page-orientation="portrait">
+        <table style="width:100%;height:-webkit-fill-available;" cellspacing="0" cellpadding="0">
+          <tr>
+            <td ac-page-header style="vertical-align: top;text-align: center;height:10px;">
+              <table width="100%">
+                <tr>
+                  <td style="vertical-align: middle;text-align: center;width:80px;">
+                    <img ac:bind:src="'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/960px-Google_Favicon_2025.svg.png'|urlToBase64" style="max-height:100px;max-width:100%;object-fit: contain;margin-bottom: 10px;" /><br>
+                  </td>
+                  <td style="vertical-align: top;text-align: left;height:10px;font-size:12px;border-left:solid 1px;">
+                    <b>{{data.accountee.accountee_name}}</b><br>
+                    {{data.accountee_addresses[0].address_line_1}}, {{data.accountee_addresses[0].address_line_2}},<br>
+                    {{data.accountee_addresses[0].city_name}} - {{data.accountee_addresses[0].postal_code}},
+                    {{data.accountee_addresses[0].state_name}}, {{data.accountee_addresses[0].country_name}}<br>
+                    Ph. <span>{{data.accountee_phone_numbers[0].phone_number_value}}</span><br>
+                    GST No. {{data.accountee.legal_identifier}}
+                  </td>
+                </tr>
+                <tr
+                  style="border-bottom-style: solid;border-bottom-color: black;border-bottom-width: 1px;border-top-style: solid;border-top-color: black;border-top-width: 1px;">
+                  <td class="" colspan="2">
+                    <div class="mb-0 text-center"><b style="font-size: 14px;">{{data.sale_invoice_title}}</b></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="" colspan="2">
+                    M/S: <strong>{{data.display_name}}</strong>
+                    <div>{{data.party_phone_numbers[0].phone_number_value}}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="" style="text-align: left;">
+                    No. :  <b>{{data.sale_invoice.sale_invoice_number}}</b></b>
+                  </td>
+                  <td class="" style="text-align: right;">
+                    Date. : <b>{{data.sale_invoice.sale_invoice_datetime | date:'dd-MM-yyyy'}}</b>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td ac-page-body style="vertical-align: top;">
+              <table height="100%" width="100%" cellspacing="0" style="border-color: black;font-size: 12px;border-width: 1px;">
+                            <tbody ac:for="let item of data.sale_invoice_products;let index;">
+                              <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;border-top-style: solid;border-bottom-style: none;border-width:1px;font-size:10px;">
+                                        <td colspan="4">
+                                            <span class="sr_no">{{index + 1}}</span>:&nbsp;<span class="item_description">{{item.product_description}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;border-top-style: none;border-bottom-style: solid;border-width:1px;font-size:10px;">
+                                        <td class="text-start" style="min-width:20%;max-width: 20%;width: 20%;">Qty: <b>{{item.product_quantity | number:'2'}}</b>&nbsp;{{item.product_uom_name}}</td>
+                                        <td class="item_rate text-start" style="min-width:27.5%;max-width: 27.5%;width: 27.5%;"> MRP: {{item.product_price_mrp | currency:'INR'}}</td>
+                                        <td class="item_rate text-start" style="min-width:27.5%;max-width: 27.5%;width: 27.5%;"> Price: {{item.product_price_final | currency:'INR'}}</td>
+                                        <td class="item_tax_amount text-start" style="min-width:25%;max-width: 25%;width: 25%;"> Amt: {{item.product_amount | currency:'INR'}}</td>
+                                    </tr>
+                                </div>
+                            </tbody>
+                        </table>
+            </td>
+          </tr>
+          <tr>
+            <td ac-page-footer style="vertical-align: top;height:10px;">
+              <table width="100%">
+                            <tr>
+                                <table style="width:100%;">
+                                <tr style="font-size:16px;border-bottom: solid 1px;"><th>Total</th><th class="text-right py-1">{{data.sale_invoice_summary.total_amount | currency:'INR'}}</th></tr>
+                                </table>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;padding:0px;border-bottom: solid 1px;">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td style="padding:5px 0px;padding-right: 5px;width:110px;">
+                                                <div ac:bind:innerHTML="'hello' | bwipjs:{height:100,width:100,bcid:'qrcode'}" style="height:100px;width:100px;margin-left:5px;"></div>
+                                            </td>
+                                            <td style="border-left: solid 1px;vertical-align:middle;">
+                                                <table style="width:100%;">
+                                                    <tr>
+                                                        <td>Tot.MRP</td>
+                                                        <td class="text-end">Saved</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td show-tax document-value="total_mrp">{{data.sale_invoice_summary.total_mrp_amount | currency:'INR'}}</td>
+                                                        <th class="text-end" show-tax style="font-size:15px;">{{data.sale_invoice_summary.total_savings_on_mrp | currency:'INR'}}</th>
+                                                    </tr>
+                                                </table>
+                                                <hr style="margin:2px 0px;">
+                                                <table style="text-align:center;font-size:10px;width:100%;margin-bottom:5px;">
+                                                    <tr>
+                                                        <td>CGST</td>
+                                                        <td>SGST</td>
+                                                        <td>IGST</td>
+                                                        <td>CESS</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_cgst_amount | currency:'INR'}}</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_sgst_amount | currency:'INR'}}</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_igst_amount | currency:'INR'}}</th>
+                                                        <th show-tax>{{data.sale_invoice_summary.total_cess_amount | currency:'INR'}}</th>
+                                                    </tr>
+                                                </table>
+                                                <table class="table-payments" style="width:100%;">
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="pt-1" style="text-align:left;border-top: solid 1px;border-bottom: solid 1px;padding-bottom: 2.5px;">
+                                    <div ac:bind:innerHTML="data.terms_html"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;font-size: 12px;padding:5px 0px;padding-top: 2.5px;">
+                                   This is computer-generated document. Generated with <b>Accountea</b>. For more information visit <b>www.accountea.com</b>.</td>
+                            </tr>
+                            <tr style="border-style: solid;border-color: black;border-width: 1px;">
+                                <td style="text-align: center;font-size: 12px;">
+                                   <b>Thanks for shopping with us.</b>
+                                </td>
+                            </tr>
+                        </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    `;
+  }
+
 
   setFinalReportData() {
     this.data = {

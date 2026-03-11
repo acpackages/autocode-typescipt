@@ -15,6 +15,7 @@
   "dependencies": {
     "@autocode-ts/autocode": "^0.0.1",
     "@autocode-ts/ac-extensions": "^0.0.1",
+    "@autocode-ts/ac-pipes": "^0.0.1",
     "luxon": "^3.6.1"
   },
   "devDependencies": {

@@ -11,7 +11,7 @@
     "require": "./ac-bwipjs-pipe.cjs"
   },
   "dependencies": {
-    "@autocode-ts/ac-report-engine": "^0.0.1",
+    "@autocode-ts/ac-pipes": "^0.0.1",
     "bwip-js": "^4.8.0"
   },
   "publishConfig": {

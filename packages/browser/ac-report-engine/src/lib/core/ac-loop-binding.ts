@@ -86,7 +86,7 @@ export class AcLoopBinding {
               const processor = new AcTemplateProcessor({ context: itemContext, element: childEl, page: this.processor.page });
               await processor.process();
               this.element.append(childEl);
-              if (this.page.isContentOverflow) {
+              if (this.page.isFixedHeight && this.page.isContentOverflow) {
                 childEl.remove();
                 const newPage = this.report.getNextPage();
                 if (newPage) {

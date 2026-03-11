@@ -11,8 +11,7 @@ export class AcReportPage {
     let result: boolean = false;
     if (this.isFixedHeight) {
       if (this.element) {
-        const pageHeight = this.element.getBoundingClientRect().height;
-        result = pageHeight > this.report.pageHeight
+        result = this.pageHeight > this.report.pageHeight;
       }
     }
     return result;

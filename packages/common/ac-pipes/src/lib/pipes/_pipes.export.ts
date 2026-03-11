@@ -4,3 +4,4 @@ export * from './date-pipes';
 export * from './number-pipes';
 export * from './object-pipes';
 export * from './string-pipes';
+export * from './url-pipes';

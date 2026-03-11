@@ -1,7 +1,8 @@
 // ac-expression.ts
 import { stringIsJson } from "@autocode-ts/ac-extensions";
-import { AcPipe } from "./ac-pipe";
+// import { AcPipe } from "./ac-pipe";
 import { AcReportEngine } from "./ac-report-engine";
+import { acPipeRegistry, IAcPipe } from '@autocode-ts/ac-pipes'
 
 export class AcExpression {
   /**
@@ -80,9 +81,8 @@ export class AcExpression {
   /**
    * Get pipe from global registry
    */
-  private static getPipe(name: string): AcPipe | undefined {
-    const normalized = name.toLowerCase();
-    return AcReportEngine.getPipe({ name: normalized });
+  private static getPipe(name: string): IAcPipe | undefined {
+    return acPipeRegistry.getPipe({name});
   }
 
   /**
