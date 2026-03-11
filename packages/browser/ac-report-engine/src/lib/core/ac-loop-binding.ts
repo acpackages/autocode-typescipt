@@ -83,6 +83,8 @@ export class AcLoopBinding {
             }
             for (const child of childClones) {
               const childEl = child.cloneNode(true) as HTMLElement;
+              const processor = new AcTemplateProcessor({ context: itemContext, element: childEl, page: this.processor.page });
+              await processor.process();
               this.element.append(childEl);
               if (this.page.isContentOverflow) {
                 childEl.remove();
@@ -92,12 +94,13 @@ export class AcLoopBinding {
                   itemContext.page = this.page.toJson();
                   this.element = this.page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${elementId}"]`) as HTMLElement;
                   this.element.innerHTML = '';
-                  this.element.append(childEl);
+                  const newChildEl = child.cloneNode(true) as HTMLElement;
+                  const processor = new AcTemplateProcessor({ context: itemContext, element: newChildEl, page: this.processor.page });
+                  await processor.process();
+                  this.element.append(newChildEl);
                 }
               }
               itemContext.page = this.page.toJson();
-              const processor = new AcTemplateProcessor({ context: itemContext, element: childEl, page: this.processor.page });
-              await processor.process();
             }
           }
           const activePageIndex = this.report.activePage!.index;

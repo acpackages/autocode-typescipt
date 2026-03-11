@@ -254,7 +254,7 @@ export class AcReport {
         measureElement.style.width = `${this.pageSize.heightMm}mm`;
       }
       (this.element.ownerDocument.querySelector('body') as HTMLElement).append(measureElement);
-      this.pageHeight = measureElement.getBoundingClientRect().height;
+      this.pageHeight = measureElement.offsetHeight;
       this.pageWidth = measureElement.getBoundingClientRect().width;
       measureElement.remove();
     }

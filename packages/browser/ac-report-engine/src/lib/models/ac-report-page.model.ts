@@ -21,7 +21,7 @@ export class AcReportPage {
   get pageHeight(): number {
     let result: number = 0;
     if (this.element) {
-      result = this.element.getBoundingClientRect().height;
+      result = this.element.offsetHeight;
     }
     return result;
   }
@@ -37,6 +37,9 @@ export class AcReportPage {
   constructor({ element, index, report, isFixedHeight = true }: { element: HTMLElement, index: number, report: AcReport, isFixedHeight?: boolean }) {
     this.report = report;
     this.element = element;
+    element.style.maxWidth = `${this.report.pageWidth}px`;
+    element.style.minWidth = `${this.report.pageWidth}px`;
+    element.style.width = `${this.report.pageWidth}px`;
     this.index = index;
     this.isFixedHeight = isFixedHeight;
   }
