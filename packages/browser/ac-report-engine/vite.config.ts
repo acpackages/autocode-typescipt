@@ -44,13 +44,15 @@ export default defineConfig(() => ({
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: [
-        "@autocode-ts/autocode",
-        "@autocode-ts/ac-extensions"
+        "@autocode-ts/ac-extensions",
+        "@autocode-ts/ac-pipes",
+        "@autocode-ts/autocode"
       ],
       output:{
         globals:{
+          "@autocode-ts/ac-extensions":"acExtensions",
+          "@autocode-ts/ac-pipes":"acPipes",
           "@autocode-ts/autocode":"autocode",
-          "@autocode-ts/ac-extensions":"acExtensions"
         }
       }
     },

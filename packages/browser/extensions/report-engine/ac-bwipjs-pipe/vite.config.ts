@@ -46,12 +46,12 @@ export default defineConfig(() => ({
     rollupOptions: {
       // External packages that should not be bundled into your library.
       external: [
-        "@autocode-ts/ac-report-engine",
+        "@autocode-ts/ac-pipes",
         "bwip-js"
       ],
       output:{
         globals:{
-          "@autocode-ts/ac-report-engine":"acReportEngine",
+          "@autocode-ts/ac-pipes":"acPipes",
           "bwip-js":"bwipjs"
         }
       }
