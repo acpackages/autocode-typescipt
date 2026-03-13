@@ -17,6 +17,9 @@ export class AcReport {
   pageSize: IAcPageSizeDetails = AC_PAGE_SIZES['A4'];
   pageHeight: number = 0;
   pageWidth: number = 0;
+  pageHeightMM: number = 0;
+  pageWidthMM: number = 0;
+  mmConversionValue:number = 1;
   pages: AcReportPage[] = [];
   evets: AcEvents = new AcEvents();
   hooks: AcHooks = new AcHooks();
@@ -126,10 +129,14 @@ export class AcReport {
         page.style.minHeight = `${this.pageHeight}px`;
         page.style.height = `${this.pageHeight}px`;
       }
-
       page.style.maxWidth = `${this.pageWidth}px`;
       page.style.minWidth = `${this.pageWidth}px`;
       page.style.width = `${this.pageWidth}px`;
+
+      this.pageHeightMM = page.offsetHeight / this.mmConversionValue;
+      this.pageWidthMM = page.offsetWidth / this.mmConversionValue;
+      this.pageHeight = page.offsetHeight;
+      this.pageWidth = page.offsetWidth;
     }
     for (const page of this.pages) {
       this.processPageReportDataBindings(page.element, page);
@@ -246,6 +253,8 @@ export class AcReport {
         measureElement.style.maxWidth = `${this.pageSize.widthMm}mm`;
         measureElement.style.minWidth = `${this.pageSize.widthMm}mm`;
         measureElement.style.width = `${this.pageSize.widthMm}mm`;
+        this.pageHeightMM = this.pageSize.heightMm;
+        this.pageWidthMM = this.pageSize.widthMm;
       }
       else {
         if(this.pageSize.isRoll != true){
@@ -253,14 +262,16 @@ export class AcReport {
           measureElement.style.minHeight = `${this.pageSize.widthMm}mm`;
           measureElement.style.height = `${this.pageSize.widthMm}mm`;
         }
-
         measureElement.style.maxWidth = `${this.pageSize.heightMm}mm`;
         measureElement.style.minWidth = `${this.pageSize.heightMm}mm`;
         measureElement.style.width = `${this.pageSize.heightMm}mm`;
+        this.pageHeightMM = this.pageSize.widthMm;
+        this.pageWidthMM = this.pageSize.heightMm;
       }
       (this.element.ownerDocument.querySelector('body') as HTMLElement).append(measureElement);
       this.pageHeight = measureElement.offsetHeight;
-      this.pageWidth = measureElement.getBoundingClientRect().width;
+      this.pageWidth = measureElement.offsetWidth;
+      this.mmConversionValue = this.pageWidth / this.pageWidthMM;
       measureElement.remove();
     }
   }
