@@ -14,7 +14,7 @@ export class AcWsClient {
         public readonly url: string,
         public readonly nsp: string = '/',
         public readonly query: Record<string, string> = {},
-        public readonly options: { rejectUnauthorized?: boolean } = {}
+        public readonly options: { rejectUnauthorized?: boolean; timeout?: number } = {}
     ) { }
 
     /* Converts http(s) URLs to ws(s) scheme automatically */
@@ -67,7 +67,9 @@ export class AcWsClient {
                     if (respId !== undefined) {
                         const pending = this._pendingAcks[respId];
                         if (pending) {
-                            clearTimeout(pending.timeout);
+                            if (pending.timeout) {
+                                clearTimeout(pending.timeout);
+                            }
                             pending.resolve(payload);
                             delete this._pendingAcks[respId];
                         }
@@ -123,12 +125,15 @@ export class AcWsClient {
         return new Promise((resolve) => {
             const ackId = ++this._ackCounter;
 
-            const timeout = setTimeout(() => {
-                if (this._pendingAcks[ackId]) {
-                    delete this._pendingAcks[ackId];
-                    resolve(null);
-                }
-            }, 30000);
+            let timeout: any = null;
+            if (this.options.timeout && this.options.timeout > 0) {
+                timeout = setTimeout(() => {
+                    if (this._pendingAcks[ackId]) {
+                        delete this._pendingAcks[ackId];
+                        resolve(null);
+                    }
+                }, this.options.timeout);
+            }
 
             this._pendingAcks[ackId] = { resolve, timeout };
 
