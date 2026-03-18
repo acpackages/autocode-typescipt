@@ -1,6 +1,6 @@
 export const dataDictionaryJson = {
   "name": "Accountea - Pro",
-  "version": 5,
+  "version": 6,
   "tables": {
     "act_access_groups": {
       "tableName": "act_access_groups",
@@ -2499,6 +2499,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Primary?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -2608,6 +2612,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Default UOM"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "NOS"
             }
           }
         },
@@ -2708,6 +2716,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3293,6 +3305,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Name"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "NOS"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -3827,6 +3843,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3847,6 +3867,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3857,6 +3881,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -3891,6 +3919,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "DELIVERED"
             }
           }
         },
@@ -3940,6 +3972,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -3950,6 +3986,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4034,6 +4074,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PAID"
             }
           }
         },
@@ -4073,6 +4117,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4103,6 +4151,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Quantity"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4153,6 +4205,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "DELIVERED"
             }
           }
         },
@@ -4240,6 +4296,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Draft?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -4294,6 +4354,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "DELIVERED"
             }
           }
         },
@@ -4384,6 +4448,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Finalized"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -6658,6 +6726,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Index"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -10816,6 +10888,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "RECEIVED"
             }
           }
         },
@@ -10876,6 +10952,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -11065,6 +11145,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PAID"
             }
           }
         },
@@ -11282,7 +11366,7 @@ export const dataDictionaryJson = {
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "RECEIVED"
+              "propertyValue": "PENDING"
             },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
@@ -11563,6 +11647,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "RECEIVED"
             }
           }
         },
@@ -11623,6 +11711,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -11833,7 +11925,7 @@ export const dataDictionaryJson = {
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "CREATED"
+              "propertyValue": "RECEIVED"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -11979,6 +12071,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Supply Mode"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "INTRA"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -11992,6 +12088,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -12322,6 +12422,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -12700,6 +12804,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PENDING"
             }
           }
         },
@@ -12965,6 +13073,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -13196,6 +13308,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -13465,6 +13581,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -13624,6 +13744,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PAID"
             }
           }
         },
@@ -13783,6 +13907,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PENDING"
             }
           }
         },
@@ -14012,6 +14140,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "RETURNED"
             }
           }
         },
@@ -14052,6 +14184,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -14258,7 +14394,7 @@ export const dataDictionaryJson = {
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "PENDING"
+              "propertyValue": "RETURNED"
             },
             "FORMAT": {
               "propertyName": "FORMAT",
@@ -14340,6 +14476,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -14552,6 +14692,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "ISSUED"
             }
           }
         }
@@ -15080,6 +15224,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -15489,7 +15637,7 @@ export const dataDictionaryJson = {
             },
             "DEFAULT_VALUE": {
               "propertyName": "DEFAULT_VALUE",
-              "propertyValue": "RECEIVED"
+              "propertyValue": "PENDING"
             },
             "VALUE_OPTIONS": {
               "propertyName": "VALUE_OPTIONS",
@@ -15855,6 +16003,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -16201,6 +16353,10 @@ export const dataDictionaryJson = {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Supply Mode"
             },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "INTRA"
+            },
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
@@ -16214,6 +16370,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -16520,6 +16680,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Exchange Rate"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "1"
             }
           }
         },
@@ -16838,6 +17002,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Status"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "PENDING"
             }
           }
         },
@@ -18789,6 +18957,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -19934,6 +20106,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         },
@@ -20799,6 +20975,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -21936,6 +22116,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -22364,6 +22548,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Is Finalized?"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "0"
             }
           }
         }
@@ -24271,6 +24459,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Label"
+            },
+            "DEFAULT_VALUE": {
+              "propertyName": "DEFAULT_VALUE",
+              "propertyValue": "Default"
             }
           }
         },
@@ -25298,7 +25490,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "accountee_taxing_type"
         }
       },
-      "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS accountee_image_media,act_accountees.* FROM act_accountees LEFT JOIN act_medias ON act_accountees.accountee_image_media_id = act_medias.media_id"
+      "viewQuery": "SELECT \n(CASE WHEN act_accountees.accountee_image_media_id IS NOT NULL THEN json_object('media_path', media_path,'media_details', media_details) ELSE NULL END) AS accountee_image_media,act_accountees.* FROM act_accountees LEFT JOIN act_medias ON act_accountees.accountee_image_media_id = act_medias.media_id"
     },
     "act_vw_assets": {
       "viewName": "act_vw_assets",
@@ -28052,7 +28244,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "party_remarks"
         }
       },
-      "viewQuery": "SELECT json_object('media_path', media_path,'media_details', media_details) AS party_image_media,act_parties.* FROM act_parties LEFT JOIN act_medias ON act_parties.party_image_media_id = act_medias.media_id"
+      "viewQuery": "SELECT \n(CASE WHEN act_parties.party_image_media_id  IS NOT NULL THEN json_object('media_path', media_path,'media_details', media_details) ELSE NULL END) AS party_image_media,act_parties.* FROM act_parties LEFT JOIN act_medias ON act_parties.party_image_media_id = act_medias.media_id"
     },
     "act_vw_party_addresses": {
       "viewName": "act_vw_party_addresses",
@@ -29099,7 +29291,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "payment_method_remarks"
         }
       },
-      "viewQuery": "SELECT act_ledger_accounts.ledger_account_name,act_ledger_accounts.reflecting_statement,act_ledger_accounts.ledger_account_balance,json_object('media_path', media_path,'media_details', media_details) AS payment_method_image_media,act_payment_methods.* FROM act_payment_methods LEFT JOIN act_ledger_accounts ON act_payment_methods.ledger_account_id = act_ledger_accounts.ledger_account_id LEFT JOIN act_medias ON act_payment_methods.payment_method_image_media_id = act_medias.media_id"
+      "viewQuery": "SELECT act_ledger_accounts.ledger_account_name,act_ledger_accounts.reflecting_statement,act_ledger_accounts.ledger_account_balance,\n(CASE WHEN act_payment_methods.payment_method_image_media_id IS NOT NULL THEN json_object('media_path', media_path,'media_details', media_details) ELSE NULL END) AS payment_method_image_media,act_payment_methods.* FROM act_payment_methods LEFT JOIN act_ledger_accounts ON act_payment_methods.ledger_account_id = act_ledger_accounts.ledger_account_id LEFT JOIN act_medias ON act_payment_methods.payment_method_image_media_id = act_medias.media_id"
     },
     "act_vw_product_barcode_links": {
       "viewName": "act_vw_product_barcode_links",
@@ -30317,7 +30509,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "product_remarks"
         }
       },
-      "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,\njson_object('media_path', media_path,'media_details', media_details) AS product_image_media,\nact_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id\nLEFT JOIN act_medias ON act_products.product_image_media_id = act_medias.media_id"
+      "viewQuery": "SELECT act_product_categories.product_category_name,act_product_categories.product_category_tree,\n(CASE WHEN act_products.product_image_media_id IS NOT NULL THEN json_object('media_path', media_path,'media_details', media_details) ELSE NULL END) AS product_image_media,\nact_products.* FROM act_products LEFT JOIN act_product_categories ON act_products.product_category_id = act_product_categories.product_category_id\nLEFT JOIN act_medias ON act_products.product_image_media_id = act_medias.media_id"
     },
     "act_vw_purchase_invoice_chargeable_services": {
       "viewName": "act_vw_purchase_invoice_chargeable_services",
@@ -31018,16 +31210,16 @@ export const dataDictionaryJson = {
           "columnName": "product_name",
           "columnType": "TEXT",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
         },
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "hsn_code"
         },
         "taxing_scheme_name": {
@@ -31237,9 +31429,17 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoice_products",
           "columnSourceOriginalColumn": "purchase_invoice_product_remarks"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
         }
       },
-      "viewQuery": "SELECT\n    (\n        COALESCE(pip.product_quantity, 0) *\n        COALESCE(pip.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(pip.product_quantity, 0) *\n            COALESCE(pip.product_price_gross, 0)\n        ) * (COALESCE(pip.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(pip.product_quantity, 0) *\n                COALESCE(pip.product_price_gross, 0)\n            ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(pip.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pip.product_quantity, 0) *\n                    COALESCE(pip.product_price_gross, 0)\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(pip.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pip.product_quantity, 0) *\n                    COALESCE(pip.product_price_gross, 0)\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pip.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pip.product_quantity, 0) *\n                    COALESCE(pip.product_price_gross, 0)\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pip.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(pip.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_products.product_name,\n    act_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    pip.*\n\nFROM act_purchase_invoice_products pip\nLEFT JOIN act_products\n    ON pip.product_id = act_products.product_id\nLEFT JOIN act_product_uoms\n    ON pip.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON pip.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON pip.tax_rate_id = act_tax_rates.tax_rate_id;"
+      "viewQuery": "SELECT\n    (\n        COALESCE(pip.product_quantity, 0) *\n        COALESCE(pip.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(pip.product_quantity, 0) *\n            COALESCE(pip.product_price_gross, 0)\n        ) * (COALESCE(pip.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(pip.product_quantity, 0) *\n                COALESCE(pip.product_price_gross, 0)\n            ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(pip.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pip.product_quantity, 0) *\n                    COALESCE(pip.product_price_gross, 0)\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(pip.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pip.product_quantity, 0) *\n                    COALESCE(pip.product_price_gross, 0)\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pip.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pip.product_quantity, 0) *\n                    COALESCE(pip.product_price_gross, 0)\n                ) * (1 - (COALESCE(pip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pip.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(pip.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_vw_products.product_name,\n    act_vw_products.hsn_code,\n    act_vw_products.product_image_media,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    pip.*\n\nFROM act_purchase_invoice_products pip\nLEFT JOIN act_vw_products\n    ON pip.product_id = act_vw_products.product_id\nLEFT JOIN act_product_uoms\n    ON pip.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON pip.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON pip.tax_rate_id = act_tax_rates.tax_rate_id;"
     },
     "act_vw_purchase_invoice_summary": {
       "viewName": "act_vw_purchase_invoice_summary",
@@ -32260,16 +32460,16 @@ export const dataDictionaryJson = {
           "columnName": "product_name",
           "columnType": "TEXT",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
         },
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "hsn_code"
         },
         "taxing_scheme_name": {
@@ -32549,9 +32749,17 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_order_products",
           "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
         }
       },
-      "viewQuery": "SELECT\n    (\n        COALESCE(pop.product_quantity, 0) *\n        COALESCE(pop.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(pop.product_quantity, 0) *\n            COALESCE(pop.product_price_gross, 0)\n        ) * (COALESCE(pop.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(pop.product_quantity, 0) *\n                COALESCE(pop.product_price_gross, 0)\n            ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(pop.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pop.product_quantity, 0) *\n                    COALESCE(pop.product_price_gross, 0)\n                ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pop.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(pop.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pop.product_quantity, 0) *\n                    COALESCE(pop.product_price_gross, 0)\n                ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pop.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pop.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pop.product_quantity, 0) *\n                    COALESCE(pop.product_price_gross, 0)\n                ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pop.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pop.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(pop.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_products.product_name,\n    act_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    pop.*\n\nFROM act_purchase_order_products pop\nLEFT JOIN act_products\n    ON pop.product_id = act_products.product_id\nLEFT JOIN act_product_uoms\n    ON pop.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON pop.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON pop.tax_rate_id = act_tax_rates.tax_rate_id;"
+      "viewQuery": "SELECT\n    (\n        COALESCE(pop.product_quantity, 0) *\n        COALESCE(pop.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(pop.product_quantity, 0) *\n            COALESCE(pop.product_price_gross, 0)\n        ) * (COALESCE(pop.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(pop.product_quantity, 0) *\n                COALESCE(pop.product_price_gross, 0)\n            ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(pop.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pop.product_quantity, 0) *\n                    COALESCE(pop.product_price_gross, 0)\n                ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pop.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(pop.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pop.product_quantity, 0) *\n                    COALESCE(pop.product_price_gross, 0)\n                ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pop.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pop.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(pop.product_quantity, 0) *\n                    COALESCE(pop.product_price_gross, 0)\n                ) * (1 - (COALESCE(pop.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(pop.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(pop.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(pop.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_vw_products.product_name,\n    act_vw_products.product_image_media,\n    act_vw_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    pop.*\n\nFROM act_purchase_order_products pop\nLEFT JOIN act_vw_products\n    ON pop.product_id = act_vw_products.product_id\nLEFT JOIN act_product_uoms\n    ON pop.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON pop.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON pop.tax_rate_id = act_tax_rates.tax_rate_id;"
     },
     "act_vw_purchase_order_summary": {
       "viewName": "act_vw_purchase_order_summary",
@@ -33957,16 +34165,16 @@ export const dataDictionaryJson = {
           "columnName": "product_name",
           "columnType": "TEXT",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
         },
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "hsn_code"
         },
         "taxing_scheme_name": {
@@ -34176,9 +34384,17 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoice_products",
           "columnSourceOriginalColumn": "sale_invoice_product_remarks"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
         }
       },
-      "viewQuery": "SELECT\n    (\n        COALESCE(sip.product_quantity, 0) *\n        COALESCE(sip.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(sip.product_quantity, 0) *\n            COALESCE(sip.product_price_gross, 0)\n        ) * (COALESCE(sip.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(sip.product_quantity, 0) *\n                COALESCE(sip.product_price_gross, 0)\n            ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(sip.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0)\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(sip.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0)\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sip.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0)\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sip.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(sip.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_products.product_name,\n    act_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    sip.*\n\nFROM act_sale_invoice_products sip\nLEFT JOIN act_products\n    ON sip.product_id = act_products.product_id\nLEFT JOIN act_product_uoms\n    ON sip.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON sip.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON sip.tax_rate_id = act_tax_rates.tax_rate_id;"
+      "viewQuery": "SELECT\n    (\n        COALESCE(sip.product_quantity, 0) *\n        COALESCE(sip.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(sip.product_quantity, 0) *\n            COALESCE(sip.product_price_gross, 0)\n        ) * (COALESCE(sip.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(sip.product_quantity, 0) *\n                COALESCE(sip.product_price_gross, 0)\n            ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(sip.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0)\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(sip.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0)\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sip.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sip.product_quantity, 0) *\n                    COALESCE(sip.product_price_gross, 0)\n                ) * (1 - (COALESCE(sip.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sip.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sip.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(sip.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_vw_products.product_name,\n    act_vw_products.hsn_code,\n    act_vw_products.product_image_media,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    sip.*\n\nFROM act_sale_invoice_products sip\nLEFT JOIN act_vw_products\n    ON sip.product_id = act_vw_products.product_id\nLEFT JOIN act_product_uoms\n    ON sip.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON sip.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON sip.tax_rate_id = act_tax_rates.tax_rate_id;"
     },
     "act_vw_sale_invoice_summary": {
       "viewName": "act_vw_sale_invoice_summary",
@@ -34239,6 +34455,7 @@ export const dataDictionaryJson = {
         "customer_category": {
           "columnName": "customer_category",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "customer_category"
@@ -34246,6 +34463,7 @@ export const dataDictionaryJson = {
         "party_name": {
           "columnName": "party_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "party_name"
@@ -34253,6 +34471,7 @@ export const dataDictionaryJson = {
         "party_id": {
           "columnName": "party_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "party_id"
@@ -34260,6 +34479,7 @@ export const dataDictionaryJson = {
         "legal_identifier": {
           "columnName": "legal_identifier",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "legal_identifier"
@@ -34267,6 +34487,7 @@ export const dataDictionaryJson = {
         "address_line_1": {
           "columnName": "address_line_1",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "address_line_1"
@@ -34274,6 +34495,7 @@ export const dataDictionaryJson = {
         "address_line_2": {
           "columnName": "address_line_2",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "address_line_2"
@@ -34281,6 +34503,7 @@ export const dataDictionaryJson = {
         "landmark": {
           "columnName": "landmark",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "landmark"
@@ -34288,6 +34511,7 @@ export const dataDictionaryJson = {
         "latitude": {
           "columnName": "latitude",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "latitude"
@@ -34295,6 +34519,7 @@ export const dataDictionaryJson = {
         "longitude": {
           "columnName": "longitude",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "longitude"
@@ -34302,6 +34527,7 @@ export const dataDictionaryJson = {
         "city_name": {
           "columnName": "city_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "city_name"
@@ -34309,6 +34535,7 @@ export const dataDictionaryJson = {
         "postal_code": {
           "columnName": "postal_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "postal_code"
@@ -34316,6 +34543,7 @@ export const dataDictionaryJson = {
         "state_name": {
           "columnName": "state_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "state_name"
@@ -34323,6 +34551,7 @@ export const dataDictionaryJson = {
         "country_name": {
           "columnName": "country_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "country_name"
@@ -34330,6 +34559,7 @@ export const dataDictionaryJson = {
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "accountee_id"
@@ -34337,6 +34567,7 @@ export const dataDictionaryJson = {
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "currency_code"
@@ -34344,6 +34575,7 @@ export const dataDictionaryJson = {
         "customer_id": {
           "columnName": "customer_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "customer_id"
@@ -34351,6 +34583,7 @@ export const dataDictionaryJson = {
         "device_id": {
           "columnName": "device_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "device_id"
@@ -34358,6 +34591,7 @@ export const dataDictionaryJson = {
         "exchange_rate": {
           "columnName": "exchange_rate",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "exchange_rate"
@@ -34365,6 +34599,7 @@ export const dataDictionaryJson = {
         "is_draft": {
           "columnName": "is_draft",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "is_draft"
@@ -34372,6 +34607,7 @@ export const dataDictionaryJson = {
         "sale_invoice_remarks": {
           "columnName": "sale_invoice_remarks",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_remarks"
@@ -34379,6 +34615,7 @@ export const dataDictionaryJson = {
         "sale_invoice_amount": {
           "columnName": "sale_invoice_amount",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_amount"
@@ -34386,6 +34623,7 @@ export const dataDictionaryJson = {
         "sale_invoice_datetime": {
           "columnName": "sale_invoice_datetime",
           "columnType": "DATETIME",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_datetime"
@@ -34393,6 +34631,7 @@ export const dataDictionaryJson = {
         "sale_invoice_id": {
           "columnName": "sale_invoice_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_id"
@@ -34400,6 +34639,7 @@ export const dataDictionaryJson = {
         "sale_invoice_number": {
           "columnName": "sale_invoice_number",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_number"
@@ -34407,6 +34647,7 @@ export const dataDictionaryJson = {
         "sale_term_id": {
           "columnName": "sale_term_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_term_id"
@@ -34414,6 +34655,7 @@ export const dataDictionaryJson = {
         "sale_invoice_status": {
           "columnName": "sale_invoice_status",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_status"
@@ -34421,6 +34663,7 @@ export const dataDictionaryJson = {
         "taxing_scheme_id": {
           "columnName": "taxing_scheme_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "taxing_scheme_id"
@@ -34428,6 +34671,7 @@ export const dataDictionaryJson = {
         "transaction_id": {
           "columnName": "transaction_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "transaction_id"
@@ -34435,6 +34679,7 @@ export const dataDictionaryJson = {
         "sale_invoice_type": {
           "columnName": "sale_invoice_type",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_type"
@@ -34442,6 +34687,7 @@ export const dataDictionaryJson = {
         "user_id": {
           "columnName": "user_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "user_id"
@@ -34449,6 +34695,7 @@ export const dataDictionaryJson = {
         "products_count": {
           "columnName": "products_count",
           "columnType": "INTEGER",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "products_count"
@@ -34456,6 +34703,7 @@ export const dataDictionaryJson = {
         "received_amount": {
           "columnName": "received_amount",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "received_amount"
@@ -34463,6 +34711,7 @@ export const dataDictionaryJson = {
         "chargeable_services_count": {
           "columnName": "chargeable_services_count",
           "columnType": "INTEGER",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "chargeable_services_count"
@@ -34470,6 +34719,7 @@ export const dataDictionaryJson = {
         "received_by": {
           "columnName": "received_by",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "received_by"
@@ -34477,6 +34727,7 @@ export const dataDictionaryJson = {
         "sale_invoice_details": {
           "columnName": "sale_invoice_details",
           "columnType": "JSON",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_details"
@@ -34484,6 +34735,7 @@ export const dataDictionaryJson = {
         "supply_mode": {
           "columnName": "supply_mode",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "supply_mode"
@@ -34491,6 +34743,7 @@ export const dataDictionaryJson = {
         "is_finalized": {
           "columnName": "is_finalized",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "is_finalized"
@@ -34498,6 +34751,7 @@ export const dataDictionaryJson = {
         "payment_status": {
           "columnName": "payment_status",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "payment_status"
@@ -34505,6 +34759,7 @@ export const dataDictionaryJson = {
         "address_id": {
           "columnName": "address_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "address_id"
@@ -34512,6 +34767,7 @@ export const dataDictionaryJson = {
         "is_credit": {
           "columnName": "is_credit",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoices",
           "columnSourceOriginalColumn": "is_credit"
@@ -34519,6 +34775,7 @@ export const dataDictionaryJson = {
         "tax_rate_id": {
           "columnName": "tax_rate_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoice_products",
           "columnSourceOriginalColumn": "tax_rate_id"
@@ -34526,6 +34783,7 @@ export const dataDictionaryJson = {
         "tax_rate_name": {
           "columnName": "tax_rate_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoice_products",
           "columnSourceOriginalColumn": "tax_rate_name"
@@ -34533,6 +34791,7 @@ export const dataDictionaryJson = {
         "tax_rate_percentage": {
           "columnName": "tax_rate_percentage",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_sale_invoice_products",
           "columnSourceOriginalColumn": "tax_rate_percentage"
@@ -35188,16 +35447,16 @@ export const dataDictionaryJson = {
           "columnName": "product_name",
           "columnType": "TEXT",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "product_name"
         },
         "hsn_code": {
           "columnName": "hsn_code",
           "columnType": "STRING",
           "columnProperties": {},
-          "columnSource": "table",
-          "columnSourceName": "act_products",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
           "columnSourceOriginalColumn": "hsn_code"
         },
         "taxing_scheme_name": {
@@ -35477,9 +35736,17 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_quotation_products",
           "columnSourceOriginalColumn": "tax_rate_percentage"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
         }
       },
-      "viewQuery": "SELECT\n    (\n        COALESCE(sqp.product_quantity, 0) *\n        COALESCE(sqp.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(sqp.product_quantity, 0) *\n            COALESCE(sqp.product_price_gross, 0)\n        ) * (COALESCE(sqp.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(sqp.product_quantity, 0) *\n                COALESCE(sqp.product_price_gross, 0)\n            ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(sqp.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sqp.product_quantity, 0) *\n                    COALESCE(sqp.product_price_gross, 0)\n                ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sqp.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(sqp.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sqp.product_quantity, 0) *\n                    COALESCE(sqp.product_price_gross, 0)\n                ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sqp.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sqp.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sqp.product_quantity, 0) *\n                    COALESCE(sqp.product_price_gross, 0)\n                ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sqp.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sqp.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(sqp.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_products.product_name,\n    act_products.hsn_code,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    sqp.*\n\nFROM act_sale_quotation_products sqp\nLEFT JOIN act_products\n    ON sqp.product_id = act_products.product_id\nLEFT JOIN act_product_uoms\n    ON sqp.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON sqp.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON sqp.tax_rate_id = act_tax_rates.tax_rate_id;"
+      "viewQuery": "SELECT\n    (\n        COALESCE(sqp.product_quantity, 0) *\n        COALESCE(sqp.product_price_gross, 0)\n    ) AS gross_amount,\n\n    (\n        (\n            COALESCE(sqp.product_quantity, 0) *\n            COALESCE(sqp.product_price_gross, 0)\n        ) * (COALESCE(sqp.discount_trade_percentage, 0) / 100)\n    ) AS discount_trade_amount,\n\n    (\n        (\n            (\n                COALESCE(sqp.product_quantity, 0) *\n                COALESCE(sqp.product_price_gross, 0)\n            ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n        ) * (COALESCE(sqp.discount_cash_percentage, 0) / 100)\n    ) AS discount_cash_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sqp.product_quantity, 0) *\n                    COALESCE(sqp.product_price_gross, 0)\n                ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sqp.discount_cash_percentage, 0) / 100))\n        ) * (COALESCE(sqp.discount_rebate_percentage, 0) / 100)\n    ) AS discount_rebate_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sqp.product_quantity, 0) *\n                    COALESCE(sqp.product_price_gross, 0)\n                ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sqp.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sqp.discount_rebate_percentage, 0) / 100))\n    ) AS taxable_amount,\n\n    (\n        (\n            (\n                (\n                    COALESCE(sqp.product_quantity, 0) *\n                    COALESCE(sqp.product_price_gross, 0)\n                ) * (1 - (COALESCE(sqp.discount_trade_percentage, 0) / 100))\n            ) * (1 - (COALESCE(sqp.discount_cash_percentage, 0) / 100))\n        ) * (1 - (COALESCE(sqp.discount_rebate_percentage, 0) / 100))\n        * (COALESCE(sqp.tax_rate_percentage, 0) / 100)\n    ) AS tax_amount,\n\n    act_vw_products.product_name,\n    act_vw_products.hsn_code,\n    act_vw_products.product_image_media,\n    act_taxing_schemes.taxing_scheme_name,\n    act_tax_rates.tax_rate_name,\n    act_product_uoms.product_uom_name,\n    sqp.*\n\nFROM act_sale_quotation_products sqp\nLEFT JOIN act_vw_products\n    ON sqp.product_id = act_vw_products.product_id\nLEFT JOIN act_product_uoms\n    ON sqp.product_uom_id = act_product_uoms.product_uom_id\nLEFT JOIN act_taxing_schemes\n    ON sqp.taxing_scheme_id = act_taxing_schemes.taxing_scheme_id\nLEFT JOIN act_tax_rates\n    ON sqp.tax_rate_id = act_tax_rates.tax_rate_id;"
     },
     "act_vw_sale_quotation_summary": {
       "viewName": "act_vw_sale_quotation_summary",
