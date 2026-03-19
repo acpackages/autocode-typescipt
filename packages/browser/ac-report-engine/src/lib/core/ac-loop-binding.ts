@@ -71,7 +71,7 @@ export class AcLoopBinding {
         }
         this.element.innerHTML = '';
         const elementId = this.element.getAttribute(AC_REPORT_ATTRIBUTE.tempId)!;
-        this.report.activeLoopElementIds.push(elementId)
+        this.report.activeLoopElementIds.push(elementId);
         const iteratorData = await AcExpression.evaluate({ expression: contextKey, context: context });
         if (iteratorData != '' && Array.isArray(iteratorData)) {
           const iteratorValues = Object.values(iteratorData);
@@ -91,6 +91,13 @@ export class AcLoopBinding {
                 const newPage = this.report.getNextPage();
                 if (newPage) {
                   this.page = newPage;
+                  const completedLoopElements = Array.from(newPage.element.querySelectorAll('[ac-report-loop-end-page-index]'));
+                  for(const el of completedLoopElements){
+                    const index = parseInt(el.getAttribute('ac-report-loop-end-page-index')!);
+                    if(index < newPage.index){
+                      el.remove();
+                    }
+                  }
                   itemContext.page = this.page.toJson();
                   this.element = this.page.element.querySelector(`[${AC_REPORT_ATTRIBUTE.tempId}="${elementId}"]`) as HTMLElement;
                   this.element.innerHTML = '';
@@ -103,6 +110,8 @@ export class AcLoopBinding {
               itemContext.page = this.page.toJson();
             }
           }
+
+          this.element.setAttribute("ac-report-loop-end-page-index",`${this.page.index}`);
           const activePageIndex = this.report.activePage!.index;
           this.report.activePage = previousActivePage;
           for(const page of this.report.pages){

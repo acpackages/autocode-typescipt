@@ -1,19 +1,18 @@
 import { AC_REPORT_ATTRIBUTE, AcReport } from '@autocode-ts/ac-report-engine';
 import { acInitBwipjsPipe } from '@autocode-ts/ac-bwipjs-pipe';
-import { acInitNumberToWordsPipe } from '@autocode-ts/ac-number-to-words-pipe';
 export class BasicReportPage extends HTMLElement {
   public static observedAttributes = [];
   data: any = {};
 
   async connectedCallback() {
-    // this.setFinalReportData();
-    // this.setFinalReportHtml();
+    this.setFinalReportData();
+    this.setFinalReportHtml();
 
     // this.setInvoiceData();
     // this.setInvoiceHtml();
 
-    this.setInvoicePosData();
-    this.setInvoicePosHtml();
+    // this.setInvoicePosData();
+    // this.setInvoicePosHtml();
 
     // this.setStatementData();
     // this.setStatementHtml();
@@ -3366,18 +3365,18 @@ export class BasicReportPage extends HTMLElement {
               <table class="mt-3" style="width:100%;border-top:solid 1px black;border-bottom:solid 1px black;"
                 cellspacing="0">
                 <thead>
+                    <th class="side-credit pb-1 credit-title"
+                      style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <span ac:if="data.type == 'BALANCE SHEET'">Assets</span>
+                      <span ac:if="['TRADING ACCOUNT','TRIAL BALANCE'].includes(data.type)">Credit</span>
+                      <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Incomes</span>
+                    </th>
                   <tr class="side-container">
                     <th class="side-debit report-side-head pb-1 debit-title"
                       style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
                       <span ac:if="data.type == 'BALANCE SHEET'">Liabilities</span>
                       <span ac:if="['TRADING ACCOUNT','TRAIAL BALANCE'].includes(data.type)">Debit</span>
                       <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Expenses</span>
-                    </th>
-                    <th class="side-credit pb-1 credit-title"
-                      style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
-                      <span ac:if="data.type == 'BALANCE SHEET'">Assets</span>
-                      <span ac:if="['TRADING ACCOUNT','TRIAL BALANCE'].includes(data.type)">Credit</span>
-                      <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Incomes</span>
                     </th>
                   </tr>
                 </thead>
@@ -3389,22 +3388,6 @@ export class BasicReportPage extends HTMLElement {
               <table style="width:100%;height: 100%;" cellspacing="0">
                 <tbody>
                   <tr class="side-container">
-                    <td class="side-debit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
-                      <table class="table table-striped mb-0" style="width:100%;">
-                        <thead>
-                          <tr>
-                            <th class="text-left balance">Balance</th>
-                            <th class="text-left account">Account</th>
-                          </tr>
-                        </thead>
-                        <tbody ac:for="let item of data.debit_balances;let index;">
-                          <tr class="tr-record-row" style="font-size:14px;">
-                            <td class="balance ps-4">{{item.ledger_account_balance | currency:'INR'}}</td>
-                            <td class="account">{{item.ledger_account_name}}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
                     <td class="side-credit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
                       <table class="table table-striped mb-0" style="width:100%;">
                           <thead>
@@ -3421,6 +3404,22 @@ export class BasicReportPage extends HTMLElement {
                           </tbody>
                       </table>
                     </td>
+                    <td class="side-debit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <table class="table table-striped mb-0" style="width:100%;">
+                        <thead>
+                          <tr>
+                            <th class="text-left balance">Balance</th>
+                            <th class="text-left account">Account</th>
+                          </tr>
+                        </thead>
+                        <tbody ac:for="let item of data.debit_balances;let index;">
+                          <tr class="tr-record-row" style="font-size:14px;">
+                            <td class="balance ps-4">{{item.ledger_account_balance | currency:'INR'}}</td>
+                            <td class="account">{{item.ledger_account_name}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -3431,6 +3430,28 @@ export class BasicReportPage extends HTMLElement {
               <table style="width:100%;height: 100%;border-top:solid 1px black;" cellspacing="0">
                 <tfoot>
                   <tr class="side-container">
+                    <td class="side-credit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
+                      <table style="width:100%;font-weight: bold;" cellspacing="0">
+                        <tfoot>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance credit-total-amount border-bottom">0.0</td>
+                            <td class="account_name border-bottom"><span
+                                ac:if="data.type == 'BALANCE SHEET'">Assets</span>
+                              <span ac:if="['TRADING ACCOUNT','TRAIAL BALANCE'].includes(data.type)">Credit</span>
+                              <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Incomes</span> Total
+                            </td>
+                          </tr>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance credit-balance-amount border-bottom">&nbsp;</td>
+                            <td class="account_name credit-balance-label border-bottom">&nbsp;</td>
+                          </tr>
+                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
+                            <td class="balance total-amount border-bottom">0.0</td>
+                            <td class="account_name total_text border-bottom">Total</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </td>
                     <td class="side-debit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
                       <table style="width:100%;font-weight: bold;" cellspacing="0">
                         <tfoot>
@@ -3446,28 +3467,6 @@ export class BasicReportPage extends HTMLElement {
                           <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
                             <td class="balance debit-balance-amount border-bottom">&nbsp;</td>
                             <td class="account_name debit-balance-label border-bottom">&nbsp;</td>
-                          </tr>
-                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
-                            <td class="balance total-amount border-bottom">0.0</td>
-                            <td class="account_name total_text border-bottom">Total</td>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </td>
-                    <td class="side-credit" style="min-width:50%;max-width: 50%;width: 50%;vertical-align: top;">
-                      <table style="width:100%;font-weight: bold;" cellspacing="0">
-                        <tfoot>
-                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
-                            <td class="balance credit-total-amount border-bottom">0.0</td>
-                            <td class="account_name border-bottom"><span
-                                ac:if="data.type == 'BALANCE SHEET'">Assets</span>
-                              <span ac:if="['TRADING ACCOUNT','TRAIAL BALANCE'].includes(data.type)">Credit</span>
-                              <span ac:if="data.type == 'PROFIT AND LOSS ACCOUNT'">Incomes</span> Total
-                            </td>
-                          </tr>
-                          <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
-                            <td class="balance credit-balance-amount border-bottom">&nbsp;</td>
-                            <td class="account_name credit-balance-label border-bottom">&nbsp;</td>
                           </tr>
                           <tr style="max-height:0.4cm;min-height: 0.4cm;height:0.4cm;">
                             <td class="balance total-amount border-bottom">0.0</td>
