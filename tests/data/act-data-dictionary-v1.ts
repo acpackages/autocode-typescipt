@@ -27196,6 +27196,12 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_delivery_notes",
           "columnSourceOriginalColumn": "delivery_note_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
         }
       },
       "viewQuery": "SELECT\n    dn.delivery_note_id,\n\n    IFNULL(p.products_count, 0) AS products_count\n\nFROM act_delivery_notes dn\n\nLEFT JOIN (\n    SELECT\n        delivery_note_id,\n        COUNT(delivery_note_product_id) AS products_count\n    FROM act_delivery_note_products\n    GROUP BY delivery_note_id\n) p\n    ON p.delivery_note_id = dn.delivery_note_id;"
@@ -27828,7 +27834,34 @@ export const dataDictionaryJson = {
     },
     "act_vw_ledger_account_summary": {
       "viewName": "act_vw_ledger_account_summary",
-      "viewColumns": {},
+      "viewColumns": {
+        "ledger_account_id": {
+          "columnName": "ledger_account_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_transaction_entries",
+          "columnSourceOriginalColumn": "ledger_account_id"
+        },
+        "balance": {
+          "columnName": "balance",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "debit_entries_count": {
+          "columnName": "debit_entries_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "credit_entries_count": {
+          "columnName": "credit_entries_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
+        }
+      },
       "viewQuery": "SELECT SUM(CASE WHEN is_credit = 1 THEN  transaction_entry_amount * -1 ELSE transaction_entry_amount END) AS balance,\nSUM(CASE WHEN is_credit = 1 THEN  0 ELSE 1 END) AS debit_entries_count,\nSUM(CASE WHEN is_credit = 0 THEN  0 ELSE 1 END) AS credit_entries_count,\nledger_account_id\n FROM act_transaction_entries GROUP BY ledger_account_id"
     },
     "act_vw_ledger_account_types": {
@@ -31451,6 +31484,24 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_invoices",
           "columnSourceOriginalColumn": "purchase_invoice_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "total_paid_amount": {
+          "columnName": "total_paid_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
         }
       },
       "viewQuery": "SELECT\n    pi.purchase_invoice_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount,\n\n    ROUND(IFNULL(pay.total_paid_amount, 0), 4) AS total_paid_amount\n\nFROM act_purchase_invoices pi\n\nLEFT JOIN (\n    SELECT\n        purchase_invoice_id,\n        COUNT(purchase_invoice_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_purchase_invoice_products\n    GROUP BY purchase_invoice_id\n) p ON p.purchase_invoice_id = pi.purchase_invoice_id\n\nLEFT JOIN (\n    SELECT\n        purchase_invoice_id,\n        SUM(purchase_invoice_payment_amount) AS total_paid_amount\n    FROM act_purchase_invoice_payments\n    WHERE purchase_invoice_payment_status = 'PAID'\n    GROUP BY purchase_invoice_id\n) pay ON pay.purchase_invoice_id = pi.purchase_invoice_id;"
@@ -32771,6 +32822,18 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_purchase_orders",
           "columnSourceOriginalColumn": "purchase_order_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
         }
       },
       "viewQuery": "SELECT\n    po.purchase_order_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount\n\nFROM act_purchase_orders po\n\nLEFT JOIN (\n    SELECT\n        purchase_order_id,\n        COUNT(purchase_order_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_purchase_order_products\n    GROUP BY purchase_order_id\n) p ON p.purchase_order_id = po.purchase_order_id;"
@@ -34406,6 +34469,24 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_invoices",
           "columnSourceOriginalColumn": "sale_invoice_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "total_received_amount": {
+          "columnName": "total_received_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
         }
       },
       "viewQuery": "SELECT\n    si.sale_invoice_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount,\n\n    ROUND(IFNULL(r.total_received_amount, 0), 4) AS total_received_amount\n\nFROM act_sale_invoices si\n\nLEFT JOIN (\n    SELECT\n        sale_invoice_id,\n        COUNT(sale_invoice_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_sale_invoice_products\n    GROUP BY sale_invoice_id\n) p ON p.sale_invoice_id = si.sale_invoice_id\n\nLEFT JOIN (\n    SELECT\n        sale_invoice_id,\n        SUM(sale_invoice_payment_amount) AS total_received_amount\n    FROM act_sale_invoice_payments\n    WHERE sale_invoice_payment_status = 'RECEIVED'\n    GROUP BY sale_invoice_id\n) r ON r.sale_invoice_id = si.sale_invoice_id;"
@@ -35758,6 +35839,18 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_sale_quotations",
           "columnSourceOriginalColumn": "sale_quotation_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function"
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function"
         }
       },
       "viewQuery": "SELECT\n    sq.sale_quotation_id,\n\n    IFNULL(p.products_count, 0) AS products_count,\n\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount\n\nFROM act_sale_quotations sq\n\nLEFT JOIN (\n    SELECT\n        sale_quotation_id,\n        COUNT(sale_quotation_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_sale_quotation_products\n    GROUP BY sale_quotation_id\n) p\n    ON p.sale_quotation_id = sq.sale_quotation_id;"
