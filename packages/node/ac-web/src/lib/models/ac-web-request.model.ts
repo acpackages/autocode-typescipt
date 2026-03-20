@@ -7,8 +7,9 @@ export class AcWebRequest {
   static readonly KEY_FILES = 'files';
   static readonly KEY_GET = 'get';
   static readonly KEY_HEADERS = 'headers';
+  static readonly KEY_INTERNAL_PARAMS = 'internalParams';
   static readonly KEY_METHOD = 'method';
-  static readonly KEY_PATH_PAREMETERS = 'pathParameters';
+  static readonly KEY_PATH_PARAMETERS = 'pathParameters';
   static readonly KEY_POST = 'post';
   static readonly KEY_SESSION = 'session';
   static readonly KEY_URL = 'url';
@@ -25,17 +26,36 @@ export class AcWebRequest {
   @AcBindJsonProperty({ key: AcWebRequest.KEY_GET })
   get: Record<string, any> = {};
 
+  get queryParameters(): Record<string, any> {
+    return this.get;
+  }
+
+  set queryParameters(value: Record<string, any>) {
+    this.get = value;
+  }
+
   @AcBindJsonProperty({ key: AcWebRequest.KEY_HEADERS })
   headers: Record<string, any> = {};
+
+  @AcBindJsonProperty({ key: AcWebRequest.KEY_INTERNAL_PARAMS })
+  internalParams: Record<string, any> = {};
 
   @AcBindJsonProperty({ key: AcWebRequest.KEY_METHOD })
   method: string = "";
 
-  @AcBindJsonProperty({ key: AcWebRequest.KEY_PATH_PAREMETERS })
+  @AcBindJsonProperty({ key: AcWebRequest.KEY_PATH_PARAMETERS })
   pathParameters: Record<string, any> = {};
 
   @AcBindJsonProperty({ key: AcWebRequest.KEY_POST })
   post: Record<string, any> = {};
+
+  get formFields(): Record<string, any> {
+    return this.post;
+  }
+
+  set formFields(value: Record<string, any>) {
+    this.post = value;
+  }
 
   @AcBindJsonProperty({ key: AcWebRequest.KEY_SESSION })
   session: Record<string, any> = {};

@@ -24,6 +24,13 @@ export class AcWebResponse {
 
   session: Record<string, any> = {};
 
+  static internalError(params: { data?: any; responseCode?: number }): AcWebResponse {
+    const response = new AcWebResponse();
+    response.responseCode = params.responseCode ?? AcEnumHttpResponseCode.InternalServerError;
+    response.content = params.data;
+    return response;
+  }
+
   static json(params: { data: any; responseCode?: number }): AcWebResponse {
     const response = new AcWebResponse();
     response.responseCode = params.responseCode ?? AcEnumHttpResponseCode.Ok;
@@ -56,10 +63,23 @@ export class AcWebResponse {
     return response;
   }
 
+  static download(params: { content: any; filename: string; responseCode?: number }): AcWebResponse {
+    const response = new AcWebResponse();
+    response.responseCode = params.responseCode ?? AcEnumHttpResponseCode.Ok;
+    response.responseType = AcEnumWebResponseType.Download;
+    response.content = params.content;
+    response.headers['Content-Disposition'] = `attachment; filename="${params.filename}"`;
+    response.headers['Content-Type'] = 'application/octet-stream';
+    return response;
+  }
+
   static view(params: { template: string; responseCode?: number }): AcWebResponse {
-    // Placeholder for view rendering logic
-    // In TS/Node, actual rendering depends on your framework
-    return new AcWebResponse();
+    const response = new AcWebResponse();
+    response.responseCode = params.responseCode ?? AcEnumHttpResponseCode.Ok;
+    response.responseType = AcEnumWebResponseType.View;
+    response.content = `<html><body>View: ${params.template}</body></html>`;
+    response.headers['Content-Type'] = 'text/html';
+    return response;
   }
 
   fromJson(jsonData: Record<string, any>): this {

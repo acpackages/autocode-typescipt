@@ -344,6 +344,13 @@ export class AcDDTableColumn {
     return false;
   }
 
+  isUseForRowLikeFilter(): boolean {
+    if (this.columnProperties[AcEnumDDColumnProperty.UseForRowLikeFilter]) {
+      return this.columnProperties[AcEnumDDColumnProperty.UseForRowLikeFilter].propertyValue === true;
+    }
+    return false;
+  }
+
   // Serialization and Deserialization with AcJsonUtils - stub implementations here
 
   toJson(): Record<string, any> {

@@ -64,6 +64,14 @@ export class AcDDView {
     return this.viewColumns.map((column) => column.columnName);
   }
 
+  getSearchQueryColumnNames(): string[] {
+    return this.getSearchQueryColumns().map((column) => column.columnName);
+  }
+
+  getSearchQueryColumns(): AcDDViewColumn[] {
+    return this.viewColumns.filter((column) => column.isUseForRowLikeFilter());
+  }
+
   getCreateViewStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string } = {}): string {
     return `CREATE View ${this.viewName} AS ${this.viewQuery};`;
   }

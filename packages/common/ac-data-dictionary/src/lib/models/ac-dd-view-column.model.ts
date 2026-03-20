@@ -87,6 +87,20 @@ export class AcDDViewColumn {
     return this.columnName;
   }
 
+  isUseForRowLikeFilter(): boolean {
+    if (this.columnProperties[AcEnumDDColumnProperty.UseForRowLikeFilter]) {
+      return this.columnProperties[AcEnumDDColumnProperty.UseForRowLikeFilter].propertyValue === true;
+    }
+    return false;
+  }
+
+  isSelectDistinct(): boolean {
+    if (this.columnProperties[AcEnumDDColumnProperty.IsSelectDistinct]) {
+      return this.columnProperties[AcEnumDDColumnProperty.IsSelectDistinct].propertyValue === true;
+    }
+    return false;
+  }
+
   toJson(): Record<string, any> {
     return AcJsonUtils.getJsonDataFromInstance({ instance: this });
   }

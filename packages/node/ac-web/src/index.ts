@@ -44,13 +44,31 @@ export * from './lib/api-docs/models/ac-api-doc.model';
 
 export * from './lib/api-docs/utils/ac-api-docs-utils';
 
+export * from './lib/api-docs/swagger/ac-api-swagger';
+export * from './lib/api-docs/swagger/ac-swagger-resources';
+
+export * from './lib/controllers/ac-files-controller';
+
 export * from './lib/core/ac-web';
 
 export * from './lib/enums/ac-enum-web-hook.enum';
 export * from './lib/enums/ac-enum-web-response-type.enum';
 
 export * from './lib/models/ac-web-api-response.model';
+export * from './lib/models/ac-web-config.model';
+export * from './lib/models/ac-web-file.model';
 export * from './lib/models/ac-web-hook-created-args.model';
+export * from './lib/models/ac-web-request-handler-args.model';
 export * from './lib/models/ac-web-request.model';
 export * from './lib/models/ac-web-response.model';
 export * from './lib/models/ac-web-route-definition.model';
+export * from './lib/data-dictionary/models/ac-data-dictionary-web-auto-execute-result.model';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-api-config.model';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-api.controller';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-delete.controller';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-insert.controller';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-save.controller';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-select-distinct.controller';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-select.controller';
+export * from './lib/data-dictionary/rest/ac-data-dictionary-auto-update.controller';
+export * from './lib/data-dictionary/utils/ac-web-data-dictionary-utils.utility';

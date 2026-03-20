@@ -103,6 +103,28 @@ export class AcDDTable {
     return this.tableColumns.filter((column) => column.isSelectDistinct());
   }
 
+  getSearchQueryColumnNames(): string[] {
+    return this.getSearchQueryColumns().map((column) => column.columnName);
+  }
+
+  getSearchQueryColumns(): AcDDTableColumn[] {
+    return this.tableColumns.filter((column) => column.isUseForRowLikeFilter());
+  }
+
+  getSelectQueryFromName(): string {
+    const result = this.getSqlViewName();
+    return result.length > 0 ? result : this.tableName;
+  }
+
+  getSqlViewName(): string {
+    for (const property of this.tableProperties) {
+      if (property.propertyName === AcEnumDDTableProperty.SqlViewName) {
+        return property.propertyValue;
+      }
+    }
+    return "";
+  }
+
   fromJson({ jsonData }: { jsonData: any }): this {
     const json = { ...jsonData };
 

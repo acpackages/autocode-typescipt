@@ -1,13 +1,11 @@
-import {
-  AcEnumApiDataFormat,
-  AcEnumApiDataType,
-  AcEnumHttpResponseCode,
-  AcApiDoc,
-  AcApiDocModel,
-  AcApiDocContent,
-  AcApiDocResponse,
-} from 'autocode_web';
-import { AcEnumDDColumnType, AcDDTable } from 'autocode_data_dictionary';
+import { AcEnumApiDataFormat } from '../enums/ac-enum-api-data-format.enum';
+import { AcEnumApiDataType } from '../enums/ac-enum-api-data-type.enum';
+import { AcEnumHttpResponseCode } from '@autocode-ts/autocode';
+import { AcApiDoc } from '../models/ac-api-doc.model';
+import { AcApiDocModel } from '../models/ac-api-doc-model.model';
+import { AcApiDocContent } from '../models/ac-api-doc-content.model';
+import { AcApiDocResponse } from '../models/ac-api-doc-response.model';
+import { AcEnumDDColumnType, AcDDTable } from '@autocode-ts/ac-data-dictionary';
 
 export class AcApiDocUtils {
   static getApiDataFormatFromDataDictionaryDataType({
@@ -17,17 +15,17 @@ export class AcApiDocUtils {
   }): string {
     if (
       dataType === AcEnumDDColumnType.AutoIncrement ||
-      dataType === AcEnumDDColumnType.INTEGER
+      dataType === AcEnumDDColumnType.Integer
     ) {
-      return AcEnumApiDataFormat.INT64;
-    } else if (dataType === AcEnumDDColumnType.DOUBLE) {
-      return AcEnumApiDataFormat.DOUBLE;
-    } else if (dataType === AcEnumDDColumnType.DATE) {
-      return AcEnumApiDataFormat.DATE;
-    } else if (dataType === AcEnumDDColumnType.DATETIME) {
-      return AcEnumApiDataFormat.DATETIME;
-    } else if (dataType === AcEnumDDColumnType.PASSWORD) {
-      return AcEnumApiDataFormat.PASSWORD;
+      return AcEnumApiDataFormat.Int64;
+    } else if (dataType === AcEnumDDColumnType.Double) {
+      return AcEnumApiDataFormat.Double;
+    } else if (dataType === AcEnumDDColumnType.Date) {
+      return AcEnumApiDataFormat.Date;
+    } else if (dataType === AcEnumDDColumnType.Datetime) {
+      return AcEnumApiDataFormat.DateTime;
+    } else if (dataType === AcEnumDDColumnType.Password) {
+      return AcEnumApiDataFormat.Password;
     }
     return '';
   }
@@ -39,18 +37,17 @@ export class AcApiDocUtils {
   }): string {
     if (
       dataType === AcEnumDDColumnType.AutoIncrement ||
-      dataType === AcEnumDDColumnType.INTEGER
+      dataType === AcEnumDDColumnType.Integer
     ) {
-      return AcEnumApiDataType.INTEGER;
+      return AcEnumApiDataType.Integer;
     } else if (
-      dataType === AcEnumDDColumnType.JSON ||
-      dataType === AcEnumDDColumnType.MEDIA_JSON
+      dataType === AcEnumDDColumnType.Json
     ) {
-      return AcEnumApiDataType.OBJECT;
-    } else if (dataType === AcEnumDDColumnType.DOUBLE) {
-      return AcEnumApiDataType.NUMBER;
+      return AcEnumApiDataType.Object;
+    } else if (dataType === AcEnumDDColumnType.Double) {
+      return AcEnumApiDataType.Number;
     }
-    return AcEnumApiDataType.STRING;
+    return AcEnumApiDataType.String;
   }
 
   static getApiModelRefFromAcDDTable({
@@ -86,7 +83,7 @@ export class AcApiDocUtils {
     }
 
     acApiDocModel.properties = model;
-    acApiDoc.addModel({ model: acApiDocModel });
+    acApiDoc.addModel(acApiDocModel);
 
     return {
       $ref: `#/components/schemas/${acApiDoc.models[acDDTable.tableName].name}`,
@@ -112,7 +109,6 @@ export class AcApiDocUtils {
     acApiDocModel.name = schemaName;
     acApiDocModel.properties = {};
 
-    const prototype = clazz.prototype;
     const instance = new clazz();
 
     for (const key of Object.keys(instance)) {
@@ -146,7 +142,7 @@ export class AcApiDocUtils {
       acApiDocModel.properties[key] = propSchema;
     }
 
-    acApiDoc.addModel({ model: acApiDocModel });
+    acApiDoc.addModel(acApiDocModel);
 
     return {
       $ref: `#/components/schemas/${schemaName}`,
@@ -154,7 +150,6 @@ export class AcApiDocUtils {
   }
 
   static getApiDocRouteResponsesForOperation({
-    operation,
     acDDTable,
     acApiDoc,
   }: {
@@ -170,28 +165,28 @@ export class AcApiDocUtils {
     const content = new AcApiDocContent();
     content.encoding = 'application/json';
     content.schema = {
-      type: AcEnumApiDataType.OBJECT,
+      type: AcEnumApiDataType.Object,
       properties: {
         code: {
-          type: AcEnumApiDataType.INTEGER,
+          type: AcEnumApiDataType.Integer,
           enum: [1, 2, 3],
         },
         status: {
-          type: AcEnumApiDataType.STRING,
+          type: AcEnumApiDataType.String,
           enum: ['success', 'failure'],
         },
         message: {
-          type: AcEnumApiDataType.STRING,
+          type: AcEnumApiDataType.String,
         },
         rows: {
-          type: AcEnumApiDataType.ARRAY,
+          type: AcEnumApiDataType.Array,
           items: schema,
         },
       },
     };
 
     const response = new AcApiDocResponse();
-    response.code = AcEnumHttpResponseCode.OK;
+    response.code = AcEnumHttpResponseCode.Ok;
     response.description = 'Successful operation';
     response.addContent({ content });
 

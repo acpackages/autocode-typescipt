@@ -4,8 +4,10 @@
 /* eslint-disable no-prototype-builtins */
 import { AcEnumLogType, AcLogger, AcResult } from "@autocode-ts/autocode";
 import { AcEnumDDRowOperation, AcEnumDDSelectMode } from "@autocode-ts/ac-data-dictionary";
+import { AcSqlCallbackArgs } from "../models/ac-sql-callback-args.model";
 import { AcSqlConnection } from "../models/ac-sql-connection.model";
 import { AcSqlDaoResult } from "../models/ac-sql-dao-result.model";
+import { AcSqlOperation } from "../models/ac-sql-operation.model";
 export class AcBaseSqlDao {
   logger: AcLogger;
   sqlConnection: AcSqlConnection;
@@ -55,14 +57,30 @@ export class AcBaseSqlDao {
     return new AcSqlDaoResult();
   }
 
+  async dropExistingRelationships(): Promise<AcResult> {
+    return new AcResult();
+  }
+
   async executeMultipleSqlStatements({
     statements,
     parameters = {},
+    perStatementCallback,
   }: {
     statements: string[];
     parameters?: Record<string, any>;
+    perStatementCallback?: (args: AcSqlCallbackArgs) => void;
   }): Promise<AcSqlDaoResult> {
     return new AcSqlDaoResult();
+  }
+
+  async executeSqlOperations({
+    operations,
+    perOperationCallback,
+  }: {
+    operations: AcSqlOperation[];
+    perOperationCallback?: (args: AcSqlCallbackArgs) => void;
+  }): Promise<AcResult> {
+    return new AcResult();
   }
 
   async executeStatement({

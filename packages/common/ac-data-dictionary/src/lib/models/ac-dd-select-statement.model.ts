@@ -28,6 +28,8 @@ export class AcDDSelectStatement {
   static readonly KeySelectStatement = "selectStatement";
   static readonly KeySqlStatement = "sqlStatement";
   static readonly KeyTableName = "tableName";
+  static readonly KeyViewName = "viewName";
+  static readonly KeySelectFrom = "selectFrom";
 
   condition: string = "";
 
@@ -68,8 +70,15 @@ export class AcDDSelectStatement {
   @AcBindJsonProperty({ key: AcDDSelectStatement.KeyTableName })
   tableName: string = "";
 
-  constructor({ tableName = "", dataDictionaryName = "default" }: { tableName?: string, dataDictionaryName?: string } = {}) {
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeyViewName })
+  viewName: string = "";
+
+  @AcBindJsonProperty({ key: AcDDSelectStatement.KeySelectFrom })
+  selectFrom: string = "";
+
+  constructor({ tableName = "", viewName = "", dataDictionaryName = "default" }: { tableName?: string, viewName?: string, dataDictionaryName?: string } = {}) {
     this.tableName = tableName;
+    this.viewName = viewName;
     this.dataDictionaryName = dataDictionaryName;
     this.conditionGroup = new AcDDConditionGroup();
     this.conditionGroup.operator = AcEnumLogicalOperator.And;
