@@ -22,8 +22,8 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
       };
       this.datagridApi.hooks.execute({ hook: AcEnumDatagridAutoAddNewRowHook.AutoAddNewRowValueChange, args: hookArgs });
     }
-
   }
+  autoAddNewRowData:any = {};
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if (this.autoAddNewRow) {
@@ -31,7 +31,7 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
         const datagridCell: IAcDatagridCell = args.datagridCell;
         const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
         if (datagridRow.index == this.datagridApi.dataManager.totalRows - 1) {
-          this.datagridApi.addRow();
+          this.datagridApi.addRow({data:{...this.autoAddNewRowData}});
         }
       }
     }

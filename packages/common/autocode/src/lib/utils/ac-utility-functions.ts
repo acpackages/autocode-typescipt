@@ -5,7 +5,7 @@ import { AcEnumLogicalOperator } from "../enums/ac-enum-logical-operator.enum";
 import { IAcFilterGroup } from "../interfaces/ac-filter-group.interface";
 import { IAcFilter } from "../interfaces/ac-filter.interface";
 
-export function acNullifyInstanceProperties({ instance, excludeKeys = [], delay = 500 }: { instance: any, excludeKeys?: (string | RegExp)[], delay?: number }): void {
+export function acNullifyInstanceProperties({ instance, excludeKeys = [], delay = 0 }: { instance: any, excludeKeys?: (string | RegExp)[], delay?: number }): void {
   const execute = () => {
     const obj = instance;
     if (obj && obj !== Object.prototype) {
@@ -13,34 +13,31 @@ export function acNullifyInstanceProperties({ instance, excludeKeys = [], delay 
 
       for (const [key, descriptor] of Object.entries(descriptors)) {
         if (key === 'constructor') continue;
-
-        // Skip readonly / non-configurable
         if (descriptor.configurable === false) continue;
 
         try {
-          // Getter / Setter
           if (descriptor.set) {
             instance[key] = null;
           }
-          // Normal property
           else if ('value' in descriptor) {
             instance[key] = null;
           }
         } catch {
-          // Ignore assignment errors
         }
       }
     }
   };
 
-  if(delay && delay > 0){
-    let delayedCallback:any = new AcDelayedCallback();
-    delayedCallback.add({callback:() => {
-      execute();
-      delayedCallback = null;
-    }, duration:delay});
+  if (delay && delay > 0) {
+    let delayedCallback: any = new AcDelayedCallback();
+    delayedCallback.add({
+      callback: () => {
+        execute();
+        delayedCallback = null;
+      }, duration: delay
+    });
   }
-  else{
+  else {
     execute();
   }
 }

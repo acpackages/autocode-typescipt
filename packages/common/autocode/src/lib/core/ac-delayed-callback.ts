@@ -13,8 +13,10 @@ export class AcDelayedCallback {
       this.clearTimeoutSafe(key);
     }
     this.timeouts[key] = setTimeout(() => {
-      delete this.timeouts[key];
-      callback();
+      if(this.timeouts && this.timeouts[key]){
+        delete this.timeouts[key];
+        callback();
+      }
     }, duration);
     return key;
   }

@@ -125,6 +125,7 @@ export class AcDDEApi {
       [AcDataDictionary.KeyRelationships]: [],
       [AcDataDictionary.KeyStoredProcedures]: {},
       [AcDataDictionary.KeyFunctions]: {},
+      [AcDataDictionary.KeyTriggers]: {},
     };
 
     const dataDictionaryRows = this.dataStorage.getDataDictionaries({ dataDictionaryId: dataDictionaryId });
@@ -242,6 +243,24 @@ export class AcDDEApi {
       dataDictionary[AcDataDictionary.KeyStoredProcedures] = storedProcedures;
     }
 
+    if(Object.keys(dataDictionary[AcDataDictionary.KeyTables]).length == 0){
+      delete dataDictionary[AcDataDictionary.KeyTables];
+    }
+    if(Object.keys(dataDictionary[AcDataDictionary.KeyViews]).length == 0){
+      delete dataDictionary[AcDataDictionary.KeyViews];
+    }
+    if(Object.keys(dataDictionary[AcDataDictionary.KeyRelationships]).length == 0){
+      delete dataDictionary[AcDataDictionary.KeyRelationships];
+    }
+    if(Object.keys(dataDictionary[AcDataDictionary.KeyStoredProcedures]).length == 0){
+      delete dataDictionary[AcDataDictionary.KeyStoredProcedures];
+    }
+    if(Object.keys(dataDictionary[AcDataDictionary.KeyFunctions]).length == 0){
+      delete dataDictionary[AcDataDictionary.KeyFunctions];
+    }
+    if(Object.keys(dataDictionary[AcDataDictionary.KeyTriggers]).length == 0){
+      delete dataDictionary[AcDataDictionary.KeyTriggers];
+    }
     return dataDictionary;
   }
 

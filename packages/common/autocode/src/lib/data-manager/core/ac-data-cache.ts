@@ -35,12 +35,17 @@ export class AcDataCache {
     return result;
   }
 
-  clearCollection({ collection }: { collection: string }){
-    const cacheCollection = this.collections.get(collection);
-    if (!cacheCollection) {
-      throw new Error(`Collection ${collection} not found`);
+  clearAllCollections(){
+    for(const collection of Object.keys(this.collections)){
+      this.collections.get(collection)!.rows = [];
     }
-    cacheCollection.rows = [];
+  }
+
+  clearCollection({ collection }: { collection: string }){
+    if(this.hasCollection({collection})){
+      const cacheCollection = this.collections.get(collection)!;
+      cacheCollection.rows = [];
+    }
   }
 
   deleteRow({ collection, key, value, rowId, data }: { collection: string, key?: string; value?: any; rowId?: string; data?: any }): any | undefined {
