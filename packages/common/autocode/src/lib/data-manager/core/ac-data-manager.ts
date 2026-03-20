@@ -55,7 +55,7 @@ export class AcDataManager {
   get data(): any[] {
     const values: any[] = [];
     for (const row of this.rows) {
-      if (row.index >= 0) {
+      if (row && row.index >= 0) {
         values.push(row.data);
       }
     }
@@ -89,7 +89,7 @@ export class AcDataManager {
 
   get displayedRows(): IAcDataRow[] {
     return this.allRows.filter((row) => {
-      return row.index >= this.displayStartIndex && row.index <= this.displayEndIndex;
+      return row && row.index >= this.displayStartIndex && row.index <= this.displayEndIndex;
     });
   }
 
@@ -110,7 +110,7 @@ export class AcDataManager {
 
   get rows(): IAcDataRow[] {
     return this.allRows.filter((row) => {
-      return row.index >= 0;
+      return row && row.index >= 0;
     });
   }
 
@@ -276,26 +276,28 @@ export class AcDataManager {
   private applyFilter() {
     let validIndex: number = 0;
     for (const row of this.allRows) {
-      const keys: any = Object.keys(row.data);
-      let valid: boolean = true;
-      if (this.searchQuery) {
-        valid = this.evaluateSearch(this.searchQuery, row, keys);
-      }
-      if (valid && this.filterGroup && (this.filterGroup.hasFilters() || this.filterGroup.filterGroups.length > 0)) {
-        valid = this.evaluateFilterGroup(this.filterGroup, row)
-      }
-      if (valid) {
-        row.index = validIndex;
-        validIndex++;
-      }
-      else {
-        row.index = -1;
+      if(row){
+        const keys: any = Object.keys(row.data);
+        let valid: boolean = true;
+        if (this.searchQuery) {
+          valid = this.evaluateSearch(this.searchQuery, row, keys);
+        }
+        if (valid && this.filterGroup && (this.filterGroup.hasFilters() || this.filterGroup.filterGroups.length > 0)) {
+          valid = this.evaluateFilterGroup(this.filterGroup, row)
+        }
+        if (valid) {
+          row.index = validIndex;
+          validIndex++;
+        }
+        else {
+          row.index = -1;
+        }
       }
     }
   }
 
   private applySort() {
-    const rows = this.allRows.filter((row) => { return row.index >= 0 });
+    const rows = this.allRows.filter((row) => { return row && row.index >= 0 });
     rows.sort((a: IAcDataRow, b: IAcDataRow): number => {
       let index = 0;
       for (const sort of this.sortOrder.sortOrders) {
@@ -344,7 +346,11 @@ export class AcDataManager {
         available = true;
         for (let index = startIndex; index <= endIndex; index++) {
           if (available) {
-            if (!this.rows[index]) {
+            if(this.rows[index] == undefined){
+              available = false;
+              break;
+            }
+            else if (!this.rows[index]) {
               available = false;
               break;
             }
@@ -362,17 +368,19 @@ export class AcDataManager {
   deleteRow({ data, rowId, key, value }: { data?: any, rowId?: string, key?: string, value?: any }): IAcDataRow | undefined {
     const dataRow: IAcDataRow | undefined = this.rows.find((dataRow: IAcDataRow) => {
       let valid: boolean = false;
-      if (rowId) {
-        valid = dataRow.rowId == rowId;
-      }
-      else if (key && value) {
-        valid = dataRow.data[key] == value;
-      }
-      else if (data && key) {
-        valid = dataRow.data[key] == data[key];
-      }
-      else if (data) {
-        valid = dataRow.data == data;
+      if(dataRow){
+        if (rowId) {
+          valid = dataRow.rowId == rowId;
+        }
+        else if (key && value) {
+          valid = dataRow.data[key] == value;
+        }
+        else if (data && key) {
+          valid = dataRow.data[key] == data[key];
+        }
+        else if (data) {
+          valid = dataRow.data == data;
+        }
       }
       return valid;
     });
@@ -495,21 +503,21 @@ export class AcDataManager {
 
   getRowIndex({ key, value }: { key: string, value: any }): number {
     const index = this.allRows.findIndex((row: IAcDataRow) => {
-      return row.data[key] == value;
+      return row && row.data[key] == value;
     });
     return index;
   }
 
   getRowAtIndex({ index }: { index: number }): IAcDataRow | undefined {
     const row = this.allRows.find((row: IAcDataRow) => {
-      return row.index == index;
+      return row && row.index == index;
     });
     return row;
   }
 
   getRow({ key, value }: { key: string, value: any }): IAcDataRow | undefined {
     const row = this.allRows.find((row: IAcDataRow) => {
-      return row.data[key] == value;
+      return row && row.data[key] == value;
     });
     return row;
   }
@@ -640,31 +648,47 @@ export class AcDataManager {
       startIndex = startIndex ?? 0;
       const endIndex = startIndex + (data.length) - 1;
       if (this.allRows.length < totalCount) {
-        this.allRows = [];
-        for (let index = 0; index < totalCount; index++) {
-          const dataRow: IAcDataRow = {
+        this.allRows = new Array(totalCount).fill(undefined);
+        // for (let index = 0; index < totalCount; index++) {
+        //   const dataRow: IAcDataRow = {
+        //     rowId: Autocode.uuid(),
+        //     data: {},
+        //     isPlaceholder: true,
+        //     index: index,
+        //     originalIndex: index,
+        //     extensionData: {}
+        //   };
+        //   if (index == 0) {
+        //     dataRow.isFirst = true;
+        //   }
+        //   if (index == totalCount - 1) {
+        //     dataRow.isLast = true;
+        //   }
+        //   this.allRows[index] = dataRow;
+        // }
+        // if (this.allRows) {
+        //   this.allRows[0].isFirst = true;
+        //   this.allRows[this.allRows.length - 1].isLast = true;
+        // }
+      }
+      for (let index = startIndex; index <= endIndex; index++) {
+        const dataIndex = index - startIndex;
+        if(this.allRows[index] == undefined){
+          this.allRows[index] = {
             rowId: Autocode.uuid(),
             data: {},
-            isPlaceholder: true,
+            isPlaceholder: false,
             index: index,
             originalIndex: index,
             extensionData: {}
           };
           if (index == 0) {
-            dataRow.isFirst = true;
+            this.allRows[index].isFirst = true;
           }
           if (index == totalCount - 1) {
-            dataRow.isLast = true;
+            this.allRows[index].isLast = true;
           }
-          this.allRows[index] = dataRow;
         }
-        if (this.allRows) {
-          this.allRows[0].isFirst = true;
-          this.allRows[this.allRows.length - 1].isLast = true;
-        }
-      }
-      for (let index = startIndex; index <= endIndex; index++) {
-        const dataIndex = index - startIndex;
         const rowData = data[dataIndex];
         if (this.assignUniqueIdToData) {
           rowData[this.uniqueIdKey] = this.allRows[index].rowId;
@@ -678,7 +702,7 @@ export class AcDataManager {
         this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
         this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
       }
-      this.allDataAvailable = this.allRows.filter((row) => { return row.isPlaceholder == false }).length == 0;
+      this.allDataAvailable = this.allRows.filter((row) => { return row == undefined || row.isPlaceholder == false }).length == 0;
       this.totalRows = totalCount;
       this.processRows();
     }
@@ -688,17 +712,19 @@ export class AcDataManager {
   updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDataRow | undefined {
     let dataRow: IAcDataRow | undefined = this.rows.find((row) => {
       let valid: boolean = false;
-      if (rowId) {
-        valid = row.rowId == rowId;
-      }
-      else if (key && value) {
-        valid = row.data[key] == value;
-      }
-      else if (data && key) {
-        valid = row.data[key] == data[key];
-      }
-      else if (data) {
-        valid = row.data == data;
+      if(row){
+        if (rowId) {
+          valid = row.rowId == rowId;
+        }
+        else if (key && value) {
+          valid = row.data[key] == value;
+        }
+        else if (data && key) {
+          valid = row.data[key] == data[key];
+        }
+        else if (data) {
+          valid = row.data == data;
+        }
       }
       return valid;
     });
@@ -760,9 +786,4 @@ export class AcDataManager {
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
   }
 
-  private unsetRowIndexes() {
-    for (const row of this.allRows) {
-      row.index = -1;
-    }
-  }
 }
