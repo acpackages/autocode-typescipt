@@ -147,9 +147,7 @@ export class AcInputBase extends AcElementBase {
     return this._value;
   }
   set value(value: any) {
-    if (value != this._value) {
-      this.setValue(value);
-    }
+    this.setValue(value);
   }
 
   elementInternals: ElementInternals;

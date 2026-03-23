@@ -6,7 +6,13 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "@autocode-ts/ac-web": "0.0.1",
+    "@autocode-ts/autocode": "0.0.1",
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "cookie-parser": "^1.4.6",
+    "multer": "^1.4.5-lts.1"
   },
   "publishConfig": {
     "access": "public"

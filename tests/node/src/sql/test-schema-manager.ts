@@ -13,15 +13,15 @@ export async function testSchemaManager(): Promise<void> {
 
     AcDataDictionary.registerDataDictionary({ jsonData: dataDictionaryJson });
 
-    AcSqlDatabase.databaseType = AcEnumSqlDatabaseType.MYSQL;
+    AcSqlDatabase.databaseType = AcEnumSqlDatabaseType.MySql;
 
     const sqlConnection = AcSqlConnection.instanceFromJson({
       jsonData: {
-        [AcSqlConnection.KEY_CONNECTION_USERNAME]: 'root',
-        [AcSqlConnection.KEY_CONNECTION_PASSWORD]: '',
-        [AcSqlConnection.KEY_CONNECTION_HOSTNAME]: 'localhost',
-        [AcSqlConnection.KEY_CONNECTION_PORT]: 3306,
-        [AcSqlConnection.KEY_CONNECTION_DATABASE]: 'acsm_test_dart',
+        [AcSqlConnection.KeyConnectionUsername]: 'root',
+        [AcSqlConnection.KeyConnectionPassword]: '',
+        [AcSqlConnection.KeyConnectionHostname]: 'localhost',
+        [AcSqlConnection.KeyConnectionPort]: 3306,
+        [AcSqlConnection.KeyConnectionDatabase]: 'acsm_test_dart',
       },
     });
 

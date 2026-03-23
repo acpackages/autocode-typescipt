@@ -543,7 +543,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       }
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATA_MANAGER_HOOK.RefreshRows)) {
-      // this.handleRefreshRows(args);
+      this.refreshRows();
     }
     else if (stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.RowAdd)) {
       this.handleRowAdd(args);
@@ -584,20 +584,6 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
       this.handleDataExportXlsx(args);
     }
 
-  }
-
-  private handleRefreshRows(args: IAcDatagridRowAddHookArgs) {
-    if (!this.datagridApi || !this.gridApi) {
-      return;
-    }
-    if (!this.isClientSideData) {
-      // this.gridApi.refreshServerSide({ purge: true });
-    }
-    else if (this.gridApi) {
-      this.gridApi.updateGridOptions({
-        rowData: this.datagridApi.data,
-      });
-    }
   }
 
   private handleRowAdd(args: any) {

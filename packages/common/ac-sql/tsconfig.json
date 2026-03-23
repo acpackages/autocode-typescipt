@@ -2,6 +2,10 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@autocode-ts/autocode": ["../../common/autocode/src/autocode.ts"]
+    },
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "importHelpers": true,

@@ -3,6 +3,14 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@autocode-ts/autocode": ["../../packages/common/autocode/src/autocode.ts"],
+      "@autocode-ts/ac-data-dictionary": ["../../packages/common/ac-data-dictionary/src/ac-data-dictionary.ts"],
+      "@autocode-ts/ac-sql": ["../../packages/common/ac-sql/src/index.ts"],
+      "@autocode-ts/ac-web": ["../../packages/node/ac-web/src/index.ts"],
+      "@autocode-ts/ac-web-on-express": ["../../packages/node/ac-web-on-express/src/index.ts"]
+    },
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],

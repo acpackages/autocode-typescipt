@@ -142,10 +142,10 @@
         "packages/vue/ac-vue/index.ts"
       ],
       "@autocode-ts/ac-web": [
-        "packages/node/ac-web/index.ts"
+        "packages/node/ac-web/src/index.ts"
       ],
       "@autocode-ts/ac-web-on-express": [
-        "packages/node/ac-web-on-express/index.ts"
+        "packages/node/ac-web-on-express/src/index.ts"
       ],
       "@autocode-ts/ac-ws-client": [
         "packages/common/ac-ws-client/src/ac-ws-client.ts"

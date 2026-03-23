@@ -537,16 +537,13 @@ export class AcDataManager {
         this.applyFilter();
         this.applySort();
       }
+      this.totalRows = this.rows.length;
     }
-    this.totalRows = this.rows.length;
     this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
   }
 
   async refreshRows() {
-    if (this.refreshRowsTimeout) {
-      clearTimeout(this.refreshRowsTimeout);
-    }
-    this.refreshRowsTimeout = this.delayedCallback.add({
+    this.delayedCallback.add({
       callback: async () => {
         if (this.type == "offline") {
           this.processRows();
@@ -558,8 +555,7 @@ export class AcDataManager {
           this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
           this.isWorking = false;
         }
-      }, duration: this.refreshRowsTimeoutDuration, 'key': 'refreshRows'
-    });
+      }, duration: this.refreshRowsTimeoutDuration, key: 'refreshRows'});
   }
 
   reset() {
@@ -594,6 +590,7 @@ export class AcDataManager {
         dataManager: this,
         oldData: this.data
       }
+      console.log(this);
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeDataChange, args: hookArgs });
       let index = 0;
       const allRows = [];
@@ -643,33 +640,12 @@ export class AcDataManager {
     }
     else if (this.type == 'ondemand') {
       if (totalCount == undefined) {
-        totalCount = data.length;
+        totalCount = this.totalRows;
       }
       startIndex = startIndex ?? 0;
       const endIndex = startIndex + (data.length) - 1;
       if (this.allRows.length < totalCount) {
         this.allRows = new Array(totalCount).fill(undefined);
-        // for (let index = 0; index < totalCount; index++) {
-        //   const dataRow: IAcDataRow = {
-        //     rowId: Autocode.uuid(),
-        //     data: {},
-        //     isPlaceholder: true,
-        //     index: index,
-        //     originalIndex: index,
-        //     extensionData: {}
-        //   };
-        //   if (index == 0) {
-        //     dataRow.isFirst = true;
-        //   }
-        //   if (index == totalCount - 1) {
-        //     dataRow.isLast = true;
-        //   }
-        //   this.allRows[index] = dataRow;
-        // }
-        // if (this.allRows) {
-        //   this.allRows[0].isFirst = true;
-        //   this.allRows[this.allRows.length - 1].isLast = true;
-        // }
       }
       for (let index = startIndex; index <= endIndex; index++) {
         const dataIndex = index - startIndex;
@@ -703,7 +679,7 @@ export class AcDataManager {
         this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
       }
       this.allDataAvailable = this.allRows.filter((row) => { return row == undefined || row.isPlaceholder == false }).length == 0;
-      this.totalRows = totalCount;
+      this.totalRows = this.allRows.length;
       this.processRows();
     }
     this.isFirstRowsSet = true;

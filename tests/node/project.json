@@ -12,8 +12,8 @@
       "options": {
         "platform": "node",
         "outputPath": "dist/tests/node",
-        "format": ["cjs"],
-        "bundle": false,
+        "format": ["esm"],
+        "bundle": true,
         "main": "tests/node/src/main.ts",
         "tsConfig": "tests/node/tsconfig.app.json",
         "assets": ["tests/node/src/assets"],

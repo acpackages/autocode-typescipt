@@ -1,7 +1,14 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs"
+    "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "@autocode-ts/autocode": ["../../common/autocode/src/autocode.ts"],
+      "@autocode-ts/ac-data-dictionary": ["../../common/ac-data-dictionary/src/ac-data-dictionary.ts"],
+      "@autocode-ts/ac-sql": ["../../common/ac-sql/src/index.ts"],
+      "@autocode-ts/ac-web": ["../../node/ac-web/src/index.ts"]
+    }
   },
   "files": [],
   "include": [],

@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "dependencies": {
     "@autocode-ts/ac-data-dictionary": "0.0.1",
-    "@autocode-ts/ac-sql": "0.0.1"
+    "@autocode-ts/ac-sql": "0.0.1",
+    "@autocode-ts/ac-web-on-express": "0.0.1",
+    "axios": "^1.6.0"
   },
   "main": "./main.js",
   "type": "module"

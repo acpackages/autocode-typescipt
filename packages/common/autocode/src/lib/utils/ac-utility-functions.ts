@@ -5,7 +5,7 @@ import { AcEnumLogicalOperator } from "../enums/ac-enum-logical-operator.enum";
 import { IAcFilterGroup } from "../interfaces/ac-filter-group.interface";
 import { IAcFilter } from "../interfaces/ac-filter.interface";
 
-export function acNullifyInstanceProperties({ instance, excludeKeys = [], delay = 0 }: { instance: any, excludeKeys?: (string | RegExp)[], delay?: number }): void {
+export function acNullifyInstanceProperties({ instance, excludeKeys = [], delay = 10   }: { instance: any, excludeKeys?: (string | RegExp)[], delay?: number }): void {
   const execute = () => {
     const obj = instance;
     if (obj && obj !== Object.prototype) {
