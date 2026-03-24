@@ -6,7 +6,7 @@ interface AcWebRouteMetaOptions {
   tags?: any[];
 }
 
-function AcWebRouteMeta(options: AcWebRouteMetaOptions = {}) {
+export function AcWebRouteMeta(options: AcWebRouteMetaOptions = {}) {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     const defaultOptions: AcWebRouteMetaOptions = {
       summary: '',

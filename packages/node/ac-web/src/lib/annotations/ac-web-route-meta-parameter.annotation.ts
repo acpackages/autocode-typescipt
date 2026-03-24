@@ -7,7 +7,7 @@ interface AcWebRouteMetaParameterOptions {
   schema?: any[];
 }
 
-function AcWebRouteMetaParameter(options: AcWebRouteMetaParameterOptions = {}) {
+export function AcWebRouteMetaParameter(options: AcWebRouteMetaParameterOptions = {}) {
   return function (target: any, propertyKey: string | symbol, parameterIndex?: number) {
     // Store parameters metadata per method
     const metadataKey = 'ac:web:route:meta:parameters';

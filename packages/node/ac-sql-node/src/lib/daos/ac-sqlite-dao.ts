@@ -479,7 +479,7 @@ export class AcSqliteDao extends AcBaseSqlDao {
           const sql = `UPDATE ${tableName} SET ${setValues} WHERE ${condition}`;
           const values = [...Object.values(row), ...Object.values(conditionParameters)];
           const updateResult = await db.run(sql, values);
-          result.affectedRowsCount = (result.affectedRowsCount ?? 0) + updateResult.changes;
+          result.affectedRowsCount = (result.affectedRowsCount ?? 0) + (updateResult.changes ?? 0);
         }
       }
       await db.exec("COMMIT");

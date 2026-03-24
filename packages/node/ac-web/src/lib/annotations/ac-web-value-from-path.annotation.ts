@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebValueFromPath(key: string) {
+export function AcWebValueFromPath(key: string) {
   return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
     const metadataKey = 'ac:web:value-from-path';
 

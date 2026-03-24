@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebValueFromForm(key: string) {
+export function AcWebValueFromForm(key: string) {
   return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
     const metadataKey = 'ac:web:value-from-form';
 

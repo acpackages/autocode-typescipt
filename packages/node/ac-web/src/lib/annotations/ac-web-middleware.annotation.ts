@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebMiddleware(middlewareClass: string) {
+export function AcWebMiddleware(middlewareClass: string) {
   return function (target: any, propertyKey?: string | symbol, descriptor?: PropertyDescriptor) {
     const metadataKey = 'ac:web:middleware';
 

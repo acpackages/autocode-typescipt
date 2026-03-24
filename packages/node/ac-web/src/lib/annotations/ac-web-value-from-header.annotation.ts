@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebValueFromHeader(key: string) {
+export function AcWebValueFromHeader(key: string) {
   return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
     const metadataKey = 'ac:web:value-from-header';
 

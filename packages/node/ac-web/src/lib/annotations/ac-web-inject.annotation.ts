@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebInject() {
+export  function AcWebInject() {
   return function (target: any, propertyKey: string | symbol, parameterIndex?: number) {
     const metadataKey = 'ac:web:inject';
 

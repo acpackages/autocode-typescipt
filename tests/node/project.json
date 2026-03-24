@@ -1,63 +1,27 @@
 {
   "name": "test-node",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "tests/node/src",
   "projectType": "application",
-  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
       "options": {
-        "platform": "node",
         "outputPath": "dist/tests/node",
-        "format": ["esm"],
-        "bundle": true,
         "main": "tests/node/src/main.ts",
-        "tsConfig": "tests/node/tsconfig.app.json",
-        "assets": ["tests/node/src/assets"],
-        "generatePackageJson": true,
-        "esbuildOptions": {
-          "sourcemap": true,
-          "outExtension": {
-            ".cjs": ".cjs"
-          }
-        }
-      },
-      "configurations": {
-        "development": {},
-        "production": {
-          "esbuildOptions": {
-            "sourcemap": false,
-            "outExtension": {
-              ".cjs": ".cjs"
-            }
-          }
-        }
+        "tsConfig": "tests/node/tsconfig.app.json"
       }
     },
+
     "serve": {
-      "continuous": true,
       "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
         "buildTarget": "test-node:build",
-        "runBuildTargetDependencies": false
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "test-node:build:development"
-        },
-        "production": {
-          "buildTarget": "test-node:build:production"
+        "buildTargetOptions": {
+          "outputFileName": "src/main.js"
         }
-      }
-    },
-    "test": {
-      "options": {
-        "passWithNoTests": true
       }
     }
   }

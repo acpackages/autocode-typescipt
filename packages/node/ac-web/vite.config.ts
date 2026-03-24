@@ -6,7 +6,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig(({ command }) => {
-  const tsconfig = 'tsconfig.lib.json';
+  const tsconfig = command === 'build' ? 'tsconfig.lib.build.json' : 'tsconfig.lib.json';
   return {
     root: __dirname,
     cacheDir: '../../../node_modules/.vite/packages/node/ac-web',
@@ -42,10 +42,9 @@ export default defineConfig(({ command }) => {
         fileName: (format) => {
           if (format === 'es') return 'ac-web.js';
           if (format === 'cjs') return 'ac-web.cjs';
-          if (format === 'umd') return 'ac-web.umd.js';
           return 'ac-web.js';
         },
-        formats: ['es' as const, 'cjs' as const, 'umd' as const],
+        formats: ['es' as const, 'cjs' as const],
       },
       rollupOptions: {
         // External packages that should not be bundled into your library.
@@ -54,9 +53,7 @@ export default defineConfig(({ command }) => {
           "@autocode-ts/ac-extensions",
           "@autocode-ts/ac-data-dictionary",
           "@autocode-ts/ac-sql-node",
-          "@autocode-ts/ac-sql",
-          "@sharp",
-          "@tslib"
+          "@autocode-ts/ac-sql"
         ],
         output: {
           globals: {

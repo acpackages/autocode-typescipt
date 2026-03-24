@@ -3,7 +3,7 @@ interface AcWebAuthorizeOptions {
   roles?: string[];
 }
 
-function AcWebAuthorize(options: AcWebAuthorizeOptions = {}) {
+export function AcWebAuthorize(options: AcWebAuthorizeOptions = {}) {
   return function (target: any, propertyKey?: string, descriptor?: PropertyDescriptor) {
     const metadataKey = 'ac:web:authorize';
 

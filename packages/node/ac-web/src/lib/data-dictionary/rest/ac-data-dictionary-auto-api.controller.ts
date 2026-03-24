@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcDataDictionary, AcDDTable } from '@autocode-ts/ac-data-dictionary';
 import { AcLogger, AcEnumLogType, AcResult } from '@autocode-ts/autocode';
 import { AcSqlDbTable } from '@autocode-ts/ac-sql';
@@ -110,7 +111,7 @@ export class AcDataDictionaryAutoApi {
     update?: boolean;
   } = {}): this {
     this.logger.log(`Generating apis for tables in data dictionary ${this.dataDictionaryName}...`);
-    
+
     const tables = AcDataDictionary.getTables({ dataDictionaryName: this.dataDictionaryName });
     for (const tableName of Object.keys(tables)) {
       const acDDTable = tables[tableName];

@@ -15,7 +15,7 @@ export default defineConfig(({ command }) => {
       nxCopyAssetsPlugin(['*.md']),
       dts({
         entryRoot: 'src',
-        tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
+        tsconfigPath: path.join(__dirname, tsconfig),
       }),
     ],
     // Uncomment this if you are using workers.
@@ -38,10 +38,9 @@ export default defineConfig(({ command }) => {
         fileName: (format) => {
           if (format === 'es') return 'ac-sql-node.js';
           if (format === 'cjs') return 'ac-sql-node.cjs';
-          if (format === 'umd') return 'ac-sql-node.umd.js';
           return 'ac-sql-node.js';
         },
-        formats: ['es' as const, 'cjs' as const, 'umd' as const],
+        formats: ['es' as const, 'cjs' as const],
       },
       rollupOptions: {
         // External packages that should not be bundled into your library.
@@ -50,6 +49,7 @@ export default defineConfig(({ command }) => {
           "@autocode-ts/ac-extensions",
           "@autocode-ts/ac-data-dictionary",
           "@autocode-ts/ac-sql",
+          "fs",
           "mysql2",
           "sqlite",
           "sqlite3"

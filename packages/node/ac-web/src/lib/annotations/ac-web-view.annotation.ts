@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebView() {
+export function AcWebView() {
   return function (target: any, propertyKey?: string | symbol, descriptor?: PropertyDescriptor) {
     if (propertyKey) {
       // Method decorator

@@ -4,7 +4,7 @@ interface AcWebRouteOptions {
   method?: string;
 }
 
-function AcWebRoute(path: string, options: { method?: string } = {}) {
+export function AcWebRoute(path: string, options: { method?: string } = {}) {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const metadataKey = 'ac:web:route';
     const routeMeta = {

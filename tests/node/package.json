@@ -8,5 +8,5 @@
     "axios": "^1.6.0"
   },
   "main": "./main.js",
-  "type": "module"
+  "type": "commonjs"
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AcJsonUtils } from "@autocode-ts/autocode";
 import { AcWebRequest } from "./ac-web-request.model";

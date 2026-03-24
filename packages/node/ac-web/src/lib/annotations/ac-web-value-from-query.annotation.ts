@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebValueFromQuery(key: string) {
+export function AcWebValueFromQuery(key: string) {
   return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
     const metadataKey = 'ac:web:value-from-query';
 

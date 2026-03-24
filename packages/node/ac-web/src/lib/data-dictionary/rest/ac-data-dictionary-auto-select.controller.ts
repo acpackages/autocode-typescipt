@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AcDataDictionary, AcDDTable, AcDDSelectStatement, AcEnumDDRowOperation } from '@autocode-ts/ac-data-dictionary';
 import { AcSqlDbTable } from '@autocode-ts/ac-sql';

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-function AcWebValueFromCookie(key: string) {
+export function AcWebValueFromCookie(key: string) {
   return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
     const metadataKey = 'ac:web:value-from-cookie';
 

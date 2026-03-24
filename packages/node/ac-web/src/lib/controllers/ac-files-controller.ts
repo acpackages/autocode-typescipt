@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import * as fs from 'fs';
 import * as path from 'path';
-import sharp from 'sharp';
 import { AcLogger, AcResult, AcJsonUtils, AcBindJsonProperty } from "@autocode-ts/autocode";
 import { AcWebConfig } from "../models/ac-web-config.model";
 import { AcWebFile } from "../models/ac-web-file.model";
@@ -75,7 +74,9 @@ export class AcFilesController {
   async generateAllSizeImages({ filePath, fileDetails }: { filePath: string; fileDetails: AcSavedFileDetails }): Promise<AcResult> {
     const result = new AcResult();
     try {
-      const metadata = await sharp(filePath).metadata();
+      // const metadata = await sharp(filePath).metadata();
+
+      const metadata:any = {};
       const sourceWidth = metadata.width || 0;
       const sourceHeight = metadata.height || 0;
       fileDetails.height = sourceHeight;
@@ -137,7 +138,8 @@ export class AcFilesController {
   async resizeImage({ originalPath, resizedPath, size, preserveRatio }: { originalPath: string; resizedPath: string; size: number; preserveRatio: boolean }): Promise<AcResult> {
     const result = new AcResult();
     try {
-      const metadata = await sharp(originalPath).metadata();
+      // const metadata = await sharp(originalPath).metadata();
+      const metadata:any = {};
       const originalWidth = metadata.width || 0;
       const originalHeight = metadata.height || 0;
       const ext = path.extname(originalPath).replace('.', '').toLowerCase();
@@ -149,7 +151,7 @@ export class AcFilesController {
       } else {
         newHeight = Math.round(newHeight / sourceAspectRatio);
       }
-      await sharp(originalPath).resize(newWidth, newHeight).toFile(resizedPath);
+      // await sharp(originalPath).resize(newWidth, newHeight).toFile(resizedPath);
       const stats = fs.statSync(resizedPath);
       const savedFileDetails = new AcSavedFileDetails({
         height: newHeight,
