@@ -1,11 +1,30 @@
-type EffectFn = () => void;
+import { AC_RUNTIME_CONFIG } from '../consts/ac-runtime-config.const';
+import { getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
 
-let activeEffect: EffectFn | null = null;
-const effectStack: EffectFn[] = [];
-const targetMap = new WeakMap<object, Map<string | symbol, Set<EffectFn>>>();
+export type EffectFn = () => (Promise<void> | void | (() => void));
 
+interface Subscriber {
+  notify(): void;
+  dependencies: Set<Set<Subscriber>>;
+}
+
+let activeSubscriber: Subscriber | null = null;
+const subscriberStack: Subscriber[] = [];
+
+/**
+ * Dependency tracking maps:
+ * targetMap: object -> property key -> Set of effects
+ * proxyMap: object -> its proxy (to reuse proxies)
+ */
+const targetMap = new WeakMap<object, Map<string | symbol, Set<Subscriber>>>();
+const proxyMap = new WeakMap<object, any>();
+const IS_REACTIVE = '__is_reactive__';
+
+/**
+ * Tracks access to a property.
+ */
 export function acTrack(target: object, key: string | symbol) {
-  if (!activeEffect) return;
+  if (!activeSubscriber) return;
 
   let depsMap = targetMap.get(target);
   if (!depsMap) {
@@ -15,309 +34,334 @@ export function acTrack(target: object, key: string | symbol) {
   if (!dep) {
     depsMap.set(key, (dep = new Set()));
   }
-  dep.add(activeEffect);
+  dep.add(activeSubscriber);
+  activeSubscriber.dependencies.add(dep);
 }
 
+/**
+ * Triggers all effects dependent on a property.
+ */
 export function acTrigger(target: object, key: string | symbol) {
   const depsMap = targetMap.get(target);
   if (!depsMap) return;
   const dep = depsMap.get(key);
   if (dep) {
-    const effectsToRun = new Set(dep);
-    effectsToRun.forEach((effect) => {
-      effect();
+    // Run a copy of the set to avoid infinite loops during mutation
+    const subscribersToRun = new Set(dep);
+    subscribersToRun.forEach((subscriber) => {
+      subscriber.notify();
     });
   }
 }
 
-const IS_REACTIVE = Symbol.for('is_reactive');
-const IS_REACTIVE_ARRAY = Symbol('is_reactive_array');
+/**
+ * Microtask-based effect batch scheduler.
+ * Multiple triggers within the same synchronous frame are deduplicated —
+ * each effect runs at most once per microtask flush.
+ */
+const pendingEffects = new Set<Effect>();
+let isFlushing = false;
+let isFlushScheduled = false;
 
-// Mutating array methods that bypass the property setter
-const MUTATING_METHODS = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse', 'fill', 'copyWithin'] as const;
+function scheduleEffect(effect: Effect) {
+  pendingEffects.add(effect);
+  if (!isFlushScheduled) {
+    isFlushScheduled = true;
+    queueMicrotask(flushEffects);
+  }
+}
+
+function flushEffects() {
+  if (isFlushing) return;
+  isFlushing = true;
+  try {
+    // Iterate a snapshot; effects added during flush are picked up in a follow-up
+    const effects = Array.from(pendingEffects);
+    pendingEffects.clear();
+    isFlushScheduled = false;
+    for (const effect of effects) {
+      effect.execute();
+    }
+    // If new effects were scheduled during this flush, schedule another
+    if (pendingEffects.size > 0 && !isFlushScheduled) {
+      isFlushScheduled = true;
+      queueMicrotask(flushEffects);
+    }
+  } finally {
+    isFlushing = false;
+  }
+}
 
 /**
- * Makes an array's mutations reactive without using Proxy.
- * Strategy (Vue 2 style):
- *  1. Patch each mutating method directly on the array instance so it
- *     calls acTrigger(owner, key) after running the real method.
- *  2. Expose a helper `$set(index, value)` for index assignments so
- *     callers can do `this.rows.$set(i, record)` instead of `this.rows[i] = record`.
- *
- * NOTE: Plain index assignment `arr[i] = v` still won't auto-trigger
- * because there's no Proxy. Use `arr.$set(i, v)` for that case.
+ * Effect class that manages subscription and re-execution.
+ * Uses microtask batching to deduplicate multiple triggers per tick.
  */
-export function acReactiveArray<T extends any[]>(arr: T, owner: object, key: string | symbol): T {
-  if ((arr as any)[IS_REACTIVE_ARRAY]) return arr; // already patched
+class Effect implements Subscriber {
+  private cleanupFn?: () => void;
+  dependencies = new Set<Set<Subscriber>>();
 
-  Object.defineProperty(arr, IS_REACTIVE_ARRAY, {
-    value: true,
-    writable: false,
-    enumerable: false,
-    configurable: false,
-  });
-
-  // Patch mutating methods on the instance (not on Array.prototype)
-  for (const method of MUTATING_METHODS) {
-    const original = Array.prototype[method] as Function;
-    Object.defineProperty(arr, method, {
-      value: function (...args: any[]) {
-        const result = original.apply(this, args);
-        acTrigger(this, IS_REACTIVE_ARRAY);
-        acTrigger(owner, key);
-        return result;
-      },
-      writable: true,
-      enumerable: false,
-      configurable: true,
-    });
+  constructor(private fn: EffectFn) {
+    // Initial run is synchronous (not batched) to ensure DOM is ready on first render
+    this.run();
   }
 
-  // $set(index, value) — reactive index assignment without Proxy
-  Object.defineProperty(arr, '$set', {
-    value: function (index: number, value: any) {
-      (this as any)[index] = value;
-      acTrigger(this, IS_REACTIVE_ARRAY);
-      acTrigger(owner, key);
+  notify() {
+    // Prevent recursive triggers from within the same effect
+    if (subscriberStack.includes(this)) {
+      return;
+    }
+    // Queue into the microtask batch instead of running immediately
+    scheduleEffect(this);
+  }
+
+  /** Called by the batch scheduler */
+  execute() {
+    this.run();
+  }
+
+  private run() {
+    this.cleanup();
+
+    try {
+      subscriberStack.push(this);
+      activeSubscriber = this;
+      const result = this.fn();
+      if (typeof result === 'function') {
+        this.cleanupFn = result;
+      }
+    } finally {
+      subscriberStack.pop();
+      activeSubscriber = subscriberStack[subscriberStack.length - 1] || null;
+    }
+  }
+
+  private cleanup() {
+    if (this.cleanupFn) {
+      try {
+        this.cleanupFn();
+      } catch (e) {
+        AC_RUNTIME_CONFIG.logError('Error during effect cleanup:', e);
+      }
+      this.cleanupFn = undefined;
+    }
+
+    this.dependencies.forEach(dep => dep.delete(this));
+    this.dependencies.clear();
+  }
+}
+
+/**
+ * Creates a reactive effect.
+ */
+export function acEffect(fn: EffectFn) {
+  return new Effect(fn);
+}
+
+/**
+ * Sets reactive descriptors (getter/setter) on a target object's existing properties.
+ * This bridges the gap for updates made via the raw instance (e.g. from arrow functions).
+ */
+function acSetReactiveDescriptors(target: any) {
+  if (!target || typeof target !== 'object' || Array.isArray(target) || target[IS_REACTIVE]) return;
+
+  const keys = Object.getOwnPropertyNames(target);
+  for (const key of keys) {
+    if (key.startsWith('__')) continue;
+
+    const desc = Object.getOwnPropertyDescriptor(target, key);
+    if (desc && desc.configurable && !desc.get && !desc.set && typeof desc.value !== 'function') {
+      let val = desc.value;
+      Object.defineProperty(target, key, {
+        get() { return val; },
+        set(newVal) {
+          if (val !== newVal || (newVal && typeof newVal === 'object')) {
+            val = newVal;
+            acTrigger(target, key);
+          }
+        },
+        enumerable: desc.enumerable,
+        configurable: true
+      });
+    }
+  }
+}
+
+/**
+ * Creates a reactive proxy for an object or array.
+ * Supports deep reactivity via lazy wrapping on access.
+ * Maintains rootTarget and rootKey for acOnPropertyChange reporting.
+ */
+export function acProxyReactive<T extends object>(target: T, rootTarget?: object, rootKey?: string, force = false): T {
+  if (target === null || typeof target !== 'object') return target;
+  if ((target as any)[IS_REACTIVE]) return target;
+
+  const existingProxy = proxyMap.get(target);
+  if (existingProxy) return existingProxy;
+
+  // Only make plain objects, arrays, or forced targets (components) reactive
+  if (!force && !isPlainObject(target) && !Array.isArray(target)) {
+    return target;
+  }
+
+  // Set reactive descriptors on the raw object to bridge raw instance updates (arrow functions)
+  acSetReactiveDescriptors(target);
+
+  const resolvedRoot = rootTarget || target;
+
+  const proxy = new Proxy(target, {
+    get(target, key, receiver) {
+      if (key === IS_REACTIVE) return true;
+
+      const res = Reflect.get(target, key, receiver);
+
+      // Skip tracking for symbols/private properties
+      if (typeof key !== 'symbol' && !String(key).startsWith('__')) {
+        acTrack(target, key);
+      }
+
+      // Deep reactivity: wrap nested objects/arrays lazily on request
+      if (isPlainObject(res) || Array.isArray(res)) {
+        const fullPath = rootKey ? `${rootKey}.${String(key)}` : String(key);
+        return acProxyReactive(res as object, resolvedRoot, fullPath);
+      }
+
+      return res;
     },
-    writable: true,
-    enumerable: false,
-    configurable: true,
-  });
 
-  return arr;
-}
+    set(target, key, value, receiver) {
+      const isArray = Array.isArray(target);
+      const oldLength = isArray ? target.length : 0;
+      const oldValue = (target as any)[key];
 
-function acReactiveObject(
-  obj: any,
-  parentTrackTarget?: any,
-  parentKey?: PropertyKey | any
-) {
-  if (!isPlainObject(obj)) return obj;
+      // Trigger if value has changed OR if it's an object/array (potential internal mutation)
+      if (value !== oldValue || (value && typeof value === 'object')) {
+        const res = Reflect.set(target, key, value, receiver);
 
-  if (obj.__isReactive) return obj;
-  Object.defineProperty(obj, '__isReactive', {
-    value: true,
-    enumerable: false,
-    configurable: false
-  });
+        if (res && typeof key !== 'symbol' && !String(key).startsWith('__')) {
+          acTrigger(target, key);
 
-  for (const key of Object.keys(obj)) {
-    let value = obj[key];
-
-    // Wrap nested values
-    if (Array.isArray(value)) {
-      value = acReactiveArray(value, obj, key);
-    } else if (isPlainObject(value)) {
-      value = acReactiveObject(value, obj, key);
-    }
-
-    Object.defineProperty(obj, key, {
-      get() {
-        acTrack(obj, key);
-        if (Array.isArray(value)) {
-          acTrack(value, IS_REACTIVE_ARRAY);
-        }
-        return value;
-      },
-      set(newVal: any) {
-        if (newVal !== value) {
-
-          const oldVal = value;
-
-          if (Array.isArray(newVal)) {
-            value = acReactiveArray(newVal, obj, key);
-          } else if (isPlainObject(newVal)) {
-            value = acReactiveObject(newVal, obj, key);
-          } else {
-            value = newVal;
+          // Trigger acOnPropertyChange hook on root
+          if (
+            resolvedRoot &&
+            typeof (resolvedRoot as any).acOnPropertyChange === 'function' &&
+            typeof key === 'string' &&
+            !(resolvedRoot as any).__is_executing_on_changes__
+          ) {
+            (resolvedRoot as any).__is_executing_on_changes__ = true;
+            try {
+              (resolvedRoot as any).acOnPropertyChange({
+                key: rootKey ? `${rootKey}` : key,
+                oldValue,
+                newValue: value,
+                property: rootKey ? key : undefined,
+              });
+            } finally {
+              (resolvedRoot as any).__is_executing_on_changes__ = false;
+            }
           }
 
-          acTrigger(obj, key);
+          if (isArray && target.length !== oldLength && key !== 'length') {
+            acTrigger(target, 'length');
+          }
+        }
+        return res;
+      }
+      return true;
+    },
 
-          if (typeof parentTrackTarget.acOnPropertyChanges == 'function' && parentTrackTarget['__ac_initialized__']) {
-            parentTrackTarget.acOnPropertyChanges({
-              key: parentKey,
-              property: key,
-              oldValue: oldVal,
-              newValue: newVal
+    deleteProperty(target, key) {
+      const isArray = Array.isArray(target);
+      const oldLength = isArray ? target.length : 0;
+      const hasKey = Object.prototype.hasOwnProperty.call(target, key);
+      const oldValue = (target as any)[key];
+      const res = Reflect.deleteProperty(target, key);
+
+      if (hasKey && res) {
+        acTrigger(target, key);
+
+        if (
+          resolvedRoot &&
+          (resolvedRoot as any).__ac_initialized__ &&
+          typeof (resolvedRoot as any).acOnPropertyChange === 'function' &&
+          typeof key === 'string' &&
+          !(resolvedRoot as any).__is_executing_on_changes__
+        ) {
+          (resolvedRoot as any).__is_executing_on_changes__ = true;
+          try {
+            (resolvedRoot as any).acOnPropertyChange({
+              key: rootKey ? `${rootKey}` : key,
+              oldValue,
+              newValue: undefined,
+              property: rootKey ? key : undefined,
             });
-          }
-
-          // Optional: notify parent property
-          if (parentTrackTarget && parentKey) {
-            acTrigger(parentTrackTarget, parentKey);
+          } finally {
+            (resolvedRoot as any).__is_executing_on_changes__ = false;
           }
         }
-      },
-      enumerable: true,
-      configurable: true
-    });
-  }
 
-  return obj;
-}
-
-function _makePropertiesReactive(target: object | any, trackTarget: object) {
-  const ownKeys = Object.getOwnPropertyNames(target);
-
-  for (const key of ownKeys) {
-    if (key === 'constructor') continue;
-
-    const descriptor = Object.getOwnPropertyDescriptor(target, key);
-    if (!descriptor) continue;
-
-    // Skip if already a getter/setter, not configurable, or a function
-    if (descriptor.get || descriptor.set) continue;
-    if (!descriptor.configurable) continue;
-    if (typeof descriptor.value === 'function') continue;
-
-    // Patch array instances or plain objects immediately
-    let value = descriptor.value;
-    if (Array.isArray(value)) {
-      value = acReactiveArray(value, trackTarget, key);
-    } else if (isPlainObject(value)) {
-      value = acReactiveObject(value, trackTarget, key);
+        if (isArray && target.length !== oldLength) {
+          acTrigger(target, 'length');
+        }
+      }
+      return res;
     }
+  });
 
-    Object.defineProperty(target, key, {
-      get() {
-        acTrack(trackTarget, key);
-        if (Array.isArray(value)) {
-          acTrack(value, IS_REACTIVE_ARRAY);
-        }
-        return value;
-      },
-      set(newVal: any) {
-        if (newVal !== value) {
-
-          if (Array.isArray(newVal)) {
-            value = acReactiveArray(newVal, trackTarget, key);
-          } else if (isPlainObject(newVal)) {
-            value = acReactiveObject(newVal, trackTarget, key);
-          } else {
-            value = newVal;
-          }
-          acTrigger(trackTarget, key);
-          if (typeof target.acOnPropertyChanges == 'function' && target['__ac_initialized__']) {
-            target.acOnPropertyChanges({ key, oldValue: value, newValue: newVal });
-          }
-        }
-      },
-      enumerable: descriptor.enumerable ?? true,
-      configurable: true,
-    });
-  }
-}
-
-function isPlainObject(obj: any): boolean {
-  if (obj === null || typeof obj !== 'object') return false;
-  return Object.getPrototypeOf(obj) === Object.prototype;
+  proxyMap.set(target, proxy);
+  return proxy as T;
 }
 
 /**
- * Makes an object reactive by converting all own data properties into
- * getter/setter pairs using Object.defineProperty.
- * This is the Vue 2 / Angular approach — no Proxy needed.
- * Works with static class properties, built-in types, and avoids all Proxy pitfalls.
+ * Makes a component instance or object reactive.
+ * Binds methods to ensure 'this' always points to the proxy.
  */
-import { getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
-
 export function acMakeReactive<T extends object>(target: T): T {
   if (target === null || typeof target !== 'object') return target;
   if ((target as any)[IS_REACTIVE]) return target;
 
-  // Mark as reactive to prevent double-processing
-  Object.defineProperty(target, IS_REACTIVE, {
-    value: true,
-    writable: false,
-    enumerable: false,
-    configurable: false,
-  });
-
-  _makePropertiesReactive(target, target);
-
-  // Also make properties from metadata reactive (e.g. uninitialized @AcInput)
   const constructor = target.constructor as any;
-  if (constructor) {
-    const metadata = [
-      getAcInputMetadata(constructor),
-      getAcOutputMetadata(constructor),
-      getAcViewChildMetadata(constructor)
-    ];
-    let added = false;
-    for (const meta of metadata) {
-      for (const key of Object.keys(meta)) {
+  const isPlainOrArray = isPlainObject(target) || Array.isArray(target);
+  const isComponent = !isPlainOrArray && constructor && constructor !== Object;
+
+  // Components are forced to be reactive even if they are class instances
+  const proxy = acProxyReactive(target, undefined, undefined, true);
+
+  if (isComponent) {
+    // Re-initialize metadata props if missing (e.g. uninitialized @AcInput)
+    const inputs = getAcInputMetadata(constructor);
+    const outputs = getAcOutputMetadata(constructor);
+    const viewChildren = getAcViewChildMetadata(constructor);
+
+    [inputs, outputs, viewChildren].forEach(meta => {
+      Object.keys(meta).forEach(key => {
         if (!(key in target)) {
           (target as any)[key] = undefined;
-          added = true;
         }
-      }
-    }
-    if (added) {
-      _makePropertiesReactive(target, target);
+      });
+    });
+
+    // Auto-bind all proto methods to the Proxy
+    let proto = Object.getPrototypeOf(target);
+    while (proto && proto !== Object.prototype) {
+      Object.getOwnPropertyNames(proto).forEach(name => {
+        if (name === 'constructor') return;
+        const desc = Object.getOwnPropertyDescriptor(proto, name);
+        if (desc && typeof desc.value === 'function') {
+          if (!Object.prototype.hasOwnProperty.call(target, name)) {
+            (target as any)[name] = desc.value.bind(proxy);
+          }
+        }
+      });
+      proto = Object.getPrototypeOf(proto);
     }
   }
-
-  // Auto-bind all methods to the instance to ensure correct 'this' context
-  // when called from template engine scopes or event listeners.
-  let proto = Object.getPrototypeOf(target);
-  while (proto && proto !== Object.prototype) {
-    const propertyNames = Object.getOwnPropertyNames(proto);
-    for (const name of propertyNames) {
-      if (name === 'constructor') continue;
-      const descriptor = Object.getOwnPropertyDescriptor(proto, name);
-      if ((descriptor && typeof descriptor.value === 'function')) {
-        // Only bind if not already bound or overridden on instance
-        if (!Object.prototype.hasOwnProperty.call(target, name)) {
-          (target as any)[name] = descriptor.value.bind(target);
-        }
-      }
-    }
-    proto = Object.getPrototypeOf(proto);
-  }
-
-  return target;
+  return proxy;
 }
 
 /**
- * Makes static properties on a class constructor reactive.
- * Call this after defining your class to enable reactive static properties.
- * Example: acMakeStaticReactive(App);
+ * Helper to check for plain objects.
  */
-export function acMakeStaticReactive(constructor: any): void {
-  if (!constructor || typeof constructor !== 'function') return;
-  if (constructor[IS_REACTIVE]) return;
-
-  Object.defineProperty(constructor, IS_REACTIVE, {
-    value: true,
-    writable: false,
-    enumerable: false,
-    configurable: false,
-  });
-
-  _makePropertiesReactive(constructor, constructor);
-}
-
-/**
- * @deprecated Use acMakeReactive instead. Kept for backward compatibility.
- */
-export function acReactive<T extends object>(target: T): T {
-  return acMakeReactive(target);
-}
-
-export function acEffect(fn: EffectFn) {
-  const effectWrapper = () => {
-    if (!effectStack.includes(effectWrapper)) {
-      try {
-        effectStack.push(effectWrapper);
-        activeEffect = effectWrapper;
-        fn();
-      } finally {
-        effectStack.pop();
-        activeEffect = effectStack[effectStack.length - 1] || null;
-      }
-    }
-  };
-  effectWrapper();
+function isPlainObject(obj: any): boolean {
+  if (obj === null || typeof obj !== 'object') return false;
+  return Object.getPrototypeOf(obj) === Object.prototype;
 }

@@ -1,5 +1,5 @@
 import { acEffect, acMakeReactive } from './reactive';
-import { acPipeRegistry } from '@autocode-ts/ac-pipes';
+import { acPipeRegistry, evaluateAcPipeExpression } from '@autocode-ts/ac-pipes';
 import { acElementRegistry } from './element-registry';
 import { getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
 import { AcElementManager, acInitRuntimeElementInstance, acSetEngineElementEngineUUID, acSetEngineElementStyles } from './element.base';
@@ -15,7 +15,7 @@ export class AcTemplateEngine {
         this.parent = parent;
     }
 
-    public compile(element: HTMLElement) {
+    public compile(element: HTMLElement | DocumentFragment) {
         this.findAndRegisterTemplates(element);
         this.traverse(element);
     }
@@ -53,12 +53,35 @@ export class AcTemplateEngine {
                 let newText = originalText;
                 let match;
                 regex.lastIndex = 0;
+                const replacements: { placeholder: string, value: any }[] = [];
+
                 while ((match = regex.exec(originalText)) !== null) {
                     const expression = match[1];
                     const value = this.evaluateExpression(expression);
-                    newText = newText.replace(match[0], value !== undefined ? value : '');
+                    replacements.push({ placeholder: match[0], value });
                 }
-                node.textContent = newText;
+
+                if (replacements.length === 0) return;
+
+                // Handle async values if any
+                const hasPromise = replacements.some(r => r.value instanceof Promise);
+                if (hasPromise) {
+                    Promise.all(replacements.map(async r => ({
+                        placeholder: r.placeholder,
+                        value: r.value instanceof Promise ? await r.value : r.value
+                    }))).then(resolvedReplacements => {
+                        let updatedText = originalText;
+                        resolvedReplacements.forEach(r => {
+                            updatedText = updatedText.replace(r.placeholder, r.value !== undefined ? r.value : '');
+                        });
+                        node.textContent = updatedText;
+                    });
+                } else {
+                    replacements.forEach(r => {
+                        newText = newText.replace(r.placeholder, r.value !== undefined ? r.value : '');
+                    });
+                    node.textContent = newText;
+                }
             });
         }
     }
@@ -73,7 +96,7 @@ export class AcTemplateEngine {
 
         const tagName = el.tagName.toLowerCase();
 
-        // 1. Structural Directives (handle first)
+        // 1. Structural Directives
         const acIf = el.getAttribute('ac:if');
         if (acIf !== null) {
             this.handleIfDirective(el, acIf);
@@ -86,7 +109,7 @@ export class AcTemplateEngine {
             return true;
         }
 
-        // 2. Identification of Child Element for ViewChild & Template References
+        // 2. Identification and Ref Tracking
         const attrs = Array.from(el.attributes);
         attrs.forEach(attr => {
             if (attr.name.startsWith('#')) {
@@ -98,7 +121,19 @@ export class AcTemplateEngine {
             }
         });
 
-        // 3. Directive, Model, Style, Class Binding (Run for ALL elements, including custom ones)
+        // 3. Early Tag-Specific Handling
+        if (tagName === 'ac-template') {
+            this.handleTemplateDefinition(el);
+            return true;
+        }
+
+        if (tagName === 'ac-container') {
+            this.handleContainer(el);
+            // Do not return early; let attributes (like outlets) run on this element.
+        }
+
+        // 4. Directive, Model, Style, Class Binding
+        let outletHandled = false;
         for (const attr of attrs) {
             const name = attr.name;
             const value = attr.value;
@@ -109,10 +144,18 @@ export class AcTemplateEngine {
                     const isSelect = el.tagName === 'SELECT';
 
                     acEffect(() => {
-                        const val = this.evaluateExpression(value);
-                        if (isCheckbox) (el as HTMLInputElement).checked = !!val;
-                        else if (isSelect) (el as HTMLSelectElement).value = val !== undefined ? val : '';
-                        else (el as HTMLInputElement).value = val !== undefined ? val : '';
+                        const valOrPromise = this.evaluateExpression(value);
+                        const updateModel = (val: any) => {
+                            if (isCheckbox) (el as HTMLInputElement).checked = !!val;
+                            else if (isSelect) (el as HTMLSelectElement).value = val !== undefined ? val : '';
+                            else (el as HTMLInputElement).value = val !== undefined ? val : '';
+                        };
+
+                        if (valOrPromise instanceof Promise) {
+                            valOrPromise.then(updateModel);
+                        } else {
+                            updateModel(valOrPromise);
+                        }
                     });
 
                     const listenerFun = () => {
@@ -120,12 +163,26 @@ export class AcTemplateEngine {
                         const val = isCheckbox ? (target as HTMLInputElement).checked : target.value;
                         this.setExpressionValue(value, val);
                     };
-                    el.addEventListener('input',listenerFun );
-                    el.addEventListener('change',listenerFun );
+                    el.addEventListener('input', listenerFun);
+                    el.addEventListener('change', listenerFun);
                     el.removeAttribute(name);
                 }
                 else if (name === 'ac:template:outlet' || name === 'ac:template-outlet' || name === '[acTemplateOutlet]' || name === '*ngTemplateOutlet' || name === '[ngTemplateOutlet]') {
+                    let currentActiveNodes: Node[] = [];
                     acEffect(() => {
+                        // Cleanup old nodes
+                        if (currentActiveNodes.length > 0) {
+                            currentActiveNodes.forEach(node => {
+                                if (node instanceof HTMLElement) {
+                                    this.destroyInstances(node);
+                                }
+                                if (node.parentNode) {
+                                    node.parentNode.removeChild(node);
+                                }
+                            });
+                            currentActiveNodes = [];
+                        }
+
                         let templateExpr = value;
                         let contextExpr: string | null = null;
                         if (value.includes(';')) {
@@ -134,68 +191,102 @@ export class AcTemplateEngine {
                             const contextPart = parts.find(p => p.startsWith('context:'));
                             if (contextPart) contextExpr = contextPart.replace('context:', '').trim();
                         }
-                        const template = this.evaluateExpression(templateExpr);
-                        if (template && (template instanceof HTMLTemplateElement || (template instanceof HTMLElement && template.tagName.toLowerCase() === 'ac-template'))) {
-                            el.innerHTML = '';
 
-                            const fragment = document.createDocumentFragment();
-                            const nodesToClone = (template instanceof HTMLTemplateElement) ? template.content.childNodes : template.childNodes;
-                            Array.from(nodesToClone).forEach(child => fragment.appendChild(child.cloneNode(true)));
+                        const renderTemplate = (template: any, extraContext?: any) => {
+                            if (template && (template instanceof HTMLTemplateElement || (template instanceof HTMLElement && template.tagName.toLowerCase() === 'ac-template'))) {
+                                const fragment = document.createDocumentFragment();
+                                const nodesToClone = (template instanceof HTMLTemplateElement) ? template.content.childNodes : template.childNodes;
+                                Array.from(nodesToClone).forEach(child => fragment.appendChild(child.cloneNode(true)));
 
-                            // Lexical Scoping: Use the context where the template was defined
-                            const definitionContext = (template as any)._acContext || this.context;
-                            const definingEngine = (template as any)._acEngine || this;
-                            let renderContext = definitionContext;
+                                const definitionContext = (template as any)._acContext || this.context;
+                                const definingEngine = (template as any)._acEngine || this;
+                                let renderContext = definitionContext;
 
-                            if (contextExpr) {
-                                // Evaluate context expression against the OUTLET's context (current context)
-                                const extraContext = this.evaluateExpression(contextExpr);
-                                // Merge extra context into the definition context
-                                renderContext = Object.create(definitionContext);
-                                Object.assign(renderContext, extraContext);
+                                if (extraContext) {
+                                    renderContext = Object.create(definitionContext);
+                                    for (const [k, v] of Object.entries(extraContext)) {
+                                        Object.defineProperty(renderContext, k, { value: v, writable: true, enumerable: true, configurable: true });
+                                    }
+                                }
+
+                                const engine = new AcTemplateEngine(renderContext, definingEngine);
+                                const nodes = Array.from(fragment.childNodes);
+
+                                const placeholder = (el as any)._acPlaceholder;
+                                if (placeholder && placeholder.parentNode) {
+                                    placeholder.parentNode.insertBefore(fragment, placeholder);
+                                    nodes.forEach(child => engine.traverse(child));
+                                } else {
+                                    el.innerHTML = '';
+                                    el.appendChild(fragment);
+                                    nodes.forEach(child => engine.traverse(child));
+                                }
+                                currentActiveNodes = nodes;
                             }
+                        };
 
-                            const engine = new AcTemplateEngine(renderContext, definingEngine);
+                        const templateOrPromise = this.evaluateExpression(templateExpr);
+                        const contextOrPromise = contextExpr ? this.evaluateExpression(contextExpr) : undefined;
 
-                            // If host is an ac-container, render into its parent before the placeholder
-                            const placeholder = (el as any)._acPlaceholder;
-                            if (placeholder && placeholder.parentNode) {
-                                placeholder.parentNode.insertBefore(fragment, placeholder);
-                                Array.from(fragment.childNodes).forEach(child => engine.traverse(child));
-                            } else {
-                                el.appendChild(fragment);
-                                Array.from(el.childNodes).forEach(child => engine.traverse(child));
-                            }
+                        if (templateOrPromise instanceof Promise || contextOrPromise instanceof Promise) {
+                            Promise.all([
+                                templateOrPromise instanceof Promise ? templateOrPromise : Promise.resolve(templateOrPromise),
+                                contextOrPromise instanceof Promise ? contextOrPromise : Promise.resolve(contextOrPromise)
+                            ]).then(([template, extraContext]) => {
+                                renderTemplate(template, extraContext);
+                            });
+                        } else {
+                            renderTemplate(templateOrPromise, contextOrPromise);
                         }
                     });
                     el.removeAttribute(name);
+                    outletHandled = true;
                 }
                 else if (name.startsWith('ac:bind:')) {
                     const attrToBind = name.replace('ac:bind:', '');
                     acEffect(() => {
-                        const val = this.evaluateExpression(value);
-                        if (val === null || val === undefined) {
-                            el.removeAttribute(attrToBind);
-                            if (attrToBind in el) {
-                                (el as any)[attrToBind] = (typeof (el as any)[attrToBind] === 'boolean') ? false : '';
+                        const valOrPromise = this.evaluateExpression(value);
+                        const updateBind = (val: any) => {
+                            if (val === null || val === undefined) {
+                                el.removeAttribute(attrToBind);
+                                if (attrToBind in el) {
+                                    (el as any)[attrToBind] = (typeof (el as any)[attrToBind] === 'boolean') ? false : '';
+                                }
+                            } else {
+                                const stringValue = String(val);
+                                const escapedValue = stringValue.includes('"') ? stringValue.replace(/"/g, '\"') : stringValue;
+                                 if(attrToBind == "disabled" || attrToBind == "readonly"){
+                                    if(stringValue == "false"){
+                                        (el as any)[attrToBind] = false;
+                                        el.removeAttribute(attrToBind);
+                                    }
+                                    else{
+                                        (el as any)[attrToBind] = true;
+                                        el.setAttribute(attrToBind,"true");
+                                    }
+                                }
+                                else{
+                                    if (attrToBind in el) {
+                                        (el as any)[attrToBind] = val;
+                                    }
+                                    if (attrToBind == 'innerhtml') {
+                                        el.innerHTML = stringValue;
+                                    }
+                                    else if (attrToBind == 'innertext') {
+                                        el.innerText = stringValue;
+                                    }
+                                    else {
+                                        el.setAttribute(attrToBind, escapedValue);
+                                    }
+                                }
+                                
                             }
-                        } else {
-                            const stringValue = String(val);
-                            // Escape double quotes in the attribute value string for safe HTML rendering
-                            const escapedValue = stringValue.includes('"') ? stringValue.replace(/"/g, '\"') : stringValue;
+                        };
 
-                            if (attrToBind in el) {
-                                (el as any)[attrToBind] = val;
-                            }
-                            if (attrToBind == 'innerhtml') {
-                                el.innerHTML = stringValue;
-                            }
-                            else if (attrToBind == 'innertext') {
-                                el.innerText = stringValue;
-                            }
-                            else {
-                                el.setAttribute(attrToBind, escapedValue);
-                            }
+                        if (valOrPromise instanceof Promise) {
+                            valOrPromise.then(updateBind);
+                        } else {
+                            updateBind(valOrPromise);
                         }
                     });
                     el.removeAttribute(name);
@@ -203,12 +294,20 @@ export class AcTemplateEngine {
                 else if (name.startsWith('ac:class:')) {
                     const className = name.split(':')[2];
                     acEffect(() => {
-                        const val = this.evaluateExpression(value);
-                        if (val) {
-                            el.classList.add(className);
-                        }
-                        else {
-                            el.classList.remove(className);
+                        const valOrPromise = this.evaluateExpression(value);
+                        const updateClass = (val: any) => {
+                            if (val) {
+                                el.classList.add(className);
+                            }
+                            else {
+                                el.classList.remove(className);
+                            }
+                        };
+
+                        if (valOrPromise instanceof Promise) {
+                            valOrPromise.then(updateClass);
+                        } else {
+                            updateClass(valOrPromise);
                         }
                     });
                     el.removeAttribute(name);
@@ -218,30 +317,17 @@ export class AcTemplateEngine {
             }
         }
 
-        // 4. Custom Elements
+        // 5. Custom Elements
         const customElement = this.detectAndInstantiateCustomElement(el);
         if (customElement) {
             return true;
         }
 
-        // 5. Component Ref and Attribute Mapping (Standard Elements)
-        if (tagName === 'ac-template') {
-            this.handleTemplateDefinition(el);
-            return true;
-        }
-
-        if (tagName === 'ac-container') {
-            this.handleContainer(el);
-            return true;
-        }
-
-        // Selective Reference Assignment (only if ViewChild exists)
+        // 6. ViewChild and Attribute Mapping
         this.applyReferenceToInstance(this.context, el, el);
-
-        // Universal Attribute to Property Mapping
         this.applyAttributesToInstance(el, el);
 
-        // 6. Event Binding (Standard Elements)
+        // 7. Event Binding
         for (const attr of Array.from(el.attributes)) {
             const name = attr.name;
             const value = attr.value;
@@ -250,7 +336,16 @@ export class AcTemplateEngine {
                 if (name.startsWith('(') && name.endsWith(')')) {
                     const eventName = name.slice(1, -1);
                     el.addEventListener(eventName, (event) => {
-                        this.evaluateExpression(value, { '$event': event });
+                        try {
+                            const resOrPromise = this.evaluateExpression(value, { '$event': event });
+                            if (resOrPromise instanceof Promise) {
+                                resOrPromise.catch(e => {
+                                    AC_RUNTIME_CONFIG.logError(`Error in async event handler (${eventName}) on ${el.tagName}:`, e);
+                                });
+                            }
+                        } catch (e) {
+                            AC_RUNTIME_CONFIG.logError(`Error in event handler (${eventName}) on ${el.tagName}:`, e);
+                        }
                     });
                     el.removeAttribute(name);
                 }
@@ -259,7 +354,10 @@ export class AcTemplateEngine {
             }
         }
 
-        return false;
+        // If it was a container or an outlet was handled, we prevent the default 
+        // recursive traversal of the element's children because we've already 
+        // handled them (either via handleContainer or by rendering the outlet).
+        return (tagName === 'ac-container' || outletHandled);
     }
 
     private applyAttributesToInstance(instance: any, el: HTMLElement, registration?: any) {
@@ -310,12 +408,39 @@ export class AcTemplateEngine {
 
                 if (targetProp) {
                     if (isBound) {
+                        let oldValue: any;
+                        let isFirstChange = true;
                         acEffect(() => {
                             try {
-                                const reactiveVal = this.evaluateExpression(attrValue);
-                                instance[targetProp!] = reactiveVal;
-                                if (typeof instance.acOnChanges === 'function') {
-                                    instance.acOnChanges({ [targetProp!]: reactiveVal });
+                                const valOrPromise = this.evaluateExpression(attrValue);
+                                const updateInstance = (newValue: any) => {
+                                    // trigger only when old and new value changes
+                                    if (!isFirstChange && this.isEquivalent(oldValue, newValue)) {
+                                        return;
+                                    }
+
+                                    const currentOldValue = isFirstChange ? undefined : oldValue;
+                                    const currentIsFirstChange = isFirstChange;
+
+                                    // Update state BEFORE side effects
+                                    oldValue = newValue;
+                                    isFirstChange = false;
+
+                                    instance[targetProp!] = newValue;
+                                    if (typeof instance.acOnChange === 'function') {
+                                        instance.acOnChange({
+                                            key: targetProp,
+                                            oldValue: currentOldValue,
+                                            newValue: newValue,
+                                            firstChange: currentIsFirstChange
+                                        });
+                                    }
+                                };
+
+                                if (valOrPromise instanceof Promise) {
+                                    valOrPromise.then(updateInstance);
+                                } else {
+                                    updateInstance(valOrPromise);
                                 }
                             } catch (e) {
                                 AC_RUNTIME_CONFIG.logError(`Error in reactive input binding [${propName}] for ${el.tagName}:`, e);
@@ -415,53 +540,63 @@ export class AcTemplateEngine {
             }
         }
 
-        // Apply Inputs/Attributes
-        this.applyAttributesToInstance(instance, el, registration);
-
-        const outputMetadata = getAcOutputMetadata(ElementClass);
-        const registeredOutputNames = new Set(Object.values(outputMetadata).map(o => o.toLowerCase()));
-
-        for (const [propKey, outputName] of Object.entries(outputMetadata)) {
-            try {
-                const handler = outputs[outputName.toLowerCase()];
-                if (handler) {
-                    const eventEmitter = instance[propKey];
-                    if (eventEmitter && typeof eventEmitter.subscribe === 'function') {
-                        eventEmitter.subscribe((value: any) => {
-                            try {
-                                this.evaluateExpression(handler, { '$event': value });
-                            } catch (e) {
-                                AC_RUNTIME_CONFIG.logError(`Error in output handler for (${outputName}) on ${tagName}:`, e);
-                            }
-                        });
-                    }
-                }
-            } catch (e) {
-                AC_RUNTIME_CONFIG.logError(`Error setting up output (${outputName}) on ${tagName}:`, e);
-            }
-        }
-
-        // Bind any remaining events in outputs that are not @AcOutputs as native DOM events
-        for (const [eventName, handler] of Object.entries(outputs)) {
-            if (!registeredOutputNames.has(eventName)) {
-                el.addEventListener(eventName, (event) => {
-                    try {
-                        this.evaluateExpression(handler, { '$event': event });
-                    } catch (e) {
-                        AC_RUNTIME_CONFIG.logError(`Error in native event handler (${eventName}) on ${tagName}:`, e);
-                    }
-                });
-            }
-        }
-
-        if (registration.metadata.template && isNew) el.innerHTML = registration.metadata.template;
-
-        const uuid = el.getAttribute('ac-engine-element');
-        if (registration.metadata.styles && registration.metadata.styles.length > 0 && uuid && isNew) {
-            acSetEngineElementStyles(registration.metadata.styles, uuid);
-        }
-
         if (isNew) {
+            // Apply Inputs/Attributes only for new instances
+            this.applyAttributesToInstance(instance, el, registration);
+
+            const outputMetadata = getAcOutputMetadata(ElementClass);
+            const registeredOutputNames = new Set(Object.values(outputMetadata).map(o => o.toLowerCase()));
+
+            for (const [propKey, outputName] of Object.entries(outputMetadata)) {
+                try {
+                    const handler = outputs[outputName.toLowerCase()];
+                    if (handler) {
+                        const eventEmitter = instance[propKey];
+                        if (eventEmitter && typeof eventEmitter.subscribe === 'function') {
+                            eventEmitter.subscribe((value: any) => {
+                                try {
+                                    const resOrPromise = this.evaluateExpression(handler, { '$event': value });
+                                    if (resOrPromise instanceof Promise) {
+                                        resOrPromise.catch(e => {
+                                            AC_RUNTIME_CONFIG.logError(`Error in async output handler for (${outputName}) on ${tagName}:`, e);
+                                        });
+                                    }
+                                } catch (e) {
+                                    AC_RUNTIME_CONFIG.logError(`Error in output handler for (${outputName}) on ${tagName}:`, e);
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {
+                    AC_RUNTIME_CONFIG.logError(`Error setting up output (${outputName}) on ${tagName}:`, e);
+                }
+            }
+
+            // Bind any remaining events in outputs that are not @AcOutputs as native DOM events
+            for (const [eventName, handler] of Object.entries(outputs)) {
+                if (!registeredOutputNames.has(eventName)) {
+                    el.addEventListener(eventName, (event) => {
+                        try {
+                            const resOrPromise = this.evaluateExpression(handler, { '$event': event });
+                            if (resOrPromise instanceof Promise) {
+                                resOrPromise.catch(e => {
+                                    AC_RUNTIME_CONFIG.logError(`Error in async native event handler (${eventName}) on ${tagName}:`, e);
+                                });
+                            }
+                        } catch (e) {
+                            AC_RUNTIME_CONFIG.logError(`Error in native event handler (${eventName}) on ${tagName}:`, e);
+                        }
+                    });
+                }
+            }
+
+            if (registration.metadata.template && isNew) el.innerHTML = registration.metadata.template;
+
+            const uuid = el.getAttribute('ac-engine-element');
+            if (registration.metadata.styles && registration.metadata.styles.length > 0 && uuid && isNew) {
+                acSetEngineElementStyles(registration.metadata.styles, uuid);
+            }
+
             const childEngine = new AcTemplateEngine(instance, this);
             this.registerContentTemplates(el, instance);
             childEngine.compile(el);
@@ -505,43 +640,49 @@ export class AcTemplateEngine {
 
         el.removeAttribute('ac:if');
         el.removeAttribute('ac-if');
-        const placeholder = document.createComment('ac:condition-chain');
-        el.parentNode?.replaceChild(placeholder, el);
+        const startPlaceholder = document.createComment('ac:if-start');
+        const endPlaceholder = document.createComment('ac:if-end');
+        el.parentNode?.replaceChild(endPlaceholder, el);
+        endPlaceholder.parentNode?.insertBefore(startPlaceholder, endPlaceholder);
 
-        let currentActiveNodes: Node[] = [];
         acEffect(() => {
-            if (currentActiveNodes.length > 0) {
-                currentActiveNodes.forEach(node => {
-                    if (node instanceof HTMLElement) {
-                        this.destroyInstances(node);
-                    }
-                    if (node.parentNode) {
-                        node.parentNode.removeChild(node);
-                    }
-                });
-                currentActiveNodes = [];
-            }
-            for (const branch of branchChain) {
-                const condition = branch.expression === null ? true : this.evaluateExpression(branch.expression);
-                if (condition) {
-                    const clone = branch.el.cloneNode(true) as HTMLElement;
-                    const parent = placeholder.parentNode;
-                    if (parent) {
-                        if (clone.tagName.toLowerCase() === 'ac-container') {
-                            const fragment = this.createFragmentFromContainer(clone);
-                            const nodes = Array.from(fragment.childNodes);
-                            parent.insertBefore(fragment, placeholder);
-                            nodes.forEach(node => this.traverse(node));
-                            currentActiveNodes = nodes;
-                        } else {
-                            parent.insertBefore(clone, placeholder);
-                            this.traverse(clone);
-                            currentActiveNodes = [clone];
-                        }
-                    }
-                    break;
+            let current = startPlaceholder.nextSibling;
+            while (current && current !== endPlaceholder) {
+                const next = current.nextSibling;
+                if (current instanceof HTMLElement) {
+                    this.destroyInstances(current);
                 }
+                if (current.parentNode) {
+                    current.parentNode.removeChild(current);
+                }
+                current = next;
             }
+
+            const renderBranches = async () => {
+                for (const branch of branchChain) {
+                    const conditionOrPromise = branch.expression === null ? true : this.evaluateExpression(branch.expression);
+                    const condition = conditionOrPromise instanceof Promise ? await conditionOrPromise : conditionOrPromise;
+
+                    if (condition) {
+                        const clone = branch.el.cloneNode(true) as HTMLElement;
+                        const parent = endPlaceholder.parentNode;
+                        if (parent) {
+                            if (clone.tagName.toLowerCase() === 'ac-container') {
+                                const fragment = this.createFragmentFromContainer(clone);
+                                const nodes = Array.from(fragment.childNodes);
+                                parent.insertBefore(fragment, endPlaceholder);
+                                nodes.forEach(node => this.traverse(node));
+                            } else {
+                                parent.insertBefore(clone, endPlaceholder);
+                                this.traverse(clone);
+                            }
+                        }
+                        break;
+                    }
+                }
+            };
+
+            renderBranches();
         });
     }
 
@@ -570,60 +711,174 @@ export class AcTemplateEngine {
         el.removeAttribute('ac:for');
         el.removeAttribute('ac-for');
         const template = el.cloneNode(true) as HTMLElement;
-        const placeholder = document.createComment(`ac:for ${expression}`);
-        el.parentNode?.replaceChild(placeholder, el);
+        const startPlaceholder = document.createComment(`ac:for-start ${expression}`);
+        const endPlaceholder = document.createComment(`ac:for-end ${expression}`);
+        el.parentNode?.replaceChild(endPlaceholder, el);
+        endPlaceholder.parentNode?.insertBefore(startPlaceholder, endPlaceholder);
 
-        const instances: { nodes: Node[] }[] = [];
+        // Track rendered entries for incremental updates
+        interface ForEntry { item: any; nodes: Node[]; subContext: any; }
+        let renderedEntries: ForEntry[] = [];
+
+        /** Set loop variables on a sub-context using Object.defineProperty to bypass proxy traps */
+        const setLoopVars = (subContext: any, item: any, i: number, count: number) => {
+            Object.defineProperty(subContext, itemName, { value: item, writable: true, enumerable: true, configurable: true });
+            Object.defineProperty(subContext, '$index', { value: i, writable: true, enumerable: true, configurable: true });
+            for (const { localName, keyword } of extraVars) {
+                let varValue: any;
+                switch (keyword) {
+                    case 'index': varValue = i; break;
+                    case 'first': varValue = i === 0; break;
+                    case 'last': varValue = i === count - 1; break;
+                    case 'even': varValue = i % 2 === 0; break;
+                    case 'odd': varValue = i % 2 !== 0; break;
+                    case 'count': varValue = count; break;
+                    default: varValue = undefined; break;
+                }
+                Object.defineProperty(subContext, localName, { value: varValue, writable: true, enumerable: true, configurable: true });
+            }
+        };
+
+        /** Render a single item and return the entry */
+        const renderItem = (item: any, i: number, count: number): ForEntry => {
+            const instance = template.cloneNode(true) as HTMLElement;
+            const subContext = Object.create(this.context);
+            setLoopVars(subContext, item, i, count);
+
+            const engine = new AcTemplateEngine(subContext, this);
+            let nodes: Node[];
+
+            if (instance.tagName.toLowerCase() === 'ac-container') {
+                const fragment = this.createFragmentFromContainer(instance);
+                engine.compile(fragment as any);
+                nodes = Array.from(fragment.childNodes);
+            } else {
+                engine.compile(instance);
+                nodes = [instance];
+            }
+
+            return { item, nodes, subContext };
+        };
+
+        /** Remove an entry's DOM nodes and destroy instances */
+        const removeEntry = (entry: ForEntry) => {
+            for (const node of entry.nodes) {
+                if (node instanceof HTMLElement) {
+                    this.destroyInstances(node);
+                }
+                if (node.parentNode) {
+                    node.parentNode.removeChild(node);
+                }
+            }
+        };
+
         acEffect(() => {
-            const list = this.evaluateExpression(listExpression);
-            if (Array.isArray(list)) {
-                instances.forEach(ins => {
-                    ins.nodes.forEach(node => {
-                        if (node instanceof HTMLElement) {
-                            this.destroyInstances(node);
-                        }
-                        if (node.parentNode) {
-                            node.parentNode.removeChild(node);
-                        }
-                    });
-                });
-                instances.length = 0;
-                const count = list.length;
-                list.forEach((item, i) => {
-                    const instance = template.cloneNode(true) as HTMLElement;
-                    const subContext = Object.create(this.context);
-                    subContext[itemName] = item;
-                    subContext['$index'] = i;
+            const listOrPromise = this.evaluateExpression(listExpression);
+            
+            const renderFor = (list: any) => {
+                if (!Array.isArray(list)) return;
 
-                    // Expose extra loop variables by their declared local name
-                    for (const { localName, keyword } of extraVars) {
-                        switch (keyword) {
-                            case 'index': subContext[localName] = i; break;
-                            case 'first': subContext[localName] = i === 0; break;
-                            case 'last': subContext[localName] = i === count - 1; break;
-                            case 'even': subContext[localName] = i % 2 === 0; break;
-                            case 'odd': subContext[localName] = i % 2 !== 0; break;
-                            case 'count': subContext[localName] = count; break;
-                            default: subContext[localName] = undefined; break;
+                const parent = endPlaceholder.parentNode;
+                if (!parent) return;
+
+                const newCount = list.length;
+                const oldCount = renderedEntries.length;
+
+                // Fast path: items only appended (push) — keep existing, add new ones
+                // Check if the first oldCount items are the same by reference
+                let isAppendOnly = newCount >= oldCount;
+                if (isAppendOnly) {
+                    for (let i = 0; i < oldCount; i++) {
+                        if (renderedEntries[i].item !== list[i]) {
+                            isAppendOnly = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (isAppendOnly && oldCount > 0) {
+                    // Update index-related variables on existing entries if count changed
+                    if (newCount !== oldCount) {
+                        for (let i = 0; i < oldCount; i++) {
+                            const entry = renderedEntries[i];
+                            const sc = entry.subContext;
+                            // Update last/count which may have changed
+                            for (const { localName, keyword } of extraVars) {
+                                if (keyword === 'last' || keyword === 'count') {
+                                    const varValue = keyword === 'last' ? i === newCount - 1 : newCount;
+                                    sc[localName] = varValue;
+                                }
+                            }
                         }
                     }
 
-                    const engine = new AcTemplateEngine(subContext, this);
-                    const parent = placeholder.parentNode;
-                    if (parent) {
-                        if (instance.tagName.toLowerCase() === 'ac-container') {
-                            const fragment = this.createFragmentFromContainer(instance);
-                            const nodes = Array.from(fragment.childNodes);
-                            engine.compile(fragment as any);
-                            parent.insertBefore(fragment, placeholder);
-                            instances.push({ nodes });
-                        } else {
-                            engine.compile(instance);
-                            parent.insertBefore(instance, placeholder);
-                            instances.push({ nodes: [instance] });
+                    // Render only new items and batch-insert
+                    const fragment = document.createDocumentFragment();
+                    const newEntries: ForEntry[] = [];
+                    for (let i = oldCount; i < newCount; i++) {
+                        const entry = renderItem(list[i], i, newCount);
+                        for (const node of entry.nodes) {
+                            fragment.appendChild(node);
+                        }
+                        newEntries.push(entry);
+                    }
+                    parent.insertBefore(fragment, endPlaceholder);
+                    renderedEntries = [...renderedEntries, ...newEntries];
+                    return;
+                }
+
+                // Fast path: items removed from end (pop/truncate) — keep prefix, remove suffix
+                let isTruncate = newCount < oldCount && newCount > 0;
+                if (isTruncate) {
+                    for (let i = 0; i < newCount; i++) {
+                        if (renderedEntries[i].item !== list[i]) {
+                            isTruncate = false;
+                            break;
                         }
                     }
-                });
+                }
+
+                if (isTruncate) {
+                    // Remove entries beyond the new length
+                    for (let i = newCount; i < oldCount; i++) {
+                        removeEntry(renderedEntries[i]);
+                    }
+                    renderedEntries = renderedEntries.slice(0, newCount);
+
+                    // Update last/count on remaining entries
+                    for (let i = 0; i < newCount; i++) {
+                        const sc = renderedEntries[i].subContext;
+                        for (const { localName, keyword } of extraVars) {
+                            if (keyword === 'last' || keyword === 'count') {
+                                const varValue = keyword === 'last' ? i === newCount - 1 : newCount;
+                                sc[localName] = varValue;
+                            }
+                        }
+                    }
+                    return;
+                }
+
+                // Full rebuild — array was replaced or reordered
+                for (const entry of renderedEntries) {
+                    removeEntry(entry);
+                }
+                renderedEntries = [];
+
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < newCount; i++) {
+                    const entry = renderItem(list[i], i, newCount);
+                    for (const node of entry.nodes) {
+                        fragment.appendChild(node);
+                    }
+                    renderedEntries.push(entry);
+                }
+                parent.insertBefore(fragment, endPlaceholder);
+            };
+
+            if (listOrPromise instanceof Promise) {
+                listOrPromise.then(renderFor);
+            } else {
+                renderFor(listOrPromise);
             }
         });
     }
@@ -663,7 +918,7 @@ export class AcTemplateEngine {
         parent.insertBefore(fragment, placeholder);
     }
 
-    private findAndRegisterTemplates(root: HTMLElement) {
+    private findAndRegisterTemplates(root: HTMLElement | DocumentFragment) {
         root.querySelectorAll('ac-template').forEach(el => {
             let parent = el.parentElement;
             let isOwned = true;
@@ -712,82 +967,25 @@ export class AcTemplateEngine {
         });
     }
 
-    private evaluateExpression(expression: string, locals?: Record<string, any>): any {
-        if (expression.includes('|')) {
-            const parts: string[] = [];
-            let currentPart = "";
-            let inString: string | null = null;
-            let j = 0;
-            while (j < expression.length) {
-                const char = expression[j];
-                if (inString) {
-                    if (char === inString && expression[j - 1] !== '\\') inString = null;
-                    currentPart += char;
-                } else if (char === "'" || char === '"' || char === '`') {
-                    inString = char;
-                    currentPart += char;
-                } else if (char === '|' && expression[j + 1] === '|') {
-                    currentPart += '||';
-                    j++;
-                } else if (char === '|') {
-                    parts.push(currentPart.trim());
-                    currentPart = "";
-                } else {
-                    currentPart += char;
-                }
-                j++;
-            }
-            parts.push(currentPart.trim());
-
-            if (parts.length > 1) {
-                let value = this.evaluateExpression(parts[0], locals);
-                for (let i = 1; i < parts.length; i++) {
-                    const pipeExpr = parts[i];
-                    const pipeParts: string[] = [];
-                    let currentPipePart = "";
-                    let inPipeString: string | null = null;
-                    let k = 0;
-                    while (k < pipeExpr.length) {
-                        const char = pipeExpr[k];
-                        if (inPipeString) {
-                            if (char === inPipeString && pipeExpr[k - 1] !== '\\') inPipeString = null;
-                            currentPipePart += char;
-                        } else if (char === "'" || char === '"' || char === '`') {
-                            inPipeString = char;
-                            currentPipePart += char;
-                        } else if (char === ':') {
-                            pipeParts.push(currentPipePart.trim());
-                            currentPipePart = "";
-                        } else {
-                            currentPipePart += char;
-                        }
-                        k++;
-                    }
-                    pipeParts.push(currentPipePart.trim());
-
-                    try {
-                        const pipe = acPipeRegistry.getPipe(pipeParts[0]);
-                        const args = pipeParts.slice(1).map(arg => this.evaluateExpression(arg, locals));
-                        value = pipe.transform(value, ...args);
-                    } catch (e) {
-                        AC_RUNTIME_CONFIG.logError(expression);
-                        AC_RUNTIME_CONFIG.logError(e);
-                    }
-                }
-                return value;
-            }
+    private evaluateExpression(exp: string, locals?: Record<string, any>, isExpressionEval:boolean = false): any {
+        if (exp.includes('|') && !isExpressionEval) {
+            const context = { ...this.context };
+            return evaluateAcPipeExpression({ expression:exp, context, evaluateFunction:({expression,context,}: {expression: string;context: any;})=>{
+                 return this.evaluateExpression(expression, locals,true);
+            } });
         }
         try {
             const scope = this.getScope(locals);
-            const normalizedExpr = this.normalizeExprForScope(expression);
+            const normalizedExpr = this.normalizeExprForScope(exp);
 
             // Use double 'with' to ensure methods are called with component context as 'this'
             // while still allowing locals/templates/refs to be resolved from the scope.
             const fn = new Function('scope', 'context', `with (context) { with (scope) { return ${normalizedExpr} } } `);
             const result = fn.call(this.context, scope, this.context);
+
             return result;
         } catch (e) {
-            AC_RUNTIME_CONFIG.logError(`Error evaluating expression: ${expression} `, e);
+            AC_RUNTIME_CONFIG.logError(`Error evaluating expression: ${exp} `, e);
             return undefined;
         }
     }
@@ -797,6 +995,7 @@ export class AcTemplateEngine {
         try {
             const scope = this.getScope();
             const normalizedExpr = this.normalizeExprForScope(expression);
+
             const fn = new Function('scope', 'context', 'value', `with (context) { with (scope) { ${normalizedExpr} = value } } `);
             fn.call(this.context, scope, this.context, value);
         } catch (e) {
@@ -857,5 +1056,26 @@ export class AcTemplateEngine {
         }
 
         return scope;
+    }
+
+    private isEquivalent(a: any, b: any): boolean {
+        if (a === b) return true;
+        if (Array.isArray(a) && Array.isArray(b)) {
+            if (a.length !== b.length) return false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
+        }
+        if (typeof a === 'object' && a !== null && typeof b === 'object' && b !== null) {
+            const keysA = Object.keys(a);
+            const keysB = Object.keys(b);
+            if (keysA.length !== keysB.length) return false;
+            for (const key of keysA) {
+                if (a[key] !== b[key]) return false;
+            }
+            return true;
+        }
+        return false;
     }
 }

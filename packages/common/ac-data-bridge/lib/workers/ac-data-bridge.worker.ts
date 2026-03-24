@@ -1,0 +1,1170 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @nx/enforce-module-boundaries */
+import * as XLSX from "xlsx";
+import { AcDataDictionary } from "@autocode-ts/ac-data-dictionary";
+import { IAcDataBridgeProgress } from "../interfaces/ac-data-bridge-progress.interface";
+import { IAcDataBridgeEntity } from "../interfaces/ac-data-bridge-entity.interface";
+import { IAcDataBridgeField } from "../interfaces/ac-data-bridge-field.interface";
+import { IAcDataBridgeEntityTemplateDef } from "../interfaces/ac-data-bridge-entity-template-def.interface";
+import { AC_DATA_BRIDGE_DEFAULTS, IAcDataBridgeProcesedRow } from "@autocode-ts/ac-data-bridge";
+import { AcEnumConditionOperator, AcEnumLogicalOperator, acEvaluateFilterGroup, Autocode, IAcFilterGroup } from "@autocode-ts/autocode";
+import { arrayRemove, objectIsSame } from "@autocode-ts/ac-extensions";
+import { IAcDataBridgeBeforeAddRequestArgs } from "../interfaces/ac-data-bridge-before-add-request-args.interface";
+import { IAcDataBridgeBeforeAddResponse } from "../interfaces/ac-data-bridge-before-add-response.interface";
+import { AcDataBridgeSocket } from "../core/ac-data-bridge-socket";
+
+class AcDataBridgeEntityWorker {
+  private worker: AcDataBridgeWorker;
+  logMessages: boolean = false;
+  entity?: IAcDataBridgeEntity;
+  progress?: IAcDataBridgeProgress;
+  processedRows: IAcDataBridgeProcesedRow[] = [];
+  allData: { rowId: string, sourceRowId?: string, data: any, sourceRow?: any }[] = [];
+  templateDef!: IAcDataBridgeEntityTemplateDef;
+  dataKeys: string[] = [];
+  referencingDestinations: string[] = [];
+
+  get primaryKeyFieldName(): string {
+    let result: string = '';
+    if (this.templateDef) {
+      const primaryField = this.templateDef.templateFields.find((field) => {
+        return field.isDestinationPrimaryKey
+      });
+      if (primaryField) {
+        result = primaryField.destinationFieldName!;
+      }
+    }
+    return result;
+  }
+
+  get templateUniqueKeyFieldName(): string {
+    let result: string = '';
+    if (this.templateDef) {
+      const primaryField = this.templateDef.templateFields.find((field) => {
+        return field.isTemplatePrimaryKey
+      });
+      if (primaryField) {
+        result = primaryField.templateFieldName!;
+      }
+    }
+    return result;
+  }
+
+  get uniqueDataKeys(): string[] {
+    let result: string[] = [];
+    if (this.templateDef) {
+      for (const field of this.templateDef.templateFields) {
+        if (field.isUniqueValue && field.destinationName == this.templateDef.destinationName && field.destinationFieldName) {
+          result.push(field.destinationFieldName);
+        }
+      }
+    }
+    return result;
+  }
+
+  constructor({ worker }: { worker: AcDataBridgeWorker }) {
+    this.worker = worker;
+    // this.convertedData = { rows: [], title: 'Product Categories', keys: [], name: Tables.ActProductCategories };
+    // this.worker.convertedData[Tables.ActProductCategories] = this.convertedData;
+
+    // this.appImportSheetDef = IMPORT_SHEET_DEFINITIONS.find((sheetDef) => {
+    //   return sheetDef.name === Tables.ActProductCategories
+    // });
+    // if (this.appImportSheetDef) {
+    //   this.appImportSheetDefColumns = this.appImportSheetDef.columns;
+    // }
+  }
+
+  async addRow({
+    row,
+    sourceRow,
+    parentRowId,
+    parentTemplateName
+  }: {
+    row: any;
+    sourceRow?: any;
+    parentRowId?: string;
+    parentTemplateName?: string
+  }): Promise<IAcDataBridgeProcesedRow> {
+
+
+    let primaryKeyValue: any;
+    let primaryKeyField: any;
+    let templateUniqueKeyField: string | undefined;
+    let sourceUniqueValue: string = '';
+
+    let saveRow: any = { ...row };
+
+    // Extract primary key and template unique field from templateDef
+    if (this.templateDef) {
+      for (const field of this.templateDef.templateFields) {
+        if (field.isDestinationPrimaryKey &&
+          field.destinationFieldName &&
+          field.destinationName === this.templateDef.destinationName) {
+          primaryKeyField = field.destinationFieldName;
+          primaryKeyValue = saveRow[field.destinationFieldName];
+        }
+        if (field.isTemplatePrimaryKey && field.templateFieldName) {
+          templateUniqueKeyField = field.templateFieldName;
+        }
+      }
+    }
+
+    // Get source unique value (from sourceRow if available)
+    if (templateUniqueKeyField && sourceRow?.[templateUniqueKeyField]) {
+      sourceUniqueValue = sourceRow[templateUniqueKeyField];
+    }
+
+    let operation: 'INSERT'| 'UPDATE' | 'SKIP' = 'INSERT';
+
+    // Duplicate check using uniqueDataKeys
+    if (this.uniqueDataKeys.length > 0) {
+      let isDuplicateRow: boolean = false;
+      for (const existingRow of this.allData) {
+        let isValueDifferent = false;
+
+        for (const key of this.uniqueDataKeys) {
+          const currentValue = saveRow[key];
+          const existingValue = existingRow.data[key];
+          if (currentValue !== undefined && existingValue != undefined) {
+            if (`${currentValue}`.trim().toLowerCase() != `${existingValue}`.trim().toLowerCase()) {
+              isValueDifferent = true;
+            }
+          }
+        }
+
+        if (!isValueDifferent) {
+          isDuplicateRow = true;
+          operation = 'SKIP';
+          primaryKeyValue = existingRow.data[primaryKeyField];
+          existingRow.sourceRow = sourceRow;
+          existingRow.sourceRowId = sourceUniqueValue;
+          break;
+        }
+      }
+      if (isDuplicateRow) {
+        // console.log('🚫 Duplicate found! Skipping insert.', {
+        //   matchedRowId: existingRow.data[primaryKeyField],
+        //   sourceUniqueValue
+        // });
+        // operation = 'SKIP';
+
+      }
+    }
+
+    // Generate new primary key if needed and inserting
+    if (operation === 'INSERT') {
+      if (primaryKeyValue == undefined || primaryKeyValue == null) {
+        primaryKeyValue = Autocode.uuid();
+      }
+    }
+    if (primaryKeyField) {
+      saveRow[primaryKeyField] = primaryKeyValue;
+    }
+    if (this.worker.beforeAddEntityRowCallback) {
+      const beforeAddResponse = await this.worker.beforeAddEntityRowCallback({ data: saveRow, destination: this.templateDef.destinationName, operation: operation });
+      saveRow = beforeAddResponse.data;
+      if(beforeAddResponse.operation){
+        operation = beforeAddResponse.operation!;
+      }
+    }
+
+    let processedRow: any;
+
+    if (operation === 'INSERT') {
+      processedRow = {
+        data: saveRow,
+        operation: 'INSERT',
+        rowId: primaryKeyValue,
+        sourceRow,
+        sourceRowId: sourceUniqueValue,
+        status: 'PENDING',
+        parentRowId,
+        parentTemplateName
+      };
+      this.processedRows.push(processedRow);
+      this.allData.push({ rowId: primaryKeyValue, data: saveRow, sourceRow, sourceRowId: sourceUniqueValue });
+    } else {
+      const existingProcessedRow = this.processedRows.find(
+        (pr: any) => {
+          return pr.rowId === primaryKeyValue;
+        }
+      );
+
+      if (existingProcessedRow) {
+        existingProcessedRow.sourceRow = sourceRow;
+        existingProcessedRow.sourceRowId = sourceUniqueValue;
+        processedRow = existingProcessedRow;
+      } else {
+        processedRow = {
+          data: saveRow,
+          operation: 'SKIP',
+          rowId: primaryKeyValue,
+          sourceRow,
+          sourceRowId: sourceUniqueValue,
+          status: 'PENDING',
+          parentRowId,
+          parentTemplateName
+        };
+        this.processedRows.push(processedRow);
+      }
+    }
+    for (const key of Object.keys(saveRow)) {
+      if (!this.dataKeys.includes(key)) {
+        this.dataKeys.push(key);
+      }
+    }
+
+    return processedRow;
+  }
+
+  checkRowIsEmpty({ row }: { row: any }) {
+    let result: boolean = true;
+    if (row) {
+      for (const key of Object.keys(row)) {
+        if (row[key] != undefined && row[key] != '') {
+          result = false;
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
+  checkRowValuesMatch({ previousRow, originalRow, row, keys }: { previousRow: any, originalRow: any, row: any, keys: string[] }): boolean {
+    let result: boolean = false;
+    if (previousRow) {
+      for (const key of keys) {
+        if (row[key] == '') {
+          result = true;
+        }
+        else if (row[key] == previousRow[key]) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
+
+  getDestinationEntity(): IAcDataBridgeEntity {
+    const processedRows: Record<string, IAcDataBridgeProcesedRow> = {};
+    for (const row of this.processedRows) {
+      processedRows[row.rowId] = row;
+    }
+    const fields: IAcDataBridgeField[] = [];
+
+    for (const field of this.templateDef!.templateFields) {
+      if (field.destinationFieldName && this.dataKeys.includes(field.destinationFieldName)) {
+        fields.push(field);
+      }
+    }
+    return {
+      destinationName: this.templateDef!.destinationName,
+      rows: [],
+      fields: fields,
+      processedCount: 0,
+      completedCount: 0,
+      errorCount: 0,
+      rowsCount: this.processedRows.length,
+      templateName: this.templateDef!.templateName,
+      sourceName: '',
+      processedRows
+    }
+  }
+
+  async getRows({ sourceRowId, rowId, rowFilters, sourceRowFilters }: { sourceRowId?: string, rowId?: string, rowFilters?: IAcFilterGroup, sourceRowFilters?: IAcFilterGroup }): Promise<any[]> {
+    let result: any[] = [];
+    for (const row of this.allData) {
+      let isValid: boolean = true;
+      if (isValid && rowId && row.rowId != rowId) {
+        isValid = false;
+      }
+      if (isValid && sourceRowId && row.sourceRowId != sourceRowId) {
+        result.push(row.data);
+      }
+      if (isValid && rowFilters) {
+        isValid = acEvaluateFilterGroup({ group: rowFilters, data: row.data });
+      }
+      if (isValid && sourceRowFilters) {
+        isValid = acEvaluateFilterGroup({ group: sourceRowFilters, data: row.sourceRow });
+      }
+      if (isValid) {
+        result.push(row.data);
+      }
+    }
+    return result;
+  }
+
+  getTableRowFromMappedColumn({ row, tableName, skipTempValueKey = false }: { row: any, tableName: string, skipTempValueKey?: boolean },) {
+    const result: any = {};
+    // for (const col of sheetDefinition.sheetColumns) {
+    // const appColumn = appDefinition.columns.find((appDefCol) => { return appDefCol?.title == col.defColumnTitle });
+    // if (appColumn) {
+    //   if (appColumn.dbColumnName && appColumn.dbTableName && appColumn.dbTableName == tableName) {
+    //     const value = row[col.sheetColumnName];
+    //     if (value != null && value != undefined) {
+    //       result[appColumn.dbColumnName] = value;
+    //     }
+    //   }
+    // }
+    // if (row[CUSTOM_UNIQUE_FIELD_TITLE] && !skipTempValueKey) {
+    //   result[TEMP_UNIQUE_VALUE_KEY] = row[CUSTOM_UNIQUE_FIELD_TITLE];
+    // }
+    // }
+    return result
+  }
+
+  async processRows() {
+    if (this.entity && this.templateDef) {
+      let previousTemplateUniqueRowId: any = null;
+      let previousDestinationsRow: any = {};
+      let uniqueCheckKeys: string[] = [];
+      let previousEntityProcessedRow: IAcDataBridgeProcesedRow | any;
+      if (this.progress) {
+        this.progress.completedCount++;
+      }
+      if (this.worker.taskProgress) {
+        this.worker.taskProgress.completedCount++;
+      }
+      const setValueInTargetDestinationField: Function = ({ target, destination, key, value }: { target: any, destination: string, key: string, value: any }) => {
+        if (!target[destination]) {
+          target[destination] = {};
+        }
+        target[destination][key] = value;
+      };
+      for (const row of this.entity.rows) {
+        if (!this.checkRowIsEmpty({ row })) {
+          let rowUniqueTemplateId = `${row[this.templateUniqueKeyFieldName]}`.trim();
+          const isDuplicateParentRow = previousTemplateUniqueRowId && rowUniqueTemplateId && previousTemplateUniqueRowId == rowUniqueTemplateId;
+          const destinationsRow: any = {
+            [this.templateDef.destinationName]: {}
+          };
+          const destSavedRow: any = {};
+          const multiHiererchyTemplates: string[][] = [];
+          const pendingForeignKeyFields: any = [];
+          for (const field of this.entity.fields) {
+            if (field.templateFieldName) {
+              let value = row[field.templateFieldName];
+              if (typeof value == 'string') {
+                value = value.trim();
+              }
+              let destName = this.templateDef.destinationName;
+              if (field.destinationName) {
+                destName = field.destinationName;
+              }
+              if (value != undefined && value != '') {
+                if (field.foreignKeyTemplateName && field.foreignKeyTemplateFieldName) {
+                  const referencingTemplate = Object.values(this.worker.templateEntities).find((templateEntity) => {
+                    return templateEntity.templateName == field.foreignKeyTemplateName;
+                  });
+                  if (referencingTemplate && referencingTemplate.destinationName) {
+                    if (this.worker.entityWorkers[referencingTemplate.destinationName]) {
+                      if (!this.referencingDestinations.includes(referencingTemplate.destinationName)) {
+                        this.referencingDestinations.push(referencingTemplate.destinationName);
+                      }
+                      const referencingWorker: AcDataBridgeEntityWorker = this.worker.entityWorkers[referencingTemplate.destinationName];
+
+                      let lookupDestinationField: string | undefined;
+                      const primaryKeyFieldName = referencingWorker.primaryKeyFieldName;
+                      if (primaryKeyFieldName) {
+                        lookupDestinationField = referencingWorker.primaryKeyFieldName;
+                      }
+                      if (field.isLookupTemplateField && field.lookupForTemplateField && field.lookupForTemplateField != '') {
+                        lookupDestinationField = "";
+                        const lookupField = this.templateDef.templateFields.find((templateField) => {
+                          return templateField.templateFieldName == field.lookupForTemplateField;
+                        });
+                        if (lookupField) {
+                          lookupDestinationField = lookupField.destinationFieldName;
+                        }
+                      }
+                      const getRowParams: any = {
+                        sourceRowFilters: {
+                          operator: AcEnumLogicalOperator.And, filters: [
+                            { key: field.foreignKeyTemplateFieldName, operator: AcEnumConditionOperator.EqualTo, value: value }
+                          ]
+                        },
+                      };
+                      let foundAllFilterParams: boolean = true;
+                      if (field.foreignKeyIncludeFieldsInFilter) {
+                        const rowFilters: any = { operator: AcEnumLogicalOperator.And, filters: [] };
+                        for (const fieldName of field.foreignKeyIncludeFieldsInFilter) {
+                          let foundField: boolean = false;
+                          for (const key of Object.keys(destinationsRow)) {
+                            if (destinationsRow[key][fieldName]) {
+                              foundField = true;
+                              rowFilters.filters.push({ key: fieldName, operator: AcEnumConditionOperator.EqualTo, value: destinationsRow[key][fieldName] });
+                            }
+                          }
+                          if (!foundField) {
+                            foundAllFilterParams = false;
+                          }
+                        }
+                        if (foundAllFilterParams) {
+                          getRowParams['rowFilters'] = rowFilters;
+                        }
+                        else {
+                          pendingForeignKeyFields.push(field);
+                        }
+                      }
+
+                      const referenceRows = await referencingWorker.getRows(getRowParams);
+
+                      if (referenceRows.length > 0) {
+                        const referenceData = referenceRows[0];
+                        if (referenceData) {
+                          if (lookupDestinationField && lookupDestinationField != "" && primaryKeyFieldName) {
+                            setValueInTargetDestinationField({ target: destinationsRow, destination: destName, key: lookupDestinationField, value: referenceData[primaryKeyFieldName] });
+                          }
+                        }
+                        else {
+                        }
+                      }
+                      else {
+                        let destinationFieldNameForRef = '';
+                        for (const refTempField of referencingWorker.templateDef.templateFields) {
+                          if (refTempField.templateFieldName == field.foreignKeyTemplateFieldName) {
+                            if (refTempField.destinationFieldName) {
+                              destinationFieldNameForRef = refTempField.destinationFieldName;
+                              break;
+                            }
+                          }
+                        }
+                        if (destinationFieldNameForRef != '' && value) {
+                          setValueInTargetDestinationField({ target: destinationsRow, destination: referencingWorker.templateDef.destinationName, key: destinationFieldNameForRef, value: value });
+                        }
+                      }
+                    }
+                  }
+                }
+                else if (field.destinationName && field.destinationFieldName && field.templateFieldName) {
+                  setValueInTargetDestinationField({ target: destinationsRow, destination: field.destinationName, key: field.destinationFieldName, value: row[field.templateFieldName] });
+                }
+                if (field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2) {
+                  multiHiererchyTemplates.push(field.extensionTemplateHierarchy);
+                }
+              }
+            }
+          }
+          let entityProcessedRow: IAcDataBridgeProcesedRow = previousEntityProcessedRow;
+          if (!isDuplicateParentRow && Object.keys(destinationsRow[this.templateDef.destinationName]).length > 0) {
+            entityProcessedRow = await this.addRow({ row: destinationsRow[this.templateDef.destinationName], sourceRow: row });
+            destSavedRow[this.templateDef.destinationName] = entityProcessedRow.data;
+            previousEntityProcessedRow = entityProcessedRow;
+          }
+          else {
+            destSavedRow[this.templateDef.destinationName] = previousEntityProcessedRow.data;
+          }
+          let childTemplates: string[] = [];
+          for (const key of Object.keys(destinationsRow)) {
+            if (Object.keys(destinationsRow[key] > 0) && entityProcessedRow) {
+              if (this.worker.entityWorkers[key] && key != this.templateDef.destinationName) {
+                const entityWorker = this.worker.entityWorkers[key];
+                if (entityWorker) {
+                  if (this.templateDef.extendChildTemplates) {
+                    const childTemplateDetails = this.templateDef.extendChildTemplates.find((e) => { return e.templateName == entityWorker.templateDef.templateName });
+                    if (childTemplateDetails && childTemplateDetails.childDestinationField && childTemplateDetails.parentDestinationField) {
+                      if (entityProcessedRow.data[childTemplateDetails.parentDestinationField]) {
+                        destinationsRow[key][childTemplateDetails.childDestinationField] = entityProcessedRow.data[childTemplateDetails.parentDestinationField];
+                      }
+                    }
+                  }
+                  let isDuplicate: boolean = false;
+                  if (previousDestinationsRow[key] && isDuplicateParentRow) {
+                    isDuplicate = objectIsSame(previousDestinationsRow[key], destinationsRow[key]);
+                  }
+                  if (!isDuplicate) {
+                    const savedProcessedRow = await entityWorker?.addRow({ row: destinationsRow[key], sourceRow: row, parentRowId: entityProcessedRow.rowId, parentTemplateName: this.templateDef.templateName });
+                    destSavedRow[entityWorker.templateDef.destinationName] = savedProcessedRow.data;
+                    if (!entityWorker.referencingDestinations.includes(this.templateDef.destinationName)) {
+                      if (!this.referencingDestinations.includes(entityWorker.templateDef.destinationName)) {
+                        entityWorker.referencingDestinations.push(this.templateDef.destinationName);
+                      }
+                    }
+                    childTemplates.push(entityWorker.templateDef.templateName);
+                  }
+                  else {
+                  }
+                }
+              }
+            }
+          }
+          for (const templates of multiHiererchyTemplates) {
+            for (let i = 1; i <= templates.length - 2; i++) {
+              const extTemplate = templates[i];
+              const prevTemplate = templates[i - 1];
+              const nextTemplate = templates[i + 1];
+              const extInterWorker = Object.values(this.worker.entityWorkers).find((w) => { return w.templateDef.templateName == extTemplate; });
+              const prevInterWorker = Object.values(this.worker.entityWorkers).find((w) => { return w.templateDef.templateName == prevTemplate; });
+              const nextInterWorker = Object.values(this.worker.entityWorkers).find((w) => { return w.templateDef.templateName == nextTemplate; });
+
+              if (extInterWorker && prevInterWorker && nextInterWorker) {
+                if (!destSavedRow[extInterWorker.templateDef.destinationName] && destSavedRow[prevInterWorker.templateDef.destinationName] && destSavedRow[nextInterWorker.templateDef.destinationName]) {
+                  const nextToExtChildDetails = nextInterWorker.templateDef.extendChildTemplates?.find((t) => { return t.templateName == extTemplate });
+                  const extToPrevParentDetails = extInterWorker.templateDef.extendParentTemplates?.find((t) => { return t.templateName == prevTemplate });
+                  if (
+                    nextToExtChildDetails && nextToExtChildDetails.childDestinationField && nextToExtChildDetails.parentDestinationField &&
+                    extToPrevParentDetails && extToPrevParentDetails.childDestinationField && extToPrevParentDetails.parentDestinationField
+                  ) {
+                    if (!destSavedRow[extInterWorker.templateDef.destinationName]) {
+                      if (destSavedRow[prevInterWorker.templateDef.destinationName][extToPrevParentDetails.parentDestinationField] && destSavedRow[nextInterWorker.templateDef.destinationName][nextToExtChildDetails.parentDestinationField]) {
+                        const extDestRow: any = {
+                          [nextToExtChildDetails.childDestinationField]: destSavedRow[nextInterWorker.templateDef.destinationName][nextToExtChildDetails.parentDestinationField],
+                          [extToPrevParentDetails.childDestinationField]: destSavedRow[prevInterWorker.templateDef.destinationName][extToPrevParentDetails.parentDestinationField],
+                        };
+                        const extProcessedRow = await extInterWorker.addRow({ row: extDestRow });
+                        destSavedRow[extInterWorker.templateDef.destinationName] = extProcessedRow.data;
+                        if (!extInterWorker.referencingDestinations.includes(this.templateDef.destinationName)) {
+                          extInterWorker.referencingDestinations.push(this.templateDef.destinationName);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          if (childTemplates.length > 0) {
+            if (!entityProcessedRow.childTemplates) {
+              entityProcessedRow.childTemplates = [];
+            }
+            for (const childTemplateName of childTemplates) {
+              if (!entityProcessedRow.childTemplates.includes(childTemplateName)) {
+                entityProcessedRow.childTemplates.push(childTemplateName)
+              };
+            }
+          }
+          previousTemplateUniqueRowId = rowUniqueTemplateId;
+          previousDestinationsRow = { ...destinationsRow };
+        }
+        else {
+        }
+        if (this.progress) {
+          this.progress.completedCount++;
+          this.progress.percentage = Math.round((this.progress.completedCount / this.progress.totalCount) * 10000) / 100;
+          if (this.worker.taskProgress) {
+            this.worker.taskProgress.completedCount++;
+            this.worker.taskProgress.percentage = Math.round((this.worker.taskProgress.completedCount / this.worker.taskProgress.totalCount) * 10000) / 100;
+          }
+          this.worker.notifyProgress();
+        }
+      }
+      this.worker.notifyProgress(true);
+    }
+  }
+}
+
+export class AcDataBridgeWorker {
+  private data?: Uint8Array;
+  private progressCallback?: (progress: IAcDataBridgeProgress) => void;
+  private destinationEntities: Record<string, IAcDataBridgeEntity> = {};
+  private processingEntities: Record<string, IAcDataBridgeEntity> = {};
+  private sourceEntities: IAcDataBridgeEntity[] = [];
+  private existingData: Record<string, any[]> = {};
+  private dataDictionary?: AcDataDictionary;
+  private lastNotificationTime: number = Date.now();
+  private progressQueue: any = {};
+
+  beforeAddEntityRowCallback: ((args: IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>) | undefined;
+  entityWorkers: Record<string, AcDataBridgeEntityWorker> = {};
+  taskProgress?: IAcDataBridgeProgress;
+  templateEntities: Record<string, IAcDataBridgeEntityTemplateDef> = {};
+  socket: AcDataBridgeSocket = new AcDataBridgeSocket();
+  private socketCallback?: (event: string, data: any) => void;
+
+  constructor() {
+  }
+
+  async convertRowsForSqlOperations() {
+    const destinationSqlOperations: any = {};
+    for (const key of Object.keys(this.destinationEntities)) {
+      const operations: { operation: string, data: any }[] = [];
+      for (const row of Object.values(this.destinationEntities[key].processedRows!)) {
+        if (row.operation == 'INSERT') {
+          operations.push({ operation: row.operation, data: row.data });
+        }
+        row.status = 'COMPLETED';
+      }
+      if (operations.length > 0) {
+        destinationSqlOperations[key] = operations;
+      }
+    }
+    return destinationSqlOperations;
+  }
+
+  async getTemplateFieldsList({ templateName }: { templateName: string }): Promise<{ label: string, value: string }[]> {
+    const result: { label: string, value: string }[] = [];
+    const templateEntity = Object.values(this.templateEntities).find((entity) => {
+      return entity.templateName == templateName;
+    });
+    if (templateEntity) {
+      for (const field of templateEntity.templateFields) {
+        if (field.templateFieldName) {
+          result.push({ value: field.templateFieldName, label: field.templateFieldName });
+        }
+      }
+    }
+    return result;
+  }
+
+  async getTemplatesList(): Promise<{ label: string, value: string }[]> {
+    const result: { label: string, value: string }[] = [];
+    for (const entity of Object.values(this.templateEntities)) {
+      if (entity.templateName) {
+        result.push({ value: entity.templateName, label: entity.templateName });
+      }
+    }
+    return result;
+  }
+
+  async getWorkerEntityDestinations(): Promise<string[]> {
+    return Object.keys(this.entityWorkers);
+  }
+
+  notifyProgress(force: boolean = false) {
+    if (this.taskProgress) {
+      if (Date.now() - this.lastNotificationTime >= 1000 || force) {
+        this.lastNotificationTime = Date.now();
+        if (this.progressCallback) {
+          this.progressCallback(this.taskProgress);
+        }
+        this.emitSocketEvent('progress', this.taskProgress);
+      }
+    }
+  }
+
+  async orderEntitiesForProcessing(): Promise<Record<string, IAcDataBridgeEntity>> {
+    let pendingEntities: IAcDataBridgeEntity[] = [...Object.values(this.sourceEntities)];
+    this.processingEntities = {};
+    let destinations: string[] = [];
+    const maxIteration: number = 100;
+    let currentIteration: number = 0;
+    while (pendingEntities.length > 0 && currentIteration < maxIteration) {
+      for (const entity of pendingEntities) {
+        if (entity.templateName) {
+          let pendingReferencedTemplate: boolean = false;
+          for (const field of entity.fields) {
+            if (field.destinationName) {
+              if (!destinations.includes(field.destinationName)) {
+                destinations.push(field.destinationName);
+              }
+            }
+            if (field.foreignKeyTemplateName && field.foreignKeyTemplateName != '' && field.foreignKeyTemplateName != entity.templateName && field.foreignKeyTemplateFieldName && field.foreignKeyTemplateFieldName != '') {
+              const templateName = field.foreignKeyTemplateName;
+              const foreignKeyTemplate = Object.values(this.templateEntities).find((t) => { return t.templateName == templateName });
+              if (foreignKeyTemplate && foreignKeyTemplate.destinationName) {
+                if (!destinations.includes(foreignKeyTemplate.destinationName)) {
+                  destinations.push(foreignKeyTemplate.destinationName);
+                }
+              }
+              const finalizedTemplateEntity = Object.values(this.processingEntities).find((entity) => {
+                return entity.templateName == templateName
+              });
+              if (!finalizedTemplateEntity) {
+                const pendingTemplateEntity = pendingEntities.find((entity) => {
+                  return entity.templateName == templateName
+                });
+                if (pendingTemplateEntity) {
+                  pendingReferencedTemplate = true;
+                }
+              }
+            }
+            if (field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2) {
+              let index = 0;
+              for (const templateName of field.extensionTemplateHierarchy) {
+                if (index != 0 && index != field.extensionTemplateHierarchy.length - 1) {
+                  const intermediateTemplate = Object.values(this.templateEntities).find((t) => { return t.templateName == templateName });
+                  if (intermediateTemplate && intermediateTemplate.destinationName) {
+                    if (!destinations.includes(intermediateTemplate.destinationName)) {
+                      destinations.push(intermediateTemplate.destinationName);
+                    }
+                  }
+                }
+                index++;
+              }
+            }
+          }
+          if (!pendingReferencedTemplate) {
+            this.processingEntities[entity.destinationName] = entity;
+            const worker = new AcDataBridgeEntityWorker({ worker: this });
+            worker.entity = entity;
+            worker.templateDef = this.templateEntities[entity.destinationName];
+            this.entityWorkers[entity.destinationName] = worker;
+          }
+        }
+      }
+      pendingEntities = pendingEntities.filter((pendingEntity) => {
+        return this.processingEntities[pendingEntity.destinationName] == undefined;
+      });
+      currentIteration++;
+    }
+
+    if (pendingEntities.length > 0) {
+      console.warn("Following pending entities not added to processing list", pendingEntities);
+    }
+    for (const destination of destinations) {
+      if (!this.entityWorkers[destination]) {
+        const worker = new AcDataBridgeEntityWorker({ worker: this });
+        worker.templateDef = this.templateEntities[destination];
+        this.entityWorkers[destination] = worker;
+      }
+    }
+    return this.processingEntities;
+  }
+
+  async processEntities(): Promise<Record<string, IAcDataBridgeEntity>> {
+    let totalCount: number = 0;
+    const subTasksProgress: IAcDataBridgeProgress[] = [];
+    for (const worker of Object.values(this.entityWorkers)) {
+      if (worker.entity) {
+        totalCount += worker.entity.rowsCount;
+        worker.progress = {
+          id: `${worker.entity.destinationName}Worker`,
+          completedCount: 0,
+          totalCount: worker.entity.rowsCount,
+          description: '',
+          percentage: 0,
+          title: `${worker.entity.sourceName}`,
+        };
+        subTasksProgress.push(worker.progress);
+      }
+    }
+    this.taskProgress = {
+      id: 'processEntities',
+      completedCount: 0,
+      totalCount: totalCount,
+      percentage: 0,
+      title: `Processing ${this.sourceEntities.length} worksheets`,
+      description: `Processing ${totalCount} rows across ${this.sourceEntities.length} worksheets`,
+      subTasksProgress: subTasksProgress
+    };
+    this.notifyProgress(true);
+    for (const worker of Object.values(this.entityWorkers)) {
+      if (worker.entity) {
+        await worker.processRows();
+      }
+    }
+    this.notifyProgress(true);
+    let convertingRows: number = 0;
+    let destinationNames = Object.keys(this.entityWorkers);
+
+    const maxIteration = destinationNames.length * 5;
+    let iteration = 0;
+    let continueLoop: boolean = true;
+    while (continueLoop) {
+      if (iteration <= maxIteration) {
+        if (destinationNames.length > 0) {
+          for (const worker of Object.values(this.entityWorkers)) {
+            if (destinationNames.includes(worker.templateDef.destinationName)) {
+              const destinationEntity = worker.getDestinationEntity();
+              let missingRefEntity: string[] = [];
+              for (const refDest of worker.referencingDestinations) {
+                if (this.destinationEntities[refDest] == undefined && refDest != destinationEntity.destinationName) {
+                  missingRefEntity.push(refDest);
+                }
+              }
+              const notInTemplateMisingRefs: string[] = [];
+              for (const entityName of missingRefEntity) {
+                if (this.entityWorkers[entityName] != undefined) {
+                  if (this.entityWorkers[entityName].processedRows.length == 0) {
+                    notInTemplateMisingRefs.push(entityName);
+                  }
+                }
+              }
+              for (const entityName of notInTemplateMisingRefs) {
+                arrayRemove(missingRefEntity, entityName);
+              }
+              if (missingRefEntity.length == 0) {
+                if (destinationEntity.rowsCount > 0) {
+                  convertingRows += destinationEntity.rowsCount;
+                  this.destinationEntities[destinationEntity.destinationName] = destinationEntity;
+                }
+                else {
+                }
+                arrayRemove(destinationNames, worker.templateDef.destinationName);
+              }
+              else {
+              }
+            }
+          }
+        }
+        else {
+          continueLoop = false;
+        }
+      }
+      else {
+        continueLoop = false;
+        console.error("Maximum iteration for dependencies done");
+      }
+
+      iteration++;
+    }
+    this.taskProgress = {
+      id: 'convertEntities',
+      completedCount: 0,
+      totalCount: convertingRows,
+      percentage: 0,
+      title: `Data ready to convert`,
+      description: `${convertingRows} data rows across ${Object.keys(this.destinationEntities).length} templates are ready to convert`,
+    };
+    this.notifyProgress(true);
+    return this.destinationEntities;
+  }
+
+  registerProgressCallback(cb: (progress: IAcDataBridgeProgress) => void) {
+    this.progressCallback = cb;
+  }
+
+  registerBeforeAddEntityRowCallback(cb: (args: IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>) {
+    this.beforeAddEntityRowCallback = cb;
+  }
+
+  registerSocketCallback(cb: (event: string, data: any) => void) {
+    this.socketCallback = cb;
+  }
+
+  emitSocketEvent(event: string, data?: any) {
+    this.socket.emit(event, data);
+    if (this.socketCallback) {
+      this.socketCallback(event, data);
+    }
+  }
+
+  async setDataDictionary({ dataDictionaryJson }: { dataDictionaryJson: any }) {
+    this.dataDictionary = new AcDataDictionary();
+    this.dataDictionary.fromJson({ jsonData: dataDictionaryJson });
+  }
+
+  private setDefaultMappings() {
+    for (const entity of this.sourceEntities) {
+      const templateEntity: IAcDataBridgeEntityTemplateDef | undefined = Object.values(this.templateEntities).find((templateEntity: IAcDataBridgeEntityTemplateDef) => {
+        return templateEntity.templateName == entity.sourceName;
+      });
+      if (templateEntity) {
+        entity.templateName = templateEntity.templateName;
+        entity.destinationName = templateEntity.destinationName ?? '';
+        for (const col of entity.fields) {
+          const templateField = templateEntity.templateFields.find((templateCol: IAcDataBridgeField) => {
+            return templateCol.templateFieldName == col.sourceFieldName;
+          });
+          if (templateField) {
+            col.destinationFieldName = templateField.destinationFieldName;
+            col.destinationName = templateField.destinationName;
+            col.templateFieldName = templateField.templateFieldName;
+            col.isTemplatePrimaryKey = templateField.isTemplatePrimaryKey;
+            col.foreignKeyTemplateFieldName = templateField.foreignKeyTemplateFieldName;
+            col.foreignKeyTemplateName = templateField.foreignKeyTemplateName;
+            col.templateName = entity.templateName;
+            col.extensionTemplateHierarchy = templateField.extensionTemplateHierarchy;
+          }
+          else if (col.sourceFieldName == AC_DATA_BRIDGE_DEFAULTS.sourceColumnUidLabel) {
+            // col.destinationFieldName = AC_DATA_BRIDGE_DEFAULTS.sourceColumnUidName;
+          }
+        }
+      } else {
+        //
+      }
+    }
+  }
+
+  async setSourceEntities() {
+    if (!this.data) {
+      this.notifyProgress();
+      return;
+    }
+    const workbook = XLSX.read(this.data, { type: "array", });
+    const totalSheets = workbook.SheetNames.length;
+    let sheetIndex = 0;
+    this.taskProgress = {
+      id: 'setEntities',
+      completedCount: 0,
+      percentage: 0,
+      totalCount: workbook.SheetNames.length,
+      description: `Getting worksheet details...`,
+      title: 'Processing worksheets'
+    };
+
+    workbook.SheetNames.forEach((sheetName, index) => {
+      sheetIndex++;
+      const taskPercent = Math.round((sheetIndex / totalSheets) * 10000) / 100;
+      const worksheet = workbook.Sheets[sheetName];
+      const json: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      const headers = (json[0] as string[]) || [];
+      const rows: any[] = [];
+      let foundHeaders: boolean = false;
+      for (const row of json) {
+        if (foundHeaders) {
+          const data: any = {};
+          let index = 0;
+          for (const key of headers) {
+            if (key) {
+              data[key] = row[index];
+            }
+            index++;
+          }
+          rows.push(data);
+        }
+        else {
+          foundHeaders = true;
+        }
+      }
+
+      const cleanHeaders = headers
+        .map((h) => (h ?? "").toString().trim())
+        .filter((h) => h);
+
+      const columns: IAcDataBridgeField[] = [];
+      for (const col of cleanHeaders) {
+        columns.push({ sourceFieldName: col, sourceName: sheetName, templateName: '', templateFieldName: '' });
+      }
+
+      this.sourceEntities.push({
+        sourceName: sheetName,
+        destinationName: '',
+        fields: [...columns],
+        rowsCount: json.length,
+        rows: rows,
+        processedCount: 0,
+        completedCount: 0,
+        errorCount: 0
+      });
+    });
+    this.setDefaultMappings();
+  }
+
+  async setExistingData({ data }: { data: Record<string, any> }) {
+    this.existingData = data;
+    for (const key of Object.keys(this.existingData)) {
+      const worker = this.entityWorkers[key];
+      if (worker) {
+        for (const row of this.existingData[key]) {
+          const rowId = row[worker.primaryKeyFieldName];
+          const sourceRow: any = {};
+          for (const field of worker.templateDef.templateFields) {
+            if (field.destinationFieldName && field.destinationName == worker.templateDef.destinationName && field.templateFieldName) {
+              sourceRow[field.templateFieldName] = row[field.destinationFieldName];
+            }
+          }
+          worker.allData.push({ rowId, data: row, sourceRow });
+        }
+      }
+    }
+  }
+
+  async setData({ buffer }: { buffer: ArrayBuffer }): Promise<IAcDataBridgeEntity[]> {
+    this.taskProgress = {
+      id: 'setData',
+      completedCount: 0,
+      totalCount: 0,
+      percentage: 0,
+      description: `0% completed`,
+      title: 'Reading file'
+    };
+    const totalSize = buffer.byteLength;
+    const chunkSize = 256 * 1024;
+    let offset = 0;
+    const chunks: Uint8Array[] = [];
+    const fullData = new Uint8Array(buffer);
+    const totalChunks = Math.ceil(totalSize / chunkSize);
+    this.taskProgress.totalCount = totalChunks;
+    let chunkCount = 0;
+    this.notifyProgress(true);
+    while (offset < totalSize) {
+      const end = Math.min(offset + chunkSize, totalSize);
+      const chunk = fullData.slice(offset, end);
+      chunks.push(chunk);
+      offset = end;
+      chunkCount++;
+      const taskPercent = Math.round((chunkCount / totalChunks) * 10000) / 100;
+      this.taskProgress.completedCount = chunkCount;
+      this.taskProgress.description = `${taskPercent} completed`;
+      this.taskProgress.percentage = taskPercent;
+      this.notifyProgress();
+    }
+    this.data = fullData;
+    this.taskProgress = {
+      id: 'setData',
+      completedCount: 100,
+      totalCount: 100,
+      percentage: 100,
+      description: `Reading worksheets...`,
+      title: 'Extracting data'
+    };
+    this.setSourceEntities();
+    this.notifyProgress(true);
+    return this.sourceEntities;
+  }
+
+  async setTemplateEntities({ entities }: { entities: Record<string, IAcDataBridgeEntityTemplateDef> }) {
+    this.templateEntities = entities;
+  }
+
+  async generateSqlContent({comments = true,newLine = true}:{comments?:boolean,newLine?:boolean} = {}): Promise<string> {
+    let sql = '';
+    for (const destinationName of Object.keys(this.destinationEntities)) {
+      const entity = this.destinationEntities[destinationName];
+      const rows = Object.values(entity.processedRows!);
+      const validRows = rows.filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE');
+      if (validRows.length === 0) continue;
+
+      const uniqueFields = this.getUniqueFields(entity.fields);
+      if (uniqueFields.length === 0) continue;
+
+      if(comments){
+        sql += `/* Sql statements for ${destinationName} start */`;
+        if(newLine){
+          sql+= "\n";
+        }
+      }
+      const pkFields = uniqueFields.filter(f => f.isDestinationPrimaryKey);
+      const nonPkFields = uniqueFields.filter(f => !f.isDestinationPrimaryKey);
+
+      for (const row of validRows) {
+        if (row.operation === 'INSERT') {
+          const columns = uniqueFields.map(f => f.destinationFieldName!).join(', ');
+          const values = uniqueFields
+            .map(f => this.escapeSqlValue(row.data[f.destinationFieldName!], f.type))
+            .join(', ');
+          sql += `INSERT INTO ${destinationName} (${columns}) VALUES (${values});`;
+          if(newLine){
+            sql+= "\n";
+          }
+        } else if (row.operation === 'UPDATE') {
+          const updates = nonPkFields
+            .map(f => `${f.destinationFieldName!} = ${this.escapeSqlValue(row.data[f.destinationFieldName!], f.type)}`)
+            .join(', ');
+          
+          const where = pkFields
+            .map(f => `${f.destinationFieldName!} = ${this.escapeSqlValue(row.data[f.destinationFieldName!], f.type)}`)
+            .join(' AND ');
+
+          if (updates && where) {
+            sql += `UPDATE ${destinationName} SET ${updates} WHERE ${where};`;
+            if(newLine){
+              sql+= "\n";
+            }
+          } else if (!where) {
+            sql += `-- WARNING: Cannot generate UPDATE for ${destinationName} because no primary key fields are defined.`;
+            if(newLine){
+              sql+= "\n";
+            }
+          }
+        }
+      }
+      if(comments){
+        if(newLine){
+          sql+= "\n";
+        }
+        sql += `/* Sql statements for ${destinationName} end */`;
+        if(newLine){
+          sql+= "\n";
+        }
+      }
+    }
+    return sql;
+  }
+
+  private getUniqueFields(fields: IAcDataBridgeField[]): IAcDataBridgeField[] {
+    const uniqueFields: IAcDataBridgeField[] = [];
+    const seenFields = new Set<string>();
+    for (const f of fields) {
+      if (f.destinationFieldName && !seenFields.has(f.destinationFieldName)) {
+        uniqueFields.push(f);
+        seenFields.add(f.destinationFieldName);
+      }
+    }
+    return uniqueFields;
+  }
+
+  private escapeSqlValue(value: any, type?: 'string' | 'number' | 'date' | 'boolean', detectFromValue?: boolean): string {
+    if (value === null || value === undefined || value === '') return 'NULL';
+
+    if (type === 'number') {
+      return isNaN(Number(value)) ? 'NULL' : Number(value).toString();
+    }
+    if (type === 'boolean') {
+      const boolVal = typeof value === 'string' ? value.toLowerCase() === 'true' : !!value;
+      return boolVal ? 'TRUE' : 'FALSE';
+    }
+    if (type === 'date') {
+      const date = value instanceof Date ? value : new Date(value);
+      return isNaN(date.getTime()) ? 'NULL' : `'${date.toISOString()}'`;
+    }
+    if (detectFromValue) {
+      if (typeof value === 'number' || typeof value === 'boolean') return value.toString();
+      if (value instanceof Date) return `'${value.toISOString()}'`;
+    }
+    return `'${String(value).replace(/'/g, "''")}'`;
+  }
+
+  async generateXlsxContent({ destinationName }: { destinationName?: string } = {}): Promise<Uint8Array> {
+    const workbook = XLSX.utils.book_new();
+    const destinations = destinationName ? [destinationName] : Object.keys(this.destinationEntities);
+
+    for (const name of destinations) {
+      const entity = this.destinationEntities[name];
+      if (!entity) continue;
+      
+      const uniqueFields = this.getUniqueFields(entity.fields);
+      const fieldNames = uniqueFields.map(f => f.destinationFieldName!);
+      
+      const rows = Object.values(entity.processedRows!)
+        .filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE')
+        .map(r => {
+          const filteredRow: any = {};
+          fieldNames.forEach(f => filteredRow[f] = r.data[f]);
+          return filteredRow;
+        });
+      if (rows.length === 0) continue;
+
+      const worksheet = XLSX.utils.json_to_sheet(rows);
+      XLSX.utils.book_append_sheet(workbook, worksheet, name.substring(0, 31));
+    }
+    const buffer = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
+    return new Uint8Array(buffer);
+  }
+
+  async generateJsonContent({ destinationName }: { destinationName: string }): Promise<string> {
+    const entity = this.destinationEntities[destinationName];
+    if (!entity) return '[]';
+    
+    const uniqueFields = this.getUniqueFields(entity.fields);
+    const fieldNames = uniqueFields.map(f => f.destinationFieldName!);
+
+    const rows = Object.values(entity.processedRows!)
+      .filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE')
+      .map(r => {
+        const filteredRow: any = {};
+        fieldNames.forEach(f => filteredRow[f] = r.data[f]);
+        return filteredRow;
+      });
+    return JSON.stringify(rows, null, 2);
+  }
+
+  async generateAllJsonContent(): Promise<string> {
+    const allData: Record<string, any[]> = {};
+    for (const destinationName of Object.keys(this.destinationEntities)) {
+      const entity = this.destinationEntities[destinationName];
+      const uniqueFields = this.getUniqueFields(entity.fields);
+      const fieldNames = uniqueFields.map(f => f.destinationFieldName!);
+
+      const rows = Object.values(entity.processedRows!)
+        .filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE')
+        .map(r => {
+          const filteredRow: any = {};
+          fieldNames.forEach(f => filteredRow[f] = r.data[f]);
+          return filteredRow;
+        });
+      if (rows.length > 0) {
+        allData[destinationName] = rows;
+      }
+    }
+    return JSON.stringify(allData, null, 2);
+  }
+
+}
+

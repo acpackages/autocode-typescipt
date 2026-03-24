@@ -25,12 +25,19 @@ export interface IAcOnDestroy {
     acOnDestroy(): void;
 }
 
-export interface IAcOnChanges {
-    acOnChanges(changes: Record<string, any>): void;
+export interface IAcChangeDetails {
+    key: string;
+    property?: string;
+    oldValue?: any;
+    newValue?: any;
 }
 
-export interface IAcOnPropertyChanges {
-    acOnPropertyChanges(changes: Record<string, any>): void;
+export interface IAcOnChange {
+    acOnChange(change: IAcChangeDetails): void;
+}
+
+export interface IAcOnPropertyChange {
+    acOnPropertyChange(change: IAcChangeDetails): void;
 }
 
 export function AcElement(metadata: IAcElementMetadata) {
@@ -89,7 +96,12 @@ export class AcElementManager {
 
         // Inject host element reference if the component class has 'element' property
         // This allows components (like Router) to manipulate their own DOM
-        (this.instance as any).element = this.element;
+        Object.defineProperty(this.instance, 'element', {
+            value: this.element,
+            enumerable: false,
+            writable: true,
+            configurable: true
+        });
 
         if (this.metadata.styles) {
             this.applyStyles(this.metadata.styles);
@@ -281,7 +293,12 @@ export async function acInitRuntimeElementInstance(instance: any) {
             AC_RUNTIME_CONFIG.logError(ex);
         }
     }
-    instance['__ac_initialized__'] = true;
+    Object.defineProperty(instance, '__ac_initialized__', {
+        value: true,
+        enumerable: false,
+        writable: true,
+        configurable: true
+    });
 }
 
 export function acSetEngineElementEngineUUID(element: HTMLElement, instance: any): string | undefined {
