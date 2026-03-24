@@ -1,15 +1,11 @@
 {
   "name": "@autocode-ts/ac-sql-node",
   "version": "0.0.1",
+  "private": true,
   "type": "module",
-  "main": "./index.cjs",
-  "module": "./index.mjs",
-  "browser": "./index.umd.js",
-  "types": "./index.d.ts",
-  "exports": {
-    "import": "./index.mjs",
-    "require": "./index.cjs"
-  },
+  "main": "./ac-sql-node.js",
+  "module": "./ac-sql-node.js",
+  "types": "./ac-sql-node.d.ts",
   "dependencies": {
     "tslib": "^2.3.0",
     "@autocode-ts/autocode":"0.0.1",
@@ -23,7 +19,14 @@
   "devDependencies":{
     "@types/node": "^20.17.50"
   },
-  "publishConfig": {
-    "access": "public"
-  }
+  "exports": {
+    ".":{
+      "import": "./ac-sql-node.js",
+      "require": "./ac-sql-node.cjs"
+    }
+  },
+  "files": [
+    "lib"
+  ]
 }
+

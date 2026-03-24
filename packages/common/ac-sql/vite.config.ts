@@ -5,7 +5,9 @@ import * as path from 'path';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
-export default defineConfig(() => ({
+export default defineConfig(({command}) => {
+  const tsconfig = command === 'build' ? 'tsconfig.lib.build.json' : 'tsconfig.lib.json';
+  return {
   root: __dirname,
   cacheDir: '../../../node_modules/.vite/packages/common/ac-sql',
   plugins: [
@@ -31,16 +33,30 @@ export default defineConfig(() => ({
     },
     lib: {
       // Could also be a dictionary or array of multiple entry points.
-      entry: 'src/index.ts',
-      name: 'ac-sql',
-      fileName: 'index',
-      // Change this to the formats you want to support.
-      // Don't forget to update your package.json as well.
-      formats: ['es' as const],
+       entry: 'src/ac-sql.ts',
+        name: 'acSql',
+        fileName: (format) => {
+          if (format === 'es') return 'ac-sql.js';
+          if (format === 'cjs') return 'ac-sql.cjs';
+          if (format === 'umd') return 'ac-sql.umd.js';
+          return 'ac-sql.js';
+        },
+        formats: ['es' as const, 'cjs' as const, 'umd' as const],
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [],
+      external: [
+        "@autocode-ts/autocode",
+        "@autocode-ts/ac-extensions",
+        "@autocode-ts/ac-data-dictionary",
+      ],
+      output: {
+          globals: {
+            "@autocode-ts/autocode": "autocode",
+            "@autocode-ts/ac-extensions": "acExtensions",
+            "@autocode-ts/ac-data-dictionary": "acDataDictionary",
+          }
+        }
     },
   },
-}));
+};});

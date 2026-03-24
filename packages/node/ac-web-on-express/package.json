@@ -2,11 +2,11 @@
   "name": "@autocode-ts/ac-web-on-express",
   "version": "0.0.1",
   "private": true,
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "type": "module",
+  "main": "./ac-web-on-express.js",
+  "module": "./ac-web-on-express.js",
+  "types": "./ac-web-on-express.d.ts",
   "dependencies": {
-    "tslib": "^2.3.0",
     "@autocode-ts/ac-web": "0.0.1",
     "@autocode-ts/autocode": "0.0.1",
     "express": "^4.21.2",
@@ -14,7 +14,13 @@
     "cookie-parser": "^1.4.6",
     "multer": "^1.4.5-lts.1"
   },
-  "publishConfig": {
-    "access": "public"
-  }
+  "exports": {
+    ".":{
+      "import": "./ac-web-on-express.js",
+      "require": "./ac-web-on-express.cjs"
+    }
+  },
+  "files": [
+    "lib"
+  ]
 }

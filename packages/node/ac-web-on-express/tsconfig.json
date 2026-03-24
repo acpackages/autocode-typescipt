@@ -1,8 +1,9 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "node20",
     "baseUrl": ".",
+    "declaration": true,
     "paths": {
       "@autocode-ts/autocode": ["../../common/autocode/src/autocode.ts"],
       "@autocode-ts/ac-data-dictionary": ["../../common/ac-data-dictionary/src/ac-data-dictionary.ts"],

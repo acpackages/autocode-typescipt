@@ -109,7 +109,7 @@ export class AcWebOnExpress extends AcWeb {
       app.get(`${prefix}*`, (req: Request, res: Response) => {
         let routePath = req.params[0] || '';
         if (routePath.startsWith('/')) routePath = routePath.substring(1);
-        
+
         let content = map[routePath];
         if (!content && fallbackUrl) {
           content = map[fallbackUrl];
@@ -177,7 +177,7 @@ export class AcWebOnExpress extends AcWeb {
         const acFile = new AcWebFile();
         acFile.fileName = file.originalname;
         acFile.mimeType = file.mimetype;
-        acFile.content = file.buffer;
+        acFile.contentBuffer = file.buffer;
         acRequest.files[file.fieldname] = acFile;
       }
     }
@@ -186,8 +186,8 @@ export class AcWebOnExpress extends AcWeb {
   }
 
   private _applyAcWebResponseToExpressRes(acResponse: AcWebResponse, res: Response): void {
-    res.status(acResponse.responseCode.value || 200);
-    
+    res.status(acResponse.responseCode || 200);
+
     // Set headers
     if (acResponse.headers) {
       for (const key of Object.keys(acResponse.headers)) {
@@ -203,21 +203,21 @@ export class AcWebOnExpress extends AcWeb {
     }
 
     switch (acResponse.responseType) {
-      case AcEnumWebResponseType.json:
+      case AcEnumWebResponseType.Json:
         res.json(acResponse.content);
         break;
-      case AcEnumWebResponseType.html:
+      case AcEnumWebResponseType.Html:
         res.setHeader('Content-Type', 'text/html');
         res.send(acResponse.content);
         break;
-      case AcEnumWebResponseType.redirect:
+      case AcEnumWebResponseType.Redirect:
         res.redirect(acResponse.content);
         break;
-      case AcEnumWebResponseType.download:
+      case AcEnumWebResponseType.Download:
         // content would be a buffer or file path
         res.send(acResponse.content);
         break;
-      case AcEnumWebResponseType.raw:
+      case AcEnumWebResponseType.Raw:
         res.send(acResponse.content);
         break;
       default:

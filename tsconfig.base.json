@@ -118,13 +118,13 @@
         "packages/browser/ac-runtime-ts/src/index.ts"
       ],
       "@autocode-ts/ac-sql": [
-        "packages/common/ac-sql/src/index.ts"
+        "packages/common/ac-sql/src/ac-sql.ts"
       ],
       "@autocode-ts/ac-sql-core": [
         "packages/common/ac-sql-core/src/index.ts"
       ],
       "@autocode-ts/ac-sql-node": [
-        "packages/node/ac-sql-node/index.ts"
+        "packages/node/ac-sql-node/ac-sql-node.ts"
       ],
       "@autocode-ts/ac-sql-parser": [
         "packages/common/ac-sql-parser/src/index.ts"
@@ -135,17 +135,14 @@
       "@autocode-ts/ac-tiptap-editor-input": [
         "packages/browser/ac-tiptap-editor-input/src/index.ts"
       ],
-      "@autocode-ts/ac-tom-select-input": [
-        "packages/browser/ac-tom-select-input/src/index.ts"
-      ],
       "@autocode-ts/ac-vue": [
         "packages/vue/ac-vue/index.ts"
       ],
       "@autocode-ts/ac-web": [
-        "packages/node/ac-web/src/index.ts"
+        "packages/node/ac-web/src/ac-web.ts"
       ],
       "@autocode-ts/ac-web-on-express": [
-        "packages/node/ac-web-on-express/src/index.ts"
+        "packages/node/ac-web-on-express/src/ac-web-on-express.ts"
       ],
       "@autocode-ts/ac-ws-client": [
         "packages/common/ac-ws-client/src/ac-ws-client.ts"

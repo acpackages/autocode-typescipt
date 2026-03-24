@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import * as fs from 'fs';
 import * as path from 'path';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 import { AcLogger, AcResult, AcJsonUtils, AcBindJsonProperty } from "@autocode-ts/autocode";
 import { AcWebConfig } from "../models/ac-web-config.model";
 import { AcWebFile } from "../models/ac-web-file.model";

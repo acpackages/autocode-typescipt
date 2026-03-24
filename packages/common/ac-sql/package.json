@@ -3,14 +3,21 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "main": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./ac-sql.js",
+  "module": "./ac-sql.js",
+  "types": "./ac-sql.d.ts",
   "dependencies": {
-    "@autocode-ts/autocode":"0.0.1",
-    "@autocode-ts/ac-extensions":"0.0.1",
+    "@autocode-ts/autocode": "^0.0.1",
+    "@autocode-ts/ac-extensions": "^0.0.1",
     "@autocode-ts/ac-data-dictionary":"0.0.1"
   },
-  "publishConfig": {
-    "access": "public"
-  }
+  "exports": {
+    ".":{
+      "import": "./ac-sql.js",
+      "require": "./ac-sql.cjs"
+    }
+  },
+  "files": [
+    "lib"
+  ]
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AcHooks, acHooks, AcLogger, AcEnumLogType, AcFileUtils } from '@autocode-ts/autocode';
 import { AcWebRouteDefinition } from '../models/ac-web-route-definition.model';

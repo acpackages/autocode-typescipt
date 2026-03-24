@@ -25,7 +25,9 @@ export class AcWebFile {
   /** Binary buffer for binary file uploads */
   contentBuffer?: Buffer;
 
-  constructor() {}
+  constructor() {
+    //
+  }
 
   static instanceFromJson(jsonData: Record<string, any>): AcWebFile {
     const instance = new AcWebFile();

@@ -4,17 +4,6 @@
   "sourceRoot": "packages/node/ac-web-on-express/src",
   "projectType": "library",
   "tags": [],
-  "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/node/ac-web-on-express",
-        "tsConfig": "packages/node/ac-web-on-express/tsconfig.lib.json",
-        "packageJson": "packages/node/ac-web-on-express/package.json",
-        "main": "packages/node/ac-web-on-express/src/index.ts",
-        "assets": ["packages/node/ac-web-on-express/*.md"]
-      }
-    }
-  }
+  "// targets": "to see all targets run: nx show project ac-web-on-express --web",
+  "targets": {}
 }
