@@ -4,7 +4,7 @@ import { AcBuilder, AcBuilderApi } from '@autocode-ts/ac-builder';
 import { acRegisterBootstrapBuilderElements } from '@autocode-ts/ac-bootstrap-builder-elements';
 import { acRegisterDataDictionaryBuilderElements } from '@autocode-ts/ac-dd-builder-elements';
 import { PageHeader } from '../../components/page-header/page-header.component';
-import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+import { dataDictionaryJson as actDataDictionary } from './../../../../data/accountea-pro';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 
 export class BasicBuilderPage extends HTMLElement {

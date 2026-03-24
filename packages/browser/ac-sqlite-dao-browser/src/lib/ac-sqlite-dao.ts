@@ -6,7 +6,7 @@
 // ac-sqlite-dao.ts
 
 import initSqlJs, { Database, SqlJsStatic, QueryExecResult } from "sql.js";
-import { AcBaseSqlDao, AcDatabaseTypeDaoClassMap, AcSqlDaoResult } from "@autocode-ts/ac-sql";
+import { AcBaseSqlDao, AC_DB_TYPE_DAO_MAP, AcSqlDaoResult } from "@autocode-ts/ac-sql";
 import {
   AcDDTable,
   AcDDTableColumn,
@@ -647,5 +647,5 @@ export class AcSqliteDao extends AcBaseSqlDao {
 
 
 export function initSqliteBrowserDao() {
-  AcDatabaseTypeDaoClassMap[AcEnumSqlDatabaseType.Sqlite] = AcSqliteDao;
+  AC_DB_TYPE_DAO_MAP[AcEnumSqlDatabaseType.Sqlite] = AcSqliteDao;
 }

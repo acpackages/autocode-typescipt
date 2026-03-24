@@ -1,6 +1,6 @@
 import { AcEnumSqlDatabaseType } from "@autocode-ts/autocode";
 
-export const AcDatabaseTypeDaoClassMap:Record<any,any> = {
+export const AC_DB_TYPE_DAO_MAP:Record<any,any> = {
   [AcEnumSqlDatabaseType.MariaDB] : undefined,
   [AcEnumSqlDatabaseType.MsSql] : undefined,
   [AcEnumSqlDatabaseType.MySql] : undefined,

@@ -29,7 +29,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryTypescriptCodeGenerator = new AcDataDictionaryTypescriptCodeGenerator();
               codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId!});
-              AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data_dictionary.ts'});
+              AcBrowser.downloadFile({content:codeGenerator.getDataDictionaryString(),filename:'data-dictionary.ts'});
             }
           }
         },
@@ -51,7 +51,7 @@ export class AcDDECodeGeneratorExtension extends AcDDEExtension {
             if(this.editorApi.activeDataDictionary){
               const codeGenerator:AcDataDictionaryTypescriptCodeGenerator = new AcDataDictionaryTypescriptCodeGenerator();
               codeGenerator.dataDictionaryJson = this.editorApi.getDataDictionaryJson({dataDictionaryId:this.editorApi.activeDataDictionary.dataDictionaryId!});
-              AcBrowser.downloadFile({content:codeGenerator.getDDKeysString(),filename:'data_dictionary_keys.ts'});
+              AcBrowser.downloadFile({content:codeGenerator.getDDKeysString(),filename:'data-dictionary-keys.ts'});
             }
           }
         },

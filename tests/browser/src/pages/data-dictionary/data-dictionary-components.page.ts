@@ -5,7 +5,7 @@ import './../../../../../packages/browser/ac-data-dictionary-editor/src/lib/css/
 import './../../../../../packages/browser/extensions/datagrid/ac-datagrid-on-ag-grid/src/lib/css/ac-datagrid-on-ag-grid.css';
 import { AcDataDictionaryEditor, AcDDEApi } from '@autocode-ts/ac-data-dictionary-editor';
 import { PageHeader } from '../../components/page-header/page-header.component';
-import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+import { dataDictionaryJson as actDataDictionary } from './../../../../data/accountea-pro';
 // import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { AcDDDatagridElement, AcDDInputElement, AcDDInputFieldElement, AcDDInputManager } from '@autocode-ts/ac-data-dictionary-components';

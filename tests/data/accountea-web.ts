@@ -1,11 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import fs from 'fs';
-import path from 'path';
-import { AcDataDictionary }  from '@autocode-ts/ac-data-dictionary';
-import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager,AC_DB_TYPE_DAO_MAP }  from '@autocode-ts/ac-sql';
-import { AcMysqlDao }  from '@autocode-ts/ac-sql-node';
-import { AcEnumSqlDatabaseType } from '@autocode-ts/autocode';
-import {  } from '../../../../packages/common/ac-sql/src/ac-sql';
 export const dataDictionaryJson = {
   "name": "Accountea - Web",
   "version": 0,
@@ -811,28 +803,3 @@ export const dataDictionaryJson = {
     }
   ]
 };
-
-export async function testSchemaManager(): Promise<void> {
-    AcDataDictionary.registerDataDictionary({ jsonData: dataDictionaryJson });
-
-    AcSqlDatabase.databaseType = AcEnumSqlDatabaseType.MySql;
-    AC_DB_TYPE_DAO_MAP[AcEnumSqlDatabaseType.MySql] = AcMysqlDao;
-
-    const sqlConnection = AcSqlConnection.instanceFromJson({
-      jsonData: {
-        [AcSqlConnection.KeyConnectionUsername]: 'root',
-        [AcSqlConnection.KeyConnectionPassword]: '',
-        [AcSqlConnection.KeyConnectionHostname]: 'localhost',
-        [AcSqlConnection.KeyConnectionPort]: 3306,
-        [AcSqlConnection.KeyConnectionDatabase]: 'accountea',
-      },
-    });
-
-    AcSqlDatabase.sqlConnection = sqlConnection;
-
-    const schemaManager = new AcSqlDbSchemaManager();
-    const schemaInitResult = await schemaManager.initDatabase();
-
-    console.log('Schema init result : ');
-    console.log(schemaInitResult);
-}

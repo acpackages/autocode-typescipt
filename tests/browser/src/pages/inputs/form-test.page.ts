@@ -3,7 +3,7 @@
 import { AcForm, AcFormField, acInit } from "@autocode-ts/ac-browser";
 import { AcDataDictionary } from "@autocode-ts/ac-data-dictionary";
 import { AcDDInputManager } from "@autocode-ts/ac-data-dictionary-components";
-import { dataDictionaryJson as actDataDictionary } from './../../../../data/act-data-dictionary-v1';
+import { dataDictionaryJson as actDataDictionary } from './../../../../data/accountea-pro';
 import { ProductCategorySelectInput } from "../../components/inputs/product-category-select-input.element";
 
 export class AcFormTest extends HTMLElement {
