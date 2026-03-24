@@ -5,7 +5,6 @@ import { AcDataDictionary }  from '@autocode-ts/ac-data-dictionary';
 import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager,AC_DB_TYPE_DAO_MAP }  from '@autocode-ts/ac-sql';
 import { AcMysqlDao }  from '@autocode-ts/ac-sql-node';
 import { AcEnumSqlDatabaseType } from '@autocode-ts/autocode';
-import {  } from '../../../../packages/common/ac-sql/src/ac-sql';
 export const dataDictionaryJson = {
   "name": "Accountea - Web",
   "version": 0,

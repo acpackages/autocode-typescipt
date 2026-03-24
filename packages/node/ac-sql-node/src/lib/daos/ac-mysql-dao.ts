@@ -16,7 +16,8 @@ export class AcMysqlDao extends AcBaseSqlDao {
       port: this.sqlConnection.port,
       user: this.sqlConnection.username,
       password: this.sqlConnection.password,
-      database: this.sqlConnection.database
+      database: this.sqlConnection.database,
+      namedPlaceholders: true
     };
     const conn = await createConnection(config);
     return conn;

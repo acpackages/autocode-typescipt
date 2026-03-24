@@ -49,8 +49,8 @@ export default defineConfig(({ command }) => {
           "@autocode-ts/ac-extensions",
           "@autocode-ts/ac-data-dictionary",
           "@autocode-ts/ac-sql",
-          "fs",
           "mysql2",
+          'mysql2/promise',
           "sqlite",
           "sqlite3"
         ],
