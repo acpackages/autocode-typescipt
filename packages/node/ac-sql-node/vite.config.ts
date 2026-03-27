@@ -52,7 +52,9 @@ export default defineConfig(({ command }) => {
           "mysql2",
           'mysql2/promise',
           "sqlite",
-          "sqlite3"
+          "sqlite3",
+          "fs",
+          "path"
         ],
         output: {
           globals: {

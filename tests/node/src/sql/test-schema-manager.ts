@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { AcDataDictionary }  from '@autocode-ts/ac-data-dictionary';
 import { AcSqlConnection, AcSqlDatabase, AcSqlDbSchemaManager,AC_DB_TYPE_DAO_MAP }  from '@autocode-ts/ac-sql';
-import { AcMysqlDao }  from '@autocode-ts/ac-sql-node';
+import { AcMysqlDao, AcSqliteDao }  from '@autocode-ts/ac-sql-node';
 import { AcEnumSqlDatabaseType } from '@autocode-ts/autocode';
 export const dataDictionaryJson = {
   "name": "Accountea - Web",
@@ -832,6 +832,32 @@ export async function testSchemaManager(): Promise<void> {
     const schemaManager = new AcSqlDbSchemaManager();
     const schemaInitResult = await schemaManager.initDatabase();
 
-    console.log('Schema init result : ');
+    console.log('MySQL Schema init result : ');
+    console.log(schemaInitResult);
+}
+
+export async function testSqliteSchemaManager(): Promise<void> {
+    AcDataDictionary.registerDataDictionary({ jsonData: dataDictionaryJson });
+
+    AcSqlDatabase.databaseType = AcEnumSqlDatabaseType.Sqlite;
+    AC_DB_TYPE_DAO_MAP[AcEnumSqlDatabaseType.Sqlite] = AcSqliteDao;
+
+    const dbPath = path.join(process.cwd(), 'test.db');
+    if (fs.existsSync(dbPath)) {
+        fs.unlinkSync(dbPath);
+    }
+
+    const sqlConnection = AcSqlConnection.instanceFromJson({
+      jsonData: {
+        [AcSqlConnection.KeyConnectionDatabase]: dbPath,
+      },
+    });
+
+    AcSqlDatabase.sqlConnection = sqlConnection;
+
+    const schemaManager = new AcSqlDbSchemaManager();
+    const schemaInitResult = await schemaManager.initDatabase();
+
+    console.log('SQLite Schema init result : ');
     console.log(schemaInitResult);
 }

@@ -358,11 +358,11 @@ export class AcMysqlDao extends AcBaseSqlDao {
       });
       const [results]:any = await db.execute(finalStatement, statementParametersMap);
       if (mode === AcEnumDDSelectMode.Count) {
-        const row = results[0].assoc();
+        const row = results[0];
         result.totalRows = row['records_count'];
       } else {
         for (const row of results as any[]) {
-          result.rows.push(this.formatRow({ row: row.typedAssoc(), columnFormats }));
+          result.rows.push(this.formatRow({ row, columnFormats }));
         }
       }
       result.setSuccess();

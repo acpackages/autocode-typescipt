@@ -1,5 +1,5 @@
 
-import { AcDatagridRowDraggingHtmlPlaceholder, AcDatagridTreeTableHtmlPlaceholder, AcTabsCssClassName } from '@autocode-ts/ac-browser';
+import { AcDatagridRowDraggingHtmlPlaceholder, AcDatagridTreeTableHtmlPlaceholder, acInit, AcTabsCssClassName } from '@autocode-ts/ac-browser';
 import { AcRouter } from './utils/ac-router';
 import { DashboardPage } from './pages/dashboard/dashboard.page';
 import { AggridLocalData } from './pages/ag-grid/local-data.page';
@@ -76,6 +76,7 @@ AcTabsCssClassName.acTabPane += ' show active';
 AcSqliteDao.wasmUrl = './assets/vendor/sql.js/sql-wasm.wasm';
 
 initAgGrid();
+acInit();
 
 window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRoute({ label: 'Dashboard', path: '/', componentTag: 'dashboard-page', component: DashboardPage });

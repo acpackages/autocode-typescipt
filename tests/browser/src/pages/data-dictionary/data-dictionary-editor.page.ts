@@ -51,8 +51,8 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       this.editorApi.enableExtension({extensionName:AcSqlAnalyzerDDEExtension.extensionName});
 
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:communityDataDictionary});
-      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaPro});
-      this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaWeb});
+      this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaPro});
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaWeb});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:unifiDataDictionary});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:ddeDataDictionary});
       console.log(this.editorApi);

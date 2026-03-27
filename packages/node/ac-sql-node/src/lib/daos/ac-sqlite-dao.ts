@@ -4,6 +4,7 @@
 /* eslint-disable no-prototype-builtins */
 // ac-sqlite-dao.ts
 
+import fs from "fs";
 import sqlite3 from "sqlite3";
 import { open, Database } from "sqlite";
 import { AcBaseSqlDao, AcSqlDaoResult } from "@autocode-ts/ac-sql";
@@ -28,7 +29,6 @@ export class AcSqliteDao extends AcBaseSqlDao {
     const result = new AcResult();
     try {
       // Check if file exists
-      const fs = await import("fs");
       const exists = fs.existsSync(this.sqlConnection.database);
       result.setSuccess({
         value: exists,
@@ -89,12 +89,13 @@ export class AcSqliteDao extends AcBaseSqlDao {
       db = await this._getConnection();
       const whereClause = condition ? `WHERE ${condition}` : "";
       const statement = `DELETE FROM ${tableName} ${whereClause}`;
-      const { statement: updatedStatement, statementParametersMap } =
+      const { statement: updatedStatement, statementParametersList } =
         this.setSqlStatementParameters({
           statement,
           passedParameters: parameters,
+          returnMap: false,
         });
-      const res = await db.run(updatedStatement, Object.values(statementParametersMap!));
+      const res = await db.run(updatedStatement, statementParametersList!);
       result.affectedRowsCount = res.changes ?? 0;
       result.setSuccess();
     } catch (ex) {
@@ -118,12 +119,13 @@ export class AcSqliteDao extends AcBaseSqlDao {
       db = await this._getConnection();
       await db.exec("BEGIN TRANSACTION");
       for (const statement of statements) {
-        const { statement: updatedStatement, statementParametersMap } =
+        const { statement: updatedStatement, statementParametersList } =
           this.setSqlStatementParameters({
             statement,
             passedParameters: parameters,
+            returnMap: false,
           });
-        await db.run(updatedStatement, Object.values(statementParametersMap!));
+        await db.run(updatedStatement, statementParametersList!);
       }
       await db.exec("COMMIT");
       result.setSuccess();
@@ -149,12 +151,13 @@ export class AcSqliteDao extends AcBaseSqlDao {
     let db: Database | null = null;
     try {
       db = await this._getConnection();
-      const { statement: updatedStatement, statementParametersMap } =
+      const { statement: updatedStatement, statementParametersList } =
         this.setSqlStatementParameters({
           statement,
           passedParameters: parameters,
+          returnMap: false,
         });
-      await db.run(updatedStatement, Object.values(statementParametersMap!));
+      await db.run(updatedStatement, statementParametersList!);
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
@@ -299,15 +302,16 @@ export class AcSqliteDao extends AcBaseSqlDao {
       if (condition) {
         updatedStatement += ` WHERE ${condition}`;
       }
-      const { statement: finalStatement, statementParametersMap } = this.setSqlStatementParameters({
+      const { statement: finalStatement, statementParametersList } = this.setSqlStatementParameters({
         statement: updatedStatement,
         passedParameters: parameters,
+        returnMap: false,
       });
       if (mode === AcEnumDDSelectMode.Count) {
-        const row: any = await db.get(finalStatement, statementParametersMap);
+        const row: any = await db.get(finalStatement, statementParametersList);
         result.totalRows = row?.records_count ?? 0;
       } else {
-        const rows: any[] = await db.all(finalStatement, statementParametersMap);
+        const rows: any[] = await db.all(finalStatement, statementParametersList);
         for (const row of rows) {
           result.rows.push(this.formatRow({ row, columnFormats }));
         }
