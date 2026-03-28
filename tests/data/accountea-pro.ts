@@ -765,6 +765,75 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "act_accountee_stats": {
+      "tableName": "act_accountee_stats",
+      "tableColumns": {
+        "accountee_stat_id": {
+          "columnName": "accountee_stat_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stat Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            }
+          }
+        },
+        "accountee_stat_key": {
+          "columnName": "accountee_stat_key",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stat Key"
+            }
+          }
+        },
+        "accountee_stat_numeric_value": {
+          "columnName": "accountee_stat_numeric_value",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Numeric Value"
+            }
+          }
+        },
+        "accountee_stat_text_value": {
+          "columnName": "accountee_stat_text_value",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Text Value"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "accountee_stats"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "accountee_stat"
+        }
+      }
+    },
     "act_accountee_websites": {
       "tableName": "act_accountee_websites",
       "tableColumns": {
@@ -5426,6 +5495,36 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Remarks"
+            }
+          }
+        },
+        "product_price_final": {
+          "columnName": "product_price_final",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product Price"
+            }
+          }
+        },
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product Batch"
+            }
+          }
+        },
+        "is_stock_available": {
+          "columnName": "is_stock_available",
+          "columnType": "YES_NO",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Stock Available"
             }
           }
         }
@@ -22393,16 +22492,90 @@ export const dataDictionaryJson = {
               "propertyValue": "0"
             }
           }
+        },
+        "product_description": {
+          "columnName": "product_description",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Description"
+            }
+          }
+        },
+        "product_price_final": {
+          "columnName": "product_price_final",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Price"
+            }
+          }
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          }
+        },
+        "product_price_mrp": {
+          "columnName": "product_price_mrp",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "MRP"
+            }
+          }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "product_price_gross": {
+          "columnName": "product_price_gross",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Gross Price"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "stock_update_products"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "stock_update_product"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "stock_update_products"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_stock_update_products"
         }
       }
     },
@@ -22603,16 +22776,80 @@ export const dataDictionaryJson = {
               "propertyValue": "0"
             }
           }
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Currency"
+            }
+          }
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Exchange Rate"
+            }
+          }
+        },
+        "stock_update_amount": {
+          "columnName": "stock_update_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Amount"
+            }
+          }
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Products"
+            }
+          }
+        },
+        "stock_update_type": {
+          "columnName": "stock_update_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Type"
+            }
+          }
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Transaction"
+            }
+          }
         }
       },
       "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "stock_updates"
+        },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "stock_update"
         },
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "stock_updates"
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_stock_updates"
         }
       }
     },
@@ -24568,6 +24805,85 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "websites"
+        }
+      }
+    },
+    "act_product_batches": {
+      "tableName": "act_product_batches",
+      "tableColumns": {
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Batch Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product"
+            }
+          }
+        },
+        "product_batch_code": {
+          "columnName": "product_batch_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Batch Code"
+            }
+          }
+        },
+        "manufacturing_time": {
+          "columnName": "manufacturing_time",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "MfgDate"
+            }
+          }
+        },
+        "expiry_time": {
+          "columnName": "expiry_time",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Expiry"
+            }
+          }
+        },
+        "product_batch_remarks": {
+          "columnName": "product_batch_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_batches"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_batch"
         }
       }
     }
@@ -37691,6 +38007,384 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT \nSUM(in_total_quantity ) AS in_total_quantity , \nSUM(out_total_quantity) AS out_total_quantity, \nSUM(IIF(in_total_quantity IS NULL,0,in_total_quantity ) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) AS total_closing_stock, \n(SUM(IIF(in_total_quantity IS NULL,0,in_total_quantity ) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS closing_stock,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.storage_location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,storage_location_id"
     },
+    "act_vw_stock_update_products": {
+      "viewName": "act_vw_stock_update_products",
+      "viewColumns": {
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "hsn_code": {
+          "columnName": "hsn_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "hsn_code"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
+        },
+        "product_uom_name": {
+          "columnName": "product_uom_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_product_uoms",
+          "columnSourceOriginalColumn": "product_uom_name"
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "display_index"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "new_stock_quantity": {
+          "columnName": "new_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "new_stock_quantity"
+        },
+        "new_stock_total_quantity": {
+          "columnName": "new_stock_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "new_stock_total_quantity"
+        },
+        "old_stock_quantity": {
+          "columnName": "old_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "old_stock_quantity"
+        },
+        "old_stock_total_quantity": {
+          "columnName": "old_stock_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "old_stock_total_quantity"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "stock_update_product_remarks": {
+          "columnName": "stock_update_product_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_product_remarks"
+        },
+        "product_status": {
+          "columnName": "product_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_status"
+        },
+        "stock_update_id": {
+          "columnName": "stock_update_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_id"
+        },
+        "stock_update_product_id": {
+          "columnName": "stock_update_product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_product_id"
+        },
+        "update_quantity": {
+          "columnName": "update_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "update_quantity"
+        },
+        "update_total_quantity": {
+          "columnName": "update_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "update_total_quantity"
+        },
+        "product_description": {
+          "columnName": "product_description",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_description"
+        },
+        "product_price_final": {
+          "columnName": "product_price_final",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_price_final"
+        },
+        "product_amount": {
+          "columnName": "product_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_amount"
+        },
+        "product_price_mrp": {
+          "columnName": "product_price_mrp",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_price_mrp"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "product_price_gross": {
+          "columnName": "product_price_gross",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "product_price_gross"
+        }
+      },
+      "viewQuery": "SELECT \nact_vw_products.product_name,\n    act_vw_products.hsn_code,\n    act_vw_products.product_image_media,\n    act_product_uoms.product_uom_name,\nact_stock_update_products.* \nFROM act_stock_update_products\nLEFT JOIN act_vw_products ON act_stock_update_products.product_id = act_vw_products.product_id \nLEFT JOIN act_product_uoms ON act_stock_update_products.product_uom_id = act_product_uoms.product_uom_id"
+    },
+    "act_vw_stock_update_summary": {
+      "viewName": "act_vw_stock_update_summary",
+      "viewColumns": {
+        "stock_update_id": {
+          "columnName": "stock_update_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_id"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "count",
+          "columnSourceOriginalColumn": ""
+        },
+        "total_amount": {
+          "columnName": "total_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "sum",
+          "columnSourceOriginalColumn": ""
+        }
+      },
+      "viewQuery": "SELECT\n    act_stock_updates.stock_update_id,\n    IFNULL(p.products_count, 0) AS products_count,\n    ROUND(IFNULL(p.total_amount, 0)) AS total_amount \nFROM act_stock_updates\nLEFT JOIN (\n    SELECT\n        stock_update_id,\n        COUNT(stock_update_product_id) AS products_count,\n        SUM(product_amount) AS total_amount\n    FROM act_stock_update_products\n    GROUP BY stock_update_id\n) p ON p.stock_update_id= act_stock_updates.stock_update_id;"
+    },
+    "act_vw_stock_updates": {
+      "viewName": "act_vw_stock_updates",
+      "viewColumns": {
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "accountee_id"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "stock_update_remarks": {
+          "columnName": "stock_update_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_remarks"
+        },
+        "stock_update_status": {
+          "columnName": "stock_update_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_status"
+        },
+        "stock_update_datetime": {
+          "columnName": "stock_update_datetime",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_datetime"
+        },
+        "stock_update_id": {
+          "columnName": "stock_update_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_id"
+        },
+        "stock_update_number": {
+          "columnName": "stock_update_number",
+          "columnType": "AUTO_NUMBER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_number"
+        },
+        "stock_update_reason": {
+          "columnName": "stock_update_reason",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_reason"
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "user_id"
+        },
+        "is_finalized": {
+          "columnName": "is_finalized",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "is_finalized"
+        },
+        "currency_code": {
+          "columnName": "currency_code",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "currency_code"
+        },
+        "exchange_rate": {
+          "columnName": "exchange_rate",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "exchange_rate"
+        },
+        "stock_update_amount": {
+          "columnName": "stock_update_amount",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_amount"
+        },
+        "products_count": {
+          "columnName": "products_count",
+          "columnType": "INTEGER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "products_count"
+        },
+        "stock_update_type": {
+          "columnName": "stock_update_type",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "stock_update_type"
+        },
+        "transaction_id": {
+          "columnName": "transaction_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_updates",
+          "columnSourceOriginalColumn": "transaction_id"
+        }
+      },
+      "viewQuery": "SELECT * FROM act_stock_updates"
+    },
     "act_vw_storage_locations": {
       "viewName": "act_vw_storage_locations",
       "viewColumns": {
@@ -38270,6 +38964,7 @@ export const dataDictionaryJson = {
         "ledger_account_name": {
           "columnName": "ledger_account_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_name"
@@ -38277,6 +38972,7 @@ export const dataDictionaryJson = {
         "ledger_account_type_name": {
           "columnName": "ledger_account_type_name",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "ledger_account_type_name"
@@ -38284,6 +38980,7 @@ export const dataDictionaryJson = {
         "reflecting_statement": {
           "columnName": "reflecting_statement",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "view",
           "columnSourceName": "act_vw_ledger_accounts",
           "columnSourceOriginalColumn": "reflecting_statement"
@@ -38291,6 +38988,7 @@ export const dataDictionaryJson = {
         "accountee_id": {
           "columnName": "accountee_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "accountee_id"
@@ -38298,6 +38996,7 @@ export const dataDictionaryJson = {
         "transaction_narration": {
           "columnName": "transaction_narration",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "transaction_narration"
@@ -38305,6 +39004,7 @@ export const dataDictionaryJson = {
         "transaction_time": {
           "columnName": "transaction_time",
           "columnType": "DATETIME",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "transaction_time"
@@ -38312,6 +39012,7 @@ export const dataDictionaryJson = {
         "transaction_type": {
           "columnName": "transaction_type",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "transaction_type"
@@ -38319,6 +39020,7 @@ export const dataDictionaryJson = {
         "debit_ledger_accounts": {
           "columnName": "debit_ledger_accounts",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "debit_ledger_accounts"
@@ -38326,6 +39028,7 @@ export const dataDictionaryJson = {
         "credit_ledger_accounts": {
           "columnName": "credit_ledger_accounts",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transactions",
           "columnSourceOriginalColumn": "credit_ledger_accounts"
@@ -38333,6 +39036,7 @@ export const dataDictionaryJson = {
         "transaction_entry_amount": {
           "columnName": "transaction_entry_amount",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_amount"
@@ -38340,6 +39044,7 @@ export const dataDictionaryJson = {
         "currency_code": {
           "columnName": "currency_code",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "currency_code"
@@ -38347,6 +39052,7 @@ export const dataDictionaryJson = {
         "exchange_rate": {
           "columnName": "exchange_rate",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "exchange_rate"
@@ -38354,6 +39060,7 @@ export const dataDictionaryJson = {
         "ledger_account_id": {
           "columnName": "ledger_account_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "ledger_account_id"
@@ -38361,6 +39068,7 @@ export const dataDictionaryJson = {
         "reference_number": {
           "columnName": "reference_number",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "reference_number"
@@ -38368,6 +39076,7 @@ export const dataDictionaryJson = {
         "transaction_entry_id": {
           "columnName": "transaction_entry_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_id"
@@ -38375,6 +39084,7 @@ export const dataDictionaryJson = {
         "transaction_id": {
           "columnName": "transaction_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_id"
@@ -38382,6 +39092,7 @@ export const dataDictionaryJson = {
         "payment_method_id": {
           "columnName": "payment_method_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "payment_method_id"
@@ -38389,6 +39100,7 @@ export const dataDictionaryJson = {
         "tax_rate_id": {
           "columnName": "tax_rate_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "tax_rate_id"
@@ -38396,6 +39108,7 @@ export const dataDictionaryJson = {
         "taxing_scheme_id": {
           "columnName": "taxing_scheme_id",
           "columnType": "UUID",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "taxing_scheme_id"
@@ -38403,6 +39116,7 @@ export const dataDictionaryJson = {
         "tax_rate_percentage": {
           "columnName": "tax_rate_percentage",
           "columnType": "DOUBLE",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "tax_rate_percentage"
@@ -38410,6 +39124,7 @@ export const dataDictionaryJson = {
         "transaction_entry_description": {
           "columnName": "transaction_entry_description",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_description"
@@ -38417,6 +39132,7 @@ export const dataDictionaryJson = {
         "transaction_entry_type": {
           "columnName": "transaction_entry_type",
           "columnType": "STRING",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_type"
@@ -38424,6 +39140,7 @@ export const dataDictionaryJson = {
         "is_credit": {
           "columnName": "is_credit",
           "columnType": "YES_NO",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "is_credit"
@@ -38431,6 +39148,7 @@ export const dataDictionaryJson = {
         "transaction_entry_remarks": {
           "columnName": "transaction_entry_remarks",
           "columnType": "TEXT",
+          "columnProperties": {},
           "columnSource": "table",
           "columnSourceName": "act_transaction_entries",
           "columnSourceOriginalColumn": "transaction_entry_remarks"
@@ -38545,6 +39263,75 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT * FROM act_users"
+    },
+    "act_vw_product_batches": {
+      "viewName": "act_vw_product_batches",
+      "viewColumns": {
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_batch_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_batch_code": {
+          "columnName": "product_batch_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_batch_code"
+        },
+        "manufacturing_time": {
+          "columnName": "manufacturing_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "manufacturing_time"
+        },
+        "expiry_time": {
+          "columnName": "expiry_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "expiry_time"
+        },
+        "product_batch_remarks": {
+          "columnName": "product_batch_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_batch_remarks"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
+        }
+      },
+      "viewQuery": "SELECT act_product_batches.*,\nact_vw_products.product_name,\nact_vw_products.product_sku,\nact_vw_products.product_image_media\n FROM act_product_batches LEFT JOIN \nact_vw_products ON act_product_batches.product_id = act_vw_products.product_id"
     }
   },
   "relationships": [
@@ -41577,6 +42364,42 @@ export const dataDictionaryJson = {
       "destinationTable": "act_delivery_note_medias",
       "sourceColumn": "media_id",
       "sourceTable": "act_medias"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_stock_update_products",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "currency_code",
+      "destinationTable": "act_stock_updates",
+      "sourceColumn": "currency_code",
+      "sourceTable": "act_currencies"
+    },
+    {
+      "destinationColumn": "transaction_id",
+      "destinationTable": "act_stock_updates",
+      "sourceColumn": "transaction_id",
+      "sourceTable": "act_transactions"
+    },
+    {
+      "destinationColumn": "accountee_id",
+      "destinationTable": "act_accountee_stats",
+      "sourceColumn": "accountee_id",
+      "sourceTable": "act_accountees"
+    },
+    {
+      "destinationColumn": "product_id",
+      "destinationTable": "act_product_batches",
+      "sourceColumn": "product_id",
+      "sourceTable": "act_products"
+    },
+    {
+      "destinationColumn": "product_batch_id",
+      "destinationTable": "act_inventory_tracking_entries",
+      "sourceColumn": "product_batch_id",
+      "sourceTable": "act_product_batches"
     }
   ]
 };
