@@ -1,29 +1,33 @@
-import { acAddClassToElement } from "../../../utils/ac-element-functions";
-import { AcRepeaterCssClassName } from "../consts/ac-repeater-css-class-name.const";
+import { AcElementBase } from "../../../core/_core.export";
+import { acGetParentElementWithTag, acRegisterCustomElement } from "../../../utils/ac-element-functions";
+import { AC_REPEATER_TAG } from "../consts/ac-repeater-tag.const";
 import { AcRepeaterApi } from "../core/ac-repeater-api";
-import { IAcRepeaterHeaderHookArgs } from "../interfaces/hook-args/ac-repeater-header-hook-args.interface";
+import { AcRepeaterElement } from "./ac-repeater.element";
 
 
-export class AcRepeaterHeaderElement {
-  public element:HTMLElement = document.createElement('div');
-  private repeaterApi:AcRepeaterApi;
-  headerRowElement:HTMLElement = document.createElement('div');
+export class AcRepeaterHeaderElement extends AcElementBase {
 
-  constructor({repeaterApi}:{repeaterApi:AcRepeaterApi}){
-    this.repeaterApi = repeaterApi;
-    this.initElement();
+  private repeaterApi: AcRepeaterApi;
+
+  private autoBindRepeater() {
+    if (this.isConnected) {
+      const repeater: AcRepeaterElement = acGetParentElementWithTag({ element: this, tag: AC_REPEATER_TAG.repeater }) as any;
+      if (repeater) {
+        this.repeaterApi = repeater.repeaterApi;
+      }
+    }
+    else {
+      this.delayedCallback.add({
+        callback: () => {
+          this.autoBindRepeater();
+        }, duration: 50, key: 'autoInit'
+      });
+    }
   }
 
-  initElement(){
-    acAddClassToElement({class_:AcRepeaterCssClassName.acRepeaterHeader,element:this.element});
-    this.element.append(this.headerRowElement);
-  }
-
-  setColumns(){
-    this.headerRowElement.innerHTML = "";
-    const hookArgs:IAcRepeaterHeaderHookArgs = {
-      repeaterHeader:this,
-      repeaterApi:this.repeaterApi
-    };
+  override init(): void {
+    super.init();
+    this.autoBindRepeater();
   }
 }
+acRegisterCustomElement({ tag: AC_REPEATER_TAG.repeaterHeader, type: AcRepeaterHeaderElement });

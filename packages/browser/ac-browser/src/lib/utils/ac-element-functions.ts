@@ -86,6 +86,18 @@ export function acElementHasParentTag({ element, tag }: { element: HTMLElement, 
   return false;
 }
 
+export function acGetParentElementWithTag({ element, tag }: { element: HTMLElement, tag: string }): HTMLElement|null {
+  tag = tag.toLowerCase(); // normalize for comparison
+  let parent = element.parentElement;
+  while (parent) {
+    if (parent.tagName.toLowerCase() == tag) {
+      return parent;
+    }
+    parent = parent.parentElement;
+  }
+  return null;
+}
+
 export function acLinkElementScroll({ source, destination, both = true }: { source: HTMLElement, destination: HTMLElement, both?: boolean }) {
   source.addEventListener('wheel', e => {
     source.scrollLeft += e.deltaX;

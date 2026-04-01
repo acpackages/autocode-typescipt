@@ -151,11 +151,11 @@ export class AcDDETableEditor {
     this.detailPanels = this.element.querySelector('.detail-resizable-panels') as AcResizablePanels;
     this.delayedCallback.add({callback:() => {
       this.editorPanels.setPanelSizes({
-      panelSizes: [
-        { size: 35, index: 0 },
-        { size: 65, index: 1 }
-      ]
-    });
+        panelSizes: [
+          { size: 35, index: 0 },
+          { size: 65, index: 1 }
+        ]
+      });
       this.detailPanels.setPanelSizes({
       panelSizes: [
         { size: 60, index: 0 },

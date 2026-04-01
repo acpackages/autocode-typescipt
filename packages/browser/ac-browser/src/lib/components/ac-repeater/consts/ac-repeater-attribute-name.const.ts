@@ -1,4 +1,4 @@
 export const AcRepeaterAttributeName = {
   acRepeater: 'ac-repeater',
-  acRepeaterRowId: 'ac-repeater-row-id',
+  IAcRepeaterRowId: 'ac-repeater-row-id',
 }

@@ -1,8 +1,8 @@
 import { AcRepeaterApi } from "../../core/ac-repeater-api";
-import { AcRepeaterRow } from "../../models/ac-repeater-row.model";
+import { IAcRepeaterRow } from "../../models/ac-repeater-row.model";
 
-export interface IAcRepeaterRowUpdateHookArgs{
+export interface IIAcRepeaterRowUpdateHookArgs{
   repeaterApi:AcRepeaterApi,
-  repeaterRow:AcRepeaterRow,
+  repeaterRow:IAcRepeaterRow,
   highlightRow:boolean
 }

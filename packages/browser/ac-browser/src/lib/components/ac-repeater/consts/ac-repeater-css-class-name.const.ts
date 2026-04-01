@@ -5,9 +5,9 @@ export const AcRepeaterCssClassName = {
   acRepeaterFooter: 'ac-repeater-footer',
   acRepeaterFooterPaginationContainer: 'ac-repeater-footer-pagination-container',
   acRepeaterHeader: 'ac-repeater-header',
-  acRepeaterRow: 'ac-repeater-row',
-  acRepeaterRowEven: 'ac-repeater-row-even',
-  acRepeaterRowOdd: 'ac-repeater-row-odd',
-  acRepeaterRowsContainer: 'ac-repeater-rows-container',
-  acRepeaterRowWrapper: 'ac-repeater-row-wrapper'
+  IAcRepeaterRow: 'ac-repeater-row',
+  IAcRepeaterRowEven: 'ac-repeater-row-even',
+  IAcRepeaterRowOdd: 'ac-repeater-row-odd',
+  IAcRepeaterRowsContainer: 'ac-repeater-rows-container',
+  IAcRepeaterRowWrapper: 'ac-repeater-row-wrapper'
 }

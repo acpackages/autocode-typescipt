@@ -1,6 +1,6 @@
 export const dataDictionaryJson = {
   "name": "Accountea - Pro",
-  "version": 9,
+  "version": 10,
   "tables": {
     "act_access_groups": {
       "tableName": "act_access_groups",
@@ -5518,9 +5518,9 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "is_stock_available": {
-          "columnName": "is_stock_available",
-          "columnType": "YES_NO",
+        "available_stock_quantity": {
+          "columnName": "available_stock_quantity",
+          "columnType": "DOUBLE",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -8986,6 +8986,119 @@ export const dataDictionaryJson = {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
           "propertyValue": "product_barcodes"
+        }
+      }
+    },
+    "act_product_batches": {
+      "tableName": "act_product_batches",
+      "tableColumns": {
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Batch Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Product"
+            }
+          }
+        },
+        "product_batch_code": {
+          "columnName": "product_batch_code",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Batch Code"
+            }
+          }
+        },
+        "manufacturing_time": {
+          "columnName": "manufacturing_time",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "MfgDate"
+            }
+          }
+        },
+        "expiry_time": {
+          "columnName": "expiry_time",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Expiry"
+            }
+          }
+        },
+        "product_batch_remarks": {
+          "columnName": "product_batch_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
+        },
+        "best_before_time": {
+          "columnName": "best_before_time",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Best Before"
+            }
+          }
+        },
+        "inward_time": {
+          "columnName": "inward_time",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Inward Time"
+            }
+          }
+        },
+        "batch_status": {
+          "columnName": "batch_status",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Batch Status"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "product_batches"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "product_batch"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "act_vw_product_batches"
         }
       }
     },
@@ -24807,85 +24920,6 @@ export const dataDictionaryJson = {
           "propertyValue": "websites"
         }
       }
-    },
-    "act_product_batches": {
-      "tableName": "act_product_batches",
-      "tableColumns": {
-        "product_batch_id": {
-          "columnName": "product_batch_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Batch Id"
-            },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
-              "propertyValue": true
-            }
-          }
-        },
-        "product_id": {
-          "columnName": "product_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Product"
-            }
-          }
-        },
-        "product_batch_code": {
-          "columnName": "product_batch_code",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Batch Code"
-            }
-          }
-        },
-        "manufacturing_time": {
-          "columnName": "manufacturing_time",
-          "columnType": "DATETIME",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "MfgDate"
-            }
-          }
-        },
-        "expiry_time": {
-          "columnName": "expiry_time",
-          "columnType": "DATETIME",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Expiry"
-            }
-          }
-        },
-        "product_batch_remarks": {
-          "columnName": "product_batch_remarks",
-          "columnType": "TEXT",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Remarks"
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "product_batches"
-        },
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "product_batch"
-        }
-      }
     }
   },
   "views": {
@@ -28347,9 +28381,41 @@ export const dataDictionaryJson = {
           "columnSource": "table",
           "columnSourceName": "act_inventory_tracking_entries",
           "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
+        },
+        "product_price_final": {
+          "columnName": "product_price_final",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_price_final"
+        },
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_batch_id"
+        },
+        "available_stock_quantity": {
+          "columnName": "available_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "available_stock_quantity"
+        },
+        "available_stock_value": {
+          "columnName": "available_stock_value",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "function",
+          "columnSourceName": "",
+          "columnSourceOriginalColumn": ""
         }
       },
-      "viewQuery": "SELECT (CASE WHEN act_inventory_tracking_entries.in_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.in_total_quantity END - CASE WHEN act_inventory_tracking_entries.out_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.out_total_quantity END) AS net_total_quantity,act_inventory_trackings.product_id,act_inventory_trackings.inventory_tracking_datetime,act_inventory_trackings.is_draft,act_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
+      "viewQuery": "SELECT \n((CASE WHEN act_inventory_tracking_entries.in_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.in_total_quantity END)-\n(CASE WHEN act_inventory_tracking_entries.out_total_quantity IS NULL THEN 0 ELSE act_inventory_tracking_entries.out_total_quantity END)) AS net_total_quantity,\n((CASE WHEN act_inventory_tracking_entries.available_stock_quantity >0 THEN act_inventory_tracking_entries.available_stock_quantity ELSE 0 END) * \n(CASE WHEN act_inventory_tracking_entries.product_price_final > 0 THEN act_inventory_tracking_entries.product_price_final ELSE 0 END)) AS available_stock_value,\nact_inventory_trackings.product_id,\nact_inventory_trackings.inventory_tracking_datetime,\nact_inventory_trackings.is_draft,\nact_inventory_tracking_entries.* FROM act_inventory_tracking_entries LEFT JOIN act_inventory_trackings ON act_inventory_tracking_entries.inventory_tracking_id = act_inventory_trackings.inventory_tracking_id"
     },
     "act_vw_ledger_account_summary": {
       "viewName": "act_vw_ledger_account_summary",
@@ -30116,6 +30182,96 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT \nact_product_barcodes.product_barcode_name,act_product_barcodes.barcode_value,\nact_product_purchase_details.product_purchase_detail_name ,\nact_product_sale_details.product_sale_detail_name ,\nact_product_prices.product_price_name,act_product_prices.price_sale ,act_product_prices.price_purchase,act_product_prices.price_mrp,\nact_product_barcode_links.* FROM act_product_barcode_links LEFT JOIN act_product_barcodes ON act_product_barcode_links.product_barcode_id = act_product_barcodes.product_barcode_id LEFT JOIN act_product_purchase_details ON act_product_barcode_links.product_purchase_detail_id = act_product_purchase_details.product_purchase_detail_id LEFT JOIN act_product_sale_details ON act_product_barcode_links.product_sale_detail_id= act_product_sale_details.product_sale_detail_id LEFT JOIN act_product_prices ON act_product_barcode_links.product_price_id= act_product_prices.product_price_id"
+    },
+    "act_vw_product_batches": {
+      "viewName": "act_vw_product_batches",
+      "viewColumns": {
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_batch_id"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "product_batch_code": {
+          "columnName": "product_batch_code",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_batch_code"
+        },
+        "manufacturing_time": {
+          "columnName": "manufacturing_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "manufacturing_time"
+        },
+        "expiry_time": {
+          "columnName": "expiry_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "expiry_time"
+        },
+        "product_batch_remarks": {
+          "columnName": "product_batch_remarks",
+          "columnType": "TEXT",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "product_batch_remarks"
+        },
+        "best_before_time": {
+          "columnName": "best_before_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "best_before_time"
+        },
+        "inward_time": {
+          "columnName": "inward_time",
+          "columnType": "DATETIME",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "inward_time"
+        },
+        "batch_status": {
+          "columnName": "batch_status",
+          "columnType": "STRING",
+          "columnSource": "table",
+          "columnSourceName": "act_product_batches",
+          "columnSourceOriginalColumn": "batch_status"
+        },
+        "product_name": {
+          "columnName": "product_name",
+          "columnType": "TEXT",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_name"
+        },
+        "product_sku": {
+          "columnName": "product_sku",
+          "columnType": "STRING",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_sku"
+        },
+        "product_image_media": {
+          "columnName": "product_image_media",
+          "columnType": "JSON",
+          "columnSource": "view",
+          "columnSourceName": "act_vw_products",
+          "columnSourceOriginalColumn": "product_image_media"
+        }
+      },
+      "viewQuery": "SELECT act_product_batches.*,\nact_vw_products.product_name,\nact_vw_products.product_sku,\nact_vw_products.product_image_media\n FROM act_product_batches LEFT JOIN \nact_vw_products ON act_product_batches.product_id = act_vw_products.product_id"
     },
     "act_vw_product_categories": {
       "viewName": "act_vw_product_categories",
@@ -31985,7 +32141,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
         }
       },
-      "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_vw_inventory_tracking_entries LEFT JOIN act_purchase_invoice_products ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id"
+      "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_purchase_invoice_products LEFT JOIN act_vw_inventory_tracking_entries ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id AND act_purchase_invoice_products.inventory_tracking_id IS NOT NULL"
     },
     "act_vw_purchase_invoice_product_inventory_trackings": {
       "viewName": "act_vw_purchase_invoice_product_inventory_trackings",
@@ -32047,7 +32203,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "inventory_tracking_remarks"
         }
       },
-      "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_inventory_trackings.* FROM act_inventory_trackings LEFT JOIN act_purchase_invoice_products ON act_inventory_trackings.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id"
+      "viewQuery": "SELECT act_purchase_invoice_products.purchase_invoice_id,act_purchase_invoice_products.purchase_invoice_product_id,act_inventory_trackings.* FROM act_purchase_invoice_products LEFT JOIN act_inventory_trackings ON act_inventory_trackings.inventory_tracking_id = act_purchase_invoice_products.inventory_tracking_id AND act_purchase_invoice_products.inventory_tracking_id IS NOT NULL"
     },
     "act_vw_purchase_invoice_products": {
       "viewName": "act_vw_purchase_invoice_products",
@@ -34980,7 +35136,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
         }
       },
-      "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_vw_inventory_tracking_entries LEFT JOIN act_sale_invoice_products ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id"
+      "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_vw_inventory_tracking_entries.* FROM act_sale_invoice_products LEFT JOIN act_vw_inventory_tracking_entries ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id AND act_sale_invoice_products.inventory_tracking_id IS NOT NULL"
     },
     "act_vw_sale_invoice_product_inventory_trackings": {
       "viewName": "act_vw_sale_invoice_product_inventory_trackings",
@@ -35042,7 +35198,7 @@ export const dataDictionaryJson = {
           "columnSourceOriginalColumn": "inventory_tracking_remarks"
         }
       },
-      "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_inventory_trackings.* FROM act_inventory_trackings LEFT JOIN act_sale_invoice_products ON act_inventory_trackings.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id"
+      "viewQuery": "SELECT act_sale_invoice_products.sale_invoice_id,act_sale_invoice_products.sale_invoice_product_id,act_inventory_trackings.* FROM act_sale_invoice_products  LEFT JOIN act_inventory_trackings ON act_inventory_trackings.inventory_tracking_id = act_sale_invoice_products.inventory_tracking_id AND act_sale_invoice_products.inventory_tracking_id IS NOT NULL"
     },
     "act_vw_sale_invoice_products": {
       "viewName": "act_vw_sale_invoice_products",
@@ -38007,6 +38163,266 @@ export const dataDictionaryJson = {
       },
       "viewQuery": "SELECT \nSUM(in_total_quantity ) AS in_total_quantity , \nSUM(out_total_quantity) AS out_total_quantity, \nSUM(IIF(in_total_quantity IS NULL,0,in_total_quantity ) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) AS total_closing_stock, \n(SUM(IIF(in_total_quantity IS NULL,0,in_total_quantity ) - IIF(out_total_quantity IS NULL,0,out_total_quantity)) / IIF(act_vw_current_product_stock_details.stock_uom_quantity IS NULL,1,act_vw_current_product_stock_details.stock_uom_quantity)) AS closing_stock,\nact_vw_current_product_stock_details.stock_uom_id, act_vw_current_product_stock_details.stock_uom_name, act_vw_current_product_stock_details.stock_uom_quantity,\nact_vw_products.*,act_vw_inventory_tracking_entries.storage_location_id FROM act_vw_products \nLEFT JOIN act_vw_inventory_tracking_entries ON act_vw_products.product_id = act_vw_inventory_tracking_entries.product_id \nLEFT JOIN act_vw_current_product_stock_details ON act_vw_current_product_stock_details.product_id = act_vw_products.product_id \nGROUP BY act_vw_products.product_id,storage_location_id"
     },
+    "act_vw_stock_update_inventory_tracking_entries": {
+      "viewName": "act_vw_stock_update_inventory_tracking_entries",
+      "viewColumns": {
+        "stock_update_id": {
+          "columnName": "stock_update_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_id"
+        },
+        "stock_update_product_id": {
+          "columnName": "stock_update_product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_product_id"
+        },
+        "net_total_quantity": {
+          "columnName": "net_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "net_total_quantity"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "in_quantity": {
+          "columnName": "in_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_quantity"
+        },
+        "in_total_quantity": {
+          "columnName": "in_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_total_quantity"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "inventory_tracking_entry_id": {
+          "columnName": "inventory_tracking_entry_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tracking_entry_id"
+        },
+        "location_id": {
+          "columnName": "location_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "location_id"
+        },
+        "out_quantity": {
+          "columnName": "out_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_quantity"
+        },
+        "out_total_quantity": {
+          "columnName": "out_total_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_total_quantity"
+        },
+        "product_barcode_id": {
+          "columnName": "product_barcode_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_barcode_id"
+        },
+        "product_price_id": {
+          "columnName": "product_price_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_price_id"
+        },
+        "product_uom_id": {
+          "columnName": "product_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_uom_id"
+        },
+        "storage_location_id": {
+          "columnName": "storage_location_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "storage_location_id"
+        },
+        "in_uom_id": {
+          "columnName": "in_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "in_uom_id"
+        },
+        "out_uom_id": {
+          "columnName": "out_uom_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "out_uom_id"
+        },
+        "inventory_tacking_entry_remarks": {
+          "columnName": "inventory_tacking_entry_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "inventory_tacking_entry_remarks"
+        },
+        "product_price_final": {
+          "columnName": "product_price_final",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_price_final"
+        },
+        "product_batch_id": {
+          "columnName": "product_batch_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "product_batch_id"
+        },
+        "available_stock_quantity": {
+          "columnName": "available_stock_quantity",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "available_stock_quantity"
+        },
+        "available_stock_value": {
+          "columnName": "available_stock_value",
+          "columnType": "DOUBLE",
+          "columnProperties": {},
+          "columnSource": "view",
+          "columnSourceName": "act_vw_inventory_tracking_entries",
+          "columnSourceOriginalColumn": "available_stock_value"
+        }
+      },
+      "viewQuery": "SELECT act_stock_update_products.stock_update_id,act_stock_update_products.stock_update_product_id,act_vw_inventory_tracking_entries.* FROM act_stock_update_products LEFT JOIN act_vw_inventory_tracking_entries ON act_vw_inventory_tracking_entries.inventory_tracking_id = act_stock_update_products.inventory_tracking_id AND act_stock_update_products.inventory_tracking_id IS NOT NULL"
+    },
+    "act_vw_stock_update_inventory_trackings": {
+      "viewName": "act_vw_stock_update_inventory_trackings",
+      "viewColumns": {
+        "stock_update_id": {
+          "columnName": "stock_update_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_id"
+        },
+        "stock_update_product_id": {
+          "columnName": "stock_update_product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_stock_update_products",
+          "columnSourceOriginalColumn": "stock_update_product_id"
+        },
+        "inventory_tracking_datetime": {
+          "columnName": "inventory_tracking_datetime",
+          "columnType": "DATETIME",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_datetime"
+        },
+        "inventory_tracking_id": {
+          "columnName": "inventory_tracking_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_id"
+        },
+        "is_draft": {
+          "columnName": "is_draft",
+          "columnType": "YES_NO",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "is_draft"
+        },
+        "product_id": {
+          "columnName": "product_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "product_id"
+        },
+        "inventory_tracking_remarks": {
+          "columnName": "inventory_tracking_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "act_inventory_trackings",
+          "columnSourceOriginalColumn": "inventory_tracking_remarks"
+        }
+      },
+      "viewQuery": "SELECT act_stock_update_products.stock_update_id,act_stock_update_products.stock_update_product_id,act_inventory_trackings.* FROM act_stock_update_products LEFT JOIN act_inventory_trackings ON act_inventory_trackings.inventory_tracking_id = act_stock_update_products.inventory_tracking_id AND act_stock_update_products.inventory_tracking_id IS NOT NULL"
+    },
     "act_vw_stock_update_products": {
       "viewName": "act_vw_stock_update_products",
       "viewColumns": {
@@ -39263,75 +39679,6 @@ export const dataDictionaryJson = {
         }
       },
       "viewQuery": "SELECT * FROM act_users"
-    },
-    "act_vw_product_batches": {
-      "viewName": "act_vw_product_batches",
-      "viewColumns": {
-        "product_batch_id": {
-          "columnName": "product_batch_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_product_batches",
-          "columnSourceOriginalColumn": "product_batch_id"
-        },
-        "product_id": {
-          "columnName": "product_id",
-          "columnType": "UUID",
-          "columnSource": "table",
-          "columnSourceName": "act_product_batches",
-          "columnSourceOriginalColumn": "product_id"
-        },
-        "product_batch_code": {
-          "columnName": "product_batch_code",
-          "columnType": "STRING",
-          "columnSource": "table",
-          "columnSourceName": "act_product_batches",
-          "columnSourceOriginalColumn": "product_batch_code"
-        },
-        "manufacturing_time": {
-          "columnName": "manufacturing_time",
-          "columnType": "DATETIME",
-          "columnSource": "table",
-          "columnSourceName": "act_product_batches",
-          "columnSourceOriginalColumn": "manufacturing_time"
-        },
-        "expiry_time": {
-          "columnName": "expiry_time",
-          "columnType": "DATETIME",
-          "columnSource": "table",
-          "columnSourceName": "act_product_batches",
-          "columnSourceOriginalColumn": "expiry_time"
-        },
-        "product_batch_remarks": {
-          "columnName": "product_batch_remarks",
-          "columnType": "TEXT",
-          "columnSource": "table",
-          "columnSourceName": "act_product_batches",
-          "columnSourceOriginalColumn": "product_batch_remarks"
-        },
-        "product_name": {
-          "columnName": "product_name",
-          "columnType": "TEXT",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_products",
-          "columnSourceOriginalColumn": "product_name"
-        },
-        "product_sku": {
-          "columnName": "product_sku",
-          "columnType": "STRING",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_products",
-          "columnSourceOriginalColumn": "product_sku"
-        },
-        "product_image_media": {
-          "columnName": "product_image_media",
-          "columnType": "JSON",
-          "columnSource": "view",
-          "columnSourceName": "act_vw_products",
-          "columnSourceOriginalColumn": "product_image_media"
-        }
-      },
-      "viewQuery": "SELECT act_product_batches.*,\nact_vw_products.product_name,\nact_vw_products.product_sku,\nact_vw_products.product_image_media\n FROM act_product_batches LEFT JOIN \nact_vw_products ON act_product_batches.product_id = act_vw_products.product_id"
     }
   },
   "relationships": [

@@ -1,29 +1,26 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
-import { AcDataManager, AcEvents, AcHooks, AcSortOrder } from "@autocode-ts/autocode";
+import { AC_DATA_MANAGER_EVENT, AcDataManager, AcEvents, AcHooks, AcSortOrder, IAcDataManagerDisplayedRowsChangeEvent } from "@autocode-ts/autocode";
 import { AcEnumPaginationEvent, AcPagination } from "../../ac-pagination/_ac-pagination.export";
 import { IAcPaginationPageChangeEvent } from "../../ac-pagination/interfaces/_interfaces.export";
 import { AcEnumRepeaterEvent } from "../enums/ac-enum-repeater-event.enum";
 import { AcEnumRepeaterHook } from "../enums/ac-enum-repeater-hooks.enum";
 import { IAcRepeaterState } from "../interfaces/ac-repeater-state.interface";
-import { IAcRepeaterRowEvent } from "../interfaces/event-args/ac-repeater-row-event.interface";
-import { IAcRepeaterRowPositionChangeEvent } from "../interfaces/event-args/ac-repeater-row-position-change-event.interface";
+import { IAcRepeaterDisplayedRowsChangeEvent } from "../interfaces/event-args/ac-repeater-displayed-rows-change-event.interface";
+import { IIAcRepeaterRowEvent } from "../interfaces/event-args/ac-repeater-row-event.interface";
+import { IIAcRepeaterRowPositionChangeEvent } from "../interfaces/event-args/ac-repeater-row-position-change-event.interface";
 import { IAcRepeaterTotalRowsChangeEvent } from "../interfaces/event-args/ac-repeater-total-rows-change-event.interface";
-import { IAcRepeaterDataSourceTypeChangeHookArgs } from "../interfaces/hook-args/ac-repeater-data-source-type-change-hook-args.interface";
 import { IAcRepeaterExtensionEnabledHookArgs } from "../interfaces/hook-args/ac-repeater-extension-enabled-hook-args.interface";
-import { IAcRepeaterRowDeleteHookArgs } from "../interfaces/hook-args/ac-repeater-row-delete-hook-args.interface";
-import { IAcRepeaterRowFocusHookArgs } from "../interfaces/hook-args/ac-repeater-row-focus-hook-args.interface";
-import { IAcRepeaterRowUpdateHookArgs } from "../interfaces/hook-args/ac-repeater-row-update-hook-args.interface";
+import { IIAcRepeaterRowDeleteHookArgs } from "../interfaces/hook-args/ac-repeater-row-delete-hook-args.interface";
+import { IIAcRepeaterRowFocusHookArgs } from "../interfaces/hook-args/ac-repeater-row-focus-hook-args.interface";
+import { IIAcRepeaterRowUpdateHookArgs } from "../interfaces/hook-args/ac-repeater-row-update-hook-args.interface";
 import { IAcRepeaterUsePaginationChangeHookArgs } from "../interfaces/hook-args/ac-repeater-use-pagination-change-hook-args.interface";
-import { AcRepeaterRow } from "../models/ac-repeater-row.model";
+import { IAcRepeaterRow } from "../interfaces/ac-repeater-row.interface";
 import { AcRepeaterExtension } from "./ac-repeater-extension";
-import { IAcRepeaterRowHookArgs } from "../interfaces/hook-args/ac-repeater-row-hook-args.interface";
-import { IAcRepeaterRowAddHookArgs } from "../interfaces/hook-args/ac-repeater-row-add-hook-args.interface";
 import { AcRepeaterExtensionManager } from "./ac-repeater-extension-manager";
 import { AcRepeaterState } from "./ac-repeater-state";
 import { AcRepeaterEventHandler } from "./ac-repeater-event-handler";
-import { AcRepeater } from "../elements/ac-repeater.element";
+import { AcRepeaterElement } from "../elements/ac-repeater.element";
 import { AcEnumDataSourceType } from "../../../enums/ac-enum-data-source-type.enum";
 
 export class AcRepeaterApi{
@@ -35,20 +32,18 @@ export class AcRepeaterApi{
     this.dataManager.data = value;
   }
 
-  get repeaterRows(): AcRepeaterRow[] {
-    let result: AcRepeaterRow[] = [];
+  get repeaterRows(): IAcRepeaterRow[] {
     if (this.dataManager) {
-      // result = this.dataManager.rows as AcRepeaterRow[];
+      return this.dataManager.rows as any[];
     }
-    return result;
+    return [];
   }
 
-  get displayedRepeaterRows(): AcRepeaterRow[] {
-    let result: AcRepeaterRow[] = [];
+  get displayedRepeaterRows(): IAcRepeaterRow[] {
     if (this.dataManager) {
-      // result = this.dataManager.rows as AcRepeaterRow[];
+      return this.dataManager.displayedRows as any[];
     }
-    return result;
+    return [];
   }
 
   private _usePagination: boolean = false;
@@ -62,14 +57,30 @@ export class AcRepeaterApi{
       oldUsePagination: this._usePagination
     };
     this._usePagination = value;
-    this.pagination = new AcPagination();
-    this.pagination.bindDataManager({dataManager:this.dataManager});
+    if (value == true) {
+      this.pagination = new AcPagination();
+      this.pagination.bindDataManager({ dataManager: this.dataManager });
+      this.pagination.on({
+        event: AcEnumPaginationEvent.PageChange,
+        callback: (event: IAcPaginationPageChangeEvent) => {
+          if (event.startRow > 0) {
+            this.dataManager.setDisplayedRows({
+              startIndex: event.startRow - 1,
+              rowsCount: event.pagination.activePageSize
+            });
+          } else {
+            this.dataManager.setDisplayedRows({ startIndex: 0, rowsCount: 0 });
+          }
+        }
+      });
+    } else {
+      this.pagination = undefined;
+    }
     this.hooks.execute({ hook: AcEnumRepeaterHook.UsePaginationChange, args: hookArgs });
-    this.repeater.repeaterFooter.setPagination();
   }
 
-  activeRepeaterRow:AcRepeaterRow | undefined;
-  repeater!: AcRepeater;
+  activeRepeaterRow:IAcRepeaterRow | undefined;
+  repeater!: AcRepeaterElement;
   repeaterState:AcRepeaterState;
   dataManager: AcDataManager = new AcDataManager();
   eventHandler!:AcRepeaterEventHandler;
@@ -82,33 +93,55 @@ export class AcRepeaterApi{
   pagination?: AcPagination;
   sortOrder: AcSortOrder = new AcSortOrder();
 
-  constructor({ repeater }: { repeater: AcRepeater }) {
+  constructor({ repeater }: { repeater: AcRepeaterElement }) {
     AcRepeaterExtensionManager.registerBuiltInExtensions();
-    this.repeater = repeater
-    this.repeaterState = new AcRepeaterState({repeaterApi:this});
-    this.eventHandler = new AcRepeaterEventHandler({repeaterApi:this});
+    this.repeater = repeater;
+    this.repeaterState = new AcRepeaterState({ repeaterApi: this });
+    this.eventHandler = new AcRepeaterEventHandler({ repeaterApi: this });
+    this.dataManager.on({
+      event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange,
+      callback: (args: IAcDataManagerDisplayedRowsChangeEvent) => {
+        const hookArgs: IAcRepeaterDisplayedRowsChangeEvent = {
+          displayedRows: args.displayedRows as any[],
+          repeaterApi: this
+        };
+        this.hooks.execute({ hook: AcEnumRepeaterHook.DisplayedRowsChange, args: hookArgs });
+        this.events.execute({ event: AcEnumRepeaterEvent.DisplayedRowsChange, args: hookArgs });
+      }
+    });
+    this.dataManager.on({
+      event: AC_DATA_MANAGER_EVENT.TotalRowsChange,
+      callback: (args: any) => {
+        const eventArgs: IAcRepeaterTotalRowsChangeEvent = {
+          totalRows: args.totalRows ?? this.dataManager.totalRows,
+          repeaterApi: this
+        };
+        this.hooks.execute({ hook: AcEnumRepeaterHook.TotalRowsChange, args: eventArgs });
+        this.events.execute({ event: AcEnumRepeaterEvent.TotalRowsChange, args: eventArgs });
+      }
+    });
   }
 
   addRow({ data, append = true, highlightRow = false }: { data?: any, append?: boolean, highlightRow?: boolean } = {}) {
-    // const repeaterRow: AcRepeaterRow = new AcRepeaterRow({
+    // const repeaterRow: IAcRepeaterRow = new IAcRepeaterRow({
     //   data: data,
     //   repeaterApi:this,
     //   index: this.dataSource.repeaterRows.length
     // });
     // this.dataSource.repeaterRows.push(repeaterRow);
-    // const hookArgs: IAcRepeaterRowHookArgs = {
+    // const hookArgs: IIAcRepeaterRowHookArgs = {
     //   repeaterApi: this,
     //   repeaterRow: repeaterRow,
     // };
     // this.hooks.execute({ hook: AcEnumRepeaterHook.RepeaterRowCreate, args: hookArgs });
-    // const addHookArgs: IAcRepeaterRowAddHookArgs = {
+    // const addHookArgs: IIAcRepeaterRowAddHookArgs = {
     //   repeaterApi: this,
     //   repeaterRow: repeaterRow,
     //   append: append,
     //   highlightRow: highlightRow
     // }
     // this.hooks.execute({ hook: AcEnumRepeaterHook.RowAdd, args: addHookArgs });
-    // const eventArgs: IAcRepeaterRowEvent = {
+    // const eventArgs: IIAcRepeaterRowEvent = {
     //   repeaterApi: this,
     //   repeaterRow: repeaterRow
     // };
@@ -117,7 +150,7 @@ export class AcRepeaterApi{
   }
 
   deleteRow({ data, rowId, key, value, highlightRow = false }: { data?: any, rowId?: string, key?: string, value?: any, highlightRow?: boolean }) {
-    // const repeaterRow: AcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
+    // const repeaterRow: IAcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
     //   let valid: boolean = false;
     //   if (rowId) {
     //     valid = repeaterRow.rowId == rowId;
@@ -135,13 +168,13 @@ export class AcRepeaterApi{
     // });
     // if (repeaterRow) {
     //   arrayRemoveByKey(this.dataSource.repeaterRows,'rowId',repeaterRow.rowId);
-    //   const deleteHookArgs: IAcRepeaterRowDeleteHookArgs = {
+    //   const deleteHookArgs: IIAcRepeaterRowDeleteHookArgs = {
     //     repeaterApi: this,
     //     repeaterRow: repeaterRow,
     //     highlightRow: highlightRow
     //   }
     //   this.hooks.execute({ hook: AcEnumRepeaterHook.RowDelete, args: deleteHookArgs });
-    //   const eventArgs: IAcRepeaterRowEvent = {
+    //   const eventArgs: IIAcRepeaterRowEvent = {
     //     repeaterApi: this,
     //     repeaterRow: repeaterRow
     //   };
@@ -183,7 +216,7 @@ export class AcRepeaterApi{
   }
 
   focusRow({ index, highlightRow = false }: { index: number, highlightRow?: boolean }) {
-    const hookArgs: IAcRepeaterRowFocusHookArgs = {
+    const hookArgs: IIAcRepeaterRowFocusHookArgs = {
       repeaterApi: this,
       repeaterRow: this.repeaterRows[index],
       index: index,
@@ -196,8 +229,18 @@ export class AcRepeaterApi{
     return this.events.subscribe({ event: event, callback: callback });
   }
 
-  getRowById({ rowId }: { rowId: string }): AcRepeaterRow | undefined {
-    let result: AcRepeaterRow | undefined;
+  getRowElement({ rowId, index }: { rowId?: string, index?: number }): HTMLElement | null {
+    let row: IAcRepeaterRow | undefined;
+    if (rowId) {
+      row = this.getRowById({ rowId });
+    } else if (index !== undefined) {
+      row = this.getRowByIndex({ index });
+    }
+    return row?.instance?.element ?? null;
+  }
+
+  getRowById({ rowId }: { rowId: string }): IAcRepeaterRow | undefined {
+    let result: IAcRepeaterRow | undefined;
     for (const row of this.repeaterRows) {
       if (row.rowId == rowId) {
         result = row;
@@ -207,8 +250,8 @@ export class AcRepeaterApi{
     return result;
   }
 
-  getRowByIndex({ index }: { index: number }): AcRepeaterRow | undefined {
-    let result: AcRepeaterRow | undefined;
+  getRowByIndex({ index }: { index: number }): IAcRepeaterRow | undefined {
+    let result: IAcRepeaterRow | undefined;
     for (const row of this.repeaterRows) {
       if (row.index == index) {
         result = row;
@@ -221,8 +264,8 @@ export class AcRepeaterApi{
     return result;
   }
 
-  getRowByKeyValue({ key, value }: { key: string, value: any }): AcRepeaterRow | undefined {
-    let result: AcRepeaterRow | undefined;
+  getRowByKeyValue({ key, value }: { key: string, value: any }): IAcRepeaterRow | undefined {
+    let result: IAcRepeaterRow | undefined;
     for (const row of this.repeaterRows) {
       if (row.data && row.data[key] == value) {
         result = row;
@@ -242,8 +285,8 @@ export class AcRepeaterApi{
   }
 
 
-  updateRowPosition({ repeaterRow, oldRepeaterRow }: { repeaterRow: AcRepeaterRow, oldRepeaterRow: AcRepeaterRow }) {
-    const eventArgs: IAcRepeaterRowPositionChangeEvent = {
+  updateRowPosition({ repeaterRow, oldRepeaterRow }: { repeaterRow: IAcRepeaterRow, oldRepeaterRow: IAcRepeaterRow }) {
+    const eventArgs: IIAcRepeaterRowPositionChangeEvent = {
       // oldRepeaterRow: oldRepeaterRow,
       repeaterRow: repeaterRow,
       repeaterApi: this
@@ -253,7 +296,7 @@ export class AcRepeaterApi{
 
   // PENDING
   updateRow({ data, value, key, rowId, highlightRow = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightRow?: boolean, addIfMissing?: boolean }) {
-    const repeaterRow: AcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
+    const repeaterRow: IAcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
       let valid: boolean = false;
       if (rowId) {
         valid = repeaterRow.rowId == rowId;
@@ -271,13 +314,13 @@ export class AcRepeaterApi{
     });
     if (repeaterRow) {
       repeaterRow.data = data;
-      const updateHookArgs: IAcRepeaterRowUpdateHookArgs = {
+      const updateHookArgs: IIAcRepeaterRowUpdateHookArgs = {
         repeaterApi: this,
         repeaterRow: repeaterRow,
         highlightRow: highlightRow
       }
       this.hooks.execute({ hook: AcEnumRepeaterHook.RowUpdate, args: updateHookArgs });
-      const eventArgs:IAcRepeaterRowEvent = {
+      const eventArgs:IIAcRepeaterRowEvent = {
       repeaterApi:this,
       repeaterRow:repeaterRow
     };

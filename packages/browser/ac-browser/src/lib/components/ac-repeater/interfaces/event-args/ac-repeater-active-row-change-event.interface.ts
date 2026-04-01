@@ -1,9 +1,9 @@
 import { AcRepeaterApi } from "../../core/ac-repeater-api";
-import { AcRepeaterRow } from "../../models/ac-repeater-row.model";
+import { IAcRepeaterRow } from "../ac-repeater-row.interface";
 
 export interface IAcRepeaterActiveRowChangeEvent{
-  oldActiveRepeaterRow:AcRepeaterRow|undefined,
-  activeRepeaterRow:AcRepeaterRow,
+  oldActiveRepeaterRow:IAcRepeaterRow|undefined,
+  activeRepeaterRow:IAcRepeaterRow,
   repeaterApi:AcRepeaterApi,
   event:any
 }

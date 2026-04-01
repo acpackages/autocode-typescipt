@@ -24,6 +24,12 @@ export class AcHooks {
     acNullifyInstanceProperties({instance:this});
   }
 
+  hasSubscribers({ hook }: { hook: string }): boolean {
+    const name = hook.toLowerCase();
+    const hookListeners = this.hooks.get(name);
+    return (hookListeners && hookListeners.size > 0) || this.allHookCallbacks.size > 0;
+  }
+
   /**
    * Execute a hook with arguments
    * Hook handlers can return AcHookExecutionResult or any value

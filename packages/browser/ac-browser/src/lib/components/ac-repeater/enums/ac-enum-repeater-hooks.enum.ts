@@ -15,6 +15,7 @@ export const AcEnumRepeaterHook = {
   RowFocus: 'ROW_FOCUS',
   RowDelete: 'ROW_DELETE',
   RowUpdate: 'ROW_UPDATE',
+  RowRender: 'ROW_RENDER',
   TotalRowsChange: 'TOTAL_ROWS_CHANGE',
   UsePaginationChange: 'USE_PAGINATION_CHANGE'
 }

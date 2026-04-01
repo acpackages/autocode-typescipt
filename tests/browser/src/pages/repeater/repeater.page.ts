@@ -1,82 +1,67 @@
-// export class TemplateEnginePage extends HTMLElement {
-//   public static observedAttributes = [];
+/* eslint-disable @nx/enforce-module-boundaries */
+/* eslint-disable prefer-const */
+import { AcRepeaterElement, AcEnumRepeaterHook, IAcRepeaterRowHookArgs, acInit } from '@autocode-ts/ac-browser';
+import { customersData } from './../../../../data/customers-data';
 
-//   async connectedCallback() {
-//     // console.log(this);
-//     const html = `
-//     <div class="app-container">
-//   <h1>Welcome to AcTemplateEngine</h1>
+export class RepeaterPage extends HTMLElement {
+  public static observedAttributes = [];
+  repeater?: AcRepeaterElement;
 
-//   <!-- Interpolation -->
-//   <p>{{ title }}</p>
+  async connectedCallback() {
+    acInit();
+     const html = `
+      <div class="p-3">
+        <h5>Repeater : Local Data</h5>
+        <p class="text-muted">A simple list rendered using AcRepeater with virtual scrolling.</p>
+        <ac-repeater style="height:80vh"></ac-repeater>
+      </div>
+    `;
+    this.innerHTML = html;
 
-//   <!-- acModel / two-way binding -->
-//   <input type="text" [(acModel)]="title" />
-//   <span>You typed: {{ title }}</span>
+    this.repeater = this.querySelector('ac-repeater') as any;
 
-//   <!-- acIf -->
-//   <div *acIf="show">Visible only if show=true</div>
+    if(this.repeater && this.repeater.repeaterApi){
+      this.repeater.repeaterApi.usePagination = true;
+      console.log(this.repeater.repeaterApi);
+      this.repeater.repeaterApi.hooks.subscribe({
+      hook: AcEnumRepeaterHook.RowRender,
+      callback: (args: IAcRepeaterRowHookArgs) => {
+        const data = args.repeaterRow.data;
+        const element = args.repeaterRow.instance!.element;
 
-//   <!-- acFor -->
-//   <ul>
-//     <li *acFor="let item in items">{{ item }}</li>
-//   </ul>
+        element.style.padding = '15px';
+        element.style.borderBottom = '1px solid #eee';
+        element.style.display = 'flex';
+        element.style.flexDirection = 'column';
+        element.style.gap = '5px';
 
-//   <!-- acClass and acStyle -->
-//   <p acClass="{ 'highlight': isHighlighted }" acStyle="{ fontSize: fontSize + 'px' }">Styled Text</p>
+        element.innerHTML = `
+          <div style="font-weight: bold; color: #333;">${data.first_name} ${data.last_name}</div>
+          <div style="font-size: 0.9rem; color: #666;">
+            <span style="margin-right: 15px;"><i class="fa fa-building"></i> ${data.company}</span>
+            <span><i class="fa fa-envelope"></i> ${data.email}</span>
+          </div>
+          <div style="font-size: 0.8rem; color: #999;">
+            <i class="fa fa-map-marker"></i> ${data.city}, ${data.country}
+          </div>
+        `;
+      }
+    });
 
-//   <!-- acBind -->
-//   <a acBind:href="link" target="_blank">Go to link</a>
+    // Append to container
 
-//   <!-- acRef and acOn -->
-//   <input acRef="myInput" />
-//   <button type="button" acOn:click="focusInput()">Focus input</button>
+    // Set data
+    const data = customersData.slice(0, 100);
+    this.repeater.repeaterApi.data = data;
 
-//   <!-- acSwitch -->
-//   <div *acSwitch="status">
-//     <div *acSwitchCase="'active'">Active</div>
-//     <div *acSwitchCase="'inactive'">Inactive</div>
-//     <div *acSwitchDefault>Unknown</div>
-//   </div>
+    // Explicitly set displayed rows to show all data
+    this.repeater.repeaterApi.dataManager.setDisplayedRows({
+      startIndex: 0,
+      rowsCount: data
+      .length
+    });
+    }
+    // Custom row rendering
 
-//   <!-- ac-template usage -->
-//   <ac-template name="userTemplate">
-//     <div>{{ user.name }} - {{ user.role }}</div>
-//   </ac-template>
-
-//   <div *acFor="user in users" acLet="user">
-//     <ac-container acLet="user">
-//       <ac-slot template="userTemplate"></ac-slot>
-//     </ac-container>
-//   </div>
-// </div>
-
-// `;
-//     // console.log(html);
-//     this.innerHTML = html;
-//     const ctx = {
-//       title: 'test-browser',
-//       show: true,
-//       items: ['One', 'Two', 'Three'],
-//       isHighlighted: true,
-//       fontSize: 16,
-//       link: 'https://example.com',
-//       status: 'active',
-//       users: [
-//         { name: 'Alice', role: 'Admin' },
-//         { name: 'Bob', role: 'User' },
-//       ],
-//       focusInput:()=>{
-//         console.log("Focus Input called");
-//         // this.$refs.myInput?.focus();
-//       },
-//       onInit() {
-//         console.log('AppElement initialized');
-//       },
-//       onDestroy() {
-//         console.log('AppElement destroyed');
-//       },
-//     };
-//     new AcTemplateEngine({context:ctx,element:this}).render();
-//   }
-// }
+  }
+}

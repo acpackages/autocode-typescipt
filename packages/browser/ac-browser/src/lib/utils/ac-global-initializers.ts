@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { AcArrayValuesInputElement, AcDatagrid, AcDatagridSelectInputElement, AcDatetimeInputElement, AcFilePreview, AcForm, AcFormField, AcFormFieldErrorMessage, AcInputElement, AcModal, AcNumberInput, AcOptionInputElement, AcPagination, AcPopoutTextareaInputElement, AcResizable, AcResizablePanel, AcResizablePanels, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
+import { AcArrayValuesInputElement, AcDatagrid, AcDatagridSelectInputElement, AcDatetimeInputElement, AcFilePreview, AcForm, AcFormField, AcFormFieldErrorMessage, AcInputElement, AcModal, AcNumberInput, AcOptionInputElement, AcPagination, AcPopoutTextareaInputElement, AcRepeaterBodyElement, AcRepeaterElement, AcRepeaterFooterElement, AcRepeaterHeaderElement, AcRepeaterRowElement, AcResizable, AcResizablePanel, AcResizablePanels, AcSelectInputElement, AcTextareaInputElement, AcTextInputElement, AcTooltip } from "../components/_components.export";
 import { AcAccordion } from "../components/ac-accordion/elements/ac-accordion.element";
 import { AcCollapse } from "../components/ac-collapse/elements/ac-collapse.element";
 import { AcSvgIcon } from "../components/ac-svg-icon/_ac-svg-icon.element";
@@ -75,6 +75,12 @@ AcTextareaInputElement;
 AcResizable;
 AcResizablePanel;
 AcResizablePanels;
+
+AcRepeaterElement;
+AcRepeaterBodyElement;
+AcRepeaterHeaderElement;
+AcRepeaterFooterElement;
+AcRepeaterRowElement;
 
 AcModal;
 AcPagination;

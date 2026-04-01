@@ -8,11 +8,19 @@ export class AcPaginationNavigationButtons extends AcElementBase{
   get pagination():AcPagination|undefined{
     return this._pagination;
   }
-  set pagination(value:AcPagination){
+  set pagination(value: AcPagination) {
     this._pagination = value;
-    value.on({event:AcEnumPaginationEvent.PageChange,callback:(event:IAcPaginationPageChangeEvent)=>{
-      this.handlePageChanged(event);
-    }});
+    value.on({
+      event: AcEnumPaginationEvent.PageChange, callback: (event: IAcPaginationPageChangeEvent) => {
+        this.render();
+      }
+    });
+
+    value.on({
+      event: AcEnumPaginationEvent.PageSizeChange, callback: (event: any) => {
+        this.render();
+      }
+    });
   }
 
   private previousButton:HTMLElement;
@@ -46,7 +54,12 @@ export class AcPaginationNavigationButtons extends AcElementBase{
   }
 
   handlePageChanged(event:IAcPaginationPageChangeEvent){
+    this.render();
+  }
+
+  render(){
     this.validateButtons();
+    this.renderPageLabel();
   }
 
   registerListeners(){

@@ -28,7 +28,6 @@ export class AcPagination extends AcElementBase {
       };
       this.events.execute({ event: AcEnumPaginationEvent.PageChange, args: eventParams });
     }
-
   }
 
   private _activePageSize: number = 50;
@@ -44,7 +43,7 @@ export class AcPagination extends AcElementBase {
         pageSize: value,
         pagination: this
       };
-      this.events.execute({ event: AcEnumPaginationEvent.PageChange, args: eventParams });
+      this.events.execute({ event: AcEnumPaginationEvent.PageSizeChange, args: eventParams });
       const newPageNo = Math.ceil((this.startRow) / value);
       if (newPageNo != this.activePage) {
         this.activePage = newPageNo;
@@ -70,7 +69,6 @@ export class AcPagination extends AcElementBase {
     }
   }
 
-  element: HTMLElement = this.ownerDocument.createElement('div');
   displayedRows: AcPaginationDisplayedRows = new AcPaginationDisplayedRows();
   navigationButtons: AcPaginationNavigationButtons = new AcPaginationNavigationButtons();
   sizeDropdown: AcPaginationSizeDropdown = new AcPaginationSizeDropdown();
@@ -94,8 +92,15 @@ export class AcPagination extends AcElementBase {
     this.displayedRows.pagination = this;
     this.navigationButtons.pagination = this;
     this.sizeDropdown.pagination = this;
+
     acAddClassToElement({ class_: AcPaginationCssClassName.acPagination, element: this });
     this.innerHTML = "";
+    this.style.display = "flex";
+    this.style.alignItems = "center";
+    this.style.justifyContent = "space-between";
+    this.style.gap = "10px";
+    this.style.width = "100%";
+    this.style.flex = "1";
 
     this.append(this.navigationButtons);
     this.append(this.displayedRows);
@@ -129,7 +134,7 @@ export class AcPagination extends AcElementBase {
       this.displayedRows.render();
     }
     if (this.navigationButtons) {
-      this.navigationButtons.renderPageLabel();
+      this.navigationButtons.render();
     }
   }
 

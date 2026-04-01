@@ -19,6 +19,12 @@
 
 .ac-pagination-navigation-button{
   width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   border: none;
+  cursor: pointer;
+  padding: 0;
 }

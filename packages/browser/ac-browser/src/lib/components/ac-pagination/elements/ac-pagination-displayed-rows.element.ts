@@ -2,6 +2,8 @@ import { AcElementBase } from "../../../core/ac-element-base";
 import { acRegisterCustomElement } from "../../../utils/ac-element-functions";
 import { AcPagination } from "./ac-pagination.element";
 
+import { AcEnumPaginationEvent } from "../enums/ac-enum-pagination-event.enum";
+
 export class AcPaginationDisplayedRows extends AcElementBase{
   private _pagination?: AcPagination;
   get pagination():AcPagination|undefined{
@@ -9,6 +11,12 @@ export class AcPaginationDisplayedRows extends AcElementBase{
   }
   set pagination(value:AcPagination){
     this._pagination = value;
+    value.on({event:AcEnumPaginationEvent.PageChange,callback:()=>{
+      this.render();
+    }});
+    value.on({event:AcEnumPaginationEvent.PageSizeChange,callback:()=>{
+      this.render();
+    }});
   }
 
   override init(){
