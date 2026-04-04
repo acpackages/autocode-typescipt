@@ -185,15 +185,16 @@ export class AcEvents {
   /**
    * Unsubscribe using subscriptionId (recommended & safe)
    */
-  unsubscribe({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }): boolean {
+  unsubscribe({ event, callback, subscriptionId }: { event?: string; callback?: Function; subscriptionId?: string }): boolean {
     if (event && callback) {
-      for (const name of Object.keys(this.events)) {
-        if (name == event) {
-          for (const id of Object.keys(this.events.get(name)!)) {
+      const name = event.toLowerCase();
+      const eventMap = this.events.get(name);
+      if (eventMap) {
+        for (const [id, cb] of eventMap.entries()) {
+          if (cb === callback) {
             subscriptionId = id;
             break;
           }
-          break;
         }
       }
     }
@@ -214,17 +215,19 @@ export class AcEvents {
   /**
    * Unsubscribe from all events listeners (global only)
    */
-  unsubscribeAllEvents({ callback, subscriptionId }: { callback?: Function, subscriptionId?: string }): boolean {
+  unsubscribeAllEvents({ callback, subscriptionId }: { callback?: Function; subscriptionId?: string } = {}): boolean {
     if (callback) {
-      for (const id of Object.keys(this.allEventCallbacks)) {
-        if (this.allEventCallbacks.get(id) == callback) {
+      for (const [id, cb] of this.allEventCallbacks.entries()) {
+        if (cb === callback) {
           subscriptionId = id;
+          break;
         }
       }
     }
     if (!subscriptionId) return false;
     return this.allEventCallbacks.delete(subscriptionId);
   }
+
 
   /**
    * (Optional) Remove entire event and all its listeners

@@ -8,7 +8,7 @@ export class AcEncryption {
     Array.from({ length: 16 }, (_, i) => String.fromCharCode(i)).join('')
   );
 
-  private static _deriveKey(keyText: string): CryptoJS.lib.WordArray {
+  private static _deriveKey({ keyText }: { keyText: string }): CryptoJS.lib.WordArray {
     return CryptoJS.SHA256(CryptoJS.enc.Utf8.parse(keyText));
   }
 
@@ -19,7 +19,7 @@ export class AcEncryption {
     plainText: string;
     encryptionKey?: string;
   }): string {
-    const key = this._deriveKey(encryptionKey ?? this.encryptionKey);
+    const key = this._deriveKey({ keyText: encryptionKey ?? this.encryptionKey });
     const encrypted = CryptoJS.AES.encrypt(plainText, key, {
       iv: this.iv,
       mode: CryptoJS.mode.CBC,
@@ -35,7 +35,7 @@ export class AcEncryption {
     encryptedText: string;
     encryptionKey?: string;
   }): string {
-    const key = this._deriveKey(encryptionKey ?? this.encryptionKey);
+    const key = this._deriveKey({ keyText: encryptionKey ?? this.encryptionKey });
     const decrypted = CryptoJS.AES.decrypt(encryptedText, key, {
       iv: this.iv,
       mode: CryptoJS.mode.CBC,
@@ -44,3 +44,4 @@ export class AcEncryption {
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 }
+

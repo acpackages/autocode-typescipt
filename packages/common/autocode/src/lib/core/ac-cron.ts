@@ -1,6 +1,6 @@
-import { AcCronJob } from "../models/ac-cron-job.model";
-import { AcLogger } from "./ac-logger";
-import { Autocode } from "./autocode";
+import { AcCronJob } from '../models/ac-cron-job.model';
+import { AcLogger } from './ac-logger';
+import { Autocode } from './autocode';
 
 export class AcCron {
   private static _logger: AcLogger;
@@ -16,7 +16,7 @@ export class AcCron {
     days = 0,
     hours = 0,
     minutes = 0,
-    seconds = 0
+    seconds = 0,
   }: {
     callbackFunction: () => void;
     days?: number;
@@ -25,16 +25,19 @@ export class AcCron {
     seconds?: number;
   }): string {
     const id = Autocode.uniqueId();
-    const job = new AcCronJob({id:id, execution:'every',duration: {
-      days,
-      hours,
-      minutes,
-      seconds
-    }, callback:callbackFunction});
+    const job = new AcCronJob({
+      id: id,
+      execution: 'every',
+      duration: {
+        days,
+        hours,
+        minutes,
+        seconds,
+      },
+      callback: callbackFunction,
+    });
     this._cronJobs.set(id, job);
-    this._logger.log(
-      `Registered cron job with id ${id} for every ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`
-    );
+    this._logger.log(`Registered cron job with id ${id} for every ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
     return id;
   }
 
@@ -42,7 +45,7 @@ export class AcCron {
     callbackFunction,
     hours = 0,
     minutes = 0,
-    seconds = 0
+    seconds = 0,
   }: {
     callbackFunction: () => void;
     hours?: number;
@@ -50,15 +53,18 @@ export class AcCron {
     seconds?: number;
   }): string {
     const id = Autocode.uniqueId();
-    const job = new AcCronJob({id:id, execution:'daily_at',duration: {
-      hours,
-      minutes,
-      seconds
-    }, callback:callbackFunction});
+    const job = new AcCronJob({
+      id: id,
+      execution: 'daily_at',
+      duration: {
+        hours,
+        minutes,
+        seconds,
+      },
+      callback: callbackFunction,
+    });
     this._cronJobs.set(id, job);
-    this._logger.log(
-      `Registered cron job with id ${id} to execute daily at ${hours}:${minutes}:${seconds}`
-    );
+    this._logger.log(`Registered cron job with id ${id} to execute daily at ${hours}:${minutes}:${seconds}`);
     return id;
   }
 
@@ -72,29 +78,25 @@ export class AcCron {
 
       if (executionMode === 'every') {
         const interval = this._getDurationInSeconds({
-          days: duration["days"] ?? 0,
-          hours: duration["hours"] ?? 0,
-          minutes: duration["minutes"] ?? 0,
-          seconds: duration["seconds"] ?? 0
+          days: duration['days'] ?? 0,
+          hours: duration['hours'] ?? 0,
+          minutes: duration['minutes'] ?? 0,
+          seconds: duration['seconds'] ?? 0,
         });
         if (!lastExecutionTime || (now.getTime() - lastExecutionTime.getTime()) / 1000 >= interval) {
-          this._logger.log(
-            `Executing cron job with id ${job.id} (every). Last execution time is ${lastExecutionTime ?? 'never'}`
-          );
+          this._logger.log(`Executing cron job with id ${job.id} (every). Last execution time is ${lastExecutionTime ?? 'never'}`);
           callback();
           job.lastExecutionTime = now;
         }
       } else if (executionMode === 'daily_at') {
-        const targetTime = this._formatTime(now.getHours(), now.getMinutes(), now.getSeconds());
-        const expectedTime = this._formatTime(
-          duration["hours"] ?? 0,
-          duration["minutes"] ?? 0,
-          duration["seconds"] ?? 0
-        );
+        const targetTime = this._formatTime({ h: now.getHours(), m: now.getMinutes(), s: now.getSeconds() });
+        const expectedTime = this._formatTime({
+          h: duration['hours'] ?? 0,
+          m: duration['minutes'] ?? 0,
+          s: duration['seconds'] ?? 0,
+        });
         if (targetTime === expectedTime) {
-          this._logger.log(
-            `Executing cron job with id ${job.id} (daily_at). Last execution time is ${lastExecutionTime ?? 'never'}`
-          );
+          this._logger.log( `Executing cron job with id ${job.id} (daily_at). Last execution time is ${lastExecutionTime ?? 'never'}`);
           callback();
           job.lastExecutionTime = now;
         }
@@ -106,7 +108,7 @@ export class AcCron {
     days = 0,
     hours = 0,
     minutes = 0,
-    seconds = 0
+    seconds = 0,
   }: {
     days?: number;
     hours?: number;
@@ -116,7 +118,7 @@ export class AcCron {
     return days * 86400 + hours * 3600 + minutes * 60 + seconds;
   }
 
-  private static _formatTime(h: number, m: number, s: number): string {
+  private static _formatTime({ h, m, s }: { h: number; m: number; s: number }): string {
     const pad = (num: number) => num.toString().padStart(2, '0');
     return `${pad(h)}:${pad(m)}:${pad(s)}`;
   }
@@ -134,3 +136,4 @@ export class AcCron {
     }
   }
 }
+

@@ -54,11 +54,16 @@ export class AcDDFunction {
     return AcJsonUtils.getJsonDataFromInstance({ instance: this });
   }
 
-  getCreateFunctionStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string }): string {
+  getCreateFunctionStatement({
+    databaseType = AcEnumSqlDatabaseType.Unknown,
+  }: {
+    databaseType?: string;
+  } = {}): string {
     return this.functionCode;
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+

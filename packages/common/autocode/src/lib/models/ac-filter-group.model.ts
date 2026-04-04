@@ -120,6 +120,6 @@ export class AcFilterGroup {
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({object:this.toJson()});
   }
 }

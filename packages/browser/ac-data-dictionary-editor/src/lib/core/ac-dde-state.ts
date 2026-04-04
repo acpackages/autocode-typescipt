@@ -241,7 +241,7 @@ export class AcDDEState {
   }
 
   toString(){
-    AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({object:this.toJson()});
   }
 
 }

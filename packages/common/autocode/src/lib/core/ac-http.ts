@@ -24,53 +24,57 @@ export interface IAcHttpResponse {
 }
 
 export class AcHttp {
-  static baseUrl: string = "";
-  static requestInterceptor?: (params: IAcHttpRequest) => IAcHttpRequest;
+  static baseUrl: string = '';
+  static requestInterceptor?: ( request: IAcHttpRequest) => IAcHttpRequest;
 
   private static axiosInstance = axios.create();
 
-  static convertObjectToFormData(
-    formData: FormData,
-    data: any,
-    parentKey?: string
-  ): void {
+  static convertObjectToFormData({
+    formData,
+    data,
+    parentKey,
+  }: {
+    formData: FormData;
+    data: any;
+    parentKey?: string;
+  }): void {
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         const formKey = parentKey ? `${parentKey}[${key}]` : key;
         const isFileType = data[key] instanceof File || data[key] instanceof Blob;
-        if (typeof data[key] === "object" && !isFileType && data[key] !== null) {
+        if (typeof data[key] === 'object' && !isFileType && data[key] !== null) {
           if (Object.keys(data[key]).length > 0) {
-            this.convertObjectToFormData(formData, data[key], formKey);
+            this.convertObjectToFormData({ formData, data: data[key], parentKey: formKey });
           } else {
-            formData.append(formKey, "");
+            formData.append(formKey, '');
           }
         } else {
-          formData.append(
-            formKey,
-            Autocode.validValue(data[key]) ? data[key] : ""
-          );
+          formData.append(formKey, Autocode.validValue({ value: data[key] }) ? data[key] : '');
         }
       }
     }
   }
 
-  private static async doAxios(request: IAcHttpRequest,method: AcEnumHttpMethod): Promise<IAcHttpResponse> {
-    const response:IAcHttpResponse = {
-      status:AcEnumHttpResponseCode.Unknown
+  private static async doAxios({
+    request,
+    method,
+  }: {
+    request: IAcHttpRequest;
+    method: AcEnumHttpMethod;
+  }): Promise<IAcHttpResponse> {
+    const response: IAcHttpResponse = {
+      status: AcEnumHttpResponseCode.Unknown,
     };
     if (this.requestInterceptor) {
-      request = this.requestInterceptor(request);
+      request = this.requestInterceptor( request );
     }
-    request = this.processRequestParams(request);
+    request = this.processRequestParams( request );
 
     const config: AxiosRequestConfig = {
       url: request.url,
       method: method.toLowerCase() as any,
       headers: request.headers,
-      data:
-        method === AcEnumHttpMethod.Get || method === AcEnumHttpMethod.Delete
-          ? undefined
-          : request.formData,
+      data: method === AcEnumHttpMethod.Get || method === AcEnumHttpMethod.Delete ? undefined : request.formData,
     };
 
     try {
@@ -79,77 +83,81 @@ export class AcHttp {
       response.data = axiosResponse.data;
     } catch (err: any) {
       response.status = AcEnumHttpResponseCode.Error;
-      response.details = err
+      response.details = err;
     }
     return response;
   }
 
   // ========= Observable wrappers =========
-  static requestObservable(
-    request: IAcHttpRequest,
-    method: AcEnumHttpMethod = AcEnumHttpMethod.Get
-  ): Observable<IAcHttpResponse> {
-    return from(this.doAxios(request, method));
+  static requestObservable({
+    request,
+    method = AcEnumHttpMethod.Get,
+  }: {
+    request: IAcHttpRequest;
+    method?: AcEnumHttpMethod;
+  }): Observable<IAcHttpResponse> {
+    return from(this.doAxios({ request, method }));
   }
 
-  static getObservable(request: IAcHttpRequest):Observable<IAcHttpResponse> {
-    return this.requestObservable(request, AcEnumHttpMethod.Get);
+  static getObservable( request: IAcHttpRequest): Observable<IAcHttpResponse> {
+    return this.requestObservable({ request, method: AcEnumHttpMethod.Get });
   }
 
-  static postObservable(request: IAcHttpRequest):Observable<IAcHttpResponse> {
-    return this.requestObservable(request, AcEnumHttpMethod.Post);
+  static postObservable( request: IAcHttpRequest): Observable<IAcHttpResponse> {
+    return this.requestObservable({ request, method: AcEnumHttpMethod.Post });
   }
 
-  static putObservable(request: IAcHttpRequest):Observable<IAcHttpResponse> {
-    return this.requestObservable(request, AcEnumHttpMethod.Put);
+  static putObservable( request: IAcHttpRequest): Observable<IAcHttpResponse> {
+    return this.requestObservable({ request, method: AcEnumHttpMethod.Put });
   }
 
-  static deleteObservable(request: IAcHttpRequest):Observable<IAcHttpResponse> {
-    return this.requestObservable(request, AcEnumHttpMethod.Delete);
+  static deleteObservable( request: IAcHttpRequest): Observable<IAcHttpResponse> {
+    return this.requestObservable({ request, method: AcEnumHttpMethod.Delete });
   }
 
   // ========= Promise wrappers =========
-  static requestPromise(
-    request: IAcHttpRequest,
-    method: AcEnumHttpMethod = AcEnumHttpMethod.Get
-  ): Promise<IAcHttpResponse> {
-    return this.doAxios(request, method);
+  static requestPromise({
+    request,
+    method = AcEnumHttpMethod.Get,
+  }: {
+    request: IAcHttpRequest;
+    method?: AcEnumHttpMethod;
+  }): Promise<IAcHttpResponse> {
+    return this.doAxios({ request, method });
   }
 
-  static getPromise(request: IAcHttpRequest): Promise<IAcHttpResponse> {
-    return this.requestPromise(request, AcEnumHttpMethod.Get);
+  static getPromise( request: IAcHttpRequest): Promise<IAcHttpResponse> {
+    return this.requestPromise({ request, method: AcEnumHttpMethod.Get });
   }
 
-  static postPromise(request: IAcHttpRequest): Promise<IAcHttpResponse> {
-    return this.requestPromise(request, AcEnumHttpMethod.Post);
+  static postPromise( request: IAcHttpRequest): Promise<IAcHttpResponse> {
+    return this.requestPromise({ request, method: AcEnumHttpMethod.Post });
   }
 
-  static putPromise(request: IAcHttpRequest): Promise<IAcHttpResponse> {
-    return this.requestPromise(request, AcEnumHttpMethod.Put);
+  static putPromise( request: IAcHttpRequest): Promise<IAcHttpResponse> {
+    return this.requestPromise({ request, method: AcEnumHttpMethod.Put });
   }
 
-  static deletePromise(request: IAcHttpRequest): Promise<IAcHttpResponse> {
-    return this.requestPromise(request, AcEnumHttpMethod.Delete);
+  static deletePromise( request: IAcHttpRequest): Promise<IAcHttpResponse> {
+    return this.requestPromise({ request, method: AcEnumHttpMethod.Delete });
   }
 
   // ========= Utilities =========
-  private static processRequestParams(
-    request: IAcHttpRequest
-  ): IAcHttpRequest {
+  private static processRequestParams( request: IAcHttpRequest): IAcHttpRequest {
     const params: IAcHttpRequest = { ...request };
 
     // Query params
     if (params.queryParams) {
       const queryParams: string[] = [];
       Object.keys(params.queryParams).forEach((key) => {
-        queryParams.push(key + "=" + params.queryParams![key]);
+        queryParams.push(key + '=' + params.queryParams![key]);
       });
 
       if (queryParams.length > 0) {
-        if (params.url.indexOf("?") < 0) {
-          params.url += "?";
+        if (params.url.indexOf('?') < 0) {
+          params.url += '?';
         }
-        params.url += queryParams.join("&");
+        params.url += queryParams.join('&');
       }
     }
 
@@ -158,12 +166,12 @@ export class AcHttp {
       if (params.formData == undefined || params.formData == null) {
         params.formData = new FormData();
       }
-      this.convertObjectToFormData(params.formData, params.data);
+      this.convertObjectToFormData({ formData: params.formData, data: params.data });
     }
 
     // Prefix base URL
-    if (this.baseUrl !== "") {
-      if (params.url.indexOf("http") !== 0) {
+    if (this.baseUrl !== '') {
+      if (params.url.indexOf('http') !== 0) {
         params.url = this.baseUrl + params.url;
       }
     }
@@ -171,15 +179,16 @@ export class AcHttp {
     return params;
   }
 
-  static async getFileContentAsBase64FromUrl(url: string) {
+  static async getFileContentAsBase64FromUrl({ url }: { url: string }) {
     try {
       const response = await this.axiosInstance.get(url, {
-        responseType: "blob",
+        responseType: 'blob',
       });
       return await blobToBase64(response.data);
     } catch (error) {
-      console.error("Error fetching file from URL:", error);
+      console.error('Error fetching file from URL:', error);
       throw error;
     }
   }
 }
+

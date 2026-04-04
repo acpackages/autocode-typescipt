@@ -212,15 +212,16 @@ export class AcHooks {
   /**
    * Unsubscribe using subscriptionId (only reliable way)
    */
-  unsubscribe({ hook,callback,subscriptionId }: { hook?:string,callback?: Function,subscriptionId?: string }): boolean {
-    if(event && callback){
-      for (const name of Object.keys(this.hooks)) {
-        if (name == hook) {
-          for (const id of Object.keys(this.hooks.get(name)!)) {
+  unsubscribe({ hook, callback, subscriptionId }: { hook?: string; callback?: Function; subscriptionId?: string }): boolean {
+    if (hook && callback) {
+      const name = hook.toLowerCase();
+      const hookMap = this.hooks.get(name);
+      if (hookMap) {
+        for (const [id, cb] of hookMap.entries()) {
+          if (cb === callback) {
             subscriptionId = id;
             break;
           }
-          break;
         }
       }
     }
@@ -238,17 +239,19 @@ export class AcHooks {
     return removed;
   }
 
-  unsubscribeAllHooks({ callback,subscriptionId }: { callback?:Function,subscriptionId?: string }): boolean {
-    if(callback){
-      for (const id of Object.keys(this.allHookCallbacks)) {
-        if (this.allHookCallbacks.get(id) == callback) {
-            subscriptionId = id;
-          }
+  unsubscribeAllHooks({ callback, subscriptionId }: { callback?: Function; subscriptionId?: string } = {}): boolean {
+    if (callback) {
+      for (const [id, cb] of this.allHookCallbacks.entries()) {
+        if (cb === callback) {
+          subscriptionId = id;
+          break;
+        }
       }
     }
     if (!subscriptionId) return false;
     return this.allHookCallbacks.delete(subscriptionId);
   }
+
 
   /**
    * Remove an entire hook and all its listeners

@@ -44,7 +44,12 @@ export class AcDDView {
   fromJson({ jsonData }: { jsonData: any }): this {
     const json = { ...jsonData };
 
-    if (AcDDView.KeyViewColumns in json && typeof json[AcDDView.KeyViewColumns] === "object" && !Array.isArray(json[AcDDView.KeyViewColumns])) {
+    if (
+      AcDDView.KeyViewColumns in json &&
+      typeof json[AcDDView.KeyViewColumns] === 'object' &&
+      !Array.isArray(json[AcDDView.KeyViewColumns])
+    ) {
+      this.viewColumns = [];
       for (const [columnName, columnData] of Object.entries(json[AcDDView.KeyViewColumns])) {
         const column = AcDDViewColumn.instanceFromJson({ jsonData: columnData as any });
         this.viewColumns.push(column);
@@ -81,6 +86,7 @@ export class AcDDView {
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+

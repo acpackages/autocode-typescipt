@@ -11,6 +11,7 @@ export class AcWebRouteDefinition {
 
   controller: any;
   handler: any;
+  interceptors: string[] = [];
 
   documentation!: AcApiDocRoute;
 

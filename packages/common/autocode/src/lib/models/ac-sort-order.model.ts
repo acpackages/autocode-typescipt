@@ -64,6 +64,6 @@ export class AcSortOrder {
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({object:this.toJson()});
   }
 }

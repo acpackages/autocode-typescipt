@@ -120,7 +120,66 @@ export class AcWeb {
     return pattern.test(uri);
   }
 
+  private _interceptors: import('./ac-web-interceptor').AcWebInterceptor[] = [];
+
+  addInterceptor({ interceptor }: { interceptor: import('./ac-web-interceptor').AcWebInterceptor }): AcWeb {
+    this._interceptors.push(interceptor);
+    return this;
+  }
+
+  _findInterceptor({ name }: { name: string }): import('./ac-web-interceptor').AcWebInterceptor | undefined {
+    return this._interceptors.find(i => i.name === name);
+  }
+
   async handleWebRequest({ request, routeDefinition }: { request: AcWebRequest; routeDefinition: AcWebRouteDefinition }): Promise<AcWebResponse> {
+    const chain = [...this._interceptors];
+    const routeInterceptors = routeDefinition.interceptors || [];
+
+    for (const name of routeInterceptors) {
+      const interceptor = this._findInterceptor({ name });
+      if (interceptor && !chain.includes(interceptor)) {
+        chain.push(interceptor);
+      } else if (!interceptor) {
+        this.logger.log(`Warning: Interceptor '${name}' not found for route ${routeDefinition.method}>${routeDefinition.url}`);
+      }
+    }
+
+    let shortCircuitResponse: AcWebResponse | null = null;
+    const executedInterceptors: import('./ac-web-interceptor').AcWebInterceptor[] = [];
+
+    for (const interceptor of chain) {
+      try {
+        shortCircuitResponse = await interceptor.onRequest({ request });
+        executedInterceptors.push(interceptor);
+        if (shortCircuitResponse) break;
+      } catch (e: any) {
+        this.logger.log(`Error in interceptor ${interceptor.name}.onRequest: ${e}`);
+        shortCircuitResponse = AcWebResponse.internalError({ data: `Interceptor error: ${e}` });
+        executedInterceptors.push(interceptor);
+        break;
+      }
+    }
+
+    let response: AcWebResponse;
+    if (shortCircuitResponse) {
+      response = shortCircuitResponse;
+    } else {
+      response = await this._executeHandler({ request, routeDefinition });
+    }
+
+    for (let i = executedInterceptors.length - 1; i >= 0; i--) {
+      const interceptor = executedInterceptors[i];
+      try {
+        response = await interceptor.onResponse({ request, response });
+      } catch (e: any) {
+        this.logger.log(`Error in interceptor ${interceptor.name}.onResponse: ${e}`);
+      }
+    }
+
+    return response;
+  }
+
+  async _executeHandler({ request, routeDefinition }: { request: AcWebRequest, routeDefinition: AcWebRouteDefinition }): Promise<AcWebResponse> {
     const requestLogger = new AcLogger({
       logFileName: `${request.url}.log`,
       logDirectory: 'logs/ac-web-requests',
@@ -128,7 +187,6 @@ export class AcWeb {
       logType: AcEnumLogType.Text,
     });
 
-    // Case 1: Handler is a controller class + method name string
     if (routeDefinition.controller && typeof routeDefinition.handler === 'string') {
       this.logger.log('Handling controller route...');
       try {
@@ -136,16 +194,24 @@ export class AcWeb {
         const controllerInstance = new ControllerClass();
         const methodName = routeDefinition.handler;
         this.logger.log(`Handler controller method name is : ${methodName}`);
+
         if (typeof controllerInstance[methodName] === 'function') {
-          return await controllerInstance[methodName]({ request, requestLogger });
+          // Reflective Parameter Injection via Named Parameters
+          const injectedArgs = {
+            request,
+            requestLogger,
+            ...request.pathParameters,
+            ...request.queryParameters,
+            ...request.formFields,
+            ...(typeof request.body === 'object' && request.body !== null ? request.body : {})
+          };
+          return await controllerInstance[methodName](injectedArgs);
         }
         return AcWebResponse.notFound();
       } catch (e: any) {
         return AcWebResponse.internalError({ data: e.toString() });
       }
-    }
-    // Case 2: Handler is a simple closure function
-    else if (typeof routeDefinition.handler === 'function') {
+    } else if (typeof routeDefinition.handler === 'function') {
       try {
         this.logger.log('Handling function route...');
         const args = new AcWebRequestHandlerArgs({ request, logger: requestLogger });
@@ -157,6 +223,7 @@ export class AcWeb {
 
     return AcWebResponse.notFound();
   }
+
 
   registerController({ controllerClass, routePrefix = '' }: { controllerClass: any; routePrefix?: string }): AcWeb {
     this.logger.log(`Registering controller class...`);
@@ -178,6 +245,11 @@ export class AcWeb {
         const routeKey = `${httpMethod}>${fullPath}`;
         this.logger.log(`Method route details > Method: ${httpMethod}, Path : ${fullPath}, RouteKey : ${routeKey}`);
 
+        // Retrieve interceptors from reflection
+        const methodInterceptors = Reflect.getMetadata('ac:web:use-interceptor', controllerClass.prototype, routeMeta.handlerName) || [];
+        const classInterceptors = Reflect.getMetadata('ac:web:use-interceptor', controllerClass) || [];
+        const combinedInterceptors = [...classInterceptors, ...methodInterceptors];
+
         const routeDefinition = AcWebRouteDefinition.instanceFromJson({
           [AcWebRouteDefinition.KEY_URL]: fullPath,
           [AcWebRouteDefinition.KEY_METHOD]: httpMethod,
@@ -185,6 +257,8 @@ export class AcWeb {
           [AcWebRouteDefinition.KEY_HANDLER]: routeMeta.handlerName,
           [AcWebRouteDefinition.KEY_DOCUMENTATION]: routeMeta.documentation || new AcApiDocRoute(),
         });
+        routeDefinition.interceptors = combinedInterceptors;
+
         this.routeDefinitions[routeKey] = routeDefinition;
       }
     }

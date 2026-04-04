@@ -1,9 +1,9 @@
-import { getAcBindJsonMetadata } from "../annotations/ac-bind-json-property.annotation";
+import { getAcBindJsonMetadata } from '../annotations/ac-bind-json-property.annotation';
 
 export class AcJsonUtils {
   static getJsonDataFromInstance({ instance }: { instance: any }): Record<string, any> {
     const result: Record<string, any> = {};
-    const metadata = getAcBindJsonMetadata(instance);
+    const metadata = getAcBindJsonMetadata({ instance });
     for (const key of Object.keys(instance)) {
       const attr = metadata.get(key) || {};
       if (attr.skipInToJson) continue;
@@ -12,20 +12,20 @@ export class AcJsonUtils {
       const value = (instance as any)[key];
 
       if (value !== undefined && value !== null) {
-        result[jsonKey] = this._getJsonForPropertyValue(value);
+        result[jsonKey] = this._getJsonForPropertyValue({ value });
       }
     }
 
     return result;
   }
 
-  static _getJsonForPropertyValue(value: any): any {
+  static _getJsonForPropertyValue({ value }: { value: any }): any {
     if (value === null || typeof value === 'number' || typeof value === 'string' || typeof value === 'boolean') {
       return value;
     }
 
     if (Array.isArray(value)) {
-      return value.map(v => this._getJsonForPropertyValue(v));
+      return value.map((v) => this._getJsonForPropertyValue({ value: v }));
     }
 
     if (value instanceof Error) {
@@ -50,7 +50,7 @@ export class AcJsonUtils {
     }
   }
 
-  static prettyEncode(object: any): string {
+  static prettyEncode({ object }: { object: any }): string {
     return JSON.stringify(object, null, 2);
   }
 
@@ -61,7 +61,7 @@ export class AcJsonUtils {
     instance: any;
     jsonData: Record<string, any>;
   }) {
-    const metadata = getAcBindJsonMetadata(instance);
+    const metadata = getAcBindJsonMetadata({ instance });
     for (const key of Object.keys(instance)) {
       this._setInstancePropertyValueFromJson({
         instance,
@@ -84,7 +84,8 @@ export class AcJsonUtils {
     attr?: {
       key?: string;
       skipInFromJson?: boolean;
-      arrayType?: () => new () => any;
+      arrayType?: any;
+      type?: any;
     };
   }) {
     const jsonKey = attr?.key || key;
@@ -94,7 +95,7 @@ export class AcJsonUtils {
 
     let value = jsonData[jsonKey];
     if (attr?.arrayType && Array.isArray(value)) {
-      const typeConstructor = attr.arrayType();
+      const typeConstructor = typeof attr.arrayType === 'function' ? attr.arrayType() : attr.arrayType;
       value = value.map((item: any) => {
         const obj = new typeConstructor();
         this.setInstancePropertiesFromJsonData({
@@ -103,10 +104,17 @@ export class AcJsonUtils {
         });
         return obj;
       });
-    }
-    else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    } else if (attr?.type && value !== null) {
+      const typeConstructor = typeof attr.type === 'function' ? attr.type() : attr.type;
+      const obj = new typeConstructor();
+      this.setInstancePropertiesFromJsonData({
+        instance: obj,
+        jsonData: value,
+      });
+      value = obj;
+    } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       const typeConstructor = instance[key]?.constructor;
-      if (typeof typeConstructor === 'function' && typeConstructor.name != 'Object') {
+      if (typeof typeConstructor === 'function' && typeConstructor.name !== 'Object') {
         const obj = new typeConstructor();
         this.setInstancePropertiesFromJsonData({
           instance: obj,
@@ -118,3 +126,4 @@ export class AcJsonUtils {
     instance[key] = value;
   }
 }
+

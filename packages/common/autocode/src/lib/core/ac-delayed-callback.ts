@@ -8,12 +8,11 @@ export class AcDelayedCallback {
   add({ callback, key, duration = 0 }: { callback: Function, key?: string, duration?: number }):string {
     if (!key) {
       key = Autocode.uuid();
-    }
-    else{
-      this.clearTimeoutSafe(key);
+    } else {
+      this.clearTimeoutSafe({ key });
     }
     this.timeouts[key] = setTimeout(() => {
-      if(this.timeouts && this.timeouts[key]){
+      if (this.timeouts && this.timeouts[key]) {
         delete this.timeouts[key];
         callback();
       }
@@ -22,12 +21,11 @@ export class AcDelayedCallback {
   }
 
   clearAll() {
-    Object.keys(this.timeouts).forEach(key =>
-      this.clearTimeoutSafe(key)
-    );
+    Object.keys(this.timeouts).forEach((key) => this.clearTimeoutSafe({ key }));
   }
 
-  private clearTimeoutSafe(key: string): void {
+
+  private clearTimeoutSafe({ key }: { key: string }): void {
     const timeout = this.timeouts[key];
     if (timeout !== undefined) {
       clearTimeout(timeout);
@@ -35,25 +33,25 @@ export class AcDelayedCallback {
     }
   }
 
-  destroy(){
+  destroy() {
     this.clearAll();
-    acNullifyInstanceProperties({instance:this});
+    acNullifyInstanceProperties({ instance: this });
   }
 
-  remove({key}:{key:string}){
-    this.clearTimeoutSafe(key);
+  remove({ key }: { key: string }) {
+    this.clearTimeoutSafe({ key });
   }
 
-  reset({ callback, key, duration = 0 }: { callback: Function, key: string, duration?: number }) {
-    if(this.timeouts[key]){
-      this.clearTimeoutSafe(key);
+  reset({ callback, key, duration = 0 }: { callback: Function; key: string; duration?: number }) {
+    if (this.timeouts[key]) {
+      this.clearTimeoutSafe({ key });
       this.timeouts[key] = setTimeout(() => {
         delete this.timeouts[key];
         callback();
       }, duration);
     }
-
   }
 }
+
 
 export const acDelayedCallback:AcDelayedCallback = new AcDelayedCallback();

@@ -39,7 +39,7 @@ export class AcDDRelationship {
   static getInstances({
     destinationColumn,
     destinationTable,
-    dataDictionaryName = "default",
+    dataDictionaryName = 'default',
   }: {
     destinationColumn: string;
     destinationTable: string;
@@ -47,9 +47,9 @@ export class AcDDRelationship {
   }): AcDDRelationship[] {
     const result: AcDDRelationship[] = [];
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
-    for(const relationshipDetails of Object.values(acDataDictionary.relationships)){
-      const relationship = AcDDRelationship.instanceFromJson({ jsonData: relationshipDetails })
-      if(relationship.destinationColumn == destinationColumn && relationship.destinationTable == destinationTable){
+    for (const relationshipDetails of acDataDictionary.relationships) {
+      const relationship = AcDDRelationship.instanceFromJson({ jsonData: relationshipDetails });
+      if (relationship.destinationColumn === destinationColumn && relationship.destinationTable === destinationTable) {
         result.push(relationship);
       }
     }
@@ -70,6 +70,7 @@ export class AcDDRelationship {
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+

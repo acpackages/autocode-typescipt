@@ -5,19 +5,21 @@ import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils } from "@autocod
 import { AcDDTableColumn } from "./ac-dd-table-column.model";
 import { AcDDTableProperty } from "./ac-dd-table-property.model";
 import { AcDataDictionary } from "./ac-data-dictionary.model";
+import { AcDDRelationship } from "./ac-dd-relationship.model";
 import { AcEnumDDTableProperty } from "../enums/ac-enum-dd-table-property.enum";
 
 
+
 export class AcDDTable {
-  static readonly KeyTableColumns = "tableColumns";
-  static readonly KeyTableName = "tableName";
-  static readonly KeyTableProperties = "tableProperties";
+  static readonly KeyTableColumns = 'tableColumns';
+  static readonly KeyTableName = 'tableName';
+  static readonly KeyTableProperties = 'tableProperties';
 
   @AcBindJsonProperty({ key: AcDDTable.KeyTableColumns })
   tableColumns: AcDDTableColumn[] = [];
 
   @AcBindJsonProperty({ key: AcDDTable.KeyTableName })
-  tableName: string = "";
+  tableName: string = '';
 
   @AcBindJsonProperty({ key: AcDDTable.KeyTableProperties })
   tableProperties: AcDDTableProperty[] = [];
@@ -28,11 +30,23 @@ export class AcDDTable {
     return instance;
   }
 
-  static getDropTableStatement({tableName,databaseType=AcEnumSqlDatabaseType.Unknown}: { tableName: string; databaseType?: string }): string {
+  static getDropTableStatement({
+    tableName,
+    databaseType = AcEnumSqlDatabaseType.Unknown,
+  }: {
+    tableName: string;
+    databaseType?: string;
+  }): string {
     return `DROP Table IF EXISTS ${tableName};`;
   }
 
-  static getInstance({tableName,dataDictionaryName="default"}: { tableName: string; dataDictionaryName?: string }): AcDDTable {
+  static getInstance({
+    tableName,
+    dataDictionaryName = 'default',
+  }: {
+    tableName: string;
+    dataDictionaryName?: string;
+  }): AcDDTable {
     const result = new AcDDTable();
     const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
 
@@ -43,7 +57,7 @@ export class AcDDTable {
     return result;
   }
 
-  getColumn({columnName}:{columnName: string}): AcDDTableColumn | undefined {
+  getColumn({ columnName }: { columnName: string }): AcDDTableColumn | undefined {
     return this.tableColumns.find((column) => column.columnName === columnName);
   }
 
@@ -51,16 +65,16 @@ export class AcDDTable {
     return this.tableColumns.map((column) => column.columnName);
   }
 
-  getCreateTableStatement({databaseType=AcEnumSqlDatabaseType.Unknown}: { databaseType?: string } = {}): string {
+  getCreateTableStatement({ databaseType = AcEnumSqlDatabaseType.Unknown }: { databaseType?: string } = {}): string {
     const columnDefinitions = this.tableColumns
       .map((column) => column.getColumnDefinitionForStatement({ databaseType }))
-      .filter((def) => def !== "");
-    return `CREATE Table IF NOT EXISTS ${this.tableName} (${columnDefinitions.join(", ")});`;
+      .filter((def) => def !== '');
+    return `CREATE Table IF NOT EXISTS ${this.tableName} (${columnDefinitions.join(', ')});`;
   }
 
   getPrimaryKeyColumnName(): string {
-    const primaryKeyColumn = this.getPrimaryKeyColumn()
-    return primaryKeyColumn ? primaryKeyColumn.columnName : "";
+    const primaryKeyColumn = this.getPrimaryKeyColumn();
+    return primaryKeyColumn ? primaryKeyColumn.columnName : '';
   }
 
   getPrimaryKeyColumn(): AcDDTableColumn | undefined {
@@ -75,6 +89,18 @@ export class AcDDTable {
 
   getForeignKeyColumns(): AcDDTableColumn[] {
     return this.tableColumns.filter((column) => column.isForeignKey());
+  }
+
+  getForeignKeyRelationships({ dataDictionaryName = 'default' }: { dataDictionaryName?: string } = {}): AcDDRelationship[] {
+    const result: AcDDRelationship[] = [];
+    const acDataDictionary = AcDataDictionary.getInstance({ dataDictionaryName });
+    const relationships = AcDataDictionary.getRelationships({ dataDictionaryName });
+    for (const relationship of relationships) {
+      if (relationship.destinationTable === this.tableName) {
+        result.push(relationship);
+      }
+    }
+    return result;
   }
 
   getPluralName(): string {
@@ -122,13 +148,18 @@ export class AcDDTable {
         return property.propertyValue;
       }
     }
-    return "";
+    return '';
   }
 
   fromJson({ jsonData }: { jsonData: any }): this {
     const json = { ...jsonData };
 
-    if (AcDDTable.KeyTableColumns in json && typeof json[AcDDTable.KeyTableColumns] === "object" && !Array.isArray(json[AcDDTable.KeyTableColumns])) {
+    if (
+      AcDDTable.KeyTableColumns in json &&
+      typeof json[AcDDTable.KeyTableColumns] === 'object' &&
+      !Array.isArray(json[AcDDTable.KeyTableColumns])
+    ) {
+      this.tableColumns = [];
       for (const [columnName, columnData] of Object.entries(json[AcDDTable.KeyTableColumns])) {
         const column = AcDDTableColumn.instanceFromJson({ jsonData: columnData });
         column.table = this;
@@ -137,7 +168,12 @@ export class AcDDTable {
       delete json[AcDDTable.KeyTableColumns];
     }
 
-    if (AcDDTable.KeyTableProperties in json && typeof json[AcDDTable.KeyTableProperties] === "object" && !Array.isArray(json[AcDDTable.KeyTableProperties])) {
+    if (
+      AcDDTable.KeyTableProperties in json &&
+      typeof json[AcDDTable.KeyTableProperties] === 'object' &&
+      !Array.isArray(json[AcDDTable.KeyTableProperties])
+    ) {
+      this.tableProperties = [];
       for (const propertyData of Object.values(json[AcDDTable.KeyTableProperties])) {
         this.tableProperties.push(AcDDTableProperty.instanceFromJson({ jsonData: propertyData }));
       }
@@ -153,6 +189,7 @@ export class AcDDTable {
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+

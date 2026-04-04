@@ -39,9 +39,6 @@ export class AcDDConfig {
     return instance;
   }
 
-  /**
-   * Populates this instance from JSON data
-   */
   fromJson({ jsonData }: { jsonData: any }): this {
     AcJsonUtils.setInstancePropertiesFromJsonData({
       instance: this,
@@ -61,9 +58,10 @@ export class AcDDConfig {
    * Returns a pretty-printed JSON string representation
    */
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+
 
 // Global singleton instance (same pattern as in Dart)
 export const acDDConfig = new AcDDConfig();

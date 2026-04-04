@@ -87,18 +87,19 @@ export class AcContext {
     return this.__events__.subscribe({ event: event, callback: callback });
   }
 
-  private makeReactive(obj: any, path: string[] = [], root: any = null): any {
+  private makeReactive({ obj, path = [], root = null }: { obj: any; path?: string[]; root?: any }): any {
     const self = this;
     root = root || obj;
 
     return new Proxy(obj, {
       get(target, key, receiver) {
         const value = Reflect.get(target, key, receiver);
-        if (value && typeof value === "object" && !(value as any).__isAcContext) {
-          return self.makeReactive(value, [...path, String(key)], root);
+        if (value && typeof value === 'object' && !(value as any).__isAcContext) {
+          return self.makeReactive({ obj: value, path: [...path, String(key)], root });
         }
         return value;
       },
+
       deleteProperty: (target, prop) => {
         if (prop in target) {
           const eventArgs: IAcContextEvent = {

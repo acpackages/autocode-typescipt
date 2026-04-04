@@ -19,12 +19,7 @@ export class AcDDTableColumnProperty {
   }
 
   fromJson({ jsonData }: { jsonData: any }): AcDDTableColumnProperty {
-    if(jsonData[AcDDTableColumnProperty.KeyPropertyName]){
-      this.propertyName = jsonData[AcDDTableColumnProperty.KeyPropertyName];
-    }
-    if(jsonData[AcDDTableColumnProperty.KeyPropertyValue]){
-      this.propertyValue = jsonData[AcDDTableColumnProperty.KeyPropertyValue];
-    }
+    AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData: jsonData });
     return this;
   }
 
@@ -33,6 +28,7 @@ export class AcDDTableColumnProperty {
   }
 
   toString(): string {
-    return AcJsonUtils.prettyEncode(this.toJson());
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+

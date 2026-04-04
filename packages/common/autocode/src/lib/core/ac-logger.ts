@@ -91,7 +91,7 @@ export class AcLogger {
   closeLogFile() {
     if (this.logFileCreated && this.logFile) {
       if (this.logType === AcEnumLogType.Html) {
-        this.logFile.writeAsString("\n\t\t</table>\n\t</body>\n</html>");
+        this.logFile.writeAsString({content:"\n\t\t</table>\n\t</body>\n</html>"});
       }
       this.logFile.close();
       this.logFile = undefined;
@@ -111,12 +111,12 @@ export class AcLogger {
         this.logFile.close();
         this.logFile = undefined;
       }
-      this.logFile = new AcBackgroundFile(this.logFilePath);
+      this.logFile = new AcBackgroundFile({filePath:this.logFilePath});
 
       if (this.logType === AcEnumLogType.Html) {
-        this.logFile.writeAsString(
+        this.logFile.writeAsString({content:
           `<html lang="en">\n\t<style>\n\t\t[ac-logger-message-data=timestamp]{\n\t\t\twidth:225px;\n\t\t\tvertical-align:top;\n\t\t}\n\t\t[ac-logger-message-type=warn]{\n\t\t\tcolor:orange;\n\t\t}\n\t\t[ac-logger-message-type=error]{\n\t\t\tcolor:red;\n\t\t}\n\t\t[ac-logger-message-type=success]{\n\t\t\tcolor:green;\n\t\t}\n\t\t[ac-logger-message-type=info]{\n\t\t\tcolor:blue;\n\t\t}\n\t\t[ac-logger-message-type=debug]{\n\t\t\tcolor:magenta;\n\t\t}\n\t</style>\n\t<body>\n\t\t<table>`
-        );
+      });
       }
 
       this.logFileCreated = true;
@@ -221,16 +221,16 @@ export class AcLogger {
   private _writeHtml(timestamp: string, message: string, type: string) {
     if (this.logFile) {
       if (message) {
-        this.logFile.writeAsString(`\n\t\t\t<tr ac-logger-message-row ac-logger-message-type="${type}"><td ac-logger-message-data="timestamp">${timestamp}</td><td ac-logger-message-data="message">${message}</td></tr>`);
+        this.logFile.writeAsString({content:`\n\t\t\t<tr ac-logger-message-row ac-logger-message-type="${type}"><td ac-logger-message-data="timestamp">${timestamp}</td><td ac-logger-message-data="message">${message}</td></tr>`});
       } else {
-        this.logFile.writeAsString("\n\t\t\t<tr><td colspan=\"1000\">&nbsp;</td></tr>");
+        this.logFile.writeAsString({content:"\n\t\t\t<tr><td colspan=\"1000\">&nbsp;</td></tr>"});
       }
     }
   }
 
   private _writeText(timestamp: string, message: string, type: string) {
     if (this.logFile) {
-      this.logFile.writeAsString(`\n${timestamp} => ${message}`);
+      this.logFile.writeAsString({content:`\n${timestamp} => ${message}`});
     }
   }
 }

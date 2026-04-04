@@ -127,7 +127,7 @@ export class AcDDTableColumn {
           isPrimaryKeySet = true;
           break;
         case AcEnumDDColumnType.Blob:
-          columnTypeLocal = this._blobType(size);
+          columnTypeLocal = this._blobType({ size });
           break;
         case AcEnumDDColumnType.Date:
           columnTypeLocal = 'DATE';
@@ -142,7 +142,7 @@ export class AcDDTableColumn {
           columnTypeLocal = 'CHAR(36)';
           break;
         case AcEnumDDColumnType.Integer:
-          columnTypeLocal = this._intType(size);
+          columnTypeLocal = this._intType({ size });
           break;
         case AcEnumDDColumnType.Json:
           columnTypeLocal = 'LONGTEXT';
@@ -152,8 +152,9 @@ export class AcDDTableColumn {
           columnTypeLocal = `VARCHAR(${size})`;
           break;
         case AcEnumDDColumnType.Text:
-          columnTypeLocal = this._textType(size);
+          columnTypeLocal = this._textType({ size });
           break;
+
         case AcEnumDDColumnType.Time:
           columnTypeLocal = 'TIME';
           break;
@@ -216,33 +217,39 @@ export class AcDDTableColumn {
     return result;
   }
 
-  private _blobType(size: number): string {
-    if (size <= 255) return "TINYBLOB";
-    if (size <= 65535) return "BLOB";
-    if (size <= 16777215) return "MEDIUMBLOB";
-    return "LONGBLOB";
+  private _blobType({ size }: { size: number }): string {
+    if (size <= 255) return 'TINYBLOB';
+    if (size <= 65535) return 'BLOB';
+    if (size <= 16777215) return 'MEDIUMBLOB';
+    return 'LONGBLOB';
   }
 
-  private _textType(size: number): string {
-    if (size <= 255) return "TINYTEXT";
-    if (size <= 65535) return "TEXT";
-    if (size <= 16777215) return "MEDIUMTEXT";
-    return "LONGTEXT";
+  private _textType({ size }: { size: number }): string {
+    if (size <= 255) return 'TINYTEXT';
+    if (size <= 65535) return 'TEXT';
+    if (size <= 16777215) return 'MEDIUMTEXT';
+    return 'LONGTEXT';
   }
 
-  private _intType(size: number): string {
-    if (size <= 255) return "TINYINT";
-    if (size <= 65535) return "SMALLINT";
-    if (size <= 16777215) return "MEDIUMINT";
-    return "BIGINT";
+  private _intType({ size }: { size: number }): string {
+    if (size <= 255) return 'TINYINT';
+    if (size <= 65535) return 'SMALLINT';
+    if (size <= 16777215) return 'MEDIUMINT';
+    return 'BIGINT';
   }
 
   fromJson({ jsonData }: { jsonData: any }): AcDDTableColumn {
     const json = { ...jsonData };
 
-    if (AcDDTableColumn.KeyColumnProperties in json && typeof json[AcDDTableColumn.KeyColumnProperties] === "object" && !Array.isArray(json[AcDDTableColumn.KeyColumnProperties])) {
+    if (
+      AcDDTableColumn.KeyColumnProperties in json &&
+      typeof json[AcDDTableColumn.KeyColumnProperties] === 'object' &&
+      !Array.isArray(json[AcDDTableColumn.KeyColumnProperties])
+    ) {
+      this.columnProperties = {};
       for (const propertyData of Object.values(json[AcDDTableColumn.KeyColumnProperties]) as any) {
-        this.columnProperties[propertyData[AcDDTableColumnProperty.KeyPropertyName]] = AcDDTableColumnProperty.instanceFromJson({ jsonData: propertyData });
+        this.columnProperties[propertyData[AcDDTableColumnProperty.KeyPropertyName]] =
+          AcDDTableColumnProperty.instanceFromJson({ jsonData: propertyData });
       }
       delete json[AcDDTableColumn.KeyColumnProperties];
     }
@@ -250,10 +257,11 @@ export class AcDDTableColumn {
     return this;
   }
 
-  getForeignKeyRelationships(): AcDDRelationship[] {
+  getForeignKeyRelationships({ dataDictionaryName = 'default' }: { dataDictionaryName?: string } = {}): AcDDRelationship[] {
     return AcDDRelationship.getInstances({
-      destinationTable: this.table?.tableName ?? "",
+      destinationTable: this.table?.tableName ?? '',
       destinationColumn: this.columnName,
+      dataDictionaryName,
     });
   }
 
@@ -264,11 +272,11 @@ export class AcDDTableColumn {
     return 0;
   }
 
-  getValueOptions():any[]{
-    let result:any[] = [];
-    if(this.columnProperties[AcEnumDDColumnProperty.ValueOptions]){
+  getValueOptions(): any[] {
+    let result: any[] = [];
+    if (this.columnProperties[AcEnumDDColumnProperty.ValueOptions]) {
       const valueOptions = this.columnProperties[AcEnumDDColumnProperty.ValueOptions].propertyValue;
-      if(valueOptions && valueOptions.length > 0){
+      if (valueOptions && valueOptions.length > 0) {
         result = valueOptions;
       }
     }
@@ -289,8 +297,8 @@ export class AcDDTableColumn {
     return this.columnType === AcEnumDDColumnType.AutoNumber;
   }
 
-  isForeignKey(): boolean {
-    return this.getForeignKeyRelationships().length > 0;
+  isForeignKey({ dataDictionaryName = 'default' }: { dataDictionaryName?: string } = {}): boolean {
+    return this.getForeignKeyRelationships({ dataDictionaryName }).length > 0;
   }
 
   isNullable(): boolean {
@@ -329,7 +337,6 @@ export class AcDDTableColumn {
     return false;
   }
 
-
   isSetValuesNullBeforeDelete(): boolean {
     if (this.columnProperties[AcEnumDDColumnProperty.SetNullBeforeDelete]) {
       return this.columnProperties[AcEnumDDColumnProperty.SetNullBeforeDelete].propertyValue === true;
@@ -357,5 +364,8 @@ export class AcDDTableColumn {
     return AcJsonUtils.getJsonDataFromInstance({ instance: this });
   }
 
-
+  toString(): string {
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
+  }
 }
+

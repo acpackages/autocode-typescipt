@@ -10,20 +10,20 @@ export type AcPromiseInstance = {
 export class AcPromiseManager {
   private promises = new Map<string, AcPromiseInstance>();
 
-  create<T>(key?: string): AcPromiseInstance {
-    if(key==undefined){
+  create<T>({ key }: { key?: string } = {}): AcPromiseInstance {
+    if (key == undefined) {
       key = Autocode.uniqueId();
     }
-    const instance = this.createInstance<T>(key);
+    const instance = this.createInstance<T>({ id: key });
     this.promises.set(key, instance);
     return instance;
   }
 
-  containsKey(key:string){
+  containsKey({ key }: { key: string }) {
     return this.promises.has(key);
   }
 
-  private createInstance<T>(id:string): AcPromiseInstance {
+  private createInstance<T>({ id }: { id: string }): AcPromiseInstance {
     let resolve!: (value: any) => void;
     let reject!: (reason?: any) => void;
 
@@ -32,22 +32,23 @@ export class AcPromiseManager {
       reject = rej;
     });
 
-    return { id,promise, resolve, reject };
+    return { id, promise, resolve, reject };
   }
 
-  destroy(){
-    acNullifyInstanceProperties({instance:this});
+  destroy() {
+    acNullifyInstanceProperties({ instance: this });
   }
 
-  resolve(key: string, value?: any) {
+  resolve({ key, value }: { key: string; value?: any }) {
     const deferred = this.promises.get(key);
     deferred?.resolve(value);
     this.promises.delete(key);
   }
 
-  reject(key: string, reason?: any) {
+  reject({ key, reason }: { key: string; reason?: any }) {
     const deferred = this.promises.get(key);
     deferred?.reject(reason);
     this.promises.delete(key);
   }
 }
+

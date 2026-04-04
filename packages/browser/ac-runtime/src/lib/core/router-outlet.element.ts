@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AC_RUNTIME_CONFIG } from '../consts/ac-runtime-config.const';
 import { AcElement, AcInput, acAutoBootstrap, acElementRegistry, getIAcElementMetadata } from './element.base';
 import { acRouter, IAcRouteSnapshot } from './router';
@@ -12,8 +13,8 @@ export class AcRouterElement {
     private isPaused: boolean = false;
     private lastSnapshot?: IAcRouteSnapshot;
 
+
     async acOnInit() {
-        // Subscribe to router
         acRouter.routeChange.subscribe((snapshot: IAcRouteSnapshot) => {
             if (!this.isPaused) {
                 this.handleRouteChange(snapshot);

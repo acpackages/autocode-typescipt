@@ -52,6 +52,7 @@ export class AcDDViewColumn {
 
     if (json.hasOwnProperty(AcDDViewColumn.KeyColumnProperties)) {
       const props = json[AcDDViewColumn.KeyColumnProperties] as Record<string, any>;
+      this.columnProperties = {};
       for (const key in props) {
         if (Object.prototype.hasOwnProperty.call(props, key)) {
           this.columnProperties[key] = AcDDTableColumnProperty.instanceFromJson({ jsonData: props[key] });
@@ -67,19 +68,23 @@ export class AcDDViewColumn {
   getColumnTitle(): string {
     if (this.columnProperties[AcEnumDDColumnProperty.ColumnTitle]) {
       return this.columnProperties[AcEnumDDColumnProperty.ColumnTitle].propertyValue ?? this.columnName;
-    }
-    else if(this.columnSource == 'table'){
-      if(this.columnSourceName && this.columnSourceOriginalColumn){
-        const ddTableColumn = AcDDTableColumn.getInstance({tableName:this.columnSourceName,columnName:this.columnSourceOriginalColumn});
-        if(ddTableColumn){
+    } else if (this.columnSource === 'table') {
+      if (this.columnSourceName && this.columnSourceOriginalColumn) {
+        const ddTableColumn = AcDDTableColumn.getInstance({
+          tableName: this.columnSourceName,
+          columnName: this.columnSourceOriginalColumn,
+        });
+        if (ddTableColumn) {
           return ddTableColumn.getColumnTitle();
         }
       }
-    }
-    else if(this.columnSource == 'view'){
-      if(this.columnSourceName && this.columnSourceOriginalColumn){
-        const ddViewColumn = AcDDViewColumn.getInstance({viewName:this.columnSourceName,columnName:this.columnSourceOriginalColumn});
-        if(ddViewColumn){
+    } else if (this.columnSource === 'view') {
+      if (this.columnSourceName && this.columnSourceOriginalColumn) {
+        const ddViewColumn = AcDDViewColumn.getInstance({
+          viewName: this.columnSourceName,
+          columnName: this.columnSourceOriginalColumn,
+        });
+        if (ddViewColumn) {
           return ddViewColumn.getColumnTitle();
         }
       }
@@ -106,6 +111,7 @@ export class AcDDViewColumn {
   }
 
   toString(): string {
-    return JSON.stringify(this.toJson(), null, 2);
+    return AcJsonUtils.prettyEncode({ object: this.toJson() });
   }
 }
+

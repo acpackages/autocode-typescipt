@@ -3,6 +3,8 @@
 import { AcLogger, AcResult } from "@autocode-ts/autocode";
 import { AcDataDictionary, AcDDTable } from "@autocode-ts/ac-data-dictionary";
 
+import { AcSqlEventHandlersRegistry } from '../annotations/ac-sql-event-handler';
+
 export class AcSqlDbRowEvent {
   logger!: AcLogger;
   tableName: string = '';
@@ -33,7 +35,27 @@ export class AcSqlDbRowEvent {
 
   async execute(): Promise<AcResult> {
     const result = new AcResult();
+    const handlers = AcSqlEventHandlersRegistry[this.tableName] || [];
+
+    for (const HandlerClass of handlers) {
+      const handlerInstance = new HandlerClass();
+      const prototype = Object.getPrototypeOf(handlerInstance);
+
+      for (const propertyName of Object.getOwnPropertyNames(prototype)) {
+        if (propertyName === 'constructor') continue;
+
+        const methodEvent = Reflect.getMetadata('ac_sql_event_callback', prototype, propertyName);
+        if (methodEvent === this.eventType) {
+          const callbackResult = await handlerInstance[propertyName](this);
+          if (callbackResult instanceof AcResult && callbackResult.isFailure()) {
+            return callbackResult;
+          }
+        }
+      }
+    }
+
     result.setSuccess();
     return result;
   }
 }
+

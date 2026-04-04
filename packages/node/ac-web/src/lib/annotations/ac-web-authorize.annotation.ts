@@ -1,18 +1,15 @@
 import 'reflect-metadata';
-interface AcWebAuthorizeOptions {
-  roles?: string[];
-}
 
-export function AcWebAuthorize(options: AcWebAuthorizeOptions = {}) {
+export function AcWebAuthorize({roles}:{roles?: string[]}) {
   return function (target: any, propertyKey?: string, descriptor?: PropertyDescriptor) {
     const metadataKey = 'ac:web:authorize';
 
     if (propertyKey) {
       // Method-level decorator
-      Reflect.defineMetadata(metadataKey, options, target, propertyKey);
+      Reflect.defineMetadata(metadataKey, roles, target, propertyKey);
     } else {
       // Class-level decorator
-      Reflect.defineMetadata(metadataKey, options, target);
+      Reflect.defineMetadata(metadataKey, roles, target);
     }
   };
 }
