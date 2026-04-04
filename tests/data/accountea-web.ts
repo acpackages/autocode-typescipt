@@ -656,6 +656,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Timestamp"
             }
           }
+        },
+        "mobile_number": {
+          "columnName": "mobile_number",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Mobile Number"
+            }
+          }
         }
       },
       "tableProperties": {
