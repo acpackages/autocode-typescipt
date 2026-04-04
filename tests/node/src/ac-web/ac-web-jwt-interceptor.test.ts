@@ -1,17 +1,9 @@
 import { AcWebOnExpress } from '@autocode-ts/ac-web-on-express';
-import { AcWebRoute, AcWebController, AcWebRequest, AcWebResponse } from '@autocode-ts/ac-web';
-import { AcWebJwtInterceptor } from '@autocode-ts/ac-web';
+import { AcWebRoute, AcWebController, AcWebRequest, AcWebResponse, AcWebJwtInterceptor } from '@autocode-ts/ac-web';
 import axios from 'axios';
 import * as crypto from 'crypto';
 
-function generateValidToken(secret: string, payload: any): string {
-  const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
-  const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
-  const hmac = crypto.createHmac('sha256', secret);
-  hmac.update(`${header}.${body}`);
-  const signature = hmac.digest('base64url');
-  return `${header}.${body}.${signature}`;
-}
+
 
 @AcWebController()
 @AcWebRoute({path: '/api/jwt'})
@@ -34,13 +26,17 @@ export async function testAcWebJwtInterceptor(): Promise<void> {
   acWeb.port = 3003;
 
   const secret = 'super-secret-test-key';
-  
-  // Add JWT Interceptor globally, excluding public routes
+
+  // Initialize JWT Interceptor without secret first
+  const jwtInterceptor = new AcWebJwtInterceptor({
+    excludePaths: ['/api/jwt/public'],
+  });
+
+  // Set secret later to test setSecretKey
+  jwtInterceptor.setSecretKey(secret);
+
   acWeb.addInterceptor({
-    interceptor: new AcWebJwtInterceptor({
-      secretKey: secret,
-      excludePaths: ['/api/jwt/public'],
-    })
+    interceptor: jwtInterceptor
   });
 
   acWeb.registerController({ controllerClass: JwtController });
@@ -88,7 +84,7 @@ export async function testAcWebJwtInterceptor(): Promise<void> {
     }
 
     // 4. Should accept valid token and expose claims
-    const validToken = generateValidToken(secret, { userId: 123, role: 'admin' });
+    const validToken = AcWebJwtInterceptor.generateToken({ userId: 123, role: 'admin' }, secret);
     const validResponse = await axios.get('http://localhost:3003/api/jwt/validate', {
       headers: { Authorization: `Bearer ${validToken}` }
     });

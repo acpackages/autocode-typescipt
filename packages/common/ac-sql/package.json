@@ -13,11 +13,14 @@
   },
   "exports": {
     ".":{
+      "types": "./ac-sql.d.ts",
       "import": "./ac-sql.js",
       "require": "./ac-sql.cjs"
     }
   },
   "files": [
-    "lib"
+    "ac-sql.js",
+    "ac-sql.cjs",
+    "ac-sql.d.ts"
   ]
 }

@@ -1,11 +1,12 @@
 import * as crypto from 'crypto';
 import { AcWebInterceptor } from '../core/ac-web-interceptor';
-import { AcWebRequest, AcWebResponse } from '@autocode-ts/ac-web';
 import { AcEnumHttpResponseCode } from '@autocode-ts/autocode';
+import { AcWebRequest } from '../models/ac-web-request.model';
+import { AcWebResponse } from '../models/ac-web-response.model';
 
 export class AcWebJwtInterceptor extends AcWebInterceptor {
   readonly excludePaths: string[];
-  readonly secretKey?: string;
+  secretKey?: string;
   readonly verifyToken?: (token: string) => Promise<Record<string, any> | null>;
   readonly headerKey: string;
 
@@ -31,36 +32,47 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
     this.headerKey = headerKey;
   }
 
+  setSecretKey({secret}:{secret: string}): void {
+    this.secretKey = secret;
+  }
+
   async onRequest({ request }: { request: AcWebRequest }): Promise<AcWebResponse | null> {
-    // Skip excluded paths
-    const path = `/${request.url.split('?')[0]}`.replace(/\/\//g, '/');
-    for (const excluded of this.excludePaths) {
-      const cleanExcluded = excluded.startsWith('/') ? excluded : `/${excluded}`;
-      if (path === cleanExcluded || path.startsWith(cleanExcluded)) {
-        return null;
+    try {
+      // Skip excluded paths
+      const path = `/${(request.url || '').split('?')[0]}`.replace(/\/\//g, '/');
+      console.log(`[AcWebJwtInterceptor] onRequest path: ${path}`);
+      for (const excluded of this.excludePaths) {
+        const cleanExcluded = excluded.startsWith('/') ? excluded : `/${excluded}`;
+        if (path === cleanExcluded || path.startsWith(cleanExcluded)) {
+          return null;
+        }
       }
-    }
 
-    // Extract bearer token from header
-    const authHeader = this._getHeader(request, this.headerKey);
-    if (!authHeader || !authHeader.toLowerCase().startsWith('bearer ')) {
-      return this._unauthorized('Missing or invalid Authorization header');
-    }
+      console.log(`[AcWebJwtInterceptor] Extracting header: ${this.headerKey}`);
+      const authHeader = this._getHeader(request, this.headerKey);
+      if (!authHeader || !authHeader.toLowerCase().startsWith('bearer ')) {
+        console.log(`[AcWebJwtInterceptor] Missing or invalid bearer header`);
+        return this._unauthorized('Missing or invalid Authorization header');
+      }
 
-    const token = authHeader.substring(7).trim();
-    if (!token) {
-      return this._unauthorized('Empty token');
-    }
+      const token = authHeader.substring(7).trim();
+      console.log(`[AcWebJwtInterceptor] Token extracted, length: ${token.length}`);
+      if (!token) {
+        return this._unauthorized('Empty token');
+      }
 
-    let claims: Record<string, any> | null = null;
+      let claims: Record<string, any> | null = null;
 
-    if (this.verifyToken) {
-      claims = await this.verifyToken(token);
-    } else if (this.secretKey) {
-      claims = this._verifyHs256(token, this.secretKey);
-    }
+      console.log(`[AcWebJwtInterceptor] Verifying token. verifyToken: ${typeof this.verifyToken}, secretKey: ${!!this.secretKey}`);
+      if (this.verifyToken) {
+        claims = await this.verifyToken(token);
+      } else if (this.secretKey) {
+        claims = AcWebJwtInterceptor._verifyHs256({token,secret: this.secretKey});
+      }
+      console.log(`[AcWebJwtInterceptor] Claims result: ${!!claims}`);
 
     if (!claims) {
+      console.log(`[AcWebJwtInterceptor] Token invalid or expired for token: ${token ? token.substring(0, 10) + '...' : 'null'}`);
       return this._unauthorized('Token is invalid or expired');
     }
 
@@ -69,6 +81,10 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
     }
     request.internalParams[AcWebJwtInterceptor.claimsKey] = claims;
     return null; // continue
+    } catch (e: any) {
+      console.error(`[AcWebJwtInterceptor] ERROR in onRequest: ${e.message}`, e.stack);
+      throw e;
+    }
   }
 
   // Helpers
@@ -83,7 +99,25 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
     return null;
   }
 
-  private _verifyHs256(token: string, secret: string): Record<string, any> | null {
+  static generateToken({payload,secret,expiresInSeconds}:{payload: Record<string, any>, secret: string, expiresInSeconds?: number}): string {
+    const header = { alg: 'HS256', typ: 'JWT' };
+    const headerEncoded = AcWebJwtInterceptor._base64UrlEncode(Buffer.from(JSON.stringify(header)));
+
+    const body = { ...payload };
+    if (expiresInSeconds) {
+      body['exp'] = Math.floor(Date.now() / 1000) + expiresInSeconds;
+    }
+    const bodyEncoded = AcWebJwtInterceptor._base64UrlEncode(Buffer.from(JSON.stringify(body)));
+
+    const signingInput = `${headerEncoded}.${bodyEncoded}`;
+    const hmac = crypto.createHmac('sha256', secret);
+    hmac.update(signingInput);
+    const signatureEncoded = AcWebJwtInterceptor._base64UrlEncode(hmac.digest());
+
+    return `${signingInput}.${signatureEncoded}`;
+  }
+
+  private static _verifyHs256({token,secret}:{token: string, secret: string}): Record<string, any> | null {
     try {
       const parts = token.split('.');
       if (parts.length !== 3) return null;
@@ -92,12 +126,12 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
       const signingInput = `${parts[0]}.${parts[1]}`;
       const hmac = crypto.createHmac('sha256', secret);
       hmac.update(signingInput);
-      const expectedSignature = this._base64UrlEncode(hmac.digest());
+      const expectedSignature = AcWebJwtInterceptor._base64UrlEncode(hmac.digest());
 
       if (expectedSignature !== parts[2]) return null;
 
       // Decode payload
-      const payloadJson = Buffer.from(this._base64UrlDecode(parts[1])).toString('utf8');
+      const payloadJson = Buffer.from(AcWebJwtInterceptor._base64UrlDecode(parts[1])).toString('utf8');
       const claims = JSON.parse(payloadJson);
 
       // Validate time claims (exp / nbf)
@@ -111,14 +145,14 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
     }
   }
 
-  private _base64UrlEncode(buffer: Buffer): string {
+  private static _base64UrlEncode(buffer: Buffer): string {
     return buffer.toString('base64')
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=/g, '');
   }
 
-  private _base64UrlDecode(input: string): Buffer {
+  private static _base64UrlDecode(input: string): Buffer {
     let base64 = input.replace(/-/g, '+').replace(/_/g, '/');
     const padContent = base64.length % 4;
     if (padContent > 0) {

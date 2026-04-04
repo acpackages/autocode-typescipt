@@ -54,7 +54,7 @@ export class AcContext {
     const instance: any = this;
     this.value = value;
     instance.__acContextName__ = name || Autocode.uuid();
-    this.proxy = this.makeReactive(value);
+    this.proxy = this.makeReactive({obj:value});
     Object.defineProperties(this.proxy, {
       __acContextName__: { value: this.__acContextName__, enumerable: false },
       off: { value: ({ event, callback, subscriptionId }: { event?: string, callback?: Function, subscriptionId?: string }) => this.off({ event, callback, subscriptionId }), enumerable: false },

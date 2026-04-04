@@ -6,10 +6,6 @@
   "module": "./ac-extensions.js",
   "browser": "./ac-extensions.umd.cjs",
   "types": "./ac-extensions.d.ts",
-  "exports": {
-    "import": "./ac-extensions.js",
-    "require": "./ac-extensions.cjs"
-  },
   "dependencies": {
     "luxon": "^3.6.1"
   },
@@ -18,5 +14,17 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./ac-extensions.d.ts",
+      "import": "./ac-extensions.js",
+      "require": "./ac-extensions.cjs"
+    }
+  },
+  "files": [
+    "ac-extensions.js",
+    "ac-extensions.cjs",
+    "ac-extensions.d.ts"
+  ]
 }

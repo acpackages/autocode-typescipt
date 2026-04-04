@@ -6,10 +6,6 @@
   "module": "./ac-data-bridge.js",
   "browser": "./ac-data-bridge.umd.cjs",
   "types": "./ac-data-bridge.d.ts",
-  "exports": {
-    "import": "./ac-data-bridge.js",
-    "require": "./ac-data-bridge.cjs"
-  },
   "dependencies": {
     "comlink": "^4.4.2",
     "xlsx": "^0.18.5",
@@ -19,5 +15,17 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./ac-data-bridge.d.ts",
+      "import": "./ac-data-bridge.js",
+      "require": "./ac-data-bridge.cjs"
+    }
+  },
+  "files": [
+    "ac-data-bridge.js",
+    "ac-data-bridge.cjs",
+    "ac-data-bridge.d.ts"
+  ]
 }

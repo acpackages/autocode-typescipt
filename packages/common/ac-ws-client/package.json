@@ -6,14 +6,22 @@
   "module": "./ac-ws-client.js",
   "browser": "./ac-ws-client.umd.cjs",
   "types": "./ac-ws-client.d.ts",
-  "exports": {
-    "import": "./ac-ws-client.js",
-    "require": "./ac-ws-client.cjs"
-  },
   "dependencies": {
     "@autocode-ts/autocode":"0.0.1"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./ac-ws-client.d.ts",
+      "import": "./ac-ws-client.js",
+      "require": "./ac-ws-client.cjs"
+    }
+  },
+  "files": [
+    "ac-ws-client.js",
+    "ac-ws-client.cjs",
+    "ac-ws-client.d.ts"
+  ]
 }

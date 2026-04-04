@@ -10,5 +10,17 @@
     "@autocode-ts/ac-extensions":"0.0.1",
     "@autocode-ts/ac-data-dictionary":"0.0.1",
     "@autocode-ts/ac-sql":"0.0.1"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./ac-remote-dao.d.ts",
+      "import": "./ac-remote-dao.js",
+      "require": "./ac-remote-dao.cjs"
+    }
+  },
+  "files": [
+    "ac-remote-dao.js",
+    "ac-remote-dao.cjs",
+    "ac-remote-dao.d.ts"
+  ]
 }

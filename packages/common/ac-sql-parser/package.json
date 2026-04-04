@@ -9,5 +9,17 @@
     "@autocode-ts/autocode":"0.0.1",
     "@autocode-ts/ac-extensions":"0.0.1",
     "@autocode-ts/ac-data-dictionary":"0.0.1"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./ac-sql-parser.d.ts",
+      "import": "./ac-sql-parser.js",
+      "require": "./ac-sql-parser.cjs"
+    }
+  },
+  "files": [
+    "ac-sql-parser.js",
+    "ac-sql-parser.cjs",
+    "ac-sql-parser.d.ts"
+  ]
 }

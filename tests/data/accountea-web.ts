@@ -50,6 +50,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Accountee Type"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         }
@@ -89,6 +93,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Application Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -99,6 +107,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Application Identifier"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "UNIQUE_KEY": {
+              "propertyName": "UNIQUE_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -141,6 +157,16 @@ export const dataDictionaryJson = {
               "propertyValue": "Application Image"
             }
           }
+        },
+        "download_link": {
+          "columnName": "download_link",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Download Link"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -178,6 +204,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "User"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -188,6 +218,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Developer Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -237,6 +271,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Device Unique Identifier"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "UNIQUE_KEY": {
+              "propertyName": "UNIQUE_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -247,6 +289,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Device Type"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         }
@@ -286,6 +332,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Extension Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -296,6 +346,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Extension Identifier"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             },
             "UNIQUE_KEY": {
               "propertyName": "UNIQUE_KEY",
@@ -310,6 +364,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Extension Type"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -320,6 +378,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Developer"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -520,16 +582,16 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "user_accountees": {
-      "tableName": "user_accountees",
+    "otps": {
+      "tableName": "otps",
       "tableColumns": {
-        "user_accountee_id": {
-          "columnName": "user_accountee_id",
+        "otp_id": {
+          "columnName": "otp_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "User Accountee iD"
+              "propertyValue": "OTP Id"
             },
             "PRIMARY_KEY": {
               "propertyName": "PRIMARY_KEY",
@@ -537,161 +599,61 @@ export const dataDictionaryJson = {
             }
           }
         },
-        "user_id": {
-          "columnName": "user_id",
-          "columnType": "UUID",
+        "otp_value": {
+          "columnName": "otp_value",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "User"
-            }
-          }
-        },
-        "device_id": {
-          "columnName": "device_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Device"
-            }
-          }
-        },
-        "accountee_id": {
-          "columnName": "accountee_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Accountee"
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "user_accountees"
-        },
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "user_accountee"
-        }
-      }
-    },
-    "user_devices": {
-      "tableName": "user_devices",
-      "tableColumns": {
-        "user_device_id": {
-          "columnName": "user_device_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "User Device ID"
+              "propertyValue": "OTP Value"
             },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
               "propertyValue": true
             }
           }
         },
-        "user_id": {
-          "columnName": "user_id",
-          "columnType": "UUID",
+        "otp_for": {
+          "columnName": "otp_for",
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "User"
-            }
-          }
-        },
-        "device_id": {
-          "columnName": "device_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Device"
-            }
-          }
-        }
-      },
-      "tableProperties": {
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "user_devices"
-        },
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "user_device"
-        }
-      }
-    },
-    "users": {
-      "tableName": "users",
-      "tableColumns": {
-        "user_id": {
-          "columnName": "user_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "User Id"
+              "propertyValue": "OTP For"
             },
-            "PRIMARY_KEY": {
-              "propertyName": "PRIMARY_KEY",
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
               "propertyValue": true
             }
           }
         },
-        "name": {
-          "columnName": "name",
-          "columnType": "STRING",
+        "otp_data": {
+          "columnName": "otp_data",
+          "columnType": "JSON",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Name"
+              "propertyValue": "OTP Data"
             }
           }
         },
-        "mobile_no": {
-          "columnName": "mobile_no",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Mobile"
-            }
-          }
-        },
-        "password": {
-          "columnName": "password",
-          "columnType": "PASSWORD",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Password"
-            }
-          }
-        },
-        "email_address": {
-          "columnName": "email_address",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Email Address"
-            }
-          }
-        },
-        "user_profile_image_media_id": {
-          "columnName": "user_profile_image_media_id",
+        "sms_message_id": {
+          "columnName": "sms_message_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Profile Image"
+              "propertyValue": "SMS"
+            }
+          }
+        },
+        "otp_timestamp": {
+          "columnName": "otp_timestamp",
+          "columnType": "TIMESTAMP",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Timestamp"
             }
           }
         }
@@ -699,11 +661,11 @@ export const dataDictionaryJson = {
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
-          "propertyValue": "users"
+          "propertyValue": "otps"
         },
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
-          "propertyValue": "user"
+          "propertyValue": "otp"
         }
       }
     },
@@ -731,6 +693,14 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Report Format Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            },
+            "UNIQUE_KEY": {
+              "propertyName": "UNIQUE_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -741,6 +711,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Report Format Label"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         },
@@ -791,6 +765,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Developer"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
             }
           }
         }
@@ -803,6 +781,314 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "report_format"
+        }
+      }
+    },
+    "sms_messages": {
+      "tableName": "sms_messages",
+      "tableColumns": {
+        "sms_message_id": {
+          "columnName": "sms_message_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "SMS Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "sms_mobile_number": {
+          "columnName": "sms_mobile_number",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Mobile Number"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "sms_timestamp": {
+          "columnName": "sms_timestamp",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Timestamp"
+            }
+          }
+        },
+        "sms_message": {
+          "columnName": "sms_message",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "SMS Mesage"
+            }
+          }
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User"
+            }
+          }
+        },
+        "sms_api_details": {
+          "columnName": "sms_api_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "SMS API Details"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "sms_messages"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "sms_message"
+        }
+      }
+    },
+    "user_accountees": {
+      "tableName": "user_accountees",
+      "tableColumns": {
+        "user_accountee_id": {
+          "columnName": "user_accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User Accountee iD"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "device_id": {
+          "columnName": "device_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Device"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "accountee_id": {
+          "columnName": "accountee_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Accountee"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "user_accountees"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "user_accountee"
+        }
+      }
+    },
+    "user_devices": {
+      "tableName": "user_devices",
+      "tableColumns": {
+        "user_device_id": {
+          "columnName": "user_device_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User Device ID"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "device_id": {
+          "columnName": "device_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Device"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "user_devices"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "user_device"
+        }
+      }
+    },
+    "users": {
+      "tableName": "users",
+      "tableColumns": {
+        "user_id": {
+          "columnName": "user_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "User Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "name": {
+          "columnName": "name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            },
+            "REQUIRED": {
+              "propertyName": "REQUIRED",
+              "propertyValue": true
+            }
+          }
+        },
+        "mobile_number": {
+          "columnName": "mobile_number",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Mobile"
+            },
+            "UNIQUE_KEY": {
+              "propertyName": "UNIQUE_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "password": {
+          "columnName": "password",
+          "columnType": "PASSWORD",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Password"
+            }
+          }
+        },
+        "email_address": {
+          "columnName": "email_address",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Email Address"
+            }
+          }
+        },
+        "user_profile_image_media_id": {
+          "columnName": "user_profile_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Profile Image"
+            }
+          }
+        },
+        "mobile_verified_on": {
+          "columnName": "mobile_verified_on",
+          "columnType": "TIMESTAMP",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Mobile Verified On"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "users"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "user"
         }
       }
     }
@@ -886,6 +1172,12 @@ export const dataDictionaryJson = {
       "destinationTable": "developers",
       "sourceColumn": "media_id",
       "sourceTable": "medias"
+    },
+    {
+      "destinationColumn": "user_id",
+      "destinationTable": "sms_messages",
+      "sourceColumn": "user_id",
+      "sourceTable": "users"
     }
   ]
 };

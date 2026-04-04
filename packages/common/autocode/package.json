@@ -5,10 +5,6 @@
   "main": "./autocode.js",
   "module": "./autocode.js",
   "types": "./autocode.d.ts",
-  "exports": {
-    "import": "./autocode.js",
-    "require": "./autocode.cjs"
-  },
   "dependencies": {
     "crypto-js": "^4.2.0",
     "reflect-metadata": "^0.2.2",
@@ -17,5 +13,17 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./autocode.d.ts",
+      "import": "./autocode.js",
+      "require": "./autocode.cjs"
+    }
+  },
+  "files": [
+    "autocode.js",
+    "autocode.cjs",
+    "autocode.d.ts"
+  ]
 }

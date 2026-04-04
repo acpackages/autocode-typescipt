@@ -6,10 +6,6 @@
   "module": "./ac-pipes.js",
   "browser": "./ac-pipes.umd.cjs",
   "types": "./ac-pipes.d.ts",
-  "exports": {
-    "import": "./ac-pipes.js",
-    "require": "./ac-pipes.cjs"
-  },
   "dependencies": {
     "luxon": "^3.6.1"
   },
@@ -18,5 +14,17 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "exports": {
+    ".":{
+      "types": "./ac-pipes.d.ts",
+      "import": "./ac-pipes.js",
+      "require": "./ac-pipes.cjs"
+    }
+  },
+  "files": [
+    "ac-pipes.js",
+    "ac-pipes.cjs",
+    "ac-pipes.d.ts"
+  ]
 }

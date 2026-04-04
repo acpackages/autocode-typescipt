@@ -16,11 +16,14 @@
   },
   "exports": {
     ".":{
+      "types": "./ac-web.d.ts",
       "import": "./ac-web.js",
       "require": "./ac-web.cjs"
     }
   },
   "files": [
-    "lib"
+    "ac-web.js",
+    "ac-web.cjs",
+    "ac-web.d.ts"
   ]
 }
