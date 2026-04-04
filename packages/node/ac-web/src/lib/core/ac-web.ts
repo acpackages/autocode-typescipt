@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AcHooks, acHooks, AcLogger, AcEnumLogType, AcFileUtils } from '@autocode-ts/autocode';
+import { acWebDetectedControllers } from '../annotations/ac-web-controller.annotation';
 import { AcWebRouteDefinition } from '../models/ac-web-route-definition.model';
 import { AcWebRequest } from '../models/ac-web-request.model';
 import { AcWebResponse } from '../models/ac-web-response.model';
@@ -225,6 +226,13 @@ export class AcWeb {
   }
 
 
+  autoRegisterControllers(): void {
+    // Statically retrieve the controllers tracked by the @AcWebController annotation
+    for (const controller of acWebDetectedControllers) {
+      this.registerController({ controllerClass: controller });
+    }
+  }
+
   registerController({ controllerClass, routePrefix = '' }: { controllerClass: any; routePrefix?: string }): AcWeb {
     this.logger.log(`Registering controller class...`);
     let classRoute = routePrefix;
@@ -235,6 +243,15 @@ export class AcWeb {
       classRoute = classMetadata.path || classRoute;
     }
     this.logger.log(`Class route is : ${classRoute}`);
+
+    // Flush the TypeScript 5 method decorator initializers by briefly bootstrapping the class.
+    // In standard ECMAScript decorators, method decorators cannot access the class prototype 
+    // immediately; they defer metadata binding until an instance is created via addInitializer().
+    try {
+      new controllerClass();
+    } catch (e) {
+      this.logger.log(`Warning: Failed to bootstrap controller class ${controllerClass?.name} during discovery. Ignore if expected.`);
+    }
 
     // Check for route metadata on the controller's methods
     const methodMetadata = (controllerClass as any)._acWebRoutes;

@@ -8,6 +8,7 @@ export * from './lib/annotations/ac-web-route-meta-parameter.annotation';
 export * from './lib/annotations/ac-web-route-meta.annotation';
 export * from './lib/annotations/ac-web-route-produces.annotation';
 export * from './lib/annotations/ac-web-route.annotation';
+export * from './lib/annotations/ac-web-use-interceptor.annotation';
 export * from './lib/annotations/ac-web-service.annotation';
 export * from './lib/annotations/ac-web-value-from-body.annotation';
 export * from './lib/annotations/ac-web-value-from-cookie.annotation';
@@ -50,6 +51,8 @@ export * from './lib/api-docs/swagger/ac-swagger-resources';
 export * from './lib/controllers/ac-files-controller';
 
 export * from './lib/core/ac-web';
+export * from './lib/core/ac-web-interceptor';
+export * from './lib/interceptors/ac-web-jwt-interceptor';
 
 export * from './lib/enums/ac-enum-web-hook.enum';
 export * from './lib/enums/ac-enum-web-response-type.enum';

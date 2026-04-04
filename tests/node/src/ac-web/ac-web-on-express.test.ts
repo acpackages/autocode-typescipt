@@ -33,7 +33,10 @@ export async function testAcWebOnExpress(): Promise<void> {
         acWeb: acWeb
   });
   acDataDictionaryAutoApi.urlPrefix = '/api';
-  acDataDictionaryAutoApi.generate({update: false,insert: false});
+  // acDataDictionaryAutoApi.generate({update: false,insert: false});
+
+  // Auto-detect and register any imported controllers correctly
+  acWeb.autoRegisterControllers();
 
   // Register a test route
   acWeb.get({
@@ -50,7 +53,7 @@ export async function testAcWebOnExpress(): Promise<void> {
 
     try {
       // Perform a request using axios
-      const response = await axios.get('http://localhost:3001/test');
+      let response = await axios.get('http://localhost:3001/test');
       console.log('Response from server:');
       console.log(JSON.stringify(response.data, null, 2));
 
@@ -60,6 +63,22 @@ export async function testAcWebOnExpress(): Promise<void> {
         console.error('Test Failed: Unexpected response content.');
         console.log('Received:', response.data);
       }
+
+      response = await axios.post('http://localhost:3001/api/auth/forgot-password',{'username':'test'});
+      console.log('Response from server:');
+      console.log(JSON.stringify(response.data, null, 2));
+
+      response = await axios.post('http://localhost:3001/api/auth/login',{'username':'test','password':'test'});
+      console.log('Response from server:');
+      console.log(JSON.stringify(response.data, null, 2));
+
+      response = await axios.post('http://localhost:3001/api/auth/register',{'username':'test','password':'test','name':'test'});
+      console.log('Response from server:');
+      console.log(JSON.stringify(response.data, null, 2));
+
+      response = await axios.post('http://localhost:3001/api/auth/verify-otp',{'otp':'9874'});
+      console.log('Response from server:');
+      console.log(JSON.stringify(response.data, null, 2));
     } catch (error: any) {
       console.error('Test Failed: Error during axios request.');
       console.error(error.message);
