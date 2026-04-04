@@ -9,6 +9,7 @@ import { AcBrowserStorageDDEExtension } from '@autocode-ts/ac-dde-browser-storag
 import { PageHeader } from '../../components/page-header/page-header.component';
 import { dataDictionaryJson as accountea } from './../../../../data/accountea';
 import { dataDictionaryJson as accounteaPro } from './../../../../data/accountea-pro';
+import { dataDictionaryJson as accounteaProInternal } from './../../../../data/accountea-pro-internal';
 import { dataDictionaryJson as accounteaWeb } from './../../../../data/accountea-web';
 import { dataDictionaryJson as communityDataDictionary } from './../../../../data/sst-community';
 import { dataDictionaryJson as unifiDataDictionary } from './../../../../data/unifi-data-dictionary';
@@ -51,8 +52,9 @@ export class DDEEditorDatagridPage  extends HTMLElement {
       this.editorApi.enableExtension({extensionName:AcSqlAnalyzerDDEExtension.extensionName});
 
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:communityDataDictionary});
-      this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaPro});
-      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaWeb});
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaPro});
+      // this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaProInternal});
+      this.editorApi.setDataDictionaryJson({dataDictionaryJson:accounteaWeb});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:unifiDataDictionary});
       // this.editorApi.setDataDictionaryJson({dataDictionaryJson:ddeDataDictionary});
       console.log(this.editorApi);

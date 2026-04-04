@@ -7,6 +7,7 @@ import { AcSqliteDao } from '@autocode-ts/ac-sql-node';
 import path from 'path';
 import { AcDataDictionary } from '@autocode-ts/ac-data-dictionary';
 import { dataDictionaryJson } from '../consts/data-dictionary';
+import './controllers/_controllers.export';
 
 export async function testAcWebOnExpress(): Promise<void> {
   console.log("Testing AcWebOnExpress...");
