@@ -27,7 +27,7 @@ class MockInterceptor extends AcWebInterceptor {
     if (!request.internalParams) request.internalParams = {};
     if (!request.internalParams.order) request.internalParams.order = [];
     request.internalParams.order.push(`${this.name}:res`);
-    
+
     // Inject the final execution order into the JSON response for validation
     if (response.content && typeof response.content.data === 'object') {
       response.content.data.finalOrder = request.internalParams.order;
@@ -39,7 +39,7 @@ class MockInterceptor extends AcWebInterceptor {
 @AcWebController()
 @AcWebRoute({path: '/api/intercepted'})
 export class InterceptedController {
-  
+
   @AcWebRoute({path: '/normal', method: 'GET'})
   async normalHandler(request: AcWebRequest) {
     return AcWebResponse.json({ data: { message: 'Normal' }});
@@ -59,10 +59,10 @@ export async function testAcWebInterceptorFlow(): Promise<void> {
 
   // Global Interceptor
   acWeb.addInterceptor({ interceptor: new MockInterceptor('MockGlobal') });
-  
+
   // Interceptor available for route injection
   acWeb.addInterceptor({ interceptor: new MockInterceptor('MockRoute') });
-  
+
   // Short-circuiting Interceptor
   acWeb.addInterceptor({ interceptor: new MockInterceptor('MockBlocker', true) });
 
@@ -106,7 +106,7 @@ export async function testAcWebInterceptorFlow(): Promise<void> {
     // 3. Short Circuit testing
     // Add blocker interceptor directly to the existing route dynamically
     acWeb.routeDefinitions['get>/api/intercepted/blocked'].interceptors = ['MockGlobal', 'MockBlocker'];
-    
+
     response = await axios.get('http://localhost:3002/api/intercepted/blocked');
     resData = response.data?.data || response.data;
     const blocked = resData?.blocked;

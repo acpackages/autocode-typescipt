@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcDataDictionary, AcDDTable, AcDDSelectStatement, AcDDView } from '@autocode-ts/ac-data-dictionary';
+import { AcDataDictionary, AcDDTable, AcDDSelectStatement } from '@autocode-ts/ac-data-dictionary';
 import { AcBaseSqlDao, AcSqlDbTable } from '@autocode-ts/ac-sql';
-import { AcLogger, AcEnumHttpResponseCode, AcEnumLogicalOperator, AcEnumConditionOperator } from '@autocode-ts/autocode';
+import { AcLogger, AcEnumLogicalOperator, AcEnumConditionOperator } from '@autocode-ts/autocode';
 import { AcWebRequest } from '../../models/ac-web-request.model';
 import { AcWebApiResponse } from '../../models/ac-web-api-response.model';
 import { AcDataDictionaryWebAutoExecuteResult } from '../models/ac-data-dictionary-web-auto-execute-result.model';
 import { AcDataDictionaryAutoApiConfig } from '../rest/ac-data-dictionary-auto-api-config.model';
+import { stringToKebabCase } from '@autocode-ts/ac-extensions';
 
 export class AcWebDataDictionaryUtils {
   static getTableNameForApiPath({ acDDTable }: { acDDTable: AcDDTable }): string {
-    const result = acDDTable.getPluralName();
-    // basic kebab-case conversion
-    return result.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+    let result:string = acDDTable.getPluralName();
+    result = stringToKebabCase(result);
+    return result;
   }
 
   static async handleAutoSelectWebRequest({

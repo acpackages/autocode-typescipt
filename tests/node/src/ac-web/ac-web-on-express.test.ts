@@ -33,7 +33,7 @@ export async function testAcWebOnExpress(): Promise<void> {
         acWeb: acWeb
   });
   acDataDictionaryAutoApi.urlPrefix = '/api';
-  // acDataDictionaryAutoApi.generate({update: false,insert: false});
+  acDataDictionaryAutoApi.generate({update: false,insert: false});
 
   // Auto-detect and register any imported controllers correctly
   acWeb.autoRegisterControllers();

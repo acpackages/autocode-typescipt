@@ -33,7 +33,7 @@ export async function testAcWebJwtInterceptor(): Promise<void> {
   });
 
   // Set secret later to test setSecretKey
-  jwtInterceptor.setSecretKey(secret);
+  jwtInterceptor.setSecretKey({secret});
 
   acWeb.addInterceptor({
     interceptor: jwtInterceptor
@@ -84,7 +84,7 @@ export async function testAcWebJwtInterceptor(): Promise<void> {
     }
 
     // 4. Should accept valid token and expose claims
-    const validToken = AcWebJwtInterceptor.generateToken({ userId: 123, role: 'admin' }, secret);
+    const validToken = AcWebJwtInterceptor.generateToken({payload:{ userId: 123, role: 'admin' }, secret});
     const validResponse = await axios.get('http://localhost:3003/api/jwt/validate', {
       headers: { Authorization: `Bearer ${validToken}` }
     });

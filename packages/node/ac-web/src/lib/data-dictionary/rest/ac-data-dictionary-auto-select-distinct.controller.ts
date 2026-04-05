@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AcDDTable, AcDDTableColumn, AcEnumDDRowOperation } from '@autocode-ts/ac-data-dictionary';
 import { AcSqlDbTable } from '@autocode-ts/ac-sql';
-import { AcEnumApiDataType } from '../../api-docs/enums/ac-enum-api-data-type.enum';
 import { AcApiDocRoute } from '../../api-docs/models/ac-api-doc-route.model';
 import { AcApiDocParameter } from '../../api-docs/models/ac-api-doc-parameter.model';
 import { AcWebRequestHandlerArgs } from '../../models/ac-web-request-handler-args.model';

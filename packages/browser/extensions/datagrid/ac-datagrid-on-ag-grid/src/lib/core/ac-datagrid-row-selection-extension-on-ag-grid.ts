@@ -31,6 +31,30 @@ export class AcDatagridRowSelectionExtensionOnAgGrid {
     this.handleAgGridRowSelected(event);
   };
 
+   private clearSelection() {
+    this.rowSelectionExtension = this.datagridApi!.extensions[AC_DATAGRID_EXTENSION_NAME.RowSelection] as AcDatagridRowSelectionExtension;
+    const selectionOption: Partial<RowSelectionOptions>  = {};
+    if (this.gridApi) {
+      if (this.rowSelectionExtension) {
+        if (this.rowSelectionExtension.allowSelection) {
+          selectionOption.mode = this.rowSelectionExtension.allowMultipleSelection ? 'multiRow' : 'singleRow';
+          this.gridApi.addEventListener('rowSelected', this.onRowSelected);
+        }
+      }
+      this.gridApi.setGridOption('rowSelection', selectionOption as any);
+      this.gridApi.setGridOption('selectionColumnDef',{
+        sortable: true,
+        resizable: false,
+        minWidth: 25,
+        maxWidth: 25,
+        width: 25,
+        suppressHeaderMenuButton: true,
+        headerStyle:{paddingLeft:'2.5px',paddingRight:'2.5px'},
+        cellStyle:{paddingLeft:'2.5px',paddingRight:'2.5px'}
+    });
+    }
+  }
+
   destroy() {
     this.removeListeners();
     acNullifyInstanceProperties({instance:this});
