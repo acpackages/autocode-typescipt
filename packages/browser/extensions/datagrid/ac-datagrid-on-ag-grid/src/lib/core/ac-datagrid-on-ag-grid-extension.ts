@@ -626,6 +626,10 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     else {
       this.gridApi.applyServerSideTransaction({ remove: [args.datagridRow.data] });
     }
+    this.gridApi.refreshCells({
+      columns: ['__internal_ac_datagrid__'],
+      force: true
+    });
   }
 
   private handleRowFocus(args: IAcDatagridRowFocusHookArgs) {

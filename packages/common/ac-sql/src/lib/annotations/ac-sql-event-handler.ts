@@ -24,19 +24,19 @@ export function AcSqlEventHandler({ tableName }: { tableName: string }) {
 
     // Scan for methods with event callback metadata and register them in the definition.
     const prototype = target.prototype;
-    console.log(`[AcSqlEventHandler] Scanning prototype for ${tableName}`, Object.getOwnPropertyNames(prototype));
-    Object.getOwnPropertyNames(prototype).forEach((propertyName) => {
-      const method = prototype[propertyName];
-      let event = Reflect.getMetadata('ac_sql_event_callback', prototype, propertyName);
-      if (!event && typeof method === 'function') {
-        event = Reflect.getMetadata('ac_sql_event_callback', method);
-      }
-      
-      if (event) {
-        console.log(`[AcSqlEventHandler] Found callback for ${tableName}: ${propertyName} -> ${event}`);
-        definition.registerEventHandlerMethod({ event, methodName: propertyName });
-      }
-    });
+    if (prototype) {
+      Object.getOwnPropertyNames(prototype).forEach((propertyName) => {
+        const method = prototype[propertyName];
+        let event = Reflect.getMetadata('ac_sql_event_callback', prototype, propertyName);
+        if (!event && typeof method === 'function') {
+          event = Reflect.getMetadata('ac_sql_event_callback', method);
+        }
+        
+        if (event) {
+          definition.registerEventHandlerMethod({ event, methodName: propertyName });
+        }
+      });
+    }
   };
 }
 

@@ -61,7 +61,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     const selectedRows: IAcDatagridRow[] = [];
     if (this.datagridApi) {
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
+      if (row.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection] && row.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
         selectedRows.push(row);
       }
     }
@@ -73,7 +73,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     const selectedData: any[] = [];
     if (this.datagridApi) {
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
+      if (row.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection] && row.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected) {
         selectedData.push(row.data);
       }
     }
@@ -85,7 +85,7 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
     const selectedKeyValues: any[] = [];
     if (this.datagridApi) {
     for (const row of this.datagridApi.datagridRows) {
-      if (row.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection] && row.data[key] != undefined) {
+      if (row.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection] && row.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected && row.data[key] != undefined) {
         selectedKeyValues.push(row.data[key]);
       }
     }
@@ -158,28 +158,31 @@ export class AcDatagridRowSelectionExtension extends AcDatagridExtension {
   // }
   // }
 
-  // setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: IAcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
-  //   if (datagridRow == undefined && rowId) {
-  //     datagridRow = this.datagridApi.getRow({ rowId: rowId });
-  //   }
-  //   else if (datagridRow == undefined && key && value) {
-  //     datagridRow = this.datagridApi.getRow({ key: key, value: value });
-  //   }
-  //   if (datagridRow) {
-  //     datagridRow.extensionData![AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
-  //     if (this.datagridApi) {
-  //     const eventArgs: IAcDatagridRowSelectionChangeEvent = {
-  //       datagridApi: this.datagridApi,
-  //       datagridRow: datagridRow,
-  //       isSelected: isSelected,
-  //       datagridRowSelectionExtension: this
-  //     };
-  //     this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
-  //     // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
-  //     this.datagridApi.events.execute({ event: AcEnumDatagridRowSelectionEvent.RowSelectionChange, args: eventArgs });
-  //   }
-  //   }
-  // }
+  setRowSelection({ datagridRow, isSelected, rowId, key, value }: { datagridRow?: IAcDatagridRow, rowId?: string, key?: string, value?: any, isSelected: boolean }) {
+    if (datagridRow == undefined && rowId) {
+      datagridRow = this.datagridApi.getRow({ rowId: rowId });
+    }
+    else if (datagridRow == undefined && key && value) {
+      datagridRow = this.datagridApi.getRow({ key: key, value: value });
+    }
+    if (datagridRow) {
+      if(!datagridRow.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection]){
+        datagridRow.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection] = {};
+      }
+      datagridRow.extensionData[AC_DATAGRID_EXTENSION_NAME.RowSelection].isSelected = isSelected;
+      if (this.datagridApi) {
+      const eventArgs: IAcDatagridRowSelectionChangeEvent = {
+        datagridApi: this.datagridApi,
+        datagridRow: datagridRow,
+        isSelected: isSelected,
+        datagridRowSelectionExtension: this
+      };
+      this.datagridApi.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
+      // datagridRow.hooks.execute({ hook: AcEnumDatagridRowSelectionHook.RowSelectionChange, args: eventArgs });
+      this.datagridApi.events.execute({ event: AcEnumDatagridRowSelectionEvent.RowSelectionChange, args: eventArgs });
+    }
+    }
+  }
 
 }
 

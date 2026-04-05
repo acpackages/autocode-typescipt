@@ -40,19 +40,24 @@ export class AcSqlEventHandlerDefinition {
     event: AcEnumDDRowEvent;
     args: AcSqlEventArgs;
   }): Promise<AcSqlEventResult> {
-    const methodName = this._eventMethods.get(event);
-    if (methodName && this.handler) {
-      // Create a new instance of the handler class for each invocation, matching Dart behavior.
-      const handlerInstance = new this.handler();
-      
-      if (typeof handlerInstance[methodName] === 'function') {
-        const result = await handlerInstance[methodName]({ args });
-        if (result instanceof AcSqlEventResult) {
-          return result;
+    try {
+      const methodName = this._eventMethods.get(event);
+      if (methodName && this.handler) {
+        // Create a new instance of the handler class for each invocation, matching Dart behavior.
+        const handlerInstance = new this.handler();
+        
+        if (typeof handlerInstance[methodName] === 'function') {
+          const result = await handlerInstance[methodName]({ args });
+          if (result instanceof AcSqlEventResult) {
+            return result;
+          }
+          // Fallback or simple success result if not an AcSqlEventResult
+          return new AcSqlEventResult();
         }
-        // Fallback or simple success result if not an AcSqlEventResult
-        return new AcSqlEventResult();
       }
+    } catch (e: any) {
+      console.error(`[AcSqlEventHandlerDefinition] Error handling ${event}:`, e, e.stack);
+      throw e;
     }
     return new AcSqlEventResult();
   }

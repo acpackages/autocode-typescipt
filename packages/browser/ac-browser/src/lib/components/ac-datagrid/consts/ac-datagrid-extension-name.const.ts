@@ -8,6 +8,6 @@ export const AC_DATAGRID_EXTENSION_NAME = {
   KeyboardActions : 'KEYBOARD_ACTIONS',
   RowNumbers : 'ROW_NUMBERS',
   RowDragging : 'ROW_DRAGGING',
-  RowSelection : 'ROW_SELECTING',
+  RowSelection : 'ROW_SELECTION',
   TreeTable : 'TREE_TABLE'
 }

@@ -6,6 +6,7 @@ import { AC_DATAGRID_EXTENSION_NAME } from "../../../consts/ac-datagrid-extensio
 import { IAcDatagridExtension } from "../../../interfaces/ac-datagrid-extension.interface";
 import { AcEnumDatagridAutoAddNewRowHook } from "../enums/ac-enum-datagrid-auto-add-new-row-hook.enum";
 import { IAcDatagridAutoAddNewRowHookArgs } from "../interfaces/ac-datagrid-auto-add-new-row-hook-args.interface";
+import { AcDelayedCallback } from "@autocode-ts/autocode";
 
 export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
   private _autoAddNewRow: boolean = false;
@@ -23,7 +24,19 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
       this.datagridApi.hooks.execute({ hook: AcEnumDatagridAutoAddNewRowHook.AutoAddNewRowValueChange, args: hookArgs });
     }
   }
-  autoAddNewRowData:any = {};
+  autoAddNewRowData: any = {};
+  private lastAutoAddRowId?: string;
+  private delayedCallback: AcDelayedCallback = new AcDelayedCallback();
+
+  private addRow() {
+    const lastRow = this.datagridApi.addRow({ data: { ...this.autoAddNewRowData } });
+    this.lastAutoAddRowId = lastRow.rowId;
+  }
+
+  override destroy(): void {
+    this.delayedCallback.destroy();
+    super.destroy();
+  }
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if (this.autoAddNewRow) {
@@ -31,8 +44,21 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
         const datagridCell: IAcDatagridCell = args.datagridCell;
         const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
         if (datagridRow.index == this.datagridApi.dataManager.totalRows - 1) {
-          this.datagridApi.addRow({data:{...this.autoAddNewRowData}});
+          this.addRow();
         }
+      }
+      else if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.DatagridRowCreate)) {
+        const datagridRow: IAcDatagridRow = args.datagridRow;
+        this.delayedCallback.add({
+          callback: () => {
+            if (this.lastAutoAddRowId) {
+              if (datagridRow.rowId != this.lastAutoAddRowId) {
+                this.datagridApi.deleteRow({ rowId: this.lastAutoAddRowId });
+                this.addRow();
+              }
+            }
+          }, key: 'checkLastIsAutoAdd', duration: 1
+        });
       }
     }
   }
