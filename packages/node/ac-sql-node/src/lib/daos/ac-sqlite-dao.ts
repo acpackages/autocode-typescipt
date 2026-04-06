@@ -451,9 +451,19 @@ export class AcSqliteDao extends AcBaseSqlDao {
     try {
 
       const db = await this._getConnection();
-      const setValues = Object.keys(row).map((key) => `${key} = ?`).join(", ");
-      const sql = `UPDATE ${tableName} SET ${setValues} ${condition ? "WHERE " + condition : ""}`;
-      const values = [...Object.values(row), ...Object.values(parameters)];
+      const columns = Object.keys(row);
+      const setValues = columns.map((key) => `${key} = ?`).join(", ");
+      
+      const { statement: updatedCondition, statementParametersList: conditionParams } =
+        this.setSqlStatementParameters({
+          statement: condition,
+          passedParameters: parameters,
+          returnMap: false,
+        });
+
+      const sql = `UPDATE ${tableName} SET ${setValues} ${updatedCondition ? "WHERE " + updatedCondition : ""}`;
+      const values = [...columns.map(c => row[c]), ...(conditionParams ?? [])];
+      
       const updateResult = await db.run(sql, values);
       result.affectedRowsCount = updateResult.changes;
       result.setSuccess();
@@ -479,9 +489,20 @@ export class AcSqliteDao extends AcBaseSqlDao {
           const row = rowWithCondition["row"] as Record<string, any>;
           const condition = rowWithCondition["condition"] as string;
           const conditionParameters = rowWithCondition["parameters"] ?? {};
-          const setValues = Object.keys(row).map((key) => `${key} = ?`).join(", ");
-          const sql = `UPDATE ${tableName} SET ${setValues} WHERE ${condition}`;
-          const values = [...Object.values(row), ...Object.values(conditionParameters)];
+          
+          const columns = Object.keys(row);
+          const setValues = columns.map((key) => `${key} = ?`).join(", ");
+          
+          const { statement: updatedCondition, statementParametersList: conditionParams } =
+            this.setSqlStatementParameters({
+              statement: condition,
+              passedParameters: conditionParameters,
+              returnMap: false,
+            });
+
+          const sql = `UPDATE ${tableName} SET ${setValues} WHERE ${updatedCondition}`;
+          const values = [...columns.map(c => row[c]), ...(conditionParams ?? [])];
+          
           const updateResult = await db.run(sql, values);
           result.affectedRowsCount = (result.affectedRowsCount ?? 0) + (updateResult.changes ?? 0);
         }

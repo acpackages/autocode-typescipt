@@ -1,6 +1,5 @@
-import * as crypto from 'crypto';
 import { AcWebInterceptor } from '../core/ac-web-interceptor';
-import { AcEnumHttpResponseCode } from '@autocode-ts/autocode';
+import { AcEncryption, AcEnumHttpResponseCode } from '@autocode-ts/autocode';
 import { AcWebRequest } from '../models/ac-web-request.model';
 import { AcWebResponse } from '../models/ac-web-response.model';
 
@@ -10,7 +9,7 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
   readonly verifyToken?: (token: string) => Promise<Record<string, any> | null>;
   readonly headerKey: string;
 
-  static readonly claimsKey = 'jwt_claims';
+  static readonly claimsKey = 'jwt_payload';
 
   readonly name = 'AcWebJwtInterceptor';
 
@@ -32,7 +31,7 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
     this.headerKey = headerKey;
   }
 
-  setSecretKey({secret}:{secret: string}): void {
+  setSecretKey({ secret }: { secret: string }): void {
     this.secretKey = secret;
   }
 
@@ -67,20 +66,20 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
       if (this.verifyToken) {
         claims = await this.verifyToken(token);
       } else if (this.secretKey) {
-        claims = AcWebJwtInterceptor._verifyHs256({token,secret: this.secretKey});
+        claims = AcEncryption.verifyToken({ token, secret: this.secretKey });
       }
       console.log(`[AcWebJwtInterceptor] Claims result: ${!!claims}`);
 
-    if (!claims) {
-      console.log(`[AcWebJwtInterceptor] Token invalid or expired for token: ${token ? token.substring(0, 10) + '...' : 'null'}`);
-      return this._unauthorized('Token is invalid or expired');
-    }
+      if (!claims) {
+        console.log(`[AcWebJwtInterceptor] Token invalid or expired for token: ${token ? token.substring(0, 10) + '...' : 'null'}`);
+        return this._unauthorized('Token is invalid or expired');
+      }
 
-    if (!request.internalParams) {
-      request.internalParams = {};
-    }
-    request.internalParams[AcWebJwtInterceptor.claimsKey] = claims;
-    return null; // continue
+      if (!request.internalParams) {
+        request.internalParams = {};
+      }
+      request.internalParams[AcWebJwtInterceptor.claimsKey] = claims;
+      return null; // continue
     } catch (e: any) {
       console.error(`[AcWebJwtInterceptor] ERROR in onRequest: ${e.message}`, e.stack);
       throw e;
@@ -99,67 +98,35 @@ export class AcWebJwtInterceptor extends AcWebInterceptor {
     return null;
   }
 
-  static generateToken({payload,secret,expiresInSeconds}:{payload: Record<string, any>, secret: string, expiresInSeconds?: number}): string {
-    const header = { alg: 'HS256', typ: 'JWT' };
-    const headerEncoded = AcWebJwtInterceptor._base64UrlEncode(Buffer.from(JSON.stringify(header)));
-
-    const body = { ...payload };
-    if (expiresInSeconds) {
-      body['exp'] = Math.floor(Date.now() / 1000) + expiresInSeconds;
-    }
-    const bodyEncoded = AcWebJwtInterceptor._base64UrlEncode(Buffer.from(JSON.stringify(body)));
-
-    const signingInput = `${headerEncoded}.${bodyEncoded}`;
-    const hmac = crypto.createHmac('sha256', secret);
-    hmac.update(signingInput);
-    const signatureEncoded = AcWebJwtInterceptor._base64UrlEncode(hmac.digest());
-
-    return `${signingInput}.${signatureEncoded}`;
+  static generateToken({
+    payload,
+    secret,
+    expiresInSeconds,
+  }: {
+    payload: Record<string, any>;
+    secret: string;
+    expiresInSeconds?: number;
+  }): string {
+    return AcEncryption.generateToken({ data: payload, secret, expiresInSeconds });
   }
 
-  private static _verifyHs256({token,secret}:{token: string, secret: string}): Record<string, any> | null {
-    try {
-      const parts = token.split('.');
-      if (parts.length !== 3) return null;
-
-      // Verify signature
-      const signingInput = `${parts[0]}.${parts[1]}`;
-      const hmac = crypto.createHmac('sha256', secret);
-      hmac.update(signingInput);
-      const expectedSignature = AcWebJwtInterceptor._base64UrlEncode(hmac.digest());
-
-      if (expectedSignature !== parts[2]) return null;
-
-      // Decode payload
-      const payloadJson = Buffer.from(AcWebJwtInterceptor._base64UrlDecode(parts[1])).toString('utf8');
-      const claims = JSON.parse(payloadJson);
-
-      // Validate time claims (exp / nbf)
-      const now = Math.floor(Date.now() / 1000);
-      if (claims.exp !== undefined && claims.exp < now) return null;
-      if (claims.nbf !== undefined && claims.nbf > now) return null;
-
-      return claims;
-    } catch (_) {
-      return null;
-    }
+  generateToken({
+    payload,
+    secret,
+    expiresInSeconds,
+  }: {
+    payload: Record<string, any>;
+    secret: string;
+    expiresInSeconds?: number;
+  }): string {
+    return AcWebJwtInterceptor.generateToken({ payload, secret, expiresInSeconds });
   }
 
-  private static _base64UrlEncode(buffer: Buffer): string {
-    return buffer.toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
-  }
 
-  private static _base64UrlDecode(input: string): Buffer {
-    let base64 = input.replace(/-/g, '+').replace(/_/g, '/');
-    const padContent = base64.length % 4;
-    if (padContent > 0) {
-      base64 = base64.padEnd(base64.length + (4 - padContent), '=');
-    }
-    return Buffer.from(base64, 'base64');
-  }
+
+
+
+
 
   private _unauthorized(message: string): AcWebResponse {
     return AcWebResponse.json({

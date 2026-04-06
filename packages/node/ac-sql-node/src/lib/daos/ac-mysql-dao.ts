@@ -103,7 +103,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: parameters,
       });
-      const [res] = await db.execute(updatedStatement, Object.values(statementParametersMap!));
+      const [res] = await db.execute(updatedStatement, statementParametersMap!);
       result.affectedRowsCount = (res as any).affectedRows;
       result.setSuccess();
     } catch (ex) {
@@ -131,7 +131,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
           statement,
           passedParameters: parameters,
         });
-        await db.execute(updatedStatement, Object.values(statementParametersMap!));
+        await db.execute(updatedStatement, statementParametersMap!);
       }
       await db.commit();
       result.setSuccess();
@@ -161,7 +161,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: parameters,
       });
-      await db.execute(updatedStatement, Object.values(statementParametersMap!));
+      await db.execute(updatedStatement, statementParametersMap!);
       result.setSuccess();
     } catch (ex) {
       result.setException({ exception: ex });
@@ -219,7 +219,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         result.rows.push({
           [AcDDFunction.KeyFunctionName]: row['ROUTINE_NAME'],
@@ -244,7 +244,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         result.rows.push({
           [AcDDStoredProcedure.KeyStoredProcedureName]: row['ROUTINE_NAME'],
@@ -269,7 +269,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         result.rows.push({
           [AcDDTable.KeyTableName]: row['TABLE_NAME'],
@@ -294,7 +294,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         result.rows.push({
           [AcDDTrigger.KeyTriggerName]: row['TRIGGER_NAME'],
@@ -319,7 +319,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@databaseName': this.sqlConnection.database },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         result.rows.push({
           [AcDDView.KeyViewName]: row['TABLE_NAME'],
@@ -356,7 +356,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement: updatedStatement,
         passedParameters: parameters,
       });
-      const [results]:any = await db.execute(finalStatement, statementParametersMap);
+      const [results]:any = await db.execute(finalStatement, statementParametersMap!);
       if (mode === AcEnumDDSelectMode.Count) {
         const row = results[0];
         result.totalRows = row['records_count'];
@@ -384,7 +384,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@tableName': tableName },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         const properties: Record<string, any> = {};
         if (row['Null'] !== 'YES') {
@@ -421,7 +421,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
         statement,
         passedParameters: { '@viewName': viewName },
       });
-      const [results] = await db.execute(updatedStatement, statementParametersMap);
+      const [results] = await db.execute(updatedStatement, statementParametersMap!);
       for (const row of results as any[]) {
         const properties: Record<string, any> = {};
         if (row['Null'] !== 'YES') {
@@ -472,7 +472,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       });
       const updatedStatement = setParametersResult['statement'];
       const updatedParameterValues = setParametersResult['statementParametersMap'];
-      const [insertResult]: any = await db.execute(updatedStatement, updatedParameterValues);
+      const [insertResult]: any = await db.execute(updatedStatement, updatedParameterValues!);
       result.lastInsertedId = parseInt(insertResult.insertId);
       result.setSuccess();
     } catch (ex:any) {
@@ -510,7 +510,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
           });
           const updatedStatement = setParametersResult['statement'];
           const updatedParameterValues = setParametersResult['statementParametersMap'];
-          await db.execute(updatedStatement, updatedParameterValues);
+          await db.execute(updatedStatement, updatedParameterValues!);
         }
         db.commit();
         result.setSuccess();
@@ -540,15 +540,22 @@ export class AcMysqlDao extends AcBaseSqlDao {
     let db: Connection | undefined;
     try {
       db = await this._getConnection();
-      const setValues = Object.keys(row).map((key) => `${key} = @${key}`).join(", ");
+      const columns = Object.keys(row);
+      const setValues = columns.map((key, i) => `${key} = @p${i}`).join(", ");
       const statement = `UPDATE ${tableName} SET ${setValues} ${condition ? "WHERE " + condition : ""}`;
+      
+      const params: Record<string, any> = { ...parameters };
+      for (let i = 0; i < columns.length; i++) {
+        params[`@p${i}`] = row[columns[i]];
+      }
+
       const setParametersResult = this.setSqlStatementParameters({
         statement,
-        passedParameters: { ...row, ...parameters },
+        passedParameters: params,
       });
       const updatedStatement = setParametersResult['statement'];
       const updatedParameterValues = setParametersResult['statementParametersMap'];
-      const [updateResult]: any = await db.execute(updatedStatement, updatedParameterValues);
+      const [updateResult]: any = await db.execute(updatedStatement, updatedParameterValues!);
       result.affectedRowsCount = parseInt(updateResult.affectedRows);
       result.setSuccess();
     } catch (ex:any) {
@@ -576,19 +583,23 @@ export class AcMysqlDao extends AcBaseSqlDao {
           const row = rowWithCondition['row'] as Record<string, any>;
           const condition = rowWithCondition['condition'] as string;
           const conditionParameters = rowWithCondition['parameters'] ?? {};
-          const setValues = Object.keys(row).map((key) => `${key} = @row_${key}`).join(", ");
+          
+          const columns = Object.keys(row);
+          const setValues = columns.map((key, i) => `${key} = @p${i}`).join(", ");
           const statement = `UPDATE ${tableName} SET ${setValues} WHERE ${condition}`;
-          const params: Record<string, any> = {};
-          for (const key of Object.keys(row)) {
-            params[`@row_${key}`] = row[key];
+          
+          const params: Record<string, any> = { ...conditionParameters };
+          for (let i = 0; i < columns.length; i++) {
+            params[`@p${i}`] = row[columns[i]];
           }
+
           const setParametersResult = this.setSqlStatementParameters({
             statement,
-            passedParameters: { ...params, ...conditionParameters },
+            passedParameters: params,
           });
           const updatedStatement = setParametersResult['statement'];
           const updatedParameterValues = setParametersResult['statementParametersMap'];
-          const [updateResult]: any = await db.execute(updatedStatement, updatedParameterValues);
+          const [updateResult]: any = await db.execute(updatedStatement, updatedParameterValues!);
           result.affectedRowsCount = (result.affectedRowsCount ?? 0) + parseInt(updateResult.affectedRows);
         }
       }

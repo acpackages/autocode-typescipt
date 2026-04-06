@@ -140,7 +140,7 @@ export const dataDictionaryJson = {
         },
         "last_updated_on": {
           "columnName": "last_updated_on",
-          "columnType": "TIMESTAMP",
+          "columnType": "DATETIME",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -417,7 +417,7 @@ export const dataDictionaryJson = {
         },
         "last_updated_on": {
           "columnName": "last_updated_on",
-          "columnType": "TIMESTAMP",
+          "columnType": "DATETIME",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -649,7 +649,7 @@ export const dataDictionaryJson = {
         },
         "otp_timestamp": {
           "columnName": "otp_timestamp",
-          "columnType": "TIMESTAMP",
+          "columnType": "DATETIME",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -750,7 +750,7 @@ export const dataDictionaryJson = {
         },
         "last_updated_on": {
           "columnName": "last_updated_on",
-          "columnType": "TIMESTAMP",
+          "columnType": "DATETIME",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -831,7 +831,7 @@ export const dataDictionaryJson = {
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Timestamp"
+              "propertyValue": "DATETIME"
             }
           }
         },
@@ -1082,7 +1082,7 @@ export const dataDictionaryJson = {
         },
         "mobile_verified_on": {
           "columnName": "mobile_verified_on",
-          "columnType": "TIMESTAMP",
+          "columnType": "DATETIME",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",

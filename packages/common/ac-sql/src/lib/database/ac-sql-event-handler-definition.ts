@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { AcEnumDDRowEvent } from "@autocode-ts/ac-data-dictionary";
-import { AcSqlEventArgs } from "../models/ac-sql-event-args.model";
+import { IAcSqlEventArgs } from "../interfaces/ac-sql-event-args.interface";
 import { AcSqlEventResult } from "../models/ac-sql-event-result.model";
 
 /**
@@ -38,14 +38,14 @@ export class AcSqlEventHandlerDefinition {
     args,
   }: {
     event: AcEnumDDRowEvent;
-    args: AcSqlEventArgs;
+    args: IAcSqlEventArgs;
   }): Promise<AcSqlEventResult> {
     try {
       const methodName = this._eventMethods.get(event);
       if (methodName && this.handler) {
         // Create a new instance of the handler class for each invocation, matching Dart behavior.
         const handlerInstance = new this.handler();
-        
+
         if (typeof handlerInstance[methodName] === 'function') {
           const result = await handlerInstance[methodName]({ args });
           if (result instanceof AcSqlEventResult) {

@@ -15,7 +15,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
   constructor({ tableName, dataDictionaryName = "default" }: { tableName: string, dataDictionaryName?: string }) {
     super({ dataDictionaryName });
-    this.setTable({tableName:tableName});
+    this.setTable({ tableName: tableName });
   }
 
   async cascadeDeleteRows({ rows }: { rows: Array<Record<string, any>> }): Promise<AcResult> {
@@ -173,16 +173,20 @@ export class AcSqlDbTable extends AcSqlDbBase {
       }
 
       for (const tableColumn of this.acDDTable.tableColumns) {
+
         const value = row[tableColumn.columnName];
-        if (tableColumn.checkInModify()) {
-          modifyConditions.push(`${tableColumn.columnName} = @modify_${tableColumn.columnName}`);
-          parameters[`@modify_${tableColumn.columnName}`] = value;
+        if (value) {
+          if (tableColumn.checkInModify()) {
+            modifyConditions.push(`${tableColumn.columnName} = @modify_${tableColumn.columnName}`);
+            parameters[`@modify_${tableColumn.columnName}`] = value;
+          }
+          if (tableColumn.isUniqueKey()) {
+            uniqueConditions.push(`${tableColumn.columnName} = @unique_${tableColumn.columnName}`);
+            parameters[`@unique_${tableColumn.columnName}`] = value;
+            uniqueColumns.push(tableColumn.columnName);
+          }
         }
-        if (tableColumn.isUniqueKey()) {
-          uniqueConditions.push(`${tableColumn.columnName} = @unique_${tableColumn.columnName}`);
-          parameters[`@unique_${tableColumn.columnName}`] = value;
-          uniqueColumns.push(tableColumn.columnName);
-        }
+
       }
 
       if (uniqueConditions.length > 0) {
@@ -234,17 +238,22 @@ export class AcSqlDbTable extends AcSqlDbBase {
           parameters = { ':primaryKeyValue': primaryKeyValue };
         } else {
           continueOperation = false;
-          result.setFailure({ message: 'Primary key column or column value is missing' });
+          result.setFailure({ message: 'Primary key column or column value is missing for delete operation' });
         }
       } else {
         condition = `${primaryKeyColumnName} IN (SELECT ${primaryKeyColumnName} FROM ${this.tableName} WHERE ${condition})`;
+      }
+
+      if (condition === '' && continueOperation) {
+        continueOperation = false;
+        result.setFailure({ message: 'Empty condition in delete operation! Prevented accidental full-table deletion.' });
       }
 
       if (continueOperation && executeBeforeEvent) {
         this.logger.log("Executing before delete event");
         if (AcSqlEventHandlersRegistry[this.tableName] &&
           AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeDelete })) {
-          const args:IAcSqlEventArgs = {
+          const args: IAcSqlEventArgs = {
             sqlDbTableInstance: this,
             condition,
             parameters,
@@ -308,14 +317,18 @@ export class AcSqlDbTable extends AcSqlDbBase {
             }
           }
         } else {
-          result.setFromResult({ result: getResult, logger: this.logger });
+          if (getResult.isFailure()) {
+            result.setFromResult({ result: getResult, logger: this.logger });
+          } else {
+            result.setFailure({ message: "No rows found matching deletion condition" });
+          }
         }
       }
 
       if (continueOperation && executeAfterEvent) {
         if (AcSqlEventHandlersRegistry[this.tableName] &&
           AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterDelete })) {
-          const args:IAcSqlEventArgs = {
+          const args: IAcSqlEventArgs = {
             sqlDbTableInstance: this,
             result,
           };
@@ -350,16 +363,16 @@ export class AcSqlDbTable extends AcSqlDbBase {
   }): Promise<AcResult> {
     const result = new AcResult();
     let continueOperation = true;
-    row = {...row};
+    row = { ...row };
 
     const columnNames = this.acDDTable.getColumnNames();
-    for(const key of Object.keys(row)){
-      if(columnNames.includes(key)){
-        if(row[key] == undefined){
+    for (const key of Object.keys(row)) {
+      if (columnNames.includes(key)) {
+        if (row[key] == undefined) {
           row[key] = null;
         }
       }
-      else{
+      else {
         delete row[key];
       }
     }
@@ -367,7 +380,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     if (executeBeforeEvent) {
       if (AcSqlEventHandlersRegistry[this.tableName] &&
         AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeFormat })) {
-        const args:IAcSqlEventArgs = {
+        const args: IAcSqlEventArgs = {
           sqlDbTableInstance: this,
           row,
         };
@@ -425,11 +438,6 @@ export class AcSqlDbTable extends AcSqlDbBase {
             } else if (type === AcEnumDDColumnType.Password) {
               value = AcEncryption.encrypt({ plainText: value });
             }
-            else if (type === AcEnumDDColumnType.Uuid && insertMode) {
-              if(value == undefined || value == null){
-                value = Autocode.uuid();
-              }
-            }
 
             row[column.columnName] = value;
           }
@@ -440,7 +448,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
     if (continueOperation && executeAfterEvent) {
       if (AcSqlEventHandlersRegistry[this.tableName] &&
         AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterFormat })) {
-        const args:IAcSqlEventArgs = {
+        const args: IAcSqlEventArgs = {
           sqlDbTableInstance: this,
           row,
         };
@@ -790,10 +798,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       this.logger.log(["Validation result : ", validateResult]);
       if (validateResult.isSuccess()) {
         for (const column of this.acDDTable.tableColumns) {
-          if (
-            (column.columnType === AcEnumDDColumnType.Uuid ||
-              (column.columnType === AcEnumDDColumnType.String && column.isPrimaryKey())) &&
-            !(column.columnName in row)
+          if ((column.columnType === AcEnumDDColumnType.Uuid || (column.columnType === AcEnumDDColumnType.String) && column.isPrimaryKey()) && !(column.columnName in row)
           ) {
             row[column.columnName] = Autocode.uuid();
           }
@@ -803,7 +808,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         let primaryKeyValue = row[primaryKeyColumn];
 
         if (Object.keys(row).length > 0) {
-          const formatResult = await this.formatValues({ row,insertMode:true });
+          const formatResult = await this.formatValues({ row, insertMode: true });
 
           if (formatResult.isSuccess()) {
             row = formatResult.value;
@@ -816,7 +821,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             this.logger.log("Executing before insert event");
             if (AcSqlEventHandlersRegistry[this.tableName] &&
               AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeInsert })) {
-              const args:IAcSqlEventArgs = {
+              const args: IAcSqlEventArgs = {
                 sqlDbTableInstance: this,
                 row,
               };
@@ -868,7 +873,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               if (continueOperation && executeAfterEvent) {
                 if (AcSqlEventHandlersRegistry[this.tableName] &&
                   AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterInsert })) {
-                  const args:IAcSqlEventArgs = {
+                  const args: IAcSqlEventArgs = {
                     sqlDbTableInstance: this,
                     result,
                   };
@@ -878,6 +883,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
                   });
                   if (!eventResult.isSuccess()) {
                     result.setFromResult({ result: eventResult });
+                    result.message = "DB_SUCCESS_BUT_EVENT_FAILURE: " + result.message;
                   }
                 }
               }
@@ -927,9 +933,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
           if (validateResult.isSuccess()) {
 
             for (const column of this.acDDTable.tableColumns) {
-              if (
-                (column.columnType === AcEnumDDColumnType.Uuid ||
-                  (column.columnType === AcEnumDDColumnType.String && column.isPrimaryKey())) &&
+              if (((column.columnType === AcEnumDDColumnType.Uuid || column.columnType === AcEnumDDColumnType.String) && column.isPrimaryKey()) &&
                 !(column.columnName in row)
               ) {
                 row[column.columnName] = Autocode.uuid();
@@ -940,7 +944,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             }
 
             if (Object.keys(row).length > 0) {
-              const formatResult = await this.formatValues({ row,insertMode:true });
+              const formatResult = await this.formatValues({ row, insertMode: true });
 
               if (formatResult.isSuccess()) {
                 row = formatResult.value;
@@ -954,7 +958,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
                 this.logger.log("Executing before insert event");
                 if (AcSqlEventHandlersRegistry[this.tableName] &&
                   AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeInsert })) {
-                  const args:IAcSqlEventArgs = {
+                  const args: IAcSqlEventArgs = {
                     sqlDbTableInstance: this,
                     row,
                   };
@@ -1013,7 +1017,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             for (const row of result.rows) {
               if (AcSqlEventHandlersRegistry[this.tableName] &&
                 AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterInsert })) {
-                const args:IAcSqlEventArgs = {
+                const args: IAcSqlEventArgs = {
                   sqlDbTableInstance: this,
                   row,
                   result,
@@ -1126,7 +1130,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (executeBeforeEvent) {
           if (AcSqlEventHandlersRegistry[this.tableName] &&
             AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeSave })) {
-            const args:IAcSqlEventArgs = {
+            const args: IAcSqlEventArgs = {
               sqlDbTableInstance: this,
               row,
             };
@@ -1156,7 +1160,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         if (continueOperation && executeAfterEvent) {
           if (AcSqlEventHandlersRegistry[this.tableName] &&
             AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterSave })) {
-            const args:IAcSqlEventArgs = {
+            const args: IAcSqlEventArgs = {
               sqlDbTableInstance: this,
               result,
             };
@@ -1253,7 +1257,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         for (const row of [...rowsToInsert, ...rowsToUpdate]) {
           if (AcSqlEventHandlersRegistry[this.tableName] &&
             AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeSave })) {
-            const args:IAcSqlEventArgs = {
+            const args: IAcSqlEventArgs = {
               sqlDbTableInstance: this,
               row,
             };
@@ -1310,9 +1314,9 @@ export class AcSqlDbTable extends AcSqlDbBase {
     return result;
   }
 
-  setTable({tableName,dataDictionaryName}:{tableName:string,dataDictionaryName?:string}){
+  setTable({ tableName, dataDictionaryName }: { tableName: string, dataDictionaryName?: string }) {
     this.tableName = tableName;
-    if(dataDictionaryName == undefined){
+    if (dataDictionaryName == undefined) {
       dataDictionaryName = this.dataDictionaryName;
     }
     this.acDDTable = AcDDTable.getInstance({ tableName, dataDictionaryName });
@@ -1408,14 +1412,18 @@ export class AcSqlDbTable extends AcSqlDbBase {
           condition = `${primaryKeyColumn} = :primaryKeyValue`;
           parameters = { ":primaryKeyValue": primaryKeyValue };
         }
+
+        if (condition === "") {
+          continueOperation = false;
+          result.setFailure({ message: "Empty condition in update operation! Prevented accidental full-table update." });
+        }
         this.logger.log(["Update condition : " + condition, parameters]);
 
         if (Object.keys(row).length > 0) {
           if (continueOperation && executeBeforeEvent) {
+            if (AcSqlEventHandlersRegistry[this.tableName] && AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeUpdate })) {
             this.logger.log("Executing before update event");
-            if (AcSqlEventHandlersRegistry[this.tableName] &&
-              AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeUpdate })) {
-              const args:IAcSqlEventArgs = {
+              const args: IAcSqlEventArgs = {
                 sqlDbTableInstance: this,
                 row,
               };
@@ -1432,6 +1440,9 @@ export class AcSqlDbTable extends AcSqlDbBase {
                 result.setFromResult({ result: eventResult, message: "Aborted from before update row events" });
               }
             }
+            else{
+              this.logger.log("Registery does not have before update event");
+            }
           } else {
             this.logger.log("Skipping before update event");
           }
@@ -1443,7 +1454,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               condition,
               parameters,
             });
-
+            console.log(updateResult);
             if (updateResult.isSuccess()) {
               result.setSuccess({ message: "Row updated successfully", logger: this.logger });
               result.primaryKeyColumn = primaryKeyColumn;
@@ -1460,7 +1471,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
               if (continueOperation && executeAfterEvent) {
                 if (AcSqlEventHandlersRegistry[this.tableName] &&
                   AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterUpdate })) {
-                  const args:IAcSqlEventArgs = {
+                  const args: IAcSqlEventArgs = {
                     sqlDbTableInstance: this,
                     result,
                   };
@@ -1558,7 +1569,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             this.logger.log("Executing before update event");
             if (AcSqlEventHandlersRegistry[this.tableName] &&
               AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.BeforeUpdate })) {
-              const args:IAcSqlEventArgs = {
+              const args: IAcSqlEventArgs = {
                 sqlDbTableInstance: this,
                 row: rowDetails.row,
               };
@@ -1604,7 +1615,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
             if (continueOperation && executeAfterEvent) {
               if (AcSqlEventHandlersRegistry[this.tableName] &&
                 AcSqlEventHandlersRegistry[this.tableName].hasMethodForEvent({ event: AcEnumDDRowEvent.AfterUpdate })) {
-                const args:IAcSqlEventArgs = {
+                const args: IAcSqlEventArgs = {
                   sqlDbTableInstance: this,
                   result,
                 };
@@ -1665,16 +1676,16 @@ export class AcSqlDbTable extends AcSqlDbBase {
 
       for (const column of this.acDDTable.tableColumns) {
         const value = row[column.columnName];
-        if (continueOperation && column.isRequired()) {
+        if (continueOperation && column.isRequired() && isInsert) {
           let validRequired = true;
-          if (!row.hasOwnProperty(column.columnName) && isInsert) {
+          if (!row.hasOwnProperty(column.columnName)) {
             validRequired = false;
           } else if ((typeof value === "string" && value.trim() === "") || value == null) {
             validRequired = false;
           }
           if (!validRequired) {
             continueOperation = false;
-            result.setFailure({ message: "Required column value is missing" });
+            result.setFailure({ message: `${column.columnName} column value is missing` });
           }
         }
 
