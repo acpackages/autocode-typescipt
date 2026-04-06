@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-export function AcWebValueFromBody(key: string) {
+export function AcWebValueFromBody(key?: string) {
   return function (target: any, propertyKey: string | symbol, parameterIndex: number) {
     const metadataKey = 'ac:web:value-from-body';
 

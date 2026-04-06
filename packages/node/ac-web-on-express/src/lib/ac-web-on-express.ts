@@ -162,14 +162,29 @@ export class AcWebOnExpress extends AcWeb {
   }
 
   private async _createAcWebRequestFromExpressReq(req: Request): Promise<AcWebRequest> {
+    const toPlainObject: Function = (value: any): Record<string, any> => {
+      if (!value) return {};
+
+      // Convert null-prototype or weird objects → plain object
+      return { ...value };
+    }
+
     const acRequest = new AcWebRequest();
     acRequest.url = req.url.substring(1);
     acRequest.method = req.method;
-    acRequest.headers = req.headers as Record<string, any>;
-    acRequest.get = req.query as Record<string, any>;
-    acRequest.post = req.body as Record<string, any>;
-    acRequest.cookies = req.cookies as Record<string, any>;
-    acRequest.pathParameters = req.params as Record<string, any>;
+    acRequest.headers = toPlainObject(
+      Object.fromEntries(
+        Object.entries(req.headers).map(([k, v]) => [
+          k,
+          Array.isArray(v) ? v.join(',') : v
+        ])
+      )
+    );
+
+    acRequest.get = toPlainObject(req.query);
+    acRequest.post = toPlainObject(req.body);
+    acRequest.cookies = toPlainObject(req.cookies);
+    acRequest.pathParameters = toPlainObject(req.params);
 
     // Handle files if using multer
     if (req.files && Array.isArray(req.files)) {

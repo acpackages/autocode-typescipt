@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcHooks, acHooks, AcLogger, AcEnumLogType, AcFileUtils } from '@autocode-ts/autocode';
+import { AcHooks, acHooks, AcLogger, AcEnumLogType, AcFileUtils, AcJsonUtils } from '@autocode-ts/autocode';
 import { acWebDetectedControllers } from '../annotations/ac-web-controller.annotation';
 import { AcWebRouteDefinition } from '../models/ac-web-route-definition.model';
 import { AcWebRequest } from '../models/ac-web-request.model';
@@ -188,41 +187,161 @@ export class AcWeb {
       logType: AcEnumLogType.Text,
     });
 
-    if (routeDefinition.controller && typeof routeDefinition.handler === 'string') {
-      this.logger.log('Handling controller route...');
-      try {
+    try {
+      if (routeDefinition.controller && typeof routeDefinition.handler === 'string') {
+        this.logger.log('Handling controller route...');
         const ControllerClass = routeDefinition.controller;
         const controllerInstance = new ControllerClass();
         const methodName = routeDefinition.handler;
         this.logger.log(`Handler controller method name is : ${methodName}`);
 
         if (typeof controllerInstance[methodName] === 'function') {
-          // Reflective Parameter Injection via Named Parameters
-          const injectedArgs = {
+          const args = this._resolveArguments({
+            target: ControllerClass.prototype,
+            methodName,
             request,
-            requestLogger,
-            ...request.pathParameters,
-            ...request.queryParameters,
-            ...request.formFields,
-            ...(typeof request.body === 'object' && request.body !== null ? request.body : {})
-          };
-          return await controllerInstance[methodName](injectedArgs);
+            requestLogger
+          });
+
+          if (args.length === 0 && (controllerInstance[methodName] as Function).length === 1) {
+            const injectedArgs = {
+              request,
+              requestLogger,
+              ...request.pathParameters,
+              ...request.queryParameters,
+              ...request.formFields,
+              ...(typeof request.body === 'object' && request.body !== null ? request.body : {})
+            };
+            return await controllerInstance[methodName](injectedArgs);
+          }
+
+          return await controllerInstance[methodName](...args);
         }
-        return AcWebResponse.notFound();
-      } catch (e: any) {
-        return AcWebResponse.internalError({ data: e.toString() });
-      }
-    } else if (typeof routeDefinition.handler === 'function') {
-      try {
+      } else if (typeof routeDefinition.handler === 'function') {
         this.logger.log('Handling function route...');
-        const args = new AcWebRequestHandlerArgs({ request, logger: requestLogger });
-        return await (routeDefinition.handler as Function)(args);
-      } catch (e: any) {
-        return AcWebResponse.internalError({ data: e.toString() });
+        const handler = routeDefinition.handler as Function;
+
+        const args = this._resolveArguments({
+          target: handler,
+          methodName: undefined,
+          request,
+          requestLogger
+        });
+
+        if (args.length === 0 && handler.length === 1) {
+          const simpleArgs = new AcWebRequestHandlerArgs({ request, logger: requestLogger });
+          return await handler(simpleArgs);
+        }
+
+        return await handler(...args);
       }
+    } catch (e: any) {
+      return AcWebResponse.internalError({ data: e.toString() });
     }
 
     return AcWebResponse.notFound();
+  }
+
+  _resolveArguments({ target, methodName, request, requestLogger }: {
+    target: any;
+    methodName: string | undefined;
+    request: AcWebRequest;
+    requestLogger: AcLogger;
+  }): any[] {
+    const paramTypes: any[] = Reflect.getMetadata('design:paramtypes', target, methodName || undefined) || [];
+
+    const fromPathMeta: Record<number, string>   = Reflect.getMetadata('ac:web:value-from-path',   target, methodName || undefined) || {};
+    const fromQueryMeta: Record<number, string>  = Reflect.getMetadata('ac:web:value-from-query',  target, methodName || undefined) || {};
+    const fromBodyMeta: Record<number, string>   = Reflect.getMetadata('ac:web:value-from-body',   target, methodName || undefined) || {};
+    const fromFormMeta: Record<number, string>   = Reflect.getMetadata('ac:web:value-from-form',   target, methodName || undefined) || {};
+    const fromHeaderMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-header', target, methodName || undefined) || {};
+    const fromCookieMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-cookie', target, methodName || undefined) || {};
+
+    let paramCount = paramTypes.length;
+
+    if (paramCount === 0) {
+      const allIndices = [
+        ...Object.keys(fromPathMeta),
+        ...Object.keys(fromQueryMeta),
+        ...Object.keys(fromBodyMeta),
+        ...Object.keys(fromFormMeta),
+        ...Object.keys(fromHeaderMeta),
+        ...Object.keys(fromCookieMeta)
+      ].map(k => parseInt(k)).filter(k => !isNaN(k));
+
+      if (allIndices.length > 0) {
+        paramCount = Math.max(...allIndices) + 1;
+      }
+    }
+
+    const args: any[] = new Array(paramCount);
+
+    for (let i = 0; i < paramCount; i++) {
+        const paramType = paramTypes[i];
+        let argValue: any = null;
+        let valueSet = false;
+
+        if (paramType === AcWebRequest) {
+          argValue = request;
+          valueSet = true;
+        } else if (paramType === AcLogger) {
+          argValue = requestLogger;
+          valueSet = true;
+        } else {
+            if (fromPathMeta[i] !== undefined) {
+                argValue = this._coerceValue({ value: request.pathParameters[fromPathMeta[i]], type: paramType });
+                valueSet = true;
+            } else if (fromQueryMeta[i] !== undefined) {
+                argValue = this._coerceValue({ value: request.queryParameters[fromQueryMeta[i]], type: paramType });
+                valueSet = true;
+            } else if (fromFormMeta[i] !== undefined) {
+                argValue = this._coerceValue({ value: request.formFields[fromFormMeta[i]], type: paramType });
+                valueSet = true;
+            } else if (fromHeaderMeta[i] !== undefined) {
+                argValue = this._coerceValue({ value: request.headers[fromHeaderMeta[i]], type: paramType });
+                valueSet = true;
+            } else if (fromCookieMeta[i] !== undefined) {
+                argValue = this._coerceValue({ value: request.cookies[fromCookieMeta[i]], type: paramType });
+                valueSet = true;
+            } else if (fromBodyMeta[i] !== undefined) {
+                const key = fromBodyMeta[i];
+                if (key) {
+                   const bodyVal = typeof request.body === 'object' && request.body !== null
+                     ? request.body[key]
+                     : undefined;
+                    argValue = this._coerceValue({ value: bodyVal, type: paramType });
+                } else if (paramType) {
+                    try {
+                        const object = new paramType();
+                        AcJsonUtils.setInstancePropertiesFromJsonData({ instance: object, jsonData: request.body });
+                        argValue = object;
+                    } catch (e) {
+                        argValue = request.body;
+                    }
+                } else {
+                    argValue = request.body;
+                }
+                valueSet = true;
+            }
+        }
+        args[i] = valueSet ? argValue : undefined;
+    }
+    return args;
+  }
+
+  _coerceValue({ value, type }: { value: any; type: any }): any {
+    if (value === undefined || value === null) return value;
+    if (!type) return value;
+    if (type === Number) {
+      const num = Number(value);
+      return isNaN(num) ? value : num;
+    }
+    if (type === Boolean) {
+      if (typeof value === 'boolean') return value;
+      return value === 'true' || value === '1' || value === 1;
+    }
+    if (type === String) return String(value);
+    return value;
   }
 
 
@@ -245,7 +364,7 @@ export class AcWeb {
     this.logger.log(`Class route is : ${classRoute}`);
 
     // Flush the TypeScript 5 method decorator initializers by briefly bootstrapping the class.
-    // In standard ECMAScript decorators, method decorators cannot access the class prototype 
+    // In standard ECMAScript decorators, method decorators cannot access the class prototype
     // immediately; they defer metadata binding until an instance is created via addInitializer().
     try {
       new controllerClass();
