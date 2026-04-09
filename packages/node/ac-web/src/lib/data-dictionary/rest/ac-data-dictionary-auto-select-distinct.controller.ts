@@ -3,7 +3,7 @@ import { AcDDTable, AcDDTableColumn, AcEnumDDRowOperation } from '@autocode-ts/a
 import { AcSqlDbTable } from '@autocode-ts/ac-sql';
 import { AcApiDocRoute } from '../../api-docs/models/ac-api-doc-route.model';
 import { AcApiDocParameter } from '../../api-docs/models/ac-api-doc-parameter.model';
-import { AcWebRequestHandlerArgs } from '../../models/ac-web-request-handler-args.model';
+import { IAcWebRequestHandlerArgs } from '../../interfaces/ac-web-request-handler-args.interface';
 import { AcWebResponse } from '../../models/ac-web-response.model';
 import { AcWebApiResponse } from '../../models/ac-web-api-response.model';
 import { AcApiDocUtils } from '../../api-docs/utils/ac-api-docs-utils';
@@ -78,8 +78,8 @@ export class AcDataDictionaryAutoSelectDistinct {
     return route;
   }
 
-  getHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  getHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();
       try {

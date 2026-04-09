@@ -218,23 +218,23 @@ export class AcDDTableColumn {
   }
 
   private _blobType({ size }: { size: number }): string {
-    if (size <= 255) return 'TINYBLOB';
-    if (size <= 65535) return 'BLOB';
-    if (size <= 16777215) return 'MEDIUMBLOB';
+    if (size >0 && size <= 255) return 'TINYBLOB';
+    if (size >0 && size <= 65535) return 'BLOB';
+    if (size >0 && size <= 16777215) return 'MEDIUMBLOB';
     return 'LONGBLOB';
   }
 
   private _textType({ size }: { size: number }): string {
-    if (size <= 255) return 'TINYTEXT';
-    if (size <= 65535) return 'TEXT';
-    if (size <= 16777215) return 'MEDIUMTEXT';
+    if (size >0 && size <= 255) return 'TINYTEXT';
+    if (size >0 && size <= 65535) return 'TEXT';
+    if (size >0 && size <= 16777215) return 'MEDIUMTEXT';
     return 'LONGTEXT';
   }
 
   private _intType({ size }: { size: number }): string {
-    if (size <= 255) return 'TINYINT';
-    if (size <= 65535) return 'SMALLINT';
-    if (size <= 16777215) return 'MEDIUMINT';
+    if (size >0 && size <= 255) return 'TINYINT';
+    if (size >0 && size <= 65535) return 'SMALLINT';
+    if (size >0 && size <= 16777215) return 'MEDIUMINT';
     return 'BIGINT';
   }
 

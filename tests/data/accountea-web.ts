@@ -275,20 +275,16 @@ export const dataDictionaryJson = {
             "REQUIRED": {
               "propertyName": "REQUIRED",
               "propertyValue": true
-            },
-            "UNIQUE_KEY": {
-              "propertyName": "UNIQUE_KEY",
-              "propertyValue": true
             }
           }
         },
-        "device_type": {
-          "columnName": "device_type",
-          "columnType": "STRING",
+        "application_id": {
+          "columnName": "application_id",
+          "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Device Type"
+              "propertyValue": "Application"
             },
             "REQUIRED": {
               "propertyName": "REQUIRED",
@@ -1188,6 +1184,12 @@ export const dataDictionaryJson = {
       "destinationTable": "sms_messages",
       "sourceColumn": "user_id",
       "sourceTable": "users"
+    },
+    {
+      "destinationColumn": "application_id",
+      "destinationTable": "devices",
+      "sourceColumn": "application_id",
+      "sourceTable": "applications"
     }
   ]
 };

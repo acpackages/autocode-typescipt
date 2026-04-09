@@ -7,13 +7,13 @@ import { AcApiDocRoute } from '../../api-docs/models/ac-api-doc-route.model';
 import { AcApiDocParameter } from '../../api-docs/models/ac-api-doc-parameter.model';
 import { AcApiDocContent } from '../../api-docs/models/ac-api-doc-content.model';
 import { AcApiDocRequestBody } from '../../api-docs/models/ac-api-doc-request-body.model';
-import { AcWebRequestHandlerArgs } from '../../models/ac-web-request-handler-args.model';
 import { AcWebResponse } from '../../models/ac-web-response.model';
 import { AcWebApiResponse } from '../../models/ac-web-api-response.model';
 import { AcApiDocUtils } from '../../api-docs/utils/ac-api-docs-utils';
 import { AcWebDataDictionaryUtils } from '../utils/ac-web-data-dictionary-utils.utility';
 import { AcDataDictionaryAutoApiConfig } from './ac-data-dictionary-auto-api-config.model';
 import { AcDataDictionaryAutoApi } from './ac-data-dictionary-auto-api.controller';
+import { IAcWebRequestHandlerArgs } from '../../interfaces/ac-web-request-handler-args.interface';
 
 export class AcDataDictionaryAutoDelete {
   readonly acDDTable: AcDDTable;
@@ -71,8 +71,8 @@ export class AcDataDictionaryAutoDelete {
     return route;
   }
 
-  getHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  getHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();
       const key = this.acDDTable.getPrimaryKeyColumnName();
@@ -132,8 +132,8 @@ export class AcDataDictionaryAutoDelete {
     return route;
   }
 
-  getPostHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  getPostHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const logger: AcLogger = args.logger;
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();

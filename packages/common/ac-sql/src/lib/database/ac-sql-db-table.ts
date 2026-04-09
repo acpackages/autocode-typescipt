@@ -798,7 +798,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
       this.logger.log(["Validation result : ", validateResult]);
       if (validateResult.isSuccess()) {
         for (const column of this.acDDTable.tableColumns) {
-          if ((column.columnType === AcEnumDDColumnType.Uuid || (column.columnType === AcEnumDDColumnType.String) && column.isPrimaryKey()) && !(column.columnName in row)
+          if (((column.columnType === AcEnumDDColumnType.Uuid || column.columnType === AcEnumDDColumnType.String) && column.isPrimaryKey()) && !(column.columnName in row)
           ) {
             row[column.columnName] = Autocode.uuid();
           }

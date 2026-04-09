@@ -107,6 +107,26 @@ export const dataDictionaryJson = {
               "propertyValue": "Log Key"
             }
           }
+        },
+        "device_id": {
+          "columnName": "device_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Device"
+            }
+          }
+        },
+        "activty_log_details": {
+          "columnName": "activty_log_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          }
         }
       },
       "tableProperties": {
@@ -208,6 +228,26 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Device Name"
+            }
+          }
+        },
+        "last_active_on": {
+          "columnName": "last_active_on",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Last Active On"
+            }
+          }
+        },
+        "last_synced_on": {
+          "columnName": "last_synced_on",
+          "columnType": "DATETIME",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Last Synced On"
             }
           }
         }
@@ -425,6 +465,12 @@ export const dataDictionaryJson = {
     {
       "destinationColumn": "device_id",
       "destinationTable": "device_authorized_accountees",
+      "sourceColumn": "device_id",
+      "sourceTable": "device_authorizations"
+    },
+    {
+      "destinationColumn": "device_id",
+      "destinationTable": "activity_logs",
       "sourceColumn": "device_id",
       "sourceTable": "device_authorizations"
     }

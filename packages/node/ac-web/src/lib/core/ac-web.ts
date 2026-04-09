@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcHooks, acHooks, AcLogger, AcEnumLogType, AcFileUtils, AcJsonUtils } from '@autocode-ts/autocode';
+import { acHooks, AcLogger, AcEnumLogType, AcFileUtils, AcJsonUtils } from '@autocode-ts/autocode';
 import { acWebDetectedControllers } from '../annotations/ac-web-controller.annotation';
 import { AcWebRouteDefinition } from '../models/ac-web-route-definition.model';
 import { AcWebRequest } from '../models/ac-web-request.model';
 import { AcWebResponse } from '../models/ac-web-response.model';
-import { AcWebRequestHandlerArgs } from '../models/ac-web-request-handler-args.model';
 import { AcWebConfig } from '../models/ac-web-config.model';
 import { AcEnumWebHook } from '../enums/ac-enum-web-hook.enum';
 import { AcApiDoc } from '../api-docs/models/ac-api-doc.model';
@@ -13,6 +12,7 @@ import { AcApiDocRoute } from '../api-docs/models/ac-api-doc-route.model';
 import { AcApiDocServer } from '../api-docs/models/ac-api-doc-server.model';
 import { AcApiSwagger } from '../api-docs/swagger/ac-api-swagger';
 import { AcSwaggerResources } from '../api-docs/swagger/ac-swagger-resources';
+import { IAcWebRequestHandlerArgs } from '../interfaces/ac-web-request-handler-args.interface';
 
 export class AcWeb {
   acApiDoc: AcApiDoc;
@@ -40,7 +40,7 @@ export class AcWeb {
   sslPrivateKeyPath: string = '';
   forceHttps: boolean = false;
 
-  logger: AcLogger = new AcLogger({ logMessages: true, logDirectory: 'logs/ac-web', logType: AcEnumLogType.Console, logFileName: 'ac-web.txt' });
+  logger: AcLogger = new AcLogger({ logMessages: false, logDirectory: 'logs/ac-web', logType: AcEnumLogType.Console, logFileName: 'ac-web.log' });
   urlPrefix: string = '';
 
   constructor({ paths = [] }: { paths?: string[] } = {}) {
@@ -50,7 +50,7 @@ export class AcWeb {
     // Register the route that generates the main swagger.json file.
     this.get({
       url: '/swagger/swagger.json',
-      handler: (args: AcWebRequestHandlerArgs) => {
+      handler: (args: IAcWebRequestHandlerArgs) => {
         const acApiSwagger = new AcApiSwagger();
         this.acApiDoc.paths = [];
         const paths: Record<string, AcApiDocPath> = {};
@@ -89,7 +89,7 @@ export class AcWeb {
     for (const swaggerFileName of Object.keys(AcSwaggerResources.files)) {
       this.get({
         url: `/swagger${swaggerFileName}`,
-        handler: (args: AcWebRequestHandlerArgs) => {
+        handler: (args: IAcWebRequestHandlerArgs) => {
           this.logger.log(`Handling Swagger File : ${swaggerFileName}`);
           const fileContent = AcSwaggerResources.files[swaggerFileName];
           const mimeType = AcFileUtils.mimeFromPath({ path: swaggerFileName });
@@ -229,7 +229,7 @@ export class AcWeb {
         });
 
         if (args.length === 0 && handler.length === 1) {
-          const simpleArgs = new AcWebRequestHandlerArgs({ request, logger: requestLogger });
+          const simpleArgs = { request, logger: requestLogger };
           return await handler(simpleArgs);
         }
 
@@ -250,10 +250,10 @@ export class AcWeb {
   }): any[] {
     const paramTypes: any[] = Reflect.getMetadata('design:paramtypes', target, methodName || undefined) || [];
 
-    const fromPathMeta: Record<number, string>   = Reflect.getMetadata('ac:web:value-from-path',   target, methodName || undefined) || {};
-    const fromQueryMeta: Record<number, string>  = Reflect.getMetadata('ac:web:value-from-query',  target, methodName || undefined) || {};
-    const fromBodyMeta: Record<number, string>   = Reflect.getMetadata('ac:web:value-from-body',   target, methodName || undefined) || {};
-    const fromFormMeta: Record<number, string>   = Reflect.getMetadata('ac:web:value-from-form',   target, methodName || undefined) || {};
+    const fromPathMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-path', target, methodName || undefined) || {};
+    const fromQueryMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-query', target, methodName || undefined) || {};
+    const fromBodyMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-body', target, methodName || undefined) || {};
+    const fromFormMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-form', target, methodName || undefined) || {};
     const fromHeaderMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-header', target, methodName || undefined) || {};
     const fromCookieMeta: Record<number, string> = Reflect.getMetadata('ac:web:value-from-cookie', target, methodName || undefined) || {};
 
@@ -277,54 +277,54 @@ export class AcWeb {
     const args: any[] = new Array(paramCount);
 
     for (let i = 0; i < paramCount; i++) {
-        const paramType = paramTypes[i];
-        let argValue: any = null;
-        let valueSet = false;
+      const paramType = paramTypes[i];
+      let argValue: any = null;
+      let valueSet = false;
 
-        if (paramType === AcWebRequest) {
-          argValue = request;
+      if (paramType === AcWebRequest) {
+        argValue = request;
+        valueSet = true;
+      } else if (paramType === AcLogger) {
+        argValue = requestLogger;
+        valueSet = true;
+      } else {
+        if (fromPathMeta[i] !== undefined) {
+          argValue = this._coerceValue({ value: request.pathParameters[fromPathMeta[i]], type: paramType });
           valueSet = true;
-        } else if (paramType === AcLogger) {
-          argValue = requestLogger;
+        } else if (fromQueryMeta[i] !== undefined) {
+          argValue = this._coerceValue({ value: request.queryParameters[fromQueryMeta[i]], type: paramType });
           valueSet = true;
-        } else {
-            if (fromPathMeta[i] !== undefined) {
-                argValue = this._coerceValue({ value: request.pathParameters[fromPathMeta[i]], type: paramType });
-                valueSet = true;
-            } else if (fromQueryMeta[i] !== undefined) {
-                argValue = this._coerceValue({ value: request.queryParameters[fromQueryMeta[i]], type: paramType });
-                valueSet = true;
-            } else if (fromFormMeta[i] !== undefined) {
-                argValue = this._coerceValue({ value: request.formFields[fromFormMeta[i]], type: paramType });
-                valueSet = true;
-            } else if (fromHeaderMeta[i] !== undefined) {
-                argValue = this._coerceValue({ value: request.headers[fromHeaderMeta[i]], type: paramType });
-                valueSet = true;
-            } else if (fromCookieMeta[i] !== undefined) {
-                argValue = this._coerceValue({ value: request.cookies[fromCookieMeta[i]], type: paramType });
-                valueSet = true;
-            } else if (fromBodyMeta[i] !== undefined) {
-                const key = fromBodyMeta[i];
-                if (key) {
-                   const bodyVal = typeof request.body === 'object' && request.body !== null
-                     ? request.body[key]
-                     : undefined;
-                    argValue = this._coerceValue({ value: bodyVal, type: paramType });
-                } else if (paramType) {
-                    try {
-                        const object = new paramType();
-                        AcJsonUtils.setInstancePropertiesFromJsonData({ instance: object, jsonData: request.body });
-                        argValue = object;
-                    } catch (e) {
-                        argValue = request.body;
-                    }
-                } else {
-                    argValue = request.body;
-                }
-                valueSet = true;
+        } else if (fromFormMeta[i] !== undefined) {
+          argValue = this._coerceValue({ value: request.formFields[fromFormMeta[i]], type: paramType });
+          valueSet = true;
+        } else if (fromHeaderMeta[i] !== undefined) {
+          argValue = this._coerceValue({ value: request.headers[fromHeaderMeta[i]], type: paramType });
+          valueSet = true;
+        } else if (fromCookieMeta[i] !== undefined) {
+          argValue = this._coerceValue({ value: request.cookies[fromCookieMeta[i]], type: paramType });
+          valueSet = true;
+        } else if (fromBodyMeta[i] !== undefined) {
+          const key = fromBodyMeta[i];
+          if (key) {
+            const bodyVal = typeof request.body === 'object' && request.body !== null
+              ? request.body[key]
+              : undefined;
+            argValue = this._coerceValue({ value: bodyVal, type: paramType });
+          } else if (paramType) {
+            try {
+              const object = new paramType();
+              AcJsonUtils.setInstancePropertiesFromJsonData({ instance: object, jsonData: request.body });
+              argValue = object;
+            } catch (e) {
+              argValue = request.body;
             }
+          } else {
+            argValue = request.body;
+          }
+          valueSet = true;
         }
-        args[i] = valueSet ? argValue : undefined;
+      }
+      args[i] = valueSet ? argValue : undefined;
     }
     return args;
   }
@@ -404,7 +404,7 @@ export class AcWeb {
 
   route({ url, handler, method, acApiDocRoute }: {
     url: string;
-    handler: (args: AcWebRequestHandlerArgs) => any;
+    handler: (args: IAcWebRequestHandlerArgs) => any;
     method: string;
     acApiDocRoute?: AcApiDocRoute;
   }): AcWeb {
@@ -448,39 +448,39 @@ export class AcWeb {
 
   // --- Standard HTTP method helpers ---
 
-  connect({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  connect({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'CONNECT', acApiDocRoute });
   }
 
-  delete({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  delete({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'DELETE', acApiDocRoute });
   }
 
-  get({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  get({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'GET', acApiDocRoute });
   }
 
-  head({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  head({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'HEAD', acApiDocRoute });
   }
 
-  options({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  options({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'OPTIONS', acApiDocRoute });
   }
 
-  patch({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  patch({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'PATCH', acApiDocRoute });
   }
 
-  post({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  post({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'POST', acApiDocRoute });
   }
 
-  put({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  put({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'PUT', acApiDocRoute });
   }
 
-  trace({ url, handler, acApiDocRoute }: { url: string; handler: (args: AcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
+  trace({ url, handler, acApiDocRoute }: { url: string; handler: (args: IAcWebRequestHandlerArgs) => any; acApiDocRoute?: AcApiDocRoute }): AcWeb {
     return this.route({ url, handler, method: 'TRACE', acApiDocRoute });
   }
 
@@ -514,7 +514,23 @@ export class AcWeb {
         }
       }
     }
+    delete result['swagger'];
 
-    return result;
+    const deepSort = (obj: any): any => {
+      if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
+        return obj;
+      }
+
+      const sortedKeys = Object.keys(obj).sort();
+      const newObj: Record<string, any> = {};
+
+      for (const key of sortedKeys) {
+        newObj[key] = deepSort(obj[key]);
+      }
+
+      return newObj;
+    };
+
+    return deepSort(result);
   }
 }

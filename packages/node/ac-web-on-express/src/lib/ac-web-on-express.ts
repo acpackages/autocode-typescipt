@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AcWeb, AcWebRequest, AcWebResponse, AcWebRouteDefinition, AcWebRequestHandlerArgs, AcEnumWebResponseType, AcSavedFileDetails, AcWebFile } from '@autocode-ts/ac-web';
+import { AcWeb, AcWebRequest, AcWebResponse, AcWebRouteDefinition, IAcWebRequestHandlerArgs, AcEnumWebResponseType, AcSavedFileDetails, AcWebFile } from '@autocode-ts/ac-web';
 import { AcLogger, AcEnumLogType, AcFileUtils, AcResult, AcEnumHttpResponseCode } from '@autocode-ts/autocode';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';

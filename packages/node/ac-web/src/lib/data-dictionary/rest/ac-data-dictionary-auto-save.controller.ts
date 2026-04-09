@@ -5,7 +5,7 @@ import { AcEnumApiDataType } from '../../api-docs/enums/ac-enum-api-data-type.en
 import { AcApiDocRoute } from '../../api-docs/models/ac-api-doc-route.model';
 import { AcApiDocContent } from '../../api-docs/models/ac-api-doc-content.model';
 import { AcApiDocRequestBody } from '../../api-docs/models/ac-api-doc-request-body.model';
-import { AcWebRequestHandlerArgs } from '../../models/ac-web-request-handler-args.model';
+import { IAcWebRequestHandlerArgs } from '../../interfaces/ac-web-request-handler-args.interface';
 import { AcWebResponse } from '../../models/ac-web-response.model';
 import { AcWebApiResponse } from '../../models/ac-web-api-response.model';
 import { AcApiDocUtils } from '../../api-docs/utils/ac-api-docs-utils';
@@ -74,8 +74,8 @@ export class AcDataDictionaryAutoSave {
     return route;
   }
 
-  getHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  getHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();
       try {

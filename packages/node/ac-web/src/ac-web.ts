@@ -57,11 +57,12 @@ export * from './lib/interceptors/ac-web-jwt-interceptor';
 export * from './lib/enums/ac-enum-web-hook.enum';
 export * from './lib/enums/ac-enum-web-response-type.enum';
 
+export * from './lib/interfaces/_interfaces.export';
+
 export * from './lib/models/ac-web-api-response.model';
 export * from './lib/models/ac-web-config.model';
 export * from './lib/models/ac-web-file.model';
 export * from './lib/models/ac-web-hook-created-args.model';
-export * from './lib/models/ac-web-request-handler-args.model';
 export * from './lib/models/ac-web-request.model';
 export * from './lib/models/ac-web-response.model';
 export * from './lib/models/ac-web-route-definition.model';

@@ -122,7 +122,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
               [TblSchemaLogs.AcSchemaOperation]: 'drop',
               [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
               [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
-              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
             }
           });
 
@@ -157,7 +157,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 [TblSchemaLogs.AcSchemaOperation]: 'create',
                 [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
                 [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
               }
             });
 
@@ -238,7 +238,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
               [TblSchemaLogs.AcSchemaOperation]: 'drop',
               [TblSchemaLogs.AcSchemaOperationResult]: dropResponse.status,
               [TblSchemaLogs.AcSchemaOperationStatement]: dropRelationshipStatement,
-              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
             }
           });
         }
@@ -272,7 +272,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'create',
             [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: createRelationshipStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
       }
@@ -312,7 +312,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'drop',
             [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
 
@@ -335,7 +335,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'create',
             [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
       }
@@ -373,7 +373,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
               [TblSchemaLogs.AcSchemaOperation]: 'create',
               [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
               [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+              [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
             }
           });
           if (logResponse.isFailure()) {
@@ -421,7 +421,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'drop',
             [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
 
@@ -444,7 +444,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'create',
             [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
       }
@@ -488,7 +488,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'drop',
             [TblSchemaLogs.AcSchemaOperationResult]: dropResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: dropStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
 
@@ -508,7 +508,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
             [TblSchemaLogs.AcSchemaOperation]: 'create',
             [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
             [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+            [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
           }
         });
       }
@@ -537,7 +537,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 [TblSchemaLogs.AcSchemaOperation]: 'create',
                 [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
                 [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
               }
             });
           }
@@ -744,7 +744,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 const createdLogResponse = await this.saveSchemaDetail({
                   row: {
                     [TblSchemaDetails.AcSchemaDetailKey]: SchemaDetails.KeyCreatedOn,
-                    [TblSchemaDetails.AcSchemaDetailStringValue]: new Date().toISOString(),
+                    [TblSchemaDetails.AcSchemaDetailStringValue]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
                   }
                 });
                 if (createdLogResponse.isFailure()) {
@@ -775,7 +775,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                   await this.saveSchemaDetail({
                     row: {
                       [TblSchemaDetails.AcSchemaDetailKey]: SchemaDetails.KeyLastUpdatedOn,
-                      [TblSchemaDetails.AcSchemaDetailStringValue]: new Date().toISOString(),
+                      [TblSchemaDetails.AcSchemaDetailStringValue]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
                     }
                   });
                 } else {
@@ -918,7 +918,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                 [TblSchemaLogs.AcSchemaOperation]: "create",
                 [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
                 [TblSchemaLogs.AcSchemaOperationStatement]: createStatement,
-                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+                [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
               },
             });
           }
@@ -952,7 +952,7 @@ export class AcSqlDbSchemaManager extends AcSqlDbBase {
                     [TblSchemaLogs.AcSchemaOperation]: "modify",
                     [TblSchemaLogs.AcSchemaOperationResult]: createResult.status,
                     [TblSchemaLogs.AcSchemaOperationStatement]: addStatement,
-                    [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString(),
+                    [TblSchemaLogs.AcSchemaOperationTimestamp]: new Date().toISOString().replace('T', ' ').replace('Z', ''),
                   },
                 });
               }

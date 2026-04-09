@@ -47,7 +47,7 @@ export class AcSqlEventHandlerDefinition {
         const handlerInstance = new this.handler();
 
         if (typeof handlerInstance[methodName] === 'function') {
-          const result = await handlerInstance[methodName]({ args });
+          const result = await handlerInstance[methodName](args);
           if (result instanceof AcSqlEventResult) {
             return result;
           }

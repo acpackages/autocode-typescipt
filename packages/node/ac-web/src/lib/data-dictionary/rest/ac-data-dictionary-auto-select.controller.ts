@@ -8,7 +8,7 @@ import { AcApiDocRoute } from '../../api-docs/models/ac-api-doc-route.model';
 import { AcApiDocParameter } from '../../api-docs/models/ac-api-doc-parameter.model';
 import { AcApiDocContent } from '../../api-docs/models/ac-api-doc-content.model';
 import { AcApiDocRequestBody } from '../../api-docs/models/ac-api-doc-request-body.model';
-import { AcWebRequestHandlerArgs } from '../../models/ac-web-request-handler-args.model';
+import { IAcWebRequestHandlerArgs } from '../../interfaces/ac-web-request-handler-args.interface';
 import { AcWebResponse } from '../../models/ac-web-response.model';
 import { AcWebApiResponse } from '../../models/ac-web-api-response.model';
 import { AcApiDocUtils } from '../../api-docs/utils/ac-api-docs-utils';
@@ -118,8 +118,8 @@ export class AcDataDictionaryAutoSelect {
     return route;
   }
 
-  getHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  getHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();
       try {
@@ -209,8 +209,8 @@ export class AcDataDictionaryAutoSelect {
     return route;
   }
 
-  getByIdHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  getByIdHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();
       try {
@@ -283,8 +283,8 @@ export class AcDataDictionaryAutoSelect {
     return route;
   }
 
-  postHandler(): (args: AcWebRequestHandlerArgs) => Promise<AcWebResponse> {
-    return async (args: AcWebRequestHandlerArgs) => {
+  postHandler(): (args: IAcWebRequestHandlerArgs) => Promise<AcWebResponse> {
+    return async (args: IAcWebRequestHandlerArgs) => {
       const logger = args.logger;
       const acWebRequest = args.request;
       const response = new AcWebApiResponse();
