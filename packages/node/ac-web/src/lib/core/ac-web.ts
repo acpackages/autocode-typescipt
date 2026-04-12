@@ -41,9 +41,18 @@ export class AcWeb {
   forceHttps: boolean = false;
 
   logger: AcLogger = new AcLogger({ logMessages: false, logDirectory: 'logs/ac-web', logType: AcEnumLogType.Console, logFileName: 'ac-web.log' });
-  urlPrefix: string = '';
+  urlPrefixes: string[] = [];
+
+  get urlPrefix(): string {
+    return this.urlPrefixes.length > 0 ? this.urlPrefixes[0] : '';
+  }
+
+  set urlPrefix(value: string) {
+    this.urlPrefixes = value ? [value] : [];
+  }
 
   constructor({ paths = [] }: { paths?: string[] } = {}) {
+    this.urlPrefixes = paths;
     this.acApiDoc = new AcApiDoc();
     acHooks.execute({ hook: AcEnumWebHook.AcWebCreated, args: [this] });
 
@@ -57,7 +66,7 @@ export class AcWeb {
 
         for (const routeDefinition of Object.values(this.routeDefinitions)) {
           const url = routeDefinition.url;
-          if (!url.startsWith('/swagger/')) {
+          if (!url.includes('/swagger/')) {
             if (!paths[url]) {
               const pathObj = new AcApiDocPath();
               pathObj.url = url;
@@ -376,26 +385,31 @@ export class AcWeb {
     const methodMetadata = (controllerClass as any)._acWebRoutes;
     if (methodMetadata) {
       for (const routeMeta of methodMetadata) {
-        const fullPath = `${classRoute}/${routeMeta.path.trim()}`.replace(/\/\//g, '/');
+        const controllerPath = `${classRoute}/${routeMeta.path.trim()}`.replace(/\/\//g, '/');
         const httpMethod = routeMeta.method.toLowerCase();
-        const routeKey = `${httpMethod}>${fullPath}`;
-        this.logger.log(`Method route details > Method: ${httpMethod}, Path : ${fullPath}, RouteKey : ${routeKey}`);
-
+        
         // Retrieve interceptors from reflection
         const methodInterceptors = Reflect.getMetadata('ac:web:use-interceptor', controllerClass.prototype, routeMeta.handlerName) || [];
         const classInterceptors = Reflect.getMetadata('ac:web:use-interceptor', controllerClass) || [];
         const combinedInterceptors = [...classInterceptors, ...methodInterceptors];
 
-        const routeDefinition = AcWebRouteDefinition.instanceFromJson({
-          [AcWebRouteDefinition.KEY_URL]: fullPath,
-          [AcWebRouteDefinition.KEY_METHOD]: httpMethod,
-          [AcWebRouteDefinition.KEY_CONTROLLER]: controllerClass,
-          [AcWebRouteDefinition.KEY_HANDLER]: routeMeta.handlerName,
-          [AcWebRouteDefinition.KEY_DOCUMENTATION]: routeMeta.documentation || new AcApiDocRoute(),
-        });
-        routeDefinition.interceptors = combinedInterceptors;
+        const prefixes = this.urlPrefixes.length > 0 ? this.urlPrefixes : [''];
+        for (const prefix of prefixes) {
+          const fullPath = `${prefix}/${controllerPath}`.replace(/\/\//g, '/');
+          const routeKey = `${httpMethod}>${fullPath}`;
+          this.logger.log(`Method route details > Method: ${httpMethod}, Path : ${fullPath}, RouteKey : ${routeKey}`);
 
-        this.routeDefinitions[routeKey] = routeDefinition;
+          const routeDefinition = AcWebRouteDefinition.instanceFromJson({
+            [AcWebRouteDefinition.KEY_URL]: fullPath,
+            [AcWebRouteDefinition.KEY_METHOD]: httpMethod,
+            [AcWebRouteDefinition.KEY_CONTROLLER]: controllerClass,
+            [AcWebRouteDefinition.KEY_HANDLER]: routeMeta.handlerName,
+            [AcWebRouteDefinition.KEY_DOCUMENTATION]: routeMeta.documentation || new AcApiDocRoute(),
+          });
+          routeDefinition.interceptors = combinedInterceptors;
+
+          this.routeDefinitions[routeKey] = routeDefinition;
+        }
       }
     }
     this.logger.log('Controller registered.');
@@ -408,13 +422,17 @@ export class AcWeb {
     method: string;
     acApiDocRoute?: AcApiDocRoute;
   }): AcWeb {
-    const routeKey = `${method.toLowerCase()}>${url}`;
-    this.routeDefinitions[routeKey] = AcWebRouteDefinition.instanceFromJson({
-      [AcWebRouteDefinition.KEY_URL]: url,
-      [AcWebRouteDefinition.KEY_METHOD]: method.toLowerCase(),
-      [AcWebRouteDefinition.KEY_HANDLER]: handler,
-      [AcWebRouteDefinition.KEY_DOCUMENTATION]: acApiDocRoute ?? new AcApiDocRoute(),
-    });
+    const prefixes = this.urlPrefixes.length > 0 ? this.urlPrefixes : [''];
+    for (const prefix of prefixes) {
+      const fullUrl = `${prefix}/${url}`.replace(/\/\//g, '/');
+      const routeKey = `${method.toLowerCase()}>${fullUrl}`;
+      this.routeDefinitions[routeKey] = AcWebRouteDefinition.instanceFromJson({
+        [AcWebRouteDefinition.KEY_URL]: fullUrl,
+        [AcWebRouteDefinition.KEY_METHOD]: method.toLowerCase(),
+        [AcWebRouteDefinition.KEY_HANDLER]: handler,
+        [AcWebRouteDefinition.KEY_DOCUMENTATION]: acApiDocRoute ?? new AcApiDocRoute(),
+      });
+    }
     return this;
   }
 
@@ -427,12 +445,20 @@ export class AcWeb {
 
   assetFiles({ assetDirectory, prefix = '' }: { assetDirectory: string; prefix?: string }): AcWeb {
     this.logger.log(`Registering asset files directory : ${assetDirectory}`);
-    this.assetFilesRoutes.push({ prefix, directory: assetDirectory });
+    const prefixes = this.urlPrefixes.length > 0 ? this.urlPrefixes : [''];
+    for (const p of prefixes) {
+      const fullPrefix = `${p}/${prefix}`.replace(/\/\//g, '/');
+      this.assetFilesRoutes.push({ prefix: fullPrefix, directory: assetDirectory });
+    }
     return this;
   }
 
   rawContentMap({ map, prefix = '', fallbackUrl = '' }: { map: Record<string, any>; prefix?: string; fallbackUrl?: string }): AcWeb {
-    this.rawContentMaps.push({ prefix, map, fallbackUrl });
+    const prefixes = this.urlPrefixes.length > 0 ? this.urlPrefixes : [''];
+    for (const p of prefixes) {
+      const fullPrefix = `${p}/${prefix}`.replace(/\/\//g, '/');
+      this.rawContentMaps.push({ prefix: fullPrefix, map, fallbackUrl });
+    }
     return this;
   }
 
@@ -442,7 +468,11 @@ export class AcWeb {
     if (!fs.existsSync(directory)) {
       fs.mkdirSync(directory, { recursive: true });
     }
-    this.staticFilesRoutes.push({ prefix, directory });
+    const prefixes = this.urlPrefixes.length > 0 ? this.urlPrefixes : [''];
+    for (const p of prefixes) {
+      const fullPrefix = `${p}/${prefix}`.replace(/\/\//g, '/');
+      this.staticFilesRoutes.push({ prefix: fullPrefix, directory });
+    }
     return this;
   }
 
@@ -514,7 +544,16 @@ export class AcWeb {
         }
       }
     }
-    delete result['swagger'];
+    
+    // Recursively delete swagger keys
+    const removeSwagger = (obj: any) => {
+      if (typeof obj !== 'object' || obj === null) return;
+      delete obj['swagger'];
+      for (const key in obj) {
+        removeSwagger(obj[key]);
+      }
+    };
+    removeSwagger(result);
 
     const deepSort = (obj: any): any => {
       if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
