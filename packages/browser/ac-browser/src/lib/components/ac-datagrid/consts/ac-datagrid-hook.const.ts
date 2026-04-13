@@ -5,6 +5,7 @@ export const AC_DATAGRID_HOOK = {
   ApplyFilter: 'applyFilter',
   BeforeColumnDefinitionsChange: 'beforeColumnDefinitionsChange',
   BeforeDataChange: 'beforeDataChange',
+  BeforeDatagridRowCreate: 'beforeDatagridRowCreate',
   BeforeGetOnDemandData: 'beforeGetOnDemandData',
   BeforeHeaderColumnCellsCreate: 'beforeHeaderColumnCellsCreate',
   BeforeRowCellsCreate: 'beforeRowCellsCreate',

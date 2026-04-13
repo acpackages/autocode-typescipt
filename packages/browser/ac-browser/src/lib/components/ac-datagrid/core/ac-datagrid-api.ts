@@ -396,31 +396,21 @@ export class AcDatagridApi {
     AcDatagridExtensionManager.registerBuiltInExtensions();
   }
 
-  addRow({ data, append = true, highlightCells = false }: { data?: any, append?: boolean, highlightCells?: boolean } = {}):IAcDatagridRow {
-    this.logger.log('Adding row', { data: data ? '[provided]' : 'undefined', append, highlightCells });
-    const datagridRow = this.dataManager.addData({ data }) as IAcDatagridRow;
-    this.logger.log('Added data to dataManager, created datagridRow', { rowId: datagridRow.rowId });
-    const hookArgs: IAcDatagridRowHookArgs = {
-      datagridApi: this,
-      datagridRow: datagridRow,
-    };
-    this.hooks.execute({ hook: AC_DATAGRID_HOOK.DatagridRowCreate, args: hookArgs });
-    this.logger.log('Executed DatagridRowCreate hook');
-    // const addHookArgs: IAcDatagridRowAddHookArgs = {
-    //   datagridApi: this,
-    //   datagridRow: datagridRow,
-    //   append: append,
-    //   highlightCells: highlightCells
-    // }
-    // this.hooks.execute({ hook: AC_DATAGRID_HOOK.RowAdd, args: addHookArgs });
-    // this.logger.log('Executed RowAdd hook');
-    // const eventArgs: IAcDatagridRowEvent = {
-    //   datagridApi: this,
-    //   datagridRow: datagridRow
-    // };
-    // this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowAdd, args: eventArgs });
-    this.logger.log('Executed RowAdd event');
-    return datagridRow;
+  addRow({ data, append = true, highlightCells = false, rowId }: { data?: any, append?: boolean, highlightCells?: boolean,rowId?:string } = {}):IAcDatagridRow {
+    const beforeRowCreateArgs: any = { datagridApi: this, data, rowId };
+    this.hooks.execute({ hook: AC_DATAGRID_HOOK.BeforeDatagridRowCreate, args: beforeRowCreateArgs });
+    if(beforeRowCreateArgs.rowId){
+      return this.dataManager.updateRow({data,rowId:beforeRowCreateArgs.rowId});
+    }
+    else{
+      const datagridRow = this.dataManager.addData({ data }) as IAcDatagridRow;
+      const hookArgs: IAcDatagridRowHookArgs = {
+        datagridApi: this,
+        datagridRow: datagridRow,
+      };
+      this.hooks.execute({ hook: AC_DATAGRID_HOOK.DatagridRowCreate, args: hookArgs });
+      return datagridRow;
+    }
   }
 
   applyFilter({ search }: { search?: string }) {
