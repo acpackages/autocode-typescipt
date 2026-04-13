@@ -5,11 +5,8 @@
 import { arrayRemoveByKey } from "@autocode-ts/ac-extensions";
 import { AcEvents } from "../../core/ac-events";
 import { AcHooks } from "../../core/ac-hooks";
-import { AcEnumConditionOperator } from "../../enums/ac-enum-condition-operator.enum";
-import { AcEnumLogicalOperator } from "../../enums/ac-enum-logical-operator.enum";
 import { AcEnumSortOrder } from "../../enums/ac-enum-sort-order.enum";
 import { AcFilterGroup } from "../../models/ac-filter-group.model";
-import { AcFilter } from "../../models/ac-filter.model";
 import { AcSortOrder } from "../../models/ac-sort-order.model";
 import { AC_DATA_MANAGER_EVENT } from "../consts/ac-data-manager-event.const";
 import { AC_DATA_MANAGER_HOOK } from "../consts/ac-data-manager-hook.const";
@@ -590,7 +587,6 @@ export class AcDataManager {
         dataManager: this,
         oldData: this.data
       }
-      console.log(this);
       this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.BeforeDataChange, args: hookArgs });
       let index = 0;
       const allRows = [];

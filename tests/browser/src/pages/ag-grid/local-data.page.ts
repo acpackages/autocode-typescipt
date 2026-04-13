@@ -36,6 +36,7 @@ export class AggridLocalData extends HTMLElement {
     AcDatagridExtensionManager.register(AgGridOnAcDatagrid);
     this.datagridApi = this.datagrid.datagridApi;
 
+    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
     this.columnDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnDragging }) as AcDatagridColumnDraggingExtension;
     this.columnsCustomizerExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.ColumnsCustomizer }) as AcDatagridColumnsCustomizerExtension;
     this.dataExportXlsxExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.DataExportXlsx }) as AcDatagridDataExportXlsxExtension;
@@ -43,7 +44,6 @@ export class AggridLocalData extends HTMLElement {
     this.rowSelectionExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowSelection }) as AcDatagridRowSelectionExtension;
     this.rowDraggingExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.RowDragging }) as AcDatagridRowDraggingExtension;
     this.autoAddRowExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_EXTENSION_NAME.AutoAddNewRow }) as AcDatagridAutoAddNewRowExtension;
-    this.agGridExtension = this.datagridApi.enableExtension({ extensionName: AC_DATAGRID_ON_AG_GRID_EXTENSION_NAME }) as AcDatagridOnAgGridExtension;
 
     this.datagridApi.usePagination = true;
 
@@ -54,6 +54,7 @@ export class AggridLocalData extends HTMLElement {
     this.rowSelectionExtension.allowSelection = true;
     this.rowSelectionExtension.allowMultipleSelection = true;
     this.autoAddRowExtension.autoAddNewRow = true;
+    console.log(this.datagridApi);
 
     // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
     this.datagridApi.columnDefinitions = [
@@ -72,7 +73,7 @@ export class AggridLocalData extends HTMLElement {
 
     ];
 
-    this.datagridApi.data = customersData.slice(0,100);
+    this.datagridApi.data = customersData.slice(0,10);
 
     this.pageHeader.addMenuItem({
       label: 'Row Numbers',

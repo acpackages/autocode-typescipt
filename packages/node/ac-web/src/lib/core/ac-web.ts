@@ -387,7 +387,7 @@ export class AcWeb {
       for (const routeMeta of methodMetadata) {
         const controllerPath = `${classRoute}/${routeMeta.path.trim()}`.replace(/\/\//g, '/');
         const httpMethod = routeMeta.method.toLowerCase();
-        
+
         // Retrieve interceptors from reflection
         const methodInterceptors = Reflect.getMetadata('ac:web:use-interceptor', controllerClass.prototype, routeMeta.handlerName) || [];
         const classInterceptors = Reflect.getMetadata('ac:web:use-interceptor', controllerClass) || [];
@@ -544,7 +544,7 @@ export class AcWeb {
         }
       }
     }
-    
+
     // Recursively delete swagger keys
     const removeSwagger = (obj: any) => {
       if (typeof obj !== 'object' || obj === null) return;

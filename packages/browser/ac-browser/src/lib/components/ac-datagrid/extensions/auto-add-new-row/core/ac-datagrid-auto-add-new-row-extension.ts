@@ -29,8 +29,9 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
   private delayedCallback: AcDelayedCallback = new AcDelayedCallback();
 
   private addRow() {
-    const lastRow = this.datagridApi.addRow({ data: { ...this.autoAddNewRowData } });
+    const lastRow = this.datagridApi.addRow({ data: { ...this.autoAddNewRowData},rowId:'___auto_add_row___' });
     this.lastAutoAddRowId = lastRow.rowId;
+    console.log(this);
   }
 
   override destroy(): void {
@@ -40,25 +41,25 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
 
   override handleHook({ hook, args }: { hook: string; args: any; }): void {
     if (this.autoAddNewRow) {
-      if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.CellValueChange)) {
+      if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.DataChange)) {
+        this.addRow();
+      }
+      else if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.CellValueChange)) {
         const datagridCell: IAcDatagridCell = args.datagridCell;
         const datagridRow: IAcDatagridRow = datagridCell.datagridRow;
         if (datagridRow.index == this.datagridApi.dataManager.totalRows - 1) {
           this.addRow();
         }
       }
-      else if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.DatagridRowCreate)) {
-        const datagridRow: IAcDatagridRow = args.datagridRow;
-        this.delayedCallback.add({
-          callback: () => {
-            if (this.lastAutoAddRowId) {
-              if (datagridRow.rowId != this.lastAutoAddRowId) {
-                this.datagridApi.deleteRow({ rowId: this.lastAutoAddRowId });
-                this.addRow();
-              }
-            }
-          }, key: 'checkLastIsAutoAdd', duration: 1
-        });
+      else if (this.datagridApi && stringEqualsIgnoreCase(hook, AC_DATAGRID_HOOK.BeforeDatagridRowCreate)) {
+        if(args.rowId!="___auto_add_row___"){
+          args.rowId = this.lastAutoAddRowId;
+          this.addRow();
+        }
+        else{
+          args.rowId = undefined;
+        }
+
       }
     }
   }
