@@ -50,7 +50,8 @@ import { BasicReportPage } from './pages/reports/basic-report';
 import { initAgGrid } from '@autocode-ts/ac-datagrid-on-ag-grid';
 import { WebSocketTestPage } from './pages/web-socket/web-socket.page';
 import { DataBridgeUIPage } from './pages/data-bridge/data-bridge-ui.page';
-import { RepeaterPage } from './pages/repeater/repeater.page';
+import { RepeaterOfflinePage } from './pages/repeater/repeater-offline.page';
+import { RepeaterOnDemandPage } from './pages/repeater/repeater-on-demand.page';
 
 
 // AcPaginationHtmlPlaceholder.first = `<i class="fa-solid fa-angles-left"></i>`;
@@ -184,7 +185,8 @@ window.addEventListener('DOMContentLoaded', () => {
   AcRouter.registerRouteGroup({
     label: 'Repeater',
     routes: [
-      { label: 'Basic', path: '/repeater/basic', componentTag: 'repeater-page', component: RepeaterPage },
+      { label: 'Offline', path: '/repeater/offline', componentTag: 'repeater-offline-page', component: RepeaterOfflinePage },
+      { label: 'On Demand', path: '/repeater/on-demand', componentTag: 'repeater-on-demand-page', component: RepeaterOnDemandPage },
     ]
   });
   AcRouter.registerRouteGroup({

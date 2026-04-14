@@ -16,6 +16,7 @@ import { IIAcRepeaterRowFocusHookArgs } from "../interfaces/hook-args/ac-repeate
 import { IIAcRepeaterRowUpdateHookArgs } from "../interfaces/hook-args/ac-repeater-row-update-hook-args.interface";
 import { IAcRepeaterUsePaginationChangeHookArgs } from "../interfaces/hook-args/ac-repeater-use-pagination-change-hook-args.interface";
 import { IAcRepeaterRow } from "../interfaces/ac-repeater-row.interface";
+import { IAcRepeaterField } from "../interfaces/ac-repeater-field.interface";
 import { AcRepeaterExtension } from "./ac-repeater-extension";
 import { AcRepeaterExtensionManager } from "./ac-repeater-extension-manager";
 import { AcRepeaterState } from "./ac-repeater-state";
@@ -60,19 +61,6 @@ export class AcRepeaterApi{
     if (value == true) {
       this.pagination = new AcPagination();
       this.pagination.bindDataManager({ dataManager: this.dataManager });
-      this.pagination.on({
-        event: AcEnumPaginationEvent.PageChange,
-        callback: (event: IAcPaginationPageChangeEvent) => {
-          if (event.startRow > 0) {
-            this.dataManager.setDisplayedRows({
-              startIndex: event.startRow - 1,
-              rowsCount: event.pagination.activePageSize
-            });
-          } else {
-            this.dataManager.setDisplayedRows({ startIndex: 0, rowsCount: 0 });
-          }
-        }
-      });
     } else {
       this.pagination = undefined;
     }
@@ -92,6 +80,8 @@ export class AcRepeaterApi{
   hoverRowId?: string;
   pagination?: AcPagination;
   sortOrder: AcSortOrder = new AcSortOrder();
+  rowRendererFunction?:any;
+  fields: IAcRepeaterField[] = [];
 
   constructor({ repeater }: { repeater: AcRepeaterElement }) {
     AcRepeaterExtensionManager.registerBuiltInExtensions();

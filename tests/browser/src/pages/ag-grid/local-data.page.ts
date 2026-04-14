@@ -58,7 +58,7 @@ export class AggridLocalData extends HTMLElement {
 
     // this.getElementsByClassName("aggrid-container")[0].append(this.datagrid.element);
     this.datagridApi.columnDefinitions = [
-      { field: 'action', title: "", allowSort: false, cellRendererElement: ActionsDatagridColumn, width: 65 },
+      { field: 'action', title: "", allowSort: false, cellRendererElement: ActionsDatagridColumn, width: 65,pinnedOn:'LEFT' },
       { field: 'customer_id', title: "Id" ,visible:true},
       { field: 'first_name', title: "First Name", allowEdit: true },
       { field: 'last_name', title: "Last Name", allowEdit: true },

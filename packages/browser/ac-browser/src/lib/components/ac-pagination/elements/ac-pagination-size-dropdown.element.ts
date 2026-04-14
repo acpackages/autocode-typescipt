@@ -25,8 +25,7 @@ export class AcPaginationSizeDropdown extends AcElementBase {
     acAddClassToElement({ class_: AcPaginationCssClassName.acPaginationPageSizeSelect, element: this.selectInput });
     this.setSelectDropdownValues();
     this.innerHTML = "";
-    this.append('Page Size:');
-    this.append(this.selectInput);;
+    this.append(this.selectInput);
   }
 
   setSelectDropdownValues() {

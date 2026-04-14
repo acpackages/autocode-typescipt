@@ -76,6 +76,8 @@ export interface IAcDatagridColumnDefinition {
   }) */
   minWidth?: number;
 
+  pinnedOn?:'LEFT'|'RIGHT';
+
   /* AcDoc({
     "description": "The title of the column. If not provided, field value will be used"
   }) */

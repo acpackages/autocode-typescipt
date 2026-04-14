@@ -273,7 +273,7 @@ export class AcDataManager {
   private applyFilter() {
     let validIndex: number = 0;
     for (const row of this.allRows) {
-      if(row){
+      if (row) {
         const keys: any = Object.keys(row.data);
         let valid: boolean = true;
         if (this.searchQuery) {
@@ -343,7 +343,7 @@ export class AcDataManager {
         available = true;
         for (let index = startIndex; index <= endIndex; index++) {
           if (available) {
-            if(this.rows[index] == undefined){
+            if (this.rows[index] == undefined) {
               available = false;
               break;
             }
@@ -365,7 +365,7 @@ export class AcDataManager {
   deleteRow({ data, rowId, key, value }: { data?: any, rowId?: string, key?: string, value?: any }): IAcDataRow | undefined {
     const dataRow: IAcDataRow | undefined = this.rows.find((dataRow: IAcDataRow) => {
       let valid: boolean = false;
-      if(dataRow){
+      if (dataRow) {
         if (rowId) {
           valid = dataRow.rowId == rowId;
         }
@@ -439,6 +439,7 @@ export class AcDataManager {
             const requestArgs: IAcOnDemandRequestArgs = {
               filterGroup: this.filterGroup.clone(),
               sortOrder: this.sortOrder.clone(),
+              startIndex,rowsCount,
               successCallback: (response: IAcOnDemandResponseArgs) => {
                 try {
                   const hookArgs: IAcDataManagerGetOnDemandDataSuccessCallbackHookArgs = {
@@ -552,7 +553,8 @@ export class AcDataManager {
           this.setDisplayedRows({ startIndex: this.displayStartIndex, rowsCount: this.displayCount });
           this.isWorking = false;
         }
-      }, duration: this.refreshRowsTimeoutDuration, key: 'refreshRows'});
+      }, duration: this.refreshRowsTimeoutDuration, key: 'refreshRows'
+    });
   }
 
   reset() {
@@ -645,7 +647,7 @@ export class AcDataManager {
       }
       for (let index = startIndex; index <= endIndex; index++) {
         const dataIndex = index - startIndex;
-        if(this.allRows[index] == undefined){
+        if (this.allRows[index] == undefined) {
           this.allRows[index] = {
             rowId: Autocode.uuid(),
             data: {},
@@ -684,7 +686,7 @@ export class AcDataManager {
   updateRow({ data, value, key, rowId, addIfMissing = true }: { data: any, value?: any, key?: string, rowId?: string, highlightCells?: boolean, addIfMissing?: boolean }): IAcDataRow | undefined {
     let dataRow: IAcDataRow | undefined = this.rows.find((row) => {
       let valid: boolean = false;
-      if(row){
+      if (row) {
         if (rowId) {
           valid = row.rowId == rowId;
         }
@@ -747,15 +749,18 @@ export class AcDataManager {
   }
 
   async setDisplayedRows({ startIndex = 0, rowsCount = -1 }: { startIndex?: number; rowsCount?: number; } = {}) {
+    const oldStartIndex = this.displayStartIndex;
+    const oldEndIndex = this.displayEndIndex;
+    const oldDisplayCount = this.displayCount;
     this.displayStartIndex = startIndex;
     this.displayEndIndex = (startIndex + rowsCount) - 1;
     this.displayCount = rowsCount;
     const eventArgs: IAcDataManagerDisplayedRowsChangeEvent = {
-      displayedRows: this.displayedRows,
-      dataManager: this
-    };
-    this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
-    this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
+        displayedRows: this.displayedRows,
+        dataManager: this
+      };
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DisplayedRowsChange, args: eventArgs });
+      this.events.execute({ event: AC_DATA_MANAGER_EVENT.DisplayedRowsChange, args: eventArgs });
   }
 
 }

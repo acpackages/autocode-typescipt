@@ -56,23 +56,24 @@ export class AcRepeaterBodyElement extends AcElementBase {
     acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterBody, element: this });
     this.style.flex = '1';
     this.style.overflow = 'auto';
-    this.style.position = 'relative';
+    // this.style.overflowX = 'hidden';
+    // this.style.position = 'relative';
 
     this.autoBindRepeater();
-    this.scrollable = new AcScrollable({
-      element: this,
-      options: {
-        itemTemplate: (row: IAcRepeaterRow, index: number) => {
-          const repeaterRow = new AcRepeaterRowElement({
-            repeaterApi: this.repeaterApi,
-            repeaterRow: row
-          });
-          return repeaterRow.rowWrapper;
-        }
-      }
-    });
-    this.registerListeners();
-    // this.setDisplayRows();
+    // this.scrollable = new AcScrollable({
+    //   element: this,
+    //   options: {
+    //     itemTemplate: (row: IAcRepeaterRow, index: number) => {
+    //       const repeaterRow = new AcRepeaterRowElement();
+    //       repeaterRow.setRow({
+    //         repeaterApi: this.repeaterApi,
+    //         repeaterRow: row,index
+    //       })
+    //       return repeaterRow;
+    //     }
+    //   }
+    // });
+    // this.registerListeners();
   }
 
   registerListeners() {
@@ -82,7 +83,15 @@ export class AcRepeaterBodyElement extends AcElementBase {
   }
 
   setDisplayRows() {
-    this.scrollable.setItems(this.repeaterApi.displayedRepeaterRows);
+    this.innerHTML = '';
+    for (const row of this.repeaterApi.displayedRepeaterRows) {
+      const repeaterRow = new AcRepeaterRowElement();
+      repeaterRow.setRow({
+        repeaterApi: this.repeaterApi,
+        repeaterRow: row
+      })
+      this.append(repeaterRow);
+    }
   }
 }
 

@@ -31,13 +31,13 @@ export class AcPaginationNavigationButtons extends AcElementBase{
 
   constructor(){
     super();
-    this.style.display = "flex";
+    this.classList.add(AcPaginationCssClassName.acPaginationNavigationButtons);
     this.innerHTML = `
-      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-first-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.first}</ac-svg-icon></button>
-      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-previous-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.previous}</ac-svg-icon></button>
-      <div ac-pagination-page-label></div>
-      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-next-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.next}</ac-svg-icon></button>
-      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-last-button style="cursor:pointer;"><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.last}</ac-svg-icon></button>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-first-button><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.first}</ac-svg-icon></button>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-previous-button><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.previous}</ac-svg-icon></button>
+      <div ac-pagination-page-label style="margin: 0 10px; font-size: 14px;"></div>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-next-button><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.next}</ac-svg-icon></button>
+      <button type="button" class="${AcPaginationCssClassName.acPaginationPageButton}" ac-pagination-last-button><ac-svg-icon>${AC_PAGINATION_SVG_ICONS.last}</ac-svg-icon></button>
     `;
     this.firstButton = this.querySelector('[ac-pagination-first-button]') as HTMLButtonElement;
     this.previousButton = this.querySelector('[ac-pagination-previous-button]') as HTMLButtonElement;
@@ -95,26 +95,18 @@ export class AcPaginationNavigationButtons extends AcElementBase{
     if(this.pagination && this.pagination.activePage <= 1){
       this.firstButton.setAttribute('disabled',"true");
       this.previousButton.setAttribute('disabled',"true");
-      this.firstButton.style.opacity = '0.5';
-      this.previousButton.style.opacity = '0.5';
     }
     else{
       this.firstButton.removeAttribute('disabled');
       this.previousButton.removeAttribute('disabled');
-      this.firstButton.style.opacity = '';
-      this.previousButton.style.opacity = '';
     }
     if(this.pagination && this.pagination.activePage >= this.pagination.totalPages){
       this.nextButton.setAttribute('disabled',"true");
       this.lastButton.setAttribute('disabled',"true");
-      this.nextButton.style.opacity = '0.5';
-      this.lastButton.style.opacity = '0.5';
     }
     else{
       this.nextButton.removeAttribute('disabled');
       this.lastButton.removeAttribute('disabled');
-      this.nextButton.style.opacity = '';
-      this.lastButton.style.opacity = '';
     }
   }
 

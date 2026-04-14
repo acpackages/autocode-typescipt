@@ -1,4 +1,6 @@
 export * from './ac-repeater-extension.interface';
+export * from './ac-repeater-field.interface';
+export * from './ac-repeater-row.interface';
 export * from './ac-repeater-state.interface';
 export * from './callback-args/_callback-args.export';
 export * from './event-args/_event-args.export';

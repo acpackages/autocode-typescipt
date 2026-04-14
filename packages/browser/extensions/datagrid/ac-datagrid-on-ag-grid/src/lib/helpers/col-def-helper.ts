@@ -41,6 +41,9 @@ export function acGetColDefFromAcDataGridColumn({ datagridColDef }: { datagridCo
     flex: datagridColDef.flexSize,
     columnDefinition:datagridColDef,
   };
+  if(datagridColDef.pinnedOn){
+    colDef.pinned = datagridColDef.pinnedOn.toLowerCase();
+  }
   if(colDef.filter){
     colDef.filter = 'agTextColumnFilter';
     colDef.filterParams = {

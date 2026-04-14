@@ -1,0 +1,188 @@
+.ac-repeater-header {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: var(--ac-header-bg, #f5f5f5);
+  border-bottom: 1px solid var(--ac-border-color, #e0e0e0);
+  gap: 12px;
+}
+
+.ac-repeater-search-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left: 8px;
+}
+
+.ac-repeater-search-input {
+  border: none;
+  outline: none;
+  padding: 8px;
+  flex: 1;
+}
+
+.ac-repeater-clear-search-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 8px;
+  color: #888;
+}
+
+.ac-repeater-clear-search-btn:hover {
+  color: #333;
+}
+
+.ac-repeater-header-button {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.ac-repeater-header-button:hover {
+  background: #f0f0f0;
+}
+
+.ac-repeater-badge {
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border: 2px solid #fff;
+}
+
+.ac-repeater-header-button {
+  position: relative;
+}
+
+.ac-repeater-header-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-radius: 4px;
+  z-index: 1000;
+  padding: 16px;
+  min-width: 300px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ac-repeater-header-popup.open {
+  display: flex;
+}
+
+.ac-repeater-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.ac-repeater-popup-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.ac-repeater-popup-close:hover {
+  color: #333;
+}
+
+.ac-repeater-filter-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ac-repeater-filter-row select,
+.ac-repeater-filter-row input {
+  padding: 4px;
+}
+
+.ac-repeater-filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Container-based responsive: compact mode (<500px) */
+.ac-repeater-header.compact {
+  gap: 8px;
+  padding: 6px;
+}
+
+.ac-repeater-header.compact .ac-repeater-search-input {
+  padding: 6px;
+  font-size: 13px;
+}
+
+.ac-repeater-header.compact .ac-repeater-header-button {
+  padding: 6px 8px;
+}
+
+.ac-repeater-header.compact .ac-repeater-header-popup {
+  min-width: unset;
+  width: calc(100% + 16px);
+  left: -8px;
+  right: auto;
+}
+
+.ac-repeater-header.compact .ac-repeater-filter-row {
+  flex-wrap: wrap;
+}
+
+.ac-repeater-header.compact .ac-repeater-filter-row select,
+.ac-repeater-header.compact .ac-repeater-filter-row input {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+/* Container-based responsive: narrow mode (<350px) */
+.ac-repeater-header.narrow {
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px;
+}
+
+.ac-repeater-header.narrow .ac-repeater-search-container {
+  flex: 1 1 100%;
+  order: -1;
+}
+
+.ac-repeater-header.narrow .ac-repeater-header-popup {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+}

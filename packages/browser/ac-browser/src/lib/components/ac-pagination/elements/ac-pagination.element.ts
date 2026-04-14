@@ -85,7 +85,14 @@ export class AcPagination extends AcElementBase {
         this.totalRows = dataManager.totalRows;
       }
     });
+    dataManager.on({
+      event: AC_DATA_MANAGER_EVENT.OnDemandFunctionSet, callback: () => {
+        this.dataManager.getRows({startIndex:this.startRow -1,rowsCount:this.activePageSize});
+      }
+    });
   }
+
+  private resizeObserver?: ResizeObserver;
 
   override init() {
     super.init();
@@ -95,16 +102,28 @@ export class AcPagination extends AcElementBase {
 
     acAddClassToElement({ class_: AcPaginationCssClassName.acPagination, element: this });
     this.innerHTML = "";
-    this.style.display = "flex";
-    this.style.alignItems = "center";
-    this.style.justifyContent = "space-between";
-    this.style.gap = "10px";
-    this.style.width = "100%";
-    this.style.flex = "1";
 
     this.append(this.navigationButtons);
     this.append(this.displayedRows);
     this.append(this.sizeDropdown);
+
+    this.setupResizeObserver();
+  }
+
+  private setupResizeObserver() {
+    this.resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.contentRect.width;
+        this.classList.toggle('compact', width < 400);
+        this.classList.toggle('narrow', width < 250);
+      }
+    });
+    this.resizeObserver.observe(this);
+  }
+
+  override destroy(): void {
+    this.resizeObserver?.disconnect();
+    super.destroy();
   }
 
   updateDisplayedRows() {
@@ -127,7 +146,14 @@ export class AcPagination extends AcElementBase {
     }
     if (this.startRow != oldStart || this.endRow != oldEnd || this.totalPages != oldTotal) {
       if (this.dataManager && !this.dataManager.isWorking) {
-        this.dataManager.setDisplayedRows({ startIndex: this.startRow - 1, rowsCount: this.activePageSize });
+        if(this.dataManager.type == 'ondemand'){
+          this.dataManager.getData({startIndex:this.startRow -1,rowsCount:this.activePageSize}).then((res:any)=>{
+            this.dataManager.setDisplayedRows({ startIndex: this.startRow - 1, rowsCount: this.activePageSize });
+          });
+        }
+        else{
+          this.dataManager.setDisplayedRows({ startIndex: this.startRow - 1, rowsCount: this.activePageSize });
+        }
       }
     }
     if (this.displayedRows) {
