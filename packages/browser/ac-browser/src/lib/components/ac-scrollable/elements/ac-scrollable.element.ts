@@ -4,433 +4,422 @@ import { IAcScrollableOptions } from "../interfaces/ac-scrollable-options.intefa
 import { IAcScrollingElement } from "../interfaces/ac-scrolling-element.interface";
 import { AcScrollableAttributeName } from "../consts/ac-scrollable-attribute-name.const";
 
-/**
- * AcScrollable - High-Performance Virtual Scrolling Engine
- * Designed for 60fps scrolling with minimal DOM churn and subpixel precision.
- * 
- * Architecture:
- * - O(log N) range detection via cumulative height mapping and binary search.
- * - Minimal DOM reconciliation: Incremental add/remove instead of innerHTML reset.
- * - Absolute positioning stabilization: Prevents layout shifts and browser scroll jitter.
- * - Frame-aligned updates via RequestAnimationFrame.
- */
 export class AcScrollable {
   private element: HTMLElement;
-  private options: IAcScrollableOptions;
-  
-  // State
-  private items: any[] = [];
-  private scrollingElements: IAcScrollingElement[] = [];
-  private heights: number[] = [];
-  private cumulativeHeights: number[] = [];
-  private totalContentHeight: number = 0;
-  
-  // DOM Management
-  private activeNodes = new Map<number, HTMLElement>(); // index -> node
-  private heightSealer: HTMLElement;
-  
-  // Viewport
-  private scrollTop: number = 0;
-  private viewportHeight: number = 0;
-  private lastRange: { start: number; end: number } = { start: -1, end: -1 };
-  
-  // Observers & Performance
+  private elementHeight: number;
+  private elementHeightFallback: number;
   private elementResizeObserver!: ResizeObserver;
-  private itemResizeObserver!: ResizeObserver;
   private mutationObserver!: MutationObserver;
-  private scrollRafId: number | null = null;
-  private isRendering = false;
-  private isWorking = true;
-  private delayedCallback = new AcDelayedCallback();
+  private options?: IAcScrollableOptions;
+  private resizeObserver!: ResizeObserver;
+  private renderedElements: IAcScrollingElement[] = [];
+  private scrollingElements: IAcScrollingElement[] = [];
+  private scrollTop = 0;
+  private isRendering: boolean = false;
+  private isWorking: boolean = true;
+  private delayedCallback: AcDelayedCallback = new AcDelayedCallback();
+  private items: any[] = [];
   private heightCache = new Map<any, number>();
+  private heights: number[] = [];
 
   constructor({ element, options = {} }: { element: HTMLElement, options?: IAcScrollableOptions }) {
     this.element = element;
-    this.options = {
-      bufferCount: 5,
-      topBufferCount: options.topBufferCount ?? options.bufferCount ?? 5,
-      bottomBufferCount: options.bottomBufferCount ?? options.bufferCount ?? 5,
-      bottomThreshold: options.bottomThreshold ?? 0,
-      elementHeight: 50,
-      ...options
-    };
-
-    // Initialize Container
+    this.options = options;
+    this.elementHeight = element.clientHeight;
+    this.elementHeightFallback = options.elementHeight ?? 50;
     this.element.style.overflowY = "auto";
-    this.element.style.position = "relative";
-    this.viewportHeight = this.element.clientHeight || this.options.elementHeight || 50;
-
-    // Create persistent height sealer
-    this.heightSealer = document.createElement("div");
-    this.heightSealer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
-    this.heightSealer.style.position = "absolute";
-    this.heightSealer.style.width = "1px";
-    this.heightSealer.style.left = "0";
-    this.heightSealer.style.top = "0";
-    this.heightSealer.style.pointerEvents = "none";
-    this.heightSealer.style.visibility = "hidden";
-    this.element.appendChild(this.heightSealer);
-
-    this.element.addEventListener("scroll", () => this.handleScroll(), { passive: true });
-    
-    this.initObservers();
-    
-    if (this.element.children.length > 1) { // 1 is the sealer
+    this.element.addEventListener("scroll", () => this.handleScroll());
+    if (this.element.children.length > 0) {
       this.registerExistingElements();
     }
+    this.initObservers();
   }
 
-  // --- Public API ---
-
-  public setItems(items: any[]) {
+  setItems(items: any[]) {
     this.items = items;
-    this.scrollingElements = [];
     this.updateHeights();
-    this.render(true);
+    this.render();
   }
 
-  public addItem(item: any) {
+  addItem(item: any) {
     if (item instanceof HTMLElement) {
       this.addElement({ element: item });
     } else {
       this.items.push(item);
       this.updateHeights();
-      this.render(true);
+      this.render();
     }
   }
 
-  public addElement({ element }: { element: HTMLElement }) {
-    const height = this.measureElement(element);
-    this.registerScrollingElement({ element, height });
-    this.updateHeights();
-    this.render(true);
+  addElement({ element }: { element: HTMLElement }) {
+    const temp = element.cloneNode(true) as HTMLElement;
+    temp.style.visibility = "hidden";
+    temp.style.position = "absolute";
+    temp.style.top = "-10000px";
+    this.element.appendChild(temp);
+    const height = temp.offsetHeight || this.elementHeightFallback;
+    this.element.removeChild(temp);
+    this.registerScrollingElement({ element: element, height: height });
+    this.render();
   }
 
-  public moveElement({ fromIndex, toIndex }: { fromIndex: number, toIndex: number }) {
-    const list = this.items.length > 0 ? this.items : this.scrollingElements;
-    if (fromIndex < 0 || fromIndex >= list.length || toIndex < 0 || toIndex >= list.length) return;
+  private updateHeights() {
+    if (this.options?.enableFixedHeight && this.options?.itemSize) {
+      this.heights = new Array(this.items.length).fill(this.options.itemSize);
+      return;
+    }
 
-    const [moved] = list.splice(fromIndex, 1);
-    list.splice(toIndex, 0, moved);
+    this.heights = this.items.map((item, index) => {
+      if (this.heightCache.has(item)) {
+        return this.heightCache.get(item)!;
+      }
+      const height = this.measureItemHeight(item, index);
+      this.heightCache.set(item, height);
+      return height;
+    });
+  }
 
-    if (this.items.length === 0) {
+  private measureItemHeight(item: any, index: number): number {
+    if (this.options?.itemSize) return this.options.itemSize;
+    if (!this.options?.itemTemplate) return this.elementHeightFallback;
+
+    const element = this.options.itemTemplate(item, index);
+    const temp = element.cloneNode(true) as HTMLElement;
+    temp.style.visibility = "hidden";
+    temp.style.position = "absolute";
+    temp.style.top = "-10000px";
+    temp.style.width = this.element.clientWidth + "px";
+    this.element.appendChild(temp);
+    const height = temp.offsetHeight || this.elementHeightFallback;
+    this.element.removeChild(temp);
+    return height;
+  }
+
+  private getVisibleRange() {
+    const totalCount = this.items.length > 0 ? this.items.length : this.scrollingElements.length;
+    if (totalCount === 0) return { startIndex: 0, endIndex: -1 };
+
+    const heights = this.items.length > 0 ? this.heights : this.scrollingElements.map(el => el.height);
+
+    let startIndex = 0;
+    let y = 0;
+    for (let i = 0; i < heights.length; i++) {
+      if (y + heights[i] >= this.scrollTop) {
+        startIndex = i;
+        break;
+      }
+      y += heights[i];
+    }
+
+    let endIndex = startIndex;
+    y = 0;
+    for (let i = startIndex; i < heights.length; i++) {
+      y += heights[i];
+      if (y >= this.elementHeight) {
+        endIndex = i;
+        break;
+      }
+    }
+
+    let buffer: number = this.options?.bufferCount ?? 2;
+    startIndex = Math.max(0, startIndex - buffer);
+    endIndex = Math.min(totalCount - 1, endIndex + buffer);
+
+    return { startIndex, endIndex };
+  }
+
+  private handleScroll() {
+    if (this.isWorking) {
+      this.scrollTop = this.element.scrollTop;
+      this.render();
+    }
+  }
+
+  private initObservers() {
+    this.mutationObserver = new MutationObserver((mutations) => {
+      if (!this.isRendering && this.items.length === 0) {
+        let needsRender = false;
+        for (const mutation of mutations) {
+          if (mutation.type === "childList") {
+            mutation.addedNodes.forEach((node) => {
+              if (node instanceof HTMLElement) {
+                if (!node.hasAttribute(AcScrollableAttributeName.acScrollingElementId) && !node.hasAttribute(AcScrollableAttributeName.acScrollingSpacer)) {
+                  const height = node.offsetHeight || this.elementHeightFallback;
+                  this.registerScrollingElement({ element: node, height });
+                  needsRender = true;
+                }
+              }
+            });
+            mutation.removedNodes.forEach((node) => {
+              if (node instanceof HTMLElement) {
+                const id = node.getAttribute(AcScrollableAttributeName.acScrollingElementId);
+                if (id) {
+                  this.scrollingElements = this.scrollingElements.filter(el => el.id !== id);
+                  this.resizeObserver.unobserve(node);
+                  needsRender = true;
+                }
+              }
+            });
+          }
+        }
+        if (needsRender) {
+          this.render();
+        }
+      }
+    });
+    this.mutationObserver.observe(this.element, { childList: true });
+    this.resizeObserver = new ResizeObserver((entries) => {
+      if (!this.isRendering && this.items.length === 0) {
+        let needsRender = false;
+        for (const entry of entries) {
+          const target = entry.target as HTMLElement;
+          const id = target.getAttribute(AcScrollableAttributeName.acScrollingElementId);
+          if (id) {
+            const se = this.scrollingElements.find(el => el.id === id);
+            if (se) {
+              const newHeight = target.offsetHeight || this.elementHeightFallback;
+              if (se.height !== newHeight) {
+                se.height = newHeight;
+                needsRender = true;
+              }
+            }
+          }
+        }
+        if (needsRender) {
+          this.render();
+        }
+      }
+    });
+    this.elementResizeObserver = new ResizeObserver(() => {
+      const newHeight = this.element.clientHeight;
+      if (this.elementHeight != newHeight) {
+        this.elementHeight = newHeight;
+        this.render();
+      }
+    });
+    this.elementResizeObserver.observe(this.element);
+    this.scrollingElements.forEach(el => {
+      this.resizeObserver.observe(el.element);
+    });
+  }
+
+  moveElement({ fromIndex, toIndex }: { fromIndex: number, toIndex: number }) {
+    if (this.items.length > 0) {
+      if (fromIndex < 0 || fromIndex >= this.items.length || toIndex < 0 || toIndex >= this.items.length) return;
+      const [moved] = this.items.splice(fromIndex, 1);
+      this.items.splice(toIndex, 0, moved);
+      const [movedHeight] = this.heights.splice(fromIndex, 1);
+      this.heights.splice(toIndex, 0, movedHeight);
+    } else {
+      if (fromIndex < 0 || fromIndex >= this.scrollingElements.length || toIndex < 0 || toIndex >= this.scrollingElements.length) return;
+      const [moved] = this.scrollingElements.splice(fromIndex, 1);
+      this.scrollingElements.splice(toIndex, 0, moved);
       this.reindexScrollingElements();
     }
-
-    this.updateHeights();
-    this.render(true);
+    this.render();
   }
 
-  public removeElement({ index, id, element }: { index?: number, id?: string, element?: HTMLElement }) {
-    const isDataMode = this.items.length > 0;
-    const list = isDataMode ? this.items : this.scrollingElements;
+  private registerScrollingElement(data: Partial<IAcScrollingElement> & Pick<IAcScrollingElement, 'element' | 'height'>) {
+    if (this.scrollingElements.findIndex((item: any) => { return item.element == data.element; }) == -1) {
+      const id: string = Autocode.uuid();
+      data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
+      if (data.index == undefined) {
+        data.index = this.scrollingElements.length;
+      }
+      const scrollingElement: IAcScrollingElement = {
+        element: data.element,
+        id: id,
+        index: data.index,
+        height: data.height
+      };
+      this.scrollingElements.push(scrollingElement);
+      if (this.resizeObserver) {
+        this.resizeObserver.observe(data.element);
+      }
+    }
+  }
 
-    if (index === undefined) {
-      if (element) index = isDataMode ? list.indexOf(element) : list.findIndex(se => se.element === element);
-      else if (id && !isDataMode) index = list.findIndex(se => se.id === id);
+  registerExistingElements() {
+    const children = Array.from(this.element.children) as HTMLElement[];
+    this.scrollingElements = [];
+    children.forEach((el, index) => {
+      if (!el.hasAttribute(AcScrollableAttributeName.acScrollingSpacer)) {
+        const height = el.offsetHeight || this.elementHeightFallback;
+        this.registerScrollingElement({ element: el, height: height, index: index });
+      }
+    });
+    this.element.innerHTML = '';
+    this.render();
+  }
+
+  private reindexScrollingElements() {
+    this.scrollingElements.forEach((se, idx) => {
+      se.index = idx;
+    });
+  }
+
+  removeElement({ element, id, index }: { index?: number, id?: string, element?: HTMLElement }) {
+    if (this.items.length > 0) {
+      if (index === undefined && element) {
+        index = this.items.indexOf(element);
+      }
+      if (index !== undefined && index >= 0 && index < this.items.length) {
+        this.items.splice(index, 1);
+        this.heights.splice(index, 1);
+        this.render();
+      }
+      return;
     }
 
-    if (index !== undefined && index >= 0 && index < list.length) {
-      const removed = list.splice(index, 1)[0];
-      if (!isDataMode && removed) {
-        this.itemResizeObserver.unobserve(removed.element);
+    if (index == undefined && element) {
+      index = this.scrollingElements.findIndex(se => se.element === element);
+    }
+    else if (index == undefined && id) {
+      index = this.scrollingElements.findIndex(se => se.id === id);
+    }
+    if (index != undefined) {
+      const removed = this.scrollingElements.splice(index, 1)[0];
+      if (removed) {
+        this.resizeObserver.unobserve(removed.element);
         removed.element.remove();
         this.reindexScrollingElements();
+        this.render();
       }
-      this.updateHeights();
-      this.render(true);
     }
   }
 
-  public replaceElementAt({ index, newElement }: { index: number, newElement: any }) {
+  private render() {
+    this.isRendering = true;
+    const { startIndex, endIndex } = this.getVisibleRange();
+    this.element.innerHTML = "";
+
+    const heights = this.items.length > 0 ? this.heights : this.scrollingElements.map(el => el.height);
+
+    const topSpacer = document.createElement("div");
+    topSpacer.style.height = heights.slice(0, startIndex).reduce((sum, h) => sum + h, 0) + "px";
+    topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
+    topSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerBefore, '');
+    this.element.appendChild(topSpacer);
+
+    this.renderedElements = [];
+    if (this.items.length > 0 && this.options?.itemTemplate) {
+      for (let i = startIndex; i <= endIndex; i++) {
+        const el = this.options.itemTemplate(this.items[i], i);
+        this.element.appendChild(el);
+      }
+    } else {
+      for (let i = startIndex; i <= endIndex; i++) {
+        if (this.scrollingElements[i]) {
+          this.renderedElements.push(this.scrollingElements[i]);
+          this.element.appendChild(this.scrollingElements[i].element);
+        }
+      }
+    }
+
+    const bottomSpacer = document.createElement("div");
+    bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacer, '');
+    bottomSpacer.setAttribute(AcScrollableAttributeName.acScrollingSpacerAfter, '');
+    bottomSpacer.style.height = heights.slice(endIndex + 1).reduce((sum, h) => sum + h, 0) + "px";
+    this.element.appendChild(bottomSpacer);
+
+    this.delayedCallback.add({
+      callback: () => {
+        this.isRendering = false;
+      }, duration: 10
+    });
+  }
+
+  replaceElementAt({ index, newElement }: { index: number, newElement: any }) {
     if (this.items.length > 0) {
       if (index < 0 || index >= this.items.length) return;
       this.items[index] = newElement;
-    } else {
-      if (index < 0 || index >= this.scrollingElements.length) return;
-      const old = this.scrollingElements[index];
-      this.itemResizeObserver.unobserve(old.element);
-      const height = this.measureElement(newElement);
-      this.scrollingElements[index] = { ...old, element: newElement, height };
-      this.itemResizeObserver.observe(newElement);
+      this.updateHeights();
+      this.render();
+      return;
     }
-    this.updateHeights();
-    this.render(true);
+
+    if (index < 0 || index >= this.scrollingElements.length) return;
+    const old = this.scrollingElements[index];
+    this.resizeObserver.unobserve(old.element);
+    const height = newElement.offsetHeight || this.elementHeightFallback;
+    this.scrollingElements[index] = {
+      ...old,
+      element: newElement,
+      height
+    };
+    this.resizeObserver.observe(newElement);
+    this.render();
   }
 
-  public scrollTo({ index, element }: { index?: number, element?: HTMLElement }) {
-    if (index === undefined && element) {
+  scrollTo({ element, index }: { index?: number, element?: HTMLElement }) {
+    const heights = this.items.length > 0 ? this.heights : this.scrollingElements.map(el => el.height);
+    const totalCount = this.items.length > 0 ? this.items.length : this.scrollingElements.length;
+
+    if (index == undefined && element) {
       index = this.items.length > 0 ? this.items.indexOf(element) : this.scrollingElements.findIndex(se => se.element === element);
     }
 
-    if (index !== undefined && index >= 0 && index < this.cumulativeHeights.length - 1) {
-      this.element.scrollTop = this.cumulativeHeights[index];
-      this.handleScroll();
+    if (index != undefined) {
+      if (index < 0 || index >= totalCount) return;
+      const scrollY = heights.slice(0, index).reduce((sum, h) => sum + h, 0);
+      this.element.scrollTop = scrollY;
+      this.render();
     }
   }
 
-  public clearAll() {
-    this.pause();
-    this.items = [];
+  clearAll() {
+    if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
+
+    this.element.innerHTML = "";
+    this.renderedElements = [];
     this.scrollingElements = [];
+    this.items = [];
     this.heightCache.clear();
     this.heights = [];
-    this.cumulativeHeights = [];
-    this.activeNodes.forEach(node => node.remove());
-    this.activeNodes.clear();
-    this.lastRange = { start: -1, end: -1 };
-    this.resume();
-    this.render(true);
+
+    this.isRendering = false;
+    this.initObservers();
   }
 
-  public pause() {
+  /**
+   * Pauses detection of new elements and size changes.
+   * Keeps existing scrollable data intact.
+   */
+  pause() {
     this.isWorking = false;
-    this.mutationObserver?.disconnect();
-    this.itemResizeObserver?.disconnect();
-    this.elementResizeObserver?.disconnect();
+    if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
   }
 
-  public resume() {
+  /**
+   * Resumes detection of new elements and size changes.
+   * Reconnects all observers.
+   */
+  resume() {
     this.isWorking = true;
     this.initObservers();
   }
 
-  // --- Core Logic ---
+  /**
+   * Automatically registers any child elements
+   * that are not yet registered as scrolling elements.
+   */
+  autoRegister() {
+    const children = Array.from(this.element.children) as HTMLElement[];
+    const existingIds = new Set(this.scrollingElements.map(el => el.id));
 
-  private handleScroll() {
-    if (!this.isWorking) return;
-    
-    if (this.scrollRafId) cancelAnimationFrame(this.scrollRafId);
-    
-    this.scrollRafId = requestAnimationFrame(() => {
-      if (this.isRendering) return;
-      
-      const newScrollTop = this.element.scrollTop;
-      if (Math.abs(this.scrollTop - newScrollTop) < 0.1) return;
-      
-      this.scrollTop = newScrollTop;
-      this.render();
-      this.scrollRafId = null;
-    });
-  }
-
-  private updateHeights() {
-    const count = this.items.length > 0 ? this.items.length : this.scrollingElements.length;
-    this.heights = new Array(count);
-    this.cumulativeHeights = new Array(count + 1);
-    this.cumulativeHeights[0] = 0;
-
-    const isFixedHeight = this.options.enableFixedHeight && this.options.itemSize;
-    let total = 0;
-
-    for (let i = 0; i < count; i++) {
-      let h = this.options.itemSize || this.options.elementHeight || 50;
-      
-      if (!isFixedHeight) {
-        if (this.items.length > 0) {
-          const item = this.items[i];
-          h = this.heightCache.get(item) ?? this.measureItem(item, i);
-          this.heightCache.set(item, h);
-        } else {
-          h = this.scrollingElements[i].height;
-        }
-      }
-      
-      this.heights[i] = h;
-      total += h;
-      this.cumulativeHeights[i + 1] = total;
-    }
-
-    this.totalContentHeight = total + (this.options.bottomThreshold ?? 0);
-    this.heightSealer.style.height = this.totalContentHeight + "px";
-  }
-
-  private findIndexAt(y: number): number {
-    let low = 0;
-    let high = this.cumulativeHeights.length - 2;
-    
-    while (low <= high) {
-      const mid = (low + high) >> 1;
-      if (y < this.cumulativeHeights[mid]) high = mid - 1;
-      else if (y >= this.cumulativeHeights[mid + 1]) low = mid + 1;
-      else return mid;
-    }
-    return low;
-  }
-
-  private render(force = false) {
-    if (!this.isWorking) return;
-    this.isRendering = true;
-
-    const totalCount = this.heights.length;
-    if (totalCount === 0) {
-      this.clearDOM();
-      this.finishRender();
-      return;
-    }
-
-    // Binary search for range
-    let start = this.findIndexAt(this.scrollTop);
-    let end = this.findIndexAt(this.scrollTop + this.viewportHeight + 1); // 1px overshoot
-
-    // Apply buffers
-    const tBuf = this.options.topBufferCount ?? this.options.bufferCount ?? 2;
-    const bBuf = this.options.bottomBufferCount ?? this.options.bufferCount ?? 2;
-    
-    start = Math.max(0, start - tBuf);
-    end = Math.min(totalCount - 1, end + bBuf);
-
-    if (!force && start === this.lastRange.start && end === this.lastRange.end) {
-      this.finishRender();
-      return;
-    }
-
-    // Simple Reconciliation
-    const nextNodes = new Map<number, HTMLElement>();
-    
-    // 1. Identify and keep/create nodes for new range
-    for (let i = start; i <= end; i++) {
-      let node = this.activeNodes.get(i);
-      if (!node) {
-        node = this.createNode(i);
-        this.element.appendChild(node);
-      }
-      
-      node.style.top = this.cumulativeHeights[i] + "px";
-      node.style.position = "absolute";
-      node.style.width = "100%";
-      node.style.left = "0";
-      nextNodes.set(i, node);
-      this.activeNodes.delete(i);
-    }
-
-    // 2. Clear nodes that left the range
-    this.activeNodes.forEach(node => node.remove());
-    this.activeNodes = nextNodes;
-    this.lastRange = { start, end };
-
-    this.finishRender();
-  }
-
-  private finishRender() {
-    this.delayedCallback.add({
-      callback: () => {
-        this.isRendering = false;
-      }, duration: 16 // One frame
-    });
-  }
-
-  private clearDOM() {
-    this.activeNodes.forEach(node => node.remove());
-    this.activeNodes.clear();
-    this.lastRange = { start: -1, end: -1 };
-  }
-
-  private createNode(index: number): HTMLElement {
-    if (this.items.length > 0 && this.options.itemTemplate) {
-      return this.options.itemTemplate(this.items[index], index);
-    }
-    return this.scrollingElements[index].element;
-  }
-
-  // --- Utilities ---
-
-  private measureItem(item: any, index: number): number {
-    if (!this.options.itemTemplate) return this.options.elementHeight || 50;
-    const el = this.options.itemTemplate(item, index);
-    return this.measureElement(el);
-  }
-
-  private measureElement(el: HTMLElement): number {
-    el.style.visibility = "hidden";
-    el.style.position = "absolute";
-    el.style.top = "-10000px";
-    el.style.width = this.element.clientWidth + "px";
-    this.element.appendChild(el);
-    const h = el.getBoundingClientRect().height;
-    this.element.removeChild(el);
-    return h || this.options.elementHeight || 50;
-  }
-
-  private initObservers() {
-    this.itemResizeObserver = new ResizeObserver((entries) => {
-      if (this.isRendering || this.items.length > 0) return;
-      let changed = false;
-      for (const entry of entries) {
-        const id = (entry.target as HTMLElement).getAttribute(AcScrollableAttributeName.acScrollingElementId);
-        const se = this.scrollingElements.find(s => s.id === id);
-        const h = entry.contentRect.height;
-        if (se && Math.abs(se.height - h) > 0.5) {
-          se.height = h;
-          changed = true;
-        }
-      }
-      if (changed) {
-        this.updateHeights();
-        this.render(true);
+    children.forEach((el) => {
+      const id = el.getAttribute(AcScrollableAttributeName.acScrollingElementId);
+      if (!id || !existingIds.has(id)) {
+        const height = el.offsetHeight || this.elementHeightFallback;
+        this.registerScrollingElement({ element: el, height });
       }
     });
 
-    this.elementResizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const h = entry.contentRect.height;
-        if (Math.abs(this.viewportHeight - h) > 0.5) {
-          this.viewportHeight = h;
-          this.render(true);
-        }
-      }
-    });
-
-    this.mutationObserver = new MutationObserver((mutations) => {
-      if (this.isRendering || this.items.length > 0) return;
-      let needsUpdate = false;
-      for (const m of mutations) {
-        m.addedNodes.forEach(n => {
-          if (n instanceof HTMLElement && !n.hasAttribute(AcScrollableAttributeName.acScrollingSpacer) && !n.hasAttribute(AcScrollableAttributeName.acScrollingElementId)) {
-            this.registerScrollingElement({ element: n, height: this.measureElement(n) });
-            needsUpdate = true;
-          }
-        });
-      }
-      if (needsUpdate) {
-        this.updateHeights();
-        this.render(true);
-      }
-    });
-
-    this.elementResizeObserver.observe(this.element);
-    this.mutationObserver.observe(this.element, { childList: true });
-    this.scrollingElements.forEach(se => this.itemResizeObserver.observe(se.element));
+    this.render();
   }
 
-  private registerScrollingElement(data: Partial<IAcScrollingElement> & { element: HTMLElement, height: number }) {
-    if (this.scrollingElements.some(se => se.element === data.element)) return;
-    const id = Autocode.uuid();
-    data.element.setAttribute(AcScrollableAttributeName.acScrollingElementId, id);
-    const se: IAcScrollingElement = {
-      element: data.element,
-      id,
-      index: data.index ?? this.scrollingElements.length,
-      height: data.height
-    };
-    this.scrollingElements.push(se);
-    this.itemResizeObserver?.observe(data.element);
-  }
-
-  private reindexScrollingElements() {
-    this.scrollingElements.forEach((se, i) => se.index = i);
-  }
-
-  private registerExistingElements() {
-    this.scrollingElements = [];
-    Array.from(this.element.children).forEach((el, i) => {
-      if (el instanceof HTMLElement && !el.hasAttribute(AcScrollableAttributeName.acScrollingSpacer)) {
-        this.registerScrollingElement({ element: el, height: this.measureElement(el), index: i });
-      }
-    });
-    this.element.innerHTML = "";
-    this.element.appendChild(this.heightSealer);
-    this.updateHeights();
-    this.render(true);
-  }
 }
