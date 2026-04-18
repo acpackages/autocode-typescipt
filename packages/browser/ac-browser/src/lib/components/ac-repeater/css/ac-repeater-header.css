@@ -71,23 +71,18 @@
 }
 
 .ac-repeater-header-popup {
-  position: absolute;
-  top: 100%;
-  right: 0;
+  position: fixed;
   background: #fff;
   border: 1px solid #ccc;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   border-radius: 4px;
-  z-index: 1000;
+  z-index: 9999;
   padding: 16px;
   min-width: 300px;
-  display: none;
+  max-width: 450px;
+  display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.ac-repeater-header-popup.open {
-  display: flex;
 }
 
 .ac-repeater-popup-header {
@@ -133,23 +128,10 @@
 /* Container-based responsive: compact mode (<500px) */
 .ac-repeater-header.compact {
   gap: 8px;
-  padding: 6px;
 }
 
 .ac-repeater-header.compact .ac-repeater-search-input {
-  padding: 6px;
   font-size: 13px;
-}
-
-.ac-repeater-header.compact .ac-repeater-header-button {
-  padding: 6px 8px;
-}
-
-.ac-repeater-header.compact .ac-repeater-header-popup {
-  min-width: unset;
-  width: calc(100% + 16px);
-  left: -8px;
-  right: auto;
 }
 
 .ac-repeater-header.compact .ac-repeater-filter-row {
@@ -164,25 +146,10 @@
 
 /* Container-based responsive: narrow mode (<350px) */
 .ac-repeater-header.narrow {
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 4px;
+  flex-wrap: nowrap;
+  gap: 4px;
 }
 
 .ac-repeater-header.narrow .ac-repeater-search-container {
-  flex: 1 1 100%;
-  order: -1;
-}
-
-.ac-repeater-header.narrow .ac-repeater-header-popup {
-  position: fixed;
-  top: auto;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  max-height: 60vh;
-  overflow-y: auto;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+  flex: 1;
 }

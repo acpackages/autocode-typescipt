@@ -261,7 +261,7 @@ export class AcSelectInputElement extends AcInputBase {
   private addNewOption(label: string) {
     this.addOptionCallback({
       query: label, callback: (option: any) => {
-        this.dataManager.addData({ data: option });
+        this.dataManager.addRow({ data: option });
         this.selectOption(option);
       }
     });

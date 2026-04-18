@@ -29,9 +29,11 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
   private delayedCallback: AcDelayedCallback = new AcDelayedCallback();
 
   private addRow() {
-    const lastRow = this.datagridApi.addRow({ data: { ...this.autoAddNewRowData},rowId:'___auto_add_row___' });
-    this.lastAutoAddRowId = lastRow.rowId;
-    console.log(this);
+    if(this.autoAddNewRow){
+      const lastRow = this.datagridApi.addRow({ data: { ...this.autoAddNewRowData},rowId:'___auto_add_row___' });
+      this.lastAutoAddRowId = lastRow.rowId;
+    }
+    console.log("Adding new row in auto add extension")
   }
 
   override destroy(): void {
@@ -59,7 +61,6 @@ export class AcDatagridAutoAddNewRowExtension extends AcDatagridExtension {
         else{
           args.rowId = undefined;
         }
-
       }
     }
   }

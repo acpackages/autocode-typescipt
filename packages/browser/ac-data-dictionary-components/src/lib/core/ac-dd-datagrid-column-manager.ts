@@ -7,7 +7,7 @@ import { IAcDDColumnDefinition } from '../interfaces/ac-dd-column-definition.int
 
 export class AcDDDatagridColumnManager {
   static columnResolver?: Function;
-  private static typeColumnDefinition: Record<string, IAcDDColumnDefinition> = {
+  private static typeColumnDefinition: Record<string, Partial<IAcDDColumnDefinition>> = {
     [AcEnumDDColumnType.Blob]: { visible: false, allowSort: false },
     [AcEnumDDColumnType.Date]: { format: 'DISPLAY' },
     [AcEnumDDColumnType.Datetime]: { format: 'DISPLAY' },
@@ -287,7 +287,7 @@ export class AcDDDatagridColumnManager {
     return result;
   }
 
-  static registerColumnTypeDefinition({ columnType, columnDefinition }: { columnType: AcEnumDDColumnType, columnDefinition: IAcDatagridColumnDefinition }) {
+  static registerColumnTypeDefinition({ columnType, columnDefinition }: { columnType: AcEnumDDColumnType, columnDefinition: Partial<IAcDatagridColumnDefinition> }) {
     AcDDDatagridColumnManager.typeColumnDefinition[columnType] = columnDefinition;
   }
 }

@@ -51,7 +51,7 @@ export class AcRepeaterBodyElement extends AcElementBase {
     // // }
   }
 
-  init() {
+  override init() {
     super.init();
     acAddClassToElement({ class_: AcRepeaterCssClassName.acRepeaterBody, element: this });
     this.style.flex = '1';

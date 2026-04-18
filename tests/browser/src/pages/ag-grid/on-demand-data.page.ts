@@ -178,26 +178,15 @@ export class AggridOnDemandData extends HTMLElement {
     });
   }
 
-  setLocalData() {
-    const data: any[] = [];
-    const multiplier = 1;
-    let index: number = 0;
-    for (let i = 0; i < multiplier; i++) {
-      for (const row of customersData) {
-        index++;
-        data.push({ index: index, ...row });
-      }
-    }
-    this.datagridApi.dataManager.data = data;
-  }
+
 
   setOnDemandData() {
     const onDemandProxyDataManager: AcDataManager = new AcDataManager();
     const data: any[] = [];
-    const multiplier = 100;
+    const multiplier = 1;
     let index: number = 0;
     for (let i = 0; i < multiplier; i++) {
-      for (const row of customersData) {
+      for (const row of customersData.splice(0,10)) {
         index++;
         data.push({ index: index, ...row })
       }
@@ -220,7 +209,9 @@ export class AggridOnDemandData extends HTMLElement {
         data
       };
       console.log(response);
-      args.successCallback(response);
+      setTimeout(() => {
+        args.successCallback(response);
+      }, 40);
     };
   }
 }

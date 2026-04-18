@@ -396,17 +396,21 @@ export class AcDatagridApi {
     AcDatagridExtensionManager.registerBuiltInExtensions();
   }
 
-  addRow({ data, append = true, highlightCells = false, rowId }: { data?: any, append?: boolean, highlightCells?: boolean,rowId?:string } = {}):IAcDatagridRow {
-    const beforeRowCreateArgs: any = { datagridApi: this, data, rowId };
-    this.hooks.execute({ hook: AC_DATAGRID_HOOK.BeforeDatagridRowCreate, args: beforeRowCreateArgs });
-    if(beforeRowCreateArgs.rowId){
-      return this.dataManager.updateRow({data,rowId:beforeRowCreateArgs.rowId});
+  addRow({ data, append = true, highlightCells = false, rowId, index }: { data?: any, append?: boolean, highlightCells?: boolean, rowId?: string, index?: number } = {}): IAcDatagridRow {
+    if (index === undefined) {
+      index = append ? this.dataManager.totalRows : 0;
     }
-    else{
-      const datagridRow = this.dataManager.addData({ data }) as IAcDatagridRow;
+    const beforeRowCreateArgs: any = { datagridApi: this, data, rowId, index };
+    this.hooks.execute({ hook: AC_DATAGRID_HOOK.BeforeDatagridRowCreate, args: beforeRowCreateArgs });
+    if (beforeRowCreateArgs.rowId) {
+      return this.dataManager.updateRow({ data, rowId: beforeRowCreateArgs.rowId }) as IAcDatagridRow;
+    }
+    else {
+      const datagridRow = this.dataManager.addRow({ data, index }) as IAcDatagridRow;
       const hookArgs: IAcDatagridRowHookArgs = {
         datagridApi: this,
         datagridRow: datagridRow,
+        highlightCells: highlightCells
       };
       this.hooks.execute({ hook: AC_DATAGRID_HOOK.DatagridRowCreate, args: hookArgs });
       return datagridRow;

@@ -73,8 +73,6 @@ export class AggridLocalData extends HTMLElement {
 
     ];
 
-    this.datagridApi.data = customersData.slice(0,10);
-
     this.pageHeader.addMenuItem({
       label: 'Row Numbers',
       children: [
@@ -174,5 +172,22 @@ export class AggridLocalData extends HTMLElement {
         }
       }
     });
+
+    this.setLocalData();
   }
+
+  setLocalData() {
+      const data: any[] = [];
+      const multiplier = 1;
+      let index: number = 0;
+      for (let i = 0; i < multiplier; i++) {
+        for (const row of customersData.splice(0,10)) {
+          index++;
+          data.push({ index: index, ...row });
+        }
+      }
+      setTimeout(() => {
+        this.datagridApi.dataManager.data = data;
+      }, 10);
+    }
 }

@@ -141,7 +141,7 @@ export class AcDatagridSelectInputElement extends AcInputBase {
   private addNewOption(label: string) {
     this.addRowCallback({
       query: label, callback: (option: any) => {
-        const row = this.datagrid.datagridApi.dataManager.addData({ data: option });
+        const row = this.datagrid.datagridApi.dataManager.addRow({ data: option });
         this.datagrid.datagridApi.focusRow({index:row.index});
       }
     });

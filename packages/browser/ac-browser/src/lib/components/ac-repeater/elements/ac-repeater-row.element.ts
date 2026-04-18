@@ -25,7 +25,19 @@ export class AcRepeaterRowElement extends AcElementBase {
     else {
       acAddClassToElement({ class_: AcRepeaterCssClassName.IAcRepeaterRowOdd, element: this });
     }
+    this.repeaterApi.hooks.subscribe({
+      hook: AcEnumRepeaterHook.RowUpdate,
+      callback: (args: any) => {
+        if (args.repeaterRow.rowId == this.repeaterRow.rowId) {
+          this.refresh();
+        }
+      }
+    });
     this.registerListeners();
+    this.render();
+  }
+
+  refresh() {
     this.render();
   }
 

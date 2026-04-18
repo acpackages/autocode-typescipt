@@ -222,8 +222,10 @@ export class AcDataManager {
   private refreshRowsTimeout: any;
   refreshRowsTimeoutDuration = 100;
 
-  addData({ data = {} }: { data?: any } = {}): IAcDataRow {
-    const index: number = this.allRows.length;
+  addRow({ data = {}, index }: { data?: any, index?: number } = {}): IAcDataRow {
+    if (index === undefined || index < 0 || index > this.allRows.length) {
+      index = this.allRows.length;
+    }
     const beforeArgs: any = {
       dataManager: this,
       data: data,
@@ -259,10 +261,14 @@ export class AcDataManager {
       dataManager: this,
       dataRow: dataRow,
     };
-    this.allRows.push(dataRow);
-    this.rows.push(dataRow);
-    this.totalRows++;
-    this.displayedRows.push(dataRow);
+
+    this.allRows.splice(index, 0, dataRow);
+    for (let i = index + 1; i < this.allRows.length; i++) {
+      if(this.allRows[i]){
+        this.allRows[i].originalIndex = i;
+      }
+    }
+    this.totalRows = this.allRows.length;
     this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowCreate, args: hookArgs });
     this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowCreate, args: hookArgs });
     this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.RowAdd, args: { dataRow: dataRow, data: data } });
@@ -632,9 +638,9 @@ export class AcDataManager {
         }
       }
       this.allRows = allRows;
-      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
       this.allDataAvailable = true;
       this.processRows();
+      this.hooks.execute({ hook: AC_DATA_MANAGER_HOOK.DataChange, args: hookArgs });
     }
     else if (this.type == 'ondemand') {
       if (totalCount == undefined) {
@@ -743,7 +749,7 @@ export class AcDataManager {
       this.events.execute({ event: AC_DATA_MANAGER_EVENT.RowUpdate, args: eventArgs });
     }
     else if (addIfMissing) {
-      dataRow = this.addData({ data: data });
+      dataRow = this.addRow({ data: data });
     }
     return dataRow;
   }

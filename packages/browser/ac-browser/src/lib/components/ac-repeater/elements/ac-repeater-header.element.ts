@@ -6,12 +6,18 @@ import { AcRepeaterApi } from "../core/ac-repeater-api";
 import { AcRepeaterElement } from "./ac-repeater.element";
 import { AcEnumConditionOperator, AcEnumSortOrder, AcFilter, AcSort } from "@autocode-ts/autocode";
 import { ACI_SVG_SOLID } from "@autocode-ts/ac-icons";
+import { createPopper, Instance as PopperInstance } from '@popperjs/core';
 
 
 export class AcRepeaterHeaderElement extends AcElementBase {
 
   private repeaterApi: AcRepeaterApi;
   private resizeObserver?: ResizeObserver;
+  private filterPopper?: PopperInstance;
+  private sortPopper?: PopperInstance;
+  private filtersPopup?: HTMLElement;
+  private sortPopup?: HTMLElement;
+  private outsideClickHandler?: (e: MouseEvent) => void;
 
   private autoBindRepeater() {
     if (this.isConnected) {
@@ -53,7 +59,25 @@ export class AcRepeaterHeaderElement extends AcElementBase {
 
   override destroy(): void {
     this.resizeObserver?.disconnect();
+    this.closeFilterPopup();
+    this.closeSortPopup();
+    if (this.outsideClickHandler) {
+      document.removeEventListener('click', this.outsideClickHandler);
+    }
     super.destroy();
+  }
+
+  private createPopupElement(title: string, content: string): HTMLElement {
+    const popup = document.createElement('div');
+    popup.className = 'ac-repeater-header-popup';
+    popup.innerHTML = `
+      <div class="ac-repeater-popup-header">
+        <span>${title}</span>
+        <button class="ac-repeater-popup-close">&times;</button>
+      </div>
+      ${content}
+    `;
+    return popup;
   }
 
   private render() {
@@ -61,55 +85,151 @@ export class AcRepeaterHeaderElement extends AcElementBase {
       <div class="ac-repeater-header">
         <div class="ac-repeater-search-container">
           <ac-svg-icon size="16px" style="color:#888">${ACI_SVG_SOLID.magnifyingGlass}</ac-svg-icon>
-          <input type="text" class="ac-repeater-search-input" placeholder="Search..." id="repeater-search-input">
-          <button id="clear-search-btn" class="ac-repeater-clear-search-btn" style="display:none">&times;</button>
+          <input type="text" class="ac-repeater-search-input" placeholder="Search...">
+          <button class="ac-repeater-clear-search-btn" style="display:none">&times;</button>
         </div>
-        <button class="ac-repeater-header-button" id="filter-btn">
+        <button class="ac-repeater-header-button ac-repeater-filter-btn">
           <ac-svg-icon size="18px">${ACI_SVG_SOLID.filter}</ac-svg-icon>
-          <span class="ac-repeater-badge" id="filter-count" style="display:none">0</span>
+          <span class="ac-repeater-badge ac-repeater-filter-count" style="display:none">0</span>
         </button>
-        <button class="ac-repeater-header-button" id="sort-btn">
+        <button class="ac-repeater-header-button ac-repeater-sort-btn">
           <ac-svg-icon size="18px">${ACI_SVG_SOLID.sort}</ac-svg-icon>
-          <span class="ac-repeater-badge" id="sort-count" style="display:none">0</span>
+          <span class="ac-repeater-badge ac-repeater-sort-count" style="display:none">0</span>
         </button>
-
-        <div class="ac-repeater-header-popup" id="filters-popup">
-          <div class="ac-repeater-popup-header">
-            <span>Advanced Filters</span>
-            <button class="ac-repeater-popup-close" id="close-filters-btn">&times;</button>
-          </div>
-          <div id="filter-rows-container" style="max-height: 300px; overflow-y: auto;"></div>
-          <div class="ac-repeater-filter-actions">
-            <button id="add-filter-btn" class="ac-repeater-header-button">Add</button>
-            <button id="clear-filters-btn" class="ac-repeater-header-button">Clear</button>
-            <button id="apply-filters-btn" class="ac-repeater-header-button" style="background:#007bff; color:#fff; border-color:#007bff;">Apply</button>
-          </div>
-        </div>
-
-        <div class="ac-repeater-header-popup" id="sort-popup">
-          <div class="ac-repeater-popup-header">
-            <span>Sort Order</span>
-            <button class="ac-repeater-popup-close" id="close-sort-btn">&times;</button>
-          </div>
-          <div id="sort-rows-container" style="max-height: 300px; overflow-y: auto;"></div>
-          <div class="ac-repeater-filter-actions">
-            <button id="add-sort-btn" class="ac-repeater-header-button">Add</button>
-            <button id="clear-sorts-btn" class="ac-repeater-header-button">Clear</button>
-            <button id="apply-sort-btn" class="ac-repeater-header-button" style="background:#007bff; color:#fff; border-color:#007bff;">Apply</button>
-          </div>
-        </div>
       </div>
     `;
 
     this.registerHeaderListeners();
   }
 
-  private registerHeaderListeners() {
-    const searchInput = this.querySelector('#repeater-search-input') as HTMLInputElement;
-    const clearSearchBtn = this.querySelector('#clear-search-btn') as HTMLElement;
-    searchInput.addEventListener('input', () => {
-      this.repeaterApi.dataManager.searchQuery = searchInput.value;
+  private openFilterPopup() {
+    if (this.filtersPopup) return; // already open
+    this.closeSortPopup();
+
+    const filterBtn = this.querySelector('.ac-repeater-filter-btn') as HTMLElement;
+    this.filtersPopup = this.createPopupElement('Advanced Filters', `
+      <div class="ac-repeater-filter-rows-container" style="max-height: 300px; overflow-y: auto;"></div>
+      <div class="ac-repeater-filter-actions">
+        <button class="ac-repeater-header-button ac-repeater-add-filter-btn">Add</button>
+        <button class="ac-repeater-header-button ac-repeater-clear-filters-btn">Clear</button>
+        <button class="ac-repeater-header-button ac-repeater-apply-filters-btn" style="background:#007bff; color:#fff; border-color:#007bff;">Apply</button>
+      </div>
+    `);
+
+    document.body.appendChild(this.filtersPopup);
+    this.filtersPopup.style.display = 'flex';
+
+    this.filterPopper = createPopper(filterBtn, this.filtersPopup, {
+      strategy: 'fixed',
+      placement: 'bottom-end',
+      modifiers: [
+        { name: 'flip', options: { fallbackPlacements: ['top-end', 'bottom-start', 'top-start'] } },
+        { name: 'offset', options: { offset: [0, 6] } },
+        { name: 'preventOverflow', options: { padding: 8 } },
+      ],
+    });
+
+    // Wire up filter popup buttons
+    this.filtersPopup.querySelector('.ac-repeater-popup-close')?.addEventListener('click', () => this.closeFilterPopup());
+    this.filtersPopup.querySelector('.ac-repeater-add-filter-btn')?.addEventListener('click', () => this.addFilterRow());
+    this.filtersPopup.querySelector('.ac-repeater-clear-filters-btn')?.addEventListener('click', () => {
+      this.repeaterApi.dataManager.filterGroup.clear();
+      this.updateBadges();
       this.repeaterApi.dataManager.refreshRows();
+      this.refreshFilterRows();
+    });
+    this.filtersPopup.querySelector('.ac-repeater-apply-filters-btn')?.addEventListener('click', () => {
+      this.applyFilters();
+      this.closeFilterPopup();
+    });
+
+    // Stop clicks inside popup from closing it
+    this.filtersPopup.addEventListener('click', (e) => e.stopPropagation());
+
+    this.refreshFilterRows();
+  }
+
+  private closeFilterPopup() {
+    if (this.filterPopper) {
+      this.filterPopper.destroy();
+      this.filterPopper = undefined;
+    }
+    if (this.filtersPopup) {
+      this.filtersPopup.remove();
+      this.filtersPopup = undefined;
+    }
+  }
+
+  private openSortPopup() {
+    if (this.sortPopup) return; // already open
+    this.closeFilterPopup();
+
+    const sortBtn = this.querySelector('.ac-repeater-sort-btn') as HTMLElement;
+    this.sortPopup = this.createPopupElement('Sort Order', `
+      <div class="ac-repeater-sort-rows-container" style="max-height: 300px; overflow-y: auto;"></div>
+      <div class="ac-repeater-filter-actions">
+        <button class="ac-repeater-header-button ac-repeater-add-sort-btn">Add</button>
+        <button class="ac-repeater-header-button ac-repeater-clear-sorts-btn">Clear</button>
+        <button class="ac-repeater-header-button ac-repeater-apply-sort-btn" style="background:#007bff; color:#fff; border-color:#007bff;">Apply</button>
+      </div>
+    `);
+
+    document.body.appendChild(this.sortPopup);
+    this.sortPopup.style.display = 'flex';
+
+    this.sortPopper = createPopper(sortBtn, this.sortPopup, {
+      strategy: 'fixed',
+      placement: 'bottom-end',
+      modifiers: [
+        { name: 'flip', options: { fallbackPlacements: ['top-end', 'bottom-start', 'top-start'] } },
+        { name: 'offset', options: { offset: [0, 6] } },
+        { name: 'preventOverflow', options: { padding: 8 } },
+      ],
+    });
+
+    // Wire up sort popup buttons
+    this.sortPopup.querySelector('.ac-repeater-popup-close')?.addEventListener('click', () => this.closeSortPopup());
+    this.sortPopup.querySelector('.ac-repeater-add-sort-btn')?.addEventListener('click', () => this.addSortRow());
+    this.sortPopup.querySelector('.ac-repeater-clear-sorts-btn')?.addEventListener('click', () => {
+      this.repeaterApi.dataManager.sortOrder.sortOrders = [];
+      this.updateBadges();
+      this.repeaterApi.dataManager.refreshRows();
+      this.refreshSortRows();
+    });
+    this.sortPopup.querySelector('.ac-repeater-apply-sort-btn')?.addEventListener('click', () => {
+      this.applySort();
+      this.closeSortPopup();
+    });
+
+    // Stop clicks inside popup from closing it
+    this.sortPopup.addEventListener('click', (e) => e.stopPropagation());
+
+    this.refreshSortRows();
+  }
+
+  private closeSortPopup() {
+    if (this.sortPopper) {
+      this.sortPopper.destroy();
+      this.sortPopper = undefined;
+    }
+    if (this.sortPopup) {
+      this.sortPopup.remove();
+      this.sortPopup = undefined;
+    }
+  }
+
+  private registerHeaderListeners() {
+    const searchInput = this.querySelector('.ac-repeater-search-input') as HTMLInputElement;
+    const clearSearchBtn = this.querySelector('.ac-repeater-clear-search-btn') as HTMLElement;
+    searchInput.addEventListener('input', () => {
+      this.delayedCallback.add({
+        callback:()=>{
+          this.repeaterApi.dataManager.searchQuery = searchInput.value;
+          this.repeaterApi.dataManager.refreshRows();
+        },
+        duration:300,
+        key:'queryRepeaterRows'
+      });
       clearSearchBtn.style.display = searchInput.value ? 'block' : 'none';
     });
 
@@ -121,67 +241,43 @@ export class AcRepeaterHeaderElement extends AcElementBase {
       searchInput.focus();
     });
 
-    const filterBtn = this.querySelector('#filter-btn') as HTMLElement;
-    const sortBtn = this.querySelector('#sort-btn') as HTMLElement;
-    const filtersPopup = this.querySelector('#filters-popup') as HTMLElement;
-    const sortPopup = this.querySelector('#sort-popup') as HTMLElement;
+    const filterBtn = this.querySelector('.ac-repeater-filter-btn') as HTMLElement;
+    const sortBtn = this.querySelector('.ac-repeater-sort-btn') as HTMLElement;
 
     filterBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      sortPopup.classList.remove('open');
-      filtersPopup.classList.toggle('open');
-      if (filtersPopup.classList.contains('open')) this.refreshFilterRows();
+      if (this.filtersPopup) {
+        this.closeFilterPopup();
+      } else {
+        this.openFilterPopup();
+      }
     });
 
     sortBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      filtersPopup.classList.remove('open');
-      sortPopup.classList.toggle('open');
-      if (sortPopup.classList.contains('open')) this.refreshSortRows();
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!this.contains(e.target as Node)) {
-        filtersPopup.classList.remove('open');
-        sortPopup.classList.remove('open');
+      if (this.sortPopup) {
+        this.closeSortPopup();
+      } else {
+        this.openSortPopup();
       }
     });
 
-    this.querySelector('#close-filters-btn')?.addEventListener('click', () => {
-      filtersPopup.classList.remove('open');
-    });
-
-    this.querySelector('#close-sort-btn')?.addEventListener('click', () => {
-      sortPopup.classList.remove('open');
-    });
-
-    this.querySelector('#add-filter-btn')?.addEventListener('click', () => this.addFilterRow());
-    this.querySelector('#clear-filters-btn')?.addEventListener('click', () => {
-      this.repeaterApi.dataManager.filterGroup.clear();
-      this.updateBadges();
-      this.repeaterApi.dataManager.refreshRows();
-      this.refreshFilterRows();
-    });
-    this.querySelector('#apply-filters-btn')?.addEventListener('click', () => {
-      this.applyFilters();
-      filtersPopup.classList.remove('open');
-    });
-
-    this.querySelector('#add-sort-btn')?.addEventListener('click', () => this.addSortRow());
-    this.querySelector('#clear-sorts-btn')?.addEventListener('click', () => {
-      this.repeaterApi.dataManager.sortOrder.sortOrders = [];
-      this.updateBadges();
-      this.repeaterApi.dataManager.refreshRows();
-      this.refreshSortRows();
-    });
-    this.querySelector('#apply-sort-btn')?.addEventListener('click', () => {
-      this.applySort();
-      sortPopup.classList.remove('open');
-    });
+    // Close popups on outside click
+    this.outsideClickHandler = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (this.filtersPopup && !this.filtersPopup.contains(target) && !this.contains(target)) {
+        this.closeFilterPopup();
+      }
+      if (this.sortPopup && !this.sortPopup.contains(target) && !this.contains(target)) {
+        this.closeSortPopup();
+      }
+    };
+    document.addEventListener('click', this.outsideClickHandler);
   }
 
   private refreshFilterRows() {
-    const container = this.querySelector('#filter-rows-container') as HTMLElement;
+    const container = (this.filtersPopup ?? this).querySelector('.ac-repeater-filter-rows-container') as HTMLElement;
+    if (!container) return;
     container.innerHTML = '';
     const filters = this.repeaterApi.dataManager.filterGroup.filters;
     if (filters.length === 0) {
@@ -192,7 +288,8 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private addFilterRow(filter?: AcFilter) {
-    const container = this.querySelector('#filter-rows-container') as HTMLElement;
+    const container = (this.filtersPopup ?? this).querySelector('.ac-repeater-filter-rows-container') as HTMLElement;
+    if (!container) return;
     const row = document.createElement('div');
     row.className = 'ac-repeater-filter-row';
     row.style.marginBottom = '8px';
@@ -250,15 +347,16 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private applyFilters() {
-    const container = this.querySelector('#filter-rows-container') as HTMLElement;
+    const container = (this.filtersPopup ?? this).querySelector('.ac-repeater-filter-rows-container') as HTMLElement;
+    if (!container) return;
     const rowEls = container.querySelectorAll('.ac-repeater-filter-row');
     this.repeaterApi.dataManager.filterGroup.clear();
-    
+
     rowEls.forEach(row => {
       const key = (row.querySelector('.filter-key') as HTMLSelectElement).value;
       const op = (row.querySelector('.filter-op') as HTMLSelectElement).value as AcEnumConditionOperator;
       const val = (row.querySelector('.filter-val') as HTMLInputElement).value;
-      
+
       if (key) {
         this.repeaterApi.dataManager.filterGroup.addFilter({ key, operator: op, value: val });
       }
@@ -269,8 +367,8 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private updateBadges() {
-    const filterCountEl = this.querySelector('#filter-count') as HTMLElement;
-    const sortCountEl = this.querySelector('#sort-count') as HTMLElement;
+    const filterCountEl = this.querySelector('.ac-repeater-filter-count') as HTMLElement;
+    const sortCountEl = this.querySelector('.ac-repeater-sort-count') as HTMLElement;
 
     const filterCount = this.repeaterApi.dataManager.filterGroup.filters.length;
     filterCountEl.innerText = filterCount.toString();
@@ -282,7 +380,8 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private refreshSortRows() {
-    const container = this.querySelector('#sort-rows-container') as HTMLElement;
+    const container = (this.sortPopup ?? this).querySelector('.ac-repeater-sort-rows-container') as HTMLElement;
+    if (!container) return;
     container.innerHTML = '';
     const sorts = this.repeaterApi.dataManager.sortOrder.sortOrders;
     if (sorts.length === 0) {
@@ -293,7 +392,8 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private addSortRow(sort?: AcSort) {
-    const container = this.querySelector('#sort-rows-container') as HTMLElement;
+    const container = (this.sortPopup ?? this).querySelector('.ac-repeater-sort-rows-container') as HTMLElement;
+    if (!container) return;
     const row = document.createElement('div');
     row.className = 'ac-repeater-filter-row';
     row.style.marginBottom = '8px';
@@ -318,7 +418,8 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private applySort() {
-    const container = this.querySelector('#sort-rows-container') as HTMLElement;
+    const container = (this.sortPopup ?? this).querySelector('.ac-repeater-sort-rows-container') as HTMLElement;
+    if (!container) return;
     const rowEls = container.querySelectorAll('.ac-repeater-filter-row');
     this.repeaterApi.dataManager.sortOrder.sortOrders = [];
 

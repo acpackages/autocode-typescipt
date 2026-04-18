@@ -21,10 +21,6 @@ export class AcRepeaterElement extends AcElementBase{
       <${AC_REPEATER_TAG.repeaterFooter}></${AC_REPEATER_TAG.repeaterFooter}>
     `;
   }
-
-  on({event,callback}:{event:string,callback:Function}):string{
-    return this.repeaterApi.on({event:event,callback:callback});
-  }
 }
 
 acRegisterCustomElement({tag:AC_REPEATER_TAG.repeater,type:AcRepeaterElement});

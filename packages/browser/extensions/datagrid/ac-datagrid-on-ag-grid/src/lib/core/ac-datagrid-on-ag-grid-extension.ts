@@ -592,29 +592,30 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     const data: any = args.datagridRow?.data;
     if (!data) return;
 
+    const rowIndex = args.datagridRow.index;
     if (this.isClientSideData) {
       const hookArgs: IAcDatagriOnAgGridRowAddHookArgs = {
         data: data
       };
+
       this.datagridApi.hooks.execute({ hook: AcEnumDatagridOnAgGridHook.BeforeRowAdd, args: hookArgs });
-      if (args.append == false) {
-        this.gridApi.applyTransaction({ add: [data], addIndex: 0 });
-      }
-      else {
-        this.gridApi.applyTransaction({ add: [data] });
-      }
-      const rowIndex = this.gridApi.getDisplayedRowCount() - 1;
+      this.gridApi.applyTransaction({ add: [data], addIndex: rowIndex });
       const rowNode: any = this.gridApi.getDisplayedRowAtIndex(rowIndex);
       this.gridApi.refreshCells({ rowNodes: [rowNode], force: true });
-      if (args.highlightCells) {
-        this.gridApi.flashCells({
-          rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
-        });
-      }
     }
     else {
-      this.gridApi.applyServerSideTransaction({ add: [data] });
+      this.gridApi.applyServerSideTransaction({ add: [data], addIndex: rowIndex });
     }
+    if (args.highlightCells) {
+      const rowNode: any = this.gridApi.getDisplayedRowAtIndex(rowIndex);
+      this.gridApi.flashCells({
+        rowNodes: [rowNode], fadeDuration: 1000, flashDuration: 1000
+      });
+    }
+    this.gridApi.refreshCells({
+      columns: ['__internal_ac_datagrid__'],
+      force: true
+    });
   }
 
   private handleRowDelete(args: any) {
@@ -727,7 +728,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.addButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-add">+ Add</button>`;
     (this.addButtonContainer.querySelector('button') as HTMLElement).addEventListener('click', (event: any) => {
       if (this.datagridApi) {
-        this.datagridApi.dataManager.addData();
+        this.datagridApi.dataManager.addRow();
       }
     });
 

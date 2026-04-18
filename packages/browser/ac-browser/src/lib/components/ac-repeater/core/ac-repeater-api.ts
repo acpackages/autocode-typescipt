@@ -112,65 +112,45 @@ export class AcRepeaterApi{
     });
   }
 
-  addRow({ data, append = true, highlightRow = false }: { data?: any, append?: boolean, highlightRow?: boolean } = {}) {
-    // const repeaterRow: IAcRepeaterRow = new IAcRepeaterRow({
-    //   data: data,
-    //   repeaterApi:this,
-    //   index: this.dataSource.repeaterRows.length
-    // });
-    // this.dataSource.repeaterRows.push(repeaterRow);
-    // const hookArgs: IIAcRepeaterRowHookArgs = {
-    //   repeaterApi: this,
-    //   repeaterRow: repeaterRow,
-    // };
-    // this.hooks.execute({ hook: AcEnumRepeaterHook.RepeaterRowCreate, args: hookArgs });
-    // const addHookArgs: IIAcRepeaterRowAddHookArgs = {
-    //   repeaterApi: this,
-    //   repeaterRow: repeaterRow,
-    //   append: append,
-    //   highlightRow: highlightRow
-    // }
-    // this.hooks.execute({ hook: AcEnumRepeaterHook.RowAdd, args: addHookArgs });
-    // const eventArgs: IIAcRepeaterRowEvent = {
-    //   repeaterApi: this,
-    //   repeaterRow: repeaterRow
-    // };
-    // this.events.execute({ event: AcEnumRepeaterEvent.RowAdd, args: eventArgs });
-    // this.dataSource.totalRows++;
+  addRow({ data, append = true, highlightRow = false, index }: { data?: any, append?: boolean, highlightRow?: boolean, index?: number } = {}) {
+    if (index === undefined) {
+      index = append ? this.dataManager.totalRows : 0;
+    }
+    const dataRow = this.dataManager.addRow({ data, index });
+    const repeaterRow = dataRow as IAcRepeaterRow;
+
+    const hookArgs: IIAcRepeaterRowUpdateHookArgs = {
+      repeaterApi: this,
+      repeaterRow: repeaterRow,
+      highlightRow: highlightRow
+    };
+    this.hooks.execute({ hook: AcEnumRepeaterHook.RowAdd, args: hookArgs });
+
+    const eventArgs: IIAcRepeaterRowEvent = {
+      repeaterApi: this,
+      repeaterRow: repeaterRow
+    };
+    this.events.execute({ event: AcEnumRepeaterEvent.RowAdd, args: eventArgs });
+    return repeaterRow;
   }
 
   deleteRow({ data, rowId, key, value, highlightRow = false }: { data?: any, rowId?: string, key?: string, value?: any, highlightRow?: boolean }) {
-    // const repeaterRow: IAcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
-    //   let valid: boolean = false;
-    //   if (rowId) {
-    //     valid = repeaterRow.rowId == rowId;
-    //   }
-    //   else if (key && value) {
-    //     valid = repeaterRow.data[key] == value;
-    //   }
-    //   else if (data && key) {
-    //     valid = repeaterRow.data[key] == data[key];
-    //   }
-    //   else if (data) {
-    //     valid = repeaterRow.data == data;
-    //   }
-    //   return valid;
-    // });
-    // if (repeaterRow) {
-    //   arrayRemoveByKey(this.dataSource.repeaterRows,'rowId',repeaterRow.rowId);
-    //   const deleteHookArgs: IIAcRepeaterRowDeleteHookArgs = {
-    //     repeaterApi: this,
-    //     repeaterRow: repeaterRow,
-    //     highlightRow: highlightRow
-    //   }
-    //   this.hooks.execute({ hook: AcEnumRepeaterHook.RowDelete, args: deleteHookArgs });
-    //   const eventArgs: IIAcRepeaterRowEvent = {
-    //     repeaterApi: this,
-    //     repeaterRow: repeaterRow
-    //   };
-    //   this.events.execute({ event: AcEnumRepeaterEvent.RowDelete, args: eventArgs });
-    //   this.dataSource.totalRows--;
-    // }
+    const dataRow = this.dataManager.deleteRow({ data, rowId, key, value });
+    if (dataRow) {
+      const repeaterRow = dataRow as IAcRepeaterRow;
+      const deleteHookArgs: IIAcRepeaterRowDeleteHookArgs = {
+        repeaterApi: this,
+        repeaterRow: repeaterRow,
+        highlightRow: highlightRow
+      };
+      this.hooks.execute({ hook: AcEnumRepeaterHook.RowDelete, args: deleteHookArgs });
+
+      const eventArgs: IIAcRepeaterRowEvent = {
+        repeaterApi: this,
+        repeaterRow: repeaterRow
+      };
+      this.events.execute({ event: AcEnumRepeaterEvent.RowDelete, args: eventArgs });
+    }
   }
 
   enableExtension({ extensionName }: { extensionName: string }): AcRepeaterExtension | null {
@@ -286,38 +266,20 @@ export class AcRepeaterApi{
 
   // PENDING
   updateRow({ data, value, key, rowId, highlightRow = true, addIfMissing = false }: { data: any, value?: any, key?: string, rowId?: string, highlightRow?: boolean, addIfMissing?: boolean }) {
-    const repeaterRow: IAcRepeaterRow | undefined = this.repeaterRows.find((repeaterRow) => {
-      let valid: boolean = false;
-      if (rowId) {
-        valid = repeaterRow.rowId == rowId;
-      }
-      else if (key && value) {
-        valid = repeaterRow.data[key] == value;
-      }
-      else if (data && key) {
-        valid = repeaterRow.data[key] == data[key];
-      }
-      else if (data) {
-        valid = repeaterRow.data == data;
-      }
-      return valid;
-    });
-    if (repeaterRow) {
-      repeaterRow.data = data;
+    const dataRow = this.dataManager.updateRow({ data, value, key, rowId, addIfMissing });
+    if (dataRow) {
+      const repeaterRow = dataRow as IAcRepeaterRow;
       const updateHookArgs: IIAcRepeaterRowUpdateHookArgs = {
         repeaterApi: this,
         repeaterRow: repeaterRow,
         highlightRow: highlightRow
-      }
+      };
       this.hooks.execute({ hook: AcEnumRepeaterHook.RowUpdate, args: updateHookArgs });
-      const eventArgs:IIAcRepeaterRowEvent = {
-      repeaterApi:this,
-      repeaterRow:repeaterRow
-    };
-    this.events.execute({event:AcEnumRepeaterEvent.RowUpdate,args:eventArgs});
-    }
-    else {
-      this.addRow({ data: data, highlightRow: highlightRow });
+      const eventArgs: IIAcRepeaterRowEvent = {
+        repeaterApi: this,
+        repeaterRow: repeaterRow
+      };
+      this.events.execute({ event: AcEnumRepeaterEvent.RowUpdate, args: eventArgs });
     }
   }
 
