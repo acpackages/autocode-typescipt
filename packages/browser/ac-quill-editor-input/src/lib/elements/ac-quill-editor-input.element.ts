@@ -83,7 +83,10 @@ export class AcQuillEditorInput extends AcInputBase {
     });
   }
 
-
+  override destroy() {
+    this.editor?.off("text-change");
+    super.destroy();
+  }
 }
 
 acRegisterCustomElement({ tag: 'ac-quill-editor-input', type: AcQuillEditorInput });

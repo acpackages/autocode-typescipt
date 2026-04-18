@@ -13,6 +13,14 @@ export class AcElementEventInput {
   event: IAcBuilderElementEvent;
   componentElement: IAcComponentElement;
   input!: AcEventSelectInput;
+  private _plusBtn?: HTMLElement;
+  private _plusBtnListener = async () => {
+    const functionName = stringToCamelCase(`handle_${this.componentElement.instanceName}_${this.event.name}`);
+    await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.component.className!, code: `${functionName}() {\n\t}\n` });
+    await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.component.className!,functionName:functionName});
+    this.input.value = functionName;
+    this.builderApi.toggleScriptEditor();
+  };
   constructor({ builderApi, event, componentElement }: { builderApi: AcBuilderApi, componentElement: IAcComponentElement, event: IAcBuilderElementEvent }) {
     this.builderApi = builderApi;
     this.event = event;
@@ -54,13 +62,8 @@ export class AcElementEventInput {
         };
       }
     });
-    (this.element.querySelector('.btn-add-event') as HTMLInputElement).addEventListener('click', async () => {
-      const functionName = stringToCamelCase(`handle_${this.componentElement.instanceName}_${this.event.name}`);
-      await this.builderApi.scriptEditor?.addCodeInsideClass({ className: this.builderApi.component.className!, code: `${functionName}() {\n\t}\n` });
-      await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.component.className!,functionName:functionName});
-      this.input.value = functionName;
-      this.builderApi.toggleScriptEditor();
-    });
+    this._plusBtn = this.element.querySelector('.btn-add-event') as HTMLElement;
+    this._plusBtn.addEventListener('click', this._plusBtnListener);
     this.input.on({event:AcEnumInputEvent.DoubleClick,callback:async ()=>{
       this.input.inputElement.closeDropdown();
       this.builderApi.toggleScriptEditor();
@@ -68,5 +71,10 @@ export class AcElementEventInput {
         await this.builderApi.scriptEditor.gotoFunction({className:this.builderApi.component.className!,functionName:this.componentElement.events[this.event.name].functionName!});
       }
     }});
+  }
+
+  destroy() {
+    this._plusBtn?.removeEventListener('click', this._plusBtnListener);
+    this.input?.destroy();
   }
 }

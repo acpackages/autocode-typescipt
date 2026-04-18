@@ -216,4 +216,7 @@ export class AcRepeaterEventHandler {
     this.repeaterApi.events.execute({ event: AcEnumRepeaterEvent.SortOrderChange, args: eventArgs });
   }
 
+  destroy() {
+    //
+  }
 }

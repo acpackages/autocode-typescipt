@@ -19,12 +19,12 @@ export class AcResizablePanel extends AcElementBase {
     return this._isLast;
   }
   set isLast(value: boolean) {
-    this._isLast = true;
-    if(!value){
+    this._isLast = value;
+    if (!value) {
       this.setupHandles();
     }
-    else{
-      if(this.resizeHandle){
+    else {
+      if (this.resizeHandle) {
         this.resizeHandle.remove();
       }
       this.resizeHandle = undefined;
@@ -68,15 +68,13 @@ export class AcResizablePanel extends AcElementBase {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.resizeObserver = new ResizeObserver(() => {
+    this.observeResizeManaged(this, () => {
       this.events.execute({ event: 'panelresize' });
     });
-    this.resizeObserver.observe(this);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    this.resizeObserver.disconnect();
   }
 
   override init(): void {
@@ -165,7 +163,7 @@ export class AcResizablePanel extends AcElementBase {
         this.style.cursor = originalCursor;
       };
 
-      this.resizeHandle.addEventListener('mousedown', onMouseDown);
+      this.addEventListenerManaged(this.resizeHandle, 'mousedown', onMouseDown);
     }
   }
 

@@ -116,8 +116,20 @@ export class AcDataBridgeUIElement implements IAcOnPropertyChange {
   currentStage: string  = '';
   currentTaskProgressId?:string;
 
+  private subIds: Array<{ event: string, id: string }> = [];
+  private initTimeout?: any;
+
   acOnInit(){
     this.initDataBridge();
+  }
+
+  acOnDestroy() {
+    if (this.initTimeout) clearTimeout(this.initTimeout);
+    if (this.dataBridge) {
+      this.subIds.forEach(sub => {
+        this.dataBridge?.off({ event: sub.event, subscriptionId: sub.id });
+      });
+    }
   }
 
   acOnPropertyChange(changes:any){
@@ -138,17 +150,23 @@ export class AcDataBridgeUIElement implements IAcOnPropertyChange {
   private initDataBridge(){
     if(this.dataBridge){
       this.currentStage = this.dataBridge!.currentStage;
-      this.dataBridge.on({event:'currentStageChange',callback:()=>{
-        this.currentStage = this.dataBridge!.currentStage;
-      }});
-      this.dataBridge.on({event:'taskProgress',callback:({progress,isRoot}:{progress:IAcDataBridgeProgress,isRoot:boolean})=>{
-              if(this.currentTaskProgressId != progress.id && isRoot){
-                this.currentTaskProgressId = progress.id;
-              }
-            }});
+      this.subIds.push({
+        event: 'currentStageChange',
+        id: this.dataBridge.on({event:'currentStageChange',callback:()=>{
+          this.currentStage = this.dataBridge!.currentStage;
+        }})
+      });
+      this.subIds.push({
+        event: 'taskProgress',
+        id: this.dataBridge.on({event:'taskProgress',callback:({progress,isRoot}:{progress:IAcDataBridgeProgress,isRoot:boolean})=>{
+          if(this.currentTaskProgressId != progress.id && isRoot){
+            this.currentTaskProgressId = progress.id;
+          }
+        }})
+      });
     }
     else{
-      setTimeout(() => {
+      this.initTimeout = setTimeout(() => {
         this.initDataBridge();
       }, 50);
     }

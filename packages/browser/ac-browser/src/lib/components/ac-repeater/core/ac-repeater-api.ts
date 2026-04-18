@@ -283,4 +283,17 @@ export class AcRepeaterApi{
     }
   }
 
+  destroy() {
+    this.dataManager.destroy();
+    this.eventHandler.destroy();
+    this.events.destroy();
+    this.hooks.destroy();
+    if (this.pagination) {
+      this.pagination.destroy();
+    }
+    for (const ext of Object.values(this.extensions)) {
+      ext.destroy();
+    }
+    this.extensions = {};
+  }
 }

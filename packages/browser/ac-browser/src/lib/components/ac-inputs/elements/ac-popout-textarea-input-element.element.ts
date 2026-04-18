@@ -175,27 +175,21 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
     this.textarea.style.opacity = "0";
     this.textarea.style.pointerEvents = "none";
     const duration = this.opts.animationDurationMs;
-    this.delayedCallback.add({callback:() => {
-      this.teardownTextarea();
-      this.isOpen = false;
-      window.removeEventListener("scroll", this.boundScroll, true);
-      window.removeEventListener("resize", this.boundResize, true);
-      this.ownerDocument.removeEventListener("mousedown", this.boundDocMouseDown, true);
-      this.ownerDocument.removeEventListener("keydown", this.boundKeydown, true);
-    }, duration});
+    this.delayedCallback.add({
+      callback: () => {
+        this.teardownTextarea();
+        this.isOpen = false;
+        this.removeEventListenerManaged(window, "scroll", this.boundScroll, true);
+        this.removeEventListenerManaged(window, "resize", this.boundResize, true);
+        this.removeEventListenerManaged(this.ownerDocument, "mousedown", this.boundDocMouseDown, true);
+        this.removeEventListenerManaged(this.ownerDocument, "keydown", this.boundKeydown, true);
+      }, duration
+    });
   }
 
   override destroy() {
     this.close("api");
-    this.io?.disconnect();
-    this.inputElement.replaceWith(this.inputElement);
-    if (this.opts.triggerOnFocus) {
-      this.inputElement.removeEventListener("focus", () => this.open());
-    }
-    if (this.opts.triggerOnDblClick) {
-      this.inputElement.removeEventListener("dblclick", () => this.open());
-    }
-
+    this.teardownTextarea();
     super.destroy();
   }
 
@@ -204,7 +198,7 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
     const ta = this.ownerDocument.createElement("textarea");
     this.textarea = ta;
     this.ownerDocument.body.appendChild(ta);
-    ta.addEventListener("input", () => {
+    this.addEventListenerManaged(ta, "input", () => {
       if (!this.textarea) return;
       if (this.opts.respectMaxLength && this.inputElement.maxLength > 0) {
         if (this.textarea.value.length > this.inputElement.maxLength) {
@@ -217,7 +211,7 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
       }
       if (this.opts.autoGrow) this.autoGrow();
     });
-    ta.addEventListener("blur", () => {
+    this.addEventListenerManaged(ta, "blur", () => {
       if (this.opts.persistent) return;
       this.close("blur");
     });
@@ -269,10 +263,10 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
     this.syncFromInputToTextarea(true);
     this.isOpen = true;
     this.queueRaf();
-    window.addEventListener("scroll", this.boundScroll, true);
-    window.addEventListener("resize", this.boundResize, true);
-    this.ownerDocument.addEventListener("mousedown", this.boundDocMouseDown, true);
-    this.ownerDocument.addEventListener("keydown", this.boundKeydown, true);
+    this.addEventListenerManaged(window, "scroll", this.boundScroll, true);
+    this.addEventListenerManaged(window, "resize", this.boundResize, true);
+    this.addEventListenerManaged(this.ownerDocument, "mousedown", this.boundDocMouseDown, true);
+    this.addEventListenerManaged(this.ownerDocument, "keydown", this.boundKeydown, true);
     requestAnimationFrame(() => {
       if (!this.textarea) return;
       const rect = this.inputElement.getBoundingClientRect();
@@ -334,7 +328,7 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
 
   private setupIntersectionObserver() {
     if (!("IntersectionObserver" in window)) return;
-    this.io = new IntersectionObserver((entries) => {
+    this.observeIntersectionManaged(this.inputElement, (entries) => {
       for (const entry of entries) {
         if (!this.isOpen) return;
         const isVisible = entry.isIntersecting;
@@ -345,7 +339,6 @@ export class AcPopoutTextareaInputElement extends AcInputBase {
         }
       }
     }, { root: null, threshold: 0 });
-    this.io.observe(this.inputElement);
   }
 
   private syncFromInputToTextarea(moveCaretToEnd = false) {

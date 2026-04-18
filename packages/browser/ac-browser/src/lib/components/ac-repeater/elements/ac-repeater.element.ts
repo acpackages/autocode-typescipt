@@ -21,6 +21,11 @@ export class AcRepeaterElement extends AcElementBase{
       <${AC_REPEATER_TAG.repeaterFooter}></${AC_REPEATER_TAG.repeaterFooter}>
     `;
   }
+
+  override destroy(){
+    this.repeaterApi.destroy();
+    super.destroy();
+  }
 }
 
 acRegisterCustomElement({tag:AC_REPEATER_TAG.repeater,type:AcRepeaterElement});

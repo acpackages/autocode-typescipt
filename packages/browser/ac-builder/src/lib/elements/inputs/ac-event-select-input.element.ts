@@ -14,13 +14,20 @@ export class AcEventSelectInput extends AcInputBase{
     this.setValue(value);
   }
 
+  private _subId: string;
+
   constructor({builderApi}:{builderApi:AcBuilderApi}){
     super();
     this.builderApi = builderApi;
-    this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ScriptFunctionChange,callback:()=>{
+    this._subId = this.builderApi.hooks.subscribe({hook:AcEnumBuilderHook.ScriptFunctionChange,callback:()=>{
       this.setOptions();
     }});
     this.setOptions();
+  }
+
+  override destroy() {
+    this.builderApi.hooks.unsubscribe({ hook: AcEnumBuilderHook.ScriptFunctionChange, subscriptionId: this._subId });
+    super.destroy();
   }
 
   async setOptions(){

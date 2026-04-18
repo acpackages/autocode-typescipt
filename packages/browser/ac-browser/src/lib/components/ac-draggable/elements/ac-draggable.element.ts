@@ -11,24 +11,17 @@ export class AcDraggable extends AcElementBase {
   draggableApi:AcDraggableApi = new AcDraggableApi({instance:this});
   groups: Map<string, IAcDragGroup> = new Map();
   override id:string = Autocode.uuid();
-  private mutationObserver!: MutationObserver;
+  private observe(): void {
+    this.observeMutationManaged(this, { childList: true, subtree: true }, () => {
+      this.init();
+    });
+  }
+
   originalUserSelect: any;
 
   override connectedCallback() {
     super.connectedCallback();
     this.observe();
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.unobserve();
-  }
-
-  private observe(): void {
-    this.mutationObserver = new MutationObserver(() => {
-      this.init();
-    });
-    this.mutationObserver.observe(this, { childList: true, subtree: true });
   }
 
   override init(): void {
@@ -51,8 +44,9 @@ export class AcDraggable extends AcElementBase {
     this.groups.delete(name);
   }
 
-  public unobserve(): void {
-    this.mutationObserver.disconnect();
+  override destroy(): void {
+    this.draggableApi.destroy();
+    super.destroy();
   }
 }
 

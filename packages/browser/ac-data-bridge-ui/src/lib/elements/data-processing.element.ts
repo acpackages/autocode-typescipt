@@ -35,8 +35,14 @@ export class DataProcessingElement {
   Object = Object;
   taskProgress?:IAcDataBridgeProgress;
 
+  private initTimeout?: any;
+
   acOnInit(){
     this.initProgress();
+  }
+
+  acOnDestroy(){
+    if(this.initTimeout) clearTimeout(this.initTimeout);
   }
 
   acOnPropertyChanges(changes:any){
@@ -52,7 +58,7 @@ export class DataProcessingElement {
       this.taskProgress = this.dataBridge.taskProgress;
     }
     else{
-      setTimeout(() => {
+      this.initTimeout = setTimeout(() => {
         this.initProgress();
       }, 50);
     }

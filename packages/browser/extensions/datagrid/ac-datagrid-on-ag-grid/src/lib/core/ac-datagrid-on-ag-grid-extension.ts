@@ -150,11 +150,8 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     }
 
     this.agGridEventHandler.destroy();
-
     this.agGridRowDragExt.destroy();
-
     this.agGridSelectionExt.destroy();
-
     this.agGridTreeTableExt.destroy();
 
     super.destroy();
@@ -714,7 +711,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
     this.columnsCustomizerButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.columnsCustomizerButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-columns-customizer"><ac-svg-icon>${ACI_SVG_SOLID.gear}</ac-svg-icon></button>`;
-    (this.columnsCustomizerButtonContainer.querySelector('button') as HTMLElement).addEventListener('click', (event: any) => {
+    this.addEventListenerManaged((this.columnsCustomizerButtonContainer.querySelector('button') as HTMLElement), 'click', (event: any) => {
       this.isColumnsCustomizerOpen = !this.isColumnsCustomizerOpen;
       if (this.isColumnsCustomizerOpen) {
         this.gridApi?.openToolPanel('columns');
@@ -726,7 +723,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
 
     this.addButtonContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.addButtonContainer.innerHTML = `<button type="button" class="btn-ac-datagrid-add">+ Add</button>`;
-    (this.addButtonContainer.querySelector('button') as HTMLElement).addEventListener('click', (event: any) => {
+    this.addEventListenerManaged((this.addButtonContainer.querySelector('button') as HTMLElement), 'click', (event: any) => {
       if (this.datagridApi) {
         this.datagridApi.dataManager.addRow();
       }
@@ -735,7 +732,7 @@ export class AcDatagridOnAgGridExtension extends AcDatagridExtension {
     this.searchInputContainer = this.datagridApi.datagrid.ownerDocument.createElement('div');
     this.searchInputContainer.innerHTML = `<input type="text" class="input-ac-datagrid-search" placeholder="Search..."/>`;
     const searchInput: HTMLInputElement = this.searchInputContainer.querySelector('input') as HTMLInputElement;
-    searchInput.addEventListener('input', (event: any) => {
+    this.addEventListenerManaged(searchInput, 'input', (event: any) => {
       this.delayedCallback.add({
         callback: () => {
           if (this.datagridApi) {

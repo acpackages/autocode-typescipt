@@ -5,26 +5,18 @@ import { AcFormFieldErrorMessage } from "./ac-form-field-error-element.element";
 
 export class AcFormField extends AcElementBase {
   private inputElement?: HTMLInputElement | any;
-  private mutationObserver!: MutationObserver;
-  private inputListener: (() => void) | null = null;
+  private invalidListener: ((e: any) => void) | null = null;
 
   override connectedCallback(): void {
     super.connectedCallback();
     this.style.display = 'contents';
-    this.mutationObserver = new MutationObserver(() => this.bindInput());
+    this.observeMutationManaged(this, { childList: true, subtree: true }, () => this.bindInput());
     this.bindInput();
-    this.mutationObserver.observe(this, { childList: true, subtree: true });
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.unbindInput();
-    this.mutationObserver.disconnect();
   }
 
   private bindInput() {
     let foundInput:boolean = false;
-    const input = this.querySelector(`[name]`);
+    const input = this.querySelector(`[name]`) as HTMLElement;
     if(input){
       if (input == this.inputElement) return;
     }
@@ -32,17 +24,18 @@ export class AcFormField extends AcElementBase {
     if (input) {
       foundInput = true;
       this.inputElement = input;
-      const listener = () => this.updateState();
-      input.addEventListener('input', listener);
-      input.addEventListener('change', listener);
-      input.addEventListener('blur', listener);
-      input.setAttribute('novalidate', 'true');
-      input.addEventListener('invalid', (e) => {
+      this.inputListener = () => this.updateState();
+      this.invalidListener = (e: any) => {
         e.preventDefault();
-        listener();
-      }, true);
-      this.inputListener = listener;
+        this.updateState();
+      };
 
+      this.addEventListenerManaged(input, 'input', this.inputListener);
+      this.addEventListenerManaged(input, 'change', this.inputListener);
+      this.addEventListenerManaged(input, 'blur', this.inputListener);
+      this.addEventListenerManaged(input, 'invalid', this.invalidListener, true);
+      
+      input.setAttribute('novalidate', 'true');
       this.updateState();
     }
     if(!foundInput){
@@ -53,13 +46,19 @@ export class AcFormField extends AcElementBase {
   }
 
   private unbindInput() {
-    if (this.inputElement && this.inputListener) {
-      this.inputElement.removeEventListener('input', this.inputListener);
-      this.inputElement.removeEventListener('change', this.inputListener);
-      this.inputElement.removeEventListener('blur', this.inputListener);
+    if (this.inputElement) {
+      if (this.inputListener) {
+        this.removeEventListenerManaged(this.inputElement, 'input', this.inputListener);
+        this.removeEventListenerManaged(this.inputElement, 'change', this.inputListener);
+        this.removeEventListenerManaged(this.inputElement, 'blur', this.inputListener);
+      }
+      if (this.invalidListener) {
+        this.removeEventListenerManaged(this.inputElement, 'invalid', this.invalidListener, true);
+      }
     }
     this.inputElement = undefined;
     this.inputListener = null;
+    this.invalidListener = null;
   }
 
   updateState() {

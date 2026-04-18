@@ -78,21 +78,27 @@ export class AcPagination extends AcElementBase {
   startRow: number = 0;
   totalPages: number = 1;
 
+  private _dmSubscriptions: Array<{ event: string, id: string }> = [];
+
   bindDataManager({ dataManager }: { dataManager: AcDataManager }) {
     this.dataManager = dataManager;
-    dataManager.on({
-      event: AC_DATA_MANAGER_EVENT.TotalRowsChange, callback: () => {
-        this.totalRows = dataManager.totalRows;
-      }
+    this._dmSubscriptions.push({
+      event: AC_DATA_MANAGER_EVENT.TotalRowsChange,
+      id: dataManager.on({
+        event: AC_DATA_MANAGER_EVENT.TotalRowsChange, callback: () => {
+          this.totalRows = dataManager.totalRows;
+        }
+      })
     });
-    dataManager.on({
-      event: AC_DATA_MANAGER_EVENT.OnDemandFunctionSet, callback: () => {
-        this.dataManager.getRows({startIndex:this.startRow -1,rowsCount:this.activePageSize});
-      }
+    this._dmSubscriptions.push({
+      event: AC_DATA_MANAGER_EVENT.OnDemandFunctionSet,
+      id: dataManager.on({
+        event: AC_DATA_MANAGER_EVENT.OnDemandFunctionSet, callback: () => {
+          this.dataManager?.getRows({ startIndex: this.startRow - 1, rowsCount: this.activePageSize });
+        }
+      })
     });
   }
-
-  private resizeObserver?: ResizeObserver;
 
   override init() {
     super.init();
@@ -111,18 +117,22 @@ export class AcPagination extends AcElementBase {
   }
 
   private setupResizeObserver() {
-    this.resizeObserver = new ResizeObserver((entries) => {
+    this.observeResizeManaged(this, (entries) => {
       for (const entry of entries) {
         const width = entry.contentRect.width;
         this.classList.toggle('compact', width < 400);
         this.classList.toggle('narrow', width < 250);
       }
     });
-    this.resizeObserver.observe(this);
   }
 
   override destroy(): void {
-    this.resizeObserver?.disconnect();
+    if (this.dataManager) {
+      this._dmSubscriptions.forEach(sub => {
+        this.dataManager?.off({ event: sub.event, subscriptionId: sub.id });
+      });
+    }
+    this._dmSubscriptions = [];
     super.destroy();
   }
 

@@ -21,6 +21,7 @@ export class AcScrollable {
   private items: any[] = [];
   private heightCache = new Map<any, number>();
   private heights: number[] = [];
+  private boundScrollHandler: any;
 
   constructor({ element, options = {} }: { element: HTMLElement, options?: IAcScrollableOptions }) {
     this.element = element;
@@ -28,11 +29,24 @@ export class AcScrollable {
     this.elementHeight = element.clientHeight;
     this.elementHeightFallback = options.elementHeight ?? 50;
     this.element.style.overflowY = "auto";
-    this.element.addEventListener("scroll", () => this.handleScroll());
+    this.boundScrollHandler = () => this.handleScroll();
+    this.element.addEventListener("scroll", this.boundScrollHandler);
     if (this.element.children.length > 0) {
       this.registerExistingElements();
     }
     this.initObservers();
+  }
+
+  destroy() {
+    this.isWorking = false;
+    if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
+    if (this.elementResizeObserver) this.elementResizeObserver.disconnect();
+    this.element.removeEventListener("scroll", this.boundScrollHandler);
+    this.delayedCallback.destroy();
+    this.heightCache.clear();
+    this.scrollingElements = [];
+    this.items = [];
   }
 
   setItems(items: any[]) {
@@ -421,5 +435,4 @@ export class AcScrollable {
 
     this.render();
   }
-
 }

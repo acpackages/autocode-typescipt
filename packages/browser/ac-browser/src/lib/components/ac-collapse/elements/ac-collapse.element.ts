@@ -16,7 +16,6 @@ export class AcCollapse extends AcElementBase{
   isOpen: boolean = false;
   isAnimating: boolean = false;
   direction: AcEnumCollapseDirection = AcEnumCollapseDirection.TopToBottom;
-  mutationObserver?:MutationObserver;
 
   close({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
     if (skipAnimation) {
@@ -88,10 +87,6 @@ export class AcCollapse extends AcElementBase{
     this.observe();
   }
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.unobserve();
-  }
 
   open({ skipAnimation = false }: { skipAnimation?: boolean } = {}) {
     if (this.isOpen || this.isAnimating) return;
@@ -178,7 +173,7 @@ export class AcCollapse extends AcElementBase{
   }
 
   private observe(){
-    this.mutationObserver = new MutationObserver((mutations) => {
+    this.observeMutationManaged(this, (mutations) => {
       for (const m of mutations) {
         if (m.attributeName === AcCollapseAttributeName.acCollapseOpen) {
           const shouldBeOpen = this.hasAttribute(AcCollapseAttributeName.acCollapseOpen);
@@ -186,9 +181,7 @@ export class AcCollapse extends AcElementBase{
           else if (!shouldBeOpen && this.isOpen) this.close();
         }
       }
-    });
-
-    this.mutationObserver.observe(this, { attributes: true });
+    }, { attributes: true });
   }
 
   setContentElement({ element }: { element: HTMLElement }) {
@@ -218,7 +211,7 @@ export class AcCollapse extends AcElementBase{
       class_: AcCollapseCssClassName.acCollapseToggle,
       element,
     });
-    this.toggleElement.addEventListener("click", () => this.toggle());
+    this.addEventListenerManaged(this.toggleElement, "click", () => this.toggle());
   }
 
   toggle() {
@@ -229,12 +222,6 @@ export class AcCollapse extends AcElementBase{
     }
     const eventParams: IAcCollapseEvent = { collapse: this,target:this };
     this.events.execute({ event: AcEnumCollapseEvent.Toggle, args: eventParams });
-  }
-
-  unobserve(){
-    if(this.mutationObserver){
-      this.mutationObserver.disconnect();
-    }
   }
 }
 

@@ -44,7 +44,7 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   }
 
   private setupResizeObserver() {
-    this.resizeObserver = new ResizeObserver((entries) => {
+    this.observeResizeManaged(this, (entries) => {
       for (const entry of entries) {
         const width = entry.contentRect.width;
         const headerEl = this.querySelector('.ac-repeater-header') as HTMLElement;
@@ -54,16 +54,11 @@ export class AcRepeaterHeaderElement extends AcElementBase {
         }
       }
     });
-    this.resizeObserver.observe(this);
   }
 
   override destroy(): void {
-    this.resizeObserver?.disconnect();
     this.closeFilterPopup();
     this.closeSortPopup();
-    if (this.outsideClickHandler) {
-      document.removeEventListener('click', this.outsideClickHandler);
-    }
     super.destroy();
   }
 
@@ -130,21 +125,28 @@ export class AcRepeaterHeaderElement extends AcElementBase {
     });
 
     // Wire up filter popup buttons
-    this.filtersPopup.querySelector('.ac-repeater-popup-close')?.addEventListener('click', () => this.closeFilterPopup());
-    this.filtersPopup.querySelector('.ac-repeater-add-filter-btn')?.addEventListener('click', () => this.addFilterRow());
-    this.filtersPopup.querySelector('.ac-repeater-clear-filters-btn')?.addEventListener('click', () => {
+    const closeBtn = this.filtersPopup.querySelector('.ac-repeater-popup-close') as HTMLElement;
+    if (closeBtn) this.addEventListenerManaged(closeBtn, 'click', () => this.closeFilterPopup());
+
+    const addBtn = this.filtersPopup.querySelector('.ac-repeater-add-filter-btn') as HTMLElement;
+    if (addBtn) this.addEventListenerManaged(addBtn, 'click', () => this.addFilterRow());
+
+    const clearBtn = this.filtersPopup.querySelector('.ac-repeater-clear-filters-btn') as HTMLElement;
+    if (clearBtn) this.addEventListenerManaged(clearBtn, 'click', () => {
       this.repeaterApi.dataManager.filterGroup.clear();
       this.updateBadges();
       this.repeaterApi.dataManager.refreshRows();
       this.refreshFilterRows();
     });
-    this.filtersPopup.querySelector('.ac-repeater-apply-filters-btn')?.addEventListener('click', () => {
+
+    const applyBtn = this.filtersPopup.querySelector('.ac-repeater-apply-filters-btn') as HTMLElement;
+    if (applyBtn) this.addEventListenerManaged(applyBtn, 'click', () => {
       this.applyFilters();
       this.closeFilterPopup();
     });
 
     // Stop clicks inside popup from closing it
-    this.filtersPopup.addEventListener('click', (e) => e.stopPropagation());
+    this.addEventListenerManaged(this.filtersPopup, 'click', (e) => e.stopPropagation());
 
     this.refreshFilterRows();
   }
@@ -188,21 +190,28 @@ export class AcRepeaterHeaderElement extends AcElementBase {
     });
 
     // Wire up sort popup buttons
-    this.sortPopup.querySelector('.ac-repeater-popup-close')?.addEventListener('click', () => this.closeSortPopup());
-    this.sortPopup.querySelector('.ac-repeater-add-sort-btn')?.addEventListener('click', () => this.addSortRow());
-    this.sortPopup.querySelector('.ac-repeater-clear-sorts-btn')?.addEventListener('click', () => {
+    const closeBtn = this.sortPopup.querySelector('.ac-repeater-popup-close') as HTMLElement;
+    if (closeBtn) this.addEventListenerManaged(closeBtn, 'click', () => this.closeSortPopup());
+
+    const addBtn = this.sortPopup.querySelector('.ac-repeater-add-sort-btn') as HTMLElement;
+    if (addBtn) this.addEventListenerManaged(addBtn, 'click', () => this.addSortRow());
+
+    const clearBtn = this.sortPopup.querySelector('.ac-repeater-clear-sorts-btn') as HTMLElement;
+    if (clearBtn) this.addEventListenerManaged(clearBtn, 'click', () => {
       this.repeaterApi.dataManager.sortOrder.sortOrders = [];
       this.updateBadges();
       this.repeaterApi.dataManager.refreshRows();
       this.refreshSortRows();
     });
-    this.sortPopup.querySelector('.ac-repeater-apply-sort-btn')?.addEventListener('click', () => {
+
+    const applyBtn = this.sortPopup.querySelector('.ac-repeater-apply-sort-btn') as HTMLElement;
+    if (applyBtn) this.addEventListenerManaged(applyBtn, 'click', () => {
       this.applySort();
       this.closeSortPopup();
     });
 
     // Stop clicks inside popup from closing it
-    this.sortPopup.addEventListener('click', (e) => e.stopPropagation());
+    this.addEventListenerManaged(this.sortPopup, 'click', (e) => e.stopPropagation());
 
     this.refreshSortRows();
   }
@@ -221,7 +230,8 @@ export class AcRepeaterHeaderElement extends AcElementBase {
   private registerHeaderListeners() {
     const searchInput = this.querySelector('.ac-repeater-search-input') as HTMLInputElement;
     const clearSearchBtn = this.querySelector('.ac-repeater-clear-search-btn') as HTMLElement;
-    searchInput.addEventListener('input', () => {
+    
+    this.addEventListenerManaged(searchInput, 'input', () => {
       this.delayedCallback.add({
         callback:()=>{
           this.repeaterApi.dataManager.searchQuery = searchInput.value;
@@ -233,7 +243,7 @@ export class AcRepeaterHeaderElement extends AcElementBase {
       clearSearchBtn.style.display = searchInput.value ? 'block' : 'none';
     });
 
-    clearSearchBtn.addEventListener('click', () => {
+    this.addEventListenerManaged(clearSearchBtn, 'click', () => {
       searchInput.value = '';
       this.repeaterApi.dataManager.searchQuery = '';
       this.repeaterApi.dataManager.refreshRows();
@@ -244,7 +254,7 @@ export class AcRepeaterHeaderElement extends AcElementBase {
     const filterBtn = this.querySelector('.ac-repeater-filter-btn') as HTMLElement;
     const sortBtn = this.querySelector('.ac-repeater-sort-btn') as HTMLElement;
 
-    filterBtn.addEventListener('click', (e) => {
+    this.addEventListenerManaged(filterBtn, 'click', (e: Event) => {
       e.stopPropagation();
       if (this.filtersPopup) {
         this.closeFilterPopup();
@@ -253,7 +263,7 @@ export class AcRepeaterHeaderElement extends AcElementBase {
       }
     });
 
-    sortBtn.addEventListener('click', (e) => {
+    this.addEventListenerManaged(sortBtn, 'click', (e: Event) => {
       e.stopPropagation();
       if (this.sortPopup) {
         this.closeSortPopup();
@@ -263,16 +273,18 @@ export class AcRepeaterHeaderElement extends AcElementBase {
     });
 
     // Close popups on outside click
-    this.outsideClickHandler = (e: MouseEvent) => {
-      const target = e.target as Node;
-      if (this.filtersPopup && !this.filtersPopup.contains(target) && !this.contains(target)) {
-        this.closeFilterPopup();
-      }
-      if (this.sortPopup && !this.sortPopup.contains(target) && !this.contains(target)) {
-        this.closeSortPopup();
-      }
-    };
-    document.addEventListener('click', this.outsideClickHandler);
+    if (!this.outsideClickHandler) {
+      this.outsideClickHandler = (e: MouseEvent) => {
+        const target = e.target as Node;
+        if (this.filtersPopup && !this.filtersPopup.contains(target) && !this.contains(target)) {
+          this.closeFilterPopup();
+        }
+        if (this.sortPopup && !this.sortPopup.contains(target) && !this.contains(target)) {
+          this.closeSortPopup();
+        }
+      };
+      this.addEventListenerManaged(document, 'click', this.outsideClickHandler);
+    }
   }
 
   private refreshFilterRows() {

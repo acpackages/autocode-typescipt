@@ -388,6 +388,7 @@ export class AcDatagridOnAgGridEventHandler {
 
   removeListeners() {
     if (this.gridApi) {
+      this.gridApi.removeEventListener('asyncTransactionsFlushed', this.onAsyncTransactionsFlushed);
       this.gridApi.removeEventListener('cellClicked', this.onCellClicked);
       this.gridApi.removeEventListener('cellDoubleClicked', this.onCellDoubleClicked);
       this.gridApi.removeEventListener('cellEditingStarted', this.onCellEditingStarted);
@@ -416,5 +417,6 @@ export class AcDatagridOnAgGridEventHandler {
       this.gridApi.removeEventListener('stateUpdated', this.onStateUpdated);
       this.gridApi.removeEventListener('viewportChanged', this.onViewportChanged);
     }
+    this.gridApi = undefined;
   }
 }

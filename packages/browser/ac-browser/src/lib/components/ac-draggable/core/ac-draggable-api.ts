@@ -30,9 +30,13 @@ export class AcDraggableApi {
     this.instance = instance;
   }
 
-  destroy(){
+  destroy() {
     this.events.destroy();
-    acNullifyInstanceProperties({instance:this});
+    Object.values(this.elementInstances).forEach(inst => inst.destroy());
+    Object.values(this.targetInstances).forEach(inst => inst.destroy());
+    this.elementInstances = {};
+    this.targetInstances = {};
+    acNullifyInstanceProperties({ instance: this });
   }
 
   handleDragEnter({ targetInstance, event }: { targetInstance: AcDraggableTarget, event: MouseEvent | TouchEvent }): void {
