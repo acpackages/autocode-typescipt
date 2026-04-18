@@ -14,6 +14,7 @@ import { AcEnumConditionOperator, AcEnumLogicalOperator, acEvaluateFilterGroup, 
 import { arrayRemove, objectIsSame } from "@autocode-ts/ac-extensions";
 import { IAcDataBridgeBeforeAddRequestArgs } from "../interfaces/ac-data-bridge-before-add-request-args.interface";
 import { IAcDataBridgeBeforeAddResponse } from "../interfaces/ac-data-bridge-before-add-response.interface";
+import { AcDataBridgeSocket } from "../core/ac-data-bridge-socket";
 
 class AcDataBridgeEntityWorker {
   private worker: AcDataBridgeWorker;
@@ -89,7 +90,6 @@ class AcDataBridgeEntityWorker {
     parentTemplateName?: string
   }): Promise<IAcDataBridgeProcesedRow> {
 
-    // console.log('🔄 addRow called with:', { row, sourceRow, parentRowId, parentTemplateName });
 
     let primaryKeyValue: any;
     let primaryKeyField: any;
@@ -106,11 +106,9 @@ class AcDataBridgeEntityWorker {
           field.destinationName === this.templateDef.destinationName) {
           primaryKeyField = field.destinationFieldName;
           primaryKeyValue = saveRow[field.destinationFieldName];
-          // console.log('🔑 Found destination primary key:', { primaryKeyField, primaryKeyValue });
         }
         if (field.isTemplatePrimaryKey && field.templateFieldName) {
           templateUniqueKeyField = field.templateFieldName;
-          // console.log('🆔 Template unique key field:', templateUniqueKeyField);
         }
       }
     }
@@ -118,14 +116,12 @@ class AcDataBridgeEntityWorker {
     // Get source unique value (from sourceRow if available)
     if (templateUniqueKeyField && sourceRow?.[templateUniqueKeyField]) {
       sourceUniqueValue = sourceRow[templateUniqueKeyField];
-      // console.log('📍 Source row unique value:', sourceUniqueValue);
     }
 
-    let operation: 'INSERT' | 'SKIP' = 'INSERT';
+    let operation: 'INSERT'| 'UPDATE' | 'SKIP' = 'INSERT';
 
     // Duplicate check using uniqueDataKeys
     if (this.uniqueDataKeys.length > 0) {
-      // console.log('🔍 Checking for duplicates using keys:', this.uniqueDataKeys);
       let isDuplicateRow: boolean = false;
       for (const existingRow of this.allData) {
         let isValueDifferent = false;
@@ -133,11 +129,9 @@ class AcDataBridgeEntityWorker {
         for (const key of this.uniqueDataKeys) {
           const currentValue = saveRow[key];
           const existingValue = existingRow.data[key];
-          // console.log(` Checking values different`, { current: currentValue, existing: existingValue,existingRow,saveRow });
           if (currentValue !== undefined && existingValue != undefined) {
             if (`${currentValue}`.trim().toLowerCase() != `${existingValue}`.trim().toLowerCase()) {
               isValueDifferent = true;
-              // console.log(`   ⚖️  Key '${key}' differs:`, { current: currentValue, existing: existingValue });
             }
           }
         }
@@ -165,16 +159,17 @@ class AcDataBridgeEntityWorker {
     if (operation === 'INSERT') {
       if (primaryKeyValue == undefined || primaryKeyValue == null) {
         primaryKeyValue = Autocode.uuid();
-        // console.log('🆕 Generated new primary key:', primaryKeyValue);
       }
     }
     if (primaryKeyField) {
       saveRow[primaryKeyField] = primaryKeyValue;
-      // console.log(`✏️  Assigned primary key to row: ${primaryKeyField} = ${primaryKeyValue}`);
     }
-    if(this.worker.beforeAddEntityRowCallback){
-      const beforeAddResponse = await this.worker.beforeAddEntityRowCallback({data:saveRow,destination:this.templateDef.destinationName,operation:operation})
+    if (this.worker.beforeAddEntityRowCallback) {
+      const beforeAddResponse = await this.worker.beforeAddEntityRowCallback({ data: saveRow, destination: this.templateDef.destinationName, operation: operation });
       saveRow = beforeAddResponse.data;
+      if(beforeAddResponse.operation){
+        operation = beforeAddResponse.operation!;
+      }
     }
 
     let processedRow: any;
@@ -192,9 +187,7 @@ class AcDataBridgeEntityWorker {
       };
       this.processedRows.push(processedRow);
       this.allData.push({ rowId: primaryKeyValue, data: saveRow, sourceRow, sourceRowId: sourceUniqueValue });
-      // console.log('✅ Row INSERTED into processedRows', { rowId: primaryKeyValue, sourceRowId: sourceUniqueValue });
     } else {
-      // SKIP case: find or create processed row
       const existingProcessedRow = this.processedRows.find(
         (pr: any) => {
           return pr.rowId === primaryKeyValue;
@@ -202,7 +195,6 @@ class AcDataBridgeEntityWorker {
       );
 
       if (existingProcessedRow) {
-        // console.log('🔄 Existing processed row found (SKIP), updating source info:', primaryKeyValue);
         existingProcessedRow.sourceRow = sourceRow;
         existingProcessedRow.sourceRowId = sourceUniqueValue;
         processedRow = existingProcessedRow;
@@ -218,7 +210,6 @@ class AcDataBridgeEntityWorker {
           parentTemplateName
         };
         this.processedRows.push(processedRow);
-        // console.log('➕ New SKIP processed row added:', { rowId: primaryKeyValue });
       }
     }
     for (const key of Object.keys(saveRow)) {
@@ -226,13 +217,11 @@ class AcDataBridgeEntityWorker {
         this.dataKeys.push(key);
       }
     }
-    // console.log('🏁 addRow completed:', { operation, rowId: primaryKeyValue, totalProcessed: this.processedRows.length },sourceRow,row);
 
     return processedRow;
   }
 
   checkRowIsEmpty({ row }: { row: any }) {
-    // console.log("Checking if row is empty:", row);
     let result: boolean = true;
     if (row) {
       for (const key of Object.keys(row)) {
@@ -242,12 +231,10 @@ class AcDataBridgeEntityWorker {
         }
       }
     }
-    // console.log("Row is empty:", result);
     return result;
   }
 
   checkRowValuesMatch({ previousRow, originalRow, row, keys }: { previousRow: any, originalRow: any, row: any, keys: string[] }): boolean {
-    // console.log("Checking row values match with previousRow:", previousRow, "keys:", keys);
     let result: boolean = false;
     if (previousRow) {
       for (const key of keys) {
@@ -259,7 +246,6 @@ class AcDataBridgeEntityWorker {
         }
       }
     }
-    // console.log("Values match:", result);
     return result;
   }
 
@@ -350,12 +336,8 @@ class AcDataBridgeEntityWorker {
         target[destination][key] = value;
       };
       for (const row of this.entity.rows) {
-        // console.log(`Processing row for ${this.templateDef.templateName} : `,row);
         if (!this.checkRowIsEmpty({ row })) {
           let rowUniqueTemplateId = `${row[this.templateUniqueKeyFieldName]}`.trim();
-          // if(this.templateDef.templateName == "Parties"){
-          // console.log(`Previous Id : ${previousTemplateUniqueRowId}, Current : ${rowUniqueTemplateId}`);
-          // }
           const isDuplicateParentRow = previousTemplateUniqueRowId && rowUniqueTemplateId && previousTemplateUniqueRowId == rowUniqueTemplateId;
           const destinationsRow: any = {
             [this.templateDef.destinationName]: {}
@@ -375,17 +357,14 @@ class AcDataBridgeEntityWorker {
               }
               if (value != undefined && value != '') {
                 if (field.foreignKeyTemplateName && field.foreignKeyTemplateFieldName) {
-                  // console.log(`Found foreign key template ${field.foreignKeyTemplateName} and field ${field.foreignKeyTemplateFieldName} with value : ${value}`);
                   const referencingTemplate = Object.values(this.worker.templateEntities).find((templateEntity) => {
                     return templateEntity.templateName == field.foreignKeyTemplateName;
                   });
                   if (referencingTemplate && referencingTemplate.destinationName) {
-                    // console.log(`Found referencing template for ${field.foreignKeyTemplateName} and field ${field.foreignKeyTemplateFieldName}`)
                     if (this.worker.entityWorkers[referencingTemplate.destinationName]) {
                       if (!this.referencingDestinations.includes(referencingTemplate.destinationName)) {
                         this.referencingDestinations.push(referencingTemplate.destinationName);
                       }
-                      // console.log(`Worker for referencing template destination ${referencingTemplate.destinationName} found`);
                       const referencingWorker: AcDataBridgeEntityWorker = this.worker.entityWorkers[referencingTemplate.destinationName];
 
                       let lookupDestinationField: string | undefined;
@@ -434,17 +413,14 @@ class AcDataBridgeEntityWorker {
 
                       const referenceRows = await referencingWorker.getRows(getRowParams);
 
-                      // console.log(`Referencing rows count for field ${field.foreignKeyTemplateFieldName} with value ${value} = ${referenceRows.length}`);
                       if (referenceRows.length > 0) {
                         const referenceData = referenceRows[0];
                         if (referenceData) {
                           if (lookupDestinationField && lookupDestinationField != "" && primaryKeyFieldName) {
-                            // console.log(destName,field);
                             setValueInTargetDestinationField({ target: destinationsRow, destination: destName, key: lookupDestinationField, value: referenceData[primaryKeyFieldName] });
                           }
                         }
                         else {
-                          // console.log(getRowParams,referenceData);
                         }
                       }
                       else {
@@ -475,14 +451,12 @@ class AcDataBridgeEntityWorker {
           }
           let entityProcessedRow: IAcDataBridgeProcesedRow = previousEntityProcessedRow;
           if (!isDuplicateParentRow && Object.keys(destinationsRow[this.templateDef.destinationName]).length > 0) {
-            // console.log(`Adding row for destination ${this.templateDef.destinationName}`,destinationsRow[this.templateDef.destinationName]);
             entityProcessedRow = await this.addRow({ row: destinationsRow[this.templateDef.destinationName], sourceRow: row });
             destSavedRow[this.templateDef.destinationName] = entityProcessedRow.data;
             previousEntityProcessedRow = entityProcessedRow;
           }
           else {
             destSavedRow[this.templateDef.destinationName] = previousEntityProcessedRow.data;
-            // console.log("Found duplicate row",this.templateDef.templateName);
           }
           let childTemplates: string[] = [];
           for (const key of Object.keys(destinationsRow)) {
@@ -513,13 +487,11 @@ class AcDataBridgeEntityWorker {
                     childTemplates.push(entityWorker.templateDef.templateName);
                   }
                   else {
-                    // console.log("Found duplicate destination row",destinationsRow[key]);
                   }
                 }
               }
             }
           }
-          // console.log(destSavedRow);
           for (const templates of multiHiererchyTemplates) {
             for (let i = 1; i <= templates.length - 2; i++) {
               const extTemplate = templates[i];
@@ -570,14 +542,13 @@ class AcDataBridgeEntityWorker {
           previousDestinationsRow = { ...destinationsRow };
         }
         else {
-          // console.log("Found empty row");
         }
         if (this.progress) {
           this.progress.completedCount++;
-          this.progress.percentage = Math.round((this.progress.completedCount / this.progress.totalCount) * 100);
+          this.progress.percentage = Math.round((this.progress.completedCount / this.progress.totalCount) * 10000) / 100;
           if (this.worker.taskProgress) {
             this.worker.taskProgress.completedCount++;
-            this.worker.taskProgress.percentage = Math.round((this.worker.taskProgress.completedCount / this.worker.taskProgress.totalCount) * 100)
+            this.worker.taskProgress.percentage = Math.round((this.worker.taskProgress.completedCount / this.worker.taskProgress.totalCount) * 10000) / 100;
           }
           this.worker.notifyProgress();
         }
@@ -596,27 +567,29 @@ export class AcDataBridgeWorker {
   private existingData: Record<string, any[]> = {};
   private dataDictionary?: AcDataDictionary;
   private lastNotificationTime: number = Date.now();
+  private progressQueue: any = {};
 
-  beforeAddEntityRowCallback: ((args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>)|undefined;
+  beforeAddEntityRowCallback: ((args: IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>) | undefined;
   entityWorkers: Record<string, AcDataBridgeEntityWorker> = {};
   taskProgress?: IAcDataBridgeProgress;
   templateEntities: Record<string, IAcDataBridgeEntityTemplateDef> = {};
+  socket: AcDataBridgeSocket = new AcDataBridgeSocket();
+  private socketCallback?: (event: string, data: any) => void;
 
   constructor() {
-    console.log(this);
   }
 
   async convertRowsForSqlOperations() {
-    const destinationSqlOperations:any = {};
-    for(const key of Object.keys(this.destinationEntities)){
-      const operations:{operation:string,data:any}[] = [];
-      for(const row of Object.values(this.destinationEntities[key].processedRows!)){
-        if(row.operation == 'INSERT'){
-          operations.push({operation:row.operation,data:row.data});
+    const destinationSqlOperations: any = {};
+    for (const key of Object.keys(this.destinationEntities)) {
+      const operations: { operation: string, data: any }[] = [];
+      for (const row of Object.values(this.destinationEntities[key].processedRows!)) {
+        if (row.operation == 'INSERT') {
+          operations.push({ operation: row.operation, data: row.data });
         }
         row.status = 'COMPLETED';
       }
-      if(operations.length > 0){
+      if (operations.length > 0) {
         destinationSqlOperations[key] = operations;
       }
     }
@@ -653,28 +626,27 @@ export class AcDataBridgeWorker {
   }
 
   notifyProgress(force: boolean = false) {
-    if (this.progressCallback && this.taskProgress) {
-      if (Date.now() - this.lastNotificationTime >= 500 || force) {
+    if (this.taskProgress) {
+      if (Date.now() - this.lastNotificationTime >= 1000 || force) {
         this.lastNotificationTime = Date.now();
-        this.progressCallback(this.taskProgress);
+        if (this.progressCallback) {
+          this.progressCallback(this.taskProgress);
+        }
+        this.emitSocketEvent('progress', this.taskProgress);
       }
     }
   }
 
   async orderEntitiesForProcessing(): Promise<Record<string, IAcDataBridgeEntity>> {
     let pendingEntities: IAcDataBridgeEntity[] = [...Object.values(this.sourceEntities)];
-    // let pendingEntityDestinations:string[] = [];
     this.processingEntities = {};
     let destinations: string[] = [];
     const maxIteration: number = 100;
     let currentIteration: number = 0;
-    // console.log("Ordering entities for processing");
     while (pendingEntities.length > 0 && currentIteration < maxIteration) {
-      // console.log(`Processing ${pendingEntities.length} pending entities! Iteration ${currentIteration}`);
       for (const entity of pendingEntities) {
         if (entity.templateName) {
           let pendingReferencedTemplate: boolean = false;
-          // console.log(`Checking ${entity.templateName} for foreign key refereneces...`);
           for (const field of entity.fields) {
             if (field.destinationName) {
               if (!destinations.includes(field.destinationName)) {
@@ -683,7 +655,6 @@ export class AcDataBridgeWorker {
             }
             if (field.foreignKeyTemplateName && field.foreignKeyTemplateName != '' && field.foreignKeyTemplateName != entity.templateName && field.foreignKeyTemplateFieldName && field.foreignKeyTemplateFieldName != '') {
               const templateName = field.foreignKeyTemplateName;
-              // console.log(`Foreign key template found ${templateName} for field ${field.templateFieldName}`);
               const foreignKeyTemplate = Object.values(this.templateEntities).find((t) => { return t.templateName == templateName });
               if (foreignKeyTemplate && foreignKeyTemplate.destinationName) {
                 if (!destinations.includes(foreignKeyTemplate.destinationName)) {
@@ -694,7 +665,6 @@ export class AcDataBridgeWorker {
                 return entity.templateName == templateName
               });
               if (!finalizedTemplateEntity) {
-                // console.log(`Referencing template ${templateName} for field ${field.templateFieldName} is not finalzied yed`);
                 const pendingTemplateEntity = pendingEntities.find((entity) => {
                   return entity.templateName == templateName
                 });
@@ -706,9 +676,7 @@ export class AcDataBridgeWorker {
             if (field.extensionTemplateHierarchy && field.extensionTemplateHierarchy.length > 2) {
               let index = 0;
               for (const templateName of field.extensionTemplateHierarchy) {
-                // console.log(`Found intermediate template ${templateName}`);
                 if (index != 0 && index != field.extensionTemplateHierarchy.length - 1) {
-                  // console.log(`Getting intermediate templete def for ${templateName}`);
                   const intermediateTemplate = Object.values(this.templateEntities).find((t) => { return t.templateName == templateName });
                   if (intermediateTemplate && intermediateTemplate.destinationName) {
                     if (!destinations.includes(intermediateTemplate.destinationName)) {
@@ -721,7 +689,6 @@ export class AcDataBridgeWorker {
             }
           }
           if (!pendingReferencedTemplate) {
-            // console.log("Finalized entity",entity);
             this.processingEntities[entity.destinationName] = entity;
             const worker = new AcDataBridgeEntityWorker({ worker: this });
             worker.entity = entity;
@@ -730,16 +697,14 @@ export class AcDataBridgeWorker {
           }
         }
       }
-      // console.log(`Removing finalized entitities for next iteration`);
       pendingEntities = pendingEntities.filter((pendingEntity) => {
         return this.processingEntities[pendingEntity.destinationName] == undefined;
       });
-      // console.log(`New iteration has ${pendingEntities.length} pending entities`);
       currentIteration++;
     }
 
-    if(pendingEntities.length > 0){
-      console.warn("Following pending entities not added to processing list",pendingEntities);
+    if (pendingEntities.length > 0) {
+      console.warn("Following pending entities not added to processing list", pendingEntities);
     }
     for (const destination of destinations) {
       if (!this.entityWorkers[destination]) {
@@ -786,27 +751,56 @@ export class AcDataBridgeWorker {
     this.notifyProgress(true);
     let convertingRows: number = 0;
     let destinationNames = Object.keys(this.entityWorkers);
-    const maxIteration = destinationNames.length;
+
+    const maxIteration = destinationNames.length * 5;
     let iteration = 0;
-    while (destinationNames.length > 0 && iteration <= maxIteration) {
-      for (const worker of Object.values(this.entityWorkers)) {
-        if (destinationNames.includes(worker.templateDef.destinationName)) {
-          const destinationEntity = worker.getDestinationEntity();
-          let allRefFound: boolean = true;
-          for (const refDest of worker.referencingDestinations) {
-            if (destinationNames.includes(refDest)) {
-              allRefFound = false;
+    let continueLoop: boolean = true;
+    while (continueLoop) {
+      if (iteration <= maxIteration) {
+        if (destinationNames.length > 0) {
+          for (const worker of Object.values(this.entityWorkers)) {
+            if (destinationNames.includes(worker.templateDef.destinationName)) {
+              const destinationEntity = worker.getDestinationEntity();
+              let missingRefEntity: string[] = [];
+              for (const refDest of worker.referencingDestinations) {
+                if (this.destinationEntities[refDest] == undefined && refDest != destinationEntity.destinationName) {
+                  missingRefEntity.push(refDest);
+                }
+              }
+              const notInTemplateMisingRefs: string[] = [];
+              for (const entityName of missingRefEntity) {
+                if (this.entityWorkers[entityName] != undefined) {
+                  if (this.entityWorkers[entityName].processedRows.length == 0) {
+                    notInTemplateMisingRefs.push(entityName);
+                  }
+                }
+              }
+              for (const entityName of notInTemplateMisingRefs) {
+                arrayRemove(missingRefEntity, entityName);
+              }
+              if (missingRefEntity.length == 0) {
+                if (destinationEntity.rowsCount > 0) {
+                  convertingRows += destinationEntity.rowsCount;
+                  this.destinationEntities[destinationEntity.destinationName] = destinationEntity;
+                }
+                else {
+                }
+                arrayRemove(destinationNames, worker.templateDef.destinationName);
+              }
+              else {
+              }
             }
-          }
-          if (allRefFound) {
-            if (destinationEntity.rowsCount > 0) {
-              convertingRows += destinationEntity.rowsCount;
-              this.destinationEntities[destinationEntity.destinationName] = destinationEntity;
-            }
-            arrayRemove(destinationNames, worker.templateDef.destinationName);
           }
         }
+        else {
+          continueLoop = false;
+        }
       }
+      else {
+        continueLoop = false;
+        console.error("Maximum iteration for dependencies done");
+      }
+
       iteration++;
     }
     this.taskProgress = {
@@ -825,8 +819,19 @@ export class AcDataBridgeWorker {
     this.progressCallback = cb;
   }
 
-  registerBeforeAddEntityRowCallback(cb: (args:IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>){
+  registerBeforeAddEntityRowCallback(cb: (args: IAcDataBridgeBeforeAddRequestArgs) => Promise<IAcDataBridgeBeforeAddResponse>) {
     this.beforeAddEntityRowCallback = cb;
+  }
+
+  registerSocketCallback(cb: (event: string, data: any) => void) {
+    this.socketCallback = cb;
+  }
+
+  emitSocketEvent(event: string, data?: any) {
+    this.socket.emit(event, data);
+    if (this.socketCallback) {
+      this.socketCallback(event, data);
+    }
   }
 
   async setDataDictionary({ dataDictionaryJson }: { dataDictionaryJson: any }) {
@@ -885,7 +890,7 @@ export class AcDataBridgeWorker {
 
     workbook.SheetNames.forEach((sheetName, index) => {
       sheetIndex++;
-      const taskPercent = Math.round((sheetIndex / totalSheets) * 100);
+      const taskPercent = Math.round((sheetIndex / totalSheets) * 10000) / 100;
       const worksheet = workbook.Sheets[sheetName];
       const json: any[] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
       const headers = (json[0] as string[]) || [];
@@ -974,7 +979,7 @@ export class AcDataBridgeWorker {
       chunks.push(chunk);
       offset = end;
       chunkCount++;
-      const taskPercent = Math.round((chunkCount / totalChunks) * 100);
+      const taskPercent = Math.round((chunkCount / totalChunks) * 10000) / 100;
       this.taskProgress.completedCount = chunkCount;
       this.taskProgress.description = `${taskPercent} completed`;
       this.taskProgress.percentage = taskPercent;
@@ -998,4 +1003,168 @@ export class AcDataBridgeWorker {
     this.templateEntities = entities;
   }
 
+  async generateSqlContent({comments = true,newLine = true}:{comments?:boolean,newLine?:boolean} = {}): Promise<string> {
+    let sql = '';
+    for (const destinationName of Object.keys(this.destinationEntities)) {
+      const entity = this.destinationEntities[destinationName];
+      const rows = Object.values(entity.processedRows!);
+      const validRows = rows.filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE');
+      if (validRows.length === 0) continue;
+
+      const uniqueFields = this.getUniqueFields(entity.fields);
+      if (uniqueFields.length === 0) continue;
+
+      if(comments){
+        sql += `/* Sql statements for ${destinationName} start */`;
+        if(newLine){
+          sql+= "\n";
+        }
+      }
+      const pkFields = uniqueFields.filter(f => f.isDestinationPrimaryKey);
+      const nonPkFields = uniqueFields.filter(f => !f.isDestinationPrimaryKey);
+
+      for (const row of validRows) {
+        if (row.operation === 'INSERT') {
+          const columns = uniqueFields.map(f => f.destinationFieldName!).join(', ');
+          const values = uniqueFields
+            .map(f => this.escapeSqlValue(row.data[f.destinationFieldName!], f.type))
+            .join(', ');
+          sql += `INSERT INTO ${destinationName} (${columns}) VALUES (${values});`;
+          if(newLine){
+            sql+= "\n";
+          }
+        } else if (row.operation === 'UPDATE') {
+          const updates = nonPkFields
+            .map(f => `${f.destinationFieldName!} = ${this.escapeSqlValue(row.data[f.destinationFieldName!], f.type)}`)
+            .join(', ');
+          
+          const where = pkFields
+            .map(f => `${f.destinationFieldName!} = ${this.escapeSqlValue(row.data[f.destinationFieldName!], f.type)}`)
+            .join(' AND ');
+
+          if (updates && where) {
+            sql += `UPDATE ${destinationName} SET ${updates} WHERE ${where};`;
+            if(newLine){
+              sql+= "\n";
+            }
+          } else if (!where) {
+            sql += `-- WARNING: Cannot generate UPDATE for ${destinationName} because no primary key fields are defined.`;
+            if(newLine){
+              sql+= "\n";
+            }
+          }
+        }
+      }
+      if(comments){
+        if(newLine){
+          sql+= "\n";
+        }
+        sql += `/* Sql statements for ${destinationName} end */`;
+        if(newLine){
+          sql+= "\n";
+        }
+      }
+    }
+    return sql;
+  }
+
+  private getUniqueFields(fields: IAcDataBridgeField[]): IAcDataBridgeField[] {
+    const uniqueFields: IAcDataBridgeField[] = [];
+    const seenFields = new Set<string>();
+    for (const f of fields) {
+      if (f.destinationFieldName && !seenFields.has(f.destinationFieldName)) {
+        uniqueFields.push(f);
+        seenFields.add(f.destinationFieldName);
+      }
+    }
+    return uniqueFields;
+  }
+
+  private escapeSqlValue(value: any, type?: 'string' | 'number' | 'date' | 'boolean', detectFromValue?: boolean): string {
+    if (value === null || value === undefined || value === '') return 'NULL';
+
+    if (type === 'number') {
+      return isNaN(Number(value)) ? 'NULL' : Number(value).toString();
+    }
+    if (type === 'boolean') {
+      const boolVal = typeof value === 'string' ? value.toLowerCase() === 'true' : !!value;
+      return boolVal ? 'TRUE' : 'FALSE';
+    }
+    if (type === 'date') {
+      const date = value instanceof Date ? value : new Date(value);
+      return isNaN(date.getTime()) ? 'NULL' : `'${date.toISOString()}'`;
+    }
+    if (detectFromValue) {
+      if (typeof value === 'number' || typeof value === 'boolean') return value.toString();
+      if (value instanceof Date) return `'${value.toISOString()}'`;
+    }
+    return `'${String(value).replace(/'/g, "''")}'`;
+  }
+
+  async generateXlsxContent({ destinationName }: { destinationName?: string } = {}): Promise<Uint8Array> {
+    const workbook = XLSX.utils.book_new();
+    const destinations = destinationName ? [destinationName] : Object.keys(this.destinationEntities);
+
+    for (const name of destinations) {
+      const entity = this.destinationEntities[name];
+      if (!entity) continue;
+      
+      const uniqueFields = this.getUniqueFields(entity.fields);
+      const fieldNames = uniqueFields.map(f => f.destinationFieldName!);
+      
+      const rows = Object.values(entity.processedRows!)
+        .filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE')
+        .map(r => {
+          const filteredRow: any = {};
+          fieldNames.forEach(f => filteredRow[f] = r.data[f]);
+          return filteredRow;
+        });
+      if (rows.length === 0) continue;
+
+      const worksheet = XLSX.utils.json_to_sheet(rows);
+      XLSX.utils.book_append_sheet(workbook, worksheet, name.substring(0, 31));
+    }
+    const buffer = XLSX.write(workbook, { type: 'array', bookType: 'xlsx' });
+    return new Uint8Array(buffer);
+  }
+
+  async generateJsonContent({ destinationName }: { destinationName: string }): Promise<string> {
+    const entity = this.destinationEntities[destinationName];
+    if (!entity) return '[]';
+    
+    const uniqueFields = this.getUniqueFields(entity.fields);
+    const fieldNames = uniqueFields.map(f => f.destinationFieldName!);
+
+    const rows = Object.values(entity.processedRows!)
+      .filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE')
+      .map(r => {
+        const filteredRow: any = {};
+        fieldNames.forEach(f => filteredRow[f] = r.data[f]);
+        return filteredRow;
+      });
+    return JSON.stringify(rows, null, 2);
+  }
+
+  async generateAllJsonContent(): Promise<string> {
+    const allData: Record<string, any[]> = {};
+    for (const destinationName of Object.keys(this.destinationEntities)) {
+      const entity = this.destinationEntities[destinationName];
+      const uniqueFields = this.getUniqueFields(entity.fields);
+      const fieldNames = uniqueFields.map(f => f.destinationFieldName!);
+
+      const rows = Object.values(entity.processedRows!)
+        .filter(r => r.operation === 'INSERT' || r.operation === 'UPDATE')
+        .map(r => {
+          const filteredRow: any = {};
+          fieldNames.forEach(f => filteredRow[f] = r.data[f]);
+          return filteredRow;
+        });
+      if (rows.length > 0) {
+        allData[destinationName] = rows;
+      }
+    }
+    return JSON.stringify(allData, null, 2);
+  }
+
 }
+

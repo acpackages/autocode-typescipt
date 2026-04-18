@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { AcDataBridge, IAcDataBridgeEntity, IAcDataBridgeProcesedRow } from '@autocode-ts/ac-data-bridge';
+import { AcDataBridge, IAcDataBridgeEntity, IAcDataBridgeProcesedRow } from '../../../ac-data-bridge/ac-data-bridge';
 import { ACI_SVG_SOLID } from '@autocode-ts/ac-icons';
-import { AcElement, AcEventEmitter, AcInput, AcOutput } from '@autocode-ts/ac-runtime';
+import { AcElement, AcEventEmitter, AcInput, AcOutput } from '../../../ac-runtime/src/ac-runtime';
 @AcElement({
   selector: 'ac-data-bridge-convert-to-destination',
   template: `
   <!-- eslint-disable @angular-eslint/template/eqeqeq -->
-  <ac-container ac:if="dataBridge">
+  <ac-container ac:if="dataBridge && false">
     <div class="d-flex flex-fill flex-column">
       <div>
         <ac-container ac:template:outlet="progressTemplate; context: { progress: dataBridge.taskProgress }"></ac-container>
@@ -14,44 +14,17 @@ import { AcElement, AcEventEmitter, AcInput, AcOutput } from '@autocode-ts/ac-ru
       <div class="flex-fill">
         <ac-container ac:if="dataBridge.destinationEntities">
           <ac-container ac:for="let importDetails of (Object.values(dataBridge.destinationEntities))">
-            <div class="card my-4">
-              <div class="card-header p-2">
-                <ac-svg-icon
-                  ac:bind:svg-code="showRows[importDetails.templateName]?ACI_SVG_SOLID.chevronDown:ACI_SVG_SOLID.chevronRight"
-                  class="me-2 toggle-icon"
-                  (click)="showRows[importDetails.templateName] = showRows[importDetails.templateName]?false:true"></ac-svg-icon><b>{{importDetails.templateName}}</b>
-                <div class="import-table-progress float-right" ac:if="importDetails.rowsCount > 0">
-                  {{importDetails.completedCount}} of {{importDetails.rowsCount}}
-                  <ac-container ac:if="importDetails.errorCount > 0">
-                    <b class="text-danger">{{importDetails.errorCount}} Errors</b>
-                  </ac-container>
-                  <ac-container ac:if="importDetails.percentage < 100">
-                    <c-progress [animated]="true" [value]="importDetails.percentage" color="danger" variant="striped">
-                      {{importDetails.percentage}}
-                    </c-progress>
-                  </ac-container>
-                  <ac-container ac:if="importDetails.percentage >= 100">
-                    <span class="badge bg-success text-white "><ac-svg-icon
-                        ac:bind:svg-code="ACI_SVG_SOLID.check"></ac-svg-icon>
-                      Completed</span>
-                  </ac-container>
-                </div>
-              </div>
-              <ac-container ac:if="showRows[importDetails.templateName]">
-                <div class="card-body p-0">
-                  <ac-container
-                    ac:template:outlet="importRowsTemplate; context: { importDetails:importDetails,cssClass:'import-rows-container' }"></ac-container>
-                </div>
-              </ac-container>
-            </div>
+            <ac-data-bridge-convert-to-destination-sheet-details [details]="importDetails"></ac-data-bridge-convert-to-destination-sheet-details>
           </ac-container>
         </ac-container>
       </div>
-      <span class="mb-4">
-        <button type="button" class="btn btn-dark" (click)="handleStartConverting()">Start Converting</button>
-      </span>
+      <div class="mb-4 d-flex gap-1">
+        <button type="button" class="btn btn-dark" (click)="handleStartImporting()">Start Importing</button>
+        <button type="button" class="btn btn-dark" (click)="handleDownloadFile('sql')">Download SQL</button>
+        <button type="button" class="btn btn-dark" (click)="handleDownloadFile('xlsx')">Download XLSX</button>
+        <button type="button" class="btn btn-dark" (click)="handleDownloadFile('json')">Download JSON</button>
+      </div>
     </div>
-
     <ac-template let-progress="progress" #progressTemplate>
       <div class="card my-2">
         <div class="card-body p-2 progress-body">
@@ -59,9 +32,10 @@ import { AcElement, AcEventEmitter, AcInput, AcOutput } from '@autocode-ts/ac-ru
           <div>{{progress.description}}</div>
           <ac-container ac:if="progress.percentage<100">
             <div class="my-1">
-              <c-progress [animated]="true" [value]="progress.percentage" color="danger" variant="striped">
-                {{progress.percentage}}
-              </c-progress>
+              <div class="progress border-warning">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" ac:bind:style="'width: '+progress.percentage+'%;'"></div>
+                <div class="progress-label">{{progress.percentage|number}}%</div>
+              </div>
             </div>
           </ac-container>
           <p class="mb-1">{{progress.completedCount}} of {{progress.totalCount}}</p>
@@ -84,85 +58,12 @@ import { AcElement, AcEventEmitter, AcInput, AcOutput } from '@autocode-ts/ac-ru
       </div>
     </ac-template>
   </ac-container>
-  <ac-template #importRowsTemplate let-importDetails="importDetails" let-cssClass="cssClass">
-    <div [attr.class]="cssClass" ac-ng-scrollable [items]="Object.values(importDetails.processedRows)">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th style="width:25px;"></th>
-            <ac-container ac:for="let col of importDetails.fields">
-              <th>{{col.templateFieldName}}</th>
-            </ac-container>
-          </tr>
-        </thead>
-        <tr>
-          <td ac-ng-scrollable-top-spacer colspan="100" class="p-0"></td>
-        </tr>
-        <tbody ac-ng-scrollable-body>
-          <ac-template let-row let-index>
-            <tr>
-              <ac-container ac:if="row.childTemplates && row.childTemplates.length>0 && importDetails">
-                <ac-svg-icon
-                  ac:bind:svg-code="showAdditionalRows[row.rowId]?ACI_SVG_SOLID.chevronDown:ACI_SVG_SOLID.chevronRight"
-                  class="me-2 toggle-icon"
-                  (click)="showAdditionalRows[row.rowId] = showAdditionalRows[row.rowId]?false:true"></ac-svg-icon>
-              </ac-container>
-              <td>
-                <div class="import-status-div">
-                  <ac-container ac:if="row.operation!='SKIP'">
-                    <ac-container ac:if="row.status=='PENDING'||row.status == undefined">
-                      <span class="badge text-white bg-primary">Pending</span>
-                    </ac-container>
-                    <ac-container ac:if="row.status=='UPLOADED'">
-                      <span class="badge text-white bg-success">Imported</span>
-                    </ac-container>
-                    <ac-container ac:if="row.status=='STARTED'">
-                      <span class="badge text-white bg-info">Importing</span>
-                    </ac-container>
-                    <ac-container ac:if="row.status=='ERROR'">
-                      <span class="badge text-white bg-danger">Error</span>
-                    </ac-container>
-                  </ac-container>
-                  <ac-container ac:if="row.operation=='SKIP'">
-                    <span class="badge text-white bg-secondary">Skipping</span>
-                  </ac-container>
-                </div>
-              </td>
-              <ac-container ac:for="let field of importDetails.fields">
-                <td>{{row.data[field.destinationFieldName]??''}}</td>
-              </ac-container>
-            </tr>
-            <!-- Child Rows Start-->
-            <ac-container ac:if="row.childTemplates && row.childTemplates.length>0 && showAdditionalRows[row.rowId]">
-              <ac-container ac:for="let templateName of row .childTemplates">
-                <tr style="display: none;">
-                  <td colspan="100" class="p-0"></td>
-                </tr>
-                <tr>
-                  <td colspan="100">
-                    <div class="card my-1 ms-4">
-                      <div class="card-header p-2"><b>{{templateName}}</b></div>
-                      <div class="card-body p-0">
-                        <ac-container
-                          ac:template:outlet="importRowsTemplate; context: { importDetails: getChildTemplateDetails(templateName,row,importDetails),cssClas:'child-import-rows-container' }"></ac-container>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </ac-container>
-            </ac-container>
-
-            <!-- Child Rows End -->
-          </ac-template>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td ac-ng-scrollable-bottom-spacer colspan="100" class="p-0"></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </ac-template>
+  <div class="mb-4 d-flex gap-1">
+        <button type="button" class="btn btn-dark" (click)="handleStartImporting()">Start Importing</button>
+        <button type="button" class="btn btn-dark" (click)="handleDownloadFile('sql')">Download SQL</button>
+        <button type="button" class="btn btn-dark" (click)="handleDownloadFile('xlsx')">Download XLSX</button>
+        <button type="button" class="btn btn-dark" (click)="handleDownloadFile('json')">Download JSON</button>
+      </div>
   `,
   styles: `
   .import-rows-container{
@@ -171,12 +72,28 @@ import { AcElement, AcEventEmitter, AcInput, AcOutput } from '@autocode-ts/ac-ru
   .child-import-rows-container{
     height:70px;
   }
+  .progress {
+        border:solid 1px;
+        background:transparent;
+        flex-direction:column;
+    }
+    
+        .progress-bar{
+            height:100%;
+        }
+        .progress-label{
+            margin-top: -16.5px;
+            height:0px;
+            text-align:center;
+            width:100%;
+        }
   `
 })
 export class ConvertToDestinationElement {
   @AcInput() dataBridge?: AcDataBridge;
 
   @AcOutput() convertedOutput: AcEventEmitter<any> = new AcEventEmitter<any>();
+  @AcOutput() startImporting: AcEventEmitter<any> = new AcEventEmitter<any>();
 
   ACI_SVG_SOLID = ACI_SVG_SOLID;
   Object = Object;
@@ -198,11 +115,24 @@ export class ConvertToDestinationElement {
     return clonedTemplate;
   }
 
-  async handleStartConverting() {
+  handleDownloadFile(format:string){
+     if (this.dataBridge) {
+      if(format == 'xlsx'){
+        this.dataBridge.generateXlsxFile();
+      }
+      else if(format == 'json'){
+        this.dataBridge.generateJsonFile();
+      }
+      else if(format == 'sql'){
+        this.dataBridge.generateSqlFile();
+      }
+    }
+  }
+
+  async handleStartImporting() {
     if (this.dataBridge) {
-      const result = await this.dataBridge.convertRowsForSqlOperations()
-      // console.log(result);
-      this.convertedOutput.emit(result);
+      const result = await this.dataBridge.getSqlStatements();
+      this.startImporting.emit(result);
     }
   }
 }

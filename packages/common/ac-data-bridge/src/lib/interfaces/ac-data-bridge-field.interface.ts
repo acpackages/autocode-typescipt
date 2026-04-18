@@ -13,5 +13,6 @@ export interface IAcDataBridgeField{
   extensionTemplateHierarchy?:string[],
   foreignKeyTemplateName?:string,
   foreignKeyTemplateFieldName?:string,
-  foreignKeyIncludeFieldsInFilter?:string[]
+  foreignKeyIncludeFieldsInFilter?:string[],
+  type?: 'string' | 'number' | 'date' | 'boolean'
 }

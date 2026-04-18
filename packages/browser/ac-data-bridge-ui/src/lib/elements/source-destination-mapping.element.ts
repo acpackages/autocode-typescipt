@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcDataBridge } from '@autocode-ts/ac-data-bridge';
-import { AcElement, AcInput } from '@autocode-ts/ac-runtime';
+import { AcDataBridge } from '../../../ac-data-bridge/ac-data-bridge';
+import { AcElement, AcInput } from '../../../ac-runtime/src/ac-runtime';
 import { AcDelayedCallback } from '@autocode-ts/autocode';
 @AcElement({
   selector: 'ac-data-bridge-source-destination-mapping',
@@ -25,7 +25,7 @@ import { AcDelayedCallback } from '@autocode-ts/autocode';
                     ac:model="entity.templateName">
                     <option value="" readonly>Select table</option>
                     <ac-container ac:for="let item of templatesList">
-                      <option ac:bind:value="item.value">{{item.label}}</option>
+                      <option ac:bind:value="item.value" ac:bind:selected="entity.templateName == item.value">{{item.label}}</option>
                     </ac-container>
                   </select>
                 </div>
@@ -51,7 +51,7 @@ import { AcDelayedCallback } from '@autocode-ts/autocode';
                             ac:model="col.templateFieldName">
                             <ac-container
                               ac:for="let tableCol of getColumnsForTemplate({templateName:entity.templateName})">
-                              <option ac:bind:value="tableCol.vaue">{{tableCol.label}}</option>
+                              <option ac:bind:value="tableCol.vaue" ac:bind:selected="col.templateFieldName == tableCol.value">{{tableCol.label}}</option>
                             </ac-container>
                           </select>
                         </div>
@@ -66,8 +66,7 @@ import { AcDelayedCallback } from '@autocode-ts/autocode';
       </div>
     </div>
     <div class="pt-3">
-      <button type="button" class="btn btn-dark" (click)="handleConvertData()">Confirm and Start Converting data for
-        Accountea</button>
+      <button type="button" class="btn btn-dark" (click)="handleConvertData()">Confirm and Start Converting data</button>
     </div>
   </ac-container>
   `,

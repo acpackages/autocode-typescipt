@@ -1,3 +1,4 @@
 export interface IAcDataBridgeBeforeAddResponse{
-  data:any
+  data:any,
+  operation?:'INSERT' | 'UPDATE' | 'SKIP'
 }
