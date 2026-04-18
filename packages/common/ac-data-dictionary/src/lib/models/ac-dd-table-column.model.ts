@@ -22,7 +22,7 @@ export class AcDDTableColumn {
   columnProperties: Record<string, AcDDTableColumnProperty> = {};
 
   @AcBindJsonProperty({ key: AcDDTableColumn.KeyColumnType })
-  columnType: string = "text";
+  columnType: string|any = "text";
 
   @AcBindJsonProperty({ key: AcDDTableColumn.KeyColumnValue })
   columnValue: any;

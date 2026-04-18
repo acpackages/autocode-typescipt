@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -343,9 +344,10 @@ export class AcMysqlDao extends AcBaseSqlDao {
   }): Promise<AcSqlDaoResult> {
     const result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
     let db: Connection | null = null;
+    let updatedStatement:string = "";
     try {
       db = await this._getConnection();
-      let updatedStatement = statement;
+      updatedStatement = statement;
       if (mode === AcEnumDDSelectMode.Count) {
         updatedStatement = `SELECT COUNT(*) AS records_count FROM (${statement}) AS records_list`;
       }
@@ -367,7 +369,9 @@ export class AcMysqlDao extends AcBaseSqlDao {
       }
       result.setSuccess();
     } catch (ex: any) {
+      console.error(updatedStatement,ex);
       result.setException({ exception: ex, stackTrace: ex.stack });
+      result.value = updatedStatement;
     } finally {
       await db!.end();
     }
@@ -543,7 +547,7 @@ export class AcMysqlDao extends AcBaseSqlDao {
       const columns = Object.keys(row);
       const setValues = columns.map((key, i) => `${key} = @p${i}`).join(", ");
       const statement = `UPDATE ${tableName} SET ${setValues} ${condition ? "WHERE " + condition : ""}`;
-      
+
       const params: Record<string, any> = { ...parameters };
       for (let i = 0; i < columns.length; i++) {
         params[`@p${i}`] = row[columns[i]];
@@ -583,11 +587,11 @@ export class AcMysqlDao extends AcBaseSqlDao {
           const row = rowWithCondition['row'] as Record<string, any>;
           const condition = rowWithCondition['condition'] as string;
           const conditionParameters = rowWithCondition['parameters'] ?? {};
-          
+
           const columns = Object.keys(row);
           const setValues = columns.map((key, i) => `${key} = @p${i}`).join(", ");
           const statement = `UPDATE ${tableName} SET ${setValues} WHERE ${condition}`;
-          
+
           const params: Record<string, any> = { ...conditionParameters };
           for (let i = 0; i < columns.length; i++) {
             params[`@p${i}`] = row[columns[i]];

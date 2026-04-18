@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
+import { AcBindJsonProperty, AcJsonUtils, AcFilterGroup } from "@autocode-ts/autocode";
 import { AcDDCondition } from "./ac-dd-condition.model";
 
 export class AcDDConditionGroup {
@@ -42,6 +42,10 @@ export class AcDDConditionGroup {
     return this;
   }
 
+  static instanceFromFilterGroup({ filterGroup }: { filterGroup: AcFilterGroup }): AcDDConditionGroup {
+    return new AcDDConditionGroup().fromFilterGroup({ filterGroup });
+  }
+
   addConditionGroup({
     conditions,
     operator = "AND",
@@ -57,6 +61,21 @@ export class AcDDConditionGroup {
         },
       })
     );
+    return this;
+  }
+
+  fromFilterGroup({ filterGroup }: { filterGroup: AcFilterGroup }): this {
+    this.operator = filterGroup.operator;
+    this.conditions = [];
+
+    for (const filter of filterGroup.filters) {
+      this.conditions.push(AcDDCondition.instanceFromFilter({ filter }));
+    }
+
+    for (const childGroup of filterGroup.filterGroups) {
+      this.conditions.push(AcDDConditionGroup.instanceFromFilterGroup({ filterGroup: childGroup }));
+    }
+
     return this;
   }
 

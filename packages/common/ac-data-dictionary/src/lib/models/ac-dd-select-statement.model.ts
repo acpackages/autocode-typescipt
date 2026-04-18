@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils, AcEnumLogicalOperator, AcEnumConditionOperator } from "@autocode-ts/autocode";
+import { AcBindJsonProperty, AcEnumSqlDatabaseType, AcJsonUtils, AcEnumLogicalOperator, AcEnumConditionOperator, AcFilterGroup, AcFilter } from "@autocode-ts/autocode";
 import { AcDDConditionGroup } from "./ac-dd-condition-group.model";
 import { AcDDCondition } from "./ac-dd-condition.model";
 import { AcDataDictionary } from "./ac-data-dictionary.model";
@@ -140,27 +140,54 @@ export class AcDDSelectStatement {
     AcJsonUtils.setInstancePropertiesFromJsonData({ instance: this, jsonData });
   }
 
-  getSqlStatement({ skipCondition = false, skipSelectStatement = false, skipLimit = false }: { skipCondition?: boolean, skipSelectStatement?: boolean, skipLimit?: boolean } = {}): string {
-    if (!skipSelectStatement) {
-      const table = AcDataDictionary.getTable({
-        tableName: this.tableName,
-        dataDictionaryName: this.dataDictionaryName
-      });
-      let columns: string[] = [];
-
-      if (this.includeColumns.length === 0 && this.excludeColumns.length === 0) {
-        columns.push("*");
-      } else if (this.includeColumns.length > 0) {
-        columns = this.includeColumns;
-      } else if (this.excludeColumns.length > 0 && table) {
-        for (const col of table.getColumnNames()) {
-          if (!this.excludeColumns.includes(col)) {
-            columns.push(col);
+  getColumns(): string[] {
+    let columns: string[] = [];
+    if (this.includeColumns.length === 0 && this.excludeColumns.length === 0) {
+      columns.push("*");
+    } else if (this.includeColumns.length > 0) {
+      columns = this.includeColumns;
+    } else if (this.excludeColumns.length > 0) {
+      if (this.tableName) {
+        const table = AcDataDictionary.getTable({
+          tableName: this.tableName,
+          dataDictionaryName: this.dataDictionaryName
+        });
+        if (table) {
+          for (const col of table.getColumnNames()) {
+            if (!this.excludeColumns.includes(col)) {
+              columns.push(col);
+            }
+          }
+        }
+      } else if (this.viewName) {
+        const view = AcDataDictionary.getView({
+          viewName: this.viewName,
+          dataDictionaryName: this.dataDictionaryName
+        });
+        if (view) {
+          for (const col of view.getColumnNames()) {
+            if (!this.excludeColumns.includes(col)) {
+              columns.push(col);
+            }
           }
         }
       }
+    }
+    return columns;
+  }
 
-      this.selectStatement = `SELECT ${columns.join(",")} FROM ${this.tableName}`;
+  getSqlStatement({ skipCondition = false, skipSelectStatement = false, skipLimit = false }: { skipCondition?: boolean, skipSelectStatement?: boolean, skipLimit?: boolean } = {}): string {
+    if (!skipSelectStatement) {
+      const columns = this.getColumns();
+      if (!this.selectFrom) {
+        if (this.tableName) {
+          this.selectFrom = this.tableName;
+        } else if (this.viewName) {
+          this.selectFrom = this.viewName;
+        }
+      }
+
+      this.selectStatement = `SELECT ${columns.join(",")} FROM ${this.selectFrom}`;
     }
 
     if (!skipCondition) {
@@ -182,6 +209,11 @@ export class AcDDSelectStatement {
   }
 
   setConditionsFromFilters({ filters }: { filters: Record<string, any> }): this {
+    if (filters.hasOwnProperty(AcFilterGroup.KeyFilters)) {
+      const group = AcDDConditionGroup.instanceFromFilterGroup({ filterGroup: AcFilterGroup.instanceFromJson({ jsonData: filters }) });
+      filters = group.toJson();
+    }
+
     if (filters.hasOwnProperty(AcDDConditionGroup.KeyConditions)) {
       const operator = filters[AcDDConditionGroup.KeyOperator] ?? AcEnumLogicalOperator.And;
       this.addConditionGroup({
@@ -285,11 +317,22 @@ export class AcDDSelectStatement {
     includeInBetween?: boolean,
     includeStart?: boolean
   }): this {
-    const tableColumn: AcDDTableColumn = AcDataDictionary.getTableColumn({
-      tableName: this.tableName,
-      columnName: acDDCondition.key,
-      dataDictionaryName: this.dataDictionaryName
-    })!;
+    let columnType:string|AcEnumDDColumnType = AcEnumDDColumnType.Unknown;
+    if (this.tableName) {
+      const col = AcDataDictionary.getTableColumn({
+        tableName: this.tableName,
+        columnName: acDDCondition.key,
+        dataDictionaryName: this.dataDictionaryName
+      });
+      if (col) columnType = col.columnType;
+    } else if (this.viewName) {
+      const col = AcDataDictionary.getViewColumn({
+        viewName: this.viewName,
+        columnName: acDDCondition.key,
+        dataDictionaryName: this.dataDictionaryName
+      });
+      if (col) columnType = col.columnType;
+    }
 
     const colCheck = `LOWER(${acDDCondition.key})`;
     const likeValue = acDDCondition.value.toLowerCase();
@@ -302,7 +345,7 @@ export class AcDDSelectStatement {
       parts.push(`${colCheck} LIKE ${param}`);
     };
 
-    if (tableColumn.columnType === AcEnumDDColumnType.Json) {
+    if (columnType === AcEnumDDColumnType.Json) {
       if (includeStart) addCondition(`%"${jsonCol}":"${likeValue}%"%`);
       if (includeInBetween) addCondition(`%"${jsonCol}":"%${likeValue}%"%`);
       if (includeEnd) addCondition(`%"${jsonCol}":"%${likeValue}"%`);

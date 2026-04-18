@@ -6,6 +6,7 @@ import { AcDDTableColumnProperty } from "./ac-dd-table-column-property.model";
 import { AcEnumDDColumnProperty } from "../enums/ac-enum-dd-column-property.enum";
 import { AcDataDictionary } from "./ac-data-dictionary.model";
 import { AcDDTableColumn } from "./ac-dd-table-column.model";
+import { AcEnumDDColumnType } from "../enums/ac-enum-dd-column-type.enum";
 
 export class AcDDViewColumn {
   static readonly KeyColumnName = "columnName";
@@ -23,7 +24,7 @@ export class AcDDViewColumn {
   columnProperties: Record<string, AcDDTableColumnProperty> = {};
 
   @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnType })
-  columnType: string = "text";
+  columnType: string|AcEnumDDColumnType = "text";
 
   @AcBindJsonProperty({ key: AcDDViewColumn.KeyColumnValue })
   columnValue: any;

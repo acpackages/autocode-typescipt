@@ -272,6 +272,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Business Phone Number Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -317,6 +321,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Business Social Media Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -718,7 +726,22 @@ export const dataDictionaryJson = {
     },
     "events": {
       "tableName": "events",
-      "tableColumns": {},
+      "tableColumns": {
+        "event_id": {
+          "columnName": "event_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Event Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
@@ -732,7 +755,22 @@ export const dataDictionaryJson = {
     },
     "form_fields": {
       "tableName": "form_fields",
-      "tableColumns": {},
+      "tableColumns": {
+        "form_field_id": {
+          "columnName": "form_field_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Form Field Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
@@ -746,7 +784,22 @@ export const dataDictionaryJson = {
     },
     "forms": {
       "tableName": "forms",
-      "tableColumns": {},
+      "tableColumns": {
+        "form_id": {
+          "columnName": "form_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Form Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
@@ -755,6 +808,85 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "form"
+        }
+      }
+    },
+    "governing_bodies": {
+      "tableName": "governing_bodies",
+      "tableColumns": {
+        "governing_body_id": {
+          "columnName": "governing_body_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Governing Body Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "governing_body_name": {
+          "columnName": "governing_body_name",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Governing Body Name"
+            }
+          }
+        },
+        "governing_term_start_date": {
+          "columnName": "governing_term_start_date",
+          "columnType": "DATE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Start Date"
+            }
+          }
+        },
+        "governing_term_end_date": {
+          "columnName": "governing_term_end_date",
+          "columnType": "DATE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "End Date"
+            }
+          }
+        },
+        "community_id": {
+          "columnName": "community_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Community"
+            }
+          }
+        },
+        "governing_body_index": {
+          "columnName": "governing_body_index",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Index"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "governing_bodies"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "governing_body"
         }
       }
     },
@@ -827,84 +959,24 @@ export const dataDictionaryJson = {
         }
       }
     },
-    "governing_bodies": {
-      "tableName": "governing_bodies",
+    "matrimony_subscriptions": {
+      "tableName": "matrimony_subscriptions",
       "tableColumns": {
-        "governing_body_id": {
-          "columnName": "governing_body_id",
+        "matrimony_subscription_id": {
+          "columnName": "matrimony_subscription_id",
           "columnType": "UUID",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Governing Body Id"
-            }
-          }
-        },
-        "governing_body_name": {
-          "columnName": "governing_body_name",
-          "columnType": "STRING",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Governing Body Name"
-            }
-          }
-        },
-        "governing_term_start_date": {
-          "columnName": "governing_term_start_date",
-          "columnType": "DATE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Start Date"
-            }
-          }
-        },
-        "governing_term_end_date": {
-          "columnName": "governing_term_end_date",
-          "columnType": "DATE",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "End Date"
-            }
-          }
-        },
-        "community_id": {
-          "columnName": "community_id",
-          "columnType": "UUID",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Community"
-            }
-          }
-        },
-        "governing_body_index": {
-          "columnName": "governing_body_index",
-          "columnType": "INTEGER",
-          "columnProperties": {
-            "COLUMN_TITLE": {
-              "propertyName": "COLUMN_TITLE",
-              "propertyValue": "Index"
+              "propertyValue": "Matrimony Subscription Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
             }
           }
         }
       },
-      "tableProperties": {
-        "PLURAL_NAME": {
-          "propertyName": "PLURAL_NAME",
-          "propertyValue": "governing_bodies"
-        },
-        "SINGULAR_NAME": {
-          "propertyName": "SINGULAR_NAME",
-          "propertyValue": "governing_body"
-        }
-      }
-    },
-    "matrimony_subscriptions": {
-      "tableName": "matrimony_subscriptions",
-      "tableColumns": {},
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
@@ -930,6 +1002,76 @@ export const dataDictionaryJson = {
             "PRIMARY_KEY": {
               "propertyName": "PRIMARY_KEY",
               "propertyValue": true
+            }
+          }
+        },
+        "media_details": {
+          "columnName": "media_details",
+          "columnType": "JSON",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Details"
+            }
+          }
+        },
+        "media_name": {
+          "columnName": "media_name",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Name"
+            }
+          }
+        },
+        "media_path": {
+          "columnName": "media_path",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Path"
+            }
+          }
+        },
+        "media_size": {
+          "columnName": "media_size",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Size"
+            }
+          }
+        },
+        "media_type": {
+          "columnName": "media_type",
+          "columnType": "STRING",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Type"
+            }
+          }
+        },
+        "media_remarks": {
+          "columnName": "media_remarks",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Remarks"
+            }
+          }
+        },
+        "display_index": {
+          "columnName": "display_index",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Index"
             }
           }
         }
@@ -1045,7 +1187,22 @@ export const dataDictionaryJson = {
     },
     "member_form_values": {
       "tableName": "member_form_values",
-      "tableColumns": {},
+      "tableColumns": {
+        "member_form_value_id": {
+          "columnName": "member_form_value_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member Form Value Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
@@ -1106,6 +1263,105 @@ export const dataDictionaryJson = {
         }
       }
     },
+    "member_qualifications": {
+      "tableName": "member_qualifications",
+      "tableColumns": {
+        "member_qualification_id": {
+          "columnName": "member_qualification_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member Qualification Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        },
+        "member_id": {
+          "columnName": "member_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Member"
+            }
+          }
+        },
+        "qualification_title": {
+          "columnName": "qualification_title",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Qualification Title"
+            }
+          }
+        },
+        "starting_year": {
+          "columnName": "starting_year",
+          "columnType": "DATE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Starting Year"
+            }
+          }
+        },
+        "ending_year": {
+          "columnName": "ending_year",
+          "columnType": "DATE",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Ending Year"
+            }
+          }
+        },
+        "passing_marks": {
+          "columnName": "passing_marks",
+          "columnType": "INTEGER",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Passing Marks"
+            }
+          }
+        },
+        "grade_type": {
+          "columnName": "grade_type",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Grade Type"
+            }
+          }
+        },
+        "university_name": {
+          "columnName": "university_name",
+          "columnType": "TEXT",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "University Name"
+            }
+          }
+        }
+      },
+      "tableProperties": {
+        "PLURAL_NAME": {
+          "propertyName": "PLURAL_NAME",
+          "propertyValue": "member_qualifications"
+        },
+        "SINGULAR_NAME": {
+          "propertyName": "SINGULAR_NAME",
+          "propertyValue": "member_qualification"
+        }
+      }
+    },
     "member_social_medias": {
       "tableName": "member_social_medias",
       "tableColumns": {
@@ -1116,6 +1372,10 @@ export const dataDictionaryJson = {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
               "propertyValue": "Member Social Media Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
             }
           }
         },
@@ -1344,7 +1604,7 @@ export const dataDictionaryJson = {
         },
         "marital_status": {
           "columnName": "marital_status",
-          "columnType": null,
+          "columnType": "STRING",
           "columnProperties": {
             "COLUMN_TITLE": {
               "propertyName": "COLUMN_TITLE",
@@ -1361,6 +1621,10 @@ export const dataDictionaryJson = {
         "SINGULAR_NAME": {
           "propertyName": "SINGULAR_NAME",
           "propertyValue": "member"
+        },
+        "SQL_VIEW_NAME": {
+          "propertyName": "SQL_VIEW_NAME",
+          "propertyValue": "view_member_list"
         }
       }
     },
@@ -1415,7 +1679,22 @@ export const dataDictionaryJson = {
     },
     "posts": {
       "tableName": "posts",
-      "tableColumns": {},
+      "tableColumns": {
+        "post_id": {
+          "columnName": "post_id",
+          "columnType": "UUID",
+          "columnProperties": {
+            "COLUMN_TITLE": {
+              "propertyName": "COLUMN_TITLE",
+              "propertyValue": "Post Id"
+            },
+            "PRIMARY_KEY": {
+              "propertyName": "PRIMARY_KEY",
+              "propertyValue": true
+            }
+          }
+        }
+      },
       "tableProperties": {
         "PLURAL_NAME": {
           "propertyName": "PLURAL_NAME",
@@ -1658,7 +1937,190 @@ export const dataDictionaryJson = {
       }
     }
   },
-  "views": {},
+  "views": {
+    "view_member_list": {
+      "viewName": "view_member_list",
+      "viewColumns": {
+        "member_id": {
+          "columnName": "member_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_id"
+        },
+        "member_number": {
+          "columnName": "member_number",
+          "columnType": "AUTO_NUMBER",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_number"
+        },
+        "member_fname": {
+          "columnName": "member_fname",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_fname"
+        },
+        "member_mname": {
+          "columnName": "member_mname",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_mname"
+        },
+        "member_lname": {
+          "columnName": "member_lname",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_lname"
+        },
+        "main_member_id": {
+          "columnName": "main_member_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "main_member_id"
+        },
+        "father_member_id": {
+          "columnName": "father_member_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "father_member_id"
+        },
+        "mother_member_id": {
+          "columnName": "mother_member_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "mother_member_id"
+        },
+        "spouse_member_id": {
+          "columnName": "spouse_member_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "spouse_member_id"
+        },
+        "member_gender": {
+          "columnName": "member_gender",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_gender"
+        },
+        "relation_with_main_member": {
+          "columnName": "relation_with_main_member",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "relation_with_main_member"
+        },
+        "date_of_birth": {
+          "columnName": "date_of_birth",
+          "columnType": "DATE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "date_of_birth"
+        },
+        "date_of_demise": {
+          "columnName": "date_of_demise",
+          "columnType": "DATE",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "date_of_demise"
+        },
+        "blood_group": {
+          "columnName": "blood_group",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "blood_group"
+        },
+        "member_profile_image_media_id": {
+          "columnName": "member_profile_image_media_id",
+          "columnType": "UUID",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_profile_image_media_id"
+        },
+        "member_native": {
+          "columnName": "member_native",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_native"
+        },
+        "member_detail": {
+          "columnName": "member_detail",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_detail"
+        },
+        "member_gotra": {
+          "columnName": "member_gotra",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "member_gotra"
+        },
+        "marital_status": {
+          "columnName": "marital_status",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "members",
+          "columnSourceOriginalColumn": "marital_status"
+        },
+        "media_path": {
+          "columnName": "media_path",
+          "columnType": "TEXT",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "medias",
+          "columnSourceOriginalColumn": "media_path"
+        },
+        "state_name": {
+          "columnName": "state_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "addresses",
+          "columnSourceOriginalColumn": "state_name"
+        },
+        "country_name": {
+          "columnName": "country_name",
+          "columnType": "STRING",
+          "columnProperties": {},
+          "columnSource": "table",
+          "columnSourceName": "addresses",
+          "columnSourceOriginalColumn": "country_name"
+        }
+      },
+      "viewQuery": "SELECT \n\tmembers.*,\n    CONCAT(members.member_fname, members.member_mname, members.member_lname) AS member_name,\n    medias.media_path , \n    addresses.state_name,\n    addresses.country_name\nFROM \nmembers INNER JOIN medias ON members.member_profile_image_media_id = medias.media_id\nINNER JOIN member_addresses ON members.member_id = member_addresses.member_id\nINNER JOIN addresses ON addresses.address_id = member_addresses.address_id;"
+    }
+  },
   "relationships": [
     {
       "destinationColumn": "address_id",
@@ -1852,8 +2314,5 @@ export const dataDictionaryJson = {
       "sourceColumn": "media_id",
       "sourceTable": "medias"
     }
-  ],
-  "storedProcedures": {},
-  "functions": {},
-  "triggers": {}
+  ]
 };

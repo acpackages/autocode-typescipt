@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { AcBindJsonProperty, AcJsonUtils } from "@autocode-ts/autocode";
+import { AcBindJsonProperty, AcJsonUtils, AcFilter } from "@autocode-ts/autocode";
 
 export class AcDDCondition {
   static readonly KeyDatabaseType = "databaseType";
@@ -23,11 +23,22 @@ export class AcDDCondition {
     return instance;
   }
 
+  static instanceFromFilter({ filter }: { filter: AcFilter }): AcDDCondition {
+    return new AcDDCondition().fromFilter(filter);
+  }
+
   fromJson({ jsonData }: { jsonData: any }): this {
     AcJsonUtils.setInstancePropertiesFromJsonData({
       instance: this,
       jsonData,
     });
+    return this;
+  }
+
+  fromFilter(filter: AcFilter): this {
+    this.key = filter.key ?? '';
+    this.operator = filter.operator;
+    this.value = filter.value;
     return this;
   }
 

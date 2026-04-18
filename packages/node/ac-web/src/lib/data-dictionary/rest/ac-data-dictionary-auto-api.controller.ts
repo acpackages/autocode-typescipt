@@ -111,6 +111,9 @@ export class AcDataDictionaryAutoApi {
     update?: boolean;
   } = {}): this {
     this.logger.log(`Generating apis for tables in data dictionary ${this.dataDictionaryName}...`);
+    if (Object.keys(this.includeTables).length === 0 && Object.keys(this.excludeTables).length === 0) {
+      this.logger.log("No include & exclude tables specified!");
+    }
 
     const tables = AcDataDictionary.getTables({ dataDictionaryName: this.dataDictionaryName });
     for (const tableName of Object.keys(tables)) {
@@ -124,11 +127,13 @@ export class AcDataDictionaryAutoApi {
       let generateSelectRow = true;
       let generateUpdate = true;
 
+      this.logger.log(`Checking table ${acDDTable.tableName} for auto data dictionary...`);
       if (Object.keys(this.includeTables).length === 0 && Object.keys(this.excludeTables).length === 0) {
         continueOperation = true;
       } else if (Object.keys(this.includeTables).length > 0) {
         if (this.includeTables[tableName]) {
           continueOperation = true;
+          this.logger.log(`Include tables list contains table ${acDDTable.tableName}`);
           const options = this.includeTables[tableName];
           generateDelete = options.delete;
           generateInsert = options.insert;
@@ -137,8 +142,11 @@ export class AcDataDictionaryAutoApi {
           generateSelectDistinct = options.selectDistinct;
           generateSelectRow = options.selectRow;
           generateUpdate = options.update;
+        } else {
+          this.logger.log(`Include tables list does not contains table ${acDDTable.tableName}`);
         }
       } else if (!this.excludeTables[tableName]) {
+        this.logger.log(`Exclude tables list does not contain table ${acDDTable.tableName}`);
         continueOperation = true;
       } else if (this.excludeTables[tableName]) {
         continueOperation = true;
@@ -153,33 +161,48 @@ export class AcDataDictionaryAutoApi {
       }
 
       if (continueOperation) {
+        this.logger.log(`Generating apis for table ${acDDTable.tableName}...`);
         let apiAdded = false;
 
         if (generateDelete && del) {
+          this.logger.log(`Generating delete api for table ${acDDTable.tableName}...`);
           new AcDataDictionaryAutoDelete({ acDDTable, acDataDictionaryAutoApi: this });
           apiAdded = true;
+          this.logger.log(`Generated delete api for table ${acDDTable.tableName}!`);
         }
         if (generateInsert && insert) {
+          this.logger.log(`Generating insert api for table ${acDDTable.tableName}...`);
           new AcDataDictionaryAutoInsert({ acDDTable, acDataDictionaryAutoApi: this });
           apiAdded = true;
+          this.logger.log(`Generated insert api for table ${acDDTable.tableName}!`);
         }
         if (generateSave && save) {
+          this.logger.log(`Generating save api for table ${acDDTable.tableName}...`);
           new AcDataDictionaryAutoSave({ acDDTable, acDataDictionaryAutoApi: this });
           apiAdded = true;
+          this.logger.log(`Generated save api for table ${acDDTable.tableName}!`);
         }
         if (generateSelect && select) {
+          this.logger.log(`Generating select api for table ${acDDTable.tableName}...`);
           new AcDataDictionaryAutoSelect({ acDDTable, acDataDictionaryAutoApi: this, includeSelectRow: generateSelectRow && selectRow });
           apiAdded = true;
+          this.logger.log(`Generated select api for table ${acDDTable.tableName}!`);
         }
         if (generateSelectDistinct && selectDistinct) {
+          this.logger.log(`Generating select distinct apis for fields in table ${acDDTable.tableName}...`);
           for (const distinctColumn of acDDTable.getSelectDistinctColumns()) {
+            this.logger.log(`Generating select distinct api for field ${distinctColumn.columnName} in table ${acDDTable.tableName}...`);
             new AcDataDictionaryAutoSelectDistinct({ acDDTable, acDDTableColumn: distinctColumn, acDataDictionaryAutoApi: this });
             apiAdded = true;
+            this.logger.log(`Generated select distinct api for field ${distinctColumn.columnName} in table ${acDDTable.tableName}!`);
           }
+          this.logger.log(`Generated select distinct apis for table ${acDDTable.tableName}!`);
         }
         if (generateUpdate && update) {
+          this.logger.log(`Generating update api for table ${acDDTable.tableName}...`);
           new AcDataDictionaryAutoUpdate({ acDDTable, acDataDictionaryAutoApi: this });
           apiAdded = true;
+          this.logger.log(`Generated update api for table ${acDDTable.tableName}!`);
         }
 
         if (apiAdded) {
@@ -188,8 +211,11 @@ export class AcDataDictionaryAutoApi {
           tag.description = `Database operations for table ${acDDTable.tableName}`;
           this.acWeb.acApiDoc.addTag(tag);
         }
+      } else {
+        this.logger.log(`Skipping apis for table ${acDDTable.tableName}!`);
       }
     }
+    this.logger.log(`Generated apis for tables in data dictionary ${this.dataDictionaryName}!`);
     return this;
   }
 }

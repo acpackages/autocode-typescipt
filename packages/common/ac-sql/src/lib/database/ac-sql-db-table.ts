@@ -738,9 +738,11 @@ export class AcSqlDbTable extends AcSqlDbBase {
     acDDSelectStatement: AcDDSelectStatement;
   }): Promise<AcSqlDaoResult> {
     let result = new AcSqlDaoResult({ operation: AcEnumDDRowOperation.Select });
+    let sqlStatement:any;
+    let sqlParameters:any;
     try {
-      const sqlStatement = acDDSelectStatement.getSqlStatement();
-      const sqlParameters = acDDSelectStatement.parameters;
+      sqlStatement = acDDSelectStatement.getSqlStatement();
+      sqlParameters = acDDSelectStatement.parameters;
 
       result = await this.dao!.getRows({
         statement: sqlStatement,
@@ -761,6 +763,7 @@ export class AcSqlDbTable extends AcSqlDbBase {
         result.totalRows = 0;
       }
     } catch (ex: any) {
+      console.error(sqlStatement,sqlParameters)
       result.setException({
         exception: ex,
         stackTrace: ex.stack,
