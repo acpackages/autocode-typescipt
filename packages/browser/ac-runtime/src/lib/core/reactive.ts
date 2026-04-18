@@ -96,7 +96,7 @@ function flushEffects() {
  * Effect class that manages subscription and re-execution.
  * Uses microtask batching to deduplicate multiple triggers per tick.
  */
-class Effect implements Subscriber {
+export class Effect implements Subscriber {
   private cleanupFn?: () => void;
   dependencies = new Set<Set<Subscriber>>();
 
@@ -147,6 +147,10 @@ class Effect implements Subscriber {
 
     this.dependencies.forEach(dep => dep.delete(this));
     this.dependencies.clear();
+  }
+
+  public destroy() {
+    this.cleanup();
   }
 }
 

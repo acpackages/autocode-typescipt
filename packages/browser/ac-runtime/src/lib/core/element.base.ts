@@ -25,6 +25,14 @@ export interface IAcOnDestroy {
     acOnDestroy(): void;
 }
 
+export interface IAcOnConnected {
+    acOnConnected(): void;
+}
+
+export interface IAcOnDisconnected {
+    acOnDisconnected(): void;
+}
+
 export interface IAcChangeDetails {
     key: string;
     property?: string;
@@ -116,7 +124,10 @@ export class AcElementManager {
         // Resolve ViewChild references BEFORE acOnInit
         AcElementManager.resolveViewChild(this.instance, this.templateEngine);
 
-        acInitRuntimeElementInstance(this.instance);
+        await acInitRuntimeElementInstance(this.instance);
+        // Trigger connected hook immediately after init if bootstrapped manually or during scan
+        await acInitRuntimeElementConnected(this.instance);
+
         acElementRegistry.registerInstance({ instance: this.instance, uuid: this.uuid })
     }
 
@@ -202,10 +213,14 @@ export async function bootstrapAcElement(component: any) {
  * @returns The component instance if bootstrapped, otherwise null
  */
 export async function acAutoBootstrap(el: HTMLElement): Promise<any> {
-    if (el.hasAttribute('ac-engine-element')) return null;
+    const existingId = el.getAttribute('ac-engine-element');
+    if (existingId && acElementRegistry.getInstance({ uuid: existingId })) return null;
 
     const registration = acElementRegistry.getByElement(el);
     if (registration) {
+        // If it was previously destroyed/removed, clear the stale ID to trigger a fresh bootstrap with new UUID
+        if (existingId) el.removeAttribute('ac-engine-element');
+
         const instance = new registration.constructor();
         const manager = new AcElementManager(instance, el);
         await manager.bootstrap();
@@ -234,6 +249,9 @@ export async function acBootstrapElements() {
         }
     }
 
+    // Call connected hook for all elements initially in the DOM
+    await acCheckAndCallConnected(document.body);
+
     // Start global observer for any future elements
     const observer = new MutationObserver((mutations) => {
         mutations.forEach(mutation => {
@@ -247,11 +265,23 @@ export async function acBootstrapElements() {
                     for (const child of Array.from(childElements)) {
                         await acAutoBootstrap(child as HTMLElement);
                     }
+
+                    // Call connected for existing or new instances
+                    await acCheckAndCallConnected(node);
                 }
             });
             mutation.removedNodes.forEach(async node => {
                 if (node instanceof HTMLElement) {
-                    acCheckAndDestroyElementInstances(node);
+                    await acCheckAndCallDisconnected(node);
+
+                    // Delayed destruction check: 
+                    // If the element is re-inserted in the same task (a "move"), isConnected will be true
+                    // and we skip destruction, keeping the state intact.
+                    setTimeout(async () => {
+                        if (!node.isConnected) {
+                            await acCheckAndDestroyElementInstances(node);
+                        }
+                    }, 0);
                 }
             });
         });
@@ -263,7 +293,7 @@ export async function acBootstrapElements() {
 export async function acCheckAndDestroyElementInstances(element: HTMLElement) {
     for (const child of Array.from(element.children)) {
         if (child instanceof HTMLElement) {
-            acCheckAndDestroyElementInstances(child);
+            await acCheckAndDestroyElementInstances(child);
         }
     }
     if (element.hasAttribute('ac-engine-element')) {
@@ -271,9 +301,24 @@ export async function acCheckAndDestroyElementInstances(element: HTMLElement) {
         if (instanceId) {
             const instance = acElementRegistry.getInstance({ uuid: instanceId });
             if (instance) {
+                if (instance.__ac_destroyed__) return;
+
+                // Call acOnDisconnected first
+                await acInitRuntimeElementDisconnected(instance);
+
                 if (typeof instance.acOnDestroy === 'function') {
                     instance.acOnDestroy();
                 }
+
+                Object.defineProperty(instance, '__ac_destroyed__', {
+                    value: true,
+                    enumerable: false,
+                    writable: true,
+                    configurable: true
+                });
+
+                acElementRegistry.removeInstance({ uuid: instanceId });
+
                 const instanceStyle = document.querySelector(`[ac-engine-style-for="${instanceId}"]`);
                 if (instanceStyle) {
                     instanceStyle.remove();
@@ -299,6 +344,71 @@ export async function acInitRuntimeElementInstance(instance: any) {
         writable: true,
         configurable: true
     });
+}
+
+export async function acInitRuntimeElementConnected(instance: any) {
+    if (instance.__ac_connected__) return;
+    if (typeof instance.acOnConnected === 'function') {
+        try {
+            instance.acOnConnected();
+        }
+        catch (ex) {
+            AC_RUNTIME_CONFIG.logError(ex);
+        }
+    }
+    Object.defineProperty(instance, '__ac_connected__', {
+        value: true,
+        enumerable: false,
+        writable: true,
+        configurable: true
+    });
+}
+
+export async function acInitRuntimeElementDisconnected(instance: any) {
+    if (!instance.__ac_connected__) return;
+    if (typeof instance.acOnDisconnected === 'function') {
+        try {
+            instance.acOnDisconnected();
+        }
+        catch (ex) {
+            AC_RUNTIME_CONFIG.logError(ex);
+        }
+    }
+    instance.__ac_connected__ = false;
+}
+
+export async function acCheckAndCallConnected(element: HTMLElement) {
+    if (element.hasAttribute('ac-engine-element')) {
+        const instanceId = element.getAttribute('ac-engine-element');
+        if (instanceId) {
+            const instance = acElementRegistry.getInstance({ uuid: instanceId });
+            if (instance) {
+                await acInitRuntimeElementConnected(instance);
+            }
+        }
+    }
+    for (const child of Array.from(element.children)) {
+        if (child instanceof HTMLElement) {
+            await acCheckAndCallConnected(child);
+        }
+    }
+}
+
+export async function acCheckAndCallDisconnected(element: HTMLElement) {
+    if (element.hasAttribute('ac-engine-element')) {
+        const instanceId = element.getAttribute('ac-engine-element');
+        if (instanceId) {
+            const instance = acElementRegistry.getInstance({ uuid: instanceId });
+            if (instance) {
+                await acInitRuntimeElementDisconnected(instance);
+            }
+        }
+    }
+    for (const child of Array.from(element.children)) {
+        if (child instanceof HTMLElement) {
+            await acCheckAndCallDisconnected(child);
+        }
+    }
 }
 
 export function acSetEngineElementEngineUUID(element: HTMLElement, instance: any): string | undefined {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { AC_RUNTIME_CONFIG } from '../consts/ac-runtime-config.const';
 import { AcElement, AcInput, acAutoBootstrap, acElementRegistry, getIAcElementMetadata } from './element.base';
 import { acRouter, IAcRouteSnapshot } from './router';
@@ -11,11 +10,11 @@ export class AcRouterElement {
     @AcInput() name?: string;
     element!: HTMLElement;
     private isPaused: boolean = false;
-    private lastSnapshot?: IAcRouteSnapshot;
-
+    private routerSub?: () => void;
 
     async acOnInit() {
-        acRouter.routeChange.subscribe((snapshot: IAcRouteSnapshot) => {
+        // Subscribe to router
+        this.routerSub = acRouter.routeChange.subscribe((snapshot: IAcRouteSnapshot) => {
             if (!this.isPaused) {
                 this.handleRouteChange(snapshot);
             }
@@ -24,6 +23,12 @@ export class AcRouterElement {
             if (acRouter.lastSnapshot) {
                 this.handleRouteChange(acRouter.lastSnapshot);
             }
+        }
+    }
+
+    acOnDestroy() {
+        if (this.routerSub) {
+            this.routerSub();
         }
     }
 

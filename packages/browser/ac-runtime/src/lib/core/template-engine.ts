@@ -1,14 +1,15 @@
-import { acEffect, acMakeReactive } from './reactive';
+import { acEffect, acMakeReactive, Effect } from './reactive';
 import { acPipeRegistry, evaluateAcPipeExpression } from '@autocode-ts/ac-pipes';
 import { acElementRegistry } from './element-registry';
 import { getAcInputMetadata, getAcOutputMetadata, getAcViewChildMetadata } from './decorators';
-import { AcElementManager, acInitRuntimeElementInstance, acSetEngineElementEngineUUID, acSetEngineElementStyles } from './element.base';
+import { AcElementManager, acInitRuntimeElementInstance, acInitRuntimeElementConnected, acSetEngineElementEngineUUID, acSetEngineElementStyles } from './element.base';
 import { AC_RUNTIME_CONFIG } from '../consts/ac-runtime-config.const';
 
 export class AcTemplateEngine {
     private childElements = new Map<HTMLElement, any>(); // Track child element instances
     private templates = new Map<string, HTMLTemplateElement>();
     private references = new Map<string, any>();
+    private effects = new Set<Effect>(); // Track reactive effects for cleanup
     private parent?: AcTemplateEngine;
 
     constructor(private context: any, parent?: AcTemplateEngine) {
@@ -49,7 +50,7 @@ export class AcTemplateEngine {
         const regex = /\{\{\s*(.*?)\s*\}\}/g;
 
         if (regex.test(originalText)) {
-            acEffect(() => {
+            this.effect(() => {
                 let newText = originalText;
                 let match;
                 regex.lastIndex = 0;
@@ -143,7 +144,7 @@ export class AcTemplateEngine {
                     const isCheckbox = (el as HTMLInputElement).type === 'checkbox';
                     const isSelect = el.tagName === 'SELECT';
 
-                    acEffect(() => {
+                    this.effect(() => {
                         const valOrPromise = this.evaluateExpression(value);
                         const updateModel = (val: any) => {
                             if (isCheckbox) (el as HTMLInputElement).checked = !!val;
@@ -169,7 +170,7 @@ export class AcTemplateEngine {
                 }
                 else if (name === 'ac:template:outlet' || name === 'ac:template-outlet' || name === '[acTemplateOutlet]' || name === '*ngTemplateOutlet' || name === '[ngTemplateOutlet]') {
                     let currentActiveNodes: Node[] = [];
-                    acEffect(() => {
+                    this.effect(() => {
                         // Cleanup old nodes
                         if (currentActiveNodes.length > 0) {
                             currentActiveNodes.forEach(node => {
@@ -244,7 +245,7 @@ export class AcTemplateEngine {
                 }
                 else if (name.startsWith('ac:bind:')) {
                     const attrToBind = name.replace('ac:bind:', '');
-                    acEffect(() => {
+                    this.effect(() => {
                         const valOrPromise = this.evaluateExpression(value);
                         const updateBind = (val: any) => {
                             if (val === null || val === undefined) {
@@ -293,7 +294,7 @@ export class AcTemplateEngine {
                 }
                 else if (name.startsWith('ac:class:')) {
                     const className = name.split(':')[2];
-                    acEffect(() => {
+                    this.effect(() => {
                         const valOrPromise = this.evaluateExpression(value);
                         const updateClass = (val: any) => {
                             if (val) {
@@ -410,7 +411,7 @@ export class AcTemplateEngine {
                     if (isBound) {
                         let oldValue: any;
                         let isFirstChange = true;
-                        acEffect(() => {
+                        this.effect(() => {
                             try {
                                 const valOrPromise = this.evaluateExpression(attrValue);
                                 const updateInstance = (newValue: any) => {
@@ -527,7 +528,10 @@ export class AcTemplateEngine {
         if (!instance) {
             instance = acMakeReactive(new ElementClass());
             (instance as any).element = el;
-            acSetEngineElementEngineUUID(el, instance);
+            const uuid = acSetEngineElementEngineUUID(el, instance);
+            if (uuid) {
+                acElementRegistry.registerInstance({ instance, uuid });
+            }
             isNew = true;
         }
 
@@ -605,6 +609,7 @@ export class AcTemplateEngine {
             this.childElements.set(el, instance);
 
             acInitRuntimeElementInstance(instance);
+            acInitRuntimeElementConnected(instance);
         }
 
         return true;
@@ -645,7 +650,7 @@ export class AcTemplateEngine {
         el.parentNode?.replaceChild(endPlaceholder, el);
         endPlaceholder.parentNode?.insertBefore(startPlaceholder, endPlaceholder);
 
-        acEffect(() => {
+        this.effect(() => {
             let current = startPlaceholder.nextSibling;
             while (current && current !== endPlaceholder) {
                 const next = current.nextSibling;
@@ -772,7 +777,7 @@ export class AcTemplateEngine {
             }
         };
 
-        acEffect(() => {
+        this.effect(() => {
             const listOrPromise = this.evaluateExpression(listExpression);
             
             const renderFor = (list: any) => {
@@ -957,14 +962,14 @@ export class AcTemplateEngine {
     }
 
     private destroyInstances(el: HTMLElement) {
-        const instance = this.childElements.get(el);
-        if (instance && typeof instance.onDestroy === 'function') instance.onDestroy();
         this.childElements.delete(el);
         el.querySelectorAll('*').forEach(child => {
-            const childInstance = this.childElements.get(child as HTMLElement);
-            if (childInstance && typeof childInstance.onDestroy === 'function') childInstance.onDestroy();
             this.childElements.delete(child as HTMLElement);
         });
+
+        // Cleanup all reactive effects managed by this engine instance
+        this.effects.forEach(effect => effect.destroy());
+        this.effects.clear();
     }
 
     private evaluateExpression(exp: string, locals?: Record<string, any>, isExpressionEval:boolean = false): any {
@@ -1077,5 +1082,10 @@ export class AcTemplateEngine {
             return true;
         }
         return false;
+    }
+    private effect(fn: () => void | (() => void)): Effect {
+        const e = acEffect(fn);
+        this.effects.add(e);
+        return e;
     }
 }
